@@ -7,9 +7,15 @@ import { Database } from '@/types_db';
 export const createClient = () => {
   const cookieStore = cookies();
 
+  let url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  if (url.endsWith('/rest/v1/')) {
+    url = url.slice(0, -9);
+  } else if (url.endsWith('/rest/v1')) {
+    url = url.slice(0, -8);
+  }
+
   return createServerClient<Database>(
-    // Pass Supabase URL and anonymous key from the environment to the client
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    url,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 
     // Define a cookies object with methods for interacting with the cookie store and pass it to the client

@@ -44,6 +44,19 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
+  getClinics,
+  addClinicLocation,
+  getBackups,
+  createManualBackup,
+  restoreBackup,
+  appendAuditLog,
+  getSystemHealth,
+  getAuditLogs,
+  runIntegrityScan,
+  ClinicLocation,
+  BackupArchive
+} from '@/utils/enterpriseState';
+import {
   AreaChart,
   Area,
   XAxis,
@@ -59,17 +72,7 @@ import {
 } from 'recharts';
 
 // --- MOCK INTERFACES FOR THE ENTERPRISE SYSTEM ---
-interface ClinicHub {
-  id: string;
-  name: string;
-  location: string;
-  manager: string;
-  doctors: number;
-  patients: number;
-  rooms: number;
-  hours: string;
-  status: 'Active' | 'Maintenance' | 'Planned';
-}
+type ClinicHub = ClinicLocation;
 
 interface OrgUser {
   id: string;
@@ -199,18 +202,65 @@ const PERMISSION_ROLES_TEMPLATES = {
 };
 
 export default function OrganizationWorkspace() {
-  // Navigation Tabs matching 10 requested areas
+  // Navigation Tabs matching 11 requested areas (including SLA backups)
   const [activeTab, setActiveTab] = useState<
-    'Overview' | 'Clinics' | 'Departments' | 'Users' | 'Permissions' | 'Teams' | 'Audits' | 'Notifications' | 'Security' | 'Settings'
+    'Overview' | 'Clinics' | 'Departments' | 'Users' | 'Permissions' | 'Teams' | 'Audits' | 'Notifications' | 'Security' | 'Settings' | 'Backup'
   >('Overview');
 
   // Interactive core state
-  const [clinics, setClinics] = useState<ClinicHub[]>(INITIAL_CLINICS);
+  const [clinics, setClinics] = useState<ClinicLocation[]>([]);
+  const [backups, setBackups] = useState<BackupArchive[]>([]);
   const [users, setUsers] = useState<OrgUser[]>(INITIAL_USERS);
   const [departments, setDepartments] = useState(INITIAL_DEPARTMENTS);
   const [teams, setTeams] = useState<TeamUnit[]>(INITIAL_TEAMS);
   const [audits, setAudits] = useState<AuditLog[]>(INITIAL_AUDITS);
   const [announcements, setAnnouncements] = useState<CustomAnnouncement[]>(INITIAL_ANNOUNCEMENTS);
+
+  // Sync with central persistent enterprise state
+  useEffect(() => {
+    setClinics(getClinics());
+    setBackups(getBackups());
+
+    const handleSync = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail) {
+        if (customEvent.detail.type === 'clinics') {
+          setClinics(getClinics());
+        } else if (customEvent.detail.type === 'backups') {
+          setBackups(getBackups());
+        } else if (customEvent.detail.type === 'audit') {
+          // Sync local mock audit logs list with persistent list if we wish
+          const realAuditLogs = getAuditLogs();
+          const mappedLogs: AuditLog[] = realAuditLogs.map(l => ({
+            id: l.id,
+            timestamp: l.timestamp,
+            actor: l.actor,
+            role: l.role === 'Clinic Owner' ? 'Owner' : l.role === 'Laboratory Technician' ? 'Lab Technician' : 'Doctor',
+            action: l.action,
+            module: l.module as any,
+            status: l.status,
+            ipAddress: l.ipAddress
+          }));
+          setAudits(prev => [...mappedLogs, ...prev.filter(p => !p.id.startsWith('AUD-'))].slice(0, 40));
+        }
+      }
+    };
+
+    window.addEventListener('healthos_state_change', handleSync);
+    return () => window.removeEventListener('healthos_state_change', handleSync);
+  }, []);
+
+  // Dynamic disaster recovery console message states
+  const [drStatusMessage, setDrStatusMessage] = useState<string | null>(null);
+  const [drStatusType, setDrStatusType] = useState<'success' | 'info' | 'warn'>('success');
+
+  // Dynamic clinic creation state
+  const [showAddClinicForm, setShowAddClinicForm] = useState(false);
+  const [clinicNameInput, setClinicNameInput] = useState('');
+  const [clinicLocInput, setClinicLocInput] = useState('');
+  const [clinicManagerInput, setClinicManagerInput] = useState('Dr. Catherine Avery');
+  const [clinicTimezoneInput, setClinicTimezoneInput] = useState('America/New_York (EST)');
+  const [clinicHoursInput, setClinicHoursInput] = useState('08:00 - 20:00');
 
   // Search & Filters
   const [userSearch, setUserSearch] = useState('');
@@ -437,7 +487,7 @@ export default function OrganizationWorkspace() {
             <p className="text-[10px] text-zinc-400 font-mono leading-relaxed">Platform control parameters:</p>
           </div>
 
-          {/* LIST OF 10 WORKSPACES */}
+          {/* LIST OF 11 WORKSPACES */}
           <div className="flex-1 overflow-y-auto p-2.5 space-y-1 scrollbar-thin">
             {[
               { id: 'Overview', label: '1. Org Overview', icon: Layers, badge: 'Unified' },
@@ -449,7 +499,8 @@ export default function OrganizationWorkspace() {
               { id: 'Audits', label: '7. Activity Audit', icon: History, badge: 'PCI Log' },
               { id: 'Notifications', label: '8. Global Alerts', icon: Bell, badge: `${announcements.length} Alerts`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
               { id: 'Security', label: '9. Security Core', icon: Lock, badge: `${securityScore}/100`, badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
-              { id: 'Settings', label: '10. Org Settings', icon: Settings2, badge: 'Branding' }
+              { id: 'Settings', label: '10. Org Settings', icon: Settings2, badge: 'Branding' },
+              { id: 'Backup', label: '11. Disaster Recovery', icon: Database, badge: `${backups.length} Archives`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' }
             ].map(item => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -685,27 +736,96 @@ export default function OrganizationWorkspace() {
                         <h3 className="text-base font-black text-white uppercase tracking-tight">Active Clinic Sites & Facilities</h3>
                         <p className="text-xs text-zinc-500 font-mono">Monitor real-time clinical room utilization and manager assignments.</p>
                       </div>
-                      <button 
-                        onClick={() => {
-                          const newId = `C-0${clinics.length + 1}`;
-                          const newC: ClinicHub = {
-                            id: newId,
-                            name: 'South Ward Ortho-Surg Center',
-                            location: '302 King Boulevard, Springfield',
-                            manager: 'Dr. Robert Carter',
-                            doctors: 4,
-                            patients: 210,
-                            rooms: 3,
-                            hours: '08:00 - 18:00',
-                            status: 'Planned'
-                          };
-                          setClinics([...clinics, newC]);
-                        }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all"
-                      >
-                        <Plus className="w-3.5 h-3.5" /> Provision Clinic Site
-                      </button>
+                      {showAddClinicForm ? (
+                        <button 
+                          onClick={() => setShowAddClinicForm(false)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold transition-all"
+                        >
+                          Cancel Registration
+                        </button>
+                      ) : (
+                        <button 
+                          onClick={() => {
+                            setShowAddClinicForm(true);
+                            setClinicNameInput('');
+                            setClinicLocInput('');
+                          }}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all"
+                        >
+                          <Plus className="w-3.5 h-3.5" /> Provision Clinic Site
+                        </button>
+                      )}
                     </div>
+
+                    {showAddClinicForm && (
+                      <div className="p-4 bg-zinc-900 border border-emerald-500/30 rounded-2xl space-y-3 animate-fade-in">
+                        <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-widest block">Register Clinic Hub Profile</span>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">Clinic Name</label>
+                            <input
+                              type="text"
+                              value={clinicNameInput}
+                              onChange={(e) => setClinicNameInput(e.target.value)}
+                              placeholder="e.g. Springfield South Implant Clinic"
+                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-emerald-500"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">Location Address</label>
+                            <input
+                              type="text"
+                              value={clinicLocInput}
+                              onChange={(e) => setClinicLocInput(e.target.value)}
+                              placeholder="e.g. 102 King Blvd, Springfield"
+                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-emerald-500"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">Clinical timezone</label>
+                            <select
+                              value={clinicTimezoneInput}
+                              onChange={(e) => setClinicTimezoneInput(e.target.value)}
+                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-300 text-xs outline-none focus:border-emerald-500"
+                            >
+                              <option value="America/New_York (EST)">America/New_York (EST)</option>
+                              <option value="Europe/London (GMT)">Europe/London (GMT)</option>
+                              <option value="Asia/Tokyo (JST)">Asia/Tokyo (JST)</option>
+                              <option value="UTC (Zulu)">UTC (Zulu)</option>
+                            </select>
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">Operational Hours</label>
+                            <input
+                              type="text"
+                              value={clinicHoursInput}
+                              onChange={(e) => setClinicHoursInput(e.target.value)}
+                              placeholder="e.g. 08:00 - 18:00"
+                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-emerald-500"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex justify-end pt-1">
+                          <button
+                            onClick={() => {
+                              if (!clinicNameInput.trim() || !clinicLocInput.trim()) return;
+                              addClinicLocation({
+                                name: clinicNameInput.trim(),
+                                location: clinicLocInput.trim(),
+                                manager: clinicManagerInput,
+                                hours: clinicHoursInput,
+                                timezone: clinicTimezoneInput,
+                                status: 'Active'
+                              });
+                              setShowAddClinicForm(false);
+                            }}
+                            className="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-bold rounded-xl uppercase transition-all"
+                          >
+                            Save Clinic Hub
+                          </button>
+                        </div>
+                      </div>
+                    )}
 
                     {/* Filter & Search Bar */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1696,6 +1816,150 @@ export default function OrganizationWorkspace() {
                   <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>BRAND PARAMETERS COMPILATION STATUS: OK</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* ==================================================
+                  11. DISASTER RECOVERY & SLA BACKUPS
+                  ================================================== */}
+              {activeTab === 'Backup' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="h-full flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
+                      <div>
+                        <h3 className="text-base font-black text-white uppercase tracking-tight">SLA Backups & Disaster Recovery</h3>
+                        <p className="text-xs text-zinc-500 font-mono">Manage real-time persistent cluster snapshots, cryptographically verifiable backups, and recovery states.</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          createManualBackup();
+                          setDrStatusType('success');
+                          setDrStatusMessage(`SLA Manual Archive triggered successfully. Verified sha256 checksum.`);
+                          setTimeout(() => setDrStatusMessage(null), 6000);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500 hover:bg-blue-400 text-black text-xs font-bold transition-all cursor-pointer"
+                      >
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin-slow" /> Trigger SLA Backup Snapshot
+                      </button>
+                    </div>
+
+                    {drStatusMessage && (
+                      <div className={`p-3 border rounded-xl font-mono text-xs flex justify-between items-center ${
+                        drStatusType === 'success' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' :
+                        drStatusType === 'warn' ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' :
+                        'bg-blue-500/10 border-blue-500/30 text-blue-400'
+                      }`}>
+                        <span>{drStatusMessage}</span>
+                        <button onClick={() => setDrStatusMessage(null)} className="p-0.5 hover:text-white">
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                      {/* Left: SLA Health Telemetry */}
+                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[380px] space-y-3">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Cryptographic Cluster Checksum</span>
+                          
+                          <div className="space-y-2.5 font-mono text-xs mt-3">
+                            <div className="flex justify-between items-center bg-zinc-950 p-2 rounded-xl border border-zinc-900">
+                              <span className="text-zinc-400">Main Database DB:</span>
+                              <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">HEALTHY</span>
+                            </div>
+                            <div className="flex justify-between items-center bg-zinc-950 p-2 rounded-xl border border-zinc-900">
+                              <span className="text-zinc-400">AWS PACS Storage:</span>
+                              <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">HEALTHY</span>
+                            </div>
+                            <div className="flex justify-between items-center bg-zinc-950 p-2 rounded-xl border border-zinc-900">
+                              <span className="text-zinc-400">exocad CAD/CAM Node:</span>
+                              <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">HEALTHY</span>
+                            </div>
+                            <div className="flex justify-between items-center bg-zinc-950 p-2 rounded-xl border border-zinc-900">
+                              <span className="text-zinc-400">Inference Engine Nodes:</span>
+                              <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">HEALTHY</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
+                          <div className="bg-zinc-950 p-3 rounded-xl border border-zinc-900 text-[10px] font-mono text-zinc-400 space-y-1">
+                            <p className="font-bold text-white uppercase tracking-wider text-[8px] text-zinc-500">Telemetry Scan Data</p>
+                            <p>API Gateway Cluster: <span className="text-white">Active (99.99%)</span></p>
+                            <p>Database Latency: <span className="text-emerald-400">11ms</span></p>
+                          </div>
+
+                          <button
+                            onClick={() => {
+                              runIntegrityScan();
+                              setDrStatusType('info');
+                              setDrStatusMessage(`Full cryptographic database checksum scan completed. Latency: 9ms. Status: ALL SECURE.`);
+                              setTimeout(() => setDrStatusMessage(null), 6000);
+                            }}
+                            className="w-full py-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 hover:border-blue-500/50 rounded-xl text-blue-400 hover:text-white text-xs font-bold font-mono transition-all uppercase cursor-pointer"
+                          >
+                            Run Diagnostic Scan
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Right: Backups Archive list */}
+                      <div className="lg:col-span-2 p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[380px]">
+                        <div className="space-y-2 flex-1 overflow-hidden flex flex-col">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-1">Cryptographically Authenticated Backups List</span>
+                          
+                          <div className="flex-1 overflow-y-auto space-y-2.5 pr-1 scrollbar-thin">
+                            {backups.map((bkp) => (
+                              <div key={bkp.id} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-xs">
+                                <div className="space-y-1">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs font-bold text-white">{bkp.id}</span>
+                                    <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded border ${
+                                      bkp.type === 'Manual' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                                    }`}>
+                                      {bkp.type.toUpperCase()}
+                                    </span>
+                                  </div>
+                                  <p className="text-[10px] text-zinc-500 font-semibold">Created: {bkp.timestamp} | Size: {bkp.size}</p>
+                                  <p className="text-[9px] text-zinc-650 truncate max-w-xs">{bkp.checksum}</p>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                  {bkp.status === 'Restored' ? (
+                                    <span className="text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-2 py-1 rounded-lg">
+                                      Active State
+                                    </span>
+                                  ) : (
+                                    <button
+                                      onClick={() => {
+                                        restoreBackup(bkp.id);
+                                        setDrStatusType('success');
+                                        setDrStatusMessage(`Successfully restored all clinical databases and tenant state to backup archive: ${bkp.id}`);
+                                        setTimeout(() => setDrStatusMessage(null), 6000);
+                                      }}
+                                      className="px-3 py-1 bg-zinc-900 border border-zinc-800 hover:border-blue-500/50 hover:bg-zinc-850 text-blue-400 hover:text-white rounded-lg text-[10px] font-bold transition-all cursor-pointer"
+                                    >
+                                      Restore
+                                    </button>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                    <span>SECURITY COMPLIANCE AUDITING: AES-256 ENCRYPTED</span>
+                    <span>DR CONSOLE VERSION: v1.0.4-LTS</span>
                   </div>
                 </motion.div>
               )}

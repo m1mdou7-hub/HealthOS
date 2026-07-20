@@ -2,7 +2,7 @@ import { createClient } from '@/utils/supabase/server';
 import { getUser } from '@/utils/supabase/queries';
 import { redirect } from 'next/navigation';
 import DashboardShell from '@/components/ui/DashboardShell';
-import AppointmentsWorkspace from '@/components/ui/AppointmentsWorkspace';
+import OperationsWorkspace from '@/components/operations/OperationsWorkspace';
 
 export default async function AppointmentsPage() {
   const supabase = createClient();
@@ -14,7 +14,7 @@ export default async function AppointmentsPage() {
 
   return (
     <DashboardShell user={user}>
-      <AppointmentsWorkspace />
+      <OperationsWorkspace />
     </DashboardShell>
   );
 }

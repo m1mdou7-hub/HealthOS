@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   let recordsCreated: string[] = [];
   let recordsUpdated: string[] = [];
   let userEmail = "m1mdou7@gmail.com";
-  let userId = "dev-bypass-user-id";
+  let userId = "d0000000-0000-0000-0000-000000000000";
   let userName = "Dr. Ahmed (Dev Bypass)";
   let isRealDatabase = false;
 
@@ -131,7 +131,7 @@ export async function GET(req: NextRequest) {
     issueFound = "Supabase remote database credentials not provided in container env. Using development mock/bypass audit.";
     recordsCreated.push("Organization: Default Development Organization");
     recordsCreated.push("Clinic: Default Development Clinic");
-    recordsCreated.push("Membership: Associated user m1mdou7@gmail.com (ID: dev-bypass-user-id) with Default Organization and Clinic as Admin role");
+    recordsCreated.push("Membership: Associated user m1mdou7@gmail.com (ID: d0000000-0000-0000-0000-000000000000) with Default Organization and Clinic as Admin role");
   }
 
   return NextResponse.json({

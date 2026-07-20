@@ -9,8 +9,15 @@ export const createClient = (request: NextRequest) => {
     }
   });
 
+  let url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  if (url.endsWith('/rest/v1/')) {
+    url = url.slice(0, -9);
+  } else if (url.endsWith('/rest/v1')) {
+    url = url.slice(0, -8);
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    url,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
@@ -65,6 +72,11 @@ export const updateSession = async (request: NextRequest) => {
     // This `try/catch` block is only here for the interactive tutorial.
     // Feel free to remove once you have Supabase connected.
     const { supabase, response } = createClient(request);
+
+    // If in development mode or dev bypass is enabled, skip the auth getUser call entirely
+    if (process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true')) {
+      return response;
+    }
 
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs

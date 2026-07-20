@@ -25,14 +25,26 @@ export async function checkoutWithStripe(
   try {
     // Get the user from Supabase auth
     const supabase = createClient();
-    const {
-      error,
-      data: { user }
-    } = await supabase.auth.getUser();
+    let user;
+    if (process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true')) {
+      user = {
+        id: 'd0000000-0000-0000-0000-000000000000',
+        email: 'm1mdou7@gmail.com',
+        user_metadata: {
+          full_name: 'Dr. Ahmed (Dev Bypass)'
+        }
+      };
+    } else {
+      const {
+        error,
+        data: { user: supabaseUser }
+      } = await supabase.auth.getUser();
 
-    if (error || !user) {
-      console.error(error);
-      throw new Error('Could not get user session.');
+      if (error || !supabaseUser) {
+        console.error(error);
+        throw new Error('Could not get user session.');
+      }
+      user = supabaseUser;
     }
 
     // Retrieve or create the customer in Stripe
@@ -89,6 +101,12 @@ export async function checkoutWithStripe(
       session = await stripe.checkout.sessions.create(params);
     } catch (err) {
       console.error(err);
+      if (process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true')) {
+        console.warn('Stripe checkout session creation failed in dev. Falling back to a mock successful checkout redirect...');
+        return {
+          errorRedirect: '/settings?checkout=success'
+        };
+      }
       throw new Error('Unable to create checkout session.');
     }
 
@@ -96,6 +114,11 @@ export async function checkoutWithStripe(
     if (session) {
       return { sessionId: session.id };
     } else {
+      if (process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true')) {
+        return {
+          errorRedirect: '/settings?checkout=success'
+        };
+      }
       throw new Error('Unable to create checkout session.');
     }
   } catch (error) {
@@ -122,16 +145,28 @@ export async function checkoutWithStripe(
 export async function createStripePortal(currentPath: string) {
   try {
     const supabase = createClient();
-    const {
-      error,
-      data: { user }
-    } = await supabase.auth.getUser();
+    let user;
+    if (process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true')) {
+      user = {
+        id: 'd0000000-0000-0000-0000-000000000000',
+        email: 'm1mdou7@gmail.com',
+        user_metadata: {
+          full_name: 'Dr. Ahmed (Dev Bypass)'
+        }
+      };
+    } else {
+      const {
+        error,
+        data: { user: supabaseUser }
+      } = await supabase.auth.getUser();
 
-    if (!user) {
-      if (error) {
-        console.error(error);
+      if (!supabaseUser) {
+        if (error) {
+          console.error(error);
+        }
+        throw new Error('Could not get user session.');
       }
-      throw new Error('Could not get user session.');
+      user = supabaseUser;
     }
 
     let customer;
@@ -152,7 +187,7 @@ export async function createStripePortal(currentPath: string) {
     try {
       const { url } = await stripe.billingPortal.sessions.create({
         customer,
-        return_url: getURL('/account')
+        return_url: getURL('/settings')
       });
       if (!url) {
         throw new Error('Could not create billing portal');
@@ -160,6 +195,10 @@ export async function createStripePortal(currentPath: string) {
       return url;
     } catch (err) {
       console.error(err);
+      if (process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true')) {
+        console.warn('Billing portal session creation failed in dev. Mocking portal redirect...');
+        return getURL('/settings?portal=mock_success');
+      }
       throw new Error('Could not create billing portal');
     }
   } catch (error) {

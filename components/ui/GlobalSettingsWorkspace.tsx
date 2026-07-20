@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   Settings,
   User,
@@ -96,6 +97,20 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
   };
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (!searchParams) return;
+    const checkout = searchParams.get('checkout');
+    if (checkout === 'success') {
+      triggerToast('Subscription upgraded! Your clinic workspace is now successfully running on the Enterprise Unlimited Plan.');
+    }
+    const portal = searchParams.get('portal');
+    if (portal === 'mock_success') {
+      triggerToast('Billing Portal settings loaded successfully.');
+    }
+  }, [searchParams]);
 
   // Add Department
   const handleAddDept = (e: React.FormEvent) => {

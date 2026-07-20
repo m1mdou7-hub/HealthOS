@@ -33,10 +33,19 @@ import {
   Search,
   Command,
   ArrowRight,
-  Sparkle
+  Sparkle,
+  Lock,
+  ShieldAlert,
+  UserCheck
 } from 'lucide-react';
 import { handleRequest } from '@/utils/auth-helpers/client';
 import { SignOut } from '@/utils/auth-helpers/server';
+import { 
+  getActiveRole, 
+  setActiveRole, 
+  checkPageAccess, 
+  UserRole 
+} from '@/utils/enterpriseState';
 
 interface DashboardShellProps {
   user: any;
@@ -76,6 +85,22 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState('');
   const [commandFeedback, setCommandFeedback] = useState('');
+  const [activeRole, setActiveRoleState] = useState<UserRole>('Super Admin');
+
+  // Sync active role with localStorage and event notifications
+  useEffect(() => {
+    setActiveRoleState(getActiveRole());
+    
+    const handleStateChange = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail && customEvent.detail.type === 'role') {
+        setActiveRoleState(customEvent.detail.value);
+      }
+    };
+    
+    window.addEventListener('healthos_state_change', handleStateChange);
+    return () => window.removeEventListener('healthos_state_change', handleStateChange);
+  }, []);
 
   // Listen to Cmd+K or Ctrl+K to toggle Command Palette
   useEffect(() => {
@@ -337,7 +362,29 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="text-xs text-zinc-400 font-mono hidden sm:inline">
+            {/* Active Role Selector Dropdown */}
+            <div className="relative flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-2xl px-3 py-1.5 hover:bg-zinc-850 transition-colors">
+              <UserCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <select
+                value={activeRole}
+                onChange={(e) => {
+                  const targetRole = e.target.value as UserRole;
+                  setActiveRole(targetRole);
+                }}
+                className="bg-transparent border-none text-xs font-semibold text-zinc-300 outline-none pr-1.5 cursor-pointer font-sans"
+              >
+                <option value="Super Admin" className="bg-zinc-950 text-white">Super Admin</option>
+                <option value="Clinic Owner" className="bg-zinc-950 text-white">Clinic Owner</option>
+                <option value="Prosthodontist" className="bg-zinc-950 text-white">Prosthodontist</option>
+                <option value="General Dentist" className="bg-zinc-950 text-white font-mono">General Dentist</option>
+                <option value="Assistant" className="bg-zinc-950 text-white">Assistant</option>
+                <option value="Receptionist" className="bg-zinc-950 text-white">Receptionist</option>
+                <option value="Laboratory Technician" className="bg-zinc-950 text-white">Laboratory Technician</option>
+                <option value="Read-only Auditor" className="bg-zinc-950 text-white">Read-only Auditor</option>
+              </select>
+            </div>
+
+            <span className="text-xs text-zinc-400 font-mono hidden xl:inline">
               SYSTEM STATUS: <span className="text-emerald-400 font-semibold">SECURE</span>
             </span>
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -346,7 +393,58 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
         {/* Dynamic page content */}
         <main className="flex-1 overflow-y-auto p-6 lg:p-8 bg-zinc-950">
-          {children}
+          {(() => {
+            const access = checkPageAccess(pathname, activeRole);
+            if (!access.allowed) {
+              return (
+                <div className="min-h-[70vh] flex items-center justify-center p-4">
+                  <div className="w-full max-w-xl bg-zinc-900/40 border border-zinc-850 rounded-3xl p-8 text-center space-y-6 backdrop-blur-md relative overflow-hidden">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-amber-500 to-red-500" />
+                    
+                    <div className="mx-auto w-16 h-16 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 animate-pulse">
+                      <ShieldAlert className="w-8 h-8" />
+                    </div>
+
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-white tracking-tight">
+                        Security Clearance Required
+                      </h3>
+                      <p className="text-xs font-mono text-zinc-400">
+                        PATHWAY: {pathname.toUpperCase()} • PRIVILEGE LEVEL: {activeRole.toUpperCase()}
+                      </p>
+                    </div>
+
+                    <div className="p-4 bg-zinc-950/80 rounded-2xl border border-zinc-900 text-left space-y-2">
+                      <span className="text-[10px] font-bold font-mono text-red-400 block uppercase tracking-wider">
+                        Access Denied Policy ID: HealthOS-RBAC-0441
+                      </span>
+                      <p className="text-xs text-zinc-300 leading-relaxed font-sans">
+                        {access.reason || "Your active seat role subscription does not possess the permissions necessary to view this module."}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                      <button
+                        onClick={() => setActiveRole('Super Admin')}
+                        className="w-full sm:w-auto px-5 py-2.5 bg-white text-zinc-950 text-xs font-bold rounded-xl hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        <UserCheck className="w-4 h-4" />
+                        <span>Impersonate Super Admin</span>
+                      </button>
+                      <button
+                        onClick={() => router.push('/')}
+                        className="w-full sm:w-auto px-5 py-2.5 bg-zinc-900 border border-zinc-800 text-xs font-semibold rounded-xl hover:bg-zinc-800 transition-colors flex items-center justify-center gap-2 cursor-pointer text-zinc-300"
+                      >
+                        <Lock className="w-4 h-4" />
+                        <span>Return to Main Terminal</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+            return children;
+          })()}
         </main>
       </div>
 

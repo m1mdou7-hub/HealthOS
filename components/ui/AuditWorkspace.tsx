@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   ShieldCheck,
   Activity,
@@ -19,18 +19,11 @@ import {
   Eye,
   Trash2,
   ExternalLink,
-  Sliders
+  Sliders,
+  ShieldAlert
 } from 'lucide-react';
+import { getAuditLogs, appendAuditLog, AuditRecord } from '@/utils/enterpriseState';
 
-// --- MOCK COMPLIANCE / AUDIT LOGS ---
-const INITIAL_LOGS = [
-  { id: 'log-1', category: 'Security Event', desc: 'Secure WebRTC TLS handshake established for patient Clara Oswald.', operator: 'Dr. Ahmed', ip: '192.168.1.14', time: '10:12 AM', code: 'SEC-204' },
-  { id: 'log-2', category: 'Patient Access Log', desc: 'EHR Dental Implant CBCT scan downloaded from central storage node.', operator: 'Dr. Sarah Jenkins', ip: '192.168.1.18', time: '09:45 AM', code: 'PAT-402' },
-  { id: 'log-3', category: 'Record Changes', desc: 'Patient Arthur Pendragon tooth-specific surgical guide status updated to [Milled-Sintered].', operator: 'Lab Tech Barton', ip: '10.0.4.82', time: '08:15 AM', code: 'EHR-109' },
-  { id: 'log-4', category: 'Export Logs', desc: 'Billing pre-authorization medical charts bundle exported as AES-256 ZIP file.', operator: 'Billing Admin Jenkins', ip: '192.168.1.9', time: 'Yesterday, 04:30 PM', code: 'EXP-901' },
-  { id: 'log-5', category: 'Security Event', desc: 'Exocad API token verified successfully from node #CAD-4.', operator: 'System Gateway', ip: 'localhost', time: 'Yesterday, 12:00 PM', code: 'SEC-101' },
-  { id: 'log-6', category: 'Patient Access Log', desc: 'HIPAA consent form digitial signature verified for patient Arthur.', operator: 'Arthur Pendragon', ip: '172.56.2.14', time: '2 days ago', code: 'PAT-114' }
-];
 
 const HIPAA_CHECKLIST = [
   { id: 'hip-1', task: 'AES-256 Encrypted Storage at Rest', checked: true, tag: 'Technical Safeguard' },
@@ -56,9 +49,24 @@ const TENANT_USERS = [
 
 export default function AuditWorkspace() {
   const [activeTab, setActiveTab] = useState<'logs' | 'checklist' | 'users'>('logs');
-  const [logs, setLogs] = useState(INITIAL_LOGS);
+  const [logs, setLogs] = useState<AuditRecord[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All Audit Logs');
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Sync with persistent system state
+  useEffect(() => {
+    setLogs(getAuditLogs());
+
+    const handleSync = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail && (customEvent.detail.type === 'audit' || customEvent.detail.type === 'role')) {
+        setLogs(getAuditLogs());
+      }
+    };
+
+    window.addEventListener('healthos_state_change', handleSync);
+    return () => window.removeEventListener('healthos_state_change', handleSync);
+  }, []);
   
   // Checklist states
   const [hipaa, setHipaa] = useState(HIPAA_CHECKLIST);
@@ -124,10 +132,10 @@ export default function AuditWorkspace() {
   // Filtering audit logs
   const filteredLogs = useMemo(() => {
     return logs.filter(lg => {
-      const matchSearch = lg.desc.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          lg.operator.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          lg.code.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchCat = selectedCategory === 'All Audit Logs' || lg.category === selectedCategory;
+      const matchSearch = lg.action.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          lg.actor.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          lg.id.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchCat = selectedCategory === 'All Audit Logs' || lg.module === selectedCategory;
       return matchSearch && matchCat;
     });
   }, [logs, searchQuery, selectedCategory]);
@@ -252,10 +260,12 @@ export default function AuditWorkspace() {
             <div className="space-y-1">
               {[
                 'All Audit Logs',
-                'Security Event',
-                'Patient Access Log',
-                'Record Changes',
-                'Export Logs'
+                'Auth',
+                'Patient Records',
+                'Appointments',
+                'Laboratory',
+                'System Admin',
+                'AI Core'
               ].map(cat => {
                 const isSelected = selectedCategory === cat;
                 return (
@@ -282,29 +292,48 @@ export default function AuditWorkspace() {
             </span>
 
             <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
-              {filteredLogs.map(lg => (
-                <div key={lg.id} className="p-3.5 bg-zinc-950 border border-zinc-850 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-[10px] font-bold text-white uppercase bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800">
-                        {lg.code}
-                      </span>
-                      <span className="text-[9px] text-zinc-500">{lg.category}</span>
-                    </div>
-
-                    <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">{lg.desc}</p>
-                    
-                    <div className="flex items-center gap-4 text-[10px] text-zinc-500">
-                      <span>Operator: <strong className="text-zinc-300 font-sans">{lg.operator}</strong></span>
-                      <span>IP Address: <strong className="text-zinc-300">{lg.ip}</strong></span>
-                    </div>
-                  </div>
-
-                  <div className="text-right">
-                    <span className="text-[10px] text-zinc-500">{lg.time}</span>
-                  </div>
+              {filteredLogs.length === 0 ? (
+                <div className="py-12 text-center text-zinc-600">
+                  No encrypted log blocks match the active filter criteria.
                 </div>
-              ))}
+              ) : (
+                filteredLogs.map(lg => (
+                  <div key={lg.id} className="p-3.5 bg-zinc-950 border border-zinc-850 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-[10px] font-bold text-white uppercase bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800">
+                          {lg.id}
+                        </span>
+                        <span className="text-[9px] text-zinc-500 font-mono">{lg.module}</span>
+                        
+                        {/* Dynamic Status Badging */}
+                        <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded font-mono ${
+                          lg.status === 'Success' 
+                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/10' 
+                            : lg.status === 'Warn' 
+                            ? 'bg-amber-500/10 text-amber-400 border border-amber-500/10' 
+                            : 'bg-red-500/10 text-red-400 border border-red-500/10 flex items-center gap-1 font-semibold'
+                        }`}>
+                          {lg.status === 'Denied' && <Lock className="w-2.5 h-2.5" />}
+                          {lg.status.toUpperCase()}
+                        </span>
+                      </div>
+
+                      <p className="text-[11px] text-zinc-300 leading-relaxed font-sans">{lg.action}</p>
+                      
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] text-zinc-500">
+                        <span>Operator: <strong className="text-zinc-300 font-sans">{lg.actor}</strong></span>
+                        <span className="px-1 py-0.2 bg-zinc-900 rounded border border-zinc-850 text-zinc-400 text-[9px] font-mono">{lg.role}</span>
+                        <span>IP Address: <strong className="text-zinc-400">{lg.ipAddress}</strong></span>
+                      </div>
+                    </div>
+
+                    <div className="text-right shrink-0">
+                      <span className="text-[10px] text-zinc-500 font-mono">{lg.timestamp}</span>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
