@@ -3,7 +3,7 @@ import Logo from '@/components/icons/Logo';
 
 export default function Footer() {
   return (
-    <footer className="mx-auto max-w-[1920px] px-6 bg-zinc-950 border-t border-zinc-900">
+    <footer className="mx-auto max-w-[1920px] px-6 bg-zinc-950 border-t border-zinc-900" aria-label="Footer Navigation">
       <div className="grid grid-cols-1 gap-8 py-12 text-white transition-colors duration-150 lg:grid-cols-12 bg-zinc-950">
         <div className="col-span-1 lg:col-span-4">
           <Link

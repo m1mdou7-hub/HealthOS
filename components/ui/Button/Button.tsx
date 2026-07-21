@@ -42,10 +42,12 @@ const Button = forwardRef<HTMLButtonElement, Props>((props, buttonRef) => {
   return (
     <Component
       aria-pressed={active}
+      aria-disabled={disabled || loading}
+      aria-busy={loading}
       data-variant={variant}
       ref={mergeRefs([ref, buttonRef])}
       className={rootClassName}
-      disabled={disabled}
+      disabled={disabled || loading}
       style={{
         width,
         ...style
@@ -54,7 +56,7 @@ const Button = forwardRef<HTMLButtonElement, Props>((props, buttonRef) => {
     >
       {children}
       {loading && (
-        <i className="flex pl-2 m-0">
+        <i className="flex pl-2 m-0" aria-hidden="true">
           <LoadingDots />
         </i>
       )}

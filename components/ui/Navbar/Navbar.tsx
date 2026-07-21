@@ -8,7 +8,7 @@ export default async function Navbar() {
   const user = await getUser(supabase);
 
   return (
-    <nav className={s.root}>
+    <nav className={s.root} aria-label="Main Navigation">
       <a href="#skip" className="sr-only focus:not-sr-only">
         Skip to content
       </a>
