@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   FileText,
   Search,
@@ -33,6 +33,7 @@ import {
   HardDrive
 } from 'lucide-react';
 import Image from 'next/image';
+import TreatmentPlannerView, { TreatmentPlan } from './TreatmentPlanner/TreatmentPlannerView';
 
 // --- TYPE DEFINITIONS ---
 interface PatientInfo {
@@ -153,6 +154,22 @@ export default function EhrWorkspace() {
   const [soapNotes, setSoapNotes] = useState<SoapNote[]>(INITIAL_SOAP_NOTES);
   const [diagnoses, setDiagnoses] = useState<DiagnosisItem[]>(INITIAL_DIAGNOSES);
   const [teeth, setTeeth] = useState<ToothState[]>(INITIAL_TEETH_STATE);
+
+  // Treatment Planner State
+  const [treatmentPlans, setTreatmentPlans] = useState<TreatmentPlan[]>([]);
+
+  useEffect(() => {
+    const txPlansKey = `healthos_txplans_${patient.id}`;
+    const savedTxPlans = localStorage.getItem(txPlansKey);
+    if (savedTxPlans) {
+      setTreatmentPlans(JSON.parse(savedTxPlans));
+    }
+  }, [patient.id]);
+
+  const saveTreatmentPlansList = (newList: TreatmentPlan[]) => {
+    setTreatmentPlans(newList);
+    localStorage.setItem(`healthos_txplans_${patient.id}`, JSON.stringify(newList));
+  };
 
   // SOAP Note Form
   const [newSubj, setNewSubj] = useState('');
@@ -935,79 +952,7 @@ export default function EhrWorkspace() {
               <div className="space-y-6">
                 
                 {/* Global Stats */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
-                  <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl space-y-1">
-                    <span className="text-zinc-500 font-bold block uppercase text-[9px]">Plan Estimate Cost</span>
-                    <span className="text-base font-black text-white">$8,450.00</span>
-                  </div>
-                  <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl space-y-1">
-                    <span className="text-emerald-400 font-bold block uppercase text-[9px]">Covered by Delta Dental</span>
-                    <span className="text-base font-black text-emerald-400">-$4,200.00</span>
-                  </div>
-                  <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl space-y-1">
-                    <span className="text-amber-400 font-bold block uppercase text-[9px]">Patient Out-of-Pocket</span>
-                    <span className="text-base font-black text-amber-400">$4,250.00</span>
-                  </div>
-                </div>
-
-                {/* Multiphase treatment planning */}
-                <div className="space-y-4">
-                  
-                  {/* Phase 1: Surgical */}
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
-                    <div className="flex justify-between items-center border-b border-zinc-850 pb-2">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                        <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Phase I: Surgical Osteotomy & Abutment</h4>
-                      </div>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                        PENDING SCHEDULING
-                      </span>
-                    </div>
-
-                    <div className="space-y-2 text-xs text-zinc-300">
-                      <div className="p-2.5 rounded bg-zinc-900 border border-zinc-850 flex justify-between items-center">
-                        <div>
-                          <span className="font-bold text-zinc-200 block">Procedure: Implant placement surgery #11</span>
-                          <span className="text-[10px] text-zinc-500 font-mono">D6010 • Surgical placement of implant body: endosteal</span>
-                        </div>
-                        <span className="font-mono text-zinc-400 font-bold">$2,800.00</span>
-                      </div>
-                      
-                      <div className="p-2.5 rounded bg-zinc-900 border border-zinc-850 flex justify-between items-center">
-                        <div>
-                          <span className="font-bold text-zinc-200 block">Procedure: Custom Abutment Mill & Try-in</span>
-                          <span className="text-[10px] text-zinc-500 font-mono">D6056 • Prefabricated abutment - includes placement</span>
-                        </div>
-                        <span className="font-mono text-zinc-400 font-bold">$1,250.00</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Phase 2: Restorative */}
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
-                    <div className="flex justify-between items-center border-b border-zinc-850 pb-2">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                        <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Phase II: Restorative Crowns</h4>
-                      </div>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                        AUTHORIZED
-                      </span>
-                    </div>
-
-                    <div className="space-y-2 text-xs text-zinc-300">
-                      <div className="p-2.5 rounded bg-zinc-900 border border-zinc-850 flex justify-between items-center">
-                        <div>
-                          <span className="font-bold text-zinc-200 block">Procedure: Screw-retained Zirconia Crown Placement #11</span>
-                          <span className="text-[10px] text-zinc-500 font-mono">D6065 • Implant supported porcelain/ceramic crown</span>
-                        </div>
-                        <span className="font-mono text-zinc-400 font-bold">$4,400.00</span>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
+                <TreatmentPlannerView activePatient={patient} treatmentPlans={treatmentPlans} saveTreatmentPlansList={saveTreatmentPlansList} />
               </div>
             )}
 

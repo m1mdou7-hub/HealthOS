@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   LayoutDashboard, Calendar, Shield, Users, RefreshCw, 
@@ -8,15 +8,15 @@ import {
 } from 'lucide-react';
 
 // Subcomponents
-const EnterpriseScheduler = lazy(() => import('./EnterpriseScheduler'));
-const OperatoryManagement = lazy(() => import('./OperatoryManagement'));
-const DoctorManagement = lazy(() => import('./DoctorManagement'));
-const WaitingQueue = lazy(() => import('./WaitingQueue'));
-const RecallCenter = lazy(() => import('./RecallCenter'));
-const NotificationCenter = lazy(() => import('./NotificationCenter'));
-const TreatmentSessionManager = lazy(() => import('./TreatmentSessionManager'));
-const DashboardIntelligence = lazy(() => import('./DashboardIntelligence'));
-const SearchEngine = lazy(() => import('./SearchEngine'));
+import EnterpriseScheduler from './EnterpriseScheduler';
+import OperatoryManagement from './OperatoryManagement';
+import DoctorManagement from './DoctorManagement';
+import WaitingQueue from './WaitingQueue';
+import RecallCenter from './RecallCenter';
+import NotificationCenter from './NotificationCenter';
+import TreatmentSessionManager from './TreatmentSessionManager';
+import DashboardIntelligence from './DashboardIntelligence';
+import SearchEngine from './SearchEngine';
 
 // Seed & Mock Types
 import { 
@@ -132,81 +132,79 @@ export default function OperationsWorkspace() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.15 }}
           >
-            <Suspense fallback={<div className="text-zinc-500 p-8 text-center text-xs font-mono">Loading module...</div>}>
-              {activeTab === 'dashboard' && (
-                <DashboardIntelligence
-                  appointments={appointments}
-                  chairs={chairs}
-                  queue={queue}
-                  recalls={recalls}
-                  doctors={doctors}
-                />
-              )}
+            {activeTab === 'dashboard' && (
+              <DashboardIntelligence
+                appointments={appointments}
+                chairs={chairs}
+                queue={queue}
+                recalls={recalls}
+                doctors={doctors}
+              />
+            )}
 
-              {activeTab === 'scheduler' && (
-                <EnterpriseScheduler
-                  appointments={appointments}
-                  setAppointments={setAppointments}
-                  doctors={doctors}
-                  chairs={chairsList}
-                />
-              )}
+            {activeTab === 'scheduler' && (
+              <EnterpriseScheduler
+                appointments={appointments}
+                setAppointments={setAppointments}
+                doctors={doctors}
+                chairs={chairsList}
+              />
+            )}
 
-              {activeTab === 'operatory' && (
-                <OperatoryManagement
-                  chairs={chairs}
-                  setChairs={setChairs}
-                  doctors={doctors}
-                />
-              )}
+            {activeTab === 'operatory' && (
+              <OperatoryManagement
+                chairs={chairs}
+                setChairs={setChairs}
+                doctors={doctors}
+              />
+            )}
 
-              {activeTab === 'staff' && (
-                <DoctorManagement
-                  doctors={doctors}
-                  setDoctors={setDoctors}
-                />
-              )}
+            {activeTab === 'staff' && (
+              <DoctorManagement
+                doctors={doctors}
+                setDoctors={setDoctors}
+              />
+            )}
 
-              {activeTab === 'queue' && (
-                <WaitingQueue
-                  queue={queue}
-                  setQueue={setQueue}
-                />
-              )}
+            {activeTab === 'queue' && (
+              <WaitingQueue
+                queue={queue}
+                setQueue={setQueue}
+              />
+            )}
 
-              {activeTab === 'recalls' && (
-                <RecallCenter
-                  recalls={recalls}
-                  setRecalls={setRecalls}
-                  onBookRecall={handleBookRecallAppointment}
-                />
-              )}
+            {activeTab === 'recalls' && (
+              <RecallCenter
+                recalls={recalls}
+                setRecalls={setRecalls}
+                onBookRecall={handleBookRecallAppointment}
+              />
+            )}
 
-              {activeTab === 'sessions' && (
-                <TreatmentSessionManager
-                  sessions={sessions}
-                  setSessions={setSessions}
-                  patients={MOCK_PATIENTS}
-                  doctors={doctors}
-                  chairs={chairsList}
-                />
-              )}
+            {activeTab === 'sessions' && (
+              <TreatmentSessionManager
+                sessions={sessions}
+                setSessions={setSessions}
+                patients={MOCK_PATIENTS}
+                doctors={doctors}
+                chairs={chairsList}
+              />
+            )}
 
-              {activeTab === 'notifications' && (
-                <NotificationCenter
-                  notifications={notifications}
-                  setNotifications={setNotifications}
-                />
-              )}
+            {activeTab === 'notifications' && (
+              <NotificationCenter
+                notifications={notifications}
+                setNotifications={setNotifications}
+              />
+            )}
 
-              {activeTab === 'search' && (
-                <SearchEngine
-                  patients={MOCK_PATIENTS}
-                  appointments={appointments}
-                  sessions={sessions}
-                />
-              )}
-            </Suspense>
+            {activeTab === 'search' && (
+              <SearchEngine
+                patients={MOCK_PATIENTS}
+                appointments={appointments}
+                sessions={sessions}
+              />
+            )}
           </motion.div>
         </AnimatePresence>
       </div>

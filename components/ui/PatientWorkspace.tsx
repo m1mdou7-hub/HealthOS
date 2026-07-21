@@ -1237,13 +1237,13 @@ export default function PatientWorkspace() {
 
 
   // Filters logic
-  const filteredPatients = React.useMemo(() => patients.filter(patient => {
+  const filteredPatients = patients.filter(patient => {
     const matchesSearch = patient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           patient.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           patient.currentTreatment.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === 'All' || patient.status === statusFilter;
     return matchesSearch && matchesStatus;
-  }), [patients, searchQuery, statusFilter]);
+  });
 
   // Sort and Paginate logic
   const sortedPatients = [...filteredPatients].sort((a, b) => {
