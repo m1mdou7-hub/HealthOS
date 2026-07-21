@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ListCollapse, ChevronUp, ChevronDown, UserPlus, Sparkles, X, Clock, HelpCircle } from 'lucide-react';
 import { QueueItem, MOCK_DOCTORS } from './types';
 

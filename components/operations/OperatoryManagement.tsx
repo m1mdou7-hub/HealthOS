@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Shield, Sparkles, Wrench, PlayCircle, Clock, AlertTriangle, CheckCircle, RefreshCw } from 'lucide-react';
 import { ChairStatus, Doctor } from './types';
 

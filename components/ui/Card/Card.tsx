@@ -1,5 +1,12 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
+/**
+ * Props for the Card component.
+ * @param title - The title of the card.
+ * @param description - The optional description of the card.
+ * @param footer - The optional footer of the card.
+ * @param children - The content of the card.
+ */
 interface Props {
   title: string;
   description?: string;

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, ShieldAlert, Sparkles, X, Check, CheckSquare, Filter, AlertTriangle, Info } from 'lucide-react';
 import { OperationalNotification } from './types';
 

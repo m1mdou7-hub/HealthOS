@@ -38,7 +38,7 @@ import {
   FileArchive,
   Gauge
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   AreaChart,
   Area,
