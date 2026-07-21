@@ -14,6 +14,7 @@ interface NavlinksProps {
 
 export default function Navlinks({ user }: NavlinksProps) {
   const router = getRedirectMethod() === 'client' ? useRouter() : null;
+  const pathname = usePathname();
 
   return (
     <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
@@ -22,8 +23,8 @@ export default function Navlinks({ user }: NavlinksProps) {
           <Logo />
           <span>HealthOS</span>
         </Link>
-        <nav className="ml-6 space-x-2 hidden md:block">
-          <Link href="/" className={s.link}>
+        <nav className="ml-6 space-x-2 hidden md:block" aria-label="Desktop Navigation">
+          <Link href="/" className={s.link} aria-current={pathname === '/' ? 'page' : undefined}>
             Workspace Platform
           </Link>
         </nav>
