@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic';
 import { Metadata } from 'next';
 import Footer from '@/components/ui/Footer';
 import Navbar from '@/components/ui/Navbar';

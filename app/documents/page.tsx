@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic';
 import { createClient } from '@/utils/supabase/server';
 import { getUser } from '@/utils/supabase/queries';
 import DashboardShell from '@/components/ui/DashboardShell';

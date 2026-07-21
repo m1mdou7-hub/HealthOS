@@ -184,6 +184,65 @@ ${patientDetailsPrompt}
 Topic to explain to the patient: "${prompt || "Proposed dental implants and zirconia crowns"}".`;
         break;
 
+
+      case "progress_notes":
+        systemInstruction = `You are an expert Clinical Scribe. Your goal is to write a concise Progress Note summarizing the patient's recent appointments, ongoing treatments, and overall trajectory. Maintain a professional tone, focusing on clinical outcomes, unresolved issues, and the timeline of care.`;
+        finalPrompt = `
+${patientDetailsPrompt}
+
+Generate a concise clinical progress note summarizing the recent visits and treatment status based on the patient record.`;
+        break;
+
+      case "clinical_findings":
+        systemInstruction = `You are a Lead Diagnostician. Your task is to extract and summarize ONLY the objective clinical findings (radiographic, periodontal, hard/soft tissue, occlusal) from the patient's record. Exclude subjective complaints or planned treatments. Present the findings in a clear, bulleted list.`;
+        finalPrompt = `
+${patientDetailsPrompt}
+
+Summarize the objective clinical findings for this patient.`;
+        break;
+
+      case "referral_letter":
+        systemInstruction = `You are a referring Dentist writing a formal Referral Letter to a specialist (e.g., Oral Surgeon, Endodontist, Periodontist).
+Use a highly professional, respectful tone.
+Structure the letter with:
+- Patient Introduction (Name, Age)
+- Reason for Referral (Chief Complaint / Diagnosis)
+- Relevant Medical/Dental History (including alerts and medications)
+- Summary of Findings (radiographs, clinical exam)
+- Requested Action / Treatment from the specialist.
+Sign off as the referring provider.`;
+        finalPrompt = `
+${patientDetailsPrompt}
+
+Write a formal referral letter to a specialist regarding this patient. Context: "${prompt}"`;
+        break;
+
+      case "lab_prescription":
+        systemInstruction = `You are an expert Prosthodontist writing a detailed Laboratory Prescription (Lab Rx).
+Your instructions must be crystal clear to the dental technician to avoid remakes.
+Include:
+- Restoration Type & Teeth Numbers
+- Material Selection (e.g., Monolithic Zirconia, e.max, PFM, PMMA)
+- Shade (Vita shade, stump shade, incisal translucency details)
+- Margin Design & Contacts (e.g., heavy/light contacts, supragingival/subgingival margins)
+- Pontic Design (if applicable)
+- Implant details (platform size, custom vs ti-base, screw vs cement retained)
+- Enclosed items (e.g., impression, bite registration, opposing model)
+- Due Date / Delivery Date request.`;
+        finalPrompt = `
+${patientDetailsPrompt}
+
+Draft a detailed Dental Laboratory Prescription for this patient based on this context: "${prompt}"`;
+        break;
+
+      case "follow_up":
+        systemInstruction = `You are an AI Clinical Assistant. Based on the patient's recent treatment and current status, suggest 3-5 specific, actionable follow-up tasks for the clinical team (e.g., 'Call patient tomorrow to check on extraction site', 'Schedule 2-week post-op for crown seat', 'Send periodontal maintenance recall').`;
+        finalPrompt = `
+${patientDetailsPrompt}
+
+Suggest actionable follow-up tasks and recalls for this patient.`;
+        break;
+
       case "risk_detection":
         systemInstruction = `You are a Board-Certified Oral Surgeon and Clinical Pharmacologist.
 Your task is to analyze the patient's complete profile, medical history, allergies, systemic conditions, active medications, and dental plans to scan for critical medical-dental risk vectors.
@@ -205,16 +264,38 @@ Run a complete Clinical Risk & Contraindication Scan for this patient's current 
         return NextResponse.json({ error: `Invalid action: ${action}` }, { status: 400 });
     }
 
-    const response = await ai.models.generateContent({
+    const formattedHistory = (history && Array.isArray(history)) ? history.map((msg: any) => ({ role: msg.role === 'user' ? 'user' : 'model', parts: [{ text: msg.content }] })) : [];
+
+    const stream = await ai.models.generateContentStream({
       model: "gemini-3.5-flash",
-      contents: finalPrompt,
+      contents: [...formattedHistory, { role: "user", parts: [{ text: finalPrompt }] }],
       config: {
         systemInstruction,
         temperature: 0.2, // Keep temperature low for precise, safe, clinical answers
       },
     });
 
-    return NextResponse.json({ text: response.text });
+    const encoder = new TextEncoder();
+    const readable = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const chunk of stream) {
+            controller.enqueue(encoder.encode(chunk.text));
+          }
+          controller.close();
+        } catch (e) {
+          controller.error(e);
+        }
+      }
+    });
+
+    return new Response(readable, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      },
+    });
   } catch (error: any) {
     console.error("Gemini API server route error:", error);
     return NextResponse.json(
