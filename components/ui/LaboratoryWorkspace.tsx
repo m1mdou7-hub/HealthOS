@@ -61,13 +61,13 @@ import {
 } from '../operations/labTypes';
 
 // Import newly refactored views for Modules 1-7
-import LabDashboardView from '../operations/LabDashboardView';
-import CaseManagerView from '../operations/CaseManagerView';
-import FileManagerView from '../operations/FileManagerView';
-import ManufacturingWorkflowView from '../operations/ManufacturingWorkflowView';
-import ShadeManagementView from '../operations/ShadeManagementView';
-import LabCommunicationView from '../operations/LabCommunicationView';
-import SmileDesignWorkspace from '../operations/SmileDesignWorkspace';
+const LabDashboardView = React.lazy(() => import('../operations/LabDashboardView'));
+const CaseManagerView = React.lazy(() => import('../operations/CaseManagerView'));
+const FileManagerView = React.lazy(() => import('../operations/FileManagerView'));
+const ManufacturingWorkflowView = React.lazy(() => import('../operations/ManufacturingWorkflowView'));
+const ShadeManagementView = React.lazy(() => import('../operations/ShadeManagementView'));
+const LabCommunicationView = React.lazy(() => import('../operations/LabCommunicationView'));
+const SmileDesignWorkspace = React.lazy(() => import('../operations/SmileDesignWorkspace'));
 
 // --- ANALYTICS ORIGINAL MOCK DATA ---
 const PRODUCTION_CHART_DATA = [
@@ -404,7 +404,7 @@ export default function LaboratoryWorkspace() {
           
           <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
             <AnimatePresence mode="wait">
-              
+              <React.Suspense fallback={<div className="text-zinc-500 p-8 text-center text-xs font-mono">Loading laboratory module...</div>}>
               {/* Module 1: Dashboard View */}
               {activeTab === 'Dashboard' && (
                 <WorkspaceTabPanel key="tab-dashboard"
@@ -1060,7 +1060,7 @@ export default function LaboratoryWorkspace() {
                   </div>
                 </WorkspaceTabPanel>
               )}
-
+              </React.Suspense>
             </AnimatePresence>
           </div>
         </div>

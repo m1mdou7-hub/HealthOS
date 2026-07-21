@@ -116,7 +116,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const COMMAND_ITEMS = [
+  const COMMAND_ITEMS = React.useMemo(() => [
     { name: 'Navigate to Dashboard', category: 'Navigation', action: () => router.push('/') },
     { name: 'Navigate to Patient Index', category: 'Navigation', action: () => router.push('/patients') },
     { name: 'Navigate to Clinics Admin', category: 'Navigation', action: () => router.push('/clinics') },
@@ -133,17 +133,17 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
     { name: 'Sync active Exocad Licenses Node', category: 'System Operations', action: () => triggerFeedback('Exocad CAD/CAM core verification key flushed and synchronized.') },
     { name: 'Trigger secure local Cloud SQL backup', category: 'System Operations', action: () => triggerFeedback('Immutable database backup archive dispatched successfully.') },
     { name: 'Deploy Emergency Platform Broadcast notice', category: 'Operations Actions', action: () => triggerFeedback('System notice successfully deployed across all connected tenant portals.') }
-  ];
+  ], [router]);
 
   const triggerFeedback = (msg: string) => {
     setCommandFeedback(msg);
     setTimeout(() => setCommandFeedback(''), 4000);
   };
 
-  const filteredCommands = COMMAND_ITEMS.filter(item => {
+  const filteredCommands = React.useMemo(() => COMMAND_ITEMS.filter(item => {
     return item.name.toLowerCase().includes(commandQuery.toLowerCase()) ||
            item.category.toLowerCase().includes(commandQuery.toLowerCase());
-  });
+  }), [commandQuery, COMMAND_ITEMS]);
 
   // Derive page title
   const activeItem = NAV_ITEMS.find((item) => {
