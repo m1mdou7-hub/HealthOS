@@ -1,5 +1,6 @@
 'use client';
 
+import { useWorkspaceToast } from './Workspace/useWorkspaceToast';
 import React, { useState, useMemo } from 'react';
 import {
   MessageSquare,
@@ -113,14 +114,7 @@ export default function CommunicationWorkspace() {
   const [callTimer, setCallTimer] = useState('00:00');
 
   // Success notifications toast
-  const [toastMsg, setToastMsg] = useState('');
-  const [showToast, setShowToast] = useState(false);
-
-  const triggerToast = (msg: string) => {
-    setToastMsg(msg);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
+  const { toastMsg, showToast, triggerToast } = useWorkspaceToast();
 
   // Filter channels
   const filteredChannels = useMemo(() => {

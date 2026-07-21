@@ -1,5 +1,8 @@
 'use client';
 
+import { WorkspaceSidebarNav } from './Workspace/WorkspaceSidebarNav';
+import { useWorkspaceToast } from './Workspace/useWorkspaceToast';
+import { WorkspaceToast } from './Workspace/WorkspaceToast';
 import React, { useState, useMemo } from 'react';
 import {
   Bell,
@@ -134,14 +137,7 @@ export default function NotificationsWorkspace() {
   });
 
   // Success notifications toast
-  const [toastMsg, setToastMsg] = useState('');
-  const [showToast, setShowToast] = useState(false);
-
-  const triggerToast = (msg: string) => {
-    setToastMsg(msg);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
+  const { toastMsg, showToast, triggerToast } = useWorkspaceToast();
 
   // Mark single read
   const handleMarkRead = (id: string) => {
@@ -192,12 +188,7 @@ export default function NotificationsWorkspace() {
     <div className="space-y-6 text-zinc-100 animate-fade-in relative max-w-[1600px] mx-auto">
       
       {/* Toast Alert */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500/30">
-          <CheckCircle2 className="w-5 h-5 shrink-0" />
-          <span>{toastMsg}</span>
-        </div>
-      )}
+      {showToast && <WorkspaceToast message={toastMsg} />}
 
       {/* FILTER & CONTROL PANEL */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">

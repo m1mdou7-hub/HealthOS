@@ -1,5 +1,7 @@
 'use client';
 
+import { WorkspaceSidebarNav } from './Workspace/WorkspaceSidebarNav';
+import { WorkspaceTabPanel } from './Workspace/WorkspaceTabPanel';
 import React, { useState, useMemo, useRef } from 'react';
 import {
   Layers,
@@ -405,11 +407,8 @@ export default function LaboratoryWorkspace() {
               
               {/* Module 1: Dashboard View */}
               {activeTab === 'Dashboard' && (
-                <motion.div
-                  key="tab-dashboard"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-dashboard"
+
                 >
                   <LabDashboardView
                     cases={cases}
@@ -419,16 +418,13 @@ export default function LaboratoryWorkspace() {
                       setActiveTab(tab as any);
                     }}
                   />
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* original layout: Case Registry List view */}
               {activeTab === 'CaseList' && (
-                <motion.div
-                  key="tab-caselist"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-caselist"
+
                   className="space-y-4"
                 >
                   {/* Header Controls */}
@@ -598,31 +594,25 @@ export default function LaboratoryWorkspace() {
                     <span className="text-zinc-500">EXOCAD SYNC STATUS: OK</span>
                     <span className="text-emerald-400 font-bold">READY FOR WORKFLOW COMPILATION</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* Module 2: Case Manager View */}
               {activeTab === 'CaseWorkspace' && (
-                <motion.div
-                  key="tab-caseworkspace"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-caseworkspace"
+
                 >
                   <CaseManagerView
                     activeCase={activeCase}
                     onUpdateCase={handleUpdateCase}
                   />
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* original layout: CAD/CAM Studio viewport */}
               {activeTab === 'CadCam' && (
-                <motion.div
-                  key="tab-cadcam"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-cadcam"
+
                   className="h-full flex flex-col lg:flex-row gap-5"
                 >
                   {/* Rotating solid crown simulator (Exocad viewport) */}
@@ -775,76 +765,61 @@ export default function LaboratoryWorkspace() {
                       <p className="mt-1">Direct OpenGL wrapper active on localized node.</p>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* Module 4: Manufacturing Staging */}
               {activeTab === 'Manufacturing' && (
-                <motion.div
-                  key="tab-manufacturing"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-manufacturing"
+
                 >
                   <ManufacturingWorkflowView
                     activeCase={activeCase}
                     onUpdateCase={handleUpdateCase}
                   />
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* Module 5: Shade Management */}
               {activeTab === 'Shade' && (
-                <motion.div
-                  key="tab-shade"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-shade"
+
                 >
                   <ShadeManagementView
                     activeCase={activeCase}
                     onUpdateCase={handleUpdateCase}
                   />
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* Module 6: Lab Secure Chat */}
               {activeTab === 'Communication' && (
-                <motion.div
-                  key="tab-communication"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-communication"
+
                 >
                   <LabCommunicationView
                     activeCase={activeCase}
                     onUpdateCase={handleUpdateCase}
                   />
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* Module 7: Smile Design */}
               {activeTab === 'SmileDesign' && (
-                <motion.div
-                  key="tab-smiledesign"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-smiledesign"
+
                 >
                   <SmileDesignWorkspace
                     activeCase={activeCase}
                     onUpdateCase={handleUpdateCase}
                   />
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* original layout: Materials Hub */}
               {activeTab === 'Materials' && (
-                <motion.div
-                  key="tab-materials"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-materials"
+
                   className="space-y-4 text-left"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -877,16 +852,13 @@ export default function LaboratoryWorkspace() {
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* original layout: AI Assistant */}
               {activeTab === 'AiAssistant' && (
-                <motion.div
-                  key="tab-aiassistant"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-aiassistant"
+
                   className="h-full flex flex-col justify-between text-left"
                 >
                   <div className="space-y-4">
@@ -949,31 +921,25 @@ export default function LaboratoryWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* Module 3: Files View */}
               {activeTab === 'Files' && (
-                <motion.div
-                  key="tab-files"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-files"
+
                 >
                   <FileManagerView
                     activeCase={activeCase}
                     onUpdateCase={handleUpdateCase}
                   />
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* original layout: Milestone Timeline */}
               {activeTab === 'Timeline' && (
-                <motion.div
-                  key="tab-timeline"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-timeline"
+
                   className="h-full flex flex-col justify-between text-left"
                 >
                   <div className="space-y-4">
@@ -1004,16 +970,13 @@ export default function LaboratoryWorkspace() {
                       ))}
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* original layout: Performance Analytics */}
               {activeTab === 'Analytics' && (
-                <motion.div
-                  key="tab-analytics"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel key="tab-analytics"
+
                   className="h-full flex flex-col justify-between text-left"
                 >
                   <div className="space-y-4">
@@ -1095,7 +1058,7 @@ export default function LaboratoryWorkspace() {
                       </table>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
             </AnimatePresence>

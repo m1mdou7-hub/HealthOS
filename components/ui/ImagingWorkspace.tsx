@@ -1,5 +1,7 @@
 'use client';
 
+import { WorkspaceSidebarNav } from './Workspace/WorkspaceSidebarNav';
+import { WorkspaceTabPanel } from './Workspace/WorkspaceTabPanel';
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
   Layers,
@@ -614,10 +616,7 @@ export default function ImagingWorkspace() {
                   1. LIBRARY TAB
                   ================================================== */}
               {activeWorkspaceTab === 'Library' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -735,17 +734,14 @@ export default function ImagingWorkspace() {
                       <span className="text-emerald-400 font-bold">&lt; 14ms</span>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   2. CBCT WORKSPACE (PACS 4-PLANE WORKSTATION)
                   ================================================== */}
               {activeWorkspaceTab === 'CBCT' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col lg:flex-row gap-5"
                 >
                   {/* Grid of planes (Viewer Panel) */}
@@ -981,17 +977,14 @@ export default function ImagingWorkspace() {
                       <p>Scan duration: 14.8 seconds</p>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   3. STL WORKSPACE (MESH VIEWER & STL LOGS)
                   ================================================== */}
               {activeWorkspaceTab === 'STL' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col lg:flex-row gap-5"
                 >
                   
@@ -1147,17 +1140,14 @@ export default function ImagingWorkspace() {
                       <p>Milling calibration: OK</p>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   4. SMILE DESIGN (AESTHETIC PORTRAIT SLIDERS)
                   ================================================== */}
               {activeWorkspaceTab === 'SmileDesign' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col lg:flex-row gap-5"
                 >
                   
@@ -1362,17 +1352,14 @@ export default function ImagingWorkspace() {
                       <p>Golden Proportion score: 94%</p>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   5. AI IMAGING TAB (GENERATED TELEMETRY)
                   ================================================== */}
               {activeWorkspaceTab === 'AI' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col lg:flex-row gap-5"
                 >
                   
@@ -1502,17 +1489,14 @@ export default function ImagingWorkspace() {
                       <FileCheck className="w-4 h-4" /> COMPILATE REPORT
                     </button>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   6. TIMELINE TAB (CHRONOLOGICAL STUDIES)
                   ================================================== */}
               {activeWorkspaceTab === 'Timeline' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1561,7 +1545,7 @@ export default function ImagingWorkspace() {
                   <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-2xl text-[10px] font-mono text-zinc-500 text-center">
                     All radiographic imaging entries comply with the federal HHS DICOM Part 15 standards.
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
             </AnimatePresence>

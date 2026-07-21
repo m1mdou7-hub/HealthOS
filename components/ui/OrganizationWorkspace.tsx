@@ -1,5 +1,7 @@
 'use client';
 
+import { WorkspaceSidebarNav } from './Workspace/WorkspaceSidebarNav';
+import { WorkspaceTabPanel } from './Workspace/WorkspaceTabPanel';
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
   Building2,
@@ -563,10 +565,7 @@ export default function OrganizationWorkspace() {
                   1. ORGANIZATION OVERVIEW
                   ================================================== */}
               {activeTab === 'Overview' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -717,17 +716,14 @@ export default function OrganizationWorkspace() {
                     </span>
                     <span className="text-zinc-400">Owner Contact: <span className="text-white font-bold">{workspaceName.split(' ')[0]} Admin</span></span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   2. CLINIC MANAGEMENT
                   ================================================== */}
               {activeTab === 'Clinics' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -904,17 +900,14 @@ export default function OrganizationWorkspace() {
                     <span>TOTAL REGISTERED CLINICS: {clinics.length}</span>
                     <span>ONLINE MAP INTEGRATION: INACTIVE</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   3. DEPARTMENTS
                   ================================================== */}
               {activeTab === 'Departments' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1003,17 +996,14 @@ export default function OrganizationWorkspace() {
                     <span>DEPARTMENT TOTAL: {departments.length} UNITS CONFIGURATION</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   4. USER MANAGEMENT
                   ================================================== */}
               {activeTab === 'Users' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1150,17 +1140,14 @@ export default function OrganizationWorkspace() {
                     <span>SEAT COUNT: {filteredUsers.length} MEMBERS ACCORDING TO FILTER</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   5. ROLES & PERMISSIONS
                   ================================================== */}
               {activeTab === 'Permissions' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1249,17 +1236,14 @@ export default function OrganizationWorkspace() {
                     <span>AUDIT ACTION LOGGED: TRUE</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   6. TEAMS
                   ================================================== */}
               {activeTab === 'Teams' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1340,17 +1324,14 @@ export default function OrganizationWorkspace() {
                     <span>ROSTER TEAMS TOTAL: {teams.length} ON-CALL SHIFTS</span>
                     <span>ONLINE REALTIME FEED: ACTIVE</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   7. ACTIVITY & AUDIT LOG
                   ================================================== */}
               {activeTab === 'Audits' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1409,17 +1390,14 @@ export default function OrganizationWorkspace() {
                     <span>IMMUTABLE LEDGER HASH: SHA-256 SECURED BY HEALTHOS SHARED TRUST</span>
                     <span>PCI COMPLIANT: TRUE</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   8. NOTIFICATIONS
                   ================================================== */}
               {activeTab === 'Notifications' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1517,17 +1495,14 @@ export default function OrganizationWorkspace() {
                     <span>BROADCASTS LOGGED: TRUE</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   9. SECURITY CENTER
                   ================================================== */}
               {activeTab === 'Security' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1673,17 +1648,14 @@ export default function OrganizationWorkspace() {
                     <span>SECURITY PARAMS RE-AUDITED: COMPLETED SUCCESSFULLY</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   10. ORGANIZATION SETTINGS
                   ================================================== */}
               {activeTab === 'Settings' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1817,17 +1789,14 @@ export default function OrganizationWorkspace() {
                     <span>BRAND PARAMETERS COMPILATION STATUS: OK</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   11. DISASTER RECOVERY & SLA BACKUPS
                   ================================================== */}
               {activeTab === 'Backup' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
@@ -1961,7 +1930,7 @@ export default function OrganizationWorkspace() {
                     <span>SECURITY COMPLIANCE AUDITING: AES-256 ENCRYPTED</span>
                     <span>DR CONSOLE VERSION: v1.0.4-LTS</span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
             </AnimatePresence>
