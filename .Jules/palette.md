@@ -1,0 +1,3 @@
+## 2026-07-21 - Icon-Only Button ARIA Labels
+**Learning:** Found multiple icon-only buttons missing `aria-label`s in `CommunicationWorkspace.tsx`, indicating a potential a11y issue pattern where custom button implementations prioritize visual design over screen reader accessibility. This application relies heavily on `lucide-react` icons inside raw `<button>` tags.
+**Action:** Next time looking for quick a11y wins, grep for `<button` combined with `<IconName` and check for missing `aria-label` attributes across other workspace components (e.g., `PatientWorkspace.tsx`, `EhrWorkspace.tsx`).
