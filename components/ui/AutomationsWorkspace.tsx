@@ -1,5 +1,6 @@
 'use client';
 
+import { WorkspaceSidebarNav } from './Workspace/WorkspaceSidebarNav';
 import React, { useState, useMemo } from 'react';
 import {
   Zap,

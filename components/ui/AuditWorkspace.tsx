@@ -1,5 +1,7 @@
 'use client';
 
+import { useWorkspaceToast } from './Workspace/useWorkspaceToast';
+import { WorkspaceToast } from './Workspace/WorkspaceToast';
 import React, { useState, useMemo, useEffect } from 'react';
 import {
   ShieldCheck,
@@ -76,14 +78,7 @@ export default function AuditWorkspace() {
   const [users, setUsers] = useState(TENANT_USERS);
 
   // Success notifications toast
-  const [toastMsg, setToastMsg] = useState('');
-  const [showToast, setShowToast] = useState(false);
-
-  const triggerToast = (msg: string) => {
-    setToastMsg(msg);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
+  const { toastMsg, showToast, triggerToast } = useWorkspaceToast();
 
   // Checkbox toggle HIPAA
   const toggleHipaaItem = (id: string) => {
@@ -153,12 +148,7 @@ export default function AuditWorkspace() {
     <div className="space-y-6 text-zinc-100 animate-fade-in relative max-w-[1600px] mx-auto">
       
       {/* Toast Alert */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500/30">
-          <CheckCircle2 className="w-5 h-5 shrink-0" />
-          <span>{toastMsg}</span>
-        </div>
-      )}
+      {showToast && <WorkspaceToast message={toastMsg} />}
 
       {/* COMPLIANCE INDEX OVERALL INDICATOR */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">

@@ -1,5 +1,7 @@
 'use client';
 
+import { useWorkspaceToast } from './Workspace/useWorkspaceToast';
+import { WorkspaceToast } from './Workspace/WorkspaceToast';
 import React, { useState, useMemo } from 'react';
 import {
   Cpu,
@@ -51,14 +53,7 @@ export default function PlatformWorkspace() {
   const [newTenantLicenses, setNewTenantLicenses] = useState('10');
 
   // Success notifications toast
-  const [toastMsg, setToastMsg] = useState('');
-  const [showToast, setShowToast] = useState(false);
-
-  const triggerToast = (msg: string) => {
-    setToastMsg(msg);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
+  const { toastMsg, showToast, triggerToast } = useWorkspaceToast();
 
   // Register Tenant
   const handleRegisterTenant = (e: React.FormEvent) => {
@@ -106,12 +101,7 @@ export default function PlatformWorkspace() {
     <div className="space-y-6 text-zinc-100 animate-fade-in relative max-w-[1600px] mx-auto">
       
       {/* Toast Alert */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500/30">
-          <CheckCircle2 className="w-5 h-5 shrink-0" />
-          <span>{toastMsg}</span>
-        </div>
-      )}
+      {showToast && <WorkspaceToast message={toastMsg} />}
 
       {/* METRIC HORIZONTAL GRID */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

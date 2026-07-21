@@ -1,5 +1,7 @@
 'use client';
 
+import { WorkspaceToast } from './Workspace/WorkspaceToast';
+import { useWorkspaceToast } from './Workspace/useWorkspaceToast';
 import React, { useState, useMemo } from 'react';
 import {
   CheckSquare,
@@ -133,14 +135,7 @@ export default function TasksWorkspace() {
   const [newCommentText, setNewCommentText] = useState('');
 
   // Toast
-  const [toastMsg, setToastMsg] = useState('');
-  const [showToast, setShowToast] = useState(false);
-
-  const triggerToast = (msg: string) => {
-    setToastMsg(msg);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
+  const { toastMsg, showToast, triggerToast } = useWorkspaceToast();
 
   const activeTask = useMemo(() => {
     return tasks.find(t => t.id === selectedTaskId) || tasks[0];
@@ -251,12 +246,7 @@ export default function TasksWorkspace() {
     <div className="space-y-6 text-zinc-100 animate-fade-in relative max-w-[1600px] mx-auto">
       
       {/* Toast Alert */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500/30">
-          <CheckCircle2 className="w-5 h-5 shrink-0" />
-          <span>{toastMsg}</span>
-        </div>
-      )}
+      {showToast && <WorkspaceToast message={toastMsg} />}
 
       {/* HORIZONTAL STATS BAR */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

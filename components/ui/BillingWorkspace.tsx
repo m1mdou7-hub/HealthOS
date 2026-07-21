@@ -1,5 +1,7 @@
 'use client';
 
+import { WorkspaceSidebarNav } from './Workspace/WorkspaceSidebarNav';
+import { WorkspaceTabPanel } from './Workspace/WorkspaceTabPanel';
 import React, { useState, useMemo } from 'react';
 import {
   CreditCard,
@@ -783,10 +785,7 @@ export default function BillingWorkspace() {
                   1. BILLING DASHBOARD
                   ================================================== */}
               {activeTab === 'Dashboard' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -936,17 +935,14 @@ export default function BillingWorkspace() {
                     </span>
                     <span className="text-zinc-400">Total YTD Volume: <span className="text-white font-bold">$1,012,450.00</span></span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   2. INVOICE MANAGEMENT
                   ================================================== */}
               {activeTab === 'Invoices' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-4"
                 >
                   <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
@@ -1104,17 +1100,14 @@ export default function BillingWorkspace() {
                       </tbody>
                     </table>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   3. INVOICE WORKSPACE (Focus view for single item)
                   ================================================== */}
               {activeTab === 'InvoiceDetails' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-4"
                 >
                   <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
@@ -1279,17 +1272,14 @@ export default function BillingWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   4. PAYMENTS & CASH DESK
                   ================================================== */}
               {activeTab === 'Payments' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -1388,17 +1378,14 @@ export default function BillingWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   5. INSURANCE CENTER & CLAIMS
                   ================================================== */}
               {activeTab === 'Insurance' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -1516,17 +1503,14 @@ export default function BillingWorkspace() {
                       )}
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   6. ESTIMATES & QUOTATIONS
                   ================================================== */}
               {activeTab === 'Estimates' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -1594,17 +1578,14 @@ export default function BillingWorkspace() {
                       );
                     })}
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   7. FINANCIAL REPORTS & ANALYTICS
                   ================================================== */}
               {activeTab === 'Reports' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -1680,17 +1661,14 @@ export default function BillingWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   8. AI FINANCIAL ASSISTANT & RISK ANALYSIS
                   ================================================== */}
               {activeTab === 'AIAssistant' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -1756,17 +1734,14 @@ export default function BillingWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   9. AUDIT TIMELINE
                   ================================================== */}
               {activeTab === 'Timeline' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -1805,17 +1780,14 @@ export default function BillingWorkspace() {
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   10. BILLING SETTINGS
                   ================================================== */}
               {activeTab === 'Settings' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -1885,7 +1857,7 @@ export default function BillingWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
             </AnimatePresence>

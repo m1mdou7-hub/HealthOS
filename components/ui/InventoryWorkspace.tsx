@@ -1,5 +1,7 @@
 'use client';
 
+import { WorkspaceSidebarNav } from './Workspace/WorkspaceSidebarNav';
+import { WorkspaceTabPanel } from './Workspace/WorkspaceTabPanel';
 import React, { useState, useMemo } from 'react';
 import {
   Package,
@@ -659,10 +661,7 @@ export default function InventoryWorkspace() {
                   1. INVENTORY DASHBOARD
                   ================================================== */}
               {activeTab === 'Dashboard' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -812,17 +811,14 @@ export default function InventoryWorkspace() {
                     </span>
                     <span className="text-zinc-400">DEA Register: <span className="text-white font-bold">ACTIVE-DEA-2026</span></span>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   2. INVENTORY CATALOG
                   ================================================== */}
               {activeTab === 'Catalog' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-4"
                 >
                   <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
@@ -1059,17 +1055,14 @@ export default function InventoryWorkspace() {
                       </tbody>
                     </table>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   3. PRODUCT WORKSPACE (FOCUSED DETAIL)
                   ================================================== */}
               {activeTab === 'ProductWorkspace' && selectedProduct && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="flex items-center gap-2 text-zinc-500 text-xs font-mono border-b border-zinc-900 pb-2">
@@ -1228,17 +1221,14 @@ export default function InventoryWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   4. PROCUREMENT CENTER
                   ================================================== */}
               {activeTab === 'Procurement' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="grid grid-cols-1 lg:grid-cols-3 gap-6"
                 >
                   <div className="lg:col-span-2 space-y-4">
@@ -1392,17 +1382,14 @@ export default function InventoryWorkspace() {
                       </button>
                     </form>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   5. SUPPLIER MANAGEMENT
                   ================================================== */}
               {activeTab === 'Suppliers' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-4"
                 >
                   <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
@@ -1473,17 +1460,14 @@ export default function InventoryWorkspace() {
                       </table>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   6. STOCK MOVEMENTS
                   ================================================== */}
               {activeTab === 'StockMovements' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="grid grid-cols-1 lg:grid-cols-3 gap-6"
                 >
                   <div className="lg:col-span-2 space-y-4">
@@ -1608,17 +1592,14 @@ export default function InventoryWorkspace() {
                       </button>
                     </form>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   7. WAREHOUSE MANAGEMENT
                   ================================================== */}
               {activeTab === 'Warehouse' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-4"
                 >
                   <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
@@ -1682,17 +1663,14 @@ export default function InventoryWorkspace() {
                       <p className="text-[10px] text-zinc-400 leading-relaxed">Dry conditions preserved to prevent capsule degradation.</p>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   8. AI INVENTORY ASSISTANT
                   ================================================== */}
               {activeTab === 'AIAssistant' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -1767,17 +1745,14 @@ export default function InventoryWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   9. REPORTS & ANALYTICS
                   ================================================== */}
               {activeTab === 'Reports' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2">
@@ -1862,17 +1837,14 @@ export default function InventoryWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
                   10. INVENTORY SETTINGS
                   ================================================== */}
               {activeTab === 'Settings' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <WorkspaceTabPanel
                   className="space-y-6"
                 >
                   <div className="border-b border-zinc-900 pb-2">
@@ -1928,7 +1900,7 @@ export default function InventoryWorkspace() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </WorkspaceTabPanel>
               )}
 
             </AnimatePresence>
