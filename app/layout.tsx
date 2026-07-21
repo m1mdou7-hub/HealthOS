@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { Metadata } from 'next';
 import Footer from '@/components/ui/Footer';
 import Navbar from '@/components/ui/Navbar';
@@ -6,7 +7,7 @@ import { PropsWithChildren, Suspense } from 'react';
 import { getURL } from '@/utils/helpers';
 import { createClient } from '@/utils/supabase/server';
 import { getUser } from '@/utils/supabase/queries';
-import 'styles/main.css';
+import '@/styles/main.css';
 
 const title = 'HealthOS';
 const description = 'HealthOS - Commercial Healthcare Operating System.';
