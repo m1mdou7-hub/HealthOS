@@ -404,7 +404,7 @@ export default function CommunicationWorkspace() {
                 >
                   <Video className="w-4 h-4" />
                 </button>
-                <button className="p-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 rounded-xl text-zinc-500 cursor-pointer">
+                <button aria-label="More options" className="p-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 rounded-xl text-zinc-500 cursor-pointer">
                   <MoreVertical className="w-4 h-4" />
                 </button>
               </div>
@@ -462,6 +462,7 @@ export default function CommunicationWorkspace() {
 
               <button 
                 type="submit"
+                aria-label="Send message"
                 className="p-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-xl font-bold cursor-pointer transition-colors"
               >
                 <Send className="w-4 h-4" />
@@ -484,6 +485,7 @@ export default function CommunicationWorkspace() {
                       <p className="text-[10px] text-zinc-500 mt-0.5">{file.type} • {file.size}</p>
                     </div>
                     <button 
+                      aria-label={`Download ${file.name}`}
                       onClick={() => triggerToast(`Downloading shared asset ${file.name}`)}
                       className="p-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-zinc-400 hover:text-white"
                     >
