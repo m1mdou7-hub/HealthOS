@@ -45,9 +45,7 @@ export async function POST(req: Request) {
     return new Response(
       JSON.stringify({
         success: false,
-        message: err?.message,
-        stack: err?.stack,
-        name: err?.name
+        message: "Webhook construction failed",
       }, null, 2),
       {
         status: 400,
@@ -132,9 +130,7 @@ export async function POST(req: Request) {
       return new Response(
         JSON.stringify({
           success: false,
-          message: error?.message,
-          stack: error?.stack,
-          name: error?.name
+          message: "Webhook handler failed",
         }, null, 2),
         {
           status: 400,

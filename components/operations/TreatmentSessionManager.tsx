@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FileText, CheckCircle, RefreshCw, Layers, Plus, Activity, User, ShieldAlert } from 'lucide-react';
-import { TreatmentSession, Patient, Doctor, MOCK_PATIENTS, MOCK_DOCTORS, MOCK_CHAIRS } from './types';
+import { TreatmentSession, Patient, Doctor, MOCK_PATIENTS, MOCK_DOCTORS, MOCK_CHAIRS_STATUS } from './types';
 
 interface TreatmentSessionManagerProps {
   sessions: TreatmentSession[];

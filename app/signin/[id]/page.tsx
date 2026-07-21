@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Logo from '@/components/icons/Logo';
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';

@@ -26,23 +26,6 @@ export const getURL = (path: string = '') => {
   return path ? `${url}/${path}` : url;
 };
 
-export const postData = async ({
-  url,
-  data
-}: {
-  url: string;
-  data?: { price: Price };
-}) => {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: new Headers({ 'Content-Type': 'application/json' }),
-    credentials: 'same-origin',
-    body: JSON.stringify(data)
-  });
-
-  return res.json();
-};
-
 export const toDateTime = (secs: number) => {
   var t = new Date(+0); // Unix epoch start.
   t.setSeconds(secs);

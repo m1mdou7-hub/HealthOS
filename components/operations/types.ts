@@ -111,15 +111,13 @@ export const MOCK_DOCTORS: Doctor[] = [
   { id: 'D-4', name: 'Dr. Marcus Vance', specialty: 'Lab Director & Prostho', color: 'orange', workingHours: { start: '08:00', end: '16:00' }, status: 'Active', breaks: [{ start: '12:30', end: '13:30' }] }
 ];
 
-export const MOCK_CHAIRS: ChairStatus[] = [
+export const MOCK_CHAIRS_STATUS: ChairStatus[] = [
   { id: 'C-1', name: 'Chair 1 (Digital Suite)', status: 'Occupied', currentPatient: 'Arthur Pendragon', currentDoctor: 'Dr. Elena Rostova', remainingTime: 15, estimatedCompletion: '11:30 AM' },
   { id: 'C-2', name: 'Chair 2 (Restorative)', status: 'Available' },
   { id: 'C-3', name: 'Chair 3 (Fitting & Try-in)', status: 'Cleaning' },
   { id: 'C-4', name: 'Surgery Suite A', status: 'Maintenance', remainingTime: 120, estimatedCompletion: '01:30 PM' },
   { id: 'C-5', name: 'Consultation Room', status: 'Occupied', currentPatient: 'Diana Prince', currentDoctor: 'Dr. Sarah Jenkins', remainingTime: 40, estimatedCompletion: '11:55 AM' }
 ];
-
-export const MOCK_CHAIRS_STATUS = MOCK_CHAIRS;
 
 export const MOCK_TREATMENT_SESSIONS: TreatmentSession[] = [
   {
