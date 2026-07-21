@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, CheckCircle, RefreshCw, Layers, Plus, Activity, User, ShieldAlert } from 'lucide-react';
 import { TreatmentSession, Patient, Doctor, MOCK_PATIENTS, MOCK_DOCTORS, MOCK_CHAIRS_STATUS } from './types';
 

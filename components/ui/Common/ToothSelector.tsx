@@ -1,20 +1,28 @@
 import React from 'react';
 
+/**
+ * Props for the ToothSelector component.
+ * @param teeth - Array of tooth IDs to display.
+ * @param teethStatuses - Record mapping tooth IDs to their current status (e.g., 'sound', 'prep', 'restored', 'implant', 'missing').
+ * @param onToggleState - Callback function triggered when a tooth is clicked, receiving the tooth ID.
+ */
 interface ToothSelectorProps {
   teeth: number[];
   teethStatuses: Record<number, string>;
   onToggleState: (toothId: number) => void;
 }
 
-export function ToothSelector({ teeth, teethStatuses, onToggleState }: ToothSelectorProps) {
+export const ToothSelector = React.memo(function ToothSelector({ teeth, teethStatuses, onToggleState }: ToothSelectorProps) {
   return (
-    <div className="flex justify-center gap-2 overflow-x-auto py-2">
+    <div className="flex justify-center gap-2 overflow-x-auto py-2" role="group" aria-label="Tooth Selector">
       {teeth.map((t) => {
         const status = teethStatuses[t] || 'sound';
         return (
           <button
             key={t}
             onClick={() => onToggleState(t)}
+            aria-label={`Tooth ${t}, Status: ${status}`}
+            aria-pressed={status !== 'sound'}
             className={`w-9 h-14 rounded-lg flex flex-col justify-between items-center p-1.5 border transition-all ${
               status === 'prep'
                 ? 'bg-amber-500/10 border-amber-500 text-amber-300'
@@ -40,4 +48,4 @@ export function ToothSelector({ teeth, teethStatuses, onToggleState }: ToothSele
       })}
     </div>
   );
-}
+});

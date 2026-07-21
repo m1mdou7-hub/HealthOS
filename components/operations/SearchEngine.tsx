@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Search, User, Calendar, FileText, Activity, ShieldAlert, Sparkles, Folder, ArrowRight } from 'lucide-react';
 import { Patient, Appointment, TreatmentSession } from './types';
 

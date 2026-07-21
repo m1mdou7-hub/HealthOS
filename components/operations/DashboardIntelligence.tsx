@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { 
   Users, Activity, Calendar, ShieldAlert, Sparkles, 
   Clock, FlaskConical, AlertCircle, CheckCircle2, TrendingUp 

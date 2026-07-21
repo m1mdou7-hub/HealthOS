@@ -6,7 +6,7 @@ import { ToothSelector } from './Common/ToothSelector';
 import { PatientTimeline } from './Timeline/PatientTimeline';
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import {
   Users,

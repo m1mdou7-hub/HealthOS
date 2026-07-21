@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { UserCheck, ShieldAlert, Calendar, Plus, X, Heart, Shield, HelpCircle } from 'lucide-react';
 import { Doctor } from './types';
 

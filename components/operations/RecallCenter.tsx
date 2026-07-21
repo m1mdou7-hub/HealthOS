@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { RefreshCw, Phone, MessageSquare, Mail, Calendar, HelpCircle, CheckCircle } from 'lucide-react';
 import { RecallItem } from './types';
 

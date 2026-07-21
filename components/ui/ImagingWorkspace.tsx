@@ -43,7 +43,7 @@ import {
   Lock,
   Compass
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // --- MOCK INTERACTIVE IMAGING STUDIES ---
 interface ImageStudy {
