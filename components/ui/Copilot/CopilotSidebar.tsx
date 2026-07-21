@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, X, Send } from 'lucide-react';
+import { useTypewriter } from '@/hooks/useTypewriter';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -16,6 +17,11 @@ interface CopilotSidebarProps {
   onSendMessage: (message: string) => void;
   input: string;
   onInputChange: (val: string) => void;
+}
+
+function TypewriterMessage({ text, isLatest }: { text: string; isLatest: boolean }) {
+  const displayedText = useTypewriter(isLatest ? text : null, 10);
+  return <>{isLatest ? displayedText : text}</>;
 }
 
 export function CopilotSidebar({
@@ -80,25 +86,32 @@ export function CopilotSidebar({
 
             {/* Conversation history */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
-                >
-                  <span className="text-[9px] font-mono text-zinc-500 mb-1">
-                    {msg.role === 'user' ? 'Dentist' : 'Copilot'}
-                  </span>
+              {messages.map((msg, i) => {
+                const isLatestAssistantMessage = msg.role === 'assistant' && i === messages.length - 1;
+                return (
                   <div
-                    className={`p-3 rounded-2xl max-w-[90%] text-xs leading-relaxed whitespace-pre-wrap ${
-                      msg.role === 'user'
-                        ? 'bg-purple-600 text-white rounded-tr-none font-sans'
-                        : 'bg-zinc-900 text-zinc-300 border border-zinc-850 rounded-tl-none font-mono'
-                    }`}
+                    key={i}
+                    className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                   >
-                    {msg.text}
+                    <span className="text-[9px] font-mono text-zinc-500 mb-1">
+                      {msg.role === 'user' ? 'Dentist' : 'Copilot'}
+                    </span>
+                    <div
+                      className={`p-3 rounded-2xl max-w-[90%] text-xs leading-relaxed whitespace-pre-wrap ${
+                        msg.role === 'user'
+                          ? 'bg-purple-600 text-white rounded-tr-none font-sans'
+                          : 'bg-zinc-900 text-zinc-300 border border-zinc-850 rounded-tl-none font-mono'
+                      }`}
+                    >
+                      {msg.role === 'assistant' ? (
+                        <TypewriterMessage text={msg.text} isLatest={isLatestAssistantMessage} />
+                      ) : (
+                        msg.text
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
 
               {loading && (
                 <div className="flex flex-col items-start">

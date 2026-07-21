@@ -5,7 +5,13 @@ import { WorkspaceSidebarNav } from './Workspace/WorkspaceSidebarNav';
 import { ToothSelector } from './Common/ToothSelector';
 import { PatientTimeline } from './Timeline/PatientTimeline';
 import React, { useState, useEffect } from 'react';
+import { useTypewriter } from '@/hooks/useTypewriter';
 import { useRouter, useParams } from 'next/navigation';
+
+function TypewriterText({ text }: { text: string | null }) {
+  const displayedText = useTypewriter(text, 10);
+  return <>{displayedText || text}</>;
+}
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import {
@@ -4790,7 +4796,7 @@ export default function PatientWorkspace() {
                                   className="text-xs text-zinc-300 space-y-4 font-mono leading-relaxed bg-zinc-900/30 p-5 rounded-xl border border-zinc-900/60"
                                 >
                                   <div className="space-y-3 whitespace-pre-line text-zinc-300 text-left">
-                                    {aiOutput}
+                                    <TypewriterText text={aiOutput} />
                                   </div>
                                 </motion.div>
                               ) : (
@@ -4937,7 +4943,7 @@ export default function PatientWorkspace() {
                               </div>
                             ) : treatmentAiOutput ? (
                               <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4 font-mono text-xs text-zinc-300 leading-relaxed max-h-[450px] overflow-y-auto">
-                                <div className="whitespace-pre-line">{treatmentAiOutput}</div>
+                                <div className="whitespace-pre-line"><TypewriterText text={treatmentAiOutput} /></div>
                                 <div className="pt-4 border-t border-zinc-900 flex justify-end">
                                   <button
                                     onClick={() => {
@@ -4997,7 +5003,7 @@ export default function PatientWorkspace() {
                               </div>
                             ) : summaryAiOutput ? (
                               <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4 font-mono text-xs text-zinc-300 leading-relaxed max-h-[450px] overflow-y-auto">
-                                <div className="whitespace-pre-line">{summaryAiOutput}</div>
+                                <div className="whitespace-pre-line"><TypewriterText text={summaryAiOutput} /></div>
                               </div>
                             ) : (
                               <div className="py-12 text-center border border-zinc-900 rounded-xl bg-zinc-950/20 space-y-2">
@@ -5040,7 +5046,7 @@ export default function PatientWorkspace() {
                               </div>
                             ) : patientEdOutput ? (
                               <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4 font-sans text-xs text-zinc-300 leading-relaxed max-h-[450px] overflow-y-auto">
-                                <div className="whitespace-pre-line">{patientEdOutput}</div>
+                                <div className="whitespace-pre-line"><TypewriterText text={patientEdOutput} /></div>
                                 <div className="pt-4 border-t border-zinc-900 flex justify-end">
                                   <button
                                     onClick={() => {
@@ -5088,7 +5094,7 @@ export default function PatientWorkspace() {
                               </div>
                             ) : riskScanOutput ? (
                               <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4 font-mono text-xs text-zinc-300 leading-relaxed max-h-[450px] overflow-y-auto">
-                                <div className="whitespace-pre-line">{riskScanOutput}</div>
+                                <div className="whitespace-pre-line"><TypewriterText text={riskScanOutput} /></div>
                               </div>
                             ) : (
                               <div className="py-12 text-center border border-zinc-900 rounded-xl bg-zinc-950/20 space-y-2">
