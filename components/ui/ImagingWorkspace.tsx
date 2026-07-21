@@ -41,14 +41,18 @@ import {
   ExternalLink,
   ChevronDown,
   Lock,
-  Compass
+  Compass,
+  Upload,
+  HardDrive,
+  ScanEye,
+  ActivitySquare
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 // --- MOCK INTERACTIVE IMAGING STUDIES ---
 interface ImageStudy {
   id: string;
-  type: 'CBCT' | 'Panoramic' | 'Bitewing' | 'Periapical' | 'Cephalometric' | 'Intraoral Photos' | 'Smile Photos' | 'Extraoral Photos';
+  type: 'CBCT' | 'Panoramic' | 'Bitewing' | 'Periapical' | 'Cephalometric' | 'Intraoral Photos' | 'Smile Photos' | 'Extraoral Photos' | 'PDF' | 'DICOM' | 'XRay';
   title: string;
   date: string;
   doctor: string;
@@ -57,6 +61,8 @@ interface ImageStudy {
   fav: boolean;
   comments: string;
   fileSize: string;
+  category?: string;
+  album?: string;
 }
 
 const MOCK_STUDIES: ImageStudy[] = [
@@ -70,7 +76,9 @@ const MOCK_STUDIES: ImageStudy[] = [
     thumbnail: 'CBCT',
     fav: true,
     comments: 'Bone height in site #11 is 11.5mm, width 7.2mm. No sinus encroachment.',
-    fileSize: '142 MB'
+    fileSize: '142 MB',
+    category: '3D Volume',
+    album: 'Surgical Planning'
   },
   {
     id: 'ST-7182',
@@ -82,7 +90,9 @@ const MOCK_STUDIES: ImageStudy[] = [
     thumbnail: 'PANO',
     fav: true,
     comments: 'Dentition stable. Congenitally missing #11. Localized bone resorption noted.',
-    fileSize: '12 MB'
+    fileSize: '12 MB',
+    category: 'Radiograph',
+    album: 'Initial Consult'
   },
   {
     id: 'ST-3024',
@@ -94,7 +104,9 @@ const MOCK_STUDIES: ImageStudy[] = [
     thumbnail: 'BW',
     fav: false,
     comments: 'Incipient enamel caries detected on distal surface of #14. High monitoring priority.',
-    fileSize: '4.2 MB'
+    fileSize: '4.2 MB',
+    category: 'Radiograph',
+    album: 'Recall Exams'
   },
   {
     id: 'ST-4081',
@@ -106,7 +118,9 @@ const MOCK_STUDIES: ImageStudy[] = [
     thumbnail: 'PA',
     fav: false,
     comments: 'Obturated root canals of tooth #19 showing complete apical seal with no periapical lesion.',
-    fileSize: '4.0 MB'
+    fileSize: '4.0 MB',
+    category: 'Radiograph',
+    album: 'Endodontic Series'
   },
   {
     id: 'ST-5099',
@@ -118,7 +132,9 @@ const MOCK_STUDIES: ImageStudy[] = [
     thumbnail: 'IOS',
     fav: true,
     comments: 'Accurate model generation for Exocad design of tooth #11 custom abutment.',
-    fileSize: '89 MB'
+    fileSize: '89 MB',
+    category: 'Surface Scan',
+    album: 'Restorative'
   },
   {
     id: 'ST-1011',
@@ -130,7 +146,9 @@ const MOCK_STUDIES: ImageStudy[] = [
     thumbnail: 'SMILE_B',
     fav: true,
     comments: 'Initial portrait showing high smile line with asymmetrical gingival contour at #11 zone.',
-    fileSize: '18 MB'
+    fileSize: '18 MB',
+    category: 'Clinical Photo',
+    album: 'Aesthetic Portraits'
   },
   {
     id: 'ST-1012',
@@ -142,7 +160,37 @@ const MOCK_STUDIES: ImageStudy[] = [
     thumbnail: 'SMILE_A',
     fav: true,
     comments: 'Aesthetic simulation following NobelActive implant and custom crown placement.',
-    fileSize: '19 MB'
+    fileSize: '19 MB',
+    category: 'Clinical Photo',
+    album: 'Aesthetic Portraits'
+  },
+  {
+    id: 'ST-9910',
+    type: 'PDF',
+    title: 'External Biopsy Report',
+    date: '2026-04-01',
+    doctor: 'Dr. H. Jenkins (Referral)',
+    device: 'Document Scanner',
+    thumbnail: 'PDF',
+    fav: false,
+    comments: 'Pathology lab report regarding lesion #32. Benign findings confirmed.',
+    fileSize: '1.2 MB',
+    category: 'Document',
+    album: 'Specialist Referrals'
+  },
+  {
+    id: 'ST-9921',
+    type: 'DICOM',
+    title: 'Raw DICOM Set - Maxilla',
+    date: '2026-06-12',
+    doctor: 'Dr. Elena Rostova',
+    device: 'Planmeca ProMax 3D Max',
+    thumbnail: 'DCM',
+    fav: false,
+    comments: 'Raw, uncompressed voxel data for external 3rd party viewing.',
+    fileSize: '240 MB',
+    category: '3D Volume',
+    album: 'Surgical Planning'
   },
   {
     id: 'ST-8812',
@@ -154,7 +202,23 @@ const MOCK_STUDIES: ImageStudy[] = [
     thumbnail: 'CEPH',
     fav: false,
     comments: 'Skeletal Class I jaw relation. Balanced profile with optimal incisal inclination.',
-    fileSize: '8.5 MB'
+    fileSize: '8.5 MB',
+    category: 'Radiograph',
+    album: 'Orthodontic Planning'
+  },
+  {
+    id: 'ST-5555',
+    type: 'XRay',
+    title: 'Digital X-Ray FMX',
+    date: '2026-06-10',
+    doctor: 'Dr. Elena Rostova',
+    device: 'Dexis Platinum',
+    thumbnail: 'XRAY',
+    fav: false,
+    comments: 'Full mouth series capturing all 32 teeth.',
+    fileSize: '15 MB',
+    category: 'Radiograph',
+    album: 'Initial Consult'
   }
 ];
 
@@ -191,11 +255,16 @@ const STL_VERSION_HISTORY: StlVersion[] = [
 
 export default function ImagingWorkspace() {
   // General UI States
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<'Library' | 'CBCT' | 'STL' | 'SmileDesign' | 'AI' | 'Timeline'>('Library');
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<'Library' | 'CBCT' | 'STL' | 'SmileDesign' | 'AI' | 'Timeline' | 'Upload' | 'PDF' | 'DICOM' | 'XRay'>('Library');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<string>('All');
+  const [filterCategory, setFilterCategory] = useState<string>('All');
+  const [filterAlbum, setFilterAlbum] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'Grid' | 'List'>('Grid');
   const [studies, setStudies] = useState<ImageStudy[]>(MOCK_STUDIES);
+
+  const uniqueCategories = useMemo(() => ['All', ...Array.from(new Set(studies.map(s => s.category).filter(Boolean)))], [studies]);
+  const uniqueAlbums = useMemo(() => ['All', ...Array.from(new Set(studies.map(s => s.album).filter(Boolean)))], [studies]);
   
   // Resizable sidebar logic mockup
   const [sidebarWidth, setSidebarWidth] = useState<number>(310);
@@ -233,6 +302,11 @@ export default function ImagingWorkspace() {
   const [midlineX, setMidlineX] = useState<number>(50); // percentage slider
   const [proportionY, setProportionY] = useState<number>(40);
 
+  // Upload State
+  const [dragActive, setDragActive] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+
   // AI Imaging Module States
   const [aiAnalysisLog, setAiAnalysisLog] = useState<string>('');
   const [aiHighlighterOn, setAiHighlighterOn] = useState<boolean>(false);
@@ -242,6 +316,62 @@ export default function ImagingWorkspace() {
   // Export States
   const [exportModalOpen, setExportModalOpen] = useState<boolean>(false);
   const [exportFormat, setExportFormat] = useState<'PDF' | 'ZIP' | 'DICOM' | 'STL' | 'JPEG'>('DICOM');
+
+  // Drag and Drop Upload Handlers
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      simulateUpload(e.dataTransfer.files[0]);
+    }
+  };
+
+  const simulateUpload = (file: File) => {
+    setIsUploading(true);
+    setUploadProgress(0);
+    const interval = setInterval(() => {
+      setUploadProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            setIsUploading(false);
+            setUploadProgress(0);
+
+            // Add to mock studies
+            const newStudy: ImageStudy = {
+              id: `ST-${Math.floor(Math.random() * 10000)}`,
+              type: file.type.includes('pdf') ? 'PDF' : file.type.includes('dicom') ? 'DICOM' : 'XRay',
+              title: file.name,
+              date: new Date().toISOString().split('T')[0],
+              doctor: 'Dr. Upload',
+              device: 'Web Upload',
+              thumbnail: 'NEW',
+              fav: false,
+              comments: 'Recently uploaded file via Drag and Drop.',
+              fileSize: `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
+              category: 'Uploaded',
+              album: 'Recent Uploads'
+            };
+            setStudies([newStudy, ...studies]);
+            setActiveWorkspaceTab('Library'); // Redirect to library after upload
+          }, 500);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 200);
+  };
 
   // Sidebar drag handle
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -274,9 +404,11 @@ export default function ImagingWorkspace() {
                           s.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           s.id.toLowerCase().includes(searchQuery.toLowerCase());
       const matchType = filterType === 'All' || s.type === filterType;
-      return matchSearch && matchType;
+      const matchCategory = filterCategory === 'All' || s.category === filterCategory;
+      const matchAlbum = filterAlbum === 'All' || s.album === filterAlbum;
+      return matchSearch && matchType && matchCategory && matchAlbum;
     });
-  }, [studies, searchQuery, filterType]);
+  }, [studies, searchQuery, filterType, filterCategory, filterAlbum]);
 
   // CBCT Interactive clicking simulation
   const handleCbctCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -410,12 +542,13 @@ export default function ImagingWorkspace() {
         </div>
 
         {/* WORKSPACE SELECTOR TAB GROUP */}
-        <div className="flex bg-zinc-950 p-1 rounded-xl border border-zinc-800">
-          {(['Library', 'CBCT', 'STL', 'SmileDesign', 'AI', 'Timeline'] as const).map(tab => {
+        <div className="flex bg-zinc-950 p-1 rounded-xl border border-zinc-800 overflow-x-auto scrollbar-thin">
+          {(['Library', 'Upload', 'CBCT', 'STL', 'SmileDesign', 'AI', 'Timeline'] as const).map(tab => {
             const isActive = activeWorkspaceTab === tab;
             let displayLabel: string = tab;
             if (tab === 'SmileDesign') displayLabel = 'Smile Design';
             if (tab === 'AI') displayLabel = 'AI Imaging';
+            if (tab === 'Upload') displayLabel = 'Upload Center';
 
             return (
               <button
@@ -472,20 +605,38 @@ export default function ImagingWorkspace() {
               />
             </div>
 
-            <div className="flex gap-1 overflow-x-auto scrollbar-none pb-1">
-              {['All', 'CBCT', 'Panoramic', 'Bitewing', 'Periapical', 'Intraoral Photos', 'Smile Photos'].map(t => (
-                <button
-                  key={t}
-                  onClick={() => setFilterType(t)}
-                  className={`px-2 py-1 rounded-md text-[10px] font-mono font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
-                    filterType === t 
-                      ? 'bg-zinc-800 text-white border border-zinc-700' 
-                      : 'text-zinc-500 hover:text-zinc-300 border border-transparent'
-                  }`}
+            <div className="space-y-2">
+              <div className="flex gap-1 overflow-x-auto scrollbar-none pb-1">
+                {['All', 'CBCT', 'Panoramic', 'Bitewing', 'Periapical', 'Intraoral Photos', 'Smile Photos', 'PDF', 'DICOM', 'XRay'].map(t => (
+                  <button
+                    key={t}
+                    onClick={() => setFilterType(t)}
+                    className={`px-2 py-1 rounded-md text-[10px] font-mono font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
+                      filterType === t
+                        ? 'bg-zinc-800 text-white border border-zinc-700'
+                        : 'text-zinc-500 hover:text-zinc-300 border border-transparent'
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <select
+                  value={filterCategory}
+                  onChange={(e) => setFilterCategory(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-800 text-zinc-400 text-[10px] font-mono font-bold rounded-lg px-2 py-1.5 outline-none focus:border-emerald-500 appearance-none cursor-pointer"
                 >
-                  {t}
-                </button>
-              ))}
+                  {uniqueCategories.map(cat => <option key={cat} value={cat}>{cat === 'All' ? 'All Categories' : cat}</option>)}
+                </select>
+                <select
+                  value={filterAlbum}
+                  onChange={(e) => setFilterAlbum(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-800 text-zinc-400 text-[10px] font-mono font-bold rounded-lg px-2 py-1.5 outline-none focus:border-emerald-500 appearance-none cursor-pointer"
+                >
+                  {uniqueAlbums.map(alb => <option key={alb} value={alb}>{alb === 'All' ? 'All Albums' : alb}</option>)}
+                </select>
+              </div>
             </div>
           </div>
 
@@ -499,6 +650,9 @@ export default function ImagingWorkspace() {
                   if (study.type === 'CBCT') setActiveWorkspaceTab('CBCT');
                   else if (study.type === 'Intraoral Photos') setActiveWorkspaceTab('STL');
                   else if (study.type === 'Smile Photos') setActiveWorkspaceTab('SmileDesign');
+                                  else if (study.type === 'PDF') setActiveWorkspaceTab('PDF');
+                                  else if (study.type === 'DICOM') setActiveWorkspaceTab('DICOM');
+                                  else if (study.type === 'XRay' || study.type === 'Panoramic' || study.type === 'Bitewing' || study.type === 'Periapical') setActiveWorkspaceTab('XRay');
                   else setActiveWorkspaceTab('Library');
                 }}
                 className="p-3 bg-zinc-950/60 hover:bg-zinc-950 rounded-xl border border-zinc-850 hover:border-emerald-500/40 cursor-pointer transition-all space-y-2 group"
@@ -669,6 +823,10 @@ export default function ImagingWorkspace() {
                                   if (study.type === 'CBCT') setActiveWorkspaceTab('CBCT');
                                   else if (study.type === 'Intraoral Photos') setActiveWorkspaceTab('STL');
                                   else if (study.type === 'Smile Photos') setActiveWorkspaceTab('SmileDesign');
+                                  else if (study.type === 'PDF') setActiveWorkspaceTab('PDF');
+                                  else if (study.type === 'DICOM') setActiveWorkspaceTab('DICOM');
+                                  else if (study.type === 'XRay' || study.type === 'Panoramic' || study.type === 'Bitewing' || study.type === 'Periapical') setActiveWorkspaceTab('XRay');
+                                  else setActiveWorkspaceTab('Library');
                                 }}
                                 className="text-emerald-400 hover:underline font-bold"
                               >
@@ -705,6 +863,10 @@ export default function ImagingWorkspace() {
                                       if (study.type === 'CBCT') setActiveWorkspaceTab('CBCT');
                                       else if (study.type === 'Intraoral Photos') setActiveWorkspaceTab('STL');
                                       else if (study.type === 'Smile Photos') setActiveWorkspaceTab('SmileDesign');
+                                      else if (study.type === 'PDF') setActiveWorkspaceTab('PDF');
+                                      else if (study.type === 'DICOM') setActiveWorkspaceTab('DICOM');
+                                      else if (study.type === 'XRay' || study.type === 'Panoramic' || study.type === 'Bitewing' || study.type === 'Periapical') setActiveWorkspaceTab('XRay');
+                                      else setActiveWorkspaceTab('Library');
                                     }}
                                     className="text-emerald-400 hover:underline font-bold"
                                   >
@@ -732,6 +894,82 @@ export default function ImagingWorkspace() {
                     <div className="flex items-center gap-3">
                       <span className="text-zinc-500 font-bold">PACS LATENCY:</span>
                       <span className="text-emerald-400 font-bold">&lt; 14ms</span>
+                    </div>
+                  </div>
+                </WorkspaceTabPanel>
+              )}
+
+              {/* ==================================================
+                  1.5 UPLOAD CENTER TAB
+                  ================================================== */}
+              {activeWorkspaceTab === 'Upload' && (
+                <WorkspaceTabPanel
+                  className="h-full flex flex-col justify-center items-center p-8"
+                >
+                  <div className="w-full max-w-2xl space-y-6">
+                    <div className="text-center space-y-2">
+                      <h3 className="text-xl font-black text-white uppercase tracking-tight flex items-center justify-center gap-2">
+                        <Upload className="w-6 h-6 text-emerald-400" /> Secure Media Registration
+                      </h3>
+                      <p className="text-sm text-zinc-400 font-mono">Upload patient imaging files, DICOM archives, or clinical PDF reports.</p>
+                    </div>
+
+                    <div
+                      onDragEnter={handleDrag}
+                      onDragOver={handleDrag}
+                      onDragLeave={handleDrag}
+                      onDrop={handleDrop}
+                      className={`p-12 rounded-3xl border-2 border-dashed flex flex-col items-center justify-center text-center space-y-4 transition-all duration-200 ${
+                        dragActive
+                          ? 'border-emerald-500 bg-emerald-500/10 scale-[1.02]'
+                          : 'border-zinc-800 bg-zinc-950/50 hover:border-zinc-700 hover:bg-zinc-900/50'
+                      }`}
+                    >
+                      <div className="p-4 rounded-full bg-zinc-900 text-zinc-400">
+                        <HardDrive className="w-8 h-8" />
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="text-base font-bold text-white">Drag & Drop Media Files Here</h4>
+                        <p className="text-xs text-zinc-500 font-mono">Supports DICOM (.dcm), STL/PLY, PDF, JPEG, PNG (Max 500MB)</p>
+                      </div>
+
+                      {isUploading ? (
+                        <div className="w-full max-w-xs space-y-2 mt-4">
+                          <div className="flex justify-between text-xs font-mono text-emerald-400 font-bold">
+                            <span>Uploading...</span>
+                            <span>{uploadProgress}%</span>
+                          </div>
+                          <div className="h-2 w-full bg-zinc-900 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-emerald-500 transition-all duration-200 ease-out"
+                              style={{ width: `${uploadProgress}%` }}
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="pt-4">
+                          <label className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-bold font-mono transition-colors cursor-pointer shadow-lg shadow-emerald-500/20 inline-flex items-center gap-2">
+                            <Upload className="w-4 h-4" /> BROWSE LOCAL FILES
+                            <input
+                              type="file"
+                              className="hidden"
+                              onChange={(e) => {
+                                if (e.target.files && e.target.files[0]) {
+                                  simulateUpload(e.target.files[0]);
+                                }
+                              }}
+                            />
+                          </label>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="p-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl flex items-start gap-3">
+                      <Shield className="w-5 h-5 text-zinc-500 shrink-0" />
+                      <div className="space-y-1">
+                        <p className="text-xs font-bold text-zinc-300">HIPAA Compliant Transfer</p>
+                        <p className="text-[10px] text-zinc-500 font-mono">All files are securely encrypted during transit and at rest. Automated metadata scrubbing is applied to non-DICOM formats.</p>
+                      </div>
                     </div>
                   </div>
                 </WorkspaceTabPanel>
@@ -976,6 +1214,88 @@ export default function ImagingWorkspace() {
                       <p>Matrix: 512 x 512 x 512 px</p>
                       <p>Scan duration: 14.8 seconds</p>
                     </div>
+                  </div>
+                </WorkspaceTabPanel>
+              )}
+
+              {/* ==================================================
+                  2.1 PDF VIEWER (CLINICAL DOCUMENTS)
+                  ================================================== */}
+              {activeWorkspaceTab === 'PDF' && (
+                <WorkspaceTabPanel
+                  className="h-full flex flex-col justify-center items-center bg-zinc-950 p-6 rounded-2xl border border-zinc-900"
+                >
+                  <div className="text-center space-y-4 max-w-lg">
+                    <FileText className="w-16 h-16 text-zinc-600 mx-auto" />
+                    <div>
+                      <h3 className="text-lg font-bold text-white uppercase tracking-wider">Clinical PDF Viewer</h3>
+                      <p className="text-xs text-zinc-500 font-mono mt-2">Displaying secure document content. File formatting is preserved. Printing and exporting restricted per HIPAA policies.</p>
+                    </div>
+                    <div className="w-full aspect-[1/1.4] bg-white rounded-md shadow-2xl relative overflow-hidden flex flex-col items-center justify-start p-8">
+                      <div className="w-full h-8 bg-zinc-200 rounded mb-4" />
+                      <div className="w-3/4 h-4 bg-zinc-100 rounded self-start mb-2" />
+                      <div className="w-full h-4 bg-zinc-100 rounded mb-2" />
+                      <div className="w-5/6 h-4 bg-zinc-100 rounded mb-2" />
+                      <div className="w-full h-4 bg-zinc-100 rounded mb-8" />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                        <span className="text-4xl font-black text-zinc-900 -rotate-45 uppercase">CONFIDENTIAL</span>
+                      </div>
+                    </div>
+                  </div>
+                </WorkspaceTabPanel>
+              )}
+
+              {/* ==================================================
+                  2.2 DICOM PLACEHOLDER
+                  ================================================== */}
+              {activeWorkspaceTab === 'DICOM' && (
+                <WorkspaceTabPanel
+                  className="h-full flex flex-col justify-center items-center bg-zinc-950 p-6 rounded-2xl border border-zinc-900"
+                >
+                  <div className="text-center space-y-4 max-w-lg">
+                    <ScanEye className="w-16 h-16 text-emerald-500/50 mx-auto animate-pulse" />
+                    <div>
+                      <h3 className="text-lg font-bold text-white uppercase tracking-wider">Raw DICOM Viewer</h3>
+                      <p className="text-xs text-zinc-500 font-mono mt-2">Initializing WebGL rendering context for large volumetric dataset. Allocating VRAM...</p>
+                    </div>
+                    <div className="w-full h-64 bg-zinc-900/50 rounded-xl border border-zinc-800 flex items-center justify-center">
+                      <div className="space-y-3 w-3/4 text-left">
+                        <div className="flex justify-between text-[10px] text-zinc-400 font-mono"><span>Parsing headers</span><span>100%</span></div>
+                        <div className="h-1 bg-zinc-800 rounded"><div className="h-full w-full bg-emerald-500 rounded" /></div>
+                        <div className="flex justify-between text-[10px] text-zinc-400 font-mono"><span>Decompressing JPEG2000 frames</span><span>45%</span></div>
+                        <div className="h-1 bg-zinc-800 rounded"><div className="h-full w-[45%] bg-emerald-500 rounded animate-pulse" /></div>
+                      </div>
+                    </div>
+                  </div>
+                </WorkspaceTabPanel>
+              )}
+
+              {/* ==================================================
+                  2.3 X-RAY MANAGER
+                  ================================================== */}
+              {activeWorkspaceTab === 'XRay' && (
+                <WorkspaceTabPanel
+                  className="h-full flex flex-col lg:flex-row gap-5"
+                >
+                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden group">
+                     <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
+                        <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">2D RADIOGRAPH VIEWER</span>
+                        <span>FILTERS: SHARPEN | INVERT | EQUALIZE</span>
+                      </div>
+
+                      <div className="flex-1 relative flex items-center justify-center m-4 bg-zinc-900/30 rounded-xl overflow-hidden border border-zinc-800">
+                        <div className="w-3/4 h-3/4 bg-zinc-800 rounded-lg opacity-50 blur-sm shadow-inner relative flex items-center justify-center">
+                          <ActivitySquare className="w-24 h-24 text-zinc-700" />
+                          <div className="absolute top-4 left-4 text-xs font-bold text-white uppercase mix-blend-difference">R</div>
+                          <div className="absolute top-4 right-4 text-xs font-bold text-white uppercase mix-blend-difference">L</div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-2 mt-2">
+                        <button className="py-2 bg-zinc-900 hover:bg-zinc-800 rounded-lg text-xs font-mono font-bold text-zinc-400 transition-colors">BRIGHTNESS</button>
+                        <button className="py-2 bg-zinc-900 hover:bg-zinc-800 rounded-lg text-xs font-mono font-bold text-zinc-400 transition-colors">CONTRAST</button>
+                        <button className="py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-mono font-bold transition-colors">AI HIGHLIGHT</button>
+                      </div>
                   </div>
                 </WorkspaceTabPanel>
               )}
