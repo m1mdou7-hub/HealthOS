@@ -1,0 +1,5 @@
+# CODEOWNERS for HealthOS
+# @m1mdou7-hub is the default owner for everything in this repository.
+# Ownership requires review approval from the listed owner on matching files.
+
+* @m1mdou7-hub
