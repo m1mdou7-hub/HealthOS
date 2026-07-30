@@ -349,8 +349,8 @@ const mapPatientRow = (row: any): Patient => ({
   medications: Array.isArray(row.medications) ? row.medications : [],
   allergies: Array.isArray(row.allergies) ? row.allergies : [],
   timeline: Array.isArray(row.timeline) ? row.timeline : [],
-  cases: Array.isArray(row.patient_cases)
-    ? row.patient_cases.map((item: any) => ({
+  cases: Array.isArray(row.healthos_patient_cases)
+    ? row.healthos_patient_cases.map((item: any) => ({
         id: item.id,
         name: item.name,
         status: item.status,
@@ -501,7 +501,7 @@ export default function PatientWorkspace({
       if (!demoMode) {
         const { createClient } = await import('@/utils/supabase/client');
         const { error } = await (createClient() as any)
-          .from('patients')
+          .from('healthos_patients')
           .update(patientPayload(updatedPatient))
           .eq('id', updatedPatient.id);
         if (error) {
@@ -545,7 +545,7 @@ export default function PatientWorkspace({
       if (!demoMode) {
         const { createClient } = await import('@/utils/supabase/client');
         const { error } = await (createClient() as any)
-          .from('patients')
+          .from('healthos_patients')
           .insert(patientPayload(newPatient));
         if (error) {
           alert(`Unable to create patient: ${error.message}`);
@@ -591,7 +591,7 @@ export default function PatientWorkspace({
       if (!demoMode) {
         const { createClient } = await import('@/utils/supabase/client');
         const { error } = await (createClient() as any)
-          .from('patients')
+          .from('healthos_patients')
           .delete()
           .eq('id', id);
         if (error) {
@@ -615,7 +615,7 @@ export default function PatientWorkspace({
     if (!demoMode) {
       const { createClient } = await import('@/utils/supabase/client');
       const { error } = await (createClient() as any)
-        .from('patients')
+        .from('healthos_patients')
         .update({ status })
         .eq('id', id);
       if (error) {
@@ -644,7 +644,7 @@ export default function PatientWorkspace({
       if (!demoMode) {
         const { createClient } = await import('@/utils/supabase/client');
         const { error } = await (createClient() as any)
-          .from('patient_cases')
+          .from('healthos_patient_cases')
           .update({
             name: caseForm.name,
             status: caseForm.status,
@@ -702,7 +702,7 @@ export default function PatientWorkspace({
       if (!demoMode) {
         const { createClient } = await import('@/utils/supabase/client');
         const { error } = await (createClient() as any)
-          .from('patient_cases')
+          .from('healthos_patient_cases')
           .insert({
             id: newCase.id,
             patient_id: activePatient.id,
@@ -757,7 +757,7 @@ export default function PatientWorkspace({
       if (!demoMode) {
         const { createClient } = await import('@/utils/supabase/client');
         const { error } = await (createClient() as any)
-          .from('patient_cases')
+          .from('healthos_patient_cases')
           .delete()
           .eq('id', caseId);
         if (error) {
@@ -937,7 +937,7 @@ export default function PatientWorkspace({
         try {
           const { createClient } = await import('@/utils/supabase/client');
           const { data, error } = await (createClient() as any)
-            .from('clinical_histories')
+            .from('healthos_clinical_histories')
             .select('*')
             .eq('patient_id', activePatient.id)
             .maybeSingle();
@@ -1036,7 +1036,7 @@ export default function PatientWorkspace({
         try {
           const { createClient } = await import('@/utils/supabase/client');
           const { data, error } = await (createClient() as any)
-            .from('patient_records')
+            .from('healthos_patient_records')
             .select('*')
             .eq('patient_id', activePatient.id)
             .maybeSingle();
@@ -1197,7 +1197,7 @@ export default function PatientWorkspace({
       const { createClient } = await import('@/utils/supabase/client');
       const supabase = createClient();
       const { data, error } = await (supabase as any)
-        .from('clinical_histories')
+        .from('healthos_clinical_histories')
         .upsert({
           patient_id: activePatient.id,
           medical_conditions: medicalConditions,
@@ -1237,7 +1237,7 @@ export default function PatientWorkspace({
     if (demoMode) return;
     const { createClient } = await import('@/utils/supabase/client');
     const { error } = await (createClient() as any)
-      .from('patient_records')
+      .from('healthos_patient_records')
       .upsert(
         { patient_id: activePatient.id, [column]: value },
         { onConflict: 'patient_id' }
@@ -1262,7 +1262,7 @@ export default function PatientWorkspace({
       await savePatientModule('recall_settings', recallSettings);
       const { createClient } = await import('@/utils/supabase/client');
       await (createClient() as any)
-        .from('patients')
+        .from('healthos_patients')
         .update({
           next_appointment: recallNextVisit
             ? `${recallNextVisit} 10:00 AM`

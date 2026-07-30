@@ -34,31 +34,31 @@ export default async function BillingPage() {
       ]
     : await Promise.all([
         (supabase as any)
-          .from('billing_invoices')
+          .from('healthos_billing_invoices')
           .select('*')
           .order('issue_date', { ascending: false }),
         (supabase as any)
-          .from('billing_estimates')
+          .from('healthos_billing_estimates')
           .select('*')
           .order('issue_date', { ascending: false }),
         (supabase as any)
-          .from('billing_claims')
+          .from('healthos_billing_claims')
           .select('*')
           .order('created_at', { ascending: false }),
         (supabase as any)
-          .from('billing_payments')
+          .from('healthos_billing_payments')
           .select('*')
           .order('recorded_at', { ascending: false }),
         (supabase as any)
-          .from('billing_timeline_events')
+          .from('healthos_billing_timeline_events')
           .select('*')
           .order('occurred_at', { ascending: false }),
         (supabase as any)
-          .from('billing_settings')
+          .from('healthos_billing_settings')
           .select('*')
           .maybeSingle(),
         (supabase as any)
-          .from('patients')
+          .from('healthos_patients')
           .select('id, name')
           .order('name', { ascending: true })
       ]);

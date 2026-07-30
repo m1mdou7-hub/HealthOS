@@ -22,8 +22,8 @@ export default async function PatientDetailPage(props: PageProps) {
   const { data: patientRows } = demoMode
     ? { data: [] }
     : await (supabase as any)
-        .from('patients')
-        .select('*, patient_cases(*)')
+        .from('healthos_patients')
+        .select('*, healthos_patient_cases(*)')
         .order('created_at', { ascending: false });
 
   if (!demoMode && !patientRows?.some((patient: any) => patient.id === id)) {
