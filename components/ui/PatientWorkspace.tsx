@@ -326,29 +326,87 @@ const INITIAL_PATIENTS: Patient[] = [
   }
 ];
 
-export default function PatientWorkspace() {
+const mapPatientRow = (row: any): Patient => ({
+  id: row.id,
+  name: row.name,
+  photoUrl: row.photo_url || '',
+  age: row.age || 0,
+  gender: row.gender || '',
+  bloodGroup: row.blood_group || '',
+  allergyStatus: row.allergy_status || 'No Known Allergies',
+  medicalAlerts: Array.isArray(row.medical_alerts) ? row.medical_alerts : [],
+  phone: row.phone || '',
+  email: row.email || '',
+  primaryDoctor: row.primary_doctor || '',
+  currentTreatment: row.current_treatment || '',
+  status: row.status || 'Active',
+  lastVisit: row.last_visit || '',
+  nextAppointment: row.next_appointment || 'Not scheduled',
+  aiRiskFlag: row.ai_risk_flag || 'Low',
+  riskDescription: row.risk_description || '',
+  summary: row.summary || '',
+  medicalHistory: Array.isArray(row.medical_history) ? row.medical_history : [],
+  medications: Array.isArray(row.medications) ? row.medications : [],
+  allergies: Array.isArray(row.allergies) ? row.allergies : [],
+  timeline: Array.isArray(row.timeline) ? row.timeline : [],
+  cases: Array.isArray(row.patient_cases)
+    ? row.patient_cases.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        status: item.status,
+        priority: item.priority,
+        clinician: item.clinician,
+        stage: item.stage,
+        progress: item.progress,
+        createdDate: item.created_date,
+        dueDate: item.due_date || '',
+        notes: item.notes || ''
+      }))
+    : []
+});
+
+const patientPayload = (patient: Patient) => ({
+  id: patient.id,
+  name: patient.name,
+  photo_url: patient.photoUrl,
+  age: patient.age,
+  gender: patient.gender,
+  blood_group: patient.bloodGroup,
+  allergy_status: patient.allergyStatus,
+  medical_alerts: patient.medicalAlerts,
+  phone: patient.phone,
+  email: patient.email,
+  primary_doctor: patient.primaryDoctor,
+  current_treatment: patient.currentTreatment,
+  status: patient.status,
+  last_visit: patient.lastVisit || null,
+  next_appointment: patient.nextAppointment,
+  ai_risk_flag: patient.aiRiskFlag,
+  risk_description: patient.riskDescription,
+  summary: patient.summary,
+  medical_history: patient.medicalHistory,
+  medications: patient.medications,
+  allergies: patient.allergies,
+  timeline: patient.timeline
+});
+
+interface PatientWorkspaceProps {
+  demoMode?: boolean;
+  initialRows?: any[];
+}
+
+export default function PatientWorkspace({
+  demoMode = false,
+  initialRows = []
+}: PatientWorkspaceProps) {
   const router = useRouter();
   const params = useParams();
   const selectedPatientId = (params?.id as string | undefined) || null;
 
   // Page states
-  const [patients, setPatients] = useState<Patient[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('healthos_patients');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {
-          console.error("Failed to parse patients from localStorage", e);
-        }
-      }
-    }
-    return INITIAL_PATIENTS;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('healthos_patients', JSON.stringify(patients));
-  }, [patients]);
+  const [patients, setPatients] = useState<Patient[]>(() =>
+    demoMode ? INITIAL_PATIENTS : initialRows.map(mapPatientRow)
+  );
 
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'All' | 'Active' | 'New' | 'Under Treatment' | 'Completed'>('All');
@@ -414,38 +472,49 @@ export default function PatientWorkspace() {
   };
 
   // Patient Actions
-  const handleSavePatient = (e: React.FormEvent) => {
+  const handleSavePatient = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!patientForm.name.trim()) return;
 
     if (editingPatient) {
-      setPatients(prev => prev.map(p => {
-        if (p.id === editingPatient.id) {
-          return {
-            ...p,
-            name: patientForm.name,
-            email: patientForm.email,
-            phone: patientForm.phone,
-            age: Number(patientForm.age),
-            gender: patientForm.gender,
-            bloodGroup: patientForm.bloodGroup,
-            allergyStatus: patientForm.allergyStatus,
-            medicalAlerts: patientForm.medicalAlerts.split(',').map(s => s.trim()).filter(Boolean),
-            primaryDoctor: patientForm.primaryDoctor,
-            currentTreatment: patientForm.currentTreatment,
-            status: patientForm.status,
-            aiRiskFlag: patientForm.aiRiskFlag,
-            riskDescription: patientForm.riskDescription,
-            summary: patientForm.summary,
-            medicalHistory: patientForm.medicalHistory.split(',').map(s => s.trim()).filter(Boolean),
-            medications: patientForm.medications.split(',').map(s => s.trim()).filter(Boolean),
-            allergies: patientForm.allergies.split(',').map(s => s.trim()).filter(Boolean)
-          };
+      const updatedPatient: Patient = {
+        ...editingPatient,
+        name: patientForm.name,
+        email: patientForm.email,
+        phone: patientForm.phone,
+        age: Number(patientForm.age),
+        gender: patientForm.gender,
+        bloodGroup: patientForm.bloodGroup,
+        allergyStatus: patientForm.allergyStatus,
+        medicalAlerts: patientForm.medicalAlerts.split(',').map(s => s.trim()).filter(Boolean),
+        primaryDoctor: patientForm.primaryDoctor,
+        currentTreatment: patientForm.currentTreatment,
+        status: patientForm.status,
+        aiRiskFlag: patientForm.aiRiskFlag,
+        riskDescription: patientForm.riskDescription,
+        summary: patientForm.summary,
+        medicalHistory: patientForm.medicalHistory.split(',').map(s => s.trim()).filter(Boolean),
+        medications: patientForm.medications.split(',').map(s => s.trim()).filter(Boolean),
+        allergies: patientForm.allergies.split(',').map(s => s.trim()).filter(Boolean)
+      };
+
+      if (!demoMode) {
+        const { createClient } = await import('@/utils/supabase/client');
+        const { error } = await (createClient() as any)
+          .from('patients')
+          .update(patientPayload(updatedPatient))
+          .eq('id', updatedPatient.id);
+        if (error) {
+          alert(`Unable to update patient: ${error.message}`);
+          return;
         }
-        return p;
-      }));
+      }
+
+      setPatients(prev =>
+        prev.map(p => (p.id === updatedPatient.id ? updatedPatient : p))
+      );
     } else {
-      const newId = `PTS-${Math.floor(1000 + Math.random() * 9000)}`;
+      const newId = `PTS-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
       const newPatient: Patient = {
         id: newId,
         name: patientForm.name,
@@ -473,6 +542,17 @@ export default function PatientWorkspace() {
         ],
         cases: []
       };
+      if (!demoMode) {
+        const { createClient } = await import('@/utils/supabase/client');
+        const { error } = await (createClient() as any)
+          .from('patients')
+          .insert(patientPayload(newPatient));
+        if (error) {
+          alert(`Unable to create patient: ${error.message}`);
+          return;
+        }
+      }
+
       setPatients(prev => [newPatient, ...prev]);
     }
 
@@ -505,9 +585,20 @@ export default function PatientWorkspace() {
     setIsPatientModalOpen(true);
   };
 
-  const handleDeletePatient = (id: string, e: React.MouseEvent) => {
+  const handleDeletePatient = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (confirm("Are you sure you want to delete this patient profile? All associated clinical cases and records will be purged.")) {
+      if (!demoMode) {
+        const { createClient } = await import('@/utils/supabase/client');
+        const { error } = await (createClient() as any)
+          .from('patients')
+          .delete()
+          .eq('id', id);
+        if (error) {
+          alert(`Unable to delete patient: ${error.message}`);
+          return;
+        }
+      }
       setPatients(prev => prev.filter(p => p.id !== id));
       if (selectedPatientId === id) {
         router.push('/patients');
@@ -515,13 +606,29 @@ export default function PatientWorkspace() {
     }
   };
 
-  const handleArchivePatient = (id: string, e: React.MouseEvent) => {
+  const handleArchivePatient = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    const patient = patients.find(p => p.id === id);
+    if (!patient) return;
+    const status = patient.status === 'Completed' ? 'Active' : 'Completed';
+
+    if (!demoMode) {
+      const { createClient } = await import('@/utils/supabase/client');
+      const { error } = await (createClient() as any)
+        .from('patients')
+        .update({ status })
+        .eq('id', id);
+      if (error) {
+        alert(`Unable to update patient status: ${error.message}`);
+        return;
+      }
+    }
+
     setPatients(prev => prev.map(p => {
       if (p.id === id) {
         return {
           ...p,
-          status: p.status === 'Completed' ? 'Active' : 'Completed'
+          status
         };
       }
       return p;
@@ -529,11 +636,32 @@ export default function PatientWorkspace() {
   };
 
   // Case Actions
-  const handleSaveCase = (e: React.FormEvent) => {
+  const handleSaveCase = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!caseForm.name.trim()) return;
 
     if (editingCase) {
+      if (!demoMode) {
+        const { createClient } = await import('@/utils/supabase/client');
+        const { error } = await (createClient() as any)
+          .from('patient_cases')
+          .update({
+            name: caseForm.name,
+            status: caseForm.status,
+            priority: caseForm.priority,
+            clinician: caseForm.clinician,
+            stage: caseForm.stage,
+            progress: Number(caseForm.progress),
+            notes: caseForm.notes,
+            due_date: caseForm.dueDate || null
+          })
+          .eq('id', editingCase.id);
+        if (error) {
+          alert(`Unable to update case: ${error.message}`);
+          return;
+        }
+      }
+
       setPatients(prev => prev.map(p => {
         if (p.id === activePatient.id) {
           const updatedCases = (p.cases || []).map(c => {
@@ -557,7 +685,7 @@ export default function PatientWorkspace() {
         return p;
       }));
     } else {
-      const newCaseId = `CASE-${Math.floor(1000 + Math.random() * 9000)}`;
+      const newCaseId = `CASE-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
       const newCase: PatientCase = {
         id: newCaseId,
         name: caseForm.name,
@@ -570,6 +698,29 @@ export default function PatientWorkspace() {
         dueDate: caseForm.dueDate || new Date(Date.now() + 7*24*60*60*1000).toISOString().split('T')[0],
         notes: caseForm.notes
       };
+
+      if (!demoMode) {
+        const { createClient } = await import('@/utils/supabase/client');
+        const { error } = await (createClient() as any)
+          .from('patient_cases')
+          .insert({
+            id: newCase.id,
+            patient_id: activePatient.id,
+            name: newCase.name,
+            status: newCase.status,
+            priority: newCase.priority,
+            clinician: newCase.clinician,
+            stage: newCase.stage,
+            progress: newCase.progress,
+            created_date: newCase.createdDate,
+            due_date: newCase.dueDate || null,
+            notes: newCase.notes
+          });
+        if (error) {
+          alert(`Unable to create case: ${error.message}`);
+          return;
+        }
+      }
 
       setPatients(prev => prev.map(p => {
         if (p.id === activePatient.id) {
@@ -601,8 +752,20 @@ export default function PatientWorkspace() {
     setIsCaseModalOpen(true);
   };
 
-  const handleDeleteCase = (caseId: string) => {
+  const handleDeleteCase = async (caseId: string) => {
     if (confirm("Are you sure you want to delete this case?")) {
+      if (!demoMode) {
+        const { createClient } = await import('@/utils/supabase/client');
+        const { error } = await (createClient() as any)
+          .from('patient_cases')
+          .delete()
+          .eq('id', caseId);
+        if (error) {
+          alert(`Unable to delete case: ${error.message}`);
+          return;
+        }
+      }
+
       setPatients(prev => prev.map(p => {
         if (p.id === activePatient.id) {
           return {
@@ -766,105 +929,141 @@ export default function PatientWorkspace() {
     const defaultMeds = activePatient.medications?.join(', ') || '';
     const defaultAllergiesList = activePatient.allergies?.join(', ') || '';
     
-    // 1. Load clinical history from Supabase or localStorage fallback
+    // 1. Load clinical history from Supabase for real accounts.
+    // Demo data is intentionally isolated in localStorage.
     const loadClinicalHistory = async () => {
       setSupabaseLoading(true);
-      try {
-        const { createClient } = await import('@/utils/supabase/client');
-        const supabase = createClient();
-        const { data, error } = await (supabase as any)
-          .from('clinical_histories')
-          .select('*')
-          .eq('patient_id', activePatient.id)
-          .maybeSingle();
-        
-        const historyData = data as any;
-        if (historyData) {
-          setMedicalConditions(historyData.medical_conditions || '');
-          setMedHistoryMedications(historyData.medications || '');
-          setMedicalAllergies(historyData.allergies || '');
-          setSmokingStatus(historyData.smoking_status || 'Non-smoker');
-          setPregnancy(historyData.pregnancy || 'Not pregnant');
-          setBloodPressure(historyData.blood_pressure || '120/80');
-          setDiabetes(historyData.diabetes || 'Negative');
-          setCardiacHistory(historyData.cardiac_history || 'None');
-          setMedicalHistoryNotes(historyData.medical_notes || '');
-          
-          setChiefComplaint(historyData.chief_complaint || '');
-          setPrevDentalTreatment(historyData.prev_dental_treatment || '');
-          setPrevProsthodonticTreatment(historyData.prev_prosthodontic_treatment || '');
-          setImplantHistory(historyData.implant_history || '');
-          setOralHygieneAssessment(historyData.oral_hygiene_assessment || 'Good');
-          setCariesRisk(historyData.caries_risk || 'Low');
-          setPeriodontalStatus(historyData.periodontal_status || 'Healthy');
-          setOcclusionNotes(historyData.occlusion_notes || '');
-          
-          setSupabaseStatus('success');
-          setSupabaseLoading(false);
-          return;
+      if (!demoMode) {
+        try {
+          const { createClient } = await import('@/utils/supabase/client');
+          const { data, error } = await (createClient() as any)
+            .from('clinical_histories')
+            .select('*')
+            .eq('patient_id', activePatient.id)
+            .maybeSingle();
+
+          if (error) throw error;
+          const historyData = data as any;
+          if (historyData) {
+            setMedicalConditions(historyData.medical_conditions || '');
+            setMedHistoryMedications(historyData.medications || '');
+            setMedicalAllergies(historyData.allergies || '');
+            setSmokingStatus(historyData.smoking_status || 'Non-smoker');
+            setPregnancy(historyData.pregnancy || 'Not pregnant');
+            setBloodPressure(historyData.blood_pressure || '');
+            setDiabetes(historyData.diabetes || 'Negative');
+            setCardiacHistory(historyData.cardiac_history || 'None');
+            setMedicalHistoryNotes(historyData.medical_notes || '');
+            setChiefComplaint(historyData.chief_complaint || '');
+            setPrevDentalTreatment(historyData.prev_dental_treatment || '');
+            setPrevProsthodonticTreatment(historyData.prev_prosthodontic_treatment || '');
+            setImplantHistory(historyData.implant_history || '');
+            setOralHygieneAssessment(historyData.oral_hygiene_assessment || 'Good');
+            setCariesRisk(historyData.caries_risk || 'Low');
+            setPeriodontalStatus(historyData.periodontal_status || 'Healthy');
+            setOcclusionNotes(historyData.occlusion_notes || '');
+            setSupabaseStatus('success');
+            setSupabaseLoading(false);
+            return;
+          }
+        } catch (e) {
+          console.error("Unable to load the clinical history.", e);
+          setSupabaseStatus('error');
         }
-      } catch (e) {
-        console.warn("Supabase fetch failed. Loading from local storage instead.", e);
       }
       
-      // Local Storage Fallback
-      const localHistoryKey = `healthos_history_${activePatient.id}`;
-      const savedLocal = localStorage.getItem(localHistoryKey);
-      if (savedLocal) {
+      if (demoMode) {
+        const localHistoryKey = `healthos_history_${activePatient.id}`;
+        const savedLocal = localStorage.getItem(localHistoryKey);
         try {
-          const parsed = JSON.parse(savedLocal);
-          setMedicalConditions(parsed.medicalConditions || '');
-          setMedHistoryMedications(parsed.medHistoryMedications || '');
-          setMedicalAllergies(parsed.medicalAllergies || '');
-          setSmokingStatus(parsed.smokingStatus || 'Non-smoker');
-          setPregnancy(parsed.pregnancy || 'Not pregnant');
-          setBloodPressure(parsed.bloodPressure || '120/80');
-          setDiabetes(parsed.diabetes || 'Negative');
-          setCardiacHistory(parsed.cardiacHistory || 'None');
-          setMedicalHistoryNotes(parsed.medicalHistoryNotes || '');
-          
-          setChiefComplaint(parsed.chiefComplaint || '');
-          setPrevDentalTreatment(parsed.prevDentalTreatment || '');
-          setPrevProsthodonticTreatment(parsed.prevProsthodonticTreatment || '');
-          setImplantHistory(parsed.implantHistory || '');
-          setOralHygieneAssessment(parsed.oralHygieneAssessment || 'Good');
-          setCariesRisk(parsed.cariesRisk || 'Low');
-          setPeriodontalStatus(parsed.periodontalStatus || 'Healthy');
-          setOcclusionNotes(parsed.occlusionNotes || '');
-          setSupabaseStatus('idle');
-          setSupabaseLoading(false);
-          return;
+          if (savedLocal) {
+            const parsed = JSON.parse(savedLocal);
+            setMedicalConditions(parsed.medicalConditions || '');
+            setMedHistoryMedications(parsed.medHistoryMedications || '');
+            setMedicalAllergies(parsed.medicalAllergies || '');
+            setSmokingStatus(parsed.smokingStatus || 'Non-smoker');
+            setPregnancy(parsed.pregnancy || 'Not pregnant');
+            setBloodPressure(parsed.bloodPressure || '120/80');
+            setDiabetes(parsed.diabetes || 'Negative');
+            setCardiacHistory(parsed.cardiacHistory || 'None');
+            setMedicalHistoryNotes(parsed.medicalHistoryNotes || '');
+            setChiefComplaint(parsed.chiefComplaint || '');
+            setPrevDentalTreatment(parsed.prevDentalTreatment || '');
+            setPrevProsthodonticTreatment(parsed.prevProsthodonticTreatment || '');
+            setImplantHistory(parsed.implantHistory || '');
+            setOralHygieneAssessment(parsed.oralHygieneAssessment || 'Good');
+            setCariesRisk(parsed.cariesRisk || 'Low');
+            setPeriodontalStatus(parsed.periodontalStatus || 'Healthy');
+            setOcclusionNotes(parsed.occlusionNotes || '');
+            setSupabaseStatus('idle');
+            setSupabaseLoading(false);
+            return;
+          }
         } catch (e) {
           console.error("Failed to parse local history", e);
         }
       }
       
-      // Default initial states if neither are present
       setMedicalConditions(defaultConditions);
       setMedHistoryMedications(defaultMeds);
       setMedicalAllergies(defaultAllergiesList);
       setSmokingStatus('Non-smoker');
-      setPregnancy(activePatient.medicalAlerts?.includes('Pregnancy (1st Trimester)') ? 'Pregnant (1st Trimester)' : 'Not pregnant');
-      setBloodPressure('120/80');
+      setPregnancy(
+        activePatient.medicalAlerts?.includes('Pregnancy (1st Trimester)')
+          ? 'Pregnant (1st Trimester)'
+          : 'Not pregnant'
+      );
+      setBloodPressure('');
       setDiabetes('Negative');
-      setCardiacHistory(activePatient.medicalAlerts?.includes('Heart Condition') ? 'Yes (Congestive)' : 'None');
-      setMedicalHistoryNotes('Baseline clinical intake logged.');
-      
-      setChiefComplaint('Aesthetic rehabilitation and restoration of masticatory function.');
-      setPrevDentalTreatment('Amalgam restorations, scaling.');
-      setPrevProsthodonticTreatment('None');
-      setImplantHistory(activePatient.id === 'PTS-1092' ? 'Bone grafting healed' : 'None');
-      setOralHygieneAssessment('Fair');
-      setCariesRisk('Moderate');
-      setPeriodontalStatus('Gingivitis (generalized)');
-      setOcclusionNotes('Class I occlusion with minor anterior crowding.');
-      setSupabaseStatus('idle');
+      setCardiacHistory('None');
+      setMedicalHistoryNotes('');
+      setChiefComplaint('');
+      setPrevDentalTreatment('');
+      setPrevProsthodonticTreatment('');
+      setImplantHistory('');
+      setOralHygieneAssessment('Good');
+      setCariesRisk('Low');
+      setPeriodontalStatus('Healthy');
+      setOcclusionNotes('');
+      if (demoMode) setSupabaseStatus('idle');
       setSupabaseLoading(false);
     };
 
     loadClinicalHistory();
 
-    // 2. Load Treatment Plans
+    if (!demoMode) {
+      const loadPatientRecords = async () => {
+        try {
+          const { createClient } = await import('@/utils/supabase/client');
+          const { data, error } = await (createClient() as any)
+            .from('patient_records')
+            .select('*')
+            .eq('patient_id', activePatient.id)
+            .maybeSingle();
+          if (error) throw error;
+          setTreatmentPlans(data?.treatment_plans || []);
+          setClinicalNotesList(data?.soap_notes || []);
+          setImagingGallery(data?.imaging_gallery || []);
+          setPatientDocuments(data?.documents || []);
+          const recall = data?.recall_settings || {};
+          setRecallInterval(recall.recallInterval || '6 Months');
+          setRecallNextVisit(recall.recallNextVisit || '');
+          setRecallFollowupStatus(recall.recallFollowupStatus || 'Scheduled');
+        } catch (error) {
+          console.error('Unable to load patient records.', error);
+          setTreatmentPlans([]);
+          setClinicalNotesList([]);
+          setImagingGallery([]);
+          setPatientDocuments([]);
+        }
+      };
+      loadPatientRecords();
+      setIsEditingHistory(false);
+      setIsEditingRecall(false);
+      return;
+    }
+
+    // Demo-only patient modules.
     const txPlansKey = `healthos_txplans_${activePatient.id}`;
     const savedTxPlans = localStorage.getItem(txPlansKey);
     if (savedTxPlans) {
@@ -961,7 +1160,7 @@ export default function PatientWorkspace() {
     setIsEditingHistory(false);
     setIsEditingRecall(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedPatientId]);
+  }, [selectedPatientId, demoMode]);
 
   // Unified save functions
   const handleSaveHistory = async () => {
@@ -986,10 +1185,14 @@ export default function PatientWorkspace() {
       occlusionNotes
     };
 
-    // 1. Save locally
-    localStorage.setItem(`healthos_history_${activePatient.id}`, JSON.stringify(historyObj));
+    if (demoMode) {
+      localStorage.setItem(`healthos_history_${activePatient.id}`, JSON.stringify(historyObj));
+      setSupabaseStatus('success');
+      setSupabaseLoading(false);
+      setIsEditingHistory(false);
+      return;
+    }
 
-    // 2. Save to Supabase
     try {
       const { createClient } = await import('@/utils/supabase/client');
       const supabase = createClient();
@@ -999,7 +1202,6 @@ export default function PatientWorkspace() {
           patient_id: activePatient.id,
           medical_conditions: medicalConditions,
           medications: medHistoryMedications,
-          allergies: medicalAllergies,
           smoking_status: smokingStatus,
           pregnancy,
           blood_pressure: bloodPressure,
@@ -1024,20 +1226,50 @@ export default function PatientWorkspace() {
         setSupabaseStatus('success');
       }
     } catch (e) {
-      console.warn("Supabase integration offline. Fallback to localStorage success.", e);
+      console.error("Unable to save clinical history.", e);
       setSupabaseStatus('error');
     }
     setSupabaseLoading(false);
     setIsEditingHistory(false);
   };
 
-  const handleSaveRecall = () => {
-    const recallKey = `healthos_recall_${activePatient.id}`;
-    localStorage.setItem(recallKey, JSON.stringify({
+  const savePatientModule = async (column: string, value: unknown) => {
+    if (demoMode) return;
+    const { createClient } = await import('@/utils/supabase/client');
+    const { error } = await (createClient() as any)
+      .from('patient_records')
+      .upsert(
+        { patient_id: activePatient.id, [column]: value },
+        { onConflict: 'patient_id' }
+      );
+    if (error) {
+      alert(`Unable to save patient record: ${error.message}`);
+    }
+  };
+
+  const handleSaveRecall = async () => {
+    const recallSettings = {
       recallInterval,
       recallNextVisit,
       recallFollowupStatus
-    }));
+    };
+    if (demoMode) {
+      localStorage.setItem(
+        `healthos_recall_${activePatient.id}`,
+        JSON.stringify(recallSettings)
+      );
+    } else {
+      await savePatientModule('recall_settings', recallSettings);
+      const { createClient } = await import('@/utils/supabase/client');
+      await (createClient() as any)
+        .from('patients')
+        .update({
+          next_appointment: recallNextVisit
+            ? `${recallNextVisit} 10:00 AM`
+            : activePatient.nextAppointment
+        })
+        .eq('id', activePatient.id);
+    }
 
     // Synchronize master patients state nextAppointment parameters
     setPatients(prev => prev.map(p => {
@@ -1055,33 +1287,57 @@ export default function PatientWorkspace() {
 
   const saveTreatmentPlansList = (newList: any[]) => {
     setTreatmentPlans(newList);
-    localStorage.setItem(`healthos_txplans_${activePatient.id}`, JSON.stringify(newList));
+    if (demoMode) {
+      localStorage.setItem(`healthos_txplans_${activePatient.id}`, JSON.stringify(newList));
+    } else {
+      void savePatientModule('treatment_plans', newList);
+    }
   };
 
   const saveClinicalNotesList = (newList: any[]) => {
     setClinicalNotesList(newList);
-    localStorage.setItem(`healthos_soapnotes_${activePatient.id}`, JSON.stringify(newList));
+    if (demoMode) {
+      localStorage.setItem(`healthos_soapnotes_${activePatient.id}`, JSON.stringify(newList));
+    } else {
+      void savePatientModule('soap_notes', newList);
+    }
   };
 
   const saveImagingGallery = (newList: any[]) => {
     setImagingGallery(newList);
-    localStorage.setItem(`healthos_gallery_${activePatient.id}`, JSON.stringify(newList));
+    if (demoMode) {
+      localStorage.setItem(`healthos_gallery_${activePatient.id}`, JSON.stringify(newList));
+    } else {
+      void savePatientModule('imaging_gallery', newList);
+    }
   };
 
   const savePatientDocuments = (newList: any[]) => {
     setPatientDocuments(newList);
-    localStorage.setItem(`healthos_docs_${activePatient.id}`, JSON.stringify(newList));
+    if (demoMode) {
+      localStorage.setItem(`healthos_docs_${activePatient.id}`, JSON.stringify(newList));
+    } else {
+      void savePatientModule('documents', newList);
+    }
   };
 
   const saveRecallSettings = (interval: string, nextVisit: string, status: string) => {
     setRecallInterval(interval);
     setRecallNextVisit(nextVisit);
     setRecallFollowupStatus(status);
-    localStorage.setItem(`healthos_recall_${activePatient.id}`, JSON.stringify({
+    const recallSettings = {
       recallInterval: interval,
       recallNextVisit: nextVisit,
       recallFollowupStatus: status
-    }));
+    };
+    if (demoMode) {
+      localStorage.setItem(
+        `healthos_recall_${activePatient.id}`,
+        JSON.stringify(recallSettings)
+      );
+    } else {
+      void savePatientModule('recall_settings', recallSettings);
+    }
   };
 
   // Automated Timeline Aggregator

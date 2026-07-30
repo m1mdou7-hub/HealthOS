@@ -18,9 +18,21 @@ export default async function PatientDetailPage(props: PageProps) {
     return redirect('/signin');
   }
 
+  const demoMode = Boolean((user as any).isDevBypass);
+  const { data: patientRows } = demoMode
+    ? { data: [] }
+    : await (supabase as any)
+        .from('patients')
+        .select('*, patient_cases(*)')
+        .order('created_at', { ascending: false });
+
+  if (!demoMode && !patientRows?.some((patient: any) => patient.id === id)) {
+    return redirect('/patients');
+  }
+
   return (
     <DashboardShell user={user}>
-      <PatientWorkspace />
+      <PatientWorkspace demoMode={demoMode} initialRows={patientRows || []} />
     </DashboardShell>
   );
 }

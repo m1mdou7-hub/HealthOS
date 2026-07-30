@@ -34,20 +34,34 @@ import {
   RecallItem,
   OperationalNotification,
   TreatmentSession,
-  Doctor
+  Doctor,
+  Patient
 } from './types';
 
 type TabId = 'dashboard' | 'scheduler' | 'operatory' | 'staff' | 'queue' | 'recalls' | 'sessions' | 'notifications' | 'search';
 
-export default function OperationsWorkspace() {
+interface OperationsWorkspaceProps {
+  demoMode: boolean;
+  initialAppointments: Appointment[];
+  initialPatients: Patient[];
+}
+
+export default function OperationsWorkspace({
+  demoMode,
+  initialAppointments,
+  initialPatients
+}: OperationsWorkspaceProps) {
   // Global Synchronized States
-  const [appointments, setAppointments] = useState<Appointment[]>(MOCK_APPOINTMENTS);
+  const [appointments, setAppointments] = useState<Appointment[]>(
+    demoMode ? MOCK_APPOINTMENTS : initialAppointments
+  );
   const [chairs, setChairs] = useState<ChairStatus[]>(MOCK_CHAIRS_STATUS);
   const [queue, setQueue] = useState<QueueItem[]>(MOCK_QUEUE);
   const [recalls, setRecalls] = useState<RecallItem[]>(MOCK_RECALLS);
   const [notifications, setNotifications] = useState<OperationalNotification[]>(MOCK_NOTIFICATIONS);
   const [sessions, setSessions] = useState<TreatmentSession[]>(MOCK_TREATMENT_SESSIONS);
   const [doctors, setDoctors] = useState<Doctor[]>(MOCK_DOCTORS);
+  const patients = demoMode ? MOCK_PATIENTS : initialPatients;
 
   // Active workspace section
   const [activeTab, setActiveTab] = useState<TabId>('dashboard');
@@ -149,6 +163,8 @@ export default function OperationsWorkspace() {
                   setAppointments={setAppointments}
                   doctors={doctors}
                   chairs={chairsList}
+                  patients={patients}
+                  demoMode={demoMode}
                 />
               )}
 
@@ -186,7 +202,7 @@ export default function OperationsWorkspace() {
                 <TreatmentSessionManager
                   sessions={sessions}
                   setSessions={setSessions}
-                  patients={MOCK_PATIENTS}
+                  patients={patients}
                   doctors={doctors}
                   chairs={chairsList}
                 />
@@ -201,7 +217,7 @@ export default function OperationsWorkspace() {
 
               {activeTab === 'search' && (
                 <SearchEngine
-                  patients={MOCK_PATIENTS}
+                  patients={patients}
                   appointments={appointments}
                   sessions={sessions}
                 />

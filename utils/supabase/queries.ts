@@ -2,11 +2,11 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { cache } from 'react';
 
 export const getUser = cache(async (supabase: any) => {
-  // If in development mode or if explicit dev bypass is set, return a mock user immediately
-  if (process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true')) {
+  // Demo access must be explicitly enabled and is never available in production.
+  if (process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true') {
     return {
       id: 'd0000000-0000-0000-0000-000000000000',
-      email: 'm1mdou7@gmail.com',
+      email: 'demo@healthos.local',
       user_metadata: {
         full_name: 'Dr. Ahmed (Dev Bypass)'
       },
@@ -33,7 +33,7 @@ export const getUser = cache(async (supabase: any) => {
 });
 
 export const getSubscription = cache(async (supabase: any) => {
-  const isDev = process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true');
+  const isDev = process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
 
   try {
     const { data: subscription, error } = await supabase
@@ -93,6 +93,8 @@ export const getSubscription = cache(async (supabase: any) => {
 });
 
 export const getProducts = cache(async (supabase: any) => {
+  const isDev = process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
+
   try {
     const { data: products, error } = await supabase
       .from('products')
@@ -106,13 +108,19 @@ export const getProducts = cache(async (supabase: any) => {
       return products;
     }
   } catch (e) {
-    // Silently proceed to fallback in development or production
+    if (!isDev) {
+      throw e;
+    }
   }
 
-  // High-fidelity fallback representing active, real Stripe products & prices in the environment
+  if (!isDev) {
+    return [];
+  }
+
+  // Demo-only catalog. Real Stripe identifiers must come from Supabase.
   return [
     {
-      id: 'prod_Uuu66GOqIhbKJU',
+      id: 'prod_demo_starter',
       active: true,
       name: 'HealthOS Starter',
       description: 'Perfect for small dental offices, individual clinical researchers, or small clinics starting with digital dentistry.',
@@ -120,8 +128,8 @@ export const getProducts = cache(async (supabase: any) => {
       metadata: { index: '0' },
       prices: [
         {
-          id: 'price_1Tv4IP2Nrn9CQFwfQtXHONrC',
-          product_id: 'prod_Uuu66GOqIhbKJU',
+          id: 'price_demo_starter_monthly',
+          product_id: 'prod_demo_starter',
           active: true,
           description: 'Starter Monthly Plan',
           unit_amount: 1000,
@@ -135,7 +143,7 @@ export const getProducts = cache(async (supabase: any) => {
       ]
     },
     {
-      id: 'prod_UuubM8LjmT4L2X',
+      id: 'prod_demo_professional',
       active: true,
       name: 'HealthOS Professional',
       description: 'Our most popular plan. Complete clinical workspace, advanced prosthodontics analytics, and fully-featured dental charts.',
@@ -143,8 +151,8 @@ export const getProducts = cache(async (supabase: any) => {
       metadata: { index: '1' },
       prices: [
         {
-          id: 'price_1Tv4m02Nrn9CQFwfe9inwGJL',
-          product_id: 'prod_UuubM8LjmT4L2X',
+          id: 'price_demo_professional_monthly',
+          product_id: 'prod_demo_professional',
           active: true,
           description: 'Professional Monthly Plan',
           unit_amount: 9900,
@@ -158,7 +166,7 @@ export const getProducts = cache(async (supabase: any) => {
       ]
     },
     {
-      id: 'prod_Uuv7yjDa0m5mTI',
+      id: 'prod_demo_enterprise',
       active: true,
       name: 'HealthOS Enterprise',
       description: 'The ultimate enterprise solution. Unlimited practice management, high-translucency Zirconia sintering optimization algorithms, and advanced AI clinical assistance.',
@@ -166,8 +174,8 @@ export const getProducts = cache(async (supabase: any) => {
       metadata: { index: '2' },
       prices: [
         {
-          id: 'price_1Tv5Go2Nrn9CQFwf8HtSpSEp',
-          product_id: 'prod_Uuv7yjDa0m5mTI',
+          id: 'price_demo_enterprise_monthly',
+          product_id: 'prod_demo_enterprise',
           active: true,
           description: 'Enterprise Monthly Plan',
           unit_amount: 29900,

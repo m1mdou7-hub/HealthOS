@@ -1,6 +1,24 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
 
+const PUBLIC_PATHS = ['/signin', '/auth', '/pricing'];
+
+const isPublicPath = (pathname: string) =>
+  PUBLIC_PATHS.some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`)
+  ) ||
+  pathname === '/api/webhooks';
+
+const redirectToSignIn = (request: NextRequest) => {
+  const signInUrl = request.nextUrl.clone();
+  signInUrl.pathname = '/signin';
+  signInUrl.searchParams.set(
+    'next',
+    `${request.nextUrl.pathname}${request.nextUrl.search}`
+  );
+  return NextResponse.redirect(signInUrl);
+};
+
 const createClient = (request: NextRequest) => {
   // Create an unmodified response
   let response = NextResponse.next({
@@ -69,28 +87,29 @@ const createClient = (request: NextRequest) => {
 
 export const updateSession = async (request: NextRequest) => {
   try {
-    // This `try/catch` block is only here for the interactive tutorial.
-    // Feel free to remove once you have Supabase connected.
     const { supabase, response } = createClient(request);
+    const demoMode =
+      process.env.NODE_ENV !== 'production' &&
+      process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
 
-    // If in development mode or dev bypass is enabled, skip the auth getUser call entirely
-    if (process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true')) {
+    if (demoMode) {
       return response;
     }
 
-    // This will refresh session if expired - required for Server Components
-    // https://supabase.com/docs/guides/auth/server-side/nextjs
-    await supabase.auth.getUser();
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    if (!user && !isPublicPath(request.nextUrl.pathname)) {
+      return redirectToSignIn(request);
+    }
 
     return response;
-  } catch (e) {
-    // If you are here, a Supabase client could not be created!
-    // This is likely because you have not set up environment variables.
-    // Check out http://localhost:3000 for Next Steps.
-    return NextResponse.next({
-      request: {
-        headers: request.headers
-      }
-    });
+  } catch {
+    if (!isPublicPath(request.nextUrl.pathname)) {
+      return redirectToSignIn(request);
+    }
+
+    return NextResponse.next({ request: { headers: request.headers } });
   }
 };
