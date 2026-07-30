@@ -18,12 +18,12 @@ export default async function AppointmentsPage() {
     ? [{ data: [] }, { data: [] }]
     : await Promise.all([
         (supabase as any)
-          .from('appointments')
+          .from('healthos_appointments')
           .select('*')
           .order('appointment_date', { ascending: true })
           .order('start_time', { ascending: true }),
         (supabase as any)
-          .from('patients')
+          .from('healthos_patients')
           .select('id, name, phone, email, medical_alerts, current_treatment')
           .order('name', { ascending: true })
       ]);

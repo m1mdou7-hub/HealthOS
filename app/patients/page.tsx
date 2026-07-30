@@ -17,8 +17,8 @@ export default async function PatientsPage() {
   const { data: patientRows } = demoMode
     ? { data: [] }
     : await (supabase as any)
-        .from('patients')
-        .select('*, patient_cases(*)')
+        .from('healthos_patients')
+        .select('*, healthos_patient_cases(*)')
         .order('created_at', { ascending: false });
 
   return (

@@ -76,7 +76,7 @@ export default function EnterpriseScheduler({
     if (!demoMode) {
       const recurringGroupId = nextAppointments.length > 1 ? crypto.randomUUID() : undefined;
       const { error } = await (supabase as any)
-        .from('appointments')
+        .from('healthos_appointments')
         .insert(nextAppointments.map(appointment => toRow(appointment, recurringGroupId)));
       if (error) {
         persistError(error);
@@ -90,7 +90,7 @@ export default function EnterpriseScheduler({
   const updateAppointment = async (appointment: Appointment) => {
     if (!demoMode) {
       const { error } = await (supabase as any)
-        .from('appointments')
+        .from('healthos_appointments')
         .update(toRow(appointment))
         .eq('id', appointment.id);
       if (error) {
@@ -268,7 +268,7 @@ export default function EnterpriseScheduler({
   const handleDelete = async (apptId: string) => {
     if (!demoMode) {
       const { error } = await (supabase as any)
-        .from('appointments')
+        .from('healthos_appointments')
         .delete()
         .eq('id', apptId);
       if (error) {

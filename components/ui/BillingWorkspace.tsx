@@ -684,7 +684,7 @@ export default function BillingWorkspace({
       try {
         const { createClient } = await import('@/utils/supabase/client');
         const { data, error } = await (createClient() as any).rpc(
-          'record_billing_payment',
+          'healthos_record_billing_payment',
           {
             target_invoice_id: matchedInvoice.id,
             payment_amount: amt,
@@ -797,7 +797,7 @@ export default function BillingWorkspace({
         const { createClient } = await import('@/utils/supabase/client');
         const supabase = createClient() as any;
         const { data: createdInvoice, error: createError } = await supabase.rpc(
-          'convert_billing_estimate',
+          'healthos_convert_billing_estimate',
           {
             target_estimate_id: est.id
           }
@@ -875,7 +875,7 @@ export default function BillingWorkspace({
       try {
         const { createClient } = await import('@/utils/supabase/client');
         const { data, error } = await (createClient() as any).rpc(
-          'resubmit_billing_claim',
+          'healthos_resubmit_billing_claim',
           {
             target_claim_id: resubmitClaimId,
             procedure_code: resubmitCode.trim(),
@@ -979,7 +979,7 @@ export default function BillingWorkspace({
     try {
       const { createClient } = await import('@/utils/supabase/client');
       const { data, error } = await (createClient() as any).rpc(
-        'create_billing_invoice',
+        'healthos_create_billing_invoice',
         {
           target_patient_id: patient.id,
           invoice_doctor_name: 'Unassigned',
@@ -1035,7 +1035,7 @@ export default function BillingWorkspace({
     try {
       const { createClient } = await import('@/utils/supabase/client');
       const { error } = await (createClient() as any)
-        .from('billing_settings')
+        .from('healthos_billing_settings')
         .upsert({
           currency: selectedCurrency,
           tax_rate_percent: taxRatePercent,
