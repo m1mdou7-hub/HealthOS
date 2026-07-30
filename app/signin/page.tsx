@@ -4,7 +4,7 @@ import { getDefaultSignInView } from '@/utils/auth-helpers/settings';
 import { cookies } from 'next/headers';
 
 export default function SignIn() {
-  if (process.env.NODE_ENV !== 'production' && (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true')) {
+  if (process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true') {
     return redirect('/');
   }
 

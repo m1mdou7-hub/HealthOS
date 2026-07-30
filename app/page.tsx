@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 import { createClient } from '@/utils/supabase/server';
 import { getUser } from '@/utils/supabase/queries';
+import { redirect } from 'next/navigation';
 import DashboardShell from '@/components/ui/DashboardShell';
 import {
   Users,
@@ -30,15 +31,12 @@ export default async function HomePage() {
   const supabase = createClient();
   const loggedInUser = await getUser(supabase);
 
-  // Fallback to a high-fidelity operator user profile for the preview so the dashboard loads immediately
-  const activeUser = loggedInUser || {
-    id: 'preview-user',
-    email: 'm1mdou7@gmail.com',
-    full_name: 'Dr. Ahmed'
-  };
+  if (!loggedInUser) {
+    return redirect('/signin');
+  }
 
   return (
-    <DashboardShell user={activeUser}>
+    <DashboardShell user={loggedInUser}>
       <div className="space-y-6 max-w-[1600px] mx-auto animate-fade-in pb-12 text-zinc-100">
         
         {/* Top Operational Command Bar */}

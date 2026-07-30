@@ -13,9 +13,17 @@ export default async function PatientsPage() {
     return redirect('/signin');
   }
 
+  const demoMode = Boolean((user as any).isDevBypass);
+  const { data: patientRows } = demoMode
+    ? { data: [] }
+    : await (supabase as any)
+        .from('patients')
+        .select('*, patient_cases(*)')
+        .order('created_at', { ascending: false });
+
   return (
     <DashboardShell user={user}>
-      <PatientWorkspace />
+      <PatientWorkspace demoMode={demoMode} initialRows={patientRows || []} />
     </DashboardShell>
   );
 }

@@ -154,7 +154,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
   });
   const pageTitle = activeItem ? activeItem.name : 'HealthOS Workspace';
 
-  const isDevBypass = process.env.NODE_ENV !== 'production' && (user?.isDevBypass || process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true');
+  const isDevBypass =
+    process.env.NODE_ENV !== 'production' &&
+    (user?.isDevBypass || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true');
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
