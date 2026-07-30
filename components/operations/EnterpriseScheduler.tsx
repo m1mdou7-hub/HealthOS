@@ -6,20 +6,25 @@ import {
   Calendar, Clock, User, Check, X, ChevronLeft, ChevronRight, 
   Trash2, Copy, Plus, Edit, RotateCcw, AlertCircle, RefreshCw 
 } from 'lucide-react';
-import { Appointment, Doctor, Patient, MOCK_DOCTORS, MOCK_PATIENTS } from './types';
+import { createClient } from '@/utils/supabase/client';
+import { Appointment, Doctor, Patient } from './types';
 
 interface EnterpriseSchedulerProps {
   appointments: Appointment[];
   setAppointments: React.Dispatch<React.SetStateAction<Appointment[]>>;
   doctors: Doctor[];
   chairs: string[];
+  patients: Patient[];
+  demoMode: boolean;
 }
 
 export default function EnterpriseScheduler({
   appointments,
   setAppointments,
   doctors,
-  chairs
+  chairs,
+  patients,
+  demoMode
 }: EnterpriseSchedulerProps) {
   const [selectedView, setSelectedView] = useState<'day' | 'week' | 'month' | 'timeline'>('day');
   const [currentDate, setCurrentDate] = useState<Date>(new Date('2026-07-20'));
@@ -30,7 +35,7 @@ export default function EnterpriseScheduler({
   const [conflictWarning, setConflictWarning] = useState<string | null>(null);
 
   // New Appointment Form State
-  const [formPatientId, setFormPatientId] = useState(MOCK_PATIENTS[0].id);
+  const [formPatientId, setFormPatientId] = useState(patients[0]?.id || '');
   const [formDoctorId, setFormDoctorId] = useState(doctors[0].id);
   const [formProcedure, setFormProcedure] = useState('Crown Preparation');
   const [formChair, setFormChair] = useState(chairs[0]);
@@ -39,6 +44,63 @@ export default function EnterpriseScheduler({
   const [formDuration, setFormDuration] = useState(45);
   const [formCategory, setFormCategory] = useState<'Consultation' | 'Treatment' | 'Surgery' | 'Lab' | 'Recall'>('Treatment');
   const [formIsRecurring, setFormIsRecurring] = useState(false);
+  const supabase = createClient();
+
+  const toRow = (appointment: Appointment, recurringGroupId?: string) => ({
+    id: appointment.id,
+    patient_id: appointment.patientId,
+    patient_name: appointment.patientName,
+    doctor_id: appointment.doctorId,
+    doctor_name: appointment.doctorName,
+    procedure: appointment.procedure,
+    chair: appointment.chair,
+    appointment_date: appointment.date,
+    start_time: appointment.startTime,
+    duration_minutes: appointment.duration,
+    status: appointment.status,
+    category: appointment.category,
+    is_recurring: Boolean(appointment.isRecurring),
+    recurring_group_id: recurringGroupId || null
+  });
+
+  const persistError = (error: any) => {
+    const isConflict = error?.code === '23P01';
+    setConflictWarning(
+      isConflict
+        ? 'This doctor or chair is already booked during the selected time.'
+        : error?.message || 'The appointment could not be saved.'
+    );
+  };
+
+  const insertAppointments = async (nextAppointments: Appointment[]) => {
+    if (!demoMode) {
+      const recurringGroupId = nextAppointments.length > 1 ? crypto.randomUUID() : undefined;
+      const { error } = await (supabase as any)
+        .from('appointments')
+        .insert(nextAppointments.map(appointment => toRow(appointment, recurringGroupId)));
+      if (error) {
+        persistError(error);
+        return false;
+      }
+    }
+    setAppointments(prev => [...prev, ...nextAppointments]);
+    return true;
+  };
+
+  const updateAppointment = async (appointment: Appointment) => {
+    if (!demoMode) {
+      const { error } = await (supabase as any)
+        .from('appointments')
+        .update(toRow(appointment))
+        .eq('id', appointment.id);
+      if (error) {
+        persistError(error);
+        return false;
+      }
+    }
+    setAppointments(prev => prev.map(item => item.id === appointment.id ? appointment : item));
+    return true;
+  };
 
   // Formatting date
   const getFormattedDate = (date: Date) => date.toISOString().split('T')[0];
@@ -80,7 +142,7 @@ export default function EnterpriseScheduler({
     e.preventDefault();
   };
 
-  const handleDrop = (e: React.DragEvent, targetChair: string, targetTime: string) => {
+  const handleDrop = async (e: React.DragEvent, targetChair: string, targetTime: string) => {
     e.preventDefault();
     const apptId = e.dataTransfer.getData('text/plain');
     if (!apptId) return;
@@ -95,12 +157,7 @@ export default function EnterpriseScheduler({
       return;
     }
 
-    setAppointments(prev => prev.map(a => {
-      if (a.id === apptId) {
-        return { ...a, chair: targetChair, startTime: targetTime };
-      }
-      return a;
-    }));
+    await updateAppointment({ ...appt, chair: targetChair, startTime: targetTime });
   };
 
   // Navigating Date
@@ -142,18 +199,22 @@ export default function EnterpriseScheduler({
   };
 
   // Actions: Create, Edit, Delete, Duplicate
-  const handleCreateAppointment = () => {
+  const handleCreateAppointment = async () => {
     const conflict = checkConflicts(formDoctorId, formChair, formDate, formTime, formDuration);
     if (conflict) {
       setConflictWarning(conflict);
       return;
     }
 
-    const patient = MOCK_PATIENTS.find(p => p.id === formPatientId)!;
+    const patient = patients.find(p => p.id === formPatientId);
     const doctor = doctors.find(d => d.id === formDoctorId)!;
+    if (!patient) {
+      setConflictWarning('Create a patient before booking an appointment.');
+      return;
+    }
 
     const base: Appointment = {
-      id: `A-${Math.floor(Math.random() * 9000) + 1000}`,
+      id: `APT-${crypto.randomUUID()}`,
       patientId: patient.id,
       patientName: patient.name,
       doctorId: doctor.id,
@@ -179,33 +240,46 @@ export default function EnterpriseScheduler({
 
         newAppts.push({
           ...base,
-          id: `A-${Math.floor(Math.random() * 9000) + 1000}`,
+          id: `APT-${crypto.randomUUID()}`,
           date: recurringDateStr,
           isRecurring: true
         });
       }
     }
 
-    setAppointments(prev => [...prev, ...newAppts]);
-    setIsCreateModalOpen(false);
-    setConflictWarning(null);
+    if (await insertAppointments(newAppts)) {
+      setIsCreateModalOpen(false);
+      setConflictWarning(null);
+    }
   };
 
-  const handleDuplicate = (appt: Appointment) => {
+  const handleDuplicate = async (appt: Appointment) => {
+    const nextDate = new Date(`${appt.date}T12:00:00`);
+    nextDate.setDate(nextDate.getDate() + 1);
     const duplicated: Appointment = {
       ...appt,
-      id: `A-${Math.floor(Math.random() * 9000) + 1000}`,
-      patientName: `${appt.patientName} (Copy)`,
-      startTime: appt.startTime // Let them drag it afterwards or edit
+      id: `APT-${crypto.randomUUID()}`,
+      date: getFormattedDate(nextDate),
+      status: 'Pending'
     };
-    setAppointments(prev => [...prev, duplicated]);
+    await insertAppointments([duplicated]);
   };
 
-  const handleDelete = (apptId: string) => {
+  const handleDelete = async (apptId: string) => {
+    if (!demoMode) {
+      const { error } = await (supabase as any)
+        .from('appointments')
+        .delete()
+        .eq('id', apptId);
+      if (error) {
+        persistError(error);
+        return;
+      }
+    }
     setAppointments(prev => prev.filter(a => a.id !== apptId));
   };
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = async () => {
     if (!editingAppt) return;
 
     const conflict = checkConflicts(
@@ -222,9 +296,10 @@ export default function EnterpriseScheduler({
       return;
     }
 
-    setAppointments(prev => prev.map(a => a.id === editingAppt.id ? editingAppt : a));
-    setEditingAppt(null);
-    setConflictWarning(null);
+    if (await updateAppointment(editingAppt)) {
+      setEditingAppt(null);
+      setConflictWarning(null);
+    }
   };
 
   return (
@@ -275,6 +350,7 @@ export default function EnterpriseScheduler({
             setFormDate(currentDateStr);
             setIsCreateModalOpen(true);
           }}
+          disabled={patients.length === 0}
           className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-purple-600/10 active:scale-95 self-start md:self-auto"
         >
           <Plus className="w-4 h-4" /> Add Appointment
@@ -684,7 +760,7 @@ export default function EnterpriseScheduler({
                       onChange={(e) => setFormPatientId(e.target.value)}
                       className="w-full p-2 bg-zinc-900 border border-zinc-850 rounded-lg text-white"
                     >
-                      {MOCK_PATIENTS.map(p => (
+                      {patients.map(p => (
                         <option key={p.id} value={p.id}>{p.name}</option>
                       ))}
                     </select>
