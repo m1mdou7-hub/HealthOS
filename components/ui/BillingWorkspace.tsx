@@ -96,6 +96,7 @@ interface Invoice {
 interface Estimate {
   id: string;
   estimateNumber: string;
+  patientId: string;
   patientName: string;
   doctorName: string;
   clinicName: string;
@@ -145,7 +146,7 @@ const INITIAL_INVOICES: Invoice[] = [
   {
     id: 'I-101',
     invoiceNumber: 'INV-2026-001',
-    patientName: 'Arthur Pendragon',
+    patientName: 'Demo Patient A',
     patientId: 'PT-9904',
     doctorName: 'Dr. Catherine Avery',
     clinicName: 'HealthOS Main Campus',
@@ -166,7 +167,7 @@ const INITIAL_INVOICES: Invoice[] = [
   {
     id: 'I-102',
     invoiceNumber: 'INV-2026-002',
-    patientName: 'Clara Oswald',
+    patientName: 'Demo Patient B',
     patientId: 'PT-3291',
     doctorName: 'Dr. Elena Rostova',
     clinicName: 'Westside Pediatric Dentistry',
@@ -187,7 +188,7 @@ const INITIAL_INVOICES: Invoice[] = [
   {
     id: 'I-103',
     invoiceNumber: 'INV-2026-003',
-    patientName: 'Bruce Wayne',
+    patientName: 'Demo Patient C',
     patientId: 'PT-0007',
     doctorName: 'Dr. Catherine Avery',
     clinicName: 'Eastside Surgical Hub',
@@ -209,7 +210,7 @@ const INITIAL_INVOICES: Invoice[] = [
   {
     id: 'I-104',
     invoiceNumber: 'INV-2026-004',
-    patientName: 'Diana Prince',
+    patientName: 'Demo Patient D',
     patientId: 'PT-4822',
     doctorName: 'Dr. Elena Rostova',
     clinicName: 'HealthOS Main Campus',
@@ -230,7 +231,7 @@ const INITIAL_INVOICES: Invoice[] = [
   {
     id: 'I-105',
     invoiceNumber: 'INV-2026-005',
-    patientName: 'Scott Summers',
+    patientName: 'Demo Patient E',
     patientId: 'PT-1102',
     doctorName: 'Dr. Robert Carter',
     clinicName: 'North Ward Urgent Care',
@@ -254,7 +255,8 @@ const INITIAL_ESTIMATES: Estimate[] = [
   {
     id: 'E-501',
     estimateNumber: 'EST-2026-401',
-    patientName: 'Logan Howlett',
+    patientId: 'PT-2401',
+    patientName: 'Demo Patient G',
     doctorName: 'Dr. Catherine Avery',
     clinicName: 'HealthOS Main Campus',
     issueDate: '2026-07-14',
@@ -269,7 +271,8 @@ const INITIAL_ESTIMATES: Estimate[] = [
   {
     id: 'E-502',
     estimateNumber: 'EST-2026-402',
-    patientName: 'Anya Chalotra',
+    patientId: 'PT-2402',
+    patientName: 'Demo Patient F',
     doctorName: 'Dr. Robert Carter',
     clinicName: 'North Ward Urgent Care',
     issueDate: '2026-07-15',
@@ -286,7 +289,7 @@ const INITIAL_CLAIMS: InsuranceClaim[] = [
   {
     id: 'CLM-001',
     invoiceNumber: 'INV-2026-001',
-    patientName: 'Arthur Pendragon',
+    patientName: 'Demo Patient A',
     provider: 'Delta Dental',
     policyNumber: 'DD-881290-A',
     preAuthRequired: true,
@@ -303,7 +306,7 @@ const INITIAL_CLAIMS: InsuranceClaim[] = [
   {
     id: 'CLM-002',
     invoiceNumber: 'INV-2026-002',
-    patientName: 'Clara Oswald',
+    patientName: 'Demo Patient B',
     provider: 'Cigna Dental',
     policyNumber: 'CG-449102-X',
     preAuthRequired: false,
@@ -319,7 +322,7 @@ const INITIAL_CLAIMS: InsuranceClaim[] = [
   {
     id: 'CLM-004',
     invoiceNumber: 'INV-2026-004',
-    patientName: 'Diana Prince',
+    patientName: 'Demo Patient D',
     provider: 'MetLife Dental',
     policyNumber: 'ML-992019-B',
     preAuthRequired: true,
@@ -335,15 +338,15 @@ const INITIAL_CLAIMS: InsuranceClaim[] = [
 ];
 
 const INITIAL_PAYMENTS: PaymentRecord[] = [
-  { id: 'PAY-881', invoiceNumber: 'INV-2026-001', patientName: 'Arthur Pendragon', amount: 1642.5, paymentMethod: 'Credit Card', timestamp: '2026-07-11 11:32', type: 'Payment', receiptNumber: 'REC-1192-01' },
-  { id: 'PAY-882', invoiceNumber: 'INV-2026-003', patientName: 'Bruce Wayne', amount: 1000.0, paymentMethod: 'Bank Transfer', timestamp: '2026-07-03 14:00', type: 'Payment', receiptNumber: 'REC-1192-02' },
-  { id: 'PAY-883', invoiceNumber: 'INV-2026-004', patientName: 'Diana Prince', amount: 150.0, paymentMethod: 'Cash', timestamp: '2026-07-15 17:10', type: 'Payment', receiptNumber: 'REC-1192-03' }
+  { id: 'PAY-881', invoiceNumber: 'INV-2026-001', patientName: 'Demo Patient A', amount: 1642.5, paymentMethod: 'Credit Card', timestamp: '2026-07-11 11:32', type: 'Payment', receiptNumber: 'REC-1192-01' },
+  { id: 'PAY-882', invoiceNumber: 'INV-2026-003', patientName: 'Demo Patient C', amount: 1000.0, paymentMethod: 'Bank Transfer', timestamp: '2026-07-03 14:00', type: 'Payment', receiptNumber: 'REC-1192-02' },
+  { id: 'PAY-883', invoiceNumber: 'INV-2026-004', patientName: 'Demo Patient D', amount: 150.0, paymentMethod: 'Cash', timestamp: '2026-07-15 17:10', type: 'Payment', receiptNumber: 'REC-1192-03' }
 ];
 
 const INITIAL_TIMELINE: TimelineEvent[] = [
-  { id: 'TL-01', type: 'invoice_created', title: 'Invoice INV-2026-005 generated', description: 'Emergency treatment extraction invoice generated for Scott Summers.', timestamp: '2026-07-16 14:22', amount: 500, user: 'Dr. Robert Carter' },
-  { id: 'TL-02', type: 'claim_submitted', title: 'Claim submitted to Aetna', description: 'Electronic claim submitted for Scott Summers extraction.', timestamp: '2026-07-16 14:45', user: 'Billing Bot AI' },
-  { id: 'TL-03', type: 'payment_received', title: 'Payment received for INV-2026-001', description: 'Credit card payment of $1,642.50 processed for Arthur Pendragon.', timestamp: '2026-07-11 11:32', amount: 1642.5, user: 'FrontDesk Jane' },
+  { id: 'TL-01', type: 'invoice_created', title: 'Invoice INV-2026-005 generated', description: 'Emergency treatment extraction invoice generated for Demo Patient E.', timestamp: '2026-07-16 14:22', amount: 500, user: 'Dr. Robert Carter' },
+  { id: 'TL-02', type: 'claim_submitted', title: 'Claim submitted to Aetna', description: 'Electronic claim submitted for Demo Patient E extraction.', timestamp: '2026-07-16 14:45', user: 'Billing Bot AI' },
+  { id: 'TL-03', type: 'payment_received', title: 'Payment received for INV-2026-001', description: 'Credit card payment of $1,642.50 processed for Demo Patient A.', timestamp: '2026-07-11 11:32', amount: 1642.5, user: 'FrontDesk Jane' },
   { id: 'TL-04', type: 'claim_approved', title: 'Claim approved by Delta Dental', description: 'Delta Dental approved claim #DD-88129 for $1,314.00.', timestamp: '2026-07-13 16:45', amount: 1314.0, user: 'Delta Gateway' },
   { id: 'TL-05', type: 'refund_issued', title: 'Refund processed for PT-8821', description: 'Refund of $350.00 processed for overpaid laboratory fee.', timestamp: '2026-07-09 09:12', amount: 350, user: 'Supervisor Avery' }
 ];
@@ -379,21 +382,99 @@ const PROCEDURE_REVENUE_BAR = [
   { code: 'D4341 (Scaling)', revenue: 14500 }
 ];
 
-export default function BillingWorkspace() {
+interface BillingPatientOption {
+  id: string;
+  name: string;
+}
+
+interface BillingSettings {
+  currency: string;
+  taxRatePercent: number;
+  invoicePrefix: string;
+  autoSubmitInsurance: boolean;
+}
+
+interface BillingWorkspaceProps {
+  demoMode?: boolean;
+  initialInvoices?: Invoice[];
+  initialEstimates?: Estimate[];
+  initialClaims?: InsuranceClaim[];
+  initialPayments?: PaymentRecord[];
+  initialTimelineEvents?: TimelineEvent[];
+  initialPatients?: BillingPatientOption[];
+  initialSettings?: BillingSettings;
+}
+
+const mapInvoiceRow = (row: any): Invoice => ({
+  id: row.id,
+  invoiceNumber: row.invoice_number,
+  patientName: row.patient_name,
+  patientId: row.patient_id,
+  doctorName: row.doctor_name,
+  clinicName: row.clinic_name,
+  issueDate: row.issue_date,
+  dueDate: row.due_date,
+  treatmentItems: row.treatment_items || [],
+  insuranceCoveragePercent: Number(row.insurance_coverage_percent || 0),
+  insuranceClaimStatus: row.insurance_claim_status,
+  insuranceProvider: row.insurance_provider,
+  paymentStatus: row.payment_status,
+  amountPaid: Number(row.amount_paid || 0),
+  notes: row.notes || '',
+  attachments: row.attachments || []
+});
+
+const mapClaimRow = (row: any): InsuranceClaim => ({
+  id: row.id,
+  invoiceNumber: row.invoice_number,
+  patientName: row.patient_name,
+  provider: row.provider,
+  policyNumber: row.policy_number,
+  preAuthRequired: row.pre_auth_required,
+  preAuthStatus: row.pre_auth_status,
+  amountClaimed: Number(row.amount_claimed || 0),
+  amountApproved: Number(row.amount_approved || 0),
+  status: row.status,
+  timeline: row.timeline || []
+});
+
+export default function BillingWorkspace({
+  demoMode = false,
+  initialInvoices = [],
+  initialEstimates = [],
+  initialClaims = [],
+  initialPayments = [],
+  initialTimelineEvents = [],
+  initialPatients = [],
+  initialSettings
+}: BillingWorkspaceProps) {
   // Navigation Tabs matching 10 requested areas
   const [activeTab, setActiveTab] = useState<
     'Dashboard' | 'Invoices' | 'InvoiceDetails' | 'Payments' | 'Insurance' | 'Estimates' | 'Reports' | 'AIAssistant' | 'Timeline' | 'Settings'
   >('Dashboard');
 
-  // Shared Core States (Realistic Front-end State Persistence)
-  const [invoices, setInvoices] = useState<Invoice[]>(INITIAL_INVOICES);
-  const [estimates, setEstimates] = useState<Estimate[]>(INITIAL_ESTIMATES);
-  const [claims, setClaims] = useState<InsuranceClaim[]>(INITIAL_CLAIMS);
-  const [payments, setPayments] = useState<PaymentRecord[]>(INITIAL_PAYMENTS);
-  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>(INITIAL_TIMELINE);
+  const [invoices, setInvoices] = useState<Invoice[]>(
+    demoMode ? INITIAL_INVOICES : initialInvoices
+  );
+  const [estimates, setEstimates] = useState<Estimate[]>(
+    demoMode ? INITIAL_ESTIMATES : initialEstimates
+  );
+  const [claims, setClaims] = useState<InsuranceClaim[]>(
+    demoMode ? INITIAL_CLAIMS : initialClaims
+  );
+  const [payments, setPayments] = useState<PaymentRecord[]>(
+    demoMode ? INITIAL_PAYMENTS : initialPayments
+  );
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>(
+    demoMode ? INITIAL_TIMELINE : initialTimelineEvents
+  );
+  const [billingBusy, setBillingBusy] = useState(false);
+  const [billingError, setBillingError] = useState('');
 
   // Active Invoice selected for details view
-  const [selectedInvoiceId, setSelectedInvoiceId] = useState<string>('I-102');
+  const [selectedInvoiceId, setSelectedInvoiceId] = useState<string>(
+    (demoMode ? INITIAL_INVOICES[1]?.id : initialInvoices[0]?.id) || ''
+  );
 
   // Interactive Form States (Invoice builder/detail, Payment creator, claim editor, etc)
   const [invoiceSearch, setInvoiceSearch] = useState('');
@@ -402,7 +483,9 @@ export default function BillingWorkspace() {
   const [invoiceClinicFilter, setInvoiceClinicFilter] = useState('All');
 
   // Quick payment form state
-  const [payInvoiceNumber, setPayInvoiceNumber] = useState('INV-2026-002');
+  const [payInvoiceNumber, setPayInvoiceNumber] = useState(
+    (demoMode ? INITIAL_INVOICES[1]?.invoiceNumber : initialInvoices[0]?.invoiceNumber) || ''
+  );
   const [payAmount, setPayAmount] = useState('1165.00');
   const [payMethod, setPayMethod] = useState<'Cash' | 'Credit Card' | 'Bank Transfer' | 'Online Gateway'>('Credit Card');
 
@@ -416,15 +499,19 @@ export default function BillingWorkspace() {
   const [aiAnalyzing, setAiAnalyzing] = useState<boolean>(false);
 
   // Billing Settings configurations
-  const [selectedCurrency, setSelectedCurrency] = useState('USD ($)');
-  const [taxRatePercent, setTaxRatePercent] = useState(8.25);
-  const [invoicePrefix, setInvoicePrefix] = useState('INV-2026-');
-  const [autoSubmitInsurance, setAutoSubmitInsurance] = useState(true);
+  const [selectedCurrency, setSelectedCurrency] = useState(initialSettings?.currency || 'USD ($)');
+  const [taxRatePercent, setTaxRatePercent] = useState(initialSettings?.taxRatePercent ?? 8.25);
+  const [invoicePrefix, setInvoicePrefix] = useState(initialSettings?.invoicePrefix || 'INV-');
+  const [autoSubmitInsurance, setAutoSubmitInsurance] = useState(initialSettings?.autoSubmitInsurance ?? false);
 
   // Calculate dynamic dashboard stats based on state
   const stats = useMemo(() => {
-    let todayRevenue = 12450.00;
+    const today = new Date().toISOString().substring(0, 10);
+    const todayRevenue = payments
+      .filter(payment => payment.timestamp.substring(0, 10) === today)
+      .reduce((sum, payment) => sum + payment.amount, 0);
     let outstandingBalance = 0;
+    let totalInvoiced = 0;
     let paidCount = 0;
     let pendingCount = 0;
     
@@ -439,14 +526,15 @@ export default function BillingWorkspace() {
       }, 0);
 
       const balanceRemaining = totalVal - inv.amountPaid;
-      outstandingBalance += balanceRemaining;
+      totalInvoiced += totalVal;
+      outstandingBalance += Math.max(balanceRemaining, 0);
 
       if (inv.paymentStatus === 'Paid') paidCount++;
       if (inv.paymentStatus === 'Pending' || inv.paymentStatus === 'Partially Paid') pendingCount++;
     });
 
     const activeClaims = claims.length;
-    const averageInvoice = 850;
+    const averageInvoice = invoices.length ? totalInvoiced / invoices.length : 0;
 
     return {
       todayRevenue,
@@ -454,9 +542,76 @@ export default function BillingWorkspace() {
       paidCount,
       pendingCount,
       activeClaims,
-      averageInvoice
+      averageInvoice,
+      totalInvoiced
     };
-  }, [invoices, claims]);
+  }, [invoices, claims, payments]);
+
+  const revenueTrendData = useMemo(() => {
+    if (demoMode) return REVENUE_TREND_DATA;
+
+    const months = Array.from({ length: 7 }, (_, offset) => {
+      const date = new Date();
+      date.setUTCDate(1);
+      date.setUTCMonth(date.getUTCMonth() - (6 - offset));
+      return {
+        key: date.toISOString().slice(0, 7),
+        month: date.toLocaleString('en', { month: 'short', timeZone: 'UTC' })
+      };
+    });
+
+    return months.map(({ key, month }) => {
+      const patientPayment = payments
+        .filter(payment => payment.timestamp.substring(0, 7) === key)
+        .reduce((sum, payment) => sum + payment.amount, 0);
+      const insuranceClaim = key === new Date().toISOString().slice(0, 7)
+        ? claims
+            .filter(claim => claim.status === 'Approved')
+            .reduce((sum, claim) => sum + claim.amountApproved, 0)
+        : 0;
+      return {
+        month,
+        PatientPayment: patientPayment,
+        InsuranceClaim: insuranceClaim,
+        Total: patientPayment + insuranceClaim
+      };
+    });
+  }, [claims, demoMode, payments]);
+
+  const clinicRevenueData = useMemo(() => {
+    if (demoMode) return CLINIC_REVENUE_PIE;
+    const colors = ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6'];
+    return Array.from(new Set(invoices.map(invoice => invoice.clinicName)))
+      .map((name, index) => ({
+        name,
+        value: invoices
+          .filter(invoice => invoice.clinicName === name)
+          .reduce((sum, invoice) => sum + invoice.amountPaid, 0),
+        color: colors[index % colors.length]
+      }));
+  }, [demoMode, invoices]);
+
+  const doctorRevenueData = useMemo(() => {
+    if (demoMode) return DOCTOR_REVENUE_BAR;
+    return Array.from(new Set(invoices.map(invoice => invoice.doctorName))).map(name => ({
+      name,
+      revenue: invoices
+        .filter(invoice => invoice.doctorName === name)
+        .reduce((sum, invoice) => sum + invoice.amountPaid, 0)
+    }));
+  }, [demoMode, invoices]);
+
+  const procedureRevenueData = useMemo(() => {
+    if (demoMode) return PROCEDURE_REVENUE_BAR;
+    const totals = new Map<string, number>();
+    invoices.forEach(invoice => invoice.treatmentItems.forEach(item => {
+      const key = `${item.code} (${item.name})`;
+      totals.set(key, (totals.get(key) || 0) + item.quantity * item.unitPrice);
+    }));
+    return Array.from(totals, ([code, revenue]) => ({ code, revenue }))
+      .sort((a, b) => b.revenue - a.revenue)
+      .slice(0, 6);
+  }, [demoMode, invoices]);
 
   // Selected Invoice reference
   const selectedInvoice = useMemo(() => {
@@ -510,14 +665,75 @@ export default function BillingWorkspace() {
   }, [invoices, invoiceSearch, invoiceStatusFilter, invoiceDoctorFilter, invoiceClinicFilter]);
 
   // Add custom payment
-  const handleProcessPayment = (e: React.FormEvent) => {
+  const handleProcessPayment = async (e: React.FormEvent) => {
     e.preventDefault();
+    setBillingError('');
     if (!payInvoiceNumber.trim() || !payAmount.trim()) return;
 
     const matchedInvoice = invoices.find(inv => inv.invoiceNumber === payInvoiceNumber.trim());
     if (!matchedInvoice) return;
 
     const amt = parseFloat(payAmount);
+    if (!Number.isFinite(amt) || amt <= 0) {
+      setBillingError('Enter a payment amount greater than zero.');
+      return;
+    }
+
+    if (!demoMode) {
+      setBillingBusy(true);
+      try {
+        const { createClient } = await import('@/utils/supabase/client');
+        const { data, error } = await (createClient() as any).rpc(
+          'record_billing_payment',
+          {
+            target_invoice_id: matchedInvoice.id,
+            payment_amount: amt,
+            selected_payment_method: payMethod
+          }
+        );
+
+        if (error) throw error;
+
+        const paymentRow = data?.payment;
+        const newPay: PaymentRecord = {
+          id: paymentRow.id,
+          invoiceNumber: paymentRow.invoice_number,
+          patientName: paymentRow.patient_name,
+          amount: Number(paymentRow.amount),
+          paymentMethod: paymentRow.payment_method,
+          timestamp: String(paymentRow.recorded_at).replace('T', ' ').slice(0, 16),
+          type: paymentRow.type,
+          receiptNumber: paymentRow.receipt_number
+        };
+        const log: TimelineEvent = {
+          id: crypto.randomUUID(),
+          type: 'payment_received',
+          title: `Payment on ${matchedInvoice.invoiceNumber}`,
+          description: `${payMethod} payment recorded for ${matchedInvoice.patientName}.`,
+          timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
+          amount: amt,
+          user: 'Practice Admin'
+        };
+
+        setPayments(prev => [newPay, ...prev]);
+        setInvoices(prev => prev.map(inv => inv.id === matchedInvoice.id
+          ? {
+              ...inv,
+              amountPaid: Number(data.amount_paid),
+              paymentStatus: data.payment_status
+            }
+          : inv
+        ));
+        setTimelineEvents(prev => [log, ...prev]);
+        setPayAmount('');
+        alert(`Payment of $${amt.toFixed(2)} recorded successfully.`);
+      } catch (error: any) {
+        setBillingError(error?.message || 'Payment could not be recorded.');
+      } finally {
+        setBillingBusy(false);
+      }
+      return;
+    }
     
     // Add payment history record
     const newPay: PaymentRecord = {
@@ -531,7 +747,7 @@ export default function BillingWorkspace() {
       receiptNumber: `REC-2026-${Math.floor(1000 + Math.random() * 9000)}`
     };
 
-    setPayments([newPay, ...payments]);
+    setPayments(prev => [newPay, ...prev]);
 
     // Update Invoice payment state
     setInvoices(prev => prev.map(inv => {
@@ -562,7 +778,7 @@ export default function BillingWorkspace() {
       amount: amt,
       user: 'Practice Admin'
     };
-    setTimelineEvents([log, ...timelineEvents]);
+    setTimelineEvents(prev => [log, ...prev]);
 
     // Reset Form
     setPayAmount('');
@@ -570,9 +786,46 @@ export default function BillingWorkspace() {
   };
 
   // Convert Estimate to Invoice
-  const handleConvertEstimate = (estId: string) => {
+  const handleConvertEstimate = async (estId: string) => {
     const est = estimates.find(e => e.id === estId);
     if (!est) return;
+
+    if (!demoMode) {
+      setBillingBusy(true);
+      setBillingError('');
+      try {
+        const { createClient } = await import('@/utils/supabase/client');
+        const supabase = createClient() as any;
+        const { data: createdInvoice, error: createError } = await supabase.rpc(
+          'convert_billing_estimate',
+          {
+            target_estimate_id: est.id
+          }
+        );
+        if (createError) throw createError;
+
+        const newInvoice = mapInvoiceRow(createdInvoice);
+        setInvoices(prev => [newInvoice, ...prev]);
+        setEstimates(prev => prev.map(item => item.id === est.id
+          ? { ...item, approvalStatus: 'Approved' }
+          : item
+        ));
+        setTimelineEvents(prev => [{
+          id: crypto.randomUUID(),
+          type: 'invoice_created',
+          title: `${newInvoice.invoiceNumber} converted from Estimate`,
+          description: `Converted approved estimate ${est.estimateNumber} for ${est.patientName}.`,
+          timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
+          user: 'Practice Admin'
+        }, ...prev]);
+        alert(`Estimate ${est.estimateNumber} converted to ${newInvoice.invoiceNumber}.`);
+      } catch (error: any) {
+        setBillingError(error?.message || 'Estimate could not be converted.');
+      } finally {
+        setBillingBusy(false);
+      }
+      return;
+    }
 
     const newInvoiceNumber = `INV-2026-00${invoices.length + 1}`;
     const newInv: Invoice = {
@@ -594,7 +847,7 @@ export default function BillingWorkspace() {
       attachments: []
     };
 
-    setInvoices([newInv, ...invoices]);
+    setInvoices(prev => [newInv, ...prev]);
     setEstimates(prev => prev.map(e => e.id === estId ? { ...e, approvalStatus: 'Approved' } : e));
 
     // Add Timeline event
@@ -606,15 +859,55 @@ export default function BillingWorkspace() {
       timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
       user: 'Clinical Director'
     };
-    setTimelineEvents([log, ...timelineEvents]);
+    setTimelineEvents(prev => [log, ...prev]);
     
     alert(`Estimate ${est.estimateNumber} converted to active Invoice ${newInvoiceNumber}!`);
   };
 
   // Claim Resubmission handler
-  const handleResubmitClaim = (e: React.FormEvent) => {
+  const handleResubmitClaim = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!resubmitClaimId) return;
+
+    if (!demoMode) {
+      setBillingBusy(true);
+      setBillingError('');
+      try {
+        const { createClient } = await import('@/utils/supabase/client');
+        const { data, error } = await (createClient() as any).rpc(
+          'resubmit_billing_claim',
+          {
+            target_claim_id: resubmitClaimId,
+            procedure_code: resubmitCode.trim(),
+            resubmission_notes: resubmitNotes.trim()
+          }
+        );
+        if (error) throw error;
+
+        const updatedClaim = mapClaimRow(data);
+        setClaims(prev => prev.map(claim => claim.id === updatedClaim.id ? updatedClaim : claim));
+        setInvoices(prev => prev.map(invoice =>
+          invoice.invoiceNumber === updatedClaim.invoiceNumber
+            ? { ...invoice, insuranceClaimStatus: 'Resubmitted' }
+            : invoice
+        ));
+        setTimelineEvents(prev => [{
+          id: crypto.randomUUID(),
+          type: 'claim_submitted',
+          title: `Claim resubmitted for ${updatedClaim.invoiceNumber}`,
+          description: `Corrected procedure code ${resubmitCode} sent to ${updatedClaim.provider}.`,
+          timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
+          user: 'Practice Admin'
+        }, ...prev]);
+        setResubmitClaimId(null);
+        alert('Claim resubmitted successfully.');
+      } catch (error: any) {
+        setBillingError(error?.message || 'Claim could not be resubmitted.');
+      } finally {
+        setBillingBusy(false);
+      }
+      return;
+    }
 
     setClaims(prev => prev.map(claim => {
       if (claim.id === resubmitClaimId) {
@@ -646,10 +939,143 @@ export default function BillingWorkspace() {
     alert('Claim resubmitted successfully to provider!');
   };
 
+  const handleIssueInvoice = async () => {
+    setBillingError('');
+
+    if (demoMode) {
+      const newNum = `INV-2026-00${invoices.length + 1}`;
+      const newInv: Invoice = {
+        id: `I-${Date.now()}`,
+        invoiceNumber: newNum,
+        patientName: 'Demo Patient',
+        patientId: 'PT-DEMO',
+        doctorName: 'Dr. Demo',
+        clinicName: 'HealthOS Demo Clinic',
+        issueDate: new Date().toISOString().substring(0, 10),
+        dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().substring(0, 10),
+        treatmentItems: [
+          { code: 'D1110', name: 'Adult Cleaning & Polish', quantity: 1, unitPrice: 150, discount: 0, tax: 0 }
+        ],
+        insuranceCoveragePercent: 0,
+        insuranceClaimStatus: 'None',
+        insuranceProvider: 'Self-Pay',
+        paymentStatus: 'Pending',
+        amountPaid: 0,
+        notes: 'Demo invoice.',
+        attachments: []
+      };
+      setInvoices(prev => [newInv, ...prev]);
+      alert(`New Demo invoice ${newNum} created.`);
+      return;
+    }
+
+    const patient = initialPatients[0];
+    if (!patient) {
+      setBillingError('Add a patient before creating an invoice.');
+      return;
+    }
+
+    setBillingBusy(true);
+    try {
+      const { createClient } = await import('@/utils/supabase/client');
+      const { data, error } = await (createClient() as any).rpc(
+        'create_billing_invoice',
+        {
+          target_patient_id: patient.id,
+          invoice_doctor_name: 'Unassigned',
+          invoice_clinic_name: 'Main Clinic',
+          invoice_treatment_items: [
+            {
+              code: 'D1110',
+              name: 'Adult Cleaning & Polish',
+              quantity: 1,
+              unitPrice: 150,
+              discount: 0,
+              tax: taxRatePercent
+            }
+          ],
+          invoice_due_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
+            .toISOString().substring(0, 10),
+          invoice_insurance_coverage: 0,
+          invoice_insurance_provider: 'Self-Pay',
+          invoice_notes: 'New billing draft.'
+        }
+      );
+      if (error) throw error;
+
+      const newInvoice = mapInvoiceRow(data);
+      setInvoices(prev => [newInvoice, ...prev]);
+      setSelectedInvoiceId(newInvoice.id);
+      setPayInvoiceNumber(newInvoice.invoiceNumber);
+      setTimelineEvents(prev => [{
+        id: crypto.randomUUID(),
+        type: 'invoice_created',
+        title: `Invoice ${newInvoice.invoiceNumber} created`,
+        description: `Invoice created for ${newInvoice.patientName}.`,
+        timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
+        amount: 150 * (1 + taxRatePercent / 100),
+        user: 'Practice Admin'
+      }, ...prev]);
+      alert(`Invoice ${newInvoice.invoiceNumber} created for ${patient.name}.`);
+    } catch (error: any) {
+      setBillingError(error?.message || 'Invoice could not be created.');
+    } finally {
+      setBillingBusy(false);
+    }
+  };
+
+  const handleSaveSettings = async () => {
+    if (demoMode) {
+      alert('Demo billing settings updated for this session.');
+      return;
+    }
+
+    setBillingBusy(true);
+    setBillingError('');
+    try {
+      const { createClient } = await import('@/utils/supabase/client');
+      const { error } = await (createClient() as any)
+        .from('billing_settings')
+        .upsert({
+          currency: selectedCurrency,
+          tax_rate_percent: taxRatePercent,
+          invoice_prefix: invoicePrefix.trim() || 'INV-',
+          auto_submit_insurance: autoSubmitInsurance
+        });
+      if (error) throw error;
+      alert('Billing settings saved.');
+    } catch (error: any) {
+      setBillingError(error?.message || 'Billing settings could not be saved.');
+    } finally {
+      setBillingBusy(false);
+    }
+  };
+
   // Trigger AI Report Generator
   const generateAIReport = () => {
     setAiAnalyzing(true);
     setTimeout(() => {
+      if (!demoMode) {
+        const overdueInvoices = invoices.filter(invoice => invoice.paymentStatus === 'Overdue');
+        const rejectedClaims = claims.filter(claim => claim.status === 'Rejected');
+        const collectionRate = stats.totalInvoiced > 0
+          ? ((stats.totalInvoiced - stats.outstandingBalance) / stats.totalInvoiced) * 100
+          : 0;
+        setAiReportText(
+          `**HEALTHOS FINANCIAL DIAGNOSTIC**\n\n` +
+          `**COLLECTIONS**\n` +
+          `• Total invoiced: **$${stats.totalInvoiced.toFixed(2)}**\n` +
+          `• Outstanding balance: **$${stats.outstandingBalance.toFixed(2)}**\n` +
+          `• Collection rate: **${collectionRate.toFixed(1)}%**\n\n` +
+          `**FOLLOW-UP QUEUE**\n` +
+          `• Overdue invoices: **${overdueInvoices.length}**\n` +
+          `• Rejected insurance claims: **${rejectedClaims.length}**\n\n` +
+          `This summary is calculated from the signed-in account's owner-isolated ledger.`
+        );
+        setAiAnalyzing(false);
+        return;
+      }
+
       setAiReportText(
         `**HEALTHOS FINANCIAL AI ENGINE - EXECUTIVE REPORT**\n\n` +
         `**1. REVENUE INSIGHTS & LEAKAGES:**\n` +
@@ -659,7 +1085,7 @@ export default function BillingWorkspace() {
         `• MetLife claims show a high return-to-provider (RTP) rate of 14% on procedure code **D4341 (Scaling & Planing)**. *Correction plan implemented*: Automating attachments of periodontal pocket depths and radiographic findings prior to EDI gateway transmission.\n` +
         `• Cigna Dental adjudication is averaging **4.2 days**, down from 8.0, due to direct clearinghouse mapping.\n\n` +
         `**3. RISK MITIGATION & ACTIONABLE PLAN:**\n` +
-        `• **Bruce Wayne (INV-2026-003)** holds an overdue balance of **$2,480.00**. Flagging as a high-net-worth case with delayed co-pay approval. Suggesting automated installment reminder.\n` +
+        `• **Demo Patient (INV-DEMO-003)** holds an overdue balance. Suggesting an automated installment reminder.\n` +
         `• **Recommend procedure pricing hike**: Zirconia Crown (D2740) currently sits 8% below local regional mean averages. Adjusting standard schedule by +$100 would generate an estimated **+$14,200.00** annually without patient churn.`
       );
       setAiAnalyzing(false);
@@ -683,7 +1109,7 @@ export default function BillingWorkspace() {
               </span>
             </div>
             <p className="text-[10px] text-zinc-500 font-mono">
-              Enterprise Billing Node ID: <span className="text-zinc-300 font-bold">FIN-7701-X22</span> • Stripe & Clearinghouse Connected
+              Enterprise Billing Node ID: <span className="text-zinc-300 font-bold">FIN-7701-X22</span> • {demoMode ? 'Demo gateways active' : 'Owner-isolated ledger active'}
             </p>
           </div>
         </div>
@@ -703,10 +1129,10 @@ export default function BillingWorkspace() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 text-[10px] bg-zinc-950 border border-zinc-850 text-zinc-300 px-3 py-1.5 rounded-full font-mono font-bold">
-            <DollarSign className="w-3.5 h-3.5 text-emerald-400" /> USD Active
-          </div>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 text-[10px] bg-zinc-950 border border-zinc-850 text-zinc-300 px-3 py-1.5 rounded-full font-mono font-bold">
+              <DollarSign className="w-3.5 h-3.5 text-emerald-400" /> {selectedCurrency} Active
+            </div>
         </div>
       </div>
 
@@ -779,6 +1205,19 @@ export default function BillingWorkspace() {
         <div className="flex-1 bg-zinc-950 flex flex-col overflow-hidden relative">
           
           <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
+            {billingError && (
+              <div className="mb-4 flex items-center justify-between rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-2 text-xs text-rose-300">
+                <span>{billingError}</span>
+                <button
+                  type="button"
+                  onClick={() => setBillingError('')}
+                  className="text-rose-300 hover:text-white"
+                  aria-label="Dismiss billing error"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            )}
             <AnimatePresence mode="wait">
               
               {/* ==================================================
@@ -855,7 +1294,7 @@ export default function BillingWorkspace() {
                       </div>
                       <div className="flex-1 w-full min-h-[200px]">
                         <ResponsiveContainer width="100%" height="100%">
-                          <AreaChart data={REVENUE_TREND_DATA}>
+                          <AreaChart data={revenueTrendData}>
                             <defs>
                               <linearGradient id="patGrad" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
@@ -933,7 +1372,7 @@ export default function BillingWorkspace() {
                     <span className="text-emerald-400 font-bold flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" /> Synchronized with US Clearinghouse Gateways
                     </span>
-                    <span className="text-zinc-400">Total YTD Volume: <span className="text-white font-bold">$1,012,450.00</span></span>
+                    <span className="text-zinc-400">Total Invoiced: <span className="text-white font-bold">${stats.totalInvoiced.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></span>
                   </div>
                 </WorkspaceTabPanel>
               )}
@@ -950,32 +1389,9 @@ export default function BillingWorkspace() {
                       <h3 className="text-base font-black text-white uppercase tracking-tight">Active Accounts Ledger</h3>
                       <p className="text-xs text-zinc-500 font-mono">Manage and filter enterprise wide practice invoices and eligibility reports.</p>
                     </div>
-                    <button 
-                      onClick={() => {
-                        const newNum = `INV-2026-00${invoices.length + 1}`;
-                        const newInv: Invoice = {
-                          id: `I-${Date.now()}`,
-                          invoiceNumber: newNum,
-                          patientName: 'Anya Chalotra',
-                          patientId: 'PT-7721',
-                          doctorName: 'Dr. Catherine Avery',
-                          clinicName: 'HealthOS Main Campus',
-                          issueDate: '2026-07-17',
-                          dueDate: '2026-07-31',
-                          treatmentItems: [
-                            { code: 'D1110', name: 'Adult Cleaning & Polish', quantity: 1, unitPrice: 150, discount: 0, tax: 0 }
-                          ],
-                          insuranceCoveragePercent: 80,
-                          insuranceClaimStatus: 'Pending',
-                          insuranceProvider: 'Delta Dental',
-                          paymentStatus: 'Pending',
-                          amountPaid: 0,
-                          notes: 'Patient routine care cleanup.',
-                          attachments: []
-                        };
-                        setInvoices([newInv, ...invoices]);
-                        alert(`New Invoice draft ${newNum} initialized successfully.`);
-                      }}
+                    <button
+                      onClick={handleIssueInvoice}
+                      disabled={billingBusy}
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all"
                     >
                       <Plus className="w-3.5 h-3.5" /> Issue New Invoice
@@ -1106,7 +1522,7 @@ export default function BillingWorkspace() {
               {/* ==================================================
                   3. INVOICE WORKSPACE (Focus view for single item)
                   ================================================== */}
-              {activeTab === 'InvoiceDetails' && (
+              {activeTab === 'InvoiceDetails' && selectedInvoice && (
                 <WorkspaceTabPanel
                   className="space-y-4"
                 >
@@ -1275,6 +1691,16 @@ export default function BillingWorkspace() {
                 </WorkspaceTabPanel>
               )}
 
+              {activeTab === 'InvoiceDetails' && !selectedInvoice && (
+                <WorkspaceTabPanel className="flex min-h-[320px] items-center justify-center">
+                  <div className="text-center">
+                    <FileText className="mx-auto mb-3 h-8 w-8 text-zinc-600" />
+                    <h3 className="text-sm font-bold text-white">No invoice selected</h3>
+                    <p className="mt-1 text-xs text-zinc-500">Create an invoice before opening the invoice workspace.</p>
+                  </div>
+                </WorkspaceTabPanel>
+              )}
+
               {/* ==================================================
                   4. PAYMENTS & CASH DESK
                   ================================================== */}
@@ -1333,6 +1759,7 @@ export default function BillingWorkspace() {
 
                         <button 
                           type="submit"
+                          disabled={billingBusy || invoices.length === 0}
                           className="w-full py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all mt-4 cursor-pointer"
                         >
                           Record Receipt & Clear Balance
@@ -1487,8 +1914,9 @@ export default function BillingWorkspace() {
                               Cancel
                             </button>
                             <button 
-                              type="submit"
-                              className="flex-1 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-[10px] font-bold font-sans cursor-pointer"
+                          type="submit"
+                          disabled={billingBusy}
+                          className="flex-1 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-[10px] font-bold font-sans cursor-pointer"
                             >
                               Dispatch Appeal
                             </button>
@@ -1603,7 +2031,7 @@ export default function BillingWorkspace() {
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
                             <Pie
-                              data={CLINIC_REVENUE_PIE}
+                              data={clinicRevenueData}
                               cx="50%"
                               cy="50%"
                               innerRadius={45}
@@ -1611,7 +2039,7 @@ export default function BillingWorkspace() {
                               paddingAngle={5}
                               dataKey="value"
                             >
-                              {CLINIC_REVENUE_PIE.map((entry, index) => (
+                              {clinicRevenueData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                               ))}
                             </Pie>
@@ -1620,7 +2048,7 @@ export default function BillingWorkspace() {
                         </ResponsiveContainer>
                       </div>
                       <div className="grid grid-cols-2 gap-1 text-[8px] font-mono text-zinc-400">
-                        {CLINIC_REVENUE_PIE.map((entry, index) => (
+                        {clinicRevenueData.map((entry, index) => (
                           <div key={index} className="flex items-center gap-1.5">
                             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: entry.color }} />
                             <span className="truncate">{entry.name}</span>
@@ -1634,7 +2062,7 @@ export default function BillingWorkspace() {
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono mb-2">Revenue Generation by Doctor</span>
                       <div className="flex-1 w-full min-h-[180px]">
                         <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={DOCTOR_REVENUE_BAR}>
+                          <BarChart data={doctorRevenueData}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#1f1f23" />
                             <XAxis dataKey="name" stroke="#52525b" style={{ fontSize: '9px' }} />
                             <YAxis stroke="#52525b" style={{ fontSize: '9px' }} />
@@ -1650,7 +2078,7 @@ export default function BillingWorkspace() {
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono mb-2">Top Yield ADA Procedure Codes</span>
                       <div className="flex-1 w-full min-h-[180px]">
                         <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={PROCEDURE_REVENUE_BAR} layout="vertical">
+                          <BarChart data={procedureRevenueData} layout="vertical">
                             <CartesianGrid strokeDasharray="3 3" stroke="#1f1f23" />
                             <XAxis type="number" stroke="#52525b" style={{ fontSize: '9px' }} />
                             <YAxis dataKey="code" type="category" stroke="#52525b" style={{ fontSize: '9px' }} />
@@ -1856,6 +2284,16 @@ export default function BillingWorkspace() {
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div className="max-w-4xl flex justify-end">
+                    <button
+                      type="button"
+                      onClick={handleSaveSettings}
+                      disabled={billingBusy}
+                      className="rounded-xl bg-emerald-500 px-4 py-2 text-xs font-bold text-black transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {billingBusy ? 'Saving...' : 'Save Billing Settings'}
+                    </button>
                   </div>
                 </WorkspaceTabPanel>
               )}
