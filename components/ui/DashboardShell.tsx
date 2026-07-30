@@ -38,6 +38,7 @@ import {
   ShieldAlert,
   UserCheck
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { handleRequest } from '@/utils/auth-helpers/client';
 import { SignOut } from '@/utils/auth-helpers/server';
 import { 
@@ -47,41 +48,47 @@ import {
   UserRole 
 } from '@/utils/enterpriseState';
 import LicenseGate from '@/components/licensing/LicenseGate';
+import LanguageSwitcher from '@/components/ui/language-switcher';
 
 interface DashboardShellProps {
   user: any;
   children: React.ReactNode;
 }
 
+// `labelKey` maps to a key under the "Navigation" namespace in the message
+// catalogs so nav labels are localized. `name` is kept as an English fallback.
 const NAV_ITEMS = [
-  { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-  { name: 'Patients', href: '/patients', icon: Users },
-  { name: 'Clinics', href: '/clinics', icon: Building2 },
-  { name: 'Appointments', href: '/appointments', icon: Calendar },
-  { name: 'Medical Records', href: '/medical-records', icon: FileText },
-  { name: 'AI Assistant', href: '/ai-assistant', icon: Sparkles },
-  { name: 'Laboratory', href: '/laboratory', icon: FlaskConical },
-  { name: 'Imaging', href: '/imaging', icon: Activity },
-  { name: 'Inventory', href: '/inventory', icon: Package },
-  { name: 'Analytics', href: '/analytics', icon: LineChart },
-  { name: 'Billing', href: '/billing', icon: CreditCard },
-  { name: 'Pricing', href: '/pricing', icon: Sparkle },
-  { name: 'Communication', href: '/communication', icon: MessageSquare },
-  { name: 'Document Center', href: '/documents', icon: Folder },
-  { name: 'Task Workspace', href: '/tasks', icon: CheckSquare },
-  { name: 'Notification Hub', href: '/notifications', icon: Bell },
-  { name: 'Audit & Compliance', href: '/audit', icon: ShieldCheck },
-  { name: 'Platform Console', href: '/platform', icon: Globe },
-  { name: 'Integrations', href: '/integrations', icon: Blocks },
-  { name: 'Automations', href: '/automations', icon: Zap },
-  { name: 'Developer', href: '/developer', icon: Terminal },
-  { name: 'Help Center', href: '/help', icon: HelpCircle },
-  { name: 'Settings', href: '/settings', icon: Settings },
+  { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
+  { name: 'Patients', labelKey: 'patients', href: '/patients', icon: Users },
+  { name: 'Clinics', labelKey: 'clinics', href: '/clinics', icon: Building2 },
+  { name: 'Appointments', labelKey: 'appointments', href: '/appointments', icon: Calendar },
+  { name: 'Medical Records', labelKey: 'medicalRecords', href: '/medical-records', icon: FileText },
+  { name: 'AI Assistant', labelKey: 'aiAssistant', href: '/ai-assistant', icon: Sparkles },
+  { name: 'Laboratory', labelKey: 'laboratory', href: '/laboratory', icon: FlaskConical },
+  { name: 'Imaging', labelKey: 'imaging', href: '/imaging', icon: Activity },
+  { name: 'Inventory', labelKey: 'inventory', href: '/inventory', icon: Package },
+  { name: 'Analytics', labelKey: 'analytics', href: '/analytics', icon: LineChart },
+  { name: 'Billing', labelKey: 'billing', href: '/billing', icon: CreditCard },
+  { name: 'Pricing', labelKey: 'pricing', href: '/pricing', icon: Sparkle },
+  { name: 'Communication', labelKey: 'communication', href: '/communication', icon: MessageSquare },
+  { name: 'Document Center', labelKey: 'documents', href: '/documents', icon: Folder },
+  { name: 'Task Workspace', labelKey: 'tasks', href: '/tasks', icon: CheckSquare },
+  { name: 'Notification Hub', labelKey: 'notifications', href: '/notifications', icon: Bell },
+  { name: 'Audit & Compliance', labelKey: 'audit', href: '/audit', icon: ShieldCheck },
+  { name: 'Platform Console', labelKey: 'platform', href: '/platform', icon: Globe },
+  { name: 'Integrations', labelKey: 'integrations', href: '/integrations', icon: Blocks },
+  { name: 'Automations', labelKey: 'automations', href: '/automations', icon: Zap },
+  { name: 'Developer', labelKey: 'developer', href: '/developer', icon: Terminal },
+  { name: 'Help Center', labelKey: 'help', href: '/help', icon: HelpCircle },
+  { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
 ];
 
 export default function DashboardShell({ user, children }: DashboardShellProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const tNav = useTranslations('Navigation');
+  const tCommon = useTranslations('Common');
+  const tAccess = useTranslations('Access');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState('');
@@ -203,7 +210,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             const Icon = item.icon;
             return (
               <Link
-                key={item.name}
+                key={tNav(item.labelKey)}
                 href={item.href}
                 className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-150 group ${
                   isActive
@@ -216,7 +223,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                     isActive ? 'text-emerald-400' : 'text-zinc-400 group-hover:text-zinc-100'
                   }`}
                 />
-                {item.name}
+                {tNav(item.labelKey)}
               </Link>
             );
           })}
@@ -297,7 +304,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                 const Icon = item.icon;
                 return (
                   <Link
-                    key={item.name}
+                    key={tNav(item.labelKey)}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-150 ${
@@ -307,7 +314,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                     }`}
                   >
                     <Icon className="w-5 h-5 mr-3 text-zinc-400" />
-                    {item.name}
+                    {tNav(item.labelKey)}
                   </Link>
                 );
               })}
@@ -360,12 +367,15 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               className="hidden md:flex items-center gap-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 px-3.5 py-2 rounded-2xl text-zinc-500 hover:text-zinc-400 text-xs font-mono transition-all cursor-pointer select-none"
             >
               <Search className="w-4 h-4 text-zinc-600" />
-              <span>Search or run command...</span>
+              <span>{tCommon('searchOrRunCommand')}</span>
               <kbd className="ml-4 px-1.5 py-0.5 text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-600 font-mono">⌘K</kbd>
             </button>
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+
             {/* Active Role Selector Dropdown */}
             <div className="relative flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-2xl px-3 py-1.5 hover:bg-zinc-850 transition-colors">
               <UserCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -389,7 +399,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             </div>
 
             <span className="text-xs text-zinc-400 font-mono hidden xl:inline">
-              SYSTEM STATUS: <span className="text-emerald-400 font-semibold">SECURE</span>
+              {tCommon('systemStatus')}: <span className="text-emerald-400 font-semibold">{tCommon('secure')}</span>
             </span>
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
           </div>
@@ -411,10 +421,10 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
                     <div className="space-y-2">
                       <h3 className="text-xl font-bold text-white tracking-tight">
-                        Security Clearance Required
+                        {tAccess('clearanceRequired')}
                       </h3>
-                      <p className="text-xs font-mono text-zinc-400">
-                        PATHWAY: {pathname.toUpperCase()} • PRIVILEGE LEVEL: {activeRole.toUpperCase()}
+                      <p className="text-xs font-mono text-zinc-400" dir="ltr">
+                        {tAccess('pathway')}: {pathname.toUpperCase()} • {tAccess('privilegeLevel')}: {activeRole.toUpperCase()}
                       </p>
                     </div>
 
