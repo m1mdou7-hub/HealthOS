@@ -36,5 +36,11 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [
+    require('tailwindcss-animate'),
+    // Adds direction-aware (logical) utilities such as ms-*, me-*, ps-*, pe-*,
+    // start-*, end-* and float-start/float-end that automatically respect the
+    // document `dir` attribute (rtl for Arabic, ltr for English).
+    require('tailwindcss-rtl')
+  ]
 };

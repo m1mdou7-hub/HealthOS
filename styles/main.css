@@ -57,3 +57,85 @@ p a {
 .height-screen-helper {
   min-height: calc(100vh - 80px);
 }
+
+
+/* ==========================================================================
+   RTL (Right-to-Left) support for Arabic
+   --------------------------------------------------------------------------
+   The document `dir` attribute is set dynamically in app/layout.tsx based on
+   the active locale (rtl for Arabic, ltr for English). The rules below flip
+   the most common physical-direction Tailwind utilities so the existing
+   components mirror correctly under RTL without needing to be rewritten one
+   by one. New code should prefer logical utilities (ms-*, me-*, ps-*, pe-*)
+   provided by the tailwindcss-rtl plugin.
+   ========================================================================== */
+
+:root {
+  --rtl-direction: ltr;
+  --rtl-start: left;
+  --rtl-end: right;
+}
+
+[dir='rtl'] {
+  --rtl-direction: rtl;
+  --rtl-start: right;
+  --rtl-end: left;
+}
+
+/* Reverse horizontal spacing utilities (space-x-*) under RTL. */
+[dir='rtl'] :where(.space-x-1, .space-x-1\.5, .space-x-2, .space-x-2\.5, .space-x-3, .space-x-4, .space-x-6, .space-x-8) > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+/* Flip common horizontal margins so icon/label gaps mirror correctly. */
+[dir='rtl'] .mr-1 { margin-right: 0; margin-left: 0.25rem; }
+[dir='rtl'] .mr-2 { margin-right: 0; margin-left: 0.5rem; }
+[dir='rtl'] .mr-3 { margin-right: 0; margin-left: 0.75rem; }
+[dir='rtl'] .mr-4 { margin-right: 0; margin-left: 1rem; }
+[dir='rtl'] .mr-6 { margin-right: 0; margin-left: 1.5rem; }
+[dir='rtl'] .ml-1 { margin-left: 0; margin-right: 0.25rem; }
+[dir='rtl'] .ml-2 { margin-left: 0; margin-right: 0.5rem; }
+[dir='rtl'] .ml-3 { margin-left: 0; margin-right: 0.75rem; }
+[dir='rtl'] .ml-4 { margin-left: 0; margin-right: 1rem; }
+[dir='rtl'] .ml-6 { margin-left: 0; margin-right: 1.5rem; }
+[dir='rtl'] .ml-auto { margin-left: 0; margin-right: auto; }
+[dir='rtl'] .mr-auto { margin-right: 0; margin-left: auto; }
+
+/* Flip common horizontal paddings. */
+[dir='rtl'] .pl-2 { padding-left: 0; padding-right: 0.5rem; }
+[dir='rtl'] .pl-3 { padding-left: 0; padding-right: 0.75rem; }
+[dir='rtl'] .pl-4 { padding-left: 0; padding-right: 1rem; }
+[dir='rtl'] .pr-1\.5 { padding-right: 0; padding-left: 0.375rem; }
+[dir='rtl'] .pr-2 { padding-right: 0; padding-left: 0.5rem; }
+[dir='rtl'] .pr-3 { padding-right: 0; padding-left: 0.75rem; }
+[dir='rtl'] .pr-4 { padding-right: 0; padding-left: 1rem; }
+
+/* Flip directional borders used for active nav indicators. */
+[dir='rtl'] .border-l,
+[dir='rtl'] .border-l-2 {
+  border-left-width: 0;
+  border-right-width: 2px;
+}
+[dir='rtl'] .border-r,
+[dir='rtl'] .border-r-2 {
+  border-right-width: 0;
+  border-left-width: 1px;
+}
+
+/* Flip left/right positioning helpers. */
+[dir='rtl'] .left-0 { left: auto; right: 0; }
+[dir='rtl'] .right-0 { right: auto; left: 0; }
+[dir='rtl'] .left-4 { left: auto; right: 1rem; }
+[dir='rtl'] .right-4 { right: auto; left: 1rem; }
+
+/* Keep numeric, code and status readouts left-to-right even under RTL. */
+[dir='rtl'] .font-mono,
+[dir='rtl'] [dir='ltr'] {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* Focus ring already handled globally; ensure text alignment follows locale. */
+[dir='rtl'] body {
+  text-align: right;
+}

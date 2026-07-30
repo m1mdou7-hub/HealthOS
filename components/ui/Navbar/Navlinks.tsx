@@ -5,7 +5,9 @@ import { SignOut } from '@/utils/auth-helpers/server';
 import { handleRequest } from '@/utils/auth-helpers/client';
 import Logo from '@/components/icons/Logo';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { getRedirectMethod } from '@/utils/auth-helpers/settings';
+import LanguageSwitcher from '@/components/ui/language-switcher';
 import s from './Navbar.module.css';
 
 interface NavlinksProps {
@@ -14,6 +16,8 @@ interface NavlinksProps {
 
 export default function Navlinks({ user }: NavlinksProps) {
   const router = getRedirectMethod() === 'client' ? useRouter() : null;
+  const t = useTranslations('Common');
+  const tNav = useTranslations('Navigation');
 
   return (
     <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
@@ -24,21 +28,22 @@ export default function Navlinks({ user }: NavlinksProps) {
         </Link>
         <nav className="ml-6 space-x-2 hidden md:block">
           <Link href="/" className={s.link}>
-            Workspace Platform
+            {tNav('workspacePlatform')}
           </Link>
         </nav>
       </div>
-      <div className="flex justify-end space-x-8">
+      <div className="flex items-center justify-end gap-4 md:gap-6">
+        <LanguageSwitcher compact />
         {user ? (
           <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
             <input type="hidden" name="pathName" value={usePathname()} />
             <button type="submit" className={s.link}>
-              Sign out
+              {t('signOut')}
             </button>
           </form>
         ) : (
           <Link href="/signin" className="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-200 hover:text-white hover:bg-zinc-800 transition-all">
-            Sign In
+            {t('signIn')}
           </Link>
         )}
       </div>
