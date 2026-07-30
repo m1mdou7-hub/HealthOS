@@ -136,6 +136,22 @@ interface Warehouse {
   occupancyPercent: number;
 }
 
+interface InventorySettings {
+  defaultUOM: string;
+  requirePOApproval: boolean;
+  lowStockThreshold: number;
+}
+
+interface InventoryWorkspaceProps {
+  demoMode?: boolean;
+  initialProducts?: Product[];
+  initialPurchaseOrders?: PurchaseOrder[];
+  initialSuppliers?: Supplier[];
+  initialMovements?: StockMovement[];
+  initialWarehouses?: Warehouse[];
+  initialSettings?: InventorySettings;
+}
+
 // --- REALISTIC ERP DATASETS ---
 const INITIAL_PRODUCTS: Product[] = [
   {
@@ -258,10 +274,10 @@ const INITIAL_POS: PurchaseOrder[] = [
 ];
 
 const INITIAL_SUPPLIERS: Supplier[] = [
-  { id: 'S-201', name: 'PharmaLink Distributions', contactName: 'Meredith Grey', email: 'mgrey@pharmalink.com', phone: '+1 (555) 019-2831', leadTimeDays: 5, performanceScore: 94, paymentTerms: 'Net 30', activeContracts: 3, totalSpent: 128400.00 },
-  { id: 'S-202', name: 'SafeMed Global', contactName: 'Peter Parker', email: 'pparker@safemed.org', phone: '+1 (555) 332-9012', leadTimeDays: 7, performanceScore: 82, paymentTerms: 'Net 15', activeContracts: 1, totalSpent: 42900.00 },
-  { id: 'S-203', name: 'Global MedSurg Inc.', contactName: 'Bruce Banner', email: 'bbanner@madsurg.com', phone: '+1 (555) 881-2090', leadTimeDays: 3, performanceScore: 98, paymentTerms: 'Due on Receipt', activeContracts: 4, totalSpent: 210000.00 },
-  { id: 'S-204', name: 'Roche Direct Supply', contactName: 'Tony Stark', email: 'stark@rochedirect.com', phone: '+1 (555) 443-8821', leadTimeDays: 14, performanceScore: 91, paymentTerms: 'Net 45', activeContracts: 2, totalSpent: 350000.00 }
+  { id: 'S-201', name: 'PharmaLink Distributions', contactName: 'Demo Contact A', email: 'contact-a@example.invalid', phone: '+1 (555) 010-0001', leadTimeDays: 5, performanceScore: 94, paymentTerms: 'Net 30', activeContracts: 3, totalSpent: 128400.00 },
+  { id: 'S-202', name: 'SafeMed Global', contactName: 'Demo Contact B', email: 'contact-b@example.invalid', phone: '+1 (555) 010-0002', leadTimeDays: 7, performanceScore: 82, paymentTerms: 'Net 15', activeContracts: 1, totalSpent: 42900.00 },
+  { id: 'S-203', name: 'Global MedSurg Inc.', contactName: 'Demo Contact C', email: 'contact-c@example.invalid', phone: '+1 (555) 010-0003', leadTimeDays: 3, performanceScore: 98, paymentTerms: 'Due on Receipt', activeContracts: 4, totalSpent: 210000.00 },
+  { id: 'S-204', name: 'Roche Direct Supply', contactName: 'Demo Contact D', email: 'contact-d@example.invalid', phone: '+1 (555) 010-0004', leadTimeDays: 14, performanceScore: 91, paymentTerms: 'Net 45', activeContracts: 2, totalSpent: 350000.00 }
 ];
 
 const INITIAL_MOVEMENTS: StockMovement[] = [
@@ -303,20 +319,87 @@ const MATERIALS_USAGE_BAR = [
   { name: 'Antiseptic Pt', count: 760 }
 ];
 
-export default function InventoryWorkspace() {
+const getProductStatus = (quantity: number, minimum: number, expiryDate?: string): Product['status'] => {
+  if (quantity <= 0) return 'Out of Stock';
+  if (expiryDate && new Date(expiryDate).getTime() <= Date.now() + 90 * 86400000) return 'Expiring Soon';
+  if (quantity < minimum) return 'Low Stock';
+  return 'In Stock';
+};
+
+const mapProductRow = (row: any): Product => ({
+  id: row.id,
+  sku: row.sku,
+  barcode: row.barcode,
+  name: row.name,
+  description: row.description,
+  category: row.category,
+  brand: row.brand,
+  manufacturer: row.manufacturer,
+  supplierName: row.supplier_name,
+  warehouse: row.warehouse_name,
+  storageLocation: row.storage_location,
+  batchNumber: row.batch_number,
+  lotNumber: row.lot_number,
+  serialNumber: row.serial_number || undefined,
+  expiryDate: row.expiry_date || '',
+  stockQuantity: row.stock_quantity,
+  minimumStock: row.minimum_stock,
+  unitOfMeasure: row.unit_of_measure,
+  status: getProductStatus(row.stock_quantity, row.minimum_stock, row.expiry_date),
+  valuePerUnit: Number(row.value_per_unit || 0),
+  attachments: row.attachments || []
+});
+
+const mapPurchaseOrderRow = (row: any): PurchaseOrder => ({
+  id: row.id,
+  poNumber: row.po_number,
+  supplierName: row.supplier_name,
+  orderDate: row.order_date,
+  deliveryDate: row.delivery_date,
+  itemsCount: row.items_count,
+  totalCost: Number(row.total_cost || 0),
+  status: row.status,
+  paymentTerms: row.payment_terms
+});
+
+const mapMovementRow = (row: any): StockMovement => ({
+  id: row.id,
+  timestamp: String(row.occurred_at).replace('T', ' ').slice(0, 16),
+  sku: row.sku,
+  productName: row.product_name,
+  type: row.movement_type,
+  quantity: row.quantity,
+  fromLocation: row.from_location,
+  toLocation: row.to_location,
+  authorizedBy: row.authorized_by,
+  referenceDoc: row.reference_doc
+});
+
+export default function InventoryWorkspace({
+  demoMode = false,
+  initialProducts = [],
+  initialPurchaseOrders = [],
+  initialSuppliers = [],
+  initialMovements = [],
+  initialWarehouses = [],
+  initialSettings
+}: InventoryWorkspaceProps) {
   const [activeTab, setActiveTab] = useState<
     'Dashboard' | 'Catalog' | 'ProductWorkspace' | 'Procurement' | 'Suppliers' | 'StockMovements' | 'Warehouse' | 'AIAssistant' | 'Reports' | 'Settings'
   >('Dashboard');
 
-  // Core React States (Real-time in-memory persistence)
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
-  const [pos, setPos] = useState<PurchaseOrder[]>(INITIAL_POS);
-  const [suppliers, setSuppliers] = useState<Supplier[]>(INITIAL_SUPPLIERS);
-  const [movements, setMovements] = useState<StockMovement[]>(INITIAL_MOVEMENTS);
-  const [warehouses, setWarehouses] = useState<Warehouse[]>(INITIAL_WAREHOUSES);
+  const [products, setProducts] = useState<Product[]>(demoMode ? INITIAL_PRODUCTS : initialProducts);
+  const [pos, setPos] = useState<PurchaseOrder[]>(demoMode ? INITIAL_POS : initialPurchaseOrders);
+  const [suppliers] = useState<Supplier[]>(demoMode ? INITIAL_SUPPLIERS : initialSuppliers);
+  const [movements, setMovements] = useState<StockMovement[]>(demoMode ? INITIAL_MOVEMENTS : initialMovements);
+  const [warehouses] = useState<Warehouse[]>(demoMode ? INITIAL_WAREHOUSES : initialWarehouses);
+  const [inventoryBusy, setInventoryBusy] = useState(false);
+  const [inventoryError, setInventoryError] = useState('');
 
   // Selected State variables
-  const [selectedProductId, setSelectedProductId] = useState<string>('P-102');
+  const [selectedProductId, setSelectedProductId] = useState<string>(
+    (demoMode ? INITIAL_PRODUCTS[1]?.id : initialProducts[0]?.id) || ''
+  );
   const [bulkCheckedIds, setBulkCheckedIds] = useState<string[]>([]);
   
   // Search & Filtering States
@@ -326,7 +409,9 @@ export default function InventoryWorkspace() {
   const [catStatusFilter, setCatStatusFilter] = useState('All');
 
   // Purchase order creator state
-  const [poSupplier, setPoSupplier] = useState('PharmaLink Distributions');
+  const [poSupplier, setPoSupplier] = useState(
+    (demoMode ? INITIAL_SUPPLIERS[0]?.name : initialSuppliers[0]?.name) || ''
+  );
   const [poItemsCount, setPoItemsCount] = useState('2');
   const [poTotalCost, setPoTotalCost] = useState('3400.00');
   const [poPaymentTerms, setPoPaymentTerms] = useState('Net 30');
@@ -336,9 +421,9 @@ export default function InventoryWorkspace() {
   const [aiAnalyzing, setAiAnalyzing] = useState(false);
 
   // Dynamic configuration states
-  const [defaultUOM, setDefaultUOM] = useState('Units');
-  const [requirePOApproval, setRequirePOApproval] = useState(true);
-  const [lowStockThreshold, setLowStockThreshold] = useState(150);
+  const [defaultUOM, setDefaultUOM] = useState(initialSettings?.defaultUOM || 'Units');
+  const [requirePOApproval, setRequirePOApproval] = useState(initialSettings?.requirePOApproval ?? true);
+  const [lowStockThreshold, setLowStockThreshold] = useState(initialSettings?.lowStockThreshold ?? 150);
 
   // Compute stats on-the-fly from actual state
   const stats = useMemo(() => {
@@ -367,6 +452,53 @@ export default function InventoryWorkspace() {
     };
   }, [products, pos, suppliers]);
 
+  const stockValueTrendData = useMemo(() => {
+    if (demoMode) return STOCK_VALUE_TREND;
+    const totals = products.reduce((result, product) => {
+      const value = product.stockQuantity * product.valuePerUnit;
+      if (product.category === 'Pharmaceuticals') result.Pharmaceuticals += value;
+      else if (product.category === 'Lab Reagents') result.LabSupplies += value;
+      else result.Consumables += value;
+      result.Total += value;
+      return result;
+    }, { Pharmaceuticals: 0, Consumables: 0, LabSupplies: 0, Total: 0 });
+    return [{
+      month: new Date().toLocaleString('en', { month: 'short', timeZone: 'UTC' }),
+      ...totals
+    }];
+  }, [demoMode, products]);
+
+  const departmentConsumptionData = useMemo(() => {
+    if (demoMode) return DEPT_CONSUMPTION_PIE;
+    const colors = ['#10b981', '#3b82f6', '#ef4444', '#8b5cf6'];
+    const totals = new Map<string, number>();
+    movements
+      .filter(movement => movement.quantity < 0)
+      .forEach(movement => totals.set(
+        movement.toLocation || 'Unassigned',
+        (totals.get(movement.toLocation || 'Unassigned') || 0) + Math.abs(movement.quantity)
+      ));
+    return Array.from(totals, ([name, value], index) => ({
+      name,
+      value,
+      color: colors[index % colors.length]
+    }));
+  }, [demoMode, movements]);
+
+  const materialsUsageData = useMemo(() => {
+    if (demoMode) return MATERIALS_USAGE_BAR;
+    const totals = new Map<string, number>();
+    movements
+      .filter(movement => movement.quantity < 0)
+      .forEach(movement => totals.set(
+        movement.productName,
+        (totals.get(movement.productName) || 0) + Math.abs(movement.quantity)
+      ));
+    return Array.from(totals, ([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 8);
+  }, [demoMode, movements]);
+
   // Selected Product reference
   const selectedProduct = useMemo(() => {
     return products.find(p => p.id === selectedProductId) || products[0];
@@ -386,76 +518,174 @@ export default function InventoryWorkspace() {
     });
   }, [products, catSearch, catCategoryFilter, catWarehouseFilter, catStatusFilter]);
 
-  // Bulk operation triggers
-  const handleBulkReorder = () => {
-    if (bulkCheckedIds.length === 0) return alert('No items selected. Please select items first.');
-    const productsToReorder = products.filter(p => bulkCheckedIds.includes(p.id));
-    
-    // Create PO draft based on bulk selections
-    const newPoId = `PO-2026-B0${pos.length + 1}`;
-    const newPo: PurchaseOrder = {
-      id: `PO-${Date.now().toString().slice(-3)}`,
-      poNumber: newPoId,
-      supplierName: productsToReorder[0]?.supplierName || 'PharmaLink Distributions',
-      orderDate: new Date().toISOString().substring(0, 10),
-      deliveryDate: new Date(Date.now() + 7*24*60*60*1000).toISOString().substring(0, 10),
-      itemsCount: productsToReorder.length,
-      totalCost: productsToReorder.reduce((acc, curr) => acc + (curr.minimumStock * 2 * curr.valuePerUnit), 0),
-      status: 'Draft',
-      paymentTerms: 'Net 30'
-    };
+  const createPurchaseOrder = async (
+    supplierName: string,
+    itemsCount: number,
+    totalCost: number,
+    paymentTerms: string,
+    productIds: string[] = []
+  ) => {
+    if (demoMode) {
+      const newPo: PurchaseOrder = {
+        id: crypto.randomUUID(),
+        poNumber: `PO-DEMO-${String(pos.length + 1).padStart(3, '0')}`,
+        supplierName,
+        orderDate: new Date().toISOString().substring(0, 10),
+        deliveryDate: new Date(Date.now() + 10 * 86400000).toISOString().substring(0, 10),
+        itemsCount,
+        totalCost,
+        status: requirePOApproval ? 'Pending Approval' : 'Approved',
+        paymentTerms
+      };
+      setPos(prev => [newPo, ...prev]);
+      return newPo;
+    }
 
-    setPos([newPo, ...pos]);
-    setBulkCheckedIds([]);
-    alert(`Bulk PO Created: Draft ${newPoId} contains ${productsToReorder.length} products to reorder.`);
-    setActiveTab('Procurement');
+    const { createClient } = await import('@/utils/supabase/client');
+    const { data, error } = await (createClient() as any).rpc(
+      'create_inventory_purchase_order',
+      {
+        order_supplier_name: supplierName,
+        order_items_count: itemsCount,
+        order_total_cost: totalCost,
+        order_payment_terms: paymentTerms,
+        order_requires_approval: requirePOApproval,
+        order_product_ids: productIds
+      }
+    );
+    if (error) throw error;
+    const newPo = mapPurchaseOrderRow(data);
+    setPos(prev => [newPo, ...prev]);
+    return newPo;
   };
 
-  const handleBulkDisposal = () => {
+  const recordMovement = async (
+    product: Product,
+    movementType: StockMovement['type'],
+    quantity: number,
+    fromLocation: string,
+    toLocation: string,
+    referenceDoc: string
+  ) => {
+    if (demoMode) {
+      const nextQuantity = movementType === 'Inbound' || movementType === 'Return'
+        ? product.stockQuantity + quantity
+        : movementType === 'Outbound' || movementType === 'Consumption'
+          ? product.stockQuantity - quantity
+          : movementType === 'Adjustment'
+            ? quantity
+            : product.stockQuantity;
+      if (nextQuantity < 0) throw new Error(`Only ${product.stockQuantity} units are available.`);
+      const ledgerQuantity = movementType === 'Outbound' || movementType === 'Consumption'
+        ? -quantity
+        : movementType === 'Adjustment'
+          ? nextQuantity - product.stockQuantity
+          : quantity;
+      const newMovement: StockMovement = {
+        id: crypto.randomUUID(),
+        timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
+        sku: product.sku,
+        productName: product.name,
+        type: movementType,
+        quantity: ledgerQuantity,
+        fromLocation,
+        toLocation,
+        authorizedBy: 'Demo Inventory Operator',
+        referenceDoc
+      };
+      const updatedProduct = {
+        ...product,
+        stockQuantity: nextQuantity,
+        status: getProductStatus(nextQuantity, product.minimumStock, product.expiryDate)
+      };
+      setProducts(prev => prev.map(item => item.id === product.id ? updatedProduct : item));
+      setMovements(prev => [newMovement, ...prev]);
+      return;
+    }
+
+    const { createClient } = await import('@/utils/supabase/client');
+    const { data, error } = await (createClient() as any).rpc(
+      'record_inventory_movement',
+      {
+        target_product_id: product.id,
+        movement_kind: movementType,
+        movement_quantity: quantity,
+        movement_from_location: fromLocation,
+        movement_to_location: toLocation,
+        movement_authorized_by: 'Inventory Operator',
+        movement_reference_doc: referenceDoc
+      }
+    );
+    if (error) throw error;
+    const result = Array.isArray(data) ? data[0] : data;
+    const updatedProduct = mapProductRow(result.product);
+    const newMovement = mapMovementRow(result.movement);
+    setProducts(prev => prev.map(item => item.id === updatedProduct.id ? updatedProduct : item));
+    setMovements(prev => [newMovement, ...prev]);
+  };
+
+  // Bulk operation triggers
+  const handleBulkReorder = async () => {
+    if (bulkCheckedIds.length === 0) return alert('No items selected. Please select items first.');
+    const productsToReorder = products.filter(p => bulkCheckedIds.includes(p.id));
+
+    setInventoryBusy(true);
+    setInventoryError('');
+    try {
+      const newPo = await createPurchaseOrder(
+        productsToReorder[0]?.supplierName || 'Unassigned Supplier',
+        productsToReorder.length,
+        productsToReorder.reduce((total, product) =>
+          total + Math.max(product.minimumStock * 2 - product.stockQuantity, 1) * product.valuePerUnit, 0),
+        'Net 30',
+        productsToReorder.map(product => product.id)
+      );
+      setBulkCheckedIds([]);
+      alert(`Purchase order ${newPo.poNumber} created for ${productsToReorder.length} products.`);
+      setActiveTab('Procurement');
+    } catch (error: any) {
+      setInventoryError(error?.message || 'The purchase order could not be created.');
+    } finally {
+      setInventoryBusy(false);
+    }
+  };
+
+  const handleBulkDisposal = async () => {
     if (bulkCheckedIds.length === 0) return alert('No items selected.');
     if (!confirm('Are you sure you want to flag selected batches for clinical biohazard disposal/audit?')) return;
 
-    setProducts(prev => prev.map(p => {
-      if (bulkCheckedIds.includes(p.id)) {
-        return {
-          ...p,
-          stockQuantity: 0,
-          status: 'Out of Stock' as const
-        };
+    setInventoryBusy(true);
+    setInventoryError('');
+    try {
+      for (const product of products.filter(item => bulkCheckedIds.includes(item.id))) {
+        await recordMovement(
+          product,
+          'Adjustment',
+          0,
+          product.warehouse,
+          'Clinical Waste Bin',
+          `BIO-AUDIT-${new Date().getUTCFullYear()}`
+        );
       }
-      return p;
-    }));
-
-    // Generate movement logs for each
-    const newMovements: StockMovement[] = bulkCheckedIds.map(id => {
-      const match = products.find(p => p.id === id)!;
-      return {
-        id: `MVT-DISP-${Math.floor(Math.random() * 900)}`,
-        timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
-        sku: match.sku,
-        productName: match.name,
-        type: 'Adjustment',
-        quantity: -match.stockQuantity,
-        fromLocation: match.warehouse,
-        toLocation: 'Clinical Waste Bin',
-        authorizedBy: 'QA Compliance Officer',
-        referenceDoc: 'BIO-AUDIT-2026'
-      };
-    });
-
-    setMovements([...newMovements, ...movements]);
-    setBulkCheckedIds([]);
-    alert('Selected items marked for disposal and written off.');
+      setBulkCheckedIds([]);
+      alert('Selected items were written off with ledger entries.');
+    } catch (error: any) {
+      setInventoryError(error?.message || 'The inventory write-off could not be completed.');
+    } finally {
+      setInventoryBusy(false);
+    }
   };
 
   // Add a new manual stock movement / transaction
-  const [moveSku, setMoveSku] = useState('PP-N95-FLT-M01');
+  const [moveSku, setMoveSku] = useState(
+    (demoMode ? INITIAL_PRODUCTS[1]?.sku : initialProducts[0]?.sku) || ''
+  );
   const [moveQty, setMoveQty] = useState('100');
   const [moveType, setMoveType] = useState<'Inbound' | 'Outbound' | 'Transfer' | 'Adjustment'>('Inbound');
   const [moveFrom, setMoveFrom] = useState('External Supplier Dock');
   const [moveTo, setMoveTo] = useState('HealthOS Central Warehouse');
 
-  const handleCreateMovement = (e: React.FormEvent) => {
+  const handleCreateMovement = async (e: React.FormEvent) => {
     e.preventDefault();
     const product = products.find(p => p.sku === moveSku);
     if (!product) return alert('Product SKU not found');
@@ -463,64 +693,185 @@ export default function InventoryWorkspace() {
     const qty = parseInt(moveQty);
     if (isNaN(qty) || qty <= 0) return alert('Invalid quantity');
 
-    const newMvt: StockMovement = {
-      id: `MVT-${Date.now().toString().slice(-3)}`,
-      timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
-      sku: moveSku,
-      productName: product.name,
-      type: moveType,
-      quantity: qty,
-      fromLocation: moveFrom,
-      toLocation: moveTo,
-      authorizedBy: 'Warehouse Manager Miller',
-      referenceDoc: 'MVT-MANUAL'
-    };
-
-    setMovements([newMvt, ...movements]);
-
-    // Apply change to state
-    setProducts(prev => prev.map(p => {
-      if (p.sku === moveSku) {
-        let newQty = p.stockQuantity;
-        if (moveType === 'Inbound') newQty += qty;
-        if (moveType === 'Outbound') newQty -= qty;
-        if (moveType === 'Adjustment') newQty = qty; // set exactly
-
-        let stat: Product['status'] = 'In Stock';
-        if (newQty <= 0) stat = 'Out of Stock';
-        else if (newQty < p.minimumStock) stat = 'Low Stock';
-
-        return {
-          ...p,
-          stockQuantity: Math.max(0, newQty),
-          status: stat
-        };
-      }
-      return p;
-    }));
-
-    setMoveQty('');
-    alert(`Stock Movement logged successfully. State synchronized!`);
+    setInventoryBusy(true);
+    setInventoryError('');
+    try {
+      await recordMovement(product, moveType, qty, moveFrom, moveTo, 'MVT-MANUAL');
+      setMoveQty('');
+      alert('Stock movement recorded and inventory synchronized.');
+    } catch (error: any) {
+      setInventoryError(error?.message || 'The stock movement could not be recorded.');
+    } finally {
+      setInventoryBusy(false);
+    }
   };
 
   // Create Purchase Order
-  const handleCreatePO = (e: React.FormEvent) => {
+  const handleCreatePO = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newPoId = `PO-2026-00${pos.length + 1}`;
-    const newPo: PurchaseOrder = {
-      id: `PO-${Date.now()}`,
-      poNumber: newPoId,
-      supplierName: poSupplier,
-      orderDate: new Date().toISOString().substring(0, 10),
-      deliveryDate: new Date(Date.now() + 10*24*60*60*1000).toISOString().substring(0, 10),
-      itemsCount: parseInt(poItemsCount),
-      totalCost: parseFloat(poTotalCost),
-      status: requirePOApproval ? 'Pending Approval' : 'Approved',
-      paymentTerms: poPaymentTerms
+    const itemCount = Number.parseInt(poItemsCount, 10);
+    const totalCost = Number.parseFloat(poTotalCost);
+    if (!poSupplier || !Number.isInteger(itemCount) || itemCount <= 0 || !Number.isFinite(totalCost) || totalCost < 0) {
+      setInventoryError('Enter a supplier, a positive item count, and a valid total cost.');
+      return;
+    }
+    setInventoryBusy(true);
+    setInventoryError('');
+    try {
+      const newPo = await createPurchaseOrder(poSupplier, itemCount, totalCost, poPaymentTerms);
+      alert(`Purchase order ${newPo.poNumber} submitted with status ${newPo.status}.`);
+    } catch (error: any) {
+      setInventoryError(error?.message || 'The purchase order could not be created.');
+    } finally {
+      setInventoryBusy(false);
+    }
+  };
+
+  const handleApprovePO = async (po: PurchaseOrder) => {
+    if (demoMode) {
+      setPos(prev => prev.map(item => item.id === po.id ? { ...item, status: 'Approved' } : item));
+      return alert(`PO ${po.poNumber} approved.`);
+    }
+    setInventoryBusy(true);
+    setInventoryError('');
+    try {
+      const { createClient } = await import('@/utils/supabase/client');
+      const { data, error } = await (createClient() as any).rpc(
+        'approve_inventory_purchase_order',
+        { target_order_id: po.id }
+      );
+      if (error) throw error;
+      const updatedOrder = mapPurchaseOrderRow(data);
+      setPos(prev => prev.map(item => item.id === updatedOrder.id ? updatedOrder : item));
+      alert(`PO ${updatedOrder.poNumber} approved.`);
+    } catch (error: any) {
+      setInventoryError(error?.message || 'The purchase order could not be approved.');
+    } finally {
+      setInventoryBusy(false);
+    }
+  };
+
+  const handleSaveSettings = async () => {
+    if (!defaultUOM.trim() || !Number.isInteger(lowStockThreshold) || lowStockThreshold < 0) {
+      setInventoryError('Enter a valid unit and non-negative low-stock threshold.');
+      return;
+    }
+    if (demoMode) return alert('Demo inventory settings saved for this session.');
+
+    setInventoryBusy(true);
+    setInventoryError('');
+    try {
+      const { createClient } = await import('@/utils/supabase/client');
+      const { error } = await (createClient() as any)
+        .from('inventory_settings')
+        .upsert({
+          default_uom: defaultUOM.trim(),
+          require_po_approval: requirePOApproval,
+          low_stock_threshold: lowStockThreshold
+        });
+      if (error) throw error;
+      alert('Inventory settings saved.');
+    } catch (error: any) {
+      setInventoryError(error?.message || 'Inventory settings could not be saved.');
+    } finally {
+      setInventoryBusy(false);
+    }
+  };
+
+  const handleRegisterProduct = async () => {
+    const newSku = `MS-DEMO-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+    const draft: Product = {
+      id: crypto.randomUUID(),
+      sku: newSku,
+      barcode: `${Math.floor(100000000000 + Math.random() * 900000000000)}`,
+      name: 'Standard Normal Saline 0.9%',
+      description: 'Intravenous infusion, standard 500ml bag.',
+      category: 'Medical Supplies',
+      brand: 'Sodium Chloride IV',
+      manufacturer: 'Demo Medical Manufacturer',
+      supplierName: suppliers[0]?.name || 'Unassigned Supplier',
+      warehouse: warehouses[0]?.name || 'Main Warehouse',
+      storageLocation: 'Aisle 2, Shelf F-1',
+      batchNumber: 'DEMO-SAL-001',
+      lotNumber: 'DEMO-LOT-001',
+      expiryDate: '2028-12-01',
+      stockQuantity: 1500,
+      minimumStock: 250,
+      unitOfMeasure: defaultUOM,
+      status: 'In Stock',
+      valuePerUnit: 1.85,
+      attachments: []
     };
 
-    setPos([newPo, ...pos]);
-    alert(`Purchase Order ${newPoId} submitted! Status: ${newPo.status}`);
+    if (demoMode) {
+      setProducts(prev => [draft, ...prev]);
+      setSelectedProductId(draft.id);
+      return alert(`Demo product ${newSku} registered.`);
+    }
+
+    setInventoryBusy(true);
+    setInventoryError('');
+    try {
+      const { createClient } = await import('@/utils/supabase/client');
+      const { data, error } = await (createClient() as any).rpc(
+        'register_inventory_product',
+        {
+          product_sku: draft.sku,
+          product_barcode: draft.barcode,
+          product_name: draft.name,
+          product_description: draft.description,
+          product_category: draft.category,
+          product_brand: draft.brand,
+          product_manufacturer: draft.manufacturer,
+          product_supplier_name: draft.supplierName,
+          product_warehouse_name: draft.warehouse,
+          product_storage_location: draft.storageLocation,
+          product_batch_number: draft.batchNumber,
+          product_lot_number: draft.lotNumber,
+          product_expiry_date: draft.expiryDate,
+          opening_quantity: draft.stockQuantity,
+          product_minimum_stock: draft.minimumStock,
+          product_unit_of_measure: draft.unitOfMeasure,
+          product_value_per_unit: draft.valuePerUnit
+        }
+      );
+      if (error) throw error;
+      const product = mapProductRow(data);
+      setProducts(prev => [product, ...prev]);
+      setSelectedProductId(product.id);
+      alert(`Product ${product.sku} registered with an opening-balance ledger entry.`);
+    } catch (error: any) {
+      setInventoryError(error?.message || 'The product could not be registered.');
+    } finally {
+      setInventoryBusy(false);
+    }
+  };
+
+  const handleAdjustStock = async (product: Product) => {
+    const newQuantity = prompt(`Set the counted stock quantity for ${product.brand}:`, String(product.stockQuantity));
+    if (newQuantity === null) return;
+    const parsed = Number.parseInt(newQuantity, 10);
+    if (!Number.isInteger(parsed) || parsed < 0) {
+      setInventoryError('Stock quantity must be a non-negative whole number.');
+      return;
+    }
+
+    setInventoryBusy(true);
+    setInventoryError('');
+    try {
+      await recordMovement(
+        product,
+        'Adjustment',
+        parsed,
+        product.warehouse,
+        product.warehouse,
+        'CYCLE-COUNT'
+      );
+    } catch (error: any) {
+      setInventoryError(error?.message || 'The stock count could not be adjusted.');
+    } finally {
+      setInventoryBusy(false);
+    }
   };
 
   // AI Assistant generator
@@ -655,6 +1006,11 @@ export default function InventoryWorkspace() {
         <div className="flex-1 bg-zinc-950 flex flex-col overflow-hidden relative">
           
           <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
+            {inventoryError && (
+              <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs font-mono text-red-300">
+                {inventoryError}
+              </div>
+            )}
             <AnimatePresence mode="wait">
               
               {/* ==================================================
@@ -731,7 +1087,7 @@ export default function InventoryWorkspace() {
                       </div>
                       <div className="flex-1 w-full min-h-[200px]">
                         <ResponsiveContainer width="100%" height="100%">
-                          <AreaChart data={STOCK_VALUE_TREND}>
+                          <AreaChart data={stockValueTrendData}>
                             <defs>
                               <linearGradient id="phGrad" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2}/>
@@ -847,33 +1203,8 @@ export default function InventoryWorkspace() {
                       )}
 
                       <button 
-                        onClick={() => {
-                          const newSku = `PH-DRG-NEW-${products.length + 1}`;
-                          const newProd: Product = {
-                            id: `P-${Date.now()}`,
-                            sku: newSku,
-                            barcode: `${Math.floor(100000000000 + Math.random() * 900000000000)}`,
-                            name: 'Standard Normal Saline 0.9%',
-                            description: 'Intravenous infusion, standard 500ml bag.',
-                            category: 'Medical Supplies',
-                            brand: 'Sodium Chloride IV',
-                            manufacturer: 'Baxter Healthcare',
-                            supplierName: 'Global MedSurg Inc.',
-                            warehouse: 'HealthOS Central Warehouse',
-                            storageLocation: 'Aisle 2, Shelf F-1',
-                            batchNumber: 'SAL-821',
-                            lotNumber: 'L-SAL-88',
-                            expiryDate: '2028-12-01',
-                            stockQuantity: 1500,
-                            minimumStock: 250,
-                            unitOfMeasure: 'Units',
-                            status: 'In Stock',
-                            valuePerUnit: 1.85,
-                            attachments: []
-                          };
-                          setProducts([newProd, ...products]);
-                          alert(`Product SKU ${newSku} registered!`);
-                        }}
+                        onClick={handleRegisterProduct}
+                        disabled={inventoryBusy}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500 hover:bg-blue-400 text-black text-xs font-bold transition-all cursor-pointer"
                       >
                         <Plus className="w-3.5 h-3.5" /> Register SKU
@@ -1025,23 +1356,8 @@ export default function InventoryWorkspace() {
                                     <Eye className="w-3.5 h-3.5" />
                                   </button>
                                   <button 
-                                    onClick={() => {
-                                      const newQty = prompt(`Adjust stock quantity for ${p.brand}:`, String(p.stockQuantity));
-                                      if (newQty !== null) {
-                                        const parsed = parseInt(newQty);
-                                        if (!isNaN(parsed)) {
-                                          setProducts(prev => prev.map(item => {
-                                            if (item.id === p.id) {
-                                              let stat: Product['status'] = 'In Stock';
-                                              if (parsed <= 0) stat = 'Out of Stock';
-                                              else if (parsed < item.minimumStock) stat = 'Low Stock';
-                                              return { ...item, stockQuantity: parsed, status: stat };
-                                            }
-                                            return item;
-                                          }));
-                                        }
-                                      }
-                                    }}
+                                    onClick={() => handleAdjustStock(p)}
+                                    disabled={inventoryBusy}
                                     className="p-1 hover:bg-zinc-800 text-zinc-400 hover:text-blue-400 rounded transition-colors"
                                     title="Edit Quantity"
                                   >
@@ -1273,10 +1589,8 @@ export default function InventoryWorkspace() {
                               <td className="py-2.5 px-4 text-center">
                                 {po.status === 'Pending Approval' ? (
                                   <button 
-                                    onClick={() => {
-                                      setPos(prev => prev.map(p => p.id === po.id ? { ...p, status: 'Approved' } : p));
-                                      alert(`PO ${po.poNumber} Approved! Ready for dispatch to supplier.`);
-                                    }}
+                                    onClick={() => handleApprovePO(po)}
+                                    disabled={inventoryBusy}
                                     className="bg-blue-600 hover:bg-blue-500 text-white font-mono text-[9px] font-bold px-2 py-1 rounded cursor-pointer"
                                   >
                                     Approve
@@ -1376,9 +1690,10 @@ export default function InventoryWorkspace() {
 
                       <button 
                         type="submit"
+                        disabled={inventoryBusy}
                         className="w-full py-2 bg-blue-500 hover:bg-blue-400 text-black font-bold text-xs rounded-xl font-mono transition-colors cursor-pointer"
                       >
-                        Submit Purchase Order Draft
+                        {inventoryBusy ? 'Saving...' : 'Submit Purchase Order Draft'}
                       </button>
                     </form>
                   </div>
@@ -1586,9 +1901,10 @@ export default function InventoryWorkspace() {
 
                       <button 
                         type="submit"
+                        disabled={inventoryBusy || products.length === 0}
                         className="w-full py-2 bg-blue-500 hover:bg-blue-400 text-black font-bold rounded-xl transition-colors cursor-pointer"
                       >
-                        Commit Movement Transaction
+                        {inventoryBusy ? 'Saving...' : 'Commit Movement Transaction'}
                       </button>
                     </form>
                   </div>
@@ -1768,7 +2084,7 @@ export default function InventoryWorkspace() {
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
                             <Pie
-                              data={DEPT_CONSUMPTION_PIE}
+                              data={departmentConsumptionData}
                               cx="50%"
                               cy="50%"
                               innerRadius={45}
@@ -1776,7 +2092,7 @@ export default function InventoryWorkspace() {
                               paddingAngle={4}
                               dataKey="value"
                             >
-                              {DEPT_CONSUMPTION_PIE.map((entry, index) => (
+                              {departmentConsumptionData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                               ))}
                             </Pie>
@@ -1785,7 +2101,7 @@ export default function InventoryWorkspace() {
                         </ResponsiveContainer>
                       </div>
                       <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center text-[9px] font-mono">
-                        {DEPT_CONSUMPTION_PIE.map((entry, index) => (
+                        {departmentConsumptionData.map((entry, index) => (
                           <span key={index} className="flex items-center gap-1">
                             <span className="w-1.5 h-1.5 rounded" style={{ backgroundColor: entry.color }} /> {entry.name}
                           </span>
@@ -1798,7 +2114,7 @@ export default function InventoryWorkspace() {
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Top Material Consumption Logs</span>
                       <div className="flex-1 w-full min-h-[180px]">
                         <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={MATERIALS_USAGE_BAR}>
+                          <BarChart data={materialsUsageData}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#1f1f23" />
                             <XAxis dataKey="name" stroke="#52525b" style={{ fontSize: '9px' }} />
                             <YAxis stroke="#52525b" style={{ fontSize: '9px' }} />
@@ -1899,6 +2215,17 @@ export default function InventoryWorkspace() {
                         </label>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      onClick={handleSaveSettings}
+                      disabled={inventoryBusy}
+                      className="rounded-xl bg-blue-500 px-5 py-2 text-xs font-bold text-black transition-colors hover:bg-blue-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {inventoryBusy ? 'Saving...' : 'Save Inventory Settings'}
+                    </button>
                   </div>
                 </WorkspaceTabPanel>
               )}
