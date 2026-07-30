@@ -46,6 +46,7 @@ import {
   checkPageAccess, 
   UserRole 
 } from '@/utils/enterpriseState';
+import LicenseGate from '@/components/licensing/LicenseGate';
 
 interface DashboardShellProps {
   user: any;
@@ -159,6 +160,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
     (user?.isDevBypass || process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true');
 
   return (
+    <LicenseGate>
     <div className="flex flex-col h-screen overflow-hidden">
       {isDevBypass && (
         <div id="dev-mode-banner" className="bg-amber-500 text-black text-xs font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 border-b border-amber-600 select-none shrink-0 z-50">
@@ -534,5 +536,6 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       )}
     </div>
   </div>
+  </LicenseGate>
   );
 }
