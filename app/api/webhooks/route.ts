@@ -37,10 +37,7 @@ export async function POST(req: Request) {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret as string);
     console.log(`🔔  Webhook received: ${event.type}`);
   } catch (err: any) {
-    console.error(err);
-    console.error(JSON.stringify(err, Object.getOwnPropertyNames(err), 2));
-    console.error(err?.stack);
-    console.log(`❌ Error message: ${err.message}`);
+    console.error('Webhook signature verification failed:', err?.message);
     console.error(`[Webhook Executing Path] Returning 400 due to constructEvent exception.`);
     return new Response(
       JSON.stringify({
@@ -123,9 +120,7 @@ export async function POST(req: Request) {
       }
     } catch (error: any) {
       console.error("=== WEBHOOK HANDLER ERROR ===");
-      console.error(error);
-      console.error(error?.message);
-      console.error(error?.stack);
+      console.error('Event processing failed:', error?.message);
 
       return new Response(
         JSON.stringify({

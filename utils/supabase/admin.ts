@@ -264,12 +264,13 @@ const copyBillingDetailsToCustomer = async (
   uuid: string,
   payment_method: Stripe.PaymentMethod
 ) => {
-  //Todo: check this assertion
   const customer = payment_method.customer as string;
   const { name, phone, address } = payment_method.billing_details;
   if (!name || !phone || !address) return;
-  //@ts-ignore
+  
+  // @ts-ignore - Stripe typing is complex here
   await stripe.customers.update(customer, { name, phone, address });
+  
   const { error: updateError } = await supabaseAdmin
     .from('users')
     .update({
@@ -344,12 +345,15 @@ const manageSubscriptionStatusChange = async (
 
   // For a new subscription copy the billing details to the customer object.
   // NOTE: This is a costly operation and should happen at the very end.
-  if (createAction && subscription.default_payment_method && uuid)
-    //@ts-ignore
-    await copyBillingDetailsToCustomer(
-      uuid,
-      subscription.default_payment_method as Stripe.PaymentMethod
-    );
+  if (createAction && subscription.default_payment_method && uuid) {
+    const paymentMethod = subscription.default_payment_method;
+    if (typeof paymentMethod !== 'string' && 'billing_details' in paymentMethod) {
+      await copyBillingDetailsToCustomer(
+        uuid,
+        paymentMethod as Stripe.PaymentMethod
+      );
+    }
+  }
 };
 
 export {
