@@ -242,6 +242,136 @@ const getDefaultTreatmentPlans = (patientId: string): TreatmentPlan[] => [
 
 // Service Implementations
 export const clinicalService = {
+  // --- PATIENTS DIRECTORY ---
+  async getPatients(supabase: SupabaseClient, demoMode: boolean): Promise<any[]> {
+    if (demoMode) {
+      const key = `healthos_patients_list`;
+      const saved = localStorage.getItem(key);
+      if (saved) return JSON.parse(saved);
+      const defaults = [
+        {
+          id: "PTS-9412",
+          name: "Arthur Pendragon",
+          photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80",
+          age: 52,
+          gender: "Male",
+          bloodGroup: "O+",
+          allergyStatus: "Penicillin Allergy",
+          medicalAlerts: ["Type II Diabetes", "Hypertension", "Penicillin Hypersensitivity"],
+          phone: "+1 (555) 381-9921",
+          email: "arthur.p@camelot.org",
+          primaryDoctor: "Dr. Ahmed",
+          currentTreatment: "Full Arch Zirconia Bridge",
+          status: "Under Treatment",
+          lastVisit: "2026-07-10",
+          nextAppointment: "2026-07-18 09:00 AM (Crown Preparation)",
+          aiRiskFlag: "High",
+          riskDescription: "Elevated periodontal inflammation score; diabetic clearance advised.",
+          summary: "Patient presents with generalized tooth mobility in the maxillary arch. Seeking a fixed, high-aesthetic solution.",
+          medicalHistory: ["Type II Diabetes diagnosed in 2018 (controlled)", "Hypertension under Lisinopril therapy"],
+          medications: ["Metformin 500mg BID", "Lisinopril 10mg QD"],
+          allergies: ["Penicillin (severe hives)", "Latex (mild contact dermatitis)"],
+          timeline: [
+            { date: "Jul 10, 2026", title: "CBCT Double Arch Scan Completed", category: "Imaging", description: "CBCT reveals 7.5mm alveolar bone depth in anterior segments." }
+          ],
+          cases: [
+            {
+              id: "CASE-9412",
+              name: "Full Arch Maxillary Zirconia Bridge",
+              status: "In Design",
+              priority: "High",
+              clinician: "Dr. Ahmed",
+              stage: "Virtual Articulation & STL Alignment",
+              progress: 35,
+              createdDate: "2026-07-10",
+              dueDate: "2026-07-25",
+              notes: "Keep minimum facial connector area at 12mm^2."
+            }
+          ]
+        }
+      ];
+      localStorage.setItem(key, JSON.stringify(defaults));
+      return defaults;
+    }
+
+    const { data, error } = await (supabase as any)
+      .from('healthos_patients')
+      .select('*, healthos_patient_cases(*)');
+
+    if (error) throw error;
+    return (data || []).map((row: any) => ({
+      id: row.id,
+      name: row.name,
+      photoUrl: row.photo_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80",
+      age: row.age,
+      gender: row.gender,
+      bloodGroup: row.blood_group,
+      allergyStatus: row.allergy_status,
+      medicalAlerts: row.medical_alerts || [],
+      phone: row.phone,
+      email: row.email,
+      primaryDoctor: row.primary_doctor,
+      currentTreatment: row.current_treatment,
+      status: row.status,
+      lastVisit: row.last_visit,
+      nextAppointment: row.next_appointment,
+      aiRiskFlag: row.ai_risk_flag,
+      riskDescription: row.risk_description,
+      summary: row.summary,
+      medicalHistory: row.medical_history || [],
+      medications: row.medications || [],
+      allergies: row.allergies || [],
+      timeline: row.timeline || [],
+      cases: (row.healthos_patient_cases || []).map((c: any) => ({
+        id: c.id,
+        name: c.name,
+        status: c.status,
+        priority: c.priority,
+        clinician: c.clinician,
+        stage: c.stage,
+        progress: c.progress,
+        createdDate: c.created_date,
+        dueDate: c.due_date,
+        notes: c.notes
+      }))
+    }));
+  },
+
+  async getAllAppointments(supabase: SupabaseClient, demoMode: boolean): Promise<Appointment[]> {
+    if (demoMode) {
+      const defaultPatients = await this.getPatients(supabase, true);
+      const appts: Appointment[] = [];
+      for (const p of defaultPatients) {
+        const pAppts = await this.getAppointments(supabase, p.id, true);
+        appts.push(...pAppts);
+      }
+      return appts;
+    }
+
+    const { data, error } = await (supabase as any)
+      .from('healthos_appointments')
+      .select('*')
+      .order('appointment_date', { ascending: true })
+      .order('start_time', { ascending: true });
+
+    if (error) throw error;
+    return (data || []).map((row: any) => ({
+      id: row.id,
+      patientId: row.patient_id,
+      patientName: row.patient_name,
+      doctorId: row.doctor_id,
+      doctorName: row.doctor_name,
+      procedure: row.procedure,
+      chair: row.chair,
+      date: row.appointment_date,
+      startTime: String(row.start_time).slice(0, 5),
+      duration: row.duration_minutes,
+      status: row.status,
+      category: row.category,
+      isRecurring: row.is_recurring
+    }));
+  },
+
   // --- APPOINTMENTS ---
   async getAppointments(supabase: SupabaseClient, patientId: string, demoMode: boolean): Promise<Appointment[]> {
     if (demoMode) {
