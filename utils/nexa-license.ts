@@ -5,7 +5,7 @@ export const NEXA_DEVICE_ID_STORAGE = 'healthos_nexa_device_id';
 export const NEXA_LAST_VERIFIED_STORAGE = 'healthos_nexa_last_verified_at';
 
 const DEFAULT_NEXA_API_URL =
-  'https://nexa-subscriptions.tennis-zag-3c.chatgpt.site';
+  'https://nexa-subscriptions.vercel.app';
 const REQUEST_TIMEOUT_MS = 12_000;
 
 export type NexaLicenseResult = {
