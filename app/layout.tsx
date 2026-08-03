@@ -1,5 +1,5 @@
 export const dynamic = 'force-dynamic';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import Footer from '@/components/ui/Footer';
 import Navbar from '@/components/ui/Navbar';
 import { Toaster } from '@/components/ui/Toasts/toaster';
@@ -11,17 +11,40 @@ import { getURL } from '@/utils/helpers';
 import { createClient } from '@/utils/supabase/server';
 import { getUser } from '@/utils/supabase/queries';
 import '@/styles/main.css';
+import ReactQueryProvider from '@/components/providers/ReactQueryProvider';
+import PWAProvider from '@/components/providers/PWAProvider';
 
 const title = 'HealthOS';
 const description = 'HealthOS - Commercial Healthcare Operating System.';
+
+export const viewport: Viewport = {
+  themeColor: '#10b981',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(getURL()),
   title: title,
   description: description,
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'HealthOS',
+  },
   openGraph: {
     title: title,
     description: description
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'msapplication-TileColor': '#10b981',
+    'msapplication-tap-highlight': 'no',
   }
 };
 
@@ -39,22 +62,27 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     <html lang={locale} dir={dir}>
       <body className="bg-black">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {/* Render marketing navbar only if not logged in */}
-          {!user && <Navbar />}
+          <ReactQueryProvider>
+            {/* PWA: Service Worker registration, offline strip, install banner */}
+            <PWAProvider />
 
-          <main
-            id="skip"
-            className={!user ? "min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)] bg-black" : "bg-black"}
-          >
-            {children}
-          </main>
+            {/* Render marketing navbar only if not logged in */}
+            {!user && <Navbar />}
 
-          {/* Render marketing footer only if not logged in */}
-          {!user && <Footer />}
+            <main
+              id="skip"
+              className={!user ? "min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)] bg-black" : "bg-black"}
+            >
+              {children}
+            </main>
 
-          <Suspense>
-            <Toaster />
-          </Suspense>
+            {/* Render marketing footer only if not logged in */}
+            {!user && <Footer />}
+
+            <Suspense>
+              <Toaster />
+            </Suspense>
+          </ReactQueryProvider>
         </NextIntlClientProvider>
       </body>
     </html>

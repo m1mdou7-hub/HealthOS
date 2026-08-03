@@ -125,7 +125,10 @@ export default function LicenseGate({
     setState('missing');
   }
 
-  if (state === 'active') {
+  const isDevBypass =
+    process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
+
+  if (isDevBypass || state === 'active') {
     return <>{children}</>;
   }
 

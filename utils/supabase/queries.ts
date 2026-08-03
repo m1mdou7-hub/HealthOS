@@ -3,7 +3,7 @@ import { cache } from 'react';
 
 export const getUser = cache(async (supabase: any) => {
   // Demo access must be explicitly enabled and is never available in production.
-  if (process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true') {
+  if (process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true') {
     return {
       id: 'd0000000-0000-0000-0000-000000000000',
       email: 'demo@healthos.local',

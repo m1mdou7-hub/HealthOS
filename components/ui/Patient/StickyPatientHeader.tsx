@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
 import { ChevronLeft, ShieldAlert, AlertCircle, User, Activity } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { Patient } from '../PatientWorkspace';
 
 interface StickyPatientHeaderProps {
@@ -17,6 +20,7 @@ export default function StickyPatientHeader({
   assignedDoctor,
   onBack
 }: StickyPatientHeaderProps) {
+  const t = useTranslations('PatientWorkspace');
   const alertsCount = activePatient.medicalAlerts?.filter(a => a !== 'None').length || 0;
   const allergiesCount = activePatient.allergies?.length || 0;
 
@@ -27,7 +31,7 @@ export default function StickyPatientHeader({
         <button
           onClick={onBack}
           className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-all active:scale-95"
-          title="Back to Patient Directory"
+          title={t('backToDirectory')}
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -60,15 +64,15 @@ export default function StickyPatientHeader({
         {alertsCount > 0 && (
           <div className="px-2 py-1 rounded bg-red-950/20 border border-red-500/20 flex items-center gap-1 text-[10px] text-red-400 font-mono font-medium animate-pulse">
             <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
-            <span className="hidden md:inline">Medical Alerts:</span>
+            <span className="hidden md:inline">{t('medicalAlerts')}:</span>
             <span>{alertsCount}</span>
           </div>
         )}
         {allergiesCount > 0 && (
           <div className="px-2 py-1 rounded bg-amber-950/25 border border-amber-500/20 flex items-center gap-1 text-[10px] text-amber-300 font-mono font-medium">
             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-            <span className="hidden md:inline">Allergies:</span>
-            <span>{activePatient.allergyStatus === 'No Known Allergies' ? 'None' : activePatient.allergyStatus}</span>
+            <span className="hidden md:inline">{t('allergies')}:</span>
+            <span>{activePatient.allergyStatus === 'No Known Allergies' ? t('none') : activePatient.allergyStatus}</span>
           </div>
         )}
       </div>
@@ -76,20 +80,20 @@ export default function StickyPatientHeader({
       {/* Right Dynamic Invoices, Scheduler, and Provider */}
       <div className="flex items-center gap-4 text-xs font-mono shrink-0 ml-auto sm:ml-0 text-left">
         <div className="hidden lg:block border-l border-zinc-900 pl-4">
-          <span className="text-[9px] text-zinc-500 block uppercase">Assigned Doctor</span>
+          <span className="text-[9px] text-zinc-500 block uppercase">{t('assignedDoctor')}</span>
           <span className="text-zinc-300 flex items-center gap-1">
             <User className="w-3 h-3 text-emerald-400" /> {assignedDoctor || activePatient.primaryDoctor}
           </span>
         </div>
         <div className="hidden md:block border-l border-zinc-900 pl-4">
-          <span className="text-[9px] text-zinc-500 block uppercase">Today's Appointment</span>
+          <span className="text-[9px] text-zinc-500 block uppercase">{t('todayAppointment')}</span>
           <span className="text-zinc-300 flex items-center gap-1">
             <Activity className="w-3 h-3 text-purple-400" />
-            <span className="truncate max-w-[150px]">{todayAppointment}</span>
+            <span className="truncate max-w-[150px]">{todayAppointment === 'Not scheduled' ? t('none') : todayAppointment}</span>
           </span>
         </div>
         <div className="border-l border-zinc-900 pl-4">
-          <span className="text-[9px] text-zinc-500 block uppercase">Outstanding</span>
+          <span className="text-[9px] text-zinc-500 block uppercase">{t('outstanding')}</span>
           <span className={`font-bold ${outstandingBalance > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
             ${outstandingBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
           </span>

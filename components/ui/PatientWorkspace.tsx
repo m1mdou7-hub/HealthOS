@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
 import { createClient } from '@/utils/supabase/client';
 import { Grid, Heart, Clipboard, Calendar as CalendarIcon, Layers, FlaskConical, DollarSign, HardDrive, Send, Activity, Sparkles, Plus, Edit3 } from 'lucide-react';
 
@@ -28,7 +29,7 @@ import TreatmentPlansPanel from './Patient/TreatmentPlansPanel';
 import AppointmentsPanel from './Patient/AppointmentsPanel';
 import RadiologyPanel from './Patient/RadiologyPanel';
 import { PatientTimeline } from './Timeline/PatientTimeline';
-import { ToothSelector } from './Common/ToothSelector';
+import { ToothSelector, ToothStatus } from './Common/ToothSelector';
 
 export interface Patient {
   id: string;
@@ -76,6 +77,7 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
   const selectedPatientId = (params?.id as string | undefined) || null;
   const supabase = createClient();
   const queryClientLocal = useQueryClient();
+  const t = useTranslations('PatientWorkspace');
 
   // Navigation
   const [workspaceTab, setWorkspaceTab] = useState<string>('overview');
@@ -119,6 +121,18 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
   const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
   const [editingPatient, setEditingPatient] = useState<Patient | null>(null);
   const [patientForm, setPatientForm] = useState<any>({ name: '', age: 35, gender: 'Male', status: 'Active' });
+
+  // Tooth Selector / Clinical Chart states
+  const [activeTooth, setActiveTooth] = useState<number | null>(null);
+  const [teethStatuses, setTeethStatuses] = useState<Record<number, ToothStatus>>(() => {
+    // Demo patient default configurations
+    return {
+      11: 'missing',
+      14: 'decayed',
+      19: 'filled',
+      30: 'crown'
+    };
+  });
 
   // Laboratory case modal
   const [isCaseModalOpen, setIsCaseModalOpen] = useState(false);
@@ -259,17 +273,17 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
   };
 
   const menuTabs = [
-    { id: 'overview', label: 'Overview', icon: Grid },
-    { id: 'timeline', label: 'Timeline', icon: Activity },
-    { id: 'clinical', label: 'Clinical SOAP', icon: Heart },
-    { id: 'treatment', label: 'Treatment Course', icon: Clipboard },
-    { id: 'appointments', label: 'Appointments', icon: CalendarIcon },
-    { id: 'radiology', label: 'Radiology', icon: Layers },
-    { id: 'laboratory', label: 'Laboratory', icon: FlaskConical },
-    { id: 'billing', label: 'Ledger & Billing', icon: DollarSign },
-    { id: 'documents', label: 'Documents', icon: HardDrive },
-    { id: 'communication', label: 'Communication', icon: Send },
-    { id: 'analytics', label: 'Analytics', icon: Activity }
+    { id: 'overview', label: t('tab_overview'), icon: Grid },
+    { id: 'timeline', label: t('tab_timeline'), icon: Activity },
+    { id: 'clinical', label: t('tab_clinical'), icon: Heart },
+    { id: 'treatment', label: t('tab_treatment'), icon: Clipboard },
+    { id: 'appointments', label: t('tab_appointments'), icon: CalendarIcon },
+    { id: 'radiology', label: t('tab_radiology'), icon: Layers },
+    { id: 'laboratory', label: t('tab_laboratory'), icon: FlaskConical },
+    { id: 'billing', label: t('tab_billing'), icon: DollarSign },
+    { id: 'documents', label: t('tab_documents'), icon: HardDrive },
+    { id: 'communication', label: t('tab_communication'), icon: Send },
+    { id: 'analytics', label: t('tab_analytics'), icon: Activity }
   ];
 
   return (
@@ -350,9 +364,9 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
                     onNavigateTab={setWorkspaceTab}
                   />
                   <div className="p-6 rounded-2xl border border-zinc-900 bg-zinc-900/10 text-left space-y-2">
-                    <h3 className="text-xs font-bold text-white font-mono uppercase tracking-wider">Baseline Demographics</h3>
-                    <p className="text-xs text-zinc-400">Chief Complaint: <strong className="text-zinc-200">{activePatient.summary}</strong></p>
-                    <p className="text-xs text-zinc-400">Primary Insurer: <strong className="text-zinc-200">{activePatient.allergyStatus}</strong></p>
+                    <h3 className="text-xs font-bold text-white font-mono uppercase tracking-wider">{t('demographics')}</h3>
+                    <p className="text-xs text-zinc-400">{t('chiefComplaint')}: <strong className="text-zinc-200">{activePatient.summary}</strong></p>
+                    <p className="text-xs text-zinc-400">{t('primaryInsurer')}: <strong className="text-zinc-200">{activePatient.allergyStatus}</strong></p>
                   </div>
                 </div>
               )}
@@ -372,11 +386,18 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
               {workspaceTab === 'clinical' && (
                 <div className="space-y-6">
                   <ToothSelector
-                    teeth={[18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27, 28]}
-                    teethStatuses={{}}
-                    onToggleState={(num: number) => alert(`Tooth #${num} selected for clinical analysis`)}
+                    activeTooth={activeTooth}
+                    setActiveTooth={setActiveTooth}
+                    teethStatuses={teethStatuses}
+                    setTeethStatuses={setTeethStatuses}
                   />
-                  <SoapNoteEditor supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />
+                  <SoapNoteEditor
+                    supabase={supabase as any}
+                    activePatient={activePatient}
+                    demoMode={!!demoMode}
+                    activeTooth={activeTooth}
+                    activeToothStatus={activeTooth ? teethStatuses[activeTooth] : null}
+                  />
                 </div>
               )}
               {workspaceTab === 'treatment' && (

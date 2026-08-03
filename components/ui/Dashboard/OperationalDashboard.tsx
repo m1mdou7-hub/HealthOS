@@ -1,55 +1,66 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
 import { createClient } from '@/utils/supabase/client';
-import { clinicalService, Appointment, PatientCase, ClinicalNote } from '@/utils/services/clinicalService';
-import { Patient } from '../PatientWorkspace';
+import { clinicalService, Appointment, PatientCase } from '@/utils/services/clinicalService';
+import { getActiveRole, UserRole, getAuditLogs, AuditRecord } from '@/utils/enterpriseState';
 import {
   Users, Activity, Calendar, FlaskConical, Layers, Play, CheckCircle2,
   Clock, AlertCircle, FileText, Plus, Upload, User, Sparkles, Send,
-  TrendingUp, ArrowRight, ShieldAlert, CheckSquare, Search, Lock, ChevronRight, X, Eye
+  TrendingUp, ArrowRight, ShieldAlert, CheckSquare, Search, Lock, ChevronRight, X, Eye, Building2, CreditCard, ShieldCheck, Zap
 } from 'lucide-react';
 
 interface OperationalDashboardProps {
   demoMode: boolean;
 }
 
-export function OperationalDashboardContent({ demoMode }: OperationalDashboardProps) {
+export default function OperationalDashboard({ demoMode }: OperationalDashboardProps) {
   const queryClient = useQueryClient();
   const supabase = createClient();
+  const t = useTranslations('DashboardV3');
 
-  // Sidebar pin state & active workspace tab
+  // Active Role state synchronized with header switcher
+  const [activeRole, setActiveRoleState] = useState<UserRole>('Super Admin');
   const [activePatientId, setActivePatientId] = useState<string | null>("PTS-9412");
-  const [copilotOpen, setCopilotOpen] = useState(false);
-  const [copilotTab, setCopilotTab] = useState<'clinical' | 'chat'>('clinical');
-  const [chatInput, setChatInput] = useState('');
-  const [chatMessages, setChatMessages] = useState<any[]>([
-    { role: 'assistant', text: 'AI Prosthodontics Scribe active. Ask me about restoration margins or bone density clearance.' }
-  ]);
+  
+  // Custom states for interactive widgets
+  const [newPatientName, setNewPatientName] = useState('');
+  const [newPatientPhone, setNewPatientPhone] = useState('');
+  const [newPatientId, setNewPatientId] = useState('');
+  const [soapSubjective, setSoapSubjective] = useState('');
+  const [soapObjective, setSoapObjective] = useState('');
 
-  // Search filter
-  const [searchQuery, setSearchQuery] = useState('');
+  useEffect(() => {
+    setActiveRoleState(getActiveRole());
+    const handleStateChange = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail && customEvent.detail.type === 'role') {
+        setActiveRoleState(customEvent.detail.value);
+      }
+    };
+    window.addEventListener('healthos_state_change', handleStateChange);
+    return () => window.removeEventListener('healthos_state_change', handleStateChange);
+  }, []);
 
   // 1. Fetch Patients
-  const { data: patients = [], isLoading: isLoadingPatients } = useQuery({
-    queryKey: ['dashboard-patients'],
+  const { data: patients = [] } = useQuery({
+    queryKey: ['dashboard-patients-v3'],
     queryFn: () => clinicalService.getPatients(supabase, demoMode)
   });
 
   // 2. Fetch Global Appointments
-  const { data: appointments = [], isLoading: isLoadingAppts } = useQuery({
-    queryKey: ['dashboard-appointments'],
+  const { data: appointments = [] } = useQuery({
+    queryKey: ['dashboard-appointments-v3'],
     queryFn: () => clinicalService.getAllAppointments(supabase, demoMode)
   });
 
-  // Find active patient data
   const activePatient = useMemo(() => {
     if (!activePatientId) return null;
     return patients.find(p => p.id === activePatientId) || null;
   }, [patients, activePatientId]);
 
-  // Mutations for Appointments
   const updateApptMutation = useMutation({
     mutationFn: async ({ apptId, status }: { apptId: string, status: Appointment['status'] }) => {
       const targetAppt = appointments.find(a => a.id === apptId);
@@ -57,66 +68,684 @@ export function OperationalDashboardContent({ demoMode }: OperationalDashboardPr
       await clinicalService.updateAppointmentStatus(supabase, targetAppt.patientId, apptId, status, demoMode);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['dashboard-appointments'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-appointments-v3'] });
     }
   });
 
-  const handleSendMessage = () => {
-    if (!chatInput.trim()) return;
-    setChatMessages(prev => [...prev, { role: 'user', text: chatInput }]);
-    const queryStr = chatInput;
-    setChatInput('');
-    setTimeout(() => {
-      setChatMessages(prev => [...prev, {
-        role: 'assistant',
-        text: `Based on patient ${activePatient?.name || 'record'}, recommended restorative material is Zirconia for high load clearance. ISQ coefficient is stable at 78.`
-      }]);
-    }, 700);
+  // Role based configs
+  const renderStats = () => {
+    switch (activeRole) {
+      case 'Super Admin':
+        return (
+          <>
+            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('sa_stat1_label')}</span>
+              <span className="text-2xl font-black text-zinc-950">18</span>
+              <span className="text-[9px] font-semibold text-amber-950">{t('sa_stat1_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('sa_stat2_label')}</span>
+              <span className="text-2xl font-bold text-white">450</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('sa_stat2_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('sa_stat3_label')}</span>
+              <span className="text-2xl font-bold text-white">99.98%</span>
+              <span className="text-[9px] text-emerald-400 font-semibold">{t('sa_stat3_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('sa_stat4_label')}</span>
+              <span className="text-2xl font-bold text-amber-400">3</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('sa_stat4_sub')}</span>
+            </div>
+          </>
+        );
+      case 'Clinic Owner':
+        return (
+          <>
+            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('m_stat1_label')}</span>
+              <span className="text-2xl font-black text-zinc-950">48</span>
+              <span className="text-[9px] font-semibold text-amber-950">{t('m_stat1_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('m_stat2_label')}</span>
+              <span className="text-2xl font-bold text-white">2</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('m_stat2_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('m_stat3_label')}</span>
+              <span className="text-2xl font-bold text-white">$12,850</span>
+              <span className="text-[9px] text-emerald-400 font-semibold">{t('m_stat3_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('m_stat4_label')}</span>
+              <span className="text-2xl font-bold text-amber-400">8</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('m_stat4_sub')}</span>
+            </div>
+          </>
+        );
+      case 'Laboratory Technician':
+        return (
+          <>
+            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('l_stat1_label')}</span>
+              <span className="text-2xl font-black text-zinc-950">9</span>
+              <span className="text-[9px] font-semibold text-amber-950">{t('l_stat1_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('l_stat2_label')}</span>
+              <span className="text-2xl font-bold text-white">0</span>
+              <span className="text-[9px] text-emerald-400 font-semibold">{t('l_stat2_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('l_stat3_label')}</span>
+              <span className="text-2xl font-bold text-white">14</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('l_stat3_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('l_stat4_label')}</span>
+              <span className="text-2xl font-bold text-white">{t('l_stat4_sub')}</span>
+              <span className="text-[9px] text-zinc-500 font-medium">SprintRay / Roland</span>
+            </div>
+          </>
+        );
+      case 'Receptionist':
+        return (
+          <>
+            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('r_stat1_label')}</span>
+              <span className="text-2xl font-black text-zinc-950">15</span>
+              <span className="text-[9px] font-semibold text-amber-950">{t('r_stat1_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('r_stat2_label')}</span>
+              <span className="text-2xl font-bold text-white">3</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('r_stat2_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('r_stat3_label')}</span>
+              <span className="text-2xl font-bold text-white">2</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('r_stat3_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('r_stat4_label')}</span>
+              <span className="text-2xl font-bold text-red-400">3</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('r_stat4_sub')}</span>
+            </div>
+          </>
+        );
+      case 'Read-only Auditor':
+        return (
+          <>
+            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('a_stat1_label')}</span>
+              <span className="text-2xl font-black text-zinc-950">4</span>
+              <span className="text-[9px] font-semibold text-amber-950">{t('a_stat1_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('a_stat2_label')}</span>
+              <span className="text-2xl font-bold text-white">0</span>
+              <span className="text-[9px] text-emerald-400 font-semibold">{t('a_stat2_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('a_stat3_label')}</span>
+              <span className="text-2xl font-bold text-white">1</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('a_stat3_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('a_stat4_label')}</span>
+              <span className="text-2xl font-bold text-red-400">0</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('a_stat4_sub')}</span>
+            </div>
+          </>
+        );
+      default: // Clinicians (Prosthodontist / General Dentist)
+        return (
+          <>
+            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('c_stat1_label')}</span>
+              <span className="text-2xl font-black text-zinc-950">8</span>
+              <span className="text-[9px] font-semibold text-amber-950">{t('c_stat1_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('c_stat2_label')}</span>
+              <span className="text-2xl font-bold text-white">2</span>
+              <span className="text-[9px] text-red-400 font-semibold">{t('c_stat2_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('c_stat3_label')}</span>
+              <span className="text-2xl font-bold text-white">4</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('c_stat3_sub')}</span>
+            </div>
+            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('c_stat4_label')}</span>
+              <span className="text-2xl font-bold text-amber-400">1</span>
+              <span className="text-[9px] text-zinc-500 font-medium">{t('c_stat4_sub')}</span>
+            </div>
+          </>
+        );
+    }
   };
 
-  // Compile global Lab Pipeline cases from patient records
-  const labCases = useMemo(() => {
-    const list: PatientCase[] = [];
-    patients.forEach(p => {
-      if (p.cases) {
-        list.push(...p.cases);
-      }
-    });
-    return list;
-  }, [patients]);
+  const renderPanels = () => {
+    switch (activeRole) {
+      case 'Super Admin':
+        return (
+          <>
+            {/* Left Panel: Clinics and Orgs list */}
+            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <Building2 className="w-4 h-4 text-amber-500" /> {t('sa_title1')}
+                </h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-right border-collapse">
+                  <thead>
+                    <tr className="border-b border-zinc-900 text-[10px] text-zinc-500">
+                      <th className="pb-3 text-right">{t('sa_th1')}</th>
+                      <th className="pb-3 text-right">{t('sa_th2')}</th>
+                      <th className="pb-3 text-right">{t('sa_th3')}</th>
+                      <th className="pb-3 text-right">{t('sa_th4')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-zinc-900/40">
+                      <td className="py-3 font-semibold text-white">{t('sa_clinic1')}</td>
+                      <td className="py-3 text-zinc-300">14</td>
+                      <td className="py-3 text-zinc-400 font-mono">Enterprise (12-08-2026)</td>
+                      <td className="py-3"><span className="text-[9px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">{t('sa_status_active')}</span></td>
+                    </tr>
+                    <tr className="border-b border-zinc-900/40">
+                      <td className="py-3 font-semibold text-white">{t('sa_clinic2')}</td>
+                      <td className="py-3 text-zinc-300">28</td>
+                      <td className="py-3 text-zinc-400 font-mono">Standard (25-08-2026)</td>
+                      <td className="py-3"><span className="text-[9px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">{t('sa_status_active')}</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-  // Compile task center stats
-  const pendingTasks = useMemo(() => {
-    const tasks = [
-      { id: 't1', title: 'Unsigned SOAP Note - Crown Prep #36', type: 'Note', patient: 'Arthur Pendragon', priority: 'Urgent' },
-      { id: 't2', title: 'Pending Lab Approval - Implant Guide #46', type: 'Lab', patient: 'Arthur Pendragon', priority: 'High' },
-      { id: 't3', title: 'Awaiting Insurer Claim Clearance', type: 'Billing', patient: 'Arthur Pendragon', priority: 'Standard' }
-    ];
-    return tasks;
-  }, []);
+            {/* Right Panel: Feature Flags */}
+            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-amber-500" /> {t('sa_title2')}
+                </h3>
+              </div>
+              <div className="space-y-3">
+                <div className="p-3 bg-zinc-950/40 border border-zinc-900 rounded-xl flex justify-between items-center">
+                  <div>
+                    <h4 className="text-xs font-bold text-white">{t('sa_flag1_title')}</h4>
+                    <p className="text-[9px] text-zinc-500 mt-0.5">{t('sa_flag1_sub')}</p>
+                  </div>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">{t('sa_flag1_status')}</span>
+                </div>
+                <div className="p-3 bg-zinc-950/40 border border-zinc-900 rounded-xl flex justify-between items-center">
+                  <div>
+                    <h4 className="text-xs font-bold text-white">{t('sa_flag2_title')}</h4>
+                    <p className="text-[9px] text-zinc-500 mt-0.5">{t('sa_flag2_sub')}</p>
+                  </div>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">{t('sa_flag2_status')}</span>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      case 'Clinic Owner':
+        return (
+          <>
+            {/* Left Panel: Doctors shift list */}
+            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <Users className="w-4 h-4 text-amber-500" /> {t('m_title1')}
+                </h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-right border-collapse">
+                  <thead>
+                    <tr className="border-b border-zinc-900 text-[10px] text-zinc-500">
+                      <th className="pb-3 text-right">{t('m_th1')}</th>
+                      <th className="pb-3 text-right">{t('m_th2')}</th>
+                      <th className="pb-3 text-right">{t('m_th3')}</th>
+                      <th className="pb-3 text-right">{t('m_th4')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-zinc-900/40">
+                      <td className="py-3 font-semibold text-white">{t('doc1_title')}</td>
+                      <td className="py-3 text-zinc-300">كرسي A</td>
+                      <td className="py-3 text-zinc-400 font-mono">09:00 - 17:00</td>
+                      <td className="py-3"><span className="text-[9px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">{t('m_status_active')}</span></td>
+                    </tr>
+                    <tr className="border-b border-zinc-900/40">
+                      <td className="py-3 font-semibold text-white">{t('doc2_title')}</td>
+                      <td className="py-3 text-zinc-300">كرسي B</td>
+                      <td className="py-3 text-zinc-400 font-mono">10:00 - 18:00</td>
+                      <td className="py-3"><span className="text-[9px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">{t('m_status_active')}</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-  // Sync timeline
-  const activityTimeline = useMemo(() => {
-    const base = [
-      { id: 'act-1', text: 'Implant Placement surgical template approved', actor: 'Dr. Ahmed', time: '10:14 AM', category: 'Lab' },
-      { id: 'act-2', text: 'Double-arch CBCT scan imported successfully', actor: 'Lab Tech Barton', time: '09:48 AM', category: 'Imaging' },
-      { id: 'act-3', text: 'Digital Smile Design preview generated by AI Scribe', actor: 'Clinical AI', time: '08:30 AM', category: 'AI' }
-    ];
-    return base.filter(a => a.text.toLowerCase().includes(searchQuery.toLowerCase()));
-  }, [searchQuery]);
+            {/* Right Panel: Pending Approvals */}
+            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <Lock className="w-4 h-4 text-amber-500" /> {t('m_title2')}
+                </h3>
+              </div>
+              <div className="space-y-3">
+                <div className="p-3.5 bg-zinc-950/40 border border-zinc-900 rounded-xl">
+                  <h4 className="text-xs font-bold text-white leading-normal">{t('m_req1')}</h4>
+                  <p className="text-[10px] text-zinc-500 font-mono mt-1">{t('m_req1_sub')}</p>
+                </div>
+                <div className="p-3.5 bg-zinc-950/40 border border-zinc-900 rounded-xl">
+                  <h4 className="text-xs font-bold text-white leading-normal">{t('m_req2')}</h4>
+                  <p className="text-[10px] text-zinc-500 font-mono mt-1">{t('m_req2_sub')}</p>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      case 'Laboratory Technician':
+        return (
+          <>
+            {/* Left Panel: Lab Kanban Board */}
+            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <FlaskConical className="w-4 h-4 text-amber-500" /> {t('l_title1')}
+                </h3>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div className="bg-zinc-950/40 border border-zinc-900/60 rounded-xl p-3 flex flex-col gap-2.5">
+                  <span className="text-[9px] font-bold text-zinc-500 border-b border-zinc-900 pb-1">{t('l_milling')}</span>
+                  <div className="bg-zinc-900 p-2.5 rounded-lg border border-zinc-800 cursor-pointer">
+                    <span className="text-[11px] font-bold text-white block">جسر زيركونيا #36</span>
+                    <span className="text-[9px] text-zinc-500 block mt-1">آرثر بندراغون</span>
+                  </div>
+                </div>
+                <div className="bg-zinc-950/40 border border-zinc-900/60 rounded-xl p-3 flex flex-col gap-2.5">
+                  <span className="text-[9px] font-bold text-zinc-500 border-b border-zinc-900 pb-1">{t('l_sintering')}</span>
+                  <div className="bg-zinc-900 p-2.5 rounded-lg border border-zinc-800 cursor-pointer">
+                    <span className="text-[11px] font-bold text-white block">تاج مفرد Zirconia</span>
+                    <span className="text-[9px] text-zinc-500 block mt-1">كلارا أوزوالد</span>
+                  </div>
+                </div>
+                <div className="bg-zinc-950/40 border border-zinc-900/60 rounded-xl p-3 flex flex-col gap-2.5">
+                  <span className="text-[9px] font-bold text-zinc-500 border-b border-zinc-900 pb-1">{t('l_qc')}</span>
+                  <div className="bg-zinc-900 p-2.5 rounded-lg border border-zinc-800 cursor-pointer">
+                    <span className="text-[11px] font-bold text-white block">دليل زراعة ثلاثي الأبعاد</span>
+                    <span className="text-[9px] text-zinc-500 block mt-1">بروس وين</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-  if (isLoadingPatients || isLoadingAppts) {
-    return (
-      <div className="space-y-6 min-h-screen pb-16 animate-pulse text-left">
-        <div className="w-full h-12 bg-zinc-900 rounded-xl" />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="h-[600px] bg-zinc-900/40 rounded-2xl border border-zinc-900" />
-          <div className="h-[600px] bg-zinc-900/40 rounded-2xl border border-zinc-900" />
-          <div className="h-[600px] bg-zinc-900/40 rounded-2xl border border-zinc-900" />
-        </div>
-      </div>
-    );
-  }
+            {/* Right Panel: Machine Status */}
+            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <Activity className="w-4 h-4 text-amber-500" /> {t('l_title2')}
+                </h3>
+              </div>
+              <div className="space-y-3">
+                <div className="p-3 bg-zinc-950/40 border border-zinc-900 rounded-xl flex justify-between items-center">
+                  <div>
+                    <h4 className="text-xs font-bold text-white">Roland DGX-52D</h4>
+                    <p className="text-[9px] text-emerald-400 font-semibold mt-0.5">Active (75%)</p>
+                  </div>
+                  <span className="text-[10px] font-mono text-zinc-500">ETA: 12m</span>
+                </div>
+                <div className="p-3 bg-zinc-950/40 border border-zinc-900 rounded-xl flex justify-between items-center">
+                  <div>
+                    <h4 className="text-xs font-bold text-white">SprintRay Pro 95</h4>
+                    <p className="text-[9px] text-zinc-500 mt-0.5">Ready</p>
+                  </div>
+                  <span className="text-[10px] font-mono text-zinc-500">Idle</span>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      case 'Receptionist':
+        return (
+          <>
+            {/* Left Panel: Today's check-ins */}
+            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-amber-500" /> {t('r_title1')}
+                </h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-right border-collapse">
+                  <thead>
+                    <tr className="border-b border-zinc-900 text-[10px] text-zinc-500">
+                      <th className="pb-3 text-right">المريض</th>
+                      <th className="pb-3 text-right">الطبيب</th>
+                      <th className="pb-3 text-right">الوقت</th>
+                      <th className="pb-3 text-right">الحالة</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-zinc-900/40">
+                      <td className="py-3 font-semibold text-white">آرثر بندراغون</td>
+                      <td className="py-3 text-zinc-300">د. أحمد</td>
+                      <td className="py-3 text-zinc-400 font-mono">09:00 ص</td>
+                      <td className="py-3"><span className="text-[9px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">حضر بالعيادة</span></td>
+                    </tr>
+                    <tr className="border-b border-zinc-900/40">
+                      <td className="py-3 font-semibold text-white">كلارا أوزوالد</td>
+                      <td className="py-3 text-zinc-300">د. أحمد</td>
+                      <td className="py-3 text-zinc-400 font-mono">10:15 ص</td>
+                      <td className="py-3"><span className="text-[9px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">قيد الانتظار</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Right Panel: Patient Intake form */}
+            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <User className="w-4 h-4 text-amber-500" /> {t('r_title2')}
+                </h3>
+              </div>
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  placeholder={t('r_name')}
+                  value={newPatientName}
+                  onChange={e => setNewPatientName(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-900 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-amber-500"
+                />
+                <input
+                  type="text"
+                  placeholder={t('r_phone')}
+                  value={newPatientPhone}
+                  onChange={e => setNewPatientPhone(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-900 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-amber-500"
+                />
+                <input
+                  type="text"
+                  placeholder={t('r_national_id')}
+                  value={newPatientId}
+                  onChange={e => setNewPatientId(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-900 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-amber-500"
+                />
+                <button
+                  onClick={() => {
+                    alert(`Intake registered: ${newPatientName}`);
+                    setNewPatientName('');
+                    setNewPatientPhone('');
+                    setNewPatientId('');
+                  }}
+                  className="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded-xl text-xs font-bold transition-all shadow-md shadow-amber-500/10 flex items-center justify-center gap-1.5"
+                >
+                  {t('r_submit')}
+                </button>
+              </div>
+            </div>
+          </>
+        );
+      case 'Read-only Auditor':
+        return (
+          <>
+            {/* Left Panel: Audit Logs */}
+            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-amber-500" /> {t('a_title1')}
+                </h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-right border-collapse">
+                  <thead>
+                    <tr className="border-b border-zinc-900 text-[10px] text-zinc-500">
+                      <th className="pb-3 text-right">الإجراء والعملية الأمنية</th>
+                      <th className="pb-3 text-right">المستهدف / البيانات</th>
+                      <th className="pb-3 text-right">المستخدم المسؤول</th>
+                      <th className="pb-3 text-right">الوقت والتدقيق</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-zinc-900/40">
+                      <td className="py-3 font-semibold text-white">تصدير سجل المريض المالي</td>
+                      <td className="py-3 text-zinc-300">ملف آرثر بندراغون</td>
+                      <td className="py-3 text-zinc-400 font-mono">خالد الدوسري (المحاسب)</td>
+                      <td className="py-3 text-zinc-500">10:14 ص</td>
+                    </tr>
+                    <tr className="border-b border-zinc-900/40">
+                      <td className="py-3 font-semibold text-white">توقيع ملف SOAP الطبي وإغلاقه</td>
+                      <td className="py-3 text-zinc-300">السن رقم #36</td>
+                      <td className="py-3 text-zinc-400 font-mono">د. أحمد القحطاني</td>
+                      <td className="py-3 text-zinc-500">09:48 ص</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Right Panel: Access Requests */}
+            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <Lock className="w-4 h-4 text-amber-500" /> {t('a_title2')}
+                </h3>
+              </div>
+              <div className="space-y-3">
+                <div className="p-3 bg-zinc-950/40 border border-zinc-900 rounded-xl flex justify-between items-center">
+                  <div>
+                    <h4 className="text-xs font-bold text-white">طلب فك تشفير السجل الطبي</h4>
+                    <p className="text-[9px] text-zinc-500 mt-0.5">المريض: آرثر بندراغون</p>
+                  </div>
+                  <button
+                    onClick={() => alert('تم رفض طلب الوصول للسرية الطبية')}
+                    className="text-[9px] px-2.5 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/20 font-bold"
+                  >
+                    رفض
+                  </button>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      default: // Clinician Dashboard (Default Doctor view)
+        return (
+          <>
+            {/* Left Panel: Today's Clinical Queue */}
+            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-amber-500" /> {t('c_title1')}
+                </h3>
+                <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-850 px-2 py-0.5 rounded text-zinc-500">
+                  {appointments.length} active
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {appointments.length === 0 ? (
+                  <div className="text-center py-8 text-xs text-zinc-600">No scheduled operations for today.</div>
+                ) : (
+                  appointments.map(appt => {
+                    const isActive = appt.patientId === activePatientId;
+                    return (
+                      <div
+                        key={appt.id}
+                        onClick={() => setActivePatientId(appt.patientId)}
+                        className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
+                          isActive
+                            ? 'bg-zinc-900/60 border-amber-500/30 shadow-md shadow-amber-500/5'
+                            : 'bg-zinc-950/20 border-zinc-900 hover:border-zinc-850'
+                        }`}
+                      >
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="text-xs font-bold text-white">{appt.patientName}</h4>
+                            <p className="text-[10px] text-zinc-500 font-medium mt-0.5">{appt.procedure} • {appt.chair}</p>
+                          </div>
+                          <span className="text-[10px] font-mono text-zinc-400 font-semibold bg-zinc-900 px-2 py-0.5 rounded border border-zinc-850">
+                            {appt.startTime}
+                          </span>
+                        </div>
+
+                        <div className="flex justify-between items-center mt-3 pt-2.5 border-t border-zinc-900/50">
+                          <span className={`text-[9px] px-2 py-0.5 rounded-full font-mono uppercase font-bold border ${
+                            appt.status === 'In-Progress' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
+                            appt.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                            'bg-zinc-900 text-zinc-400 border-zinc-850'
+                          }`}>
+                            {appt.status}
+                          </span>
+
+                          <div className="flex gap-1.5">
+                            {appt.status !== 'Completed' && appt.status !== 'In-Progress' && (
+                              <button
+                                onClick={(e) => { e.stopPropagation(); updateApptMutation.mutate({ apptId: appt.id, status: 'In-Progress' }); }}
+                                className="px-2 py-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded text-[9px] font-bold transition-all"
+                              >
+                                Start
+                              </button>
+                            )}
+                            {appt.status === 'In-Progress' && (
+                              <button
+                                onClick={(e) => { e.stopPropagation(); updateApptMutation.mutate({ apptId: appt.id, status: 'Completed' }); }}
+                                className="px-2 py-1 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded text-[9px] font-bold transition-all"
+                              >
+                                Complete
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+
+            {/* Right Panel: Active Patient snapshot + SOAP note fields */}
+            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                  <User className="w-4 h-4 text-amber-500" /> {t('c_title2')}
+                </h3>
+              </div>
+
+              {!activePatient ? (
+                <div className="p-12 text-center text-zinc-500 text-xs font-medium space-y-2">
+                  <User className="w-8 h-8 text-zinc-700 mx-auto" />
+                  <p>No patient chart active.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={activePatient.photoUrl}
+                      alt={activePatient.name}
+                      className="w-11 h-11 rounded-lg object-cover border border-zinc-900 shrink-0"
+                    />
+                    <div>
+                      <h4 className="text-xs font-bold text-white">{activePatient.name}</h4>
+                      <span className="text-[9px] font-mono text-zinc-400 bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
+                        {activePatient.id} • Age: {activePatient.age}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div className="p-2.5 rounded-xl border border-zinc-900/60 bg-zinc-950/20">
+                      <span className="text-[8px] uppercase tracking-wider font-mono text-zinc-500 font-bold block mb-1">{t('c_medical_alerts')}</span>
+                      <span className="text-red-400 font-mono text-[9.5px] font-bold block truncate" title={activePatient.medicalAlerts?.join(', ')}>
+                        {activePatient.medicalAlerts?.filter((a: any) => a !== 'None').join(', ') || 'None'}
+                      </span>
+                    </div>
+                    <div className="p-2.5 rounded-xl border border-zinc-900/60 bg-zinc-950/20">
+                      <span className="text-[8px] uppercase tracking-wider font-mono text-zinc-500 font-bold block mb-1">{t('c_allergies')}</span>
+                      <span className="text-amber-400 font-mono text-[9.5px] font-bold block truncate">
+                        {activePatient.allergyStatus || 'None'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900 space-y-1">
+                    <span className="text-[8px] uppercase tracking-wider font-mono text-zinc-500 font-bold block">{t('c_current_goal')}</span>
+                    <p className="text-xs text-zinc-300 font-medium">{activePatient.currentTreatment || 'No active protocol'}</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <textarea
+                      placeholder={t('soap_sub_placeholder')}
+                      value={soapSubjective}
+                      onChange={e => setSoapSubjective(e.target.value)}
+                      className="w-full bg-zinc-950 border border-zinc-900 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-amber-500 h-16 resize-none"
+                    />
+                    <textarea
+                      placeholder={t('soap_obj_placeholder')}
+                      value={soapObjective}
+                      onChange={e => setSoapObjective(e.target.value)}
+                      className="w-full bg-zinc-950 border border-zinc-900 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-amber-500 h-16 resize-none"
+                    />
+                  </div>
+
+                  <button
+                    onClick={() => window.location.href = `/patients/${activePatient.id}`}
+                    className="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded-xl text-xs font-bold transition-all shadow-md shadow-amber-500/10 flex items-center justify-center gap-1.5"
+                  >
+                    {t('c_full_workspace')} <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
+        );
+    }
+  };
+
+  const getHeaderInfo = () => {
+    switch (activeRole) {
+      case 'Super Admin':
+        return {
+          title: t('title_super_admin'),
+          sub: t('sub_super_admin')
+        };
+      case 'Clinic Owner':
+        return {
+          title: t('title_manager'),
+          sub: t('sub_manager')
+        };
+      case 'Laboratory Technician':
+        return {
+          title: t('title_technician'),
+          sub: t('sub_technician')
+        };
+      case 'Receptionist':
+        return {
+          title: t('title_receptionist'),
+          sub: t('sub_receptionist')
+        };
+      case 'Read-only Auditor':
+        return {
+          title: t('title_auditor'),
+          sub: t('sub_auditor')
+        };
+      default:
+        return {
+          title: t('title_clinician'),
+          sub: t('sub_clinician')
+        };
+    }
+  };
+
+  const headerInfo = getHeaderInfo();
 
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto animate-fade-in pb-12 text-zinc-100 flex relative">
@@ -127,438 +756,37 @@ export function OperationalDashboardContent({ demoMode }: OperationalDashboardPr
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-zinc-900/30 p-4 rounded-2xl border border-zinc-900/80 backdrop-blur-sm">
           <div className="space-y-1">
             <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-              Dental Prosthodontics Workspace
+              {headerInfo.title}
               <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest animate-pulse">
-                Live
+                {activeRole} {t('active')}
               </span>
             </h2>
             <p className="text-xs text-zinc-400">
-              HealthOS Central Node • Digital Dentistry Control Console
+              {headerInfo.sub}
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
             <button className="px-3.5 py-1.5 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-xs font-semibold flex items-center gap-1.5 transition-colors">
-              <Plus className="w-3.5 h-3.5 text-amber-500" /> New Patient
+              <Plus className="w-3.5 h-3.5 text-amber-500" /> {t('newConsultation')}
             </button>
             <button className="px-3.5 py-1.5 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-xs font-semibold flex items-center gap-1.5 transition-colors">
-              <Upload className="w-3.5 h-3.5 text-amber-500" /> Import STL
-            </button>
-            <button className="px-3.5 py-1.5 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-xs font-semibold flex items-center gap-1.5 transition-colors">
-              <Activity className="w-3.5 h-3.5 text-amber-500" /> Import CBCT
-            </button>
-
-            <div className="w-px h-6 bg-zinc-900 mx-1" />
-
-            <button
-              onClick={() => setCopilotOpen(prev => !prev)}
-              className={`px-3.5 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                copilotOpen
-                  ? 'bg-purple-500/10 text-purple-400 border-purple-500/20 shadow-md shadow-purple-500/5'
-                  : 'bg-zinc-950 hover:bg-zinc-900 text-zinc-400 border-zinc-800 hover:text-white'
-              }`}
-              title="Toggle AI Copilot Scribe"
-            >
-              <Sparkles className="w-3.5 h-3.5" /> AI Copilot
+              <Upload className="w-3.5 h-3.5 text-amber-500" /> {t('importStl')}
             </button>
           </div>
         </div>
 
-        {/* 3-COLUMN DESKTOP WORKSPACE */}
+        {/* Dynamic Stats Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {renderStats()}
+        </div>
+
+        {/* 2-COLUMN DESKTOP WORKSPACE */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            
-            {/* COLUMN 1 (4 Columns): TODAY'S OPERATIONS & LABS */}
-            <div className="lg:col-span-4 space-y-6">
-              
-              {/* SECTION 1: TODAY'S OPERATIONS */}
-              <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/40 backdrop-blur-md space-y-4">
-                <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-amber-500" /> Today's Operations
-                  </h3>
-                  <span className="text-[10px] font-mono font-bold bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-500">
-                    {appointments.length} active
-                  </span>
-                </div>
-
-                <div className="space-y-3">
-                  {appointments.length === 0 ? (
-                    <div className="text-center py-8 text-xs text-zinc-600">No scheduled operations for today.</div>
-                  ) : (
-                    appointments.map(appt => {
-                      const isActive = appt.patientId === activePatientId;
-                      return (
-                        <div
-                          key={appt.id}
-                          onClick={() => setActivePatientId(appt.patientId)}
-                          className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
-                            isActive
-                              ? 'bg-zinc-900/60 border-amber-500/30 shadow-md shadow-amber-500/5'
-                              : 'bg-zinc-950/20 border-zinc-900 hover:border-zinc-850'
-                          }`}
-                        >
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <h4 className="text-xs font-bold text-white">{appt.patientName}</h4>
-                              <p className="text-[10px] text-zinc-500 font-medium mt-0.5">{appt.procedure} • {appt.chair}</p>
-                            </div>
-                            <span className="text-[10px] font-mono text-zinc-400 font-semibold bg-zinc-900 px-2 py-0.5 rounded border border-zinc-850">
-                              {appt.startTime}
-                            </span>
-                          </div>
-
-                          <div className="flex justify-between items-center mt-3 pt-2.5 border-t border-zinc-900/50">
-                            <span className={`text-[9px] px-2 py-0.5 rounded-full font-mono uppercase font-bold border ${
-                              appt.status === 'In-Progress' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                              appt.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                              'bg-zinc-900 text-zinc-400 border-zinc-850'
-                            }`}>
-                              {appt.status}
-                            </span>
-
-                            <div className="flex gap-1.5">
-                              {appt.status !== 'Completed' && appt.status !== 'In-Progress' && (
-                                <button
-                                  onClick={(e) => { e.stopPropagation(); updateApptMutation.mutate({ apptId: appt.id, status: 'In-Progress' }); }}
-                                  className="px-2 py-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded text-[9px] font-bold transition-all"
-                                >
-                                  Start
-                                </button>
-                              )}
-                              {appt.status === 'In-Progress' && (
-                                <button
-                                  onClick={(e) => { e.stopPropagation(); updateApptMutation.mutate({ apptId: appt.id, status: 'Completed' }); }}
-                                  className="px-2 py-1 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded text-[9px] font-bold transition-all"
-                                >
-                                  Complete
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-              </div>
-
-              {/* SECTION 4: LAB PIPELINE */}
-              <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/40 backdrop-blur-md space-y-4">
-                <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                    <FlaskConical className="w-4 h-4 text-amber-500" /> Lab CAD/CAM Pipeline
-                  </h3>
-                  <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-500">
-                    Live Nodes
-                  </span>
-                </div>
-
-                <div className="space-y-3">
-                  {labCases.length === 0 ? (
-                    <div className="text-center py-8 text-xs text-zinc-600">No laboratory cases registered.</div>
-                  ) : (
-                    labCases.map(c => (
-                      <div key={c.id} className="p-3.5 rounded-xl border border-zinc-900 bg-zinc-950/20 space-y-2">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h4 className="text-xs font-bold text-white truncate max-w-[180px]">{c.name}</h4>
-                            <p className="text-[10px] text-zinc-500 font-mono mt-0.5">Technician: {c.clinician} • Due: {c.dueDate}</p>
-                          </div>
-                          <span className={`text-[8px] px-1.5 py-0.5 rounded border uppercase font-mono font-bold ${
-                            c.priority === 'High' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                            'bg-zinc-900 text-zinc-400 border-zinc-800'
-                          }`}>
-                            {c.priority}
-                          </span>
-                        </div>
-
-                        <div className="flex justify-between items-center pt-2 border-t border-zinc-900/50">
-                          <span className="text-[9px] text-zinc-400 font-mono font-bold">{c.stage}</span>
-                          <span className="text-[10px] text-amber-400 font-mono font-bold">{c.progress}%</span>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-
-            </div>
-
-            {/* COLUMN 2 (4 Columns): ACTIVE PATIENT CHART & IMAGES */}
-            <div className="lg:col-span-4 space-y-6">
-              
-              {/* SECTION 2: ACTIVE PATIENT */}
-              <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/40 backdrop-blur-md space-y-4">
-                <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                    <User className="w-4 h-4 text-amber-500" /> Active Patient Chart
-                  </h3>
-                  <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-500">
-                    Prosthodontics context
-                  </span>
-                </div>
-
-                {!activePatient ? (
-                  <div className="p-12 text-center text-zinc-500 text-xs font-medium space-y-2">
-                    <User className="w-8 h-8 text-zinc-700 mx-auto" />
-                    <p>No patient chart active. Select an operational queue card to fetch clinical records.</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4 text-left">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={activePatient.photoUrl}
-                        alt={activePatient.name}
-                        className="w-12 h-12 rounded-xl object-cover border border-zinc-900 shrink-0"
-                      />
-                      <div>
-                        <h4 className="text-sm font-bold text-white">{activePatient.name}</h4>
-                        <span className="text-[9px] font-mono text-zinc-400 bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
-                          {activePatient.id} • Age: {activePatient.age}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Allergies & Alerts */}
-                    <div className="grid grid-cols-2 gap-3 text-xs">
-                      <div className="p-2.5 rounded-xl border border-zinc-900/60 bg-zinc-950/20">
-                        <span className="text-[8px] uppercase tracking-wider font-mono text-zinc-500 font-bold block mb-1">Medical Alerts</span>
-                        <span className="text-red-400 font-mono text-[10px] font-bold block truncate" title={activePatient.medicalAlerts?.join(', ')}>
-                          {activePatient.medicalAlerts?.filter((a: any) => a !== 'None').join(', ') || 'None'}
-                        </span>
-                      </div>
-                      <div className="p-2.5 rounded-xl border border-zinc-900/60 bg-zinc-950/20">
-                        <span className="text-[8px] uppercase tracking-wider font-mono text-zinc-500 font-bold block mb-1">Drug Allergies</span>
-                        <span className="text-amber-400 font-mono text-[10px] font-bold block truncate">
-                          {activePatient.allergyStatus || 'None logged'}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900 space-y-1">
-                      <span className="text-[8px] uppercase tracking-wider font-mono text-zinc-500 font-bold block">Current Prosthodontics prep Goal</span>
-                      <p className="text-xs text-zinc-300 font-medium">{activePatient.currentTreatment || 'No active protocol'}</p>
-                    </div>
-
-                    {/* Action Hub */}
-                    <div className="grid grid-cols-2 gap-2 text-center text-xs">
-                      <button className="py-2 px-3 bg-zinc-900 hover:bg-zinc-850 rounded-xl border border-zinc-800 text-[10px] font-semibold text-zinc-200 transition-colors">
-                        SOAP Record
-                      </button>
-                      <button className="py-2 px-3 bg-zinc-900 hover:bg-zinc-850 rounded-xl border border-zinc-800 text-[10px] font-semibold text-zinc-200 transition-colors">
-                        Treatment Plan
-                      </button>
-                    </div>
-
-                    <button
-                      onClick={() => window.location.href = `/patients/${activePatient.id}`}
-                      className="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded-xl text-xs font-bold transition-all shadow-md shadow-amber-500/10 hover:shadow-amber-500/25 flex items-center justify-center gap-1.5"
-                    >
-                      Open Full Workspace <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* SECTION 5: IMAGING */}
-              <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/40 backdrop-blur-md space-y-4">
-                <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-amber-500" /> PACS Digital Imaging
-                  </h3>
-                  <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-500">
-                    STL + DICOM
-                  </span>
-                </div>
-
-                <div className="space-y-3">
-                  {[
-                    { id: 'img-1', name: 'High-Res CBCT (Double Arch)', patient: 'Arthur Pendragon', type: 'DICOM Imports', status: 'Rendered' },
-                    { id: 'img-2', name: 'Upper/Lower Intraoral Scan', patient: 'Sarah Jenkins', type: 'STL Files', status: 'CAD Aligned' },
-                    { id: 'img-3', name: '12-Angle Facial Portrait Set', patient: 'Sarah Jenkins', type: 'Smile Photos', status: 'AI Analyzed' }
-                  ].map(img => (
-                    <div key={img.id} className="p-3 rounded-xl bg-zinc-950/40 border border-zinc-900 flex items-center justify-between">
-                      <div>
-                        <h4 className="text-xs font-bold text-white">{img.name}</h4>
-                        <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{img.type} • Patient: {img.patient}</p>
-                      </div>
-                      <button className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-850 hover:bg-zinc-800 text-zinc-400 hover:text-white transition-colors" title="Launch PACS slice viewer">
-                        <Eye className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-
-            {/* COLUMN 3 (4 Columns): TASK CENTER & HIPAA ACTIVITY TIMELINE */}
-            <div className="lg:col-span-4 space-y-6">
-              
-              {/* SECTION 3: TASK CENTER */}
-              <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/40 backdrop-blur-md space-y-4">
-                <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                    <CheckSquare className="w-4 h-4 text-amber-500" /> Operational Task Center
-                  </h3>
-                  <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-500">
-                    Scribe items
-                  </span>
-                </div>
-
-                <div className="space-y-3">
-                  {pendingTasks.map(t => (
-                    <div key={t.id} className="p-3.5 rounded-xl border border-zinc-900 bg-zinc-950/20 flex items-center justify-between">
-                      <div>
-                        <h4 className="text-xs font-bold text-white leading-normal">{t.title}</h4>
-                        <p className="text-[10px] text-zinc-500 font-mono mt-0.5">Patient: {t.patient}</p>
-                      </div>
-                      <span className={`text-[8px] font-mono px-2 py-0.5 rounded border uppercase font-bold shrink-0 ${
-                        t.priority === 'Urgent' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                        'bg-zinc-900 text-zinc-400 border-zinc-850'
-                      }`}>
-                        {t.priority}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* SECTION 6: ACTIVITY TIMELINE */}
-              <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/40 backdrop-blur-md space-y-4">
-                <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                    <Activity className="w-4 h-4 text-amber-500" /> HIPAA Audit Timeline
-                  </h3>
-                  <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-500">
-                    Live Stream
-                  </span>
-                </div>
-
-                <div className="relative pl-5 space-y-4 border-l border-zinc-900">
-                  {activityTimeline.map(act => (
-                    <div key={act.id} className="relative text-xs">
-                      <span className="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-zinc-900 border-2 border-zinc-950" />
-                      <p className="font-semibold text-white leading-tight">{act.text}</p>
-                      <span className="text-[10px] text-zinc-500 font-mono block mt-1">{act.time} • Operator: {act.actor}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
+          {renderPanels()}
+        </div>
 
       </div>
     </div>
-
-      {/* SECTION 7: AI COPILOT (DOCK ON RIGHT) */}
-      <div
-        className={`h-screen border-l border-zinc-900 bg-zinc-950/90 backdrop-blur-md flex flex-col transition-all duration-300 relative ${
-          copilotOpen ? 'w-80 opacity-100' : 'w-0 opacity-0 overflow-hidden'
-        }`}
-      >
-        <div className="p-4 border-b border-zinc-900 flex justify-between items-center shrink-0 bg-zinc-900/10">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4.5 h-4.5 text-purple-400" />
-            <span className="text-xs font-bold font-mono text-white">Clinical AI Copilot</span>
-          </div>
-          <button
-            onClick={() => setCopilotOpen(false)}
-            className="p-1.5 rounded-lg hover:bg-zinc-900 text-zinc-400 hover:text-white transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Tab selection */}
-        <div className="flex border-b border-zinc-900 text-[10px] font-mono font-bold uppercase tracking-wider bg-zinc-950">
-          <button
-            onClick={() => setCopilotTab('clinical')}
-            className={`flex-1 py-2 text-center border-r border-zinc-900 transition-colors ${
-              copilotTab === 'clinical' ? 'bg-zinc-900/50 text-purple-400' : 'text-zinc-500 hover:text-zinc-300'
-            }`}
-          >
-            Diagnostics
-          </button>
-          <button
-            onClick={() => setCopilotTab('chat')}
-            className={`flex-1 py-2 text-center transition-colors ${
-              copilotTab === 'chat' ? 'bg-zinc-900/50 text-purple-400' : 'text-zinc-500 hover:text-zinc-300'
-            }`}
-          >
-            Decision Chat
-          </button>
-        </div>
-
-        {/* Tab Content */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {copilotTab === 'clinical' ? (
-            <div className="space-y-4 text-left">
-              <div className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl space-y-1">
-                <span className="text-[8px] font-mono text-zinc-500 block uppercase font-bold">Implant Stability Profile</span>
-                <p className="text-xs text-zinc-300">Target site #46 is osteointegrated. Torque resistance verified at 35 Ncm. ISQ coefficient is stable at 78.</p>
-              </div>
-
-              <div className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl space-y-1">
-                <span className="text-[8px] font-mono text-zinc-500 block uppercase font-bold">Lab Suggestions</span>
-                <p className="text-xs text-zinc-300">Zirconia multi-unit bridge framework is ready. Suggested sintering duration: 7 hours at 1450°C.</p>
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col h-full overflow-hidden">
-              <div className="flex-1 overflow-y-auto space-y-3 pb-4">
-                {chatMessages.map((msg, idx) => (
-                  <div
-                    key={idx}
-                    className={`p-3 rounded-xl text-xs leading-normal max-w-[85%] ${
-                      msg.role === 'assistant'
-                        ? 'bg-zinc-900 text-zinc-300 mr-auto text-left'
-                        : 'bg-purple-600 text-white ml-auto text-left'
-                    }`}
-                  >
-                    {msg.text}
-                  </div>
-                ))}
-              </div>
-
-              {/* Chat Input */}
-              <div className="border-t border-zinc-900 pt-3 flex gap-2 shrink-0 bg-zinc-950">
-                <input
-                  type="text"
-                  placeholder="Ask Clinical AI Scribe..."
-                  value={chatInput}
-                  onChange={e => setChatInput(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handleSendMessage()}
-                  className="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-300 focus:outline-none focus:border-purple-500"
-                />
-                <button
-                  onClick={handleSendMessage}
-                  className="p-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white transition-colors"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const localQueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: false,
-    },
-  },
-});
-
-export default function OperationalDashboard(props: OperationalDashboardProps) {
-  return (
-    <QueryClientProvider client={localQueryClient}>
-      <OperationalDashboardContent {...props} />
-    </QueryClientProvider>
   );
 }
