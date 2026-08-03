@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
     // Handle upsert
     if (action === 'upsert') {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from(dbTable)
         .upsert({
           ...data,
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 
     // Handle delete
     if (action === 'delete') {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from(dbTable)
         .delete()
         .eq('id', id);
@@ -93,7 +93,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const since = searchParams.get('since');
 
-    let query = supabase
+    let query = (supabase as any)
       .from('healthos_patients')
       .select('*')
       .order('updated_at', { ascending: false });

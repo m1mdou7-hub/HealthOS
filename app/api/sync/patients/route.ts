@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const since = searchParams.get('since');
 
-    let query = supabase
+    let query = (supabase as any)
       .from('healthos_patients')
       .select('*')
       .order('updated_at', { ascending: false })
