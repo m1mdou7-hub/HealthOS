@@ -177,12 +177,15 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           <span>Bypassing Supabase authentication for local development. Production authentication remains active and untouched.</span>
         </div>
       )}
-      <div className="flex flex-1 bg-zinc-950 text-zinc-100 overflow-hidden font-sans">
+      <div className="flex flex-1 bg-zinc-950 text-zinc-100 overflow-hidden font-sans relative">
+      {/* Sidebar Spacer for Desktop layout */}
+      <div className="hidden lg:block w-[72px] shrink-0" />
+
       {/* Sidebar for Desktop */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:flex-shrink-0 border-r border-zinc-800 bg-zinc-900/50 backdrop-blur-md">
+      <aside className="hidden lg:flex lg:flex-col absolute left-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-r border-zinc-900 bg-zinc-950/90 backdrop-blur-md transition-all duration-300 ease-in-out group shadow-xl shadow-black/45">
         {/* Brand Header */}
-        <div className="flex items-center h-16 px-6 border-b border-zinc-800 gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500 text-white">
+        <div className="flex items-center h-16 px-[20px] border-b border-zinc-900 gap-3 overflow-hidden shrink-0">
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500 text-white shrink-0">
             <svg
               width="18"
               height="18"
@@ -197,14 +200,14 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
           </div>
-          <span className="font-semibold text-lg tracking-tight text-white">HealthOS</span>
-          <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span className="font-semibold text-lg tracking-tight text-white opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">HealthOS</span>
+          <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
             PRO
           </span>
         </div>
 
         {/* Navigation links */}
-        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-3.5 py-6 space-y-1.5 overflow-y-auto scrollbar-none">
           {NAV_ITEMS.map((item) => {
             const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
             const Icon = item.icon;
@@ -212,38 +215,38 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <Link
                 key={tNav(item.labelKey)}
                 href={item.href}
-                className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-150 group ${
+                className={`flex items-center px-2.5 py-2.5 text-sm font-medium rounded-xl transition-all duration-150 group/nav overflow-hidden ${
                   isActive
                     ? 'bg-emerald-500/10 text-emerald-400 border-l-2 border-emerald-500'
                     : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
                 }`}
               >
                 <Icon
-                  className={`w-5 h-5 mr-3 transition-transform duration-150 group-hover:scale-105 ${
-                    isActive ? 'text-emerald-400' : 'text-zinc-400 group-hover:text-zinc-100'
+                  className={`w-5 h-5 shrink-0 transition-transform duration-150 group-hover/nav:scale-105 ${
+                    isActive ? 'text-emerald-400' : 'text-zinc-400 group-hover/nav:text-zinc-100'
                   }`}
                 />
-                {tNav(item.labelKey)}
+                <span className="ml-3 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">{tNav(item.labelKey)}</span>
               </Link>
             );
           })}
         </nav>
 
         {/* Bottom User Area */}
-        <div className="p-4 border-t border-zinc-800 bg-zinc-900/30">
+        <div className="p-3.5 border-t border-zinc-900 bg-zinc-950/20 overflow-hidden shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center min-w-0 gap-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-800 text-zinc-300">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-800 text-zinc-300 shrink-0">
                 <User className="w-4 h-4" />
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
                 <p className="text-xs font-medium text-zinc-200 truncate">
                   {user?.email || 'Medical Operator'}
                 </p>
-                <p className="text-[10px] text-zinc-500 truncate">HealthOS Workspace</p>
+                <p className="text-[10px] text-zinc-500 truncate font-mono">Operator Console</p>
               </div>
             </div>
-            <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
+            <form onSubmit={(e) => handleRequest(e, SignOut, router)} className="opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shrink-0">
               <input type="hidden" name="pathName" value={pathname} />
               <button
                 type="submit"
