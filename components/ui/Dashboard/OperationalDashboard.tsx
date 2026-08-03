@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createClient } from '@/utils/supabase/client';
 import { clinicalService, Appointment, PatientCase, ClinicalNote } from '@/utils/services/clinicalService';
 import { Patient } from '../PatientWorkspace';
@@ -15,7 +15,7 @@ interface OperationalDashboardProps {
   demoMode: boolean;
 }
 
-export default function OperationalDashboard({ demoMode }: OperationalDashboardProps) {
+export function OperationalDashboardContent({ demoMode }: OperationalDashboardProps) {
   const queryClient = useQueryClient();
   const supabase = createClient();
 
@@ -543,5 +543,22 @@ export default function OperationalDashboard({ demoMode }: OperationalDashboardP
         </div>
       </div>
     </div>
+  );
+}
+
+const localQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  },
+});
+
+export default function OperationalDashboard(props: OperationalDashboardProps) {
+  return (
+    <QueryClientProvider client={localQueryClient}>
+      <OperationalDashboardContent {...props} />
+    </QueryClientProvider>
   );
 }
