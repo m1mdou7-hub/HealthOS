@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthOS V3 - لوحة التحكم الشاملة متعددة الأدوار</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #040406;
+      --bg-card: rgba(18, 18, 24, 0.8);
+      --bg-card-hover: rgba(28, 28, 38, 0.95);
+      --border-color: rgba(255, 255, 255, 0.05);
+      --accent-orange: #ff6b00;
+      --accent-orange-glow: rgba(255, 107, 0, 0.12);
+      --accent-green: #10b981;
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --accent-red: #ef4444;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dark: #4b5563;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      padding: 16px;
+      overflow: hidden;
+      gap: 16px;
+      background-image: 
+        radial-gradient(circle at 5% 5%, rgba(255, 107, 0, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 95% 95%, rgba(139, 92, 246, 0.02) 0%, transparent 40%);
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 240px;
+      background-color: rgba(10, 10, 14, 0.95);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 14px;
+      gap: 20px;
+      flex-shrink: 0;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 6px;
+    }
+
+    .logo-box {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--accent-orange), #ff8c00);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #000;
+      font-size: 18px;
+    }
+
+    .brand-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: #fff;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 2px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .nav-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 600;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .nav-item.active {
+      background-color: var(--accent-orange-glow);
+      border-color: rgba(255, 107, 0, 0.15);
+      color: var(--accent-orange);
+    }
+
+    /* Workspace */
+    .workspace {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      height: 64px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(15px);
+      z-index: 10;
+    }
+
+    .role-switcher-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .switcher-label {
+      font-size: 11px;
+      font-weight: 750;
+      color: var(--text-muted);
+    }
+
+    .role-select {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 6px 12px;
+      color: var(--accent-orange);
+      font-size: 12px;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-header {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-header.primary {
+      background-color: var(--accent-orange);
+      color: #000;
+      border: none;
+    }
+
+    .btn-header.primary:hover {
+      background-color: #ff8c00;
+    }
+
+    /* Dashboard Layout */
+    .dashboard-layout {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+      padding-bottom: 16px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .stat-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100px;
+      transition: all 0.25s ease;
+    }
+
+    .stat-card.highlight {
+      background: linear-gradient(135deg, var(--accent-orange), #ff8c00);
+      border: none;
+      box-shadow: 0 8px 20px rgba(255, 107, 0, 0.12);
+    }
+
+    .stat-card.highlight .stat-value,
+    .stat-card.highlight .stat-label,
+    .stat-card.highlight .stat-sub {
+      color: #000 !important;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin: 4px 0;
+    }
+
+    .stat-sub {
+      font-size: 9px;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    /* 2-Column Main Workspace */
+    .columns-grid {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 16px;
+    }
+
+    /* Panel Card */
+    .panel-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      backdrop-filter: blur(15px);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      padding-bottom: 10px;
+    }
+
+    .panel-title {
+      font-size: 12px;
+      font-weight: 750;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .panel-subtitle {
+      font-size: 9px;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    /* Custom Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+    }
+
+    .data-table th {
+      padding: 8px 10px;
+      font-size: 9px;
+      color: var(--text-dark);
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .data-table td {
+      padding: 10px 10px;
+      font-size: 11.5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+    }
+
+    /* Progress bar */
+    .progress-bar-bg {
+      height: 6px;
+      background-color: rgba(255, 255, 255, 0.03);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background-color: var(--accent-orange);
+      border-radius: 4px;
+    }
+
+    /* Kanban Board for Lab */
+    .kanban-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .kanban-column {
+      background-color: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kanban-header {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      padding-bottom: 4px;
+    }
+
+    .kanban-card {
+      background-color: rgba(15, 15, 20, 0.95);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .kanban-card-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .kanban-card-desc {
+      font-size: 8.5px;
+      color: var(--text-dark);
+    }
+
+    /* Timeline list */
+    .timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      padding-right: 16px;
+      border-right: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .timeline-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      right: -21px;
+      top: 4px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: var(--text-dark);
+      border: 2px solid var(--bg-base);
+    }
+
+    .timeline-dot.active {
+      background-color: var(--accent-orange);
+    }
+
+    .timeline-dot.green {
+      background-color: var(--accent-green);
+    }
+
+    .timeline-dot.red {
+      background-color: var(--accent-red);
+    }
+
+    .timeline-item-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .timeline-item-sub {
+      font-size: 8.5px;
+      color: var(--text-dark);
+    }
+
+    /* Inputs */
+    .form-input {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 11.5px;
+      color: #fff;
+      outline: none;
+      width: 100%;
+    }
+
+    .form-input:focus {
+      border-color: var(--accent-orange);
+    }
+
+    /* Badges */
+    .badge {
+      font-size: 8.5px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .badge-orange {
+      background-color: rgba(255, 107, 0, 0.1);
+      color: var(--accent-orange);
+      border: 1px solid rgba(255, 107, 0, 0.15);
+    }
+
+    .badge-green {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+    }
+
+    .badge-red {
+      background-color: rgba(239, 68, 68, 0.1);
+      color: var(--accent-red);
+      border: 1px solid rgba(239, 68, 68, 0.15);
+    }
+
+    .badge-blue {
+      background-color: rgba(59, 130, 246, 0.1);
+      color: var(--accent-blue);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+    }
+
+    /* Transition animations */
+    .fade-in {
+      animation: fadeIn 0.2s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(2px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-box">H</div>
+      <span class="brand-name">HealthOS PRO</span>
+    </div>
+    <nav class="nav-list" id="sidebar-nav">
+      <!-- Loaded dynamically -->
+    </nav>
+  </aside>
+
+  <!-- MAIN WORKSPACE -->
+  <div class="workspace">
+    
+    <!-- Top Bar with Switcher -->
+    <header class="top-bar">
+      <div class="role-switcher-container">
+        <span class="switcher-label">الدور النشط:</span>
+        <select class="role-select" id="role-select" onchange="switchRole(this.value)">
+          <option value="super-admin">Super Admin (مسؤول النظام الأعلى)</option>
+          <option value="manager">Admin / Manager (مدير العيادة)</option>
+          <option value="clinician" selected>Clinician / Doctor (طبيب الأسنان)</option>
+          <option value="technician">Lab Technician (فني المختبر)</option>
+          <option value="receptionist">Receptionist (موظف الاستقبال)</option>
+          <option value="auditor">Auditor / Compliance (المراجع الأمني)</option>
+        </select>
+      </div>
+
+      <div class="header-actions" id="header-actions">
+        <!-- Loaded dynamically -->
+      </div>
+    </header>
+
+    <!-- Dashboard Main Layout -->
+    <main class="dashboard-layout fade-in" id="dashboard-content">
+      
+      <!-- Stats row -->
+      <div class="stats-grid" id="stats-grid">
+        <!-- Loaded dynamically -->
+      </div>
+
+      <!-- Columns Grid -->
+      <div class="columns-grid">
+        
+        <!-- Left Panel -->
+        <div class="panel-card" id="primary-panel">
+          <!-- Loaded dynamically -->
+        </div>
+
+        <!-- Right Panel -->
+        <div class="panel-card" id="secondary-panel">
+          <!-- Loaded dynamically -->
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Comprehensive Multi-Role Clinical Datasets
+    const rolesData = {
+      'super-admin': {
+        nav: [
+          { icon: '📊', label: 'لوحة التحكم العامة' },
+          { icon: '🏥', label: 'المنظمات والعيادات' },
+          { icon: '👥', label: 'الصلاحيات والمستخدمين' },
+          { icon: '🔌', label: 'التكاملات وواجهة الـ API' },
+          { icon: '⚙️', label: 'ميزات التجريب' },
+          { icon: '🛡️', label: 'سجلات التدقيق HIPAA' },
+          { icon: '💳', label: 'الاشتراكات والفوترة' },
+          { icon: '⚙️', label: 'الإعدادات العامة' }
+        ],
+        actions: [
+          { label: 'إنشاء منظمة جديدة', primary: true },
+          { label: 'تشغيل ترحيل قاعدة البيانات', primary: false }
+        ],
+        stats: [
+          { label: 'إجمالي الحسابات والمنظمات', value: '18 منظمة', sub: '99% نشطة', highlight: true },
+          { label: 'إجمالي الأطباء والمستخدمين', value: '450 طبيب', sub: '12 مستخدم قيد المراجعة' },
+          { label: 'حجم استهلاك الخادم والـ API', value: '25,400 call', sub: 'معدل Uptime 99.99%' },
+          { label: 'طلبات الانضمام المعلقة', value: '3 طلبات', sub: 'مرفق المستندات الطبية' }
+        ],
+        primary: `
+          <div class="panel-header">
+            <span class="panel-title">🏢 قائمة المنظمات والعيادات الطبية المسجلة</span>
+            <span class="panel-subtitle">إجمالي الاشتراكات والنشاط</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>اسم المنظمة / الفرع</th>
+                <th>الأطباء النشطين</th>
+                <th>فئة الاشتراك وموعد التجديد</th>
+                <th>الحالة والاشتراك</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">مجمع الرياض الرقمي للأسنان</td>
+                <td>14 طبيب معالج</td>
+                <td>Enterprise (تجديد: 12-08-2026)</td>
+                <td><span class="badge badge-green">نشط / مدفوع</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">مستشفى جدة للتجميل والاستعاضة</td>
+                <td>28 طبيب وأخصائي</td>
+                <td>Standard (تجديد: 25-08-2026)</td>
+                <td><span class="badge badge-green">نشط / مدفوع</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">مركز الشرقية التخصصي للزراعة</td>
+                <td>4 أطباء</td>
+                <td>فترة تجريبية (تنتهي: 10-08-2026)</td>
+                <td><span class="badge badge-orange">قيد المراجعة</span></td>
+              </tr>
+            </tbody>
+          </table>
+        `,
+        secondary: `
+          <div class="panel-header">
+            <span class="panel-title">🛡️ تفعيل الميزات التجريبية (Feature Flags)</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); border-radius:10px;">
+              <div>
+                <h4 style="font-size:11.5px; font-weight:700;">مستعرض الأشعة الرسومي ثلاثي الأبعاد v2</h4>
+                <p style="font-size:9px; color:var(--text-dark)">تفعيل محرك OpenGL بالويب للـ STL</p>
+              </div>
+              <span class="badge badge-green">نشط للجميع</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); border-radius:10px;">
+              <div>
+                <h4 style="font-size:11.5px; font-weight:700;">الربط المالي التلقائي مع تأمين بوبا</h4>
+                <p style="font-size:9px; color:var(--text-dark)">التحقق الذكي من استحقاق الحالات</p>
+              </div>
+              <span class="badge badge-orange">نسخة تجريبية للمطورين</span>
+            </div>
+          </div>
+        `
+      },
+      'manager': {
+        nav: [
+          { icon: '📊', label: 'لوحة التحكم بالعيادة' },
+          { icon: '👥', label: 'كادر العيادة والورديات' },
+          { icon: '📅', label: 'جدول العيادات المجمع' },
+          { icon: '💳', label: 'التحصيلات والفوترة' },
+          { icon: '🔒', label: 'الموافقات الإدارية' },
+          { icon: '🔬', label: 'طابور الحالات المفتوحة' },
+          { icon: '📈', label: 'تقارير الكفاءة والـ KPIs' },
+          { icon: '⚙️', label: 'إعدادات الفرع والعيادة' }
+        ],
+        actions: [
+          { label: 'تصدير التقرير المالي الكلي', primary: false },
+          { label: 'إسناد معالج لوردية', primary: true }
+        ],
+        stats: [
+          { label: 'المواعيد الكلية اليوم', value: '48 موعد مجدول', sub: 'موزعة على 4 غرف علاجية', highlight: true },
+          { label: 'الحالات التي لم تحضر', value: '2 حالة تخلف', sub: 'أرسلت لهم رسائل تذكير تلقائية' },
+          { label: 'التحصيلات المالية اليوم', value: '$12,850', sub: 'نقداً وبطاقات وشبكة مدى' },
+          { label: 'طلبات المعمل المتراكمة', value: '8 تيجان بانتظار الاعتماد', sub: 'مخرطة Roland Node 4' }
+        ],
+        primary: `
+          <div class="panel-header">
+            <span class="panel-title">👥 كادر الأطباء المعالجين ومناوبات الكراسي</span>
+            <span class="panel-subtitle">توزيع الغرف والورديات</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>الطبيب المعالج</th>
+                <th>الغرفة / الكرسي</th>
+                <th>ساعات الوردية</th>
+                <th>الحالة والعمليات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">د. أحمد القحطاني (استشاري زراعة)</td>
+                <td>كرسي العمليات A</td>
+                <td>09:00 ص - 05:00 م</td>
+                <td><span class="badge badge-green">نشط بالعيادة</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">د. سارة العتيبي (أخصائية تقويم)</td>
+                <td>كرسي التقويم B</td>
+                <td>10:00 ص - 06:00 م</td>
+                <td><span class="badge badge-green">نشط بالعيادة</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">د. فهد الدوسري (أخصائي عصب)</td>
+                <td>كرسي علاج الجذور C</td>
+                <td>01:00 م - 09:00 م</td>
+                <td><span class="badge badge-orange">بدء الوردية قريباً</span></td>
+              </tr>
+            </tbody>
+          </table>
+        `,
+        secondary: `
+          <div class="panel-header">
+            <span class="panel-title">🔒 الموافقات الإدارية المعلقة</span>
+          </div>
+          <div class="timeline-list">
+            <div class="timeline-item">
+              <span class="timeline-dot active"></span>
+              <span class="timeline-item-title">طلب إرجاع مالي للمريض آرثر بندراغون</span>
+              <span class="timeline-item-sub">المبلغ: $450 - لسبب طبي تأخر معملي</span>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-dot"></span>
+              <span class="timeline-item-title">تغيير الدليل الجراحي لبروس وين</span>
+              <span class="timeline-item-sub">تحديث الموعد في غرفة العمليات</span>
+            </div>
+          </div>
+        `
+      },
+      'clinician': {
+        nav: [
+          { icon: '📊', label: 'لوحة التحكم' },
+          { icon: '👥', label: 'المرضى' },
+          { icon: '🏥', label: 'العيادات' },
+          { icon: '📅', label: 'المواعيد' },
+          { icon: '📄', label: 'السجلات الطبية' },
+          { icon: '✨', label: 'المساعد الذكي' },
+          { icon: '🔬', label: 'المختبر' },
+          { icon: '📈', label: 'الأشعة والتصوير' },
+          { icon: '📦', label: 'المخزون' },
+          { icon: '📊', label: 'التحليلات' },
+          { icon: '💳', label: 'الفوترة' },
+          { icon: '🏷️', label: 'الأسعار' },
+          { icon: '💬', label: 'التواصل' },
+          { icon: '📂', label: 'مركز المستندات' },
+          { icon: '✅', label: 'مساحة المهام' },
+          { icon: '🔔', label: 'مركز الإشعارات' },
+          { icon: '🛡️', label: 'التدقيق والامتثال' },
+          { icon: '🌐', label: 'وحدة تحكم المنصة' },
+          { icon: '🔌', label: 'التكاملات' },
+          { icon: '🤖', label: 'الأتمتة' },
+          { icon: '💻', label: 'المطور' },
+          { icon: '❓', label: 'مركز المساعدة' },
+          { icon: '⚙️', label: 'الإعدادات' }
+        ],
+        actions: [
+          { label: 'استيراد ملف طبعة STL', primary: false },
+          { label: 'توقيع الملاحظة الطبية الكلية', primary: true }
+        ],
+        stats: [
+          { label: 'مرضى عيادتي اليوم', value: '8 مرضى', sub: '3 تيجان زيركونيا، 1 دليل زراعة', highlight: true },
+          { label: 'حالات حرجة (Urgent)', value: '2 مريض', sub: 'حساسية أدوية وسكري غير منتظم' },
+          { label: 'خطط علاج معلقة التوقيع', value: '4 خطط معلقة', sub: 'بانتظار موافقة المرضى لطلب المخرطة' },
+          { label: 'ملاحظات طبية بانتظار الإغلاق', value: '1 ملاحظة غير موقعة', sub: 'SOAP المريض آرثر بندراغون' }
+        ],
+        primary: `
+          <div class="panel-header">
+            <span class="panel-title">👤 تفاصيل المريض النشط والحالة الطبية</span>
+            <span class="panel-subtitle">PTS-9412</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80" style="width:44px; height:44px; border-radius:10px; object-fit:cover;">
+            <div>
+              <h4 style="font-size:13px; font-weight:700;">آرثر بندراغون</h4>
+              <span style="font-size:9.5px; color:var(--text-muted); font-family:monospace;">العمر: 52 • سكري وضغط تحت العلاج</span>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+            <div style="background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); padding:10px; border-radius:10px;">
+              <span style="font-size:8px; color:var(--text-dark); font-weight:750; display:block; text-transform:uppercase;">تنبيهات طبية</span>
+              <span style="font-size:10px; color:var(--accent-red); font-weight:700;">Diabetes Type II</span>
+            </div>
+            <div style="background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); padding:10px; border-radius:10px;">
+              <span style="font-size:8px; color:var(--text-dark); font-weight:750; display:block; text-transform:uppercase;">حساسية أدوية</span>
+              <span style="font-size:10px; color:var(--accent-orange); font-weight:700;">حساسية بنسلين</span>
+            </div>
+          </div>
+          <div style="background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); padding:12px; border-radius:10px; font-size:11px; line-height:1.5; margin-bottom:12px;">
+            <span style="font-size:8px; color:var(--text-dark); font-weight:700; display:block; margin-bottom:4px;">الهدف العلاجي لليوم</span>
+            مراجعة تلائم جسر الزيركونيا للفك العلوي السن رقم #36 وتأكيد مساحة التوصيل (الحد الأدنى 12 مم²).
+          </div>
+          <!-- SOAP note fields inline -->
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <textarea placeholder="Subjective: شكوى المريض وآلامه..." style="background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); border-radius:8px; padding:8px; font-size:11px; color:#fff; height:60px; outline:none; resize:none;"></textarea>
+            <textarea placeholder="Objective: الفحص السريري وصور الأشعة..." style="background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); border-radius:8px; padding:8px; font-size:11px; color:#fff; height:60px; outline:none; resize:none;"></textarea>
+          </div>
+        `,
+        secondary: `
+          <div class="panel-header">
+            <span class="panel-title">💀 صور الأشعة الرقمية وملفات الـ STL المتاحة</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); border-radius:10px;">
+              <div>
+                <h4 style="font-size:11px; font-weight:700;">أشعة ثلاثية الأبعاد (CBCT) كاملة</h4>
+                <p style="font-size:9px; color:var(--text-dark)">تاريخ التصوير: 10 يوليو 2026</p>
+              </div>
+              <span style="cursor:pointer;" onclick="alert('فتح مستعرض الأشعة PACS...')">👁️</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); border-radius:10px;">
+              <div>
+                <h4 style="font-size:11px; font-weight:700;">طبعة الفك العلوي STL</h4>
+                <p style="font-size:9px; color:var(--text-dark)">تاريخ الاستيراد: 3 يوليو 2026</p>
+              </div>
+              <span style="cursor:pointer;" onclick="alert('فتح مستعرض STL ثلاثي الأبعاد...')">👁️</span>
+            </div>
+          </div>
+        `
+      },
+      'technician': {
+        nav: [
+          { icon: '📊', label: 'لوحة التحكم بالمختبر' },
+          { icon: '🔬', label: 'طابور الحالات والـ Kanban' },
+          { icon: '⚙️', label: 'حالة المخارط والطابعات' },
+          { icon: '⚠️', label: 'فحص وتدقيق الجودة QC' },
+          { icon: '📦', label: 'مستودع الخامات والمستهلكات' },
+          { icon: '📂', label: 'ملفات الـ STL وتصاميم CAD' },
+          { icon: '⚙️', label: 'إعدادات المختبر الرقمي' }
+        ],
+        actions: [
+          { label: 'إضافة حالة تصنيع جديدة', primary: true }
+        ],
+        stats: [
+          { label: 'الحالات الجارية بالمعمل', value: '9 حالات جارية', sub: '6 زيركونيا، 3 طبعات PMMA مؤقتة', highlight: true },
+          { label: 'أعطال الآلات اليوم', value: '0 أعطال', sub: 'جميع الأجهزة مخبرية تحت الخدمة' },
+          { label: 'معدل سرعة المخرطة والخرط', value: '14 تاج / ساعة', sub: 'أداء مستقر للأذرع الآلية' },
+          { label: 'الصيانة المجدولة القادمة', value: 'بعد 3 أيام', sub: 'معايرة محور مخرطة Roland' }
+        ],
+        primary: `
+          <div class="panel-header">
+            <span class="panel-title">🔬 لوحة كانبان لمراحل تصنيع التركيبات (Lab Kanban)</span>
+            <span class="panel-subtitle">تتبع إنتاج التيجان</span>
+          </div>
+          <div class="kanban-board">
+            <div class="kanban-column">
+              <span class="kanban-header">خرط (Milling)</span>
+              <div class="kanban-card">
+                <span class="kanban-card-title">جسر زيركونيا #36</span>
+                <span class="kanban-card-desc">المريض: آرثر بندراغون • فني: بارتون</span>
+              </div>
+            </div>
+            <div class="kanban-column">
+              <span class="kanban-header">سنترة (Sintering)</span>
+              <div class="kanban-card">
+                <span class="kanban-card-title">تاج مفرد Zirconia</span>
+                <span class="kanban-card-desc">المريض: كلارا أوزوالد • فني: بارتون</span>
+              </div>
+            </div>
+            <div class="kanban-column">
+              <span class="kanban-header">فحص الجودة (QC)</span>
+              <div class="kanban-card">
+                <span class="kanban-card-title">دليل زراعة ثلاثي الأبعاد</span>
+                <span class="kanban-card-desc">المريض: بروس وين • فني: فهد</span>
+              </div>
+            </div>
+          </div>
+        `,
+        secondary: `
+          <div class="panel-header">
+            <span class="panel-title">⚙️ مؤشرات حالة الآلات والمخارط</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); border-radius:10px;">
+              <div>
+                <h4 style="font-size:11px; font-weight:700;">Roland DGX-52D (مخرطة زيركونيا)</h4>
+                <p style="font-size:9px; color:var(--accent-green)">قيد الخرط الفعلي (75%)</p>
+              </div>
+              <span style="font-size:10px; font-family:monospace; color:var(--text-muted);">ETA: 12m</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); border-radius:10px;">
+              <div>
+                <h4 style="font-size:11px; font-weight:700;">SprintRay Pro 95 (طابعة ثلاثية الأبعاد)</h4>
+                <p style="font-size:9px; color:var(--text-dark)">جاهزة للعمل بالكامل</p>
+              </div>
+              <span style="font-size:10px; font-family:monospace; color:var(--text-muted);">خاملة</span>
+            </div>
+          </div>
+        `
+      },
+      'receptionist': {
+        nav: [
+          { icon: '📊', label: 'لوحة التحكم بالاستقبال' },
+          { icon: '📅', label: 'مواعيد اليوم والحضور' },
+          { icon: '👥', label: 'سجلات وبحث المرضى' },
+          { icon: '🚪', label: 'إدارة الغرف والانتظار' },
+          { icon: '💬', label: 'مركز التواصل والرسائل' },
+          { icon: '💳', label: 'تسجيل الدفعات السريعة' },
+          { icon: '⚙️', label: 'إعدادات الاستقبال' }
+        ],
+        actions: [
+          { label: 'إرسال تذكير مواعيد الغد SMS', primary: false },
+          { label: 'تسجيل مريض جديد', primary: true }
+        ],
+        stats: [
+          { label: 'المرضى الذين سجلوا حضورهم', value: '15 مريض حضر', sub: 'من أصل 18 موعد مجدول اليوم', highlight: true },
+          { label: 'الغرف الطبية المشغولة', value: '3 غرف مشغولة', sub: 'الغرفة 1، 2 و 4 ممتلئة بالأطباء' },
+          { label: 'قائمة الانتظار الحالية', value: '2 مرضى بالانتظار', sub: 'متوسط وقت الانتظار: 10 دقائق' },
+          { label: 'حالات لم تحضر (No-shows)', value: '3 حالات تخلف', sub: 'لم يتم الرد على مكالمات التذكير' }
+        ],
+        primary: `
+          <div class="panel-header">
+            <span class="panel-title">📅 قائمة مواعيد اليوم بالعيادة للتحقق والحضور</span>
+            <span class="panel-subtitle">متابعة صالة الانتظار</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>اسم المريض</th>
+                <th>الطبيب المعالج</th>
+                <th>الوقت المجدول</th>
+                <th>الحالة السريرية والكرسي</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">آرثر بندراغون</td>
+                <td>د. أحمد القحطاني</td>
+                <td>09:00 ص</td>
+                <td><span class="badge badge-green">دخل للعيادة</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">كلارا أوزوالد</td>
+                <td>د. أحمد القحطاني</td>
+                <td>10:15 ص</td>
+                <td><span class="badge badge-orange">قيد الانتظار بالصالة</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">بروس وين</td>
+                <td>د. سارة العتيبي</td>
+                <td>11:30 ص</td>
+                <td><span class="badge badge-blue">موعد قادم</span></td>
+              </tr>
+            </tbody>
+          </table>
+        `,
+        secondary: `
+          <div class="panel-header">
+            <span class="panel-title">👤 نموذج تسجيل مريض واستقبال سريع</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <input type="text" placeholder="اسم المريض الثلاثي..." style="background-color:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:10px; font-size:12px; color:#fff; outline:none;">
+            <input type="text" placeholder="رقم الجوال النشط..." style="background-color:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:10px; font-size:12px; color:#fff; outline:none;">
+            <input type="text" placeholder="الهوية الوطنية / الإقامة..." style="background-color:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:10px; font-size:12px; color:#fff; outline:none;">
+            <button style="background-color:var(--accent-orange); color:#000; font-weight:700; border:none; border-radius:10px; padding:10px; font-size:11px; cursor:pointer;" onclick="alert('تم تسجيل المريض وحفظه بنجاح!')">تسجيل وتأكيد الموعد الفوري</button>
+          </div>
+        `
+      },
+      'auditor': {
+        nav: [
+          { icon: '📊', label: 'لوحة تحكم الامتثال' },
+          { icon: '🛡️', label: 'سجلات التدقيق الأمني' },
+          { icon: '📥', label: 'تصدير البيانات والـ Reports' },
+          { icon: '🔑', label: 'إدارة صلاحيات الاستثناء' },
+          { icon: '⚠️', label: 'تنبيهات الأنشطة المشبوهة' },
+          { icon: '⚙️', label: 'إعدادات التدقيق الأمني' }
+        ],
+        actions: [
+          { label: 'تصدير تقرير الامتثال الكلي', primary: true }
+        ],
+        stats: [
+          { label: 'تعديلات حساسة اليوم', value: '4 أحداث تعديل', sub: 'على ملفات المرضى والتقارير المالية', highlight: true },
+          { label: 'طلبات تصدير البيانات معلقة', value: '0 طلب تصدير', sub: 'تم مراجعة كافة الطلبات السابقة وإغلاقها' },
+          { label: 'طلبات الوصول الاستثنائية لملفات', value: '1 طلب معلق', sub: 'ممرض الاستقبال يطلب صلاحية EHR' }
+        ],
+        primary: `
+          <div class="panel-header">
+            <span class="panel-title">🛡️ سجل المراقبة والامتثال الأمني (HIPAA Logs)</span>
+            <span class="panel-subtitle">تتبع العمليات المباشر</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>الإجراء والعملية الأمنية</th>
+                <th>المستخدم المسؤول</th>
+                <th>البيانات المستهدفة</th>
+                <th>الوقت</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">تصدير سجل المريض المالي</td>
+                <td>المحاسب خالد الدوسري</td>
+                <td>فواتير المريض آرثر بندراغون</td>
+                <td>10:14 ص</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">توقيع ملف SOAP الطبي وإغلاقه</td>
+                <td>د. أحمد القحطاني</td>
+                <td>ملف السن رقم #36 (آرثر)</td>
+                <td>09:48 ص</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: #fff;">استعراض صور أشعة CBCT ثلاثية الأبعاد</td>
+                <td>د. سارة العتيبي</td>
+                <td>المريض بروس وين</td>
+                <td>08:30 ص</td>
+              </tr>
+            </tbody>
+          </table>
+        `,
+        secondary: `
+          <div class="panel-header">
+            <span class="panel-title">🔑 طلبات الصلاحيات والوصول المعلقة</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background-color:rgba(255,255,255,0.01); border:1px solid var(--border-color); border-radius:10px;">
+              <div>
+                <h4 style="font-size:11px; font-weight:700;">طلب فك تشفير السجل الطبي الحساس</h4>
+                <p style="font-size:9px; color:var(--text-dark)">مستند لـ: المريض آرثر بندراغون</p>
+              </div>
+              <button style="background-color:rgba(239, 68, 68, 0.1); color:var(--accent-red); border:1px solid rgba(239, 68, 68, 0.2); font-size:10px; border-radius:6px; padding:4px 8px; cursor:pointer;" onclick="alert('تم رفض تصريح الوصول للمستخدم للسرية الطبية!')">رفض الوصول</button>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    // Switch Role render engine
+    function switchRole(roleId) {
+      const data = rolesData[roleId];
+      if (!data) return;
+
+      const content = document.getElementById('dashboard-content');
+      content.classList.remove('fade-in');
+      void content.offsetWidth;
+      content.classList.add('fade-in');
+
+      // 1. Sidebar Links
+      const navList = document.getElementById('sidebar-nav');
+      navList.innerHTML = '';
+      data.nav.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = `nav-item ${index === 0 ? 'active' : ''}`;
+        div.innerHTML = `
+          <span class="nav-icon">${item.icon}</span>
+          <span>${item.label}</span>
+        `;
+        navList.appendChild(div);
+      });
+
+      // 2. Header actions
+      const actionsContainer = document.getElementById('header-actions');
+      actionsContainer.innerHTML = '';
+      data.actions.forEach(action => {
+        const btn = document.createElement('button');
+        btn.className = `btn-header ${action.primary ? 'primary' : ''}`;
+        btn.textContent = action.label;
+        btn.onclick = () => alert(`تم تفعيل إجراء: ${action.label}`);
+        actionsContainer.appendChild(btn);
+      });
+
+      // 3. Stats grid
+      const statsGrid = document.getElementById('stats-grid');
+      statsGrid.innerHTML = '';
+      data.stats.forEach(card => {
+        const div = document.createElement('div');
+        div.className = `stat-card ${card.highlight ? 'highlight' : ''}`;
+        div.innerHTML = `
+          <span class="stat-label">${card.label}</span>
+          <span class="stat-value">${card.value}</span>
+          <span class="stat-sub">${card.sub}</span>
+        `;
+        statsGrid.appendChild(div);
+      });
+
+      // 4. Primary and secondary dashboards
+      document.getElementById('primary-panel').innerHTML = data.primary;
+      document.getElementById('secondary-panel').innerHTML = data.secondary;
+    }
+
+    window.onload = () => {
+      switchRole('clinician');
+    };
+  </script>
+</body>
+</html>

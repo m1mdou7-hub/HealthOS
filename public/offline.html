@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HealthOS — غير متصل بالإنترنت</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'IBM Plex Sans Arabic', 'IBM Plex Mono', system-ui, sans-serif;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Ambient glow background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(16,185,129,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(16,185,129,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Grid lines */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(9,9,11,0.8);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 0 0 1px rgba(16,185,129,0.05),
+        0 32px 64px rgba(0,0,0,0.6);
+    }
+
+    .logo-ring {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse-ring 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.3); }
+      50%       { box-shadow: 0 0 0 16px rgba(16,185,129,0); }
+    }
+
+    .wifi-icon {
+      width: 40px;
+      height: 40px;
+      color: #10b981;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.2);
+      color: #10b981;
+      font-size: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: blink 1.2s step-start infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: #10b981;
+      color: #000;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      font-family: inherit;
+    }
+    .btn-primary:hover  { background: #34d399; }
+    .btn-primary:active { transform: scale(0.97); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+    .status-bar {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', monospace;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .status-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Reconnect animation */
+    .reconnecting { display: none; }
+    .reconnecting.show { display: block; color: #10b981; font-size: 12px; margin-top: 12px; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo-ring">
+    <svg class="wifi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <line x1="1" y1="1" x2="23" y2="23" />
+      <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55" />
+      <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39" />
+      <path d="M10.71 5.05A16 16 0 0 1 22.56 9" />
+      <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" />
+      <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+      <circle cx="12" cy="20" r="1" fill="currentColor" />
+    </svg>
+  </div>
+
+  <div class="badge">
+    <span class="badge-dot"></span>
+    OFFLINE MODE
+  </div>
+
+  <h1>أنت غير متصل بالإنترنت</h1>
+  <p>
+    HealthOS يعمل في وضع أوفلاين. البيانات المحفوظة محلياً متاحة للقراءة.<br />
+    سيتم مزامنة أي تغييرات تلقائياً عند عودة الاتصال.
+  </p>
+
+  <div class="actions">
+    <button class="btn-primary" onclick="retryConnection()">إعادة المحاولة</button>
+    <button class="btn-secondary" onclick="history.back()">العودة للخلف</button>
+  </div>
+
+  <div class="reconnecting" id="reconnecting">⟳ جارٍ الاتصال...</div>
+
+  <div class="status-bar">
+    <div class="status-item">
+      <span class="status-value" id="time">--:--</span>
+      <span>الوقت</span>
+    </div>
+    <div class="status-item">
+      <span class="status-value">محلي</span>
+      <span>وضع البيانات</span>
+    </div>
+    <div class="status-item">
+      <span class="status-value" id="retry-count">0</span>
+      <span>محاولات</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Live clock
+  function updateTime() {
+    const now = new Date();
+    document.getElementById('time').textContent =
+      now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+
+  // Auto-retry counter
+  let retries = 0;
+  function retryConnection() {
+    retries++;
+    document.getElementById('retry-count').textContent = retries;
+    document.getElementById('reconnecting').classList.add('show');
+    setTimeout(() => {
+      if (navigator.onLine) {
+        window.location.href = '/';
+      } else {
+        document.getElementById('reconnecting').classList.remove('show');
+      }
+    }, 2000);
+  }
+
+  // Auto redirect when back online
+  window.addEventListener('online', () => {
+    document.getElementById('reconnecting').classList.add('show');
+    setTimeout(() => { window.location.href = '/'; }, 1500);
+  });
+</script>
+
+</body>
+</html>

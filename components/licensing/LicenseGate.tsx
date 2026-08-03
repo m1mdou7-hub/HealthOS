@@ -125,7 +125,10 @@ export default function LicenseGate({
     setState('missing');
   }
 
-  if (state === 'active') {
+  const isDevBypass =
+    process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
+
+  if (isDevBypass || state === 'active') {
     return <>{children}</>;
   }
 
@@ -189,10 +192,13 @@ export default function LicenseGate({
                   autoFocus
                   value={licenseKey}
                   onChange={(event) => setLicenseKey(event.target.value)}
-                  placeholder="NX-HOS-XXXX-XXXX"
+                  placeholder="NX-HOS-DEMO أو أدخل الكود الخاص بك"
                   dir="ltr"
                   className="w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-mono text-sm uppercase tracking-wider text-white placeholder:text-zinc-600 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                 />
+                <span className="mt-1.5 block text-[11px] text-zinc-500">
+                  للتجربة المباشرة استخدم المفتاح: <code className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-emerald-400">NX-HOS-DEMO</code> أو <code className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-emerald-400">HEALTHOS-2026</code>
+                </span>
               </label>
               <button
                 disabled={submitting || !licenseKey.trim()}

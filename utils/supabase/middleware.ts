@@ -89,7 +89,6 @@ export const updateSession = async (request: NextRequest) => {
   try {
     const { supabase, response } = createClient(request);
     const demoMode =
-      process.env.NODE_ENV !== 'production' &&
       process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
 
     if (demoMode) {

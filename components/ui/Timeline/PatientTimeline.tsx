@@ -274,6 +274,58 @@ export function PatientTimeline({
           </span>
         </div>
 
+        {/* Interactive Clinical Pathway Roadmap */}
+        <div className="p-4 rounded-xl border border-zinc-900 bg-zinc-950/30 space-y-4">
+          <div className="flex justify-between items-center">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-bold">Active Clinical Pathway Roadmap</span>
+            <span className="text-[9px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Phase 3: Surgical Loading</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-3 pt-2">
+            {[
+              { id: 'intake', step: 1, title: 'Intake & Records', date: '2026-06-15', status: 'completed', desc: 'CBCT 3D Scan & intake documentation.', filter: 'Clinical Note' },
+              { id: 'prep', step: 2, title: 'Preparatory Phase', date: '2026-07-15', status: 'completed', desc: '#14 Pre-prosthetic Abutment.', filter: 'Lab Case' },
+              { id: 'surgery', step: 3, title: 'Surgical Phase', date: '2026-08-01', status: 'active', desc: '#16 & #26 Implant placement.', filter: 'Treatment Plan' },
+              { id: 'loading', step: 4, title: 'Prosthetic Loading', date: '2026-08-15', status: 'pending', desc: 'Zirconia Bridge Rehabilitation.', filter: 'Invoice' },
+              { id: 'recall', step: 5, title: 'Recall & Osseo', date: '2026-10-15', status: 'future', desc: 'Osseointegration check.', filter: 'Appointment' },
+            ].map(node => {
+              const isActive = categoryFilter === node.filter;
+              return (
+                <button
+                  type="button"
+                  key={node.id}
+                  onClick={() => {
+                    setCategoryFilter(node.filter);
+                    setSearchQuery('');
+                  }}
+                  className={`p-3 rounded-xl border text-left transition-all ${
+                    node.status === 'completed'
+                      ? 'border-emerald-500/20 bg-emerald-500/[0.02] text-zinc-300 hover:bg-emerald-500/[0.05]'
+                      : node.status === 'active'
+                        ? 'border-purple-500/40 bg-purple-500/[0.04] text-white shadow-md shadow-purple-500/5'
+                        : node.status === 'pending'
+                          ? 'border-amber-500/20 bg-amber-500/[0.01] text-zinc-450 hover:bg-amber-500/[0.03]'
+                          : 'border-zinc-900 bg-zinc-950/20 text-zinc-500'
+                  } ${isActive ? 'ring-1 ring-emerald-400 border-transparent bg-zinc-900/40' : ''}`}
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="text-[9px] font-mono text-zinc-500 font-semibold">Step 0{node.step}</span>
+                    <span className={`w-1.5 h-1.5 rounded-full ${
+                      node.status === 'completed' ? 'bg-emerald-500 shadow-sm shadow-emerald-500' :
+                      node.status === 'active' ? 'bg-purple-500 animate-ping' :
+                      node.status === 'pending' ? 'bg-amber-500' :
+                      'bg-zinc-800'
+                    }`} />
+                  </div>
+                  <h4 className="font-bold text-xs mt-1 text-white leading-tight">{node.title}</h4>
+                  <p className="text-[9px] text-zinc-400 mt-1 leading-relaxed font-sans">{node.desc}</p>
+                  <span className="text-[8px] font-mono text-zinc-500 block mt-2">{node.date}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Filter bar and search */}
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="relative w-full max-w-sm">

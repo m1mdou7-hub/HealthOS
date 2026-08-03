@@ -83,6 +83,52 @@ const NAV_ITEMS = [
   { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
 ];
 
+const ROLE_NAV_ITEMS: Record<string, typeof NAV_ITEMS> = {
+  'Super Admin': [
+    { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
+    { name: 'Clinics', labelKey: 'clinics', href: '/clinics', icon: Building2 },
+    { name: 'Patients', labelKey: 'patients', href: '/patients', icon: Users },
+    { name: 'Integrations', labelKey: 'integrations', href: '/integrations', icon: Blocks },
+    { name: 'Developer', labelKey: 'developer', href: '/developer', icon: Terminal },
+    { name: 'Audit & Compliance', labelKey: 'audit', href: '/audit', icon: ShieldCheck },
+    { name: 'Billing', labelKey: 'billing', href: '/billing', icon: CreditCard },
+    { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+  ],
+  'Clinic Owner': [
+    { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
+    { name: 'Patients', labelKey: 'patients', href: '/patients', icon: Users },
+    { name: 'Clinics', labelKey: 'clinics', href: '/clinics', icon: Building2 },
+    { name: 'Appointments', labelKey: 'appointments', href: '/appointments', icon: Calendar },
+    { name: 'Billing', labelKey: 'billing', href: '/billing', icon: CreditCard },
+    { name: 'Laboratory', labelKey: 'laboratory', href: '/laboratory', icon: FlaskConical },
+    { name: 'Analytics', labelKey: 'analytics', href: '/analytics', icon: LineChart },
+    { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+  ],
+  'Laboratory Technician': [
+    { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
+    { name: 'Laboratory', labelKey: 'laboratory', href: '/laboratory', icon: FlaskConical },
+    { name: 'Imaging', labelKey: 'imaging', href: '/imaging', icon: Activity },
+    { name: 'Inventory', labelKey: 'inventory', href: '/inventory', icon: Package },
+    { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+  ],
+  'Receptionist': [
+    { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
+    { name: 'Appointments', labelKey: 'appointments', href: '/appointments', icon: Calendar },
+    { name: 'Patients', labelKey: 'patients', href: '/patients', icon: Users },
+    { name: 'Communication', labelKey: 'communication', href: '/communication', icon: MessageSquare },
+    { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+  ],
+  'Read-only Auditor': [
+    { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
+    { name: 'Audit & Compliance', labelKey: 'audit', href: '/audit', icon: ShieldCheck },
+    { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+  ]
+};
+
+const getNavItemsForRole = (role: string) => {
+  return ROLE_NAV_ITEMS[role] || NAV_ITEMS;
+};
+
 export default function DashboardShell({ user, children }: DashboardShellProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -208,7 +254,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
         {/* Navigation links */}
         <nav className="flex-1 px-3.5 py-6 space-y-1.5 overflow-y-auto scrollbar-none">
-          {NAV_ITEMS.map((item) => {
+          {getNavItemsForRole(activeRole).map((item) => {
             const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
             const Icon = item.icon;
             return (
@@ -302,7 +348,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Navigation links */}
             <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-              {NAV_ITEMS.map((item) => {
+              {getNavItemsForRole(activeRole).map((item) => {
                 const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
                 const Icon = item.icon;
                 return (
