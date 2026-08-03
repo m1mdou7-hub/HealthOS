@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { createClient } from '@/utils/supabase/client';
 import { clinicalService, Appointment, PatientCase } from '@/utils/services/clinicalService';
@@ -16,7 +16,19 @@ interface OperationalDashboardProps {
   demoMode: boolean;
 }
 
+const _queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false, staleTime: 1000 * 60 * 5 } }
+});
+
 export default function OperationalDashboard({ demoMode }: OperationalDashboardProps) {
+  return (
+    <QueryClientProvider client={_queryClient}>
+      <OperationalDashboardInner demoMode={demoMode} />
+    </QueryClientProvider>
+  );
+}
+
+function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
   const queryClient = useQueryClient();
   const supabase = createClient();
   const t = useTranslations('DashboardV3');
