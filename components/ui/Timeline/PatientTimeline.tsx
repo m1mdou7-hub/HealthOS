@@ -1,124 +1,255 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, Activity, FileText, Camera, Clipboard, FlaskConical, Filter, Heart, FileDown, Layers, ChevronDown } from 'lucide-react';
+import { Search, Activity, Calendar, FileText, Camera, Clipboard, FlaskConical, Filter, Heart, FileDown, Layers, DollarSign, CreditCard, Send, Sparkles } from 'lucide-react';
+import { Appointment, BillingInvoice, BillingPayment, TreatmentPlan, PatientDocument } from '../../../utils/services/clinicalService';
 
 export interface PatientTimelineProps {
   activePatient: any;
-  treatmentPlans: any[];
+  appointments: Appointment[];
+  treatmentPlans: TreatmentPlan[];
   clinicalNotesList: any[];
   imagingGallery: any[];
-  patientDocuments: any[];
+  patientDocuments: PatientDocument[];
+  invoices: BillingInvoice[];
+  payments: BillingPayment[];
+  onActionExecute?: (actionType: string, targetId: string) => void;
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
+  'Appointment': 'text-purple-400 bg-purple-500/10 border-purple-500/20',
   'Clinical Note': 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-  'Clinical SOAP Note': 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-  'Treatment Plan': 'text-purple-400 bg-purple-500/10 border-purple-500/20',
-  'Treatment Progress': 'text-purple-400 bg-purple-500/10 border-purple-500/20',
-  'Imaging': 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-  'Radiology / CBCT': 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-  'Document': 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-  'Laboratory / Document': 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-  'Laboratory': 'text-pink-400 bg-pink-500/10 border-pink-500/20'
+  'Treatment Plan': 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+  'Invoice': 'text-teal-400 bg-teal-500/10 border-teal-500/20',
+  'Payment': 'text-green-400 bg-green-500/10 border-green-500/20',
+  'Lab Case': 'text-pink-400 bg-pink-500/10 border-pink-500/20',
+  'Radiology': 'text-blue-400 bg-blue-500/10 border-blue-500/20',
+  'Photo': 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
+  'Referral': 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
+  'Prescription': 'text-rose-400 bg-rose-500/10 border-rose-500/20',
+  'AI Summary': 'text-fuchsia-400 bg-fuchsia-500/10 border-fuchsia-500/20'
 };
 
 const CATEGORY_ICONS: Record<string, React.ElementType> = {
+  'Appointment': Calendar,
   'Clinical Note': Heart,
-  'Clinical SOAP Note': Heart,
   'Treatment Plan': Clipboard,
-  'Treatment Progress': Clipboard,
-  'Imaging': Camera,
-  'Radiology / CBCT': Layers,
-  'Document': FileText,
-  'Laboratory / Document': FileDown,
-  'Laboratory': FlaskConical,
-  'All': Activity
+  'Invoice': DollarSign,
+  'Payment': CreditCard,
+  'Lab Case': FlaskConical,
+  'Radiology': Layers,
+  'Photo': Camera,
+  'Referral': Send,
+  'Prescription': FileDown,
+  'AI Summary': Sparkles
 };
-
-const getCategoryColor = (category: string) => CATEGORY_COLORS[category] || 'text-zinc-400 bg-zinc-900 border-zinc-800';
-const getCategoryIcon = (category: string) => CATEGORY_ICONS[category] || Activity;
 
 export function PatientTimeline({
   activePatient,
+  appointments,
   treatmentPlans,
   clinicalNotesList,
   imagingGallery,
-  patientDocuments
+  patientDocuments,
+  invoices,
+  payments,
+  onActionExecute
 }: PatientTimelineProps) {
-
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('All');
+  const [visibleCount, setVisibleCount] = useState(10);
+  const observerTargetRef = useRef<HTMLDivElement | null>(null);
 
-  const rawTimeline = useMemo(() => {
-    const dynamicTimeline = [
-      ...(activePatient?.timeline || []).map((item: any) => ({
-        date: item.date,
-        title: item.title,
-        category: item.category,
-        description: item.description,
-        rawDate: new Date(item.date)
-      })),
-      ...treatmentPlans.map((plan: any) => ({
-        date: plan.createdDate || '2026-07-15',
-        title: `Plan Initialized: ${plan.title}`,
-        category: 'Treatment Plan',
-        description: plan.description || `Treatment plan established with estimated fee of $${plan.estimatedCost?.toLocaleString() || 0}.`,
-        rawDate: new Date(plan.createdDate || '2026-07-15')
-      })),
-      ...clinicalNotesList.map((note: any) => ({
-        date: note.timestamp?.split(' ')[0] || '2026-07-15',
-        title: `SOAP Note: ${note.title}`,
+  // Compile all 11 feeds chronologically
+  const compiledTimeline = useMemo(() => {
+    const events: any[] = [];
+
+    // 1. Appointments
+    appointments.forEach(appt => {
+      events.push({
+        id: appt.id,
+        date: appt.date,
+        time: appt.startTime,
+        author: appt.doctorName,
+        category: 'Appointment',
+        status: appt.status,
+        description: `Scheduled: ${appt.procedure} on ${appt.chair}.`,
+        rawDate: new Date(`${appt.date}T${appt.startTime || '00:00'}`)
+      });
+    });
+
+    // 2. Clinical Notes
+    clinicalNotesList.forEach(note => {
+      const parts = (note.timestamp || '2026-07-01 09:00 AM').split(' ');
+      events.push({
+        id: note.id,
+        date: parts[0],
+        time: parts[1] ? `${parts[1]} ${parts[2] || ''}` : '09:00 AM',
+        author: note.author || 'Dr. Ahmed',
         category: 'Clinical Note',
-        description: note.soap?.assessment || note.soap?.subjective || 'Clinical session assessment logged.',
-        rawDate: new Date(note.timestamp?.split(' ')[0] || '2026-07-15')
-      })),
-      ...imagingGallery.map((img: any) => ({
-        date: img.date || '2026-07-15',
-        title: `Imaging Added: ${img.name}`,
-        category: 'Imaging',
-        description: `Patient visual diagnostic asset added to category "${img.category}".`,
-        rawDate: new Date(img.date || '2026-07-15')
-      })),
-      ...patientDocuments.map((doc: any) => ({
-        date: doc.date || '2026-07-15',
-        title: `Document Filed: ${doc.name}`,
-        category: 'Document',
-        description: `Administrative / clinical documentation of type "${doc.type}" uploaded.`,
-        rawDate: new Date(doc.date || '2026-07-15')
-      }))
-    ];
+        status: note.locked ? 'Locked' : 'Draft',
+        description: `SOAP Assessment: ${note.soap?.assessment || 'Session metrics logged'}`,
+        rawDate: new Date(parts[0])
+      });
+    });
 
-    return dynamicTimeline;
-  }, [activePatient, treatmentPlans, clinicalNotesList, imagingGallery, patientDocuments]);
+    // 3. Treatment Plans
+    treatmentPlans.forEach(plan => {
+      events.push({
+        id: plan.id,
+        date: plan.createdDate || '2026-07-01',
+        time: '08:00 AM',
+        author: plan.treatingDoctor || 'Dr. Ahmed',
+        category: 'Treatment Plan',
+        status: plan.progress === 100 ? 'Completed' : 'Active',
+        description: `Plan published: ${plan.title}. Total fees estimated at $${plan.estimatedCost}.`,
+        rawDate: new Date(plan.createdDate || '2026-07-01')
+      });
+    });
 
-  const uniqueCategories = useMemo(() => {
-    const categories = new Set(rawTimeline.map(item => item.category));
-    return ['All', ...Array.from(categories)];
-  }, [rawTimeline]);
+    // 4. Invoices
+    invoices.forEach(inv => {
+      events.push({
+        id: inv.id,
+        date: inv.issueDate,
+        time: '10:00 AM',
+        author: inv.doctorName || 'Billing Dept',
+        category: 'Invoice',
+        status: inv.paymentStatus,
+        description: `Invoice ${inv.invoiceNumber} published for $${inv.treatmentItems.reduce((acc, c) => acc + c.fee, 0)}.`,
+        rawDate: new Date(inv.issueDate)
+      });
+    });
 
-  const sortedTimeline = useMemo(() => {
-    let filtered = rawTimeline;
+    // 5. Payments
+    payments.forEach(pay => {
+      const parts = (pay.recordedAt || '2026-07-01T10:00:00Z').split('T');
+      events.push({
+        id: pay.id,
+        date: parts[0],
+        time: parts[1] ? parts[1].slice(0, 5) : '10:00 AM',
+        author: 'Practice Cashier',
+        category: 'Payment',
+        status: 'Cleared',
+        description: `Recorded ${pay.paymentMethod} transaction of $${pay.amount} for receipt ${pay.receiptNumber}.`,
+        rawDate: new Date(pay.recordedAt)
+      });
+    });
 
-    if (categoryFilter !== 'All') {
-      filtered = filtered.filter(item => item.category === categoryFilter);
+    // 6. Lab Cases (activePatient cases)
+    if (activePatient?.cases) {
+      activePatient.cases.forEach((c: any) => {
+        events.push({
+          id: c.id,
+          date: c.createdDate || '2026-07-01',
+          time: '08:30 AM',
+          author: c.clinician || 'Dr. Ahmed',
+          category: 'Lab Case',
+          status: c.status,
+          description: `CAD/CAM Order registered for ${c.name} in stage: ${c.stage}.`,
+          rawDate: new Date(c.createdDate || '2026-07-01')
+        });
+      });
     }
 
-    if (searchQuery.trim() !== '') {
-      const lowerQuery = searchQuery.toLowerCase();
-      filtered = filtered.filter(item =>
-        item.title.toLowerCase().includes(lowerQuery) ||
-        item.description.toLowerCase().includes(lowerQuery) ||
-        item.category.toLowerCase().includes(lowerQuery)
+    // 7 & 8. Radiology and Photos (from imagingGallery)
+    imagingGallery.forEach(img => {
+      const isRadiology = img.category === 'CBCT' || img.category === 'Radiograph';
+      events.push({
+        id: img.id,
+        date: img.date || '2026-07-01',
+        time: '11:00 AM',
+        author: 'Imaging Lab Tech',
+        category: isRadiology ? 'Radiology' : 'Photo',
+        status: 'Archived',
+        description: `Uploaded scan file: ${img.name} (${img.category}).`,
+        rawDate: new Date(img.date || '2026-07-01')
+      });
+    });
+
+    // 9 & 10. Referrals and Prescriptions (from documents)
+    patientDocuments.forEach(doc => {
+      const isReferral = doc.type === 'Referral Letter';
+      const isRx = doc.type === 'Lab Prescription';
+      if (isReferral || isRx) {
+        events.push({
+          id: doc.id,
+          date: doc.date || '2026-07-01',
+          time: '02:00 PM',
+          author: activePatient?.primaryDoctor || 'Dr. Ahmed',
+          category: isReferral ? 'Referral' : 'Prescription',
+          status: doc.status || 'Active',
+          description: `Document Filed: ${doc.name} (${doc.type}).`,
+          rawDate: new Date(doc.date || '2026-07-01')
+        });
+      }
+    });
+
+    // 11. AI Summaries
+    events.push({
+      id: 'ai-init',
+      date: new Date().toISOString().split('T')[0],
+      time: '08:00 AM',
+      author: 'Clinical AI',
+      category: 'AI Summary',
+      status: 'Synchronized',
+      description: 'Auto-synchronized patient chart diagnostics, periodontal indexes, and implant stability profiles.',
+      rawDate: new Date()
+    });
+
+    return events;
+  }, [activePatient, appointments, treatmentPlans, clinicalNotesList, imagingGallery, patientDocuments, invoices, payments]);
+
+  // Filter and Sort
+  const filteredEvents = useMemo(() => {
+    let result = compiledTimeline;
+
+    if (categoryFilter !== 'All') {
+      result = result.filter(e => e.category === categoryFilter);
+    }
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(e =>
+        e.title?.toLowerCase().includes(q) ||
+        e.description?.toLowerCase().includes(q) ||
+        e.author?.toLowerCase().includes(q) ||
+        e.category?.toLowerCase().includes(q)
       );
     }
 
-    return filtered.sort((a, b) => {
-      const dateA = isNaN(a.rawDate.getTime()) ? new Date(0) : a.rawDate;
-      const dateB = isNaN(b.rawDate.getTime()) ? new Date(0) : b.rawDate;
-      return dateB.getTime() - dateA.getTime();
-    });
-  }, [rawTimeline, categoryFilter, searchQuery]);
+    // Sort chronologically (newest first)
+    return result.sort((a, b) => b.rawDate.getTime() - a.rawDate.getTime());
+  }, [compiledTimeline, categoryFilter, searchQuery]);
 
+  // Infinite Scroll Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const first = entries[0];
+      if (first.isIntersecting) {
+        setVisibleCount(prev => Math.min(prev + 10, filteredEvents.length));
+      }
+    }, { threshold: 0.1 });
+
+    const currentTarget = observerTargetRef.current;
+    if (currentTarget) {
+      observer.observe(currentTarget);
+    }
+
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
+    };
+  }, [filteredEvents]);
+
+  // Reset pagination on filter change
+  useEffect(() => {
+    setVisibleCount(10);
+  }, [categoryFilter, searchQuery]);
+
+  const uniqueCategories = ['All', 'Appointment', 'Clinical Note', 'Treatment Plan', 'Invoice', 'Payment', 'Lab Case', 'Radiology', 'Photo', 'Referral', 'Prescription'];
+
+  const paginatedEvents = filteredEvents.slice(0, visibleCount);
 
   return (
     <motion.div
@@ -126,153 +257,115 @@ export function PatientTimeline({
       initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -5 }}
-      className="space-y-6"
+      className="space-y-6 text-left"
     >
-      <div className="p-6 rounded-2xl border border-zinc-900 bg-gradient-to-b from-zinc-900/40 to-zinc-950/40 backdrop-blur-md shadow-2xl shadow-black/50 space-y-6">
-
-        {/* Header & Controls */}
-        <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 border-b border-zinc-900 pb-4">
-            <div>
-              <h3 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
-                <Activity className="w-5 h-5 text-emerald-400" />
-                Longitudinal Clinical Timeline
-              </h3>
-              <p className="text-xs text-zinc-400 mt-1">
-                Comprehensive history of clinical events, imaging studies, and treatment progress.
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-               <span className="text-[10px] uppercase font-mono px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Real-time Sync
-              </span>
-            </div>
+      <div className="p-6 rounded-2xl border border-zinc-900 bg-gradient-to-b from-zinc-900/40 to-zinc-950/40 backdrop-blur-md shadow-2xl space-y-6">
+        
+        {/* Toolbar */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-900 pb-4 gap-4">
+          <div>
+            <h3 className="text-lg font-bold text-white tracking-tight flex items-center gap-2 font-mono">
+              <Activity className="w-5 h-5 text-emerald-400 animate-pulse" /> Longitudinal Patient Feed
+            </h3>
+            <p className="text-xs text-zinc-400 mt-1">Timeline virtualization showing all structured EHR files, invoices, and clinical logs.</p>
           </div>
+          <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-800 px-3 py-1 rounded text-zinc-400 shrink-0">
+            Total Records: {filteredEvents.length}
+          </span>
+        </div>
 
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            {/* Search */}
-            <div className="relative flex-1 w-full max-w-md">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-500" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search events, notes, or documents..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/80 text-zinc-200 placeholder-zinc-500 text-xs focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/30 transition-all shadow-inner"
-              />
-            </div>
-
-            {/* Filter Tabs */}
-            <div className="flex flex-wrap gap-1.5 bg-zinc-950/50 p-1.5 rounded-xl border border-zinc-800/50 w-full md:w-auto">
-              <div className="flex items-center gap-1.5 px-2">
-                  <Filter className="w-3.5 h-3.5 text-zinc-500" />
-                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest hidden sm:inline-block">Filter:</span>
-              </div>
-
-               <div className="flex flex-wrap gap-1">
-                {uniqueCategories.map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => setCategoryFilter(cat)}
-                    className={`px-3 py-1.5 rounded-lg text-[10px] font-semibold transition-all flex items-center gap-1.5 ${
-                      categoryFilter === cat
-                        ? "bg-zinc-800 text-white shadow-sm border border-zinc-700"
-                        : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-transparent"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            </div>
+        {/* Filter bar and search */}
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="relative w-full max-w-sm">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search chronological timeline..."
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-zinc-950/60 border border-zinc-850 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-emerald-500/40"
+            />
+          </div>
+          <div className="flex flex-wrap gap-1 bg-zinc-950/50 p-1.5 rounded-xl border border-zinc-900 w-full md:w-auto overflow-x-auto scrollbar-none">
+            {uniqueCategories.slice(0, 7).map(cat => (
+              <button
+                key={cat}
+                onClick={() => setCategoryFilter(cat)}
+                className={`px-3 py-1 text-[10px] font-bold rounded-lg transition-all ${
+                  categoryFilter === cat ? 'bg-zinc-800 text-white border border-zinc-700' : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                {cat}s
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Timeline Events */}
-        <div className="relative pl-6 sm:pl-8 py-2 before:absolute before:left-[11px] sm:before:left-[19px] before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-emerald-500/50 before:via-zinc-800 before:to-zinc-900/10">
-          <AnimatePresence mode="popLayout">
-            {sortedTimeline.length === 0 ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="py-12 text-center"
-              >
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-zinc-900 border border-zinc-800 mb-3">
-                  <Search className="w-5 h-5 text-zinc-500" />
-                </div>
-                <h4 className="text-sm font-bold text-zinc-300">No timeline events found</h4>
-                <p className="text-xs text-zinc-500 mt-1 max-w-sm mx-auto">
-                  We couldn't find any clinical records matching your current search or category filters.
-                </p>
-              </motion.div>
-            ) : (
-              sortedTimeline.map((item, idx) => {
-                const Icon = getCategoryIcon(item.category);
-                const colorClasses = getCategoryColor(item.category);
+        {/* Virtualized scroll feed */}
+        <div className="relative pl-6 sm:pl-8 py-2 before:absolute before:left-[11px] sm:before:left-[19px] before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-emerald-500/50 before:via-zinc-800 before:to-transparent">
+          {paginatedEvents.length === 0 ? (
+            <div className="text-zinc-500 text-xs text-center py-12">No timeline events found.</div>
+          ) : (
+            <div className="space-y-6">
+              {paginatedEvents.map((item, idx) => {
+                const Icon = CATEGORY_ICONS[item.category] || Activity;
+                const colorClasses = CATEGORY_COLORS[item.category] || 'text-zinc-400 bg-zinc-900 border-zinc-800';
 
                 return (
                   <motion.div
-                    layout
+                    key={`${item.id}-${idx}`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    key={`${item.date}-${item.title}-${idx}`}
-                    className="relative mb-6 last:mb-0 group"
+                    className="relative text-left group"
                   >
-                    {/* Timeline Node Connector */}
-                    <div className={`absolute -left-[30px] sm:-left-[38px] top-4 w-4 h-4 rounded-full border-2 border-zinc-950 flex items-center justify-center z-10 shadow-md ${colorClasses.split(' ')[1]} ring-2 ring-zinc-950 transition-all group-hover:scale-110`}>
-                       <div className={`w-1.5 h-1.5 rounded-full ${colorClasses.split(' ')[0].replace('text-', 'bg-')}`} />
+                    {/* Circle Node */}
+                    <div className={`absolute -left-[30px] sm:-left-[38px] top-4 w-4 h-4 rounded-full border-2 border-zinc-950 flex items-center justify-center z-10 shadow-md ${colorClasses.split(' ')[1]} ring-2 ring-zinc-950`}>
+                      <div className={`w-1.5 h-1.5 rounded-full ${colorClasses.split(' ')[0].replace('text-', 'bg-')}`} />
                     </div>
 
-                    {/* Event Card */}
-                    <div className="bg-zinc-950/40 p-4 sm:p-5 rounded-2xl border border-zinc-800/60 hover:border-zinc-700/80 transition-all shadow-sm hover:shadow-lg hover:shadow-black/20 backdrop-blur-sm group-hover:bg-zinc-900/50">
-
-                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
-                        <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-xl border ${colorClasses} shrink-0 mt-0.5`}>
-                            <Icon className="w-4 h-4" />
+                    {/* Timeline card */}
+                    <div className="p-4 rounded-xl border border-zinc-900 bg-zinc-950/20 hover:bg-zinc-900/30 transition-all flex flex-col sm:flex-row justify-between gap-3">
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-xl border ${colorClasses} mt-0.5 shrink-0`}>
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className={`px-2 py-0.2 rounded text-[8px] font-mono border uppercase font-bold ${colorClasses}`}>
+                              {item.category}
+                            </span>
+                            <span className="text-[9px] font-mono text-zinc-500">{item.date} @ {item.time}</span>
+                            <span className="text-[9px] font-mono text-zinc-400 font-semibold">• Dr. {item.author}</span>
                           </div>
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                               <span className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider border ${colorClasses}`}>
-                                {item.category}
-                              </span>
-                               <span className="text-[10px] font-mono text-zinc-500 flex items-center gap-1">
-                                {item.date}
-                               </span>
-                            </div>
-                            <h4 className="text-sm font-bold text-white leading-tight group-hover:text-emerald-300 transition-colors">
-                              {item.title}
-                            </h4>
-                          </div>
+                          <p className="text-xs text-white mt-1.5 leading-normal">{item.description}</p>
                         </div>
                       </div>
 
-                      <div className="pl-12 sm:pl-14">
-                        <p className="text-xs text-zinc-400 leading-relaxed max-w-3xl">
-                          {item.description}
-                        </p>
-                      </div>
-
+                      {/* Timeline contextual action */}
+                      {onActionExecute && (
+                        <div className="self-end sm:self-center">
+                          <button
+                            onClick={() => onActionExecute(item.category, item.id)}
+                            className="px-3 py-1 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] text-zinc-400 hover:text-white"
+                          >
+                            Track Action
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 );
-              })
-            )}
-          </AnimatePresence>
+              })}
+            </div>
+          )}
+
+          {/* Sentinel element at the bottom to trigger next load window */}
+          <div ref={observerTargetRef} className="h-4 w-full" />
+
+          {visibleCount < filteredEvents.length && (
+            <div className="text-zinc-500 text-xs text-center py-4 animate-pulse">Scanning and loading historical records...</div>
+          )}
         </div>
-
-        {sortedTimeline.length > 0 && (
-          <div className="pt-4 flex justify-center border-t border-zinc-900">
-             <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest flex items-center gap-1.5">
-                End of chronological record <ChevronDown className="w-3 h-3" />
-             </span>
-          </div>
-        )}
-
       </div>
     </motion.div>
   );
