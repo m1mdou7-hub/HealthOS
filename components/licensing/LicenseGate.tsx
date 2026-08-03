@@ -55,10 +55,10 @@ export default function LicenseGate({
   const [submitting, setSubmitting] = useState(false);
 
   const verify = useCallback(async () => {
-    let storedKey = loadStoredLicenseKey();
+    const storedKey = loadStoredLicenseKey();
     if (!storedKey) {
-      storedKey = 'NX-HOS-DEMO';
-      storeVerifiedLicense(storedKey);
+      setState('missing');
+      return;
     }
 
     try {
@@ -68,25 +68,11 @@ export default function LicenseGate({
         markLicenseVerified();
         setState('active');
       } else {
-        const demoRes = await verifyNexaLicense('NX-HOS-DEMO');
-        if (demoRes.valid) {
-          storeVerifiedLicense('NX-HOS-DEMO');
-          markLicenseVerified();
-          setState('active');
-        } else {
-          setState('blocked');
-        }
+        setState('blocked');
       }
     } catch {
-      storeVerifiedLicense('NX-HOS-DEMO');
-      setState('active');
+      setState('offline');
     }
-  }, []);
-
-  const activateDemoQuick = useCallback(() => {
-    storeVerifiedLicense('NX-HOS-DEMO');
-    markLicenseVerified();
-    setState('active');
   }, []);
 
   useEffect(() => {
@@ -215,7 +201,7 @@ export default function LicenseGate({
                 </span>
               </label>
               <button
-                disabled={submitting}
+                disabled={submitting || !licenseKey.trim()}
                 type="submit"
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-3 text-sm font-bold text-zinc-950 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
               >
@@ -225,13 +211,6 @@ export default function LicenseGate({
                   <ShieldCheck className="h-4 w-4" />
                 )}
                 تفعيل الجهاز
-              </button>
-              <button
-                type="button"
-                onClick={activateDemoQuick}
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-xs font-bold text-emerald-400 transition hover:bg-emerald-500/20"
-              >
-                ⚡ دخول تجريبي سريع بدون كود
               </button>
             </form>
           )}
