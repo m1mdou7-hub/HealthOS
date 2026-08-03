@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard — Header & Top Stats</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0b0d;
+      --panel: rgba(255,255,255,0.02);
+      --muted: #9aa0a6;
+      --accent-green: #00C38A;
+      --accent-ai: #8B5CF6;
+      --accent-warn: #F59E0B;
+      --glass: rgba(255,255,255,0.03);
+      --card-radius: 12px;
+      --card-padding: 18px;
+      --shadow: 0 6px 18px rgba(0,0,0,0.6);
+      --gap: 18px;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: dark;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      background: linear-gradient(180deg, #070709 0%, var(--bg) 100%);
+      color: #e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .container{
+      max-width:1320px;
+      margin:28px auto;
+      padding: 16px;
+      display:flex;
+      flex-direction:column;
+      gap: var(--gap);
+    }
+
+    /* Header */
+    .header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      justify-content:space-between;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      padding:14px 18px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:44px; height:44px;
+      background: linear-gradient(135deg, var(--accent-ai), #5b21b6);
+      display:flex; align-items:center; justify-content:center;
+      border-radius:10px;
+      font-weight:700;
+      box-shadow: 0 4px 14px rgba(139,92,246,0.18);
+    }
+    .brand h1{
+      margin:0;
+      font-size:16px;
+      font-weight:700;
+      color:#fff;
+    }
+    .brand p{ margin:0; color:var(--muted); font-size:12px; }
+
+    .header-actions{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .btn{
+      background:var(--accent-green);
+      color:#02120e;
+      border:none;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow: 0 6px 18px rgba(0,195,138,0.14);
+    }
+    .btn.secondary{
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow:none;
+    }
+    .search{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background: rgba(255,255,255,0.02);
+      padding:8px 12px;
+      border-radius:10px;
+      border: 1px solid rgba(255,255,255,0.02);
+      width:420px;
+    }
+    .search input{
+      background:transparent; border:none; outline:none; color: #dbe9f7; width:100%;
+    }
+
+    /* Top Stats grid */
+    .stats-grid{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: var(--gap);
+    }
+    @media (max-width:1100px){
+      .stats-grid{ grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width:700px){
+      .stats-grid{ grid-template-columns: repeat(1, 1fr); }
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      padding: var(--card-padding);
+      border-radius: var(--card-radius);
+      border: 1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 6px 18px rgba(2,8,23,0.6);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      min-height:86px;
+    }
+
+    .card .meta{
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .icon{
+      width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+      flex:0 0 40px;
+    }
+    .number{
+      font-size:22px; font-weight:800; letter-spacing:0.4px;
+    }
+    .label{ color: var(--muted); font-size:12px; }
+
+    .pill{
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px; font-weight:600;
+      display:inline-block;
+      cursor:pointer;
+      border: 1px solid rgba(255,255,255,0.025);
+    }
+    .pill.green{ background: rgba(0,195,138,0.12); color: var(--accent-green); }
+    .pill.purple{ background: rgba(139,92,246,0.12); color: var(--accent-ai); }
+    .pill.warn{ background: rgba(245,158,11,0.12); color: var(--accent-warn); }
+
+    /* small description */
+    .muted-small{ color:var(--muted); font-size:12px; margin-top:4px; }
+
+    /* focus states for accessibility */
+    .btn:focus, .pill:focus { outline: 3px solid rgba(139,92,246,0.12); outline-offset:2px; }
+
+    /* minimal responsiveness for header */
+    .header-right{ display:flex; gap:12px; align-items:center; }
+    @media (max-width:900px){
+      .search{ width:220px; }
+      .header{ padding:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header" role="banner" aria-label="Top header">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true">DS</div>
+        <div>
+          <h1>Dental Prosthodontics Workspace</h1>
+          <p>HealthOS Central Node · Digital Dentistry</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="search" role="search" aria-label="Search patient charts">
+          <svg width="16" height="16" style="opacity:0.6" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input type="search" id="global-search" placeholder="Search patient charts, restorations, STL files" aria-label="search input" />
+        </div>
+
+        <button class="btn" id="new-consult" aria-label="New Consultation">New Consultation +</button>
+        <button class="btn secondary" id="copilot" aria-pressed="false" title="Open AI Copilot">
+          <span style="display:inline-flex;align-items:center;gap:8px;">
+            <span style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent-ai),#6d28d9);display:inline-flex;align-items:center;justify-content:center;font-size:13px">AI</span>
+            Open AI Copilot
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <section class="stats-grid" aria-label="Top statistics">
+      <!-- 6 cards: populated by JS -->
+      <div class="card" data-key="ai-insights">
+        <div class="meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon" style="background: rgba(139,92,246,0.18)">AI</div>
+            <div>
+              <div class="number" id="ai-insights-count">—</div>
+              <div class="label">AI Clinical Insights</div>
+            </div>
+          </div>
+          <div>
+            <button class="pill purple" id="ai-btn">3 Flags</button>
+          </div>
+        </div>
+        <div class="muted-small" id="ai-insights-sub">precision 99.4%</div>
+      </div>
+
+      <div class="card" data-key="tx-plans">
+        <div class="meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon" style="background: rgba(0,195,138,0.12); color: var(--accent-green)">P</div>
+            <div>
+              <div class="number" id="tx-plans-count">—</div>
+              <div class="label">Outstanding TX Plans</div>
+            </div>
+          </div>
+          <div><button class="pill" id="plans-btn">Awaiting consults</button></div>
+        </div>
+        <div class="muted-small" id="tx-plans-sub">Pending confirmations</div>
+      </div>
+
+      <div class="card" data-key="lab-cases">
+        <div class="meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon" style="background: rgba(245,158,11,0.12); color: var(--accent-warn)">L</div>
+            <div>
+              <div class="number" id="lab-cases-count">—</div>
+              <div class="label">Pending Lab Cases</div>
+            </div>
+          </div>
+          <div><button class="pill warn" id="lab-btn">Action</button></div>
+        </div>
+        <div class="muted-small" id="lab-cases-sub">milling + sintering</div>
+      </div>
+
+      <div class="card" data-key="active-cases">
+        <div class="meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon" style="background: rgba(255,255,255,0.03); color:#fff">⟳</div>
+            <div>
+              <div class="number" id="active-cases-count">—</div>
+              <div class="label">Active Cases</div>
+            </div>
+          </div>
+          <div><button class="pill green" id="active-btn">Digital designs active</button></div>
+        </div>
+        <div class="muted-small" id="active-cases-sub">showing live jobs</div>
+      </div>
+
+      <div class="card" data-key="scheduled-procedures">
+        <div class="meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon" style="background: rgba(0,0,0,0.25); color:#fff">📅</div>
+            <div>
+              <div class="number" id="scheduled-count">—</div>
+              <div class="label">Scheduled Procedures</div>
+            </div>
+          </div>
+          <div><button class="pill" id="sched-btn">View</button></div>
+        </div>
+        <div class="muted-small" id="scheduled-sub">complex archs</div>
+      </div>
+
+      <div class="card" data-key="todays-patients">
+        <div class="meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon" style="background: rgba(0,195,138,0.08); color: var(--accent-green)">🙂</div>
+            <div>
+              <div class="number" id="todays-count">—</div>
+              <div class="label">Today's Patients</div>
+            </div>
+          </div>
+          <div><button class="pill green" id="patient-btn">from yesterday +2</button></div>
+        </div>
+        <div class="muted-small" id="todays-sub">clinic roster</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // SAMPLE: Replace endpoint with your real API
+    const API_STATS = '/api/dashboard/top-stats';
+
+    async function loadStats(){
+      try{
+        const res = await fetch(API_STATS, { cache: 'no-store' });
+        if(!res.ok) throw new Error('Network error');
+        const data = await res.json();
+
+        // Safe render with defaults
+        document.getElementById('ai-insights-count').textContent = data.ai_insights?.count ?? '0';
+        document.getElementById('ai-insights-sub').textContent = data.ai_insights?.sub ?? '';
+        document.getElementById('ai-btn').textContent = data.ai_insights?.pill ?? '';
+
+        document.getElementById('tx-plans-count').textContent = data.tx_plans?.count ?? '0';
+        document.getElementById('tx-plans-sub').textContent = data.tx_plans?.sub ?? '';
+        document.getElementById('plans-btn').textContent = data.tx_plans?.pill ?? '';
+
+        document.getElementById('lab-cases-count').textContent = data.lab_cases?.count ?? '0';
+        document.getElementById('lab-cases-sub').textContent = data.lab_cases?.sub ?? '';
+        document.getElementById('lab-btn').textContent = data.lab_cases?.pill ?? '';
+
+        document.getElementById('active-cases-count').textContent = data.active_cases?.count ?? '0';
+        document.getElementById('active-cases-sub').textContent = data.active_cases?.sub ?? '';
+        document.getElementById('active-btn').textContent = data.active_cases?.pill ?? '';
+
+        document.getElementById('scheduled-count').textContent = data.scheduled_procedures?.count ?? '0';
+        document.getElementById('scheduled-sub').textContent = data.scheduled_procedures?.sub ?? '';
+        document.getElementById('sched-btn').textContent = data.scheduled_procedures?.pill ?? '';
+
+        document.getElementById('todays-count').textContent = data.todays_patients?.count ?? '0';
+        document.getElementById('todays-sub').textContent = data.todays_patients?.sub ?? '';
+        document.getElementById('patient-btn').textContent = data.todays_patients?.pill ?? '';
+
+      }catch(err){
+        console.error('Failed to load stats', err);
+      }
+    }
+
+    document.getElementById('new-consult').addEventListener('click', async ()=>{
+      try{
+        const r = await fetch('/api/action/new-consult', { method:'POST' });
+        const j = await r.json();
+        if(j && j.url) window.location.href = j.url;
+      }catch(e){
+        console.error('action failed', e);
+        alert('فشل إنشاء استشارة جديدة');
+      }
+    });
+
+    document.getElementById('copilot').addEventListener('click', async (e)=>{
+      const btn = e.currentTarget;
+      try{
+        const r = await fetch('/api/action/toggle-copilot', { method:'POST' });
+        const j = await r.json();
+        btn.setAttribute('aria-pressed', j.active ? 'true' : 'false');
+        alert(j.active ? 'AI Copilot مفعل' : 'AI Copilot مغلق');
+      }catch(err){ console.error(err); }
+    });
+
+    loadStats();
+    setInterval(loadStats, 30000);
+  </script>
+</body>
+</html>
