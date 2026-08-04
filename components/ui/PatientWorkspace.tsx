@@ -328,7 +328,7 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
             />
 
             {/* Horizontal Tabs Menu */}
-            <div className="overflow-x-auto pb-1 flex border-b border-zinc-900 scrollbar-none gap-1 bg-zinc-950/20 p-2 rounded-xl border border-zinc-900/60 text-xs">
+            <div className="overflow-x-auto pb-1 flex border-b border-white/5 scrollbar-none gap-1 bg-[#0d0d16]/30 p-2 rounded-xl border border-white/5 text-xs">
               {menuTabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -337,7 +337,7 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
                     onClick={() => setWorkspaceTab(tab.id)}
                     className={`px-3.5 py-2.5 rounded-lg font-semibold shrink-0 transition-all flex items-center gap-1.5 border-b-2 border-transparent ${
                       workspaceTab === tab.id
-                        ? 'bg-zinc-900 text-emerald-400 border-b-2 border-emerald-500'
+                        ? 'bg-[#0d0d16] text-gold-400 border-b-2 border-gold-500'
                         : 'text-zinc-400 hover:text-zinc-200'
                     }`}
                   >
@@ -363,8 +363,8 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
                     alertsCount={activePatient.medicalAlerts?.filter(a => a !== 'None').length || 0}
                     onNavigateTab={setWorkspaceTab}
                   />
-                  <div className="p-6 rounded-2xl border border-zinc-900 bg-zinc-900/10 text-left space-y-2">
-                    <h3 className="text-xs font-bold text-white font-mono uppercase tracking-wider">{t('demographics')}</h3>
+                  <div className="p-6 rounded-2xl border border-white/5 bg-[#0d0d16]/20 text-left space-y-2 card-luxury">
+                    <h3 className="text-xs font-bold text-gold-400 font-display uppercase tracking-wider">{t('demographics')}</h3>
                     <p className="text-xs text-zinc-400">{t('chiefComplaint')}: <strong className="text-zinc-200">{activePatient.summary}</strong></p>
                     <p className="text-xs text-zinc-400">{t('primaryInsurer')}: <strong className="text-zinc-200">{activePatient.allergyStatus}</strong></p>
                   </div>

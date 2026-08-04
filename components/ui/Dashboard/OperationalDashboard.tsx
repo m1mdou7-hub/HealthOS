@@ -90,22 +90,22 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
       case 'Super Admin':
         return (
           <>
-            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+            <div className="bg-gold-gradient text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-gold-sm card-luxury">
               <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('sa_stat1_label')}</span>
               <span className="text-2xl font-black text-zinc-950">18</span>
               <span className="text-[9px] font-semibold text-amber-950">{t('sa_stat1_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('sa_stat2_label')}</span>
               <span className="text-2xl font-bold text-white">450</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('sa_stat2_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('sa_stat3_label')}</span>
               <span className="text-2xl font-bold text-white">99.98%</span>
               <span className="text-[9px] text-emerald-400 font-semibold">{t('sa_stat3_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('sa_stat4_label')}</span>
               <span className="text-2xl font-bold text-amber-400">3</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('sa_stat4_sub')}</span>
@@ -115,22 +115,22 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
       case 'Clinic Owner':
         return (
           <>
-            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+            <div className="bg-gold-gradient text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-gold-sm card-luxury">
               <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('m_stat1_label')}</span>
               <span className="text-2xl font-black text-zinc-950">48</span>
               <span className="text-[9px] font-semibold text-amber-950">{t('m_stat1_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('m_stat2_label')}</span>
               <span className="text-2xl font-bold text-white">2</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('m_stat2_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('m_stat3_label')}</span>
               <span className="text-2xl font-bold text-white">$12,850</span>
               <span className="text-[9px] text-emerald-400 font-semibold">{t('m_stat3_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('m_stat4_label')}</span>
               <span className="text-2xl font-bold text-amber-400">8</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('m_stat4_sub')}</span>
@@ -140,22 +140,22 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
       case 'Laboratory Technician':
         return (
           <>
-            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+            <div className="bg-gold-gradient text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-gold-sm card-luxury">
               <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('l_stat1_label')}</span>
               <span className="text-2xl font-black text-zinc-950">9</span>
               <span className="text-[9px] font-semibold text-amber-950">{t('l_stat1_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('l_stat2_label')}</span>
               <span className="text-2xl font-bold text-white">0</span>
               <span className="text-[9px] text-emerald-400 font-semibold">{t('l_stat2_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('l_stat3_label')}</span>
               <span className="text-2xl font-bold text-white">14</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('l_stat3_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('l_stat4_label')}</span>
               <span className="text-2xl font-bold text-white">{t('l_stat4_sub')}</span>
               <span className="text-[9px] text-zinc-500 font-medium">SprintRay / Roland</span>
@@ -165,22 +165,22 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
       case 'Receptionist':
         return (
           <>
-            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+            <div className="bg-gold-gradient text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-gold-sm card-luxury">
               <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('r_stat1_label')}</span>
               <span className="text-2xl font-black text-zinc-950">15</span>
               <span className="text-[9px] font-semibold text-amber-950">{t('r_stat1_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('r_stat2_label')}</span>
               <span className="text-2xl font-bold text-white">3</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('r_stat2_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('r_stat3_label')}</span>
               <span className="text-2xl font-bold text-white">2</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('r_stat3_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('r_stat4_label')}</span>
               <span className="text-2xl font-bold text-red-400">3</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('r_stat4_sub')}</span>
@@ -190,22 +190,22 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
       case 'Read-only Auditor':
         return (
           <>
-            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+            <div className="bg-gold-gradient text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-gold-sm card-luxury">
               <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('a_stat1_label')}</span>
               <span className="text-2xl font-black text-zinc-950">4</span>
               <span className="text-[9px] font-semibold text-amber-950">{t('a_stat1_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('a_stat2_label')}</span>
               <span className="text-2xl font-bold text-white">0</span>
               <span className="text-[9px] text-emerald-400 font-semibold">{t('a_stat2_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('a_stat3_label')}</span>
               <span className="text-2xl font-bold text-white">1</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('a_stat3_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('a_stat4_label')}</span>
               <span className="text-2xl font-bold text-red-400">0</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('a_stat4_sub')}</span>
@@ -215,22 +215,22 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
       default: // Clinicians (Prosthodontist / General Dentist)
         return (
           <>
-            <div className="bg-gradient-to-br from-amber-600 to-amber-700 text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-lg shadow-amber-500/10">
+            <div className="bg-gold-gradient text-zinc-950 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] shadow-gold-sm card-luxury">
               <span className="text-[10px] font-bold uppercase tracking-wider text-amber-950">{t('c_stat1_label')}</span>
               <span className="text-2xl font-black text-zinc-950">8</span>
               <span className="text-[9px] font-semibold text-amber-950">{t('c_stat1_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('c_stat2_label')}</span>
               <span className="text-2xl font-bold text-white">2</span>
               <span className="text-[9px] text-red-400 font-semibold">{t('c_stat2_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('c_stat3_label')}</span>
               <span className="text-2xl font-bold text-white">4</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('c_stat3_sub')}</span>
             </div>
-            <div className="bg-zinc-900/60 border border-zinc-850 p-5 rounded-2xl flex flex-col justify-between min-h-[110px]">
+            <div className="bg-[#0d0d16]/60 border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[110px] card-luxury shadow-gold-glow">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{t('c_stat4_label')}</span>
               <span className="text-2xl font-bold text-amber-400">1</span>
               <span className="text-[9px] text-zinc-500 font-medium">{t('c_stat4_sub')}</span>
@@ -246,10 +246,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
         return (
           <>
             {/* Left Panel: Clinics and Orgs list */}
-            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-8 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <Building2 className="w-4 h-4 text-amber-500" /> {t('sa_title1')}
+                  <Building2 className="w-4 h-4 text-gold-400" /> {t('sa_title1')}
                 </h3>
               </div>
               <div className="overflow-x-auto">
@@ -281,10 +281,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
             </div>
 
             {/* Right Panel: Feature Flags */}
-            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-amber-500" /> {t('sa_title2')}
+                  <Zap className="w-4 h-4 text-gold-400" /> {t('sa_title2')}
                 </h3>
               </div>
               <div className="space-y-3">
@@ -310,10 +310,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
         return (
           <>
             {/* Left Panel: Doctors shift list */}
-            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-8 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <Users className="w-4 h-4 text-amber-500" /> {t('m_title1')}
+                  <Users className="w-4 h-4 text-gold-400" /> {t('m_title1')}
                 </h3>
               </div>
               <div className="overflow-x-auto">
@@ -345,10 +345,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
             </div>
 
             {/* Right Panel: Pending Approvals */}
-            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-amber-500" /> {t('m_title2')}
+                  <Lock className="w-4 h-4 text-gold-400" /> {t('m_title2')}
                 </h3>
               </div>
               <div className="space-y-3">
@@ -368,10 +368,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
         return (
           <>
             {/* Left Panel: Lab Kanban Board */}
-            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-8 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <FlaskConical className="w-4 h-4 text-amber-500" /> {t('l_title1')}
+                  <FlaskConical className="w-4 h-4 text-gold-400" /> {t('l_title1')}
                 </h3>
               </div>
               <div className="grid grid-cols-3 gap-3">
@@ -400,10 +400,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
             </div>
 
             {/* Right Panel: Machine Status */}
-            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-amber-500" /> {t('l_title2')}
+                  <Activity className="w-4 h-4 text-gold-400" /> {t('l_title2')}
                 </h3>
               </div>
               <div className="space-y-3">
@@ -429,10 +429,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
         return (
           <>
             {/* Left Panel: Today's check-ins */}
-            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-8 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-amber-500" /> {t('r_title1')}
+                  <Calendar className="w-4 h-4 text-gold-400" /> {t('r_title1')}
                 </h3>
               </div>
               <div className="overflow-x-auto">
@@ -464,10 +464,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
             </div>
 
             {/* Right Panel: Patient Intake form */}
-            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <User className="w-4 h-4 text-amber-500" /> {t('r_title2')}
+                  <User className="w-4 h-4 text-gold-400" /> {t('r_title2')}
                 </h3>
               </div>
               <div className="space-y-3">
@@ -511,10 +511,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
         return (
           <>
             {/* Left Panel: Audit Logs */}
-            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-8 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-amber-500" /> {t('a_title1')}
+                  <ShieldCheck className="w-4 h-4 text-gold-400" /> {t('a_title1')}
                 </h3>
               </div>
               <div className="overflow-x-auto">
@@ -546,10 +546,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
             </div>
 
             {/* Right Panel: Access Requests */}
-            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-amber-500" /> {t('a_title2')}
+                  <Lock className="w-4 h-4 text-gold-400" /> {t('a_title2')}
                 </h3>
               </div>
               <div className="space-y-3">
@@ -573,10 +573,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
         return (
           <>
             {/* Left Panel: Today's Clinical Queue */}
-            <div className="lg:col-span-8 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-8 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-amber-500" /> {t('c_title1')}
+                  <Clock className="w-4 h-4 text-gold-400" /> {t('c_title1')}
                 </h3>
                 <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-850 px-2 py-0.5 rounded text-zinc-500">
                   {appointments.length} active
@@ -645,10 +645,10 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
             </div>
 
             {/* Right Panel: Active Patient snapshot + SOAP note fields */}
-            <div className="lg:col-span-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-5 space-y-4">
-              <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
+            <div className="lg:col-span-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl p-5 space-y-4 card-luxury">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                  <User className="w-4 h-4 text-amber-500" /> {t('c_title2')}
+                  <User className="w-4 h-4 text-gold-400" /> {t('c_title2')}
                 </h3>
               </div>
 
@@ -765,25 +765,25 @@ function OperationalDashboardInner({ demoMode }: OperationalDashboardProps) {
       <div className="flex-1 space-y-6">
         
         {/* TOP OPERATIONS COMMAND BAR */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-zinc-900/30 p-4 rounded-2xl border border-zinc-900/80 backdrop-blur-sm">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-[#0d0d16]/30 p-4 rounded-2xl border border-white/5 backdrop-blur-md relative overflow-hidden card-luxury">
           <div className="space-y-1">
-            <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2 font-display text-gold-gradient">
               {headerInfo.title}
-              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest animate-pulse">
+              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/20 uppercase tracking-widest animate-pulse font-sans">
                 {activeRole} {t('active')}
               </span>
             </h2>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-zinc-400 font-sans">
               {headerInfo.sub}
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
-            <button className="px-3.5 py-1.5 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-xs font-semibold flex items-center gap-1.5 transition-colors">
-              <Plus className="w-3.5 h-3.5 text-amber-500" /> {t('newConsultation')}
+            <button className="px-3.5 py-1.5 rounded-xl bg-[#0d0d16] hover:bg-[#131320] border border-white/5 text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-gold-glow">
+              <Plus className="w-3.5 h-3.5 text-gold-400" /> {t('newConsultation')}
             </button>
-            <button className="px-3.5 py-1.5 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-xs font-semibold flex items-center gap-1.5 transition-colors">
-              <Upload className="w-3.5 h-3.5 text-amber-500" /> {t('importStl')}
+            <button className="px-3.5 py-1.5 rounded-xl bg-[#0d0d16] hover:bg-[#131320] border border-white/5 text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-gold-glow">
+              <Upload className="w-3.5 h-3.5 text-gold-400" /> {t('importStl')}
             </button>
           </div>
         </div>

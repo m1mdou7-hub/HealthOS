@@ -1205,7 +1205,7 @@ export default function BillingWorkspace({
 
                   {/* High Quality Bento Cards */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[105px]">
+                    <div className="p-4 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[105px]">
                       <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Today's Revenue</span>
                       <div className="flex items-baseline gap-1">
                         <span className="text-xl font-black text-white font-mono">${stats.todayRevenue.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
@@ -1215,7 +1215,7 @@ export default function BillingWorkspace({
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[105px]">
+                    <div className="p-4 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[105px]">
                       <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Outstanding Balance</span>
                       <div className="flex items-baseline gap-1">
                         <span className="text-xl font-black text-zinc-300 font-mono">${stats.outstandingBalance.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
@@ -1225,7 +1225,7 @@ export default function BillingWorkspace({
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[105px]">
+                    <div className="p-4 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[105px]">
                       <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Paid / Pending Invoices</span>
                       <div className="flex items-baseline gap-2">
                         <span className="text-xl font-black text-white font-mono">{stats.paidCount} Paid</span>
@@ -1236,7 +1236,7 @@ export default function BillingWorkspace({
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[105px]">
+                    <div className="p-4 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[105px]">
                       <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Insurance Claims</span>
                       <div className="flex items-baseline gap-1">
                         <span className="text-xl font-black text-white font-mono">{stats.activeClaims} Active</span>
@@ -1250,7 +1250,7 @@ export default function BillingWorkspace({
                   {/* Chart Row */}
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     {/* Recharts Area Chart */}
-                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl col-span-2 flex flex-col justify-between h-[280px]">
+                    <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl card-luxury col-span-2 flex flex-col justify-between h-[280px]">
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Monthly Revenue Trend (YTD)</span>
                         <div className="flex gap-4 text-[10px] font-mono">
@@ -1283,7 +1283,7 @@ export default function BillingWorkspace({
                     </div>
 
                     {/* Quick actions panel */}
-                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[280px]">
+                    <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[280px]">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">Quick Ledger Dispatches</span>
                         <p className="text-[10px] text-zinc-400 font-mono leading-relaxed mb-4">Direct dispatch links for immediate patient billing operations.</p>
@@ -1333,7 +1333,7 @@ export default function BillingWorkspace({
                   </div>
 
                   {/* BOTTOM TELEMETRY BAR */}
-                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono">
+                  <div className="p-4 bg-[#0d0d16]/25 border border-white/5 rounded-2xl card-luxury flex justify-between items-center text-xs font-mono">
                     <span className="text-zinc-500 font-bold uppercase tracking-wider">Cleared Batch Status:</span>
                     <span className="text-emerald-400 font-bold flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" /> Synchronized with US Clearinghouse Gateways
@@ -1420,7 +1420,7 @@ export default function BillingWorkspace({
                   </div>
 
                   {/* Large Financial Table */}
-                  <div className="bg-zinc-900/20 border border-zinc-900 rounded-2xl overflow-hidden">
+                  <div className="bg-[#0d0d16]/25 border border-white/5 rounded-2xl card-luxury overflow-hidden">
                     <table className="w-full text-left text-xs font-sans">
                       <thead className="bg-zinc-900/60 text-zinc-400 font-mono text-[10px] uppercase border-b border-zinc-850">
                         <tr>
@@ -1530,7 +1530,7 @@ export default function BillingWorkspace({
                     {/* Left: Patient info & line items */}
                     <div className="lg:col-span-2 space-y-4">
                       {/* Patient metadata card */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl grid grid-cols-2 gap-4">
+                      <div className="p-4 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury grid grid-cols-2 gap-4">
                         <div className="space-y-1">
                           <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Patient Details</span>
                           <p className="text-sm font-bold text-white font-mono">{selectedInvoice.patientName}</p>
@@ -1544,7 +1544,7 @@ export default function BillingWorkspace({
                       </div>
 
                       {/* Line items table */}
-                      <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-2xl">
+                      <div className="p-4 bg-[#0d0d16]/25 border border-white/5 rounded-2xl card-luxury">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">ADA Code Treatment Breakdown</span>
                         
                         <table className="w-full text-left font-mono text-[11px]">
@@ -1580,7 +1580,7 @@ export default function BillingWorkspace({
 
                       {/* Notes & Attachments */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl space-y-2">
+                        <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl card-luxury space-y-2">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Clinical Ledger Notes</span>
                           <textarea 
                             value={selectedInvoice.notes}
@@ -1589,7 +1589,7 @@ export default function BillingWorkspace({
                           />
                         </div>
 
-                        <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl space-y-2">
+                        <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl card-luxury space-y-2">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">PACS DICOM Attachments</span>
                           <div className="space-y-1.5 overflow-y-auto h-20 pr-1">
                             {selectedInvoice.attachments.length > 0 ? (
@@ -1608,7 +1608,7 @@ export default function BillingWorkspace({
                     </div>
 
                     {/* Right: Calculations ledger summary */}
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[380px]">
+                    <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[380px]">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-4">Calculation Ledger Summary</span>
                         
@@ -1683,7 +1683,7 @@ export default function BillingWorkspace({
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Payment dispatch form */}
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl h-[380px] flex flex-col justify-between">
+                    <div className="p-4 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury h-[380px] flex flex-col justify-between">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Collect Payment</span>
 
                       <form onSubmit={handleProcessPayment} className="space-y-3 flex-1 justify-center mt-3">
@@ -1734,7 +1734,7 @@ export default function BillingWorkspace({
                     </div>
 
                     {/* Payment History and Receipts table */}
-                    <div className="lg:col-span-2 p-4 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex flex-col justify-between h-[380px]">
+                    <div className="lg:col-span-2 p-4 bg-[#0d0d16]/25 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[380px]">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">Settlement Receipts Journal</span>
                         <div className="overflow-y-auto max-h-[280px] pr-1">
@@ -1790,7 +1790,7 @@ export default function BillingWorkspace({
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Claims Journal List */}
-                    <div className="lg:col-span-2 p-4 bg-zinc-900/20 border border-zinc-900 rounded-2xl h-[380px] overflow-y-auto pr-1">
+                    <div className="lg:col-span-2 p-4 bg-[#0d0d16]/25 border border-white/5 rounded-2xl card-luxury h-[380px] overflow-y-auto pr-1">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">Clearinghouse Claim Logs</span>
                       
                       <table className="w-full text-left font-mono text-[10px]">
@@ -1846,7 +1846,7 @@ export default function BillingWorkspace({
                     </div>
 
                     {/* Resubmission Appeal Form (Conditional rendering inside panel) */}
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl h-[380px] flex flex-col justify-between">
+                    <div className="p-4 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury h-[380px] flex flex-col justify-between">
                       {resubmitClaimId ? (
                         <form onSubmit={handleResubmitClaim} className="space-y-3 flex-1 justify-center">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Appeals & Resubmission</span>
@@ -1918,7 +1918,7 @@ export default function BillingWorkspace({
                     {estimates.map((est) => {
                       const totalVal = est.treatmentItems.reduce((acc, x) => acc + (x.quantity * x.unitPrice * (1 - x.discount/100)), 0);
                       return (
-                        <div key={est.id} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[280px]">
+                        <div key={est.id} className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[280px]">
                           <div>
                             <div className="flex justify-between items-start mb-3">
                               <div>
@@ -1991,7 +1991,7 @@ export default function BillingWorkspace({
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Revenue by Clinic Site */}
-                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[280px]">
+                    <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[280px]">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono mb-2">Revenue Share by Clinic</span>
                       <div className="flex-1 w-full min-h-[160px]">
                         <ResponsiveContainer width="100%" height="100%">
@@ -2024,7 +2024,7 @@ export default function BillingWorkspace({
                     </div>
 
                     {/* Revenue by Doctor */}
-                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[280px]">
+                    <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[280px]">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono mb-2">Revenue Generation by Doctor</span>
                       <div className="flex-1 w-full min-h-[180px]">
                         <ResponsiveContainer width="100%" height="100%">
@@ -2040,7 +2040,7 @@ export default function BillingWorkspace({
                     </div>
 
                     {/* Revenue by Specific Procedure */}
-                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[280px]">
+                    <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl card-luxury flex flex-col justify-between h-[280px]">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono mb-2">Top Yield ADA Procedure Codes</span>
                       <div className="flex-1 w-full min-h-[180px]">
                         <ResponsiveContainer width="100%" height="100%">
@@ -2074,7 +2074,7 @@ export default function BillingWorkspace({
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Diagnostic flags / parameters */}
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4 h-[380px] flex flex-col justify-between">
+                    <div className="p-4 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury space-y-4 h-[380px] flex flex-col justify-between">
                       <div className="space-y-2">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Auditing Engine Configurations</span>
                         <p className="text-[10px] text-zinc-400 font-mono leading-relaxed">Run a complete review of historical clearinghouse codes and patient balances.</p>
@@ -2109,7 +2109,7 @@ export default function BillingWorkspace({
                     </div>
 
                     {/* Report Output Area */}
-                    <div className="lg:col-span-2 p-5 bg-zinc-900/20 border border-zinc-900 rounded-2xl h-[380px] flex flex-col justify-between">
+                    <div className="lg:col-span-2 p-5 bg-[#0d0d16]/25 border border-white/5 rounded-2xl card-luxury h-[380px] flex flex-col justify-between">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">AI Diagnostic Telemetry Report</span>
                         <div className="overflow-y-auto max-h-[290px] pr-1">
@@ -2147,7 +2147,7 @@ export default function BillingWorkspace({
 
                   <div className="max-w-2xl mx-auto space-y-4">
                     {timelineEvents.map((evt) => (
-                      <div key={evt.id} className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl flex gap-4 text-xs">
+                      <div key={evt.id} className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl card-luxury flex gap-4 text-xs">
                         <div className="p-2 bg-zinc-950 border border-zinc-850 rounded-xl h-9 w-9 flex items-center justify-center shrink-0">
                           {evt.type === 'payment_received' ? (
                             <DollarSign className="w-4 h-4 text-emerald-400" />
@@ -2192,7 +2192,7 @@ export default function BillingWorkspace({
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4">
+                    <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury space-y-4">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Currency & Taxation Settings</span>
                       
                       <div className="space-y-3">
@@ -2222,7 +2222,7 @@ export default function BillingWorkspace({
                       </div>
                     </div>
 
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4">
+                    <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl card-luxury space-y-4">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Clearinghouse & Numbering Settings</span>
                       
                       <div className="space-y-3">

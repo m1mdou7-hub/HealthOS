@@ -60,7 +60,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 
   return (
     <html lang={locale} dir={dir}>
-      <body className="bg-black">
+      <body className="antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ReactQueryProvider>
             {/* PWA: Service Worker registration, offline strip, install banner */}
@@ -71,7 +71,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 
             <main
               id="skip"
-              className={!user ? "min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)] bg-black" : "bg-black"}
+              className={!user ? "min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)]" : ""}
             >
               {children}
             </main>

@@ -180,15 +180,15 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
     <div className="space-y-6 text-left">
       {/* Overview stats cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-xl border border-zinc-900 bg-zinc-950/40">
+        <div className="p-4 rounded-xl border border-white/5 bg-[#0d0d16]/40 shadow-gold-glow card-luxury">
           <span className="text-[10px] text-zinc-500 font-mono uppercase block">{t('total_fees_invoiced')}</span>
           <span className="text-base font-bold text-white font-mono block mt-1">${totalInvoiced.toLocaleString()}</span>
         </div>
-        <div className="p-4 rounded-xl border border-zinc-900 bg-zinc-950/40">
+        <div className="p-4 rounded-xl border border-white/5 bg-[#0d0d16]/40 shadow-gold-glow card-luxury">
           <span className="text-[10px] text-zinc-500 font-mono uppercase block">{t('amount_paid_settled')}</span>
           <span className="text-base font-bold text-emerald-400 font-mono block mt-1">${totalPaid.toLocaleString()}</span>
         </div>
-        <div className="p-4 rounded-xl border border-zinc-900 bg-zinc-950/40 relative">
+        <div className="p-4 rounded-xl border border-white/5 bg-[#0d0d16]/40 shadow-gold-glow card-luxury relative">
           <span className="text-[10px] text-zinc-500 font-mono uppercase block">{t('outstanding')}</span>
           <span className={`text-base font-bold font-mono block mt-1 ${outstandingBalance > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
             ${outstandingBalance.toLocaleString()}
@@ -197,10 +197,10 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       </div>
 
       {/* Toolbar actions */}
-      <div className="flex flex-wrap justify-between items-center bg-zinc-900/10 p-4 rounded-2xl border border-zinc-900 gap-3">
+      <div className="flex flex-wrap justify-between items-center bg-[#0d0d16]/20 p-4 rounded-2xl border border-white/5 gap-3 card-luxury">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
-            <DollarSign className="w-4 h-4 text-emerald-400" /> {t('patient_ledger_title')}
+            <DollarSign className="w-4 h-4 text-gold-400" /> {t('patient_ledger_title')}
           </h3>
           <p className="text-[11px] text-zinc-400 mt-0.5">{t('patient_ledger_desc')}</p>
         </div>

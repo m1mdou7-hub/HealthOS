@@ -1,6 +1,30 @@
+/* ─── Google Fonts ───────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ─── Luxury CSS Variables ───────────────────────────────────── */
+:root {
+  /* Gold system */
+  --gold:       #c9a84c;
+  --gold-hi:    #e3c45a;
+  --gold-dim:   #7a6030;
+  --gold-glow:  rgba(201,168,76,0.15);
+  --gold-glow2: rgba(201,168,76,0.07);
+
+  /* Depth palette */
+  --ink:        #07070c;
+  --ink-2:      #0d0d16;
+  --ink-3:      #131320;
+  --ink-4:      #191928;
+  --border-dim: rgba(255,255,255,0.06);
+  --border-mid: rgba(255,255,255,0.11);
+}
+
+/* ─── Base overrides ─────────────────────────────────────────── */
+
 
 *,
 *:before,
@@ -24,11 +48,17 @@ html {
 
 html,
 body {
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue',
-    'Helvetica', sans-serif;
+  font-family: 'Inter', -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  @apply text-white bg-zinc-800 antialiased;
+  @apply text-white antialiased;
+  background-color: var(--ink);
+  /* Subtle ambient gold glow at top */
+  background-image: radial-gradient(
+    ellipse 80% 50% at 50% -10%,
+    rgba(201,168,76,0.05) 0%,
+    transparent 60%
+  );
 }
 
 body {
@@ -149,28 +179,81 @@ p a {
   scrollbar-width: none;  /* Firefox */
 }
 
-/* Custom global sleek dark scrollbar styling */
+/* ─── Luxury Scrollbar ───────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090b; /* zinc-950 */
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a; /* zinc-800 */
+  background: rgba(201,168,76,0.2);
   border-radius: 9999px;
-  border: 2px solid #09090b;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46; /* zinc-700 */
+  background: rgba(201,168,76,0.35);
 }
 
-/* Firefox support */
+/* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #27272a #09090b;
+  scrollbar-color: rgba(201,168,76,0.2) transparent;
+}
+
+/* ─── Global Luxury Utilities ────────────────────────────────── */
+
+/* Serif headings helper */
+.font-display {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: 0.02em;
+}
+
+/* Gold text gradient */
+.text-gold-gradient {
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold), var(--gold-hi));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Luxury card base — adds shimmer top edge */
+.card-luxury {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-luxury::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.07) 50%, transparent 90%);
+  pointer-events: none;
+}
+
+/* Animated shimmer header bar */
+.header-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201,168,76,0.6) 20%,
+    rgba(227,196,90,0.9) 50%,
+    rgba(201,168,76,0.6) 80%,
+    transparent 100%
+  );
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Gold focus ring — replaces the pink one for HealthOS elements */
+.focus-gold:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--gold-glow), 0 0 0 1px var(--gold-dim);
 }

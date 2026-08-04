@@ -252,15 +252,15 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           <span>Bypassing Supabase authentication for local development. Production authentication remains active and untouched.</span>
         </div>
       )}
-      <div className="flex flex-1 bg-zinc-950 text-zinc-100 overflow-hidden font-sans relative">
+      <div className="flex flex-1 bg-transparent text-zinc-100 overflow-hidden font-sans relative">
       {/* Sidebar Spacer for Desktop layout */}
       <div className="hidden lg:block w-[72px] shrink-0" />
 
       {/* Sidebar for Desktop */}
-      <aside className="hidden lg:flex lg:flex-col absolute left-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-r border-zinc-900 bg-zinc-950/90 backdrop-blur-md transition-all duration-300 ease-in-out group shadow-xl shadow-black/45">
+      <aside className="hidden lg:flex lg:flex-col absolute left-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-r border-white/5 bg-[#07070c]/60 backdrop-blur-xl transition-all duration-300 ease-in-out group shadow-xl shadow-black/45">
         {/* Brand Header */}
-        <div className="flex items-center h-16 px-[20px] border-b border-zinc-900 gap-3 overflow-hidden shrink-0">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500 text-white shrink-0">
+        <div className="flex items-center h-16 px-[20px] border-b border-white/5 gap-3 overflow-hidden shrink-0">
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gold-gradient text-black shrink-0">
             <svg
               width="18"
               height="18"
@@ -275,8 +275,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
           </div>
-          <span className="font-semibold text-lg tracking-tight text-white opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">HealthOS</span>
-          <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
+          <span className="font-semibold text-lg tracking-tight text-white opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-display">HealthOS</span>
+          <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-gold-500/10 text-gold-400 border border-gold-500/20 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
             PRO
           </span>
         </div>
@@ -292,13 +292,13 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                 href={item.href}
                 className={`flex items-center px-2.5 py-2.5 text-sm font-medium rounded-xl transition-all duration-150 group/nav overflow-hidden ${
                   isActive
-                    ? 'bg-emerald-500/10 text-emerald-400 border-l-2 border-emerald-500'
+                    ? 'bg-gold-500/10 text-gold-400 border-l-2 border-gold-500 shadow-gold-glow'
                     : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
                 }`}
               >
                 <Icon
                   className={`w-5 h-5 shrink-0 transition-transform duration-150 group-hover/nav:scale-105 ${
-                    isActive ? 'text-emerald-400' : 'text-zinc-400 group-hover/nav:text-zinc-100'
+                    isActive ? 'text-gold-400' : 'text-zinc-400 group-hover/nav:text-zinc-100'
                   }`}
                 />
                 <span className="ml-3 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">{tNav(item.labelKey)}</span>
@@ -308,7 +308,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
         </nav>
 
         {/* Bottom User Area */}
-        <div className="p-3.5 border-t border-zinc-900 bg-zinc-950/20 overflow-hidden shrink-0">
+        <div className="p-3.5 border-t border-white/5 bg-[#0d0d16]/30 overflow-hidden shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center min-w-0 gap-3">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-800 text-zinc-300 shrink-0">
@@ -344,7 +344,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             onClick={() => setMobileMenuOpen(false)}
           />
 
-          <div className="relative flex flex-col w-full max-w-xs flex-1 bg-zinc-900 border-r border-zinc-800">
+          <div className="relative flex flex-col w-full max-w-xs flex-1 bg-[#0d0d16] border-r border-white/5">
             {/* Close button */}
             <div className="absolute top-4 right-4">
               <button
@@ -356,8 +356,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             </div>
 
             {/* Brand Header */}
-            <div className="flex items-center h-16 px-6 border-b border-zinc-800 gap-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500 text-white">
+            <div className="flex items-center h-16 px-6 border-b border-white/5 gap-3">
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gold-gradient text-black">
                 <svg
                   width="18"
                   height="18"
@@ -372,7 +372,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
               </div>
-              <span className="font-semibold text-lg tracking-tight text-white">HealthOS</span>
+              <span className="font-semibold text-lg tracking-tight text-white font-display">HealthOS</span>
             </div>
 
             {/* Navigation links */}
@@ -387,7 +387,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-150 ${
                       isActive
-                        ? 'bg-emerald-500/10 text-emerald-400 border-l-2 border-emerald-500'
+                        ? 'bg-gold-500/10 text-gold-400 border-l-2 border-gold-500'
                         : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800'
                     }`}
                   >
@@ -428,7 +428,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         {/* Top bar */}
-        <header className="flex items-center justify-between h-16 px-6 border-b border-zinc-800 bg-zinc-900/30 backdrop-blur-md">
+        <header className="flex items-center justify-between h-16 px-6 border-b border-white/5 bg-[#07070c]/50 backdrop-blur-xl relative header-shimmer">
           <div className="flex items-center">
             {/* Mobile toggle */}
             <button
@@ -437,16 +437,16 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-lg font-semibold text-white tracking-tight mr-6">{pageTitle}</h1>
+            <h1 className="text-lg font-semibold text-white tracking-tight mr-6 font-display text-gold-gradient">{pageTitle}</h1>
             
             {/* Command Palette Launcher Button */}
             <button
               onClick={() => setCommandMenuOpen(true)}
-              className="hidden md:flex items-center gap-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 px-3.5 py-2 rounded-2xl text-zinc-500 hover:text-zinc-400 text-xs font-mono transition-all cursor-pointer select-none"
+              className="hidden md:flex items-center gap-2 bg-[#0d0d16]/70 hover:bg-[#131320]/70 border border-white/5 px-3.5 py-2 rounded-2xl text-zinc-500 hover:text-zinc-400 text-xs font-mono transition-all cursor-pointer select-none focus-gold"
             >
-              <Search className="w-4 h-4 text-zinc-600" />
+              <Search className="w-4 h-4 text-zinc-650" />
               <span>{tCommon('searchOrRunCommand')}</span>
-              <kbd className="ml-4 px-1.5 py-0.5 text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-600 font-mono">⌘K</kbd>
+              <kbd className="ml-4 px-1.5 py-0.5 text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-650 font-mono">⌘K</kbd>
             </button>
           </div>
 
@@ -455,8 +455,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             <LanguageSwitcher />
 
             {/* Active Role Selector Dropdown */}
-            <div className="relative flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-2xl px-3 py-1.5 hover:bg-zinc-850 transition-colors">
-              <UserCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <div className="relative flex items-center gap-2 bg-[#0d0d16] border border-white/5 rounded-2xl px-3 py-1.5 hover:bg-zinc-850 transition-colors">
+              <UserCheck className="w-3.5 h-3.5 text-gold-400 shrink-0" />
               <select
                 value={activeRole}
                 onChange={(e) => {
@@ -487,7 +487,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <button
                 type="button"
                 onClick={() => setShowQuickInviteModal(true)}
-                className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-md shadow-emerald-500/10 cursor-pointer transition-all"
+                className="px-3 py-1.5 bg-gold-500 hover:bg-gold-400 text-zinc-950 font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-md shadow-gold-sm cursor-pointer transition-all"
                 title="إضافة وتحديد صلاحيات موظف جديد"
               >
                 <UserPlus className="w-3.5 h-3.5" />
@@ -503,21 +503,21 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
         </header>
 
         {/* Dynamic page content */}
-        <main className="flex-1 overflow-y-auto p-6 lg:p-8 bg-zinc-950">
+        <main className="flex-1 overflow-y-auto p-6 lg:p-8 bg-transparent">
           {(() => {
             const access = checkPageAccess(pathname, activeRole);
             if (!access.allowed) {
               return (
                 <div className="min-h-[70vh] flex items-center justify-center p-4">
-                  <div className="w-full max-w-xl bg-zinc-900/40 border border-zinc-850 rounded-3xl p-8 text-center space-y-6 backdrop-blur-md relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-amber-500 to-red-500" />
+                  <div className="w-full max-w-xl bg-[#0d0d16]/40 border border-white/5 rounded-3xl p-8 text-center space-y-6 backdrop-blur-md relative overflow-hidden card-luxury">
+                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gold-gradient" />
                     
-                    <div className="mx-auto w-16 h-16 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 animate-pulse">
+                    <div className="mx-auto w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-gold-400 animate-pulse">
                       <ShieldAlert className="w-8 h-8" />
                     </div>
 
                     <div className="space-y-2">
-                      <h3 className="text-xl font-bold text-white tracking-tight">
+                      <h3 className="text-xl font-bold text-white tracking-tight font-display text-gold-gradient">
                         {tAccess('clearanceRequired')}
                       </h3>
                       <p className="text-xs font-mono text-zinc-400" dir="ltr">
@@ -525,8 +525,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-950/80 rounded-2xl border border-zinc-900 text-left space-y-2">
-                      <span className="text-[10px] font-bold font-mono text-red-400 block uppercase tracking-wider">
+                    <div className="p-4 bg-zinc-950/80 rounded-2xl border border-white/5 text-left space-y-2">
+                      <span className="text-[10px] font-bold font-mono text-gold-400 block uppercase tracking-wider">
                         Access Denied Policy ID: HealthOS-RBAC-0441
                       </span>
                       <p className="text-xs text-zinc-300 leading-relaxed font-sans">
@@ -569,17 +569,17 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           />
 
           {/* Modal Container */}
-          <div className="relative w-full max-w-2xl bg-zinc-950 border border-zinc-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden font-mono text-xs animate-fade-in max-h-[70vh]">
+          <div className="relative w-full max-w-2xl bg-[#0d0d16] border border-white/5 rounded-3xl shadow-gold-md flex flex-col overflow-hidden font-mono text-xs animate-fade-in max-h-[70vh] card-luxury">
             {/* Header Input Search */}
-            <div className="p-4 border-b border-zinc-800 flex items-center gap-3">
-              <Command className="w-5 h-5 text-emerald-400 shrink-0" />
+            <div className="p-4 border-b border-white/5 flex items-center gap-3">
+              <Command className="w-5 h-5 text-gold-400 shrink-0" />
               <input
                 type="text"
                 autoFocus
                 value={commandQuery}
                 onChange={(e) => setCommandQuery(e.target.value)}
                 placeholder="Search resources, navigate, or run local console procedures..."
-                className="flex-1 bg-transparent border-none text-xs outline-none text-white placeholder-zinc-600 font-mono"
+                className="flex-1 bg-transparent border-none text-xs outline-none text-white placeholder-zinc-650 font-mono"
               />
               <button 
                 onClick={() => setCommandMenuOpen(false)}
@@ -591,7 +591,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Command Feedback status banner if triggered */}
             {commandFeedback && (
-              <div className="bg-emerald-500/10 border-b border-emerald-500/20 px-4 py-2 text-emerald-400 font-bold font-mono text-[10px] flex items-center gap-2 animate-pulse">
+              <div className="bg-gold-500/10 border-b border-gold-500/20 px-4 py-2 text-gold-400 font-bold font-mono text-[10px] flex items-center gap-2 animate-pulse">
                 <Sparkle className="w-4 h-4 shrink-0" />
                 <span>{commandFeedback}</span>
               </div>
@@ -622,11 +622,11 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                         <span className="text-[10px] uppercase font-bold text-zinc-500 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-850 font-mono">
                           {cmd.category}
                         </span>
-                        <span className="text-zinc-200 font-sans group-hover:text-emerald-400 transition-colors">
+                        <span className="text-zinc-200 font-sans group-hover:text-gold-400 transition-colors">
                           {cmd.name}
                         </span>
                       </div>
-                      <ArrowRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 transition-colors group-hover:translate-x-0.5" />
+                      <ArrowRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-gold-400 transition-colors group-hover:translate-x-0.5" />
                     </div>
                   ))
                 )}
@@ -645,11 +645,11 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       {/* Quick Invite Staff Modal */}
       {showQuickInviteModal && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleQuickInviteSubmit} className="bg-zinc-950 border border-zinc-850 p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans text-right" dir="rtl">
-            <div className="flex justify-between items-center border-b border-zinc-850 pb-3">
+          <form onSubmit={handleQuickInviteSubmit} className="bg-[#0d0d16] border border-white/5 p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans text-right card-luxury shadow-gold-md" dir="rtl">
+            <div className="flex justify-between items-center border-b border-white/5 pb-3">
               <div>
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <UserPlus className="w-4 h-4 text-emerald-400" /> دعوة / إضافة موظف جديد لـ HealthOS
+                <h3 className="text-sm font-bold text-white flex items-center gap-2 font-display text-gold-gradient">
+                  <UserPlus className="w-4 h-4 text-gold-400" /> دعوة / إضافة موظف جديد لـ HealthOS
                 </h3>
                 <p className="text-[11px] text-zinc-400 mt-0.5">يمكن للموظف استخدام البريد وكلمة المرور للدخول المباشر دون كود تفعيل.</p>
               </div>
@@ -668,7 +668,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   value={quickInviteForm.name}
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, name: e.target.value })}
                   placeholder="د. محمد السعيد"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none focus:border-emerald-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none focus:border-gold-500"
                 />
               </div>
 
@@ -681,7 +681,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, email: e.target.value })}
                   placeholder="m.alsaeed@healthos.io"
                   dir="ltr"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none focus:border-emerald-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none focus:border-gold-500"
                 />
               </div>
 
@@ -690,13 +690,13 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                 <select
                   value={quickInviteForm.role}
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, role: e.target.value as StaffRole })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none font-mono focus:border-emerald-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none font-mono focus:border-gold-500"
                 >
-                  <option value="clinician">🩺 طبيب معالج (Clinician - Full EHR Access)</option>
-                  <option value="receptionist">📋 مسؤول استقبال (Receptionist - Appointments & Check-in)</option>
-                  <option value="lab_tech">🧪 فني مختبر (Lab Tech - CAD/CAM & STL)</option>
-                  <option value="admin">👑 مدير نظام (Clinic Admin)</option>
-                  <option value="auditor">🛡️ مراجع سلامة (HIPAA Auditor)</option>
+                  <option value="clinician" className="bg-zinc-950">🩺 طبيب معالج (Clinician - EHR Access)</option>
+                  <option value="receptionist" className="bg-zinc-950">📋 مسؤول استقبال (Receptionist - Scheduling)</option>
+                  <option value="lab_tech" className="bg-zinc-950">🧪 فني مختبر (Lab Tech - CAD/CAM & STL)</option>
+                  <option value="admin" className="bg-zinc-950">👑 مدير نظام (Clinic Admin)</option>
+                  <option value="auditor" className="bg-zinc-950">🛡️ مراجع سلامة (HIPAA Auditor)</option>
                 </select>
               </div>
 
@@ -707,12 +707,12 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   required
                   value={quickInviteForm.tempPassword}
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, tempPassword: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none focus:border-emerald-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none focus:border-gold-500"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 border-t border-zinc-855 pt-3">
+            <div className="flex justify-end gap-2 border-t border-white/5 pt-3">
               <button
                 type="button"
                 onClick={() => setShowQuickInviteModal(false)}
@@ -722,7 +722,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/20"
+                className="px-5 py-2 rounded-xl bg-gold-500 hover:bg-gold-400 text-zinc-950 font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-gold-sm"
               >
                 إرسال الدعوة واعتماد الحساب
               </button>

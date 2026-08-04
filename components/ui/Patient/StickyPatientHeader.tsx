@@ -25,25 +25,25 @@ export default function StickyPatientHeader({
   const allergiesCount = activePatient.allergies?.length || 0;
 
   return (
-    <div className="sticky top-0 z-40 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-3 shadow-lg shadow-black/45">
+    <div className="sticky top-0 z-40 bg-[#07070c]/70 backdrop-blur-xl border-b border-white/5 px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-3 shadow-lg shadow-black/45 relative overflow-hidden header-shimmer">
       {/* Left Back Arrow and Core Demographics */}
       <div className="flex items-center gap-3 shrink-0">
         <button
           onClick={onBack}
-          className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-all active:scale-95"
+          className="p-1.5 rounded-lg bg-[#0d0d16] hover:bg-[#131320] border border-white/5 text-zinc-400 hover:text-white transition-all active:scale-95"
           title={t('backToDirectory')}
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-4 h-4 text-gold-400" />
         </button>
         <div className="flex flex-col text-left">
           <div className="flex items-center gap-2">
-            <h2 className="text-sm sm:text-base font-bold text-white tracking-tight">{activePatient.name}</h2>
-            <span className="text-[9px] font-mono bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-400">
+            <h2 className="text-sm sm:text-base font-bold text-white tracking-tight font-display text-gold-gradient">{activePatient.name}</h2>
+            <span className="text-[9px] font-mono bg-[#0d0d16] border border-white/5 px-2 py-0.5 rounded text-zinc-400">
               {activePatient.id}
             </span>
             <span className={`px-2 py-0.5 rounded-full text-[8px] font-mono uppercase font-semibold border hidden sm:inline-block ${
               activePatient.status === 'Completed'
-                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                ? 'bg-gold-500/10 text-gold-400 border-gold-500/20 shadow-gold-glow'
                 : 'bg-purple-500/10 text-purple-400 border-purple-500/20'
             }`}>
               {activePatient.status}
@@ -79,20 +79,20 @@ export default function StickyPatientHeader({
 
       {/* Right Dynamic Invoices, Scheduler, and Provider */}
       <div className="flex items-center gap-4 text-xs font-mono shrink-0 ml-auto sm:ml-0 text-left">
-        <div className="hidden lg:block border-l border-zinc-900 pl-4">
+        <div className="hidden lg:block border-l border-white/5 pl-4">
           <span className="text-[9px] text-zinc-500 block uppercase">{t('assignedDoctor')}</span>
           <span className="text-zinc-300 flex items-center gap-1">
-            <User className="w-3 h-3 text-emerald-400" /> {assignedDoctor || activePatient.primaryDoctor}
+            <User className="w-3 h-3 text-gold-400" /> {assignedDoctor || activePatient.primaryDoctor}
           </span>
         </div>
-        <div className="hidden md:block border-l border-zinc-900 pl-4">
+        <div className="hidden md:block border-l border-white/5 pl-4">
           <span className="text-[9px] text-zinc-500 block uppercase">{t('todayAppointment')}</span>
           <span className="text-zinc-300 flex items-center gap-1">
             <Activity className="w-3 h-3 text-purple-400" />
             <span className="truncate max-w-[150px]">{todayAppointment === 'Not scheduled' ? t('none') : todayAppointment}</span>
           </span>
         </div>
-        <div className="border-l border-zinc-900 pl-4">
+        <div className="border-l border-white/5 pl-4">
           <span className="text-[9px] text-zinc-500 block uppercase">{t('outstanding')}</span>
           <span className={`font-bold ${outstandingBalance > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
             ${outstandingBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
