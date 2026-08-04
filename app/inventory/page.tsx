@@ -2,12 +2,14 @@ export const dynamic = 'force-dynamic';
 import { createClient } from '@/utils/supabase/server';
 import { getUser } from '@/utils/supabase/queries';
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import DashboardShell from '@/components/ui/DashboardShell';
 import InventoryWorkspace from '@/components/ui/InventoryWorkspace';
 
 export default async function InventoryPage() {
   const supabase = createClient();
   const user = await getUser(supabase);
+  const tInv = await getTranslations('InventoryWorkspace');
 
   if (!user) {
     return redirect('/signin');
@@ -120,8 +122,8 @@ export default async function InventoryPage() {
     <DashboardShell user={user}>
       <div className="space-y-6 animate-fade-in">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl">
-            Inventory & Procurement Operations
+          <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl font-sans">
+            {tInv('headerTitle')}
           </h2>
           <p className="mt-1 text-zinc-400 text-sm">
             Oversee pharmaceutical drug registrations, cold chain logistics, automated supplier reorders, and stock movement ledger audits.

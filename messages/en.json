@@ -227,6 +227,123 @@
       "title": "Security, Password Rules & Immutable Audit Trail"
     }
   },
+  "LaboratoryWorkspace": {
+    "headerTitle": "Digital Dental Laboratory & CAD/CAM Production",
+    "status": "Lab Status: Synced with 3D Milling Nodes",
+    "tabs": {
+      "kanban": "1. Case Fabrication Pipeline",
+      "equipment": "2. CAD/CAM Milling Units",
+      "analytics": "3. Milling Throughput",
+      "materials": "4. Zirconia & E.max Stocks",
+      "orders": "5. Maintenance & Spares"
+    }
+  },
+  "InventoryWorkspace": {
+    "headerTitle": "Medical Inventory & Supply Operations",
+    "status": "Inventory Status: Auto Re-order Active",
+    "tabs": {
+      "catalog": "1. Material & SKU Catalog",
+      "purchase": "2. Purchase & Supply Orders",
+      "suppliers": "3. Vendors & Manufacturers",
+      "expiry": "4. Expiry & Waste Control",
+      "audits": "5. Periodic Stock Audits"
+    }
+  },
+  "ImagingWorkspace": {
+    "headerTitle": "Imaging Workspace & Interactive 3D PACS Viewer",
+    "status": "DICOM Network: Stream Linked",
+    "tabs": {
+      "viewer": "1. Interactive 3D PACS Viewer",
+      "studies": "2. Patient Imaging Archive",
+      "aiDiagnostic": "3. AI Nerve & Caries Trace",
+      "export": "4. Export Report"
+    }
+  },
+  "AnalyticsWorkspace": {
+    "headerTitle": "Strategic Analytics & Clinical Telemetry",
+    "status": "Analytics Engine: Connected Real-time",
+    "tabs": {
+      "overview": "1. Financial & Operational KPIs",
+      "doctors": "2. Provider Output & Utilization",
+      "clinical": "3. Implant & Case Success Rate",
+      "forecasting": "4. AI Revenue Forecasting"
+    }
+  },
+  "CommunicationWorkspace": {
+    "headerTitle": "Patient Outreach & Direct WhatsApp Desk",
+    "status": "Gateway Status: Connected (SMS / WhatsApp / Email)",
+    "tabs": {
+      "inbox": "1. Unified Conversations",
+      "whatsapp": "2. Instant WhatsApp Desk",
+      "campaigns": "3. Outbound Follow-ups",
+      "referrals": "4. Medical Referral Network"
+    }
+  },
+  "AutomationsWorkspace": {
+    "headerTitle": "Workflow Automation Engine & Rules",
+    "status": "Automation Engine: 12 Workflows Active",
+    "tabs": {
+      "workflows": "1. Active Workflows",
+      "triggers": "2. Event Trigger Library",
+      "logs": "3. Dispatch Execution Trail"
+    }
+  },
+  "DocumentWorkspace": {
+    "headerTitle": "Document Hub & Electronic Prescriptions",
+    "status": "Document Archive: AES-256 Encrypted",
+    "tabs": {
+      "templates": "1. Prescription Templates",
+      "prescriptions": "2. Electronic Prescriptions",
+      "consents": "3. Patient Consent Forms",
+      "archive": "4. Signed Document Repository"
+    }
+  },
+  "IntegrationsWorkspace": {
+    "headerTitle": "External Integrations & API Connectors",
+    "status": "External Gateway: 8 Connectors Operational",
+    "tabs": {
+      "insurance": "1. Payer EDI Gateways",
+      "payments": "2. Merchant Terminals",
+      "cloud": "3. Cloud Storage & Archives"
+    }
+  },
+  "TasksWorkspace": {
+    "headerTitle": "Clinical Task Management & To-Do Hub",
+    "status": "Task Desk: Synced Real-time",
+    "tabs": {
+      "kanban": "1. Task Board (Kanban)",
+      "myTasks": "2. My Daily Tasks",
+      "delegated": "3. Delegated Staff Tasks"
+    }
+  },
+  "NotificationsWorkspace": {
+    "headerTitle": "Real-time Notification Center",
+    "status": "Broadcast Channel: Connected",
+    "tabs": {
+      "all": "1. All Notifications",
+      "urgent": "2. Urgent Flags",
+      "clinical": "3. Clinical Alerts",
+      "billing": "4. Financial Alerts"
+    }
+  },
+  "HelpWorkspace": {
+    "headerTitle": "Help Center, Knowledgebase & Support",
+    "status": "Support Portal: 24/7 Available",
+    "tabs": {
+      "faq": "1. FAQ & Troubleshooting",
+      "guides": "2. System User Guides",
+      "tickets": "3. Support Ticket Desk"
+    }
+  },
+  "PlatformWorkspace": {
+    "headerTitle": "Multi-Tenant Platform Control Console",
+    "status": "Platform Status: All Nodes Operational",
+    "tabs": {
+      "nodes": "1. Tenant Nodes & Workspaces",
+      "telemetry": "2. Telemetry Metrics",
+      "updates": "3. System Release Trail"
+    }
+  },
   "Navigation": {
     "dashboard": "Dashboard",
     "patients": "Patients",
