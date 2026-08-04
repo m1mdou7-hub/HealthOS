@@ -121,58 +121,58 @@ interface CustomAnnouncement {
 
 // --- CORE REALISTIC MOCK DATA ---
 const INITIAL_CLINICS: ClinicHub[] = [
-  { id: 'C-01', name: 'HealthOS Main Campus', location: '742 Evergreen Terrace, Springfield', manager: 'Dr. Catherine Avery', doctors: 12, patients: 1420, rooms: 8, hours: '08:00 - 20:00', status: 'Active' },
-  { id: 'C-02', name: 'North Ward Urgent Care', location: '101 Pine Avenue, Metro City', manager: 'Marcus Sterling', doctors: 6, patients: 850, rooms: 4, hours: '24/7 Operations', status: 'Active' },
-  { id: 'C-03', name: 'Westside Pediatric Dentistry', location: '422 Maple Street, Riverdale', manager: 'Selina Kyle', doctors: 4, patients: 512, rooms: 3, hours: '09:00 - 17:00', status: 'Active' },
-  { id: 'C-04', name: 'Eastside Surgical Hub', location: '800 Broad Way, Gotham', manager: 'Lucius Fox', doctors: 8, patients: 940, rooms: 6, hours: '07:00 - 19:00', status: 'Maintenance' },
+  { id: 'C-01', name: 'مجمع هيلث أو إس الرئيسي للأسنان', location: 'طريق الملك فهد، الرياض', manager: 'د. كاترين أفيري', doctors: 12, patients: 1420, rooms: 8, hours: '08:00 - 20:00', status: 'Active' },
+  { id: 'C-02', name: 'مركز الرعاية الطارئة بالشمال', location: 'طريق الأمير سلطان، جدة', manager: 'ماركوس ستيرلينغ', doctors: 6, patients: 850, rooms: 4, hours: 'عمليات 24/7', status: 'Active' },
+  { id: 'C-03', name: 'مركز طب أسنان الأطفال والغرب', location: 'شارع الملك عبد الله، الخبر', manager: 'سيلينا كاين', doctors: 4, patients: 512, rooms: 3, hours: '09:00 - 17:00', status: 'Active' },
+  { id: 'C-04', name: 'مركز الجراحة والاستعاضة الشرقية', location: 'طريق الكورنيش، الدمام', manager: 'لوسيوس فوكس', doctors: 8, patients: 940, rooms: 6, hours: '07:00 - 19:00', status: 'Maintenance' },
 ];
 
 const INITIAL_USERS: OrgUser[] = [
-  { id: 'U-101', name: 'Dr. Catherine Avery', role: 'Owner', email: 'catherine.avery@healthos-group.com', clinic: 'HealthOS Main Campus', status: 'Active', avatarColor: 'from-emerald-500 to-teal-600', phone: '+1 (555) 102-3920' },
-  { id: 'U-102', name: 'Dr. Bruce Wayne', role: 'Doctor', email: 'b.wayne@healthos-group.com', clinic: 'Eastside Surgical Hub', status: 'Active', avatarColor: 'from-slate-700 to-zinc-900', phone: '+1 (555) 902-1244' },
-  { id: 'U-103', name: 'Marcus Sterling', role: 'Lab Technician', email: 'm.sterling@healthos-group.com', clinic: 'HealthOS Main Campus', status: 'Active', avatarColor: 'from-amber-500 to-rose-600', phone: '+1 (555) 482-1922' },
-  { id: 'U-104', name: 'Lucius Fox', role: 'Administrator', email: 'l.fox@healthos-group.com', clinic: 'Eastside Surgical Hub', status: 'Active', avatarColor: 'from-blue-600 to-indigo-700', phone: '+1 (555) 302-8854' },
-  { id: 'U-105', name: 'Selina Kyle', role: 'Manager', email: 's.kyle@healthos-group.com', clinic: 'Westside Pediatric Dentistry', status: 'Active', avatarColor: 'from-purple-600 to-fuchsia-700', phone: '+1 (555) 120-4493' },
-  { id: 'U-106', name: 'Anya Chalotra', role: 'Assistant', email: 'a.chalotra@healthos-group.com', clinic: 'North Ward Urgent Care', status: 'Active', avatarColor: 'from-pink-500 to-rose-600', phone: '+1 (555) 882-9411' },
-  { id: 'U-107', name: 'Dr. Elena Rostova', role: 'Doctor', email: 'e.rostova@healthos-group.com', clinic: 'Westside Pediatric Dentistry', status: 'Active', avatarColor: 'from-red-500 to-orange-600', phone: '+1 (555) 441-2902' },
-  { id: 'U-108', name: 'Pamela Isley', role: 'Receptionist', email: 'p.isley@healthos-group.com', clinic: 'North Ward Urgent Care', status: 'Pending', avatarColor: 'from-green-500 to-emerald-600', phone: '+1 (555) 773-1945' },
-  { id: 'U-109', name: 'Dr. Robert Carter', role: 'Doctor', email: 'r.carter@healthos-group.com', clinic: 'North Ward Urgent Care', status: 'Active', avatarColor: 'from-cyan-500 to-blue-600', phone: '+1 (555) 832-4410' },
-  { id: 'U-110', name: 'Harley Quinn', role: 'Assistant', email: 'h.quinn@healthos-group.com', clinic: 'HealthOS Main Campus', status: 'Inactive', avatarColor: 'from-rose-500 to-red-700', phone: '+1 (555) 293-1110' },
+  { id: 'U-101', name: 'د. كاترين أفيري', role: 'Owner', email: 'catherine.avery@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Active', avatarColor: 'from-emerald-500 to-teal-600', phone: '+966 50 102 3920' },
+  { id: 'U-102', name: 'د. بروس واين', role: 'Doctor', email: 'b.wayne@healthos-group.com', clinic: 'مركز الجراحة والاستعاضة الشرقية', status: 'Active', avatarColor: 'from-slate-700 to-zinc-900', phone: '+966 55 902 1244' },
+  { id: 'U-103', name: 'ماركوس ستيرلينغ', role: 'Lab Technician', email: 'm.sterling@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Active', avatarColor: 'from-amber-500 to-rose-600', phone: '+966 54 482 1922' },
+  { id: 'U-104', name: 'لوسيوس فوكس', role: 'Administrator', email: 'l.fox@healthos-group.com', clinic: 'مركز الجراحة والاستعاضة الشرقية', status: 'Active', avatarColor: 'from-blue-600 to-indigo-700', phone: '+966 56 302 8854' },
+  { id: 'U-105', name: 'سيلينا كاين', role: 'Manager', email: 's.kyle@healthos-group.com', clinic: 'مركز طب أسنان الأطفال والغرب', status: 'Active', avatarColor: 'from-purple-600 to-fuchsia-700', phone: '+966 50 120 4493' },
+  { id: 'U-106', name: 'آنيا تشالوترا', role: 'Assistant', email: 'a.chalotra@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Active', avatarColor: 'from-pink-500 to-rose-600', phone: '+966 53 882 9411' },
+  { id: 'U-107', name: 'د. إلينا روستوفا', role: 'Doctor', email: 'e.rostova@healthos-group.com', clinic: 'مركز طب أسنان الأطفال والغرب', status: 'Active', avatarColor: 'from-red-500 to-orange-600', phone: '+966 50 441 2902' },
+  { id: 'U-108', name: 'باميلا إيسلي', role: 'Receptionist', email: 'p.isley@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Pending', avatarColor: 'from-green-500 to-emerald-600', phone: '+966 55 773 1945' },
+  { id: 'U-109', name: 'د. روبرت كارتر', role: 'Doctor', email: 'r.carter@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Active', avatarColor: 'from-cyan-500 to-blue-600', phone: '+966 50 832 4410' },
+  { id: 'U-110', name: 'هارلي كوين', role: 'Assistant', email: 'h.quinn@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Inactive', avatarColor: 'from-rose-500 to-red-700', phone: '+966 54 293 1110' },
 ];
 
 const INITIAL_DEPARTMENTS = [
-  { name: 'General Dentistry', head: 'Dr. Robert Carter', staffCount: 14, rooms: 'A1 - A4', code: 'GEN-DENT' },
-  { name: 'Prosthodontics', head: 'Dr. Catherine Avery', staffCount: 8, rooms: 'B1 - B3', code: 'PROSTH' },
-  { name: 'Implantology', head: 'Dr. Bruce Wayne', staffCount: 6, rooms: 'C1 - C2', code: 'IMPL' },
-  { name: 'Orthodontics', head: 'Dr. Elena Rostova', staffCount: 5, rooms: 'D1 - D2', code: 'ORTHO' },
-  { name: 'Endodontics', head: 'Dr. Catherine Avery', staffCount: 4, rooms: 'E1', code: 'ENDO' },
-  { name: 'Periodontics', head: 'Dr. Victor Fries', staffCount: 4, rooms: 'E2', code: 'PERIO' },
-  { name: 'Oral Surgery', head: 'Dr. Bruce Wayne', staffCount: 7, rooms: 'Surg-01', code: 'ORAL-SURG' },
-  { name: 'Hygiene', head: 'Selina Kyle', staffCount: 12, rooms: 'H1 - H6', code: 'HYG' },
+  { name: 'طب الأسنان العام', head: 'د. روبرت كارتر', staffCount: 14, rooms: 'أ1 - أ4', code: 'GEN-DENT' },
+  { name: 'الاستعاضة والتركيبات', head: 'د. كاترين أفيري', staffCount: 8, rooms: 'ب1 - ب3', code: 'PROSTH' },
+  { name: 'زراعة الأسنان', head: 'د. بروس واين', staffCount: 6, rooms: 'ج1 - ج2', code: 'IMPL' },
+  { name: 'تقويم الأسنان', head: 'د. إلينا روستوفا', staffCount: 5, rooms: 'د1 - د2', code: 'ORTHO' },
+  { name: 'علاج العصب والجذور', head: 'د. كاترين أفيري', staffCount: 4, rooms: 'هـ1', code: 'ENDO' },
+  { name: 'علاج اللثة والمحيط السني', head: 'د. فيكتور فريز', staffCount: 4, rooms: 'هـ2', code: 'PERIO' },
+  { name: 'جراحة الفم والفكين', head: 'د. بروس واين', staffCount: 7, rooms: 'جراحة-01', code: 'ORAL-SURG' },
+  { name: 'العناية وصحة الأسنان', head: 'سيلينا كاين', staffCount: 12, rooms: 'ص1 - ص6', code: 'HYG' },
 ];
 
 const INITIAL_TEAMS: TeamUnit[] = [
-  { id: 'T-01', name: 'Anterior Esthetics Special Unit', type: 'Clinical', members: ['Dr. Catherine Avery', 'Anya Chalotra', 'Dr. Elena Rostova'], assignedRooms: ['A1', 'A2', 'B1'], availability: '95% Weekdays', status: 'On Duty' },
-  { id: 'T-02', name: 'Complex Oral Reconstruction Team', type: 'Clinical', members: ['Dr. Bruce Wayne', 'Lucius Fox', 'Anya Chalotra'], assignedRooms: ['Surg-01', 'C1'], availability: '88% Dynamic', status: 'On Call' },
-  { id: 'T-03', name: 'CAD/CAM Precision Restoration Lab', type: 'Lab', members: ['Marcus Sterling', 'Anya Chalotra'], assignedRooms: ['Milling Chamber 1', '3D Lab'], availability: '100% Core Hours', status: 'On Duty' },
-  { id: 'T-04', name: 'Patient Coordination & Intake Desk', type: 'Administrative', members: ['Selina Kyle', 'Pamela Isley'], assignedRooms: ['Reception Main', 'Desk West'], availability: '92% Continuous', status: 'On Duty' },
+  { id: 'T-01', name: 'فريق التجميل السني والابتسامة', type: 'Clinical', members: ['د. كاترين أفيري', 'آنيا تشالوترا', 'د. إلينا روستوفا'], assignedRooms: ['أ1', 'أ2', 'ب1'], availability: '95% أيام الأسبوع', status: 'On Duty' },
+  { id: 'T-02', name: 'فريق الترميم وجراحة الفم المعقدة', type: 'Clinical', members: ['د. بروس واين', 'لوسيوس فوكس', 'آنيا تشالوترا'], assignedRooms: ['جراحة-01', 'ج1'], availability: '88% مناوبات حية', status: 'On Call' },
+  { id: 'T-03', name: 'مختبر الدقة والتصنيع CAD/CAM', type: 'Lab', members: ['ماركوس ستيرلينغ', 'آنيا تشالوترا'], assignedRooms: ['غرفة الخرط 1', 'مختبر 3D'], availability: '100% الساعات الأساسية', status: 'On Duty' },
+  { id: 'T-04', name: 'مكتب تنسيق واستقبال المرضى', type: 'Administrative', members: ['سيلينا كاين', 'باميلا إيسلي'], assignedRooms: ['الاستقبال الرئيسي', 'المكتب الغربي'], availability: '92% مستمر', status: 'On Duty' },
 ];
 
 const INITIAL_AUDITS: AuditLog[] = [
-  { id: 'LOG-449', timestamp: '2026-07-17 05:45:12', actor: 'Dr. Catherine Avery', role: 'Owner', action: 'Modified Treatment Plan #8829', module: 'Patient Records', status: 'Success', ipAddress: '192.168.1.14' },
-  { id: 'LOG-448', timestamp: '2026-07-17 05:33:02', actor: 'Anya Chalotra', role: 'Assistant', action: 'Accessed CBCT Maxilla DICOM files', module: 'Imaging', status: 'Success', ipAddress: '192.168.1.84' },
-  { id: 'LOG-447', timestamp: '2026-07-17 05:12:44', actor: 'Marcus Sterling', role: 'Lab Technician', action: 'Loaded Exocad margin line version v3.2', module: 'Laboratory', status: 'Success', ipAddress: '10.0.4.15' },
-  { id: 'LOG-446', timestamp: '2026-07-17 04:59:10', actor: 'Unknown Client', role: 'External REST API', action: 'Unauthorized access attempt to clinical logs', module: 'Auth', status: 'Denied', ipAddress: '185.122.9.44' },
-  { id: 'LOG-445', timestamp: '2026-07-17 04:22:15', actor: 'Lucius Fox', role: 'Administrator', action: 'Updated HIPAA Access Policy Matrix', module: 'System Admin', status: 'Success', ipAddress: '192.168.1.2' },
-  { id: 'LOG-444', timestamp: '2026-07-17 03:50:00', actor: 'AI Diagnosis Engine', role: 'AI Core', action: 'Generated multi-layer zirconia recommendation', module: 'AI Core', status: 'Success', ipAddress: 'Localhost' },
-  { id: 'LOG-443', timestamp: '2026-07-17 03:10:22', actor: 'Pamela Isley', role: 'Receptionist', action: 'Rescheduled Appointment #10492', module: 'Appointments', status: 'Success', ipAddress: '192.168.2.19' },
-  { id: 'LOG-442', timestamp: '2026-07-17 02:44:11', actor: 'Harley Quinn', role: 'Assistant', action: 'Attempted to export patient database', module: 'Patient Records', status: 'Warn', ipAddress: '192.168.1.92' },
+  { id: 'LOG-449', timestamp: '2026-07-17 05:45:12', actor: 'د. كاترين أفيري', role: 'مالك المنظمة', action: 'تعديل خطة العلاج السريرية #8829', module: 'Patient Records', status: 'Success', ipAddress: '192.168.1.14' },
+  { id: 'LOG-448', timestamp: '2026-07-17 05:33:02', actor: 'آنيا تشالوترا', role: 'مساعد طبيب', action: 'استعراض أشعة CBCT مقطعية للفك العلوي DICOM', module: 'Imaging', status: 'Success', ipAddress: '192.168.1.84' },
+  { id: 'LOG-447', timestamp: '2026-07-17 05:12:44', actor: 'ماركوس ستيرلينغ', role: 'فني مختبر', action: 'تحميل خطوط حدود الحواف Exocad v3.2', module: 'Laboratory', status: 'Success', ipAddress: '10.0.4.15' },
+  { id: 'LOG-446', timestamp: '2026-07-17 04:59:10', actor: 'عميل غير معروف', role: 'REST API خارجي', action: 'محاولة وصول غير مصرحة لسجلات السريرية', module: 'Auth', status: 'Denied', ipAddress: '185.122.9.44' },
+  { id: 'LOG-445', timestamp: '2026-07-17 04:22:15', actor: 'لوسيوس فوكس', role: 'مدير النظام', action: 'تحديث مصفوفة أمان وصلاحيات HIPAA', module: 'System Admin', status: 'Success', ipAddress: '192.168.1.2' },
+  { id: 'LOG-444', timestamp: '2026-07-17 03:50:00', actor: 'محرك التشخيص الذكي', role: 'ذكاء اصطناعي', action: 'توليد توصية لتركيبة زيركونيا متعددة الطبقات', module: 'AI Core', status: 'Success', ipAddress: 'المضيف المحلي' },
+  { id: 'LOG-443', timestamp: '2026-07-17 03:10:22', actor: 'باميلا إيسلي', role: 'مسؤول الاستقبال', action: 'إعادة جدولة الموعد الطبي #10492', module: 'Appointments', status: 'Success', ipAddress: '192.168.2.19' },
+  { id: 'LOG-442', timestamp: '2026-07-17 02:44:11', actor: 'هارلي كوين', role: 'مساعد طبيب', action: 'محاولة تصدير قاعدة بيانات المرضى', module: 'Patient Records', status: 'Warn', ipAddress: '192.168.1.92' },
 ];
 
 const INITIAL_ANNOUNCEMENTS: CustomAnnouncement[] = [
-  { id: 'A-01', title: 'HIPAA Annual Security Audit Scheduled', content: 'On-site external compliance audit on July 22, 2026. Ensure all workstations are configured to lock automatically after 3 minutes of inactivity.', type: 'Critical', date: '2026-07-16', author: 'Lucius Fox (Compliance Officer)', active: true },
-  { id: 'A-02', title: 'PACS Server Routine Optimization', content: 'Database index rebuild and imaging storage compression scheduled for July 20 at 02:00 UTC. Expect minor latency on STL imports during this time.', type: 'Maintenance', date: '2026-07-15', author: 'HealthOS Operations', active: true },
-  { id: 'A-03', title: 'Aesthetic veneers case training workshop', content: 'Dr. Catherine Avery will run a specialized masterclass on ultra-thin ceramic prep designs next Wednesday in the main campus conference hall.', type: 'Announcement', date: '2026-07-14', author: 'Dr. Catherine Avery', active: true },
+  { id: 'A-01', title: 'تدقيق الأمان والامتثال السنوي لمعايير HIPAA', content: 'تدقيق خارجي نشط للامتثال السريري. يرجى التأكد من قفل جميع أجهزة الكمبيوتر تلقائياً بعد 3 دقائق من عدم النشاط.', type: 'Critical', date: '2026-07-16', author: 'لوسيوس فوكس (مسؤول الامتثال)', active: true },
+  { id: 'A-02', title: 'صيانة وتحسين خوادم تصاوير الأشعة PACS', content: 'إعادة بناء كشافات قاعدة البيانات وضغط تخزين أجهزة الأشعة المقطعية. يتوقع تأخير طفيف عند استيراد ملفات STL.', type: 'Maintenance', date: '2026-07-15', author: 'فريق العمليات السحابية', active: true },
+  { id: 'A-03', title: 'ورشة عمل تدريبية لعدسات الأسنان وقشور E.max', content: 'ستقود د. كاترين أفيري ورشة عمل تخصصية متقدمة في تصميم وتحضير عدسات السيراميك الفائقة الرقة يوم الأربعاء القادم.', type: 'Announcement', date: '2026-07-14', author: 'د. كاترين أفيري', active: true },
 ];
 
 // --- CHARTS & TREND DATA ---
@@ -1386,84 +1386,86 @@ export default function OrganizationWorkspace() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
                       <div>
-                        <h3 className="text-base font-black text-white uppercase tracking-tight">Global Workspace Notices & Alerts</h3>
-                        <p className="text-xs text-zinc-500 font-mono">Publish critical warnings, maintenance schedules, or internal announcements to all staff.</p>
+                        <h3 className="text-base font-bold text-white uppercase tracking-tight font-sans">{tOrg('notices.headerTitle')}</h3>
+                        <p className="text-xs text-zinc-400 font-sans">{tOrg('notices.headerSubtitle')}</p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                       {/* Left publish form */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-3 h-[380px] flex flex-col justify-between">
+                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-3 h-[380px] flex flex-col justify-between font-sans">
                         <div className="space-y-1">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Draft Announcement</span>
-                          <p className="text-[10px] text-zinc-400 font-mono">Broadcasting pushes instant visual overlays to all authorized clinician browsers.</p>
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block">{tOrg('notices.draftTitle')}</span>
+                          <p className="text-[10px] text-zinc-400 font-sans">{tOrg('notices.draftDesc')}</p>
                         </div>
 
                         <form onSubmit={handleAddAnnouncement} className="space-y-3 flex-1 justify-center mt-3">
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Notification Title</label>
+                            <label className="text-[10px] font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.titleLabel')}</label>
                             <input
                               type="text"
                               value={newAnnouncementTitle}
                               onChange={(e) => setNewAnnouncementTitle(e.target.value)}
-                              placeholder="e.g. Server Maintenance Notice"
-                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
+                              placeholder={tOrg('notices.titlePlaceholder')}
+                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-sans placeholder:text-zinc-600"
                             />
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Notification Type</label>
+                            <label className="text-[10px] font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.typeLabel')}</label>
                             <select
                               value={newAnnouncementType}
                               onChange={(e: any) => setNewAnnouncementType(e.target.value)}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-zinc-300 font-mono"
+                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-zinc-300 font-sans"
                             >
-                              <option value="Announcement">Standard Announcement</option>
-                              <option value="Critical">Critical Threat / HIPAA</option>
-                              <option value="Maintenance">Scheduled Maintenance</option>
+                              <option value="Announcement">{tOrg('notices.types.standard')}</option>
+                              <option value="Critical">{tOrg('notices.types.critical')}</option>
+                              <option value="Maintenance">{tOrg('notices.types.maintenance')}</option>
                             </select>
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Announcement Body</label>
+                            <label className="text-[10px] font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.bodyLabel')}</label>
                             <textarea
                               value={newAnnouncementContent}
                               onChange={(e) => setNewAnnouncementContent(e.target.value)}
                               rows={3}
-                              placeholder="Write descriptive notification details..."
-                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600 resize-none"
+                              placeholder={tOrg('notices.bodyPlaceholder')}
+                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-sans placeholder:text-zinc-600 resize-none"
                             />
                           </div>
 
                           <button
                             type="submit"
-                            className="w-full py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-black uppercase font-mono tracking-wider transition-colors cursor-pointer"
+                            className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-extrabold uppercase font-sans tracking-wider transition-colors cursor-pointer"
                           >
-                            Broadcast Notice &rarr;
+                            {tOrg('notices.broadcastBtn')}
                           </button>
                         </form>
                       </div>
 
                       {/* Right active announcements list */}
-                      <div className="lg:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-2xl h-[380px] overflow-y-auto scrollbar-thin space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Live Workspace Notice board</span>
+                      <div className="lg:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-2xl h-[380px] overflow-y-auto scrollbar-thin space-y-3 font-sans">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block mb-2">{tOrg('notices.boardTitle')}</span>
                         <div className="space-y-2.5">
                           {announcements.map((item) => (
-                            <div key={item.id} className="p-4.5 bg-zinc-950 border border-zinc-900 rounded-xl space-y-2 relative group">
-                              <span className={`text-[8px] font-mono font-black px-2 py-0.5 rounded-full border absolute top-3 right-3 ${
+                            <div key={item.id} className="p-4.5 bg-zinc-950 border border-zinc-900 rounded-xl space-y-2 relative group font-sans">
+                              <span className={`text-[9px] font-sans font-bold px-2 py-0.5 rounded-full border absolute top-3 right-3 ${
                                 item.type === 'Critical' ? 'bg-rose-500/15 text-rose-400 border-rose-500/30' :
                                 item.type === 'Maintenance' ? 'bg-amber-500/15 text-amber-400 border-amber-500/30' :
                                 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
                               }`}>
-                                {item.type.toUpperCase()}
+                                {item.type === 'Critical' ? tOrg('notices.types.critical') :
+                                 item.type === 'Maintenance' ? tOrg('notices.types.maintenance') :
+                                 tOrg('notices.types.standard')}
                               </span>
-                              <div className="flex items-start gap-2.5">
+                              <div className="flex items-start gap-2.5 font-sans">
                                 <Bell className="w-4.5 h-4.5 mt-0.5 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
                                 <div className="space-y-1">
-                                  <h4 className="text-xs font-black text-white">{item.title}</h4>
-                                  <p className="text-[10px] text-zinc-400 leading-relaxed font-mono">{item.content}</p>
-                                  <p className="text-[8px] text-zinc-500 font-mono pt-1">
-                                    Published {item.date} by {item.author}
+                                  <h4 className="text-xs font-bold text-white font-sans">{item.title}</h4>
+                                  <p className="text-[11px] text-zinc-300 leading-relaxed font-sans">{item.content}</p>
+                                  <p className="text-[9px] text-zinc-500 font-sans pt-1">
+                                    {item.date} • {item.author}
                                   </p>
                                 </div>
                               </div>

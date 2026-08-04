@@ -122,11 +122,11 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
     if (!searchParams) return;
     const checkout = searchParams.get('checkout');
     if (checkout === 'success') {
-      triggerToast('Subscription upgraded! Your clinic workspace is now successfully running on the Enterprise Unlimited Plan.');
+      triggerToast(tSet('tabs.organization'));
     }
     const portal = searchParams.get('portal');
     if (portal === 'mock_success') {
-      triggerToast('Billing Portal settings loaded successfully.');
+      triggerToast(tSet('org.subscriptionTitle'));
     }
   }, [searchParams]);
 
@@ -146,7 +146,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
     setDepartments([...departments, newDep]);
     setNewDepName('');
     setNewDepCode('');
-    triggerToast(`Clinical Department "${newDep.name}" added to organization hierarchy.`);
+    triggerToast(`${tSet('org.hierarchyTitle')}: "${newDep.name}"`);
   };
 
   // Remove Department
@@ -154,7 +154,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
     const dep = departments.find(d => d.id === id);
     if (!dep) return;
     setDepartments(departments.filter(d => d.id !== id));
-    triggerToast(`Department "${dep.name}" removed.`);
+    triggerToast(`${dep.name}`);
   };
 
   const handleInviteStaff = (e: React.FormEvent) => {
@@ -169,9 +169,9 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
       setTeam(staffAuthService.getStaffMembers());
       setShowInviteModal(false);
       setInviteForm({ name: '', email: '', role: 'clinician', tempPassword: 'doctor123' });
-      triggerToast(`تمت إضافة ودعوة الموظف "${newMember.name}" بنجاح!`);
+      triggerToast(`${tSet('invite.submit')}: ${newMember.name}`);
     } catch (err: any) {
-      alert(err.message || 'تعذر إضافة الموظف.');
+      alert(err.message || tSet('org.staffDesc'));
     }
   };
 
@@ -231,8 +231,8 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
               <div className="flex justify-between items-center">
                 <div>
-                  <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">Clinical Hierarchy</span>
-                  <p className="text-[11px] text-zinc-500">Manage specialized clinical departments and staffing allotments.</p>
+                  <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">{tSet('org.hierarchyTitle')}</span>
+                  <p className="text-[11px] text-zinc-500">{tSet('org.hierarchyDesc')}</p>
                 </div>
               </div>
 
@@ -245,7 +245,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                         <h5 className="font-bold text-white text-[13px]">{dep.name}</h5>
                       </div>
                       <p className="text-[10px] text-zinc-500">
-                        Head: <span className="text-zinc-300">{dep.head}</span> • Staff Size: <span className="text-blue-400">{dep.activeStaff} operators</span>
+                        {tSet('org.head')}: <span className="text-zinc-300">{dep.head}</span> • {tSet('org.staffSize')}: <span className="text-blue-400">{dep.activeStaff}</span>
                       </p>
                     </div>
 
@@ -264,14 +264,14 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
               <form onSubmit={handleAddDept} className="grid grid-cols-1 md:grid-cols-4 gap-2.5 pt-2 border-t border-zinc-900 font-mono text-xs">
                 <input 
                   type="text" 
-                  placeholder="Dept Name (e.g. Endodontics)" 
+                  placeholder={tSet('org.deptNamePlaceholder')}
                   value={newDepName}
                   onChange={(e) => setNewDepName(e.target.value)}
                   className="md:col-span-2 bg-zinc-950 border border-zinc-850 p-2 text-white outline-none rounded-xl"
                 />
                 <input 
                   type="text" 
-                  placeholder="Code (e.g. ENDO)" 
+                  placeholder={tSet('org.deptCodePlaceholder')}
                   value={newDepCode}
                   onChange={(e) => setNewDepCode(e.target.value)}
                   maxLength={5}
@@ -281,7 +281,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                   type="submit"
                   className="bg-blue-600 hover:bg-blue-500 text-black font-bold p-2 rounded-xl text-center flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <Plus className="w-4 h-4" /> Add Dept
+                  <Plus className="w-4 h-4" /> {tSet('org.addDept')}
                 </button>
               </form>
             </div>
@@ -290,15 +290,15 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
               <div className="flex justify-between items-center">
                 <div>
-                  <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">إدارة واستدعاء كادر العيادة (Staff Seats & Credentials)</span>
-                  <p className="text-[11px] text-zinc-500 mt-0.5">يمكن للمدير إرسال دعوات وإضافة الموظفين بالبريد الإلكتروني للوصول السريع بدون مفتاح تفعيل.</p>
+                  <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">{tSet('org.staffTitle')}</span>
+                  <p className="text-[11px] text-zinc-500 mt-0.5">{tSet('org.staffDesc')}</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setShowInviteModal(true)}
                   className="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-lg shadow-emerald-500/10 cursor-pointer"
                 >
-                  <Plus className="w-4 h-4" /> دعوة / إضافة موظف جديد
+                  <Plus className="w-4 h-4" /> {tSet('org.inviteBtn')}
                 </button>
               </div>
 
@@ -326,24 +326,24 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
           {/* Sub Info panel */}
           <div className="space-y-4">
             <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4 font-mono text-xs">
-              <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Subscription Status</span>
+              <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">{tSet('org.subscriptionTitle')}</span>
               <div className="space-y-3.5">
                 <div className="p-3 bg-blue-950/20 border border-blue-900/30 rounded-xl">
-                  <p className="text-white font-extrabold text-sm">Enterprise Ultimate Plan</p>
-                  <p className="text-[11px] text-zinc-400 mt-0.5">Expires July 2027 • Standard HIPAA SLA</p>
+                  <p className="text-white font-extrabold text-sm">{tSet('org.enterprisePlan')}</p>
+                  <p className="text-[11px] text-zinc-400 mt-0.5">{tSet('org.planExpiry')}</p>
                 </div>
                 <div className="space-y-1 text-zinc-400">
                   <div className="flex justify-between">
-                    <span>Seat Licenses:</span>
-                    <span className="text-white font-bold">{team.length} of 15 seats</span>
+                    <span>{tSet('org.seatLicenses')}</span>
+                    <span className="text-white font-bold">{team.length} {tSet('org.seats')}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Multi-Clinic Hubs:</span>
-                    <span className="text-white font-bold">3 active clinics</span>
+                    <span>{tSet('org.multiClinic')}</span>
+                    <span className="text-white font-bold">{tSet('org.activeClinics')}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Support Desk:</span>
-                    <span className="text-emerald-400 font-bold">Dedicated 24/7 Account Mgr</span>
+                    <span>{tSet('org.supportDesk')}</span>
+                    <span className="text-emerald-400 font-bold">{tSet('org.dedicatedSupport')}</span>
                   </div>
                 </div>
               </div>
@@ -359,55 +359,55 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             <div className="flex justify-between items-center border-b border-zinc-850 pb-3">
               <div>
                 <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <User className="w-4 h-4 text-emerald-400" /> دعوة / إضافة موظف جديد لـ HealthOS
+                  <User className="w-4 h-4 text-emerald-400" /> {tSet('invite.title')}
                 </h3>
-                <p className="text-[11px] text-zinc-400 mt-0.5">سيتمكن الموظف من استخدام البريد وكلمة المرور للدخول المباشر.</p>
+                <p className="text-[11px] text-zinc-400 mt-0.5">{tSet('invite.subtitle')}</p>
               </div>
             </div>
 
             <div className="space-y-3">
               <div className="space-y-1">
-                <label className="text-zinc-300 font-semibold">اسم الموظف الكامل</label>
+                <label className="text-zinc-300 font-semibold">{tSet('invite.fullName')}</label>
                 <input
                   type="text"
                   required
                   value={inviteForm.name}
                   onChange={(e) => setInviteForm({ ...inviteForm, name: e.target.value })}
-                  placeholder="د. محمد السعيد"
+                  placeholder={tSet('invite.namePlaceholder')}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-zinc-300 font-semibold">البريد الإلكتروني</label>
+                <label className="text-zinc-300 font-semibold">{tSet('invite.email')}</label>
                 <input
                   type="email"
                   required
                   value={inviteForm.email}
                   onChange={(e) => setInviteForm({ ...inviteForm, email: e.target.value })}
-                  placeholder="m.alsaeed@healthos.io"
+                  placeholder={tSet('invite.emailPlaceholder')}
                   dir="ltr"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-zinc-300 font-semibold">الدور والصلاحية (Role)</label>
+                <label className="text-zinc-300 font-semibold">{tSet('invite.role')}</label>
                 <select
                   value={inviteForm.role}
                   onChange={(e) => setInviteForm({ ...inviteForm, role: e.target.value as StaffRole })}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none font-mono"
                 >
-                  <option value="clinician">🩺 طبيب معالج (Clinician - Full EHR Access)</option>
-                  <option value="receptionist">📋 مسؤول استقبال (Receptionist - Appointments & Check-in)</option>
-                  <option value="lab_tech">🧪 فني مختبر (Lab Tech - CAD/CAM & STL)</option>
-                  <option value="admin">👑 مدير نظام (Clinic Admin)</option>
-                  <option value="auditor">🛡️ مراجع سلامة (HIPAA Auditor)</option>
+                  <option value="clinician">🩺 {tSet('invite.roleClinician')}</option>
+                  <option value="receptionist">📋 {tSet('invite.roleReceptionist')}</option>
+                  <option value="lab_tech">🧪 {tSet('invite.roleLabTech')}</option>
+                  <option value="admin">👑 {tSet('invite.roleAdmin')}</option>
+                  <option value="auditor">🛡️ {tSet('invite.roleAuditor')}</option>
                 </select>
               </div>
 
               <div className="space-y-1">
-                <label className="text-zinc-300 font-semibold">كلمة المرور المبدئية</label>
+                <label className="text-zinc-300 font-semibold">{tSet('invite.tempPassword')}</label>
                 <input
                   type="text"
                   required
@@ -424,13 +424,13 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                 onClick={() => setShowInviteModal(false)}
                 className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 font-semibold text-xs"
               >
-                إلغاء
+                {tSet('invite.cancel')}
               </button>
               <button
                 type="submit"
                 className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/20"
               >
-                إرسال الدعوة واعتماد الحساب
+                {tSet('invite.submit')}
               </button>
             </div>
           </form>
@@ -451,38 +451,38 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
               
               {/* App defaults settings */}
               <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
-                <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">Default Appointment Parameters</span>
+                <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">{tSet('appConfig.appointmentTitle')}</span>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="text-zinc-500">Normal Slot Duration</label>
+                      <label className="text-zinc-500">{tSet('appConfig.slotDuration')}</label>
                       <select 
                         value={slotDuration} 
                         onChange={(e) => setSlotDuration(e.target.value)}
                         className="w-full bg-zinc-950 border border-zinc-850 p-2 rounded-xl text-white outline-none"
                       >
-                        <option value="15">15 Minutes</option>
-                        <option value="30">30 Minutes</option>
-                        <option value="45">45 Minutes</option>
-                        <option value="60">60 Minutes</option>
+                        <option value="15">15 min</option>
+                        <option value="30">30 min</option>
+                        <option value="45">45 min</option>
+                        <option value="60">60 min</option>
                       </select>
                     </div>
                     <div className="space-y-1">
-                      <label className="text-zinc-500">Cancellation Period</label>
+                      <label className="text-zinc-500">{tSet('appConfig.cancellationPeriod')}</label>
                       <select 
                         className="w-full bg-zinc-950 border border-zinc-850 p-2 rounded-xl text-white outline-none"
                       >
-                        <option>24 Hours Before</option>
-                        <option>48 Hours Before</option>
-                        <option>Always Allowed</option>
+                        <option>{tSet('appConfig.cancel24h')}</option>
+                        <option>{tSet('appConfig.cancel48h')}</option>
+                        <option>{tSet('appConfig.cancelAlways')}</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between p-3 bg-zinc-950 border border-zinc-850 rounded-xl">
                     <div>
-                      <p className="text-white font-bold">Allow Immediate Patient Cancellations</p>
-                      <p className="text-[10px] text-zinc-500">If toggled, outpatients can withdraw in-app without admin fee rules.</p>
+                      <p className="text-white font-bold">{tSet('appConfig.allowCancel')}</p>
+                      <p className="text-[10px] text-zinc-500">{tSet('appConfig.allowCancelDesc')}</p>
                     </div>
                     <input 
                       type="checkbox" 
@@ -498,12 +498,12 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
               <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-amber-400" />
-                  <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">AI Core / Gemini LLM Defaults</span>
+                  <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">{tSet('appConfig.aiTitle')}</span>
                 </div>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="text-zinc-500">Primary Model Hub</label>
+                      <label className="text-zinc-500">{tSet('appConfig.primaryModel')}</label>
                       <select 
                         value={geminiModel} 
                         onChange={(e) => setGeminiModel(e.target.value)}
@@ -515,7 +515,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                       </select>
                     </div>
                     <div className="space-y-1">
-                      <label className="text-zinc-500">Creativity Temperature</label>
+                      <label className="text-zinc-500">{tSet('appConfig.temperature')}</label>
                       <select 
                         value={geminiTemp} 
                         onChange={(e) => setGeminiTemp(e.target.value)}
@@ -531,11 +531,11 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                   <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl space-y-1 text-[11px]">
                     <div className="flex justify-between items-center text-emerald-400 font-bold">
                       <span className="flex items-center gap-1">
-                        <Key className="w-3.5 h-3.5" /> API Key Environment Status
+                        <Key className="w-3.5 h-3.5" /> {tSet('appConfig.apiKeyStatus')}
                       </span>
-                      <span>Configured</span>
+                      <span>{tSet('appConfig.apiKeyConfigured')}</span>
                     </div>
-                    <p className="text-[10px] text-zinc-500">Using secure server-side proxy route: process.env.GEMINI_API_KEY. No client leakage.</p>
+                    <p className="text-[10px] text-zinc-500">{tSet('appConfig.apiKeyDesc')}</p>
                   </div>
                 </div>
               </div>
@@ -544,10 +544,10 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             {/* Language / Region Settings */}
             <div className="space-y-4">
               <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
-                <span className="text-xs font-bold text-white uppercase tracking-wider block">Regional Localization</span>
+                <span className="text-xs font-bold text-white uppercase tracking-wider block">{tSet('appConfig.regionTitle')}</span>
                 <div className="space-y-3">
                   <div className="space-y-1">
-                    <label className="text-zinc-500">Default Language</label>
+                    <label className="text-zinc-500">{tSet('appConfig.defaultLanguage')}</label>
                     <select 
                       value={selectedLanguage}
                       onChange={(e) => setSelectedLanguage(e.target.value)}
@@ -557,11 +557,12 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                       <option>English (UK)</option>
                       <option>Español (ES)</option>
                       <option>Français (FR)</option>
+                      <option>العربية (AR)</option>
                     </select>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-zinc-500">Clinic Timezone</label>
+                    <label className="text-zinc-500">{tSet('appConfig.timezone')}</label>
                     <select 
                       value={selectedTimezone}
                       onChange={(e) => setSelectedTimezone(e.target.value)}
@@ -570,15 +571,17 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                       <option value="America/Los_Angeles">America/Los_Angeles</option>
                       <option value="America/New_York">America/New_York</option>
                       <option value="UTC">UTC Greenwich Mean Time</option>
+                      <option value="Asia/Riyadh">Asia/Riyadh (KSA)</option>
+                      <option value="Asia/Dubai">Asia/Dubai (UAE)</option>
                     </select>
                   </div>
                 </div>
 
                 <button 
-                  onClick={() => triggerToast('Clinical parameters and regional localization saved successfully.')}
+                  onClick={() => triggerToast(tSet('appConfig.applyBtn'))}
                   className="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold p-2.5 rounded-xl text-center cursor-pointer transition-colors block mt-2"
                 >
-                  Apply System Bounds
+                  {tSet('appConfig.applyBtn')}
                 </button>
               </div>
             </div>
@@ -592,8 +595,8 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             {/* Active alert rules */}
             <div className="lg:col-span-2 space-y-4">
               <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
-                <span className="text-xs font-bold text-white uppercase tracking-wider block">Dynamic SMS/Email Templating</span>
-                <p className="text-[10px] text-zinc-500">Workspace macros auto-render during transactional patient appointments or dispatch triggers.</p>
+                <span className="text-xs font-bold text-white uppercase tracking-wider block">{tSet('notifications.templatesTitle')}</span>
+                <p className="text-[10px] text-zinc-500">{tSet('notifications.templatesDesc')}</p>
 
                 <div className="space-y-3">
                   {smsTemplates.map(t => (
@@ -612,15 +615,15 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             {/* Channels toggle */}
             <div className="space-y-4">
               <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
-                <span className="text-xs font-bold text-white uppercase tracking-wider block">Active Dispatch Channels</span>
+                <span className="text-xs font-bold text-white uppercase tracking-wider block">{tSet('notifications.channelsTitle')}</span>
                 
                 <div className="space-y-3.5">
                   <div className="flex justify-between items-center p-3 bg-zinc-950 border border-zinc-850 rounded-xl">
                     <div className="flex items-center gap-2">
                       <Mail className="w-4 h-4 text-emerald-400" />
                       <div>
-                        <p className="text-white font-bold">Email Dispatcher</p>
-                        <p className="text-[9px] text-zinc-500">SES SMTP Gateway</p>
+                        <p className="text-white font-bold">{tSet('notifications.emailChannel')}</p>
+                        <p className="text-[9px] text-zinc-500">{tSet('notifications.emailGateway')}</p>
                       </div>
                     </div>
                     <input 
@@ -635,8 +638,8 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     <div className="flex items-center gap-2">
                       <Smartphone className="w-4 h-4 text-blue-400" />
                       <div>
-                        <p className="text-white font-bold">SMS Outbox</p>
-                        <p className="text-[9px] text-zinc-500">Twilio Webhook Node</p>
+                        <p className="text-white font-bold">{tSet('notifications.smsChannel')}</p>
+                        <p className="text-[9px] text-zinc-500">{tSet('notifications.smsGateway')}</p>
                       </div>
                     </div>
                     <input 
@@ -651,8 +654,8 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     <div className="flex items-center gap-2">
                       <Activity className="w-4 h-4 text-purple-400" />
                       <div>
-                        <p className="text-white font-bold">WhatsApp Business</p>
-                        <p className="text-[9px] text-zinc-500">Meta Cloud API</p>
+                        <p className="text-white font-bold">{tSet('notifications.whatsappChannel')}</p>
+                        <p className="text-[9px] text-zinc-500">{tSet('notifications.whatsappGateway')}</p>
                       </div>
                     </div>
                     <input 
@@ -665,10 +668,10 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                 </div>
 
                 <button 
-                  onClick={() => triggerToast('Notification template states and channels applied.')}
+                  onClick={() => triggerToast(tSet('notifications.saveBtn'))}
                   className="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold p-2.5 rounded-xl text-center cursor-pointer transition-all block mt-2"
                 >
-                  Save Dispatch States
+                  {tSet('notifications.saveBtn')}
                 </button>
               </div>
             </div>
@@ -682,8 +685,8 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             {/* Audit Log Table */}
             <div className="lg:col-span-2 space-y-4">
               <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
-                <span className="text-xs font-bold text-white uppercase tracking-wider block">Real-time Workspace Audit Log</span>
-                <p className="text-[10px] text-zinc-500">Read-only immutable sequence ledger of all administrator actions within HealthOS.</p>
+                <span className="text-xs font-bold text-white uppercase tracking-wider block">{tSet('security.auditTitle')}</span>
+                <p className="text-[10px] text-zinc-500">{tSet('security.auditDesc')}</p>
 
                 <div className="space-y-2">
                   {AUDIT_LOGS.map((log, i) => (
@@ -693,7 +696,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                           <span className="text-[9px] text-zinc-500 font-bold">{log.timestamp}</span>
                           <span className="font-extrabold text-white">{log.action}</span>
                         </div>
-                        <p className="text-[10px] text-zinc-400 mt-0.5">Actor: {log.user} • Asset: {log.resource}</p>
+                        <p className="text-[10px] text-zinc-400 mt-0.5">{tSet('security.auditActor')}: {log.user} • {tSet('security.auditAsset')}: {log.resource}</p>
                       </div>
                       <span className="text-[10px] text-zinc-500 bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800 font-mono">
                         {log.ip}
@@ -707,26 +710,26 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             {/* Security preferences */}
             <div className="space-y-4">
               <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
-                <span className="text-xs font-bold text-white uppercase tracking-wider block">HIPAA & Security Compliance</span>
+                <span className="text-xs font-bold text-white uppercase tracking-wider block">{tSet('security.hipaaTitle')}</span>
                 
                 <div className="space-y-3 text-xs">
                   <div className="space-y-1">
-                    <label className="text-zinc-500">Password Policy</label>
+                    <label className="text-zinc-500">{tSet('security.passwordPolicy')}</label>
                     <select 
                       value={pwdComplexity} 
                       onChange={(e) => setPwdComplexity(e.target.value)}
                       className="w-full bg-zinc-950 border border-zinc-850 p-2 rounded-xl text-white outline-none"
                     >
-                      <option>Standard (8+ chars)</option>
-                      <option>High (12+ chars, Symbols, Case)</option>
-                      <option>Super-Max (16+ chars, rotated monthly)</option>
+                      <option>{tSet('security.pwdStandard')}</option>
+                      <option>{tSet('security.pwdHigh')}</option>
+                      <option>{tSet('security.pwdSuperMax')}</option>
                     </select>
                   </div>
 
                   <div className="flex items-center justify-between p-3 bg-zinc-950 border border-zinc-850 rounded-xl">
                     <div>
-                      <p className="text-white font-bold">Enforce Two-Factor (MFA)</p>
-                      <p className="text-[10px] text-zinc-500">Require TOTP token for clinical logins.</p>
+                      <p className="text-white font-bold">{tSet('security.enforceMFA')}</p>
+                      <p className="text-[10px] text-zinc-500">{tSet('security.enforceMFADesc')}</p>
                     </div>
                     <input 
                       type="checkbox" 
@@ -738,10 +741,10 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                 </div>
 
                 <button 
-                  onClick={() => triggerToast('Security policies updated. Audit logs synced.')}
+                  onClick={() => triggerToast(tSet('security.saveBtn'))}
                   className="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold p-2.5 rounded-xl text-center cursor-pointer transition-all block mt-2"
                 >
-                  Save Security Policies
+                  {tSet('security.saveBtn')}
                 </button>
               </div>
             </div>

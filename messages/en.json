@@ -39,7 +39,7 @@
     "workspace": "HealthOS Workspace",
     "pro": "PRO",
     "language": "Language",
-    "arabic": "العربية",
+    "arabic": "ط§ظ„ط¹ط±ط¨ظٹط©",
     "english": "English"
   },
   "Roles": {
@@ -56,7 +56,7 @@
     "headerTitle": "Organization Admin Control Center",
     "adminConsole": "ADMIN CONSOLE",
     "multiClinic": "MULTI-CLINIC",
-    "tenantDesc": "Enterprise Tenant ID: ORG-8820-X92 • Dedicated Secure Cloud Environment • Consolidated dashboard of subscription plan limits, clinic sites, user licenses, and storage allocations.",
+    "tenantDesc": "Enterprise Tenant ID: ORG-8820-X92 â€¢ Dedicated Secure Cloud Environment â€¢ Consolidated dashboard of subscription plan limits, clinic sites, user licenses, and storage allocations.",
     "hipaaStatus": "HIPAA Audit: COMPLIANT",
     "multiRegion": "Multi-Region Active",
     "nodesSynced": "All Nodes Synchronized",
@@ -83,6 +83,24 @@
       "teams": "Teams",
       "alerts": "Alerts",
       "archives": "Archives"
+    },
+    "notices": {
+      "headerTitle": "Global Workspace Notices & Alerts",
+      "headerSubtitle": "Publish critical warnings, maintenance schedules, or internal announcements to all staff.",
+      "draftTitle": "Draft Announcement",
+      "draftDesc": "Broadcasting pushes instant visual overlays to all authorized clinician browsers.",
+      "titleLabel": "Notification Title",
+      "titlePlaceholder": "e.g. Server Maintenance Notice",
+      "typeLabel": "Notification Type",
+      "types": {
+        "standard": "Standard Announcement",
+        "critical": "Critical Threat / HIPAA",
+        "maintenance": "Scheduled Maintenance"
+      },
+      "bodyLabel": "Announcement Body",
+      "bodyPlaceholder": "Write descriptive notification details...",
+      "broadcastBtn": "Broadcast Notice â‍”",
+      "boardTitle": "Live Workspace Notice Board"
     }
   },
   "DeveloperWorkspace": {
@@ -492,7 +510,7 @@
   },
   "DashboardV3": {
     "prosthodonticsNode": "Prosthodontics Dashboard Node",
-    "digitalDentistry": "HealthOS Central Node • Digital Dentistry Control Console",
+    "digitalDentistry": "HealthOS Central Node â€¢ Digital Dentistry Control Console",
     "active": "Active",
     "newConsultation": "New Consultation",
     "importStl": "Import STL",
@@ -773,5 +791,101 @@
     "lab_stl_empty": "No STL scan files compiled. Go to the Documents tab to upload one.",
     "lab_shade_picker": "Shade Selection",
     "lab_stages_track": "Stage Tracker"
+  },
+  "GlobalSettingsWorkspace": {
+    "headerTitle": "HealthOS Global Settings",
+    "headerSubtitle": "Manage organization, staff, notifications, and security controls across the platform.",
+    "nodeStatus": "Admin Node: Active",
+    "tabs": {
+      "organization": "Organization & Staff",
+      "profile": "Personal Credentials",
+      "appConfig": "App Configuration",
+      "notifications": "Alerts & Notifications",
+      "security": "Security & Audits"
+    },
+    "org": {
+      "hierarchyTitle": "Clinical Hierarchy",
+      "hierarchyDesc": "Manage specialized clinical departments and staffing allotments.",
+      "head": "Head",
+      "staffSize": "Staff Size",
+      "addDept": "Add Dept",
+      "deptNamePlaceholder": "Dept Name (e.g. Endodontics)",
+      "deptCodePlaceholder": "Code (e.g. ENDO)",
+      "staffTitle": "Staff Seats & Credentials",
+      "staffDesc": "Admin can send invites and add staff via email for direct access without an activation key.",
+      "inviteBtn": "Invite / Add New Staff",
+      "subscriptionTitle": "Subscription Status",
+      "enterprisePlan": "Enterprise Ultimate Plan",
+      "planExpiry": "Expires July 2027 • Standard HIPAA SLA",
+      "seatLicenses": "Seat Licenses:",
+      "seats": "of 15 seats",
+      "multiClinic": "Multi-Clinic Hubs:",
+      "activeClinics": "3 active clinics",
+      "supportDesk": "Support Desk:",
+      "dedicatedSupport": "Dedicated 24/7 Account Mgr"
+    },
+    "invite": {
+      "title": "Invite / Add New Staff to HealthOS",
+      "subtitle": "Staff can use email and password for direct login access.",
+      "fullName": "Full Name",
+      "namePlaceholder": "Dr. John Smith",
+      "email": "Email Address",
+      "emailPlaceholder": "j.smith@healthos.io",
+      "role": "Role & Permissions",
+      "roleClinician": "Clinician (Full EHR Access)",
+      "roleReceptionist": "Receptionist (Appointments & Check-in)",
+      "roleLabTech": "Lab Tech (CAD/CAM & STL)",
+      "roleAdmin": "Clinic Admin",
+      "roleAuditor": "HIPAA Auditor",
+      "tempPassword": "Temporary Password",
+      "cancel": "Cancel",
+      "submit": "Send Invite & Activate Account"
+    },
+    "appConfig": {
+      "appointmentTitle": "Default Appointment Parameters",
+      "slotDuration": "Normal Slot Duration",
+      "cancellationPeriod": "Cancellation Period",
+      "cancel24h": "24 Hours Before",
+      "cancel48h": "48 Hours Before",
+      "cancelAlways": "Always Allowed",
+      "allowCancel": "Allow Immediate Patient Cancellations",
+      "allowCancelDesc": "If toggled, outpatients can withdraw in-app without admin fee rules.",
+      "aiTitle": "AI Core / Gemini LLM Defaults",
+      "primaryModel": "Primary Model Hub",
+      "temperature": "Creativity Temperature",
+      "apiKeyStatus": "API Key Environment Status",
+      "apiKeyConfigured": "Configured",
+      "apiKeyDesc": "Using secure server-side proxy route: process.env.GEMINI_API_KEY. No client leakage.",
+      "regionTitle": "Regional Localization",
+      "defaultLanguage": "Default Language",
+      "timezone": "Clinic Timezone",
+      "applyBtn": "Apply System Bounds"
+    },
+    "notifications": {
+      "templatesTitle": "Dynamic SMS/Email Templating",
+      "templatesDesc": "Workspace macros auto-render during transactional patient appointments or dispatch triggers.",
+      "channelsTitle": "Active Dispatch Channels",
+      "emailChannel": "Email Dispatcher",
+      "emailGateway": "SES SMTP Gateway",
+      "smsChannel": "SMS Outbox",
+      "smsGateway": "Twilio Webhook Node",
+      "whatsappChannel": "WhatsApp Business",
+      "whatsappGateway": "Meta Cloud API",
+      "saveBtn": "Save Dispatch States"
+    },
+    "security": {
+      "auditTitle": "Real-time Workspace Audit Log",
+      "auditDesc": "Read-only immutable sequence ledger of all administrator actions within HealthOS.",
+      "auditActor": "Actor",
+      "auditAsset": "Asset",
+      "hipaaTitle": "HIPAA & Security Compliance",
+      "passwordPolicy": "Password Policy",
+      "pwdStandard": "Standard (8+ chars)",
+      "pwdHigh": "High (12+ chars, Symbols, Case)",
+      "pwdSuperMax": "Super-Max (16+ chars, rotated monthly)",
+      "enforceMFA": "Enforce Two-Factor (MFA)",
+      "enforceMFADesc": "Require TOTP token for clinical logins.",
+      "saveBtn": "Save Security Policies"
+    }
   }
 }
