@@ -432,296 +432,272 @@ export default function OrganizationWorkspace() {
   };
 
   return (
-    <div className="bg-zinc-950/90 border border-zinc-850/80 rounded-3xl overflow-hidden flex flex-col shadow-2xl h-[780px] font-sans antialiased text-zinc-100 relative backdrop-blur-2xl">
+    <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans">
       
-      {/* Background glow effects */}
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
-
-      {/* BRAND & HEADER STATUS BAR */}
-      <div className="bg-zinc-900/90 border-b border-zinc-850/80 px-6 py-4 flex items-center justify-between shrink-0 relative z-10 backdrop-blur-xl">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/5 border border-emerald-500/30 text-emerald-400 shadow-lg shadow-emerald-500/10">
-            <Building2 className="w-5 h-5" />
+      {/* HEADER BANNER */}
+      <div className="p-6 rounded-3xl bg-zinc-900/50 border border-zinc-850/80 shadow-xl backdrop-blur-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
+            <Building2 className="w-6 h-6" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-xs font-black uppercase tracking-wider text-white">HealthOS Portal Admin</h2>
-              <span className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[9px] font-mono font-black px-2.5 py-0.5 rounded-full shadow-sm">
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <h2 className="text-lg font-bold text-white tracking-tight">Organization Admin Control Center</h2>
+              <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold px-3 py-0.5 rounded-full">
                 ADMIN CONSOLE
               </span>
+              <span className="bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold px-3 py-0.5 rounded-full">
+                {brandColor.toUpperCase()} MULTI-CLINIC
+              </span>
             </div>
-            <p className="text-[10px] text-zinc-400 font-mono mt-0.5">
-              Enterprise Tenant ID: <span className="text-emerald-400 font-bold font-mono">ORG-8820-X92</span> • Dedicated Secure Cloud Environment
+            <p className="text-xs text-zinc-400 mt-1 font-sans">
+              Enterprise Tenant ID: <span className="text-emerald-400 font-semibold font-mono">ORG-8820-X92</span> • Dedicated Secure Cloud Environment • Consolidated dashboard of subscription plan limits, clinic sites, user licenses, and storage allocations.
             </p>
           </div>
         </div>
 
-        {/* FAST METRIC BANNER */}
-        <div className="hidden lg:flex items-center gap-4 bg-zinc-950/80 border border-zinc-800/80 px-4 py-2 rounded-2xl shadow-inner">
-          <div className="flex items-center gap-1.5 font-mono text-[10px]">
-            <Server className="w-3.5 h-3.5 text-zinc-400" />
-            <span className="text-zinc-400 font-bold">Plan:</span>
-            <span className="text-emerald-400 font-extrabold">{brandColor.toUpperCase()} MULTI-CLINIC</span>
+        <div className="flex items-center gap-3 shrink-0 flex-wrap">
+          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-medium">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <span>HIPAA Audit: <strong className="text-white">COMPLIANT</strong></span>
           </div>
-          <div className="h-4 w-[1px] bg-zinc-800" />
-          <div className="flex items-center gap-1.5 font-mono text-[10px]">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="text-zinc-400 font-bold">HIPAA Audit status:</span>
-            <span className="text-white font-semibold">COMPLIANT</span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 text-[10px] bg-zinc-900/90 border border-zinc-800 text-zinc-300 px-3.5 py-1.5 rounded-full font-mono font-bold shadow-sm">
-            <Globe className="w-3.5 h-3.5 text-emerald-400 animate-pulse" /> Multi-Region Active
+          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-medium">
+            <Globe className="w-4 h-4 text-emerald-400 animate-pulse" />
+            <span>Multi-Region Active</span>
           </div>
         </div>
       </div>
 
-      {/* DUAL WORKSPACE LAYOUT */}
-      <div className="flex-1 flex overflow-hidden relative z-10">
-        
-        {/* RESIZABLE ADMIN SIDEBAR */}
-        <div 
-          style={{ width: `${sidebarWidth}px` }}
-          className="bg-zinc-950/80 border-r border-zinc-900 flex flex-col shrink-0 overflow-hidden select-none backdrop-blur-md"
-        >
-          {/* SIDEBAR TITLE */}
-          <div className="p-4 border-b border-zinc-900 shrink-0">
-            <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-1">Tenant Submodules</span>
-            <p className="text-[10px] text-zinc-400 font-mono leading-relaxed">Platform control parameters:</p>
-          </div>
-
-          {/* LIST OF 11 WORKSPACES */}
-          <div className="flex-1 overflow-y-auto p-2.5 space-y-1.5 scrollbar-thin">
-            {[
-              { id: 'Overview', label: '1. Org Overview', icon: Layers, badge: 'Unified' },
-              { id: 'Clinics', label: '2. Clinic Hubs', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} OK` },
-              { id: 'Departments', label: '3. Departments', icon: Sliders, badge: `${departments.length} Units` },
-              { id: 'Users', label: '4. User Directory', icon: Users, badge: `${activeUsersCount} Active` },
-              { id: 'Permissions', label: '5. Roles & Security', icon: ShieldCheck, badge: 'Matrix' },
-              { id: 'Teams', label: '6. Clinic Teams', icon: UserCheck, badge: `${teams.length} Teams` },
-              { id: 'Audits', label: '7. Activity Audit', icon: History, badge: 'PCI Log' },
-              { id: 'Notifications', label: '8. Global Alerts', icon: Bell, badge: `${announcements.length} Alerts`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
-              { id: 'Security', label: '9. Security Core', icon: Lock, badge: `${securityScore}/100`, badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
-              { id: 'Settings', label: '10. Org Settings', icon: Settings2, badge: 'Branding' },
-              { id: 'Backup', label: '11. Disaster Recovery', icon: Database, badge: `${backups.length} Archives`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' }
-            ].map(item => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id as any)}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center justify-between border cursor-pointer ${
-                    isActive 
-                      ? 'bg-emerald-500 text-zinc-950 border-emerald-400 shadow-lg shadow-emerald-500/20' 
-                      : 'bg-zinc-900/40 text-zinc-400 border-zinc-850/60 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 shrink-0" />
-                    <span>{item.label}</span>
-                  </div>
-                  {item.badge && (
-                    <span className={`text-[8px] font-mono font-black px-1.5 py-0.5 rounded-md border ${
-                      item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-950 text-zinc-500 border-zinc-850')
-                    }`}>
-                      {item.badge}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* ACTIVE TENANT PROFILE DETAILS AT FOOTER */}
-          <div className="p-3 bg-zinc-950 border-t border-zinc-900 shrink-0 space-y-2">
-            <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Active Operator</span>
-            <div className="flex items-center gap-2.5 p-2 bg-zinc-900/90 border border-zinc-800 rounded-xl shadow-sm">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-md">
-                CA
-              </div>
-              <div className="min-w-0 flex-1">
-                <h5 className="text-[11px] font-bold text-white truncate">Dr. C. Avery</h5>
-                <p className="text-[9px] text-zinc-400 font-mono truncate">Role: System Owner</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* RESIZABLE DRAG BAR */}
-        <div 
-          onMouseDown={handleMouseDown}
-          className="w-1 bg-zinc-900 hover:bg-emerald-500/40 cursor-col-resize flex items-center justify-center shrink-0 transition-colors"
-        >
-          <div className="w-0.5 h-10 bg-zinc-800 rounded" />
-        </div>
-
-        {/* ADMIN WORKSPACE CONTAINER */}
-        <div className="flex-1 bg-zinc-950/60 flex flex-col overflow-hidden relative">
-          
-          <div className="flex-1 overflow-hidden p-6">
-            <AnimatePresence mode="wait">
-              
-              {/* ==================================================
-                  1. ORGANIZATION OVERVIEW
-                  ================================================== */}
-              {activeTab === 'Overview' && (
-                <WorkspaceTabPanel
-                  className="h-full flex flex-col justify-between"
-                >
-                  <div className="space-y-4">
-                    {/* Header */}
-                    <div className="border-b border-zinc-900 pb-2.5 flex justify-between items-center">
-                      <div>
-                        <h3 className="text-base font-black text-white uppercase tracking-tight">Organization Admin Control Center</h3>
-                        <p className="text-xs text-zinc-400 font-mono mt-0.5">Consolidated dashboard of subscription plan limits, clinic sites, user licenses, and storage allocations.</p>
-                      </div>
-                      <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-1 rounded-xl shadow-sm font-semibold">
-                        All Nodes Synchronized
-                      </span>
-                    </div>
-
-                    {/* Bento Box Stats */}
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                      <div className="p-3.5 bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 border border-zinc-850/80 rounded-2xl flex flex-col justify-between h-[98px] shadow-lg hover:border-zinc-800 transition-all">
-                        <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Organization ID</span>
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-sm font-bold text-white font-mono">ORG-8820-X92</span>
-                        </div>
-                        <p className="text-[10px] text-zinc-400 font-semibold truncate">{workspaceName}</p>
-                        <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                          <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full w-full shadow-sm shadow-emerald-500/50" />
-                        </div>
-                      </div>
-
-                      <div className="p-3.5 bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 border border-zinc-850/80 rounded-2xl flex flex-col justify-between h-[98px] shadow-lg hover:border-zinc-800 transition-all">
-                        <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Clinics & Rooms</span>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-black text-white font-mono">{totalClinics} Site{totalClinics > 1 ? 's' : ''}</span>
-                        </div>
-                        <p className="text-[10px] text-zinc-400">Total of 21 Clinical Suites active</p>
-                        <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                          <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full w-4/5 shadow-sm shadow-emerald-500/50" />
-                        </div>
-                      </div>
-
-                      <div className="p-3.5 bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 border border-zinc-850/80 rounded-2xl flex flex-col justify-between h-[98px] shadow-lg hover:border-zinc-800 transition-all">
-                        <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest font-mono">License Seats Seat usage</span>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-black text-white font-mono">122 / 150</span>
-                          <span className="text-[9px] text-emerald-400 font-mono font-bold">28 free</span>
-                        </div>
-                        <p className="text-[10px] text-zinc-400">81.3% subscription capacity</p>
-                        <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                          <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full w-[81.3%] shadow-sm shadow-emerald-500/50" />
-                        </div>
-                      </div>
-
-                      <div className="p-3.5 bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 border border-zinc-850/80 rounded-2xl flex flex-col justify-between h-[98px] shadow-lg hover:border-zinc-800 transition-all">
-                        <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Secure Cloud Storage</span>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-black text-white font-mono">1.2 / 5.0 TB</span>
-                          <span className="text-[9px] text-cyan-400 font-mono font-bold">24%</span>
-                        </div>
-                        <p className="text-[10px] text-zinc-400">Mainly PACS and STL Scan storage</p>
-                        <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                          <div className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full w-[24%] shadow-sm shadow-cyan-500/50" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Main stats layout */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[240px]">
-                      {/* Interactive License Utilization Chart */}
-                      <div className="p-4 bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 border border-zinc-850/80 rounded-2xl flex flex-col justify-between col-span-2 shadow-xl">
-                        <div className="flex justify-between items-center">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-mono">AI API Utilization Trend</span>
-                          <span className="text-[10px] font-mono text-emerald-400 font-semibold bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">Total processed this month: 42,650 calls</span>
-                        </div>
-                        <div className="h-[160px] w-full mt-2">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={AI_UTILIZATION_DATA}>
-                              <defs>
-                                <linearGradient id="callsGrad" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                                  <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                                </linearGradient>
-                                <linearGradient id="clinicalGrad" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3}/>
-                                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
-                                </linearGradient>
-                              </defs>
-                              <CartesianGrid strokeDasharray="3 3" stroke="#27272a" opacity={0.6} />
-                              <XAxis dataKey="date" stroke="#a1a1aa" style={{ fontSize: '10px' }} />
-                              <YAxis stroke="#a1a1aa" style={{ fontSize: '10px' }} />
-                              <Tooltip contentStyle={{ backgroundColor: '#09090b', borderColor: '#27272a', borderRadius: '12px', fontSize: '11px' }} />
-                              <Area type="monotone" dataKey="calls" stroke="#10b981" strokeWidth={2} fillOpacity={1} fill="url(#callsGrad)" name="Total AI Calls" />
-                              <Area type="monotone" dataKey="clinical" stroke="#8b5cf6" strokeWidth={2} fillOpacity={1} fill="url(#clinicalGrad)" name="Clinical AI" />
-                            </AreaChart>
-                          </ResponsiveContainer>
-                        </div>
-                      </div>
-
-                      {/* Quick action grid panel */}
-                      <div className="p-4 bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 border border-zinc-850/80 rounded-2xl flex flex-col justify-between shadow-xl">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-mono block mb-2">Platform Quick Actions</span>
-                        <div className="grid grid-cols-1 gap-2 flex-1 justify-center">
-                          <button 
-                            onClick={() => { setActiveTab('Users') }}
-                            className="w-full text-left p-2.5 bg-zinc-900/70 border border-zinc-800 hover:border-emerald-500/60 hover:bg-zinc-900 rounded-xl flex items-center gap-3 transition-all duration-200 text-xs font-bold font-mono cursor-pointer shadow-sm group"
-                          >
-                            <div className="p-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg group-hover:bg-emerald-500 group-hover:text-zinc-950 transition-colors">
-                              <Plus className="w-4 h-4" />
-                            </div>
-                            <div>
-                              <p className="text-white text-[11px] group-hover:text-emerald-400 transition-colors">Provision User Seat</p>
-                              <p className="text-[9px] text-zinc-400 font-normal">Configure core credential roles</p>
-                            </div>
-                          </button>
-
-                          <button 
-                            onClick={() => { setActiveTab('Permissions') }}
-                            className="w-full text-left p-2.5 bg-zinc-900/70 border border-zinc-800 hover:border-purple-500/60 hover:bg-zinc-900 rounded-xl flex items-center gap-3 transition-all duration-200 text-xs font-bold font-mono cursor-pointer shadow-sm group"
-                          >
-                            <div className="p-1.5 bg-purple-500/10 text-purple-400 rounded-lg group-hover:bg-purple-500 group-hover:text-zinc-950 transition-colors">
-                              <Sliders className="w-4 h-4" />
-                            </div>
-                            <div>
-                              <p className="text-white text-[11px] group-hover:text-purple-400 transition-colors">Audit Permission Matrix</p>
-                              <p className="text-[9px] text-zinc-400 font-normal">Adjust clinical access parameters</p>
-                            </div>
-                          </button>
-
-                          <button 
-                            onClick={() => { setActiveTab('Security') }}
-                            className="w-full text-left p-2.5 bg-zinc-900/70 border border-zinc-800 hover:border-rose-500/60 hover:bg-zinc-900 rounded-xl flex items-center gap-3 transition-all duration-200 text-xs font-bold font-mono cursor-pointer shadow-sm group"
-                          >
-                            <div className="p-1.5 bg-rose-500/10 text-rose-400 rounded-lg group-hover:bg-rose-500 group-hover:text-zinc-950 transition-colors">
-                              <Lock className="w-4 h-4" />
-                            </div>
-                            <div>
-                              <p className="text-white text-[11px] group-hover:text-rose-400 transition-colors">Trigger Security Scan</p>
-                              <p className="text-[9px] text-zinc-400 font-normal">Review HIPAA logs and 2FA compliance</p>
-                            </div>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* BOTTOM TELEMETRY BAR */}
-                  <div className="p-3.5 bg-zinc-900/40 border border-zinc-850/80 rounded-2xl flex justify-between items-center text-xs font-mono backdrop-blur-md shadow-inner">
-                    <span className="text-zinc-400 font-bold uppercase tracking-wider">Enterprise PACS Server State:</span>
-                    <span className="text-emerald-400 font-bold flex items-center gap-2 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Synchronized with US-East-1 AWS Cloud
-                    </span>
-                    <span className="text-zinc-400">Owner Contact: <span className="text-white font-bold">HealthOS Admin</span></span>
-                  </div>
-                </WorkspaceTabPanel>
+      {/* 11 SUBMODULES HORIZONTAL / GRID NAV TABS */}
+      <div className="bg-zinc-900/40 p-2 rounded-2xl border border-zinc-850/80 flex flex-wrap gap-1.5">
+        {[
+          { id: 'Overview', label: '1. Org Overview', icon: Layers, badge: 'Unified' },
+          { id: 'Clinics', label: '2. Clinic Hubs', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} OK` },
+          { id: 'Departments', label: '3. Departments', icon: Sliders, badge: `${departments.length} Units` },
+          { id: 'Users', label: '4. User Directory', icon: Users, badge: `${activeUsersCount} Active` },
+          { id: 'Permissions', label: '5. Roles & Security', icon: ShieldCheck, badge: 'Matrix' },
+          { id: 'Teams', label: '6. Clinic Teams', icon: UserCheck, badge: `${teams.length} Teams` },
+          { id: 'Audits', label: '7. Activity Audit', icon: History, badge: 'PCI Log' },
+          { id: 'Notifications', label: '8. Global Alerts', icon: Bell, badge: `${announcements.length} Alerts`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+          { id: 'Security', label: '9. Security Core', icon: Lock, badge: `${securityScore}/100`, badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
+          { id: 'Settings', label: '10. Org Settings', icon: Settings2, badge: 'Branding' },
+          { id: 'Backup', label: '11. Disaster Recovery', icon: Database, badge: `${backups.length} Archives`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' }
+        ].map(item => {
+          const Icon = item.icon;
+          const isActive = activeTab === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id as any)}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
+                isActive 
+                  ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-bold shadow-lg shadow-emerald-500/10' 
+                  : 'bg-zinc-950/60 text-zinc-400 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
+              }`}
+            >
+              <Icon className="w-3.5 h-3.5" />
+              <span>{item.label}</span>
+              {item.badge && (
+                <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono font-bold border ${
+                  item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-900 text-zinc-500 border-zinc-800')
+                }`}>
+                  {item.badge}
+                </span>
               )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* TAB CONTENT PANELS */}
+      <div className="space-y-6">
+        <AnimatePresence mode="wait">
+          
+          {/* ==================================================
+              1. ORGANIZATION OVERVIEW
+              ================================================== */}
+          {activeTab === 'Overview' && (
+            <WorkspaceTabPanel className="space-y-6">
+              
+              {/* Bento Box 4 Stats Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                {/* Stat 1: Org ID */}
+                <div className="p-5 bg-zinc-900/40 border border-zinc-850/80 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Organization ID</span>
+                    <Building2 className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-white font-mono">ORG-8820-X92</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5 truncate font-sans">{workspaceName}</p>
+                  </div>
+                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
+                    <div className="h-full bg-emerald-500 rounded-full w-full" />
+                  </div>
+                </div>
+
+                {/* Stat 2: Clinics & Rooms */}
+                <div className="p-5 bg-zinc-900/40 border border-zinc-850/80 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Clinics & Rooms</span>
+                    <Globe className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-white">{totalClinics} Site{totalClinics > 1 ? 's' : ''}</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">Total of 21 Clinical Suites active</p>
+                  </div>
+                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
+                    <div className="h-full bg-emerald-500 rounded-full w-4/5" />
+                  </div>
+                </div>
+
+                {/* Stat 3: License Seats */}
+                <div className="p-5 bg-zinc-900/40 border border-zinc-850/80 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">License Seats</span>
+                    <span className="text-xs text-emerald-400 font-mono font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">28 free</span>
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-white font-mono">122 / 150</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">81.3% subscription capacity</p>
+                  </div>
+                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
+                    <div className="h-full bg-emerald-500 rounded-full w-[81.3%]" />
+                  </div>
+                </div>
+
+                {/* Stat 4: Secure Cloud Storage */}
+                <div className="p-5 bg-zinc-900/40 border border-zinc-850/80 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Secure Cloud Storage</span>
+                    <span className="text-xs text-cyan-400 font-mono font-bold bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">24%</span>
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-white font-mono">1.2 / 5.0 TB</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">Mainly PACS and STL Scan storage</p>
+                  </div>
+                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
+                    <div className="h-full bg-cyan-400 rounded-full w-[24%]" />
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Chart & Quick Actions Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                {/* AI API Utilization Trend Chart */}
+                <div className="lg:col-span-2 p-6 bg-zinc-900/40 border border-zinc-850/80 rounded-3xl space-y-4 shadow-xl">
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-zinc-850 pb-3">
+                    <div>
+                      <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono">AI API Utilization Trend</h4>
+                      <p className="text-xs text-zinc-400 mt-0.5 font-sans">Real-time clinical AI model telemetry and laboratory inference calls.</p>
+                    </div>
+                    <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-xl self-start sm:self-auto font-semibold">
+                      Total processed this month: 42,650 calls
+                    </span>
+                  </div>
+
+                  <div className="h-[220px] w-full pt-2">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={AI_UTILIZATION_DATA}>
+                        <defs>
+                          <linearGradient id="callsGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.35}/>
+                            <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                          </linearGradient>
+                          <linearGradient id="clinicalGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.35}/>
+                            <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#27272a" opacity={0.6} />
+                        <XAxis dataKey="date" stroke="#a1a1aa" style={{ fontSize: '11px' }} />
+                        <YAxis stroke="#a1a1aa" style={{ fontSize: '11px' }} />
+                        <Tooltip contentStyle={{ backgroundColor: '#09090b', borderColor: '#27272a', borderRadius: '12px', fontSize: '12px' }} />
+                        <Area type="monotone" dataKey="calls" stroke="#10b981" strokeWidth={2.5} fillOpacity={1} fill="url(#callsGrad)" name="Total AI Calls" />
+                        <Area type="monotone" dataKey="clinical" stroke="#8b5cf6" strokeWidth={2.5} fillOpacity={1} fill="url(#clinicalGrad)" name="Clinical AI" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                {/* Platform Quick Actions */}
+                <div className="p-6 bg-zinc-900/40 border border-zinc-850/80 rounded-3xl space-y-4 flex flex-col justify-between shadow-xl">
+                  <div>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono border-b border-zinc-850 pb-3">Platform Quick Actions</h4>
+                    <div className="space-y-3 pt-3">
+                      
+                      <button 
+                        onClick={() => { setActiveTab('Users') }}
+                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-emerald-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                      >
+                        <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl group-hover:bg-emerald-500 group-hover:text-zinc-950 transition-colors">
+                          <Plus className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <p className="text-white text-xs font-bold font-sans group-hover:text-emerald-400 transition-colors">Provision User Seat</p>
+                          <p className="text-[11px] text-zinc-400 mt-0.5">Configure core credential roles</p>
+                        </div>
+                      </button>
+
+                      <button 
+                        onClick={() => { setActiveTab('Permissions') }}
+                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-purple-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                      >
+                        <div className="p-2 bg-purple-500/10 text-purple-400 rounded-xl group-hover:bg-purple-500 group-hover:text-zinc-950 transition-colors">
+                          <Sliders className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <p className="text-white text-xs font-bold font-sans group-hover:text-purple-400 transition-colors">Audit Permission Matrix</p>
+                          <p className="text-[11px] text-zinc-400 mt-0.5">Adjust clinical access parameters</p>
+                        </div>
+                      </button>
+
+                      <button 
+                        onClick={() => { setActiveTab('Security') }}
+                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-rose-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                      >
+                        <div className="p-2 bg-rose-500/10 text-rose-400 rounded-xl group-hover:bg-rose-500 group-hover:text-zinc-950 transition-colors">
+                          <Lock className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <p className="text-white text-xs font-bold font-sans group-hover:text-rose-400 transition-colors">Trigger Security Scan</p>
+                          <p className="text-[11px] text-zinc-400 mt-0.5">Review HIPAA logs and 2FA compliance</p>
+                        </div>
+                      </button>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Active Operator & Bottom Telemetry Bar */}
+              <div className="p-4 bg-zinc-900/30 border border-zinc-850/80 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-sans">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-md">
+                    CA
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-white">Dr. C. Avery</h5>
+                    <p className="text-[11px] text-zinc-400">Role: System Owner • Active Operator</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 font-mono text-emerald-400 font-semibold bg-emerald-500/10 px-3.5 py-1.5 rounded-xl border border-emerald-500/20">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Enterprise PACS Server State: Synchronized with US-East-1 AWS Cloud</span>
+                </div>
+
+                <div className="text-zinc-400 font-mono text-xs">
+                  Owner Contact: <strong className="text-white">HealthOS Admin</strong>
+                </div>
+              </div>
+
+            </WorkspaceTabPanel>
+          )}
 
               {/* ==================================================
                   2. CLINIC MANAGEMENT
@@ -1940,9 +1916,5 @@ export default function OrganizationWorkspace() {
             </AnimatePresence>
           </div>
         </div>
-
-      </div>
-
-    </div>
   );
 }
