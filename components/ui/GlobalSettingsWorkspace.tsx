@@ -26,6 +26,8 @@ import {
   Activity
 } from 'lucide-react';
 
+import { staffAuthService, StaffMember, StaffRole } from '@/utils/services/staffAuthService';
+
 // --- MOCK CONSTANTS FOR ENTERPRISE WORKSPACE ---
 const MOCK_DEPARTMENTS = [
   { id: 'dep-1', name: 'Prosthodontics', code: 'PRST', activeStaff: 12, head: 'Dr. Elena Rostova' },
@@ -65,10 +67,24 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
   
   // Organization state
   const [departments, setDepartments] = useState(MOCK_DEPARTMENTS);
-  const [team, setTeam] = useState(MOCK_TEAM_MEMBERS);
+  const [team, setTeam] = useState<StaffMember[]>([]);
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [inviteForm, setInviteForm] = useState({
+    name: '',
+    email: '',
+    role: 'clinician' as StaffRole,
+    tempPassword: 'doctor123'
+  });
+
   const [newDepName, setNewDepName] = useState('');
   const [newDepCode, setNewDepCode] = useState('');
   const [newDepHead, setNewDepHead] = useState('Dr. Elena Rostova');
+
+  useEffect(() => {
+    // Sync staff members from staffAuthService
+    const members = staffAuthService.getStaffMembers();
+    setTeam(members);
+  }, []);
   
   // App Config form states
   const [slotDuration, setSlotDuration] = useState('30');
@@ -139,6 +155,24 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
     triggerToast(`Department "${dep.name}" removed successfully.`);
   };
 
+  const handleInviteStaff = (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const newMember = staffAuthService.inviteStaffMember({
+        name: inviteForm.name,
+        email: inviteForm.email,
+        role: inviteForm.role as StaffRole,
+        passwordHash: inviteForm.tempPassword
+      });
+      setTeam(staffAuthService.getStaffMembers());
+      setShowInviteModal(false);
+      setInviteForm({ name: '', email: '', role: 'clinician', tempPassword: 'doctor123' });
+      triggerToast(`تمت إضافة ودعوة الموظف "${newMember.name}" بنجاح!`);
+    } catch (err: any) {
+      alert(err.message || 'تعذر إضافة الموظف.');
+    }
+  };
+
   return (
     <div className="space-y-6 text-zinc-100 animate-fade-in relative">
       
@@ -154,7 +188,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/50 p-4 rounded-3xl border border-zinc-900">
         <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
           {[
-            { id: 'organization', label: '1. Organization & Core', icon: Building },
+            { id: 'organization', label: '1. Organization & Staff', icon: Building },
             { id: 'profile', label: '2. Personal Credentials', icon: User },
             { id: 'app-config', label: '3. Clinical Parameters', icon: Settings },
             { id: 'notifications', label: '4. Alerts & Notifications', icon: Bell },
@@ -178,126 +212,225 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
         </div>
 
         <div className="flex items-center gap-2 px-3 py-1 bg-zinc-950 rounded-xl border border-zinc-850 text-[10px] font-mono text-zinc-400">
-          <Database className="w-3.5 h-3.5 text-blue-400" />
-          <span>Cloud Quota: 42.5 / 100 GB used</span>
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>HealthOS Multi-Tenant Node</span>
         </div>
       </div>
 
-      {/* WORKSPACE AREA */}
-      <div className="space-y-6">
-
-        {/* ==================== 1. ORGANIZATION & CORE ==================== */}
-        {tab === 'organization' && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* TAB CONTENT */}
+      {tab === 'organization' && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
             
-            {/* Departments Setup */}
-            <div className="lg:col-span-2 space-y-4">
-              <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">Active Specialty Departments</h4>
-                    <p className="text-[10px] text-zinc-500 font-mono">Hierarchy configurations for routing medical laboratory and treatment logs.</p>
+            {/* Department List */}
+            <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">Clinical Hierarchy</span>
+                  <p className="text-[11px] text-zinc-500">Manage specialized clinical departments and staffing allotments.</p>
+                </div>
+              </div>
+
+              <div className="space-y-2.5">
+                {departments.map(dep => (
+                  <div key={dep.id} className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl flex items-center justify-between text-xs font-mono">
+                    <div className="space-y-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] bg-blue-500/10 text-blue-400 px-1.5 py-0.5 rounded border border-blue-500/20 font-black">{dep.code}</span>
+                        <h5 className="font-bold text-white text-[13px]">{dep.name}</h5>
+                      </div>
+                      <p className="text-[10px] text-zinc-500">
+                        Head: <span className="text-zinc-300">{dep.head}</span> • Staff Size: <span className="text-blue-400">{dep.activeStaff} operators</span>
+                      </p>
+                    </div>
+
+                    <button 
+                      onClick={() => handleRemoveDept(dep.id)}
+                      className="p-1.5 hover:bg-zinc-900 text-zinc-500 hover:text-red-400 transition-all cursor-pointer rounded-lg border border-transparent hover:border-zinc-800"
+                      title="Delete department"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
-                </div>
-
-                <div className="space-y-2.5">
-                  {departments.map(dep => (
-                    <div key={dep.id} className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl flex items-center justify-between text-xs font-mono">
-                      <div className="space-y-0.5">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] bg-blue-500/10 text-blue-400 px-1.5 py-0.5 rounded border border-blue-500/20 font-black">{dep.code}</span>
-                          <h5 className="font-bold text-white text-[13px]">{dep.name}</h5>
-                        </div>
-                        <p className="text-[10px] text-zinc-500">
-                          Head: <span className="text-zinc-300">{dep.head}</span> • Staff Size: <span className="text-blue-400">{dep.activeStaff} operators</span>
-                        </p>
-                      </div>
-
-                      <button 
-                        onClick={() => handleRemoveDept(dep.id)}
-                        className="p-1.5 hover:bg-zinc-900 text-zinc-500 hover:text-red-400 transition-all cursor-pointer rounded-lg border border-transparent hover:border-zinc-800"
-                        title="Delete department"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Add Dept Form */}
-                <form onSubmit={handleAddDept} className="grid grid-cols-1 md:grid-cols-4 gap-2.5 pt-2 border-t border-zinc-900 font-mono text-xs">
-                  <input 
-                    type="text" 
-                    placeholder="Dept Name (e.g. Endodontics)" 
-                    value={newDepName}
-                    onChange={(e) => setNewDepName(e.target.value)}
-                    className="md:col-span-2 bg-zinc-950 border border-zinc-850 p-2 text-white outline-none rounded-xl"
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="Code (e.g. ENDO)" 
-                    value={newDepCode}
-                    onChange={(e) => setNewDepCode(e.target.value)}
-                    maxLength={5}
-                    className="bg-zinc-950 border border-zinc-850 p-2 text-white outline-none rounded-xl uppercase"
-                  />
-                  <button 
-                    type="submit"
-                    className="bg-blue-600 hover:bg-blue-500 text-black font-bold p-2 rounded-xl text-center flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <Plus className="w-4 h-4" /> Add Dept
-                  </button>
-                </form>
+                ))}
               </div>
 
-              {/* Team seat licenses */}
-              <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
-                <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">Registered System Seat Licenses</span>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
-                  {team.map(member => (
-                    <div key={member.id} className="p-3 bg-zinc-950/50 border border-zinc-850 rounded-xl flex items-center justify-between">
-                      <div>
-                        <p className="text-white font-bold">{member.name}</p>
-                        <p className="text-[10px] text-zinc-500">{member.email}</p>
-                        <span className="text-[9px] text-zinc-400 px-1 py-0.5 bg-zinc-900 border border-zinc-800 rounded mt-1.5 inline-block">{member.role}</span>
-                      </div>
-                      <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded font-bold">
-                        {member.status}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              {/* Add Dept Form */}
+              <form onSubmit={handleAddDept} className="grid grid-cols-1 md:grid-cols-4 gap-2.5 pt-2 border-t border-zinc-900 font-mono text-xs">
+                <input 
+                  type="text" 
+                  placeholder="Dept Name (e.g. Endodontics)" 
+                  value={newDepName}
+                  onChange={(e) => setNewDepName(e.target.value)}
+                  className="md:col-span-2 bg-zinc-950 border border-zinc-850 p-2 text-white outline-none rounded-xl"
+                />
+                <input 
+                  type="text" 
+                  placeholder="Code (e.g. ENDO)" 
+                  value={newDepCode}
+                  onChange={(e) => setNewDepCode(e.target.value)}
+                  maxLength={5}
+                  className="bg-zinc-950 border border-zinc-850 p-2 text-white outline-none rounded-xl uppercase"
+                />
+                <button 
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-500 text-black font-bold p-2 rounded-xl text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" /> Add Dept
+                </button>
+              </form>
             </div>
 
-            {/* Sub Info panel */}
-            <div className="space-y-4">
-              <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4 font-mono text-xs">
-                <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Subscription Status</span>
-                <div className="space-y-3.5">
-                  <div className="p-3 bg-blue-950/20 border border-blue-900/30 rounded-xl">
-                    <p className="text-white font-extrabold text-sm">Enterprise Ultimate Plan</p>
-                    <p className="text-[11px] text-zinc-400 mt-0.5">Expires July 2027 • Standard HIPAA SLA</p>
+            {/* Team seat licenses & Staff Management */}
+            <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">إدارة واستدعاء كادر العيادة (Staff Seats & Credentials)</span>
+                  <p className="text-[11px] text-zinc-500 mt-0.5">يمكن للمدير إرسال دعوات وإضافة الموظفين بالبريد الإلكتروني للوصول السريع بدون مفتاح تفعيل.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowInviteModal(true)}
+                  className="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-lg shadow-emerald-500/10 cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" /> دعوة / إضافة موظف جديد
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
+                {team.map(member => (
+                  <div key={member.id} className="p-3.5 bg-zinc-950/80 border border-zinc-850 rounded-xl flex items-start justify-between">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1.5">
+                        <p className="text-white font-bold text-sm">{member.name}</p>
+                        <span className="text-[9px] text-zinc-400 px-1.5 py-0.5 bg-zinc-900 border border-zinc-800 rounded font-semibold uppercase">{member.role}</span>
+                      </div>
+                      <p className="text-[11px] text-zinc-400">{member.email}</p>
+                    </div>
+                    <span className={`text-[10px] px-2 py-0.5 rounded font-bold uppercase border ${
+                      member.status === 'Active' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                    }`}>
+                      {member.status}
+                    </span>
                   </div>
-                  <div className="space-y-1 text-zinc-400">
-                    <div className="flex justify-between">
-                      <span>Seat Licenses:</span>
-                      <span className="text-white font-bold">6 of 15 seats</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Multi-Clinic Hubs:</span>
-                      <span className="text-white font-bold">3 active clinics</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Support Desk:</span>
-                      <span className="text-emerald-400 font-bold">Dedicated 24/7 Account Mgr</span>
-                    </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Sub Info panel */}
+          <div className="space-y-4">
+            <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4 font-mono text-xs">
+              <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Subscription Status</span>
+              <div className="space-y-3.5">
+                <div className="p-3 bg-blue-950/20 border border-blue-900/30 rounded-xl">
+                  <p className="text-white font-extrabold text-sm">Enterprise Ultimate Plan</p>
+                  <p className="text-[11px] text-zinc-400 mt-0.5">Expires July 2027 • Standard HIPAA SLA</p>
+                </div>
+                <div className="space-y-1 text-zinc-400">
+                  <div className="flex justify-between">
+                    <span>Seat Licenses:</span>
+                    <span className="text-white font-bold">{team.length} of 15 seats</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Multi-Clinic Hubs:</span>
+                    <span className="text-white font-bold">3 active clinics</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Support Desk:</span>
+                    <span className="text-emerald-400 font-bold">Dedicated 24/7 Account Mgr</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
+
+      {/* Invite Staff Modal */}
+      {showInviteModal && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <form onSubmit={handleInviteStaff} className="bg-zinc-950 border border-zinc-850 p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans">
+            <div className="flex justify-between items-center border-b border-zinc-850 pb-3">
+              <div>
+                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <User className="w-4 h-4 text-emerald-400" /> دعوة / إضافة موظف جديد لـ HealthOS
+                </h3>
+                <p className="text-[11px] text-zinc-400 mt-0.5">سيتمكن الموظف من استخدام البريد وكلمة المرور للدخول المباشر.</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <label className="text-zinc-300 font-semibold">اسم الموظف الكامل</label>
+                <input
+                  type="text"
+                  required
+                  value={inviteForm.name}
+                  onChange={(e) => setInviteForm({ ...inviteForm, name: e.target.value })}
+                  placeholder="د. محمد السعيد"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-zinc-300 font-semibold">البريد الإلكتروني</label>
+                <input
+                  type="email"
+                  required
+                  value={inviteForm.email}
+                  onChange={(e) => setInviteForm({ ...inviteForm, email: e.target.value })}
+                  placeholder="m.alsaeed@healthos.io"
+                  dir="ltr"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-zinc-300 font-semibold">الدور والصلاحية (Role)</label>
+                <select
+                  value={inviteForm.role}
+                  onChange={(e) => setInviteForm({ ...inviteForm, role: e.target.value as StaffRole })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none font-mono"
+                >
+                  <option value="clinician">🩺 طبيب معالج (Clinician - Full EHR Access)</option>
+                  <option value="receptionist">📋 مسؤول استقبال (Receptionist - Appointments & Check-in)</option>
+                  <option value="lab_tech">🧪 فني مختبر (Lab Tech - CAD/CAM & STL)</option>
+                  <option value="admin">👑 مدير نظام (Clinic Admin)</option>
+                  <option value="auditor">🛡️ مراجع سلامة (HIPAA Auditor)</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-zinc-300 font-semibold">كلمة المرور المبدئية</label>
+                <input
+                  type="text"
+                  required
+                  value={inviteForm.tempPassword}
+                  onChange={(e) => setInviteForm({ ...inviteForm, tempPassword: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 border-t border-zinc-850 pt-3">
+              <button
+                type="button"
+                onClick={() => setShowInviteModal(false)}
+                className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 font-semibold text-xs"
+              >
+                إلغاء
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/20"
+              >
+                إرسال الدعوة واعتماد الحساب
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
         {/* ==================== 2. PERSONAL CREDENTIALS ==================== */}
         {tab === 'profile' && (
@@ -610,7 +743,6 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
           </div>
         )}
 
-      </div>
     </div>
   );
 }
