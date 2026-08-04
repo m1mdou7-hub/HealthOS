@@ -24,6 +24,7 @@ import {
   Sliders,
   ShieldAlert
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { getAuditLogs, appendAuditLog, AuditRecord } from '@/utils/enterpriseState';
 
 
@@ -50,6 +51,7 @@ const TENANT_USERS = [
 ];
 
 export default function AuditWorkspace() {
+  const tAudit = useTranslations('AuditWorkspace');
   const [activeTab, setActiveTab] = useState<'logs' | 'checklist' | 'users'>('logs');
   const [logs, setLogs] = useState<AuditRecord[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All Audit Logs');
@@ -145,72 +147,75 @@ export default function AuditWorkspace() {
   }, [hipaa, gdpr]);
 
   return (
-    <div className="space-y-6 text-zinc-100 animate-fade-in relative max-w-[1600px] mx-auto">
+    <div className="space-y-6 text-zinc-100 animate-fade-in relative max-w-[1600px] mx-auto font-sans">
       
       {/* Toast Alert */}
       {showToast && <WorkspaceToast message={toastMsg} />}
 
       {/* COMPLIANCE INDEX OVERALL INDICATOR */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-        <div className="md:col-span-1 p-5 rounded-3xl bg-gradient-to-br from-zinc-950 to-zinc-900 border border-zinc-900 space-y-4 relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch font-sans">
+        <div className="md:col-span-1 p-6 rounded-3xl bg-zinc-900/50 border border-zinc-850/80 space-y-4 relative overflow-hidden flex flex-col justify-between min-h-[170px] shadow-xl backdrop-blur-xl">
           <div className="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
           
           <div className="space-y-1 relative z-10">
-            <span className="text-[10px] text-emerald-400 font-mono font-bold uppercase tracking-widest block">Overall Audit Status</span>
-            <h3 className="text-sm font-bold text-white tracking-wide uppercase font-mono">Platform Integrity</h3>
+            <span className="text-xs text-emerald-400 font-bold uppercase tracking-wider block font-sans">{tAudit('overallStatus')}</span>
+            <h3 className="text-base font-extrabold text-white tracking-tight uppercase font-sans">{tAudit('platformIntegrity')}</h3>
           </div>
 
           <div className="flex items-baseline gap-3 relative z-10">
-            <span className="text-4xl font-bold text-white font-mono">{complianceScore}%</span>
-            <span className="text-xs font-mono text-emerald-400">Compliance Index</span>
+            <span className="text-4xl font-extrabold text-white font-mono">{complianceScore}%</span>
+            <span className="text-xs font-bold text-emerald-400 font-sans">{tAudit('complianceIndex')}</span>
           </div>
 
-          <p className="text-[11px] text-zinc-400 font-sans z-10">
-            Audit index calculated from checked technical and structural controls. All nodes are isolated.
+          <p className="text-xs text-zinc-400 font-sans z-10 leading-relaxed">
+            {tAudit('integrityDesc')}
           </p>
         </div>
 
-        <div className="md:col-span-2 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-900 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="md:col-span-2 p-6 rounded-3xl bg-zinc-900/40 border border-zinc-850/80 grid grid-cols-1 md:grid-cols-2 gap-4 shadow-xl">
           {[
-            { label: 'Authorized Tenant Sessions', value: users.filter(u => u.status === 'Verified').length, icon: Users, color: 'text-blue-400', desc: 'Secure, verified accounts with active clinical scope.' },
-            { label: 'Active Encryption Clusters', value: '4/4', icon: ShieldCheck, color: 'text-emerald-400', desc: 'All storage partitions, files, and channels encrypted with AES-256 TLS.' }
+            { label: tAudit('authorizedSessions'), value: users.filter(u => u.status === 'Verified').length, icon: Users, color: 'text-blue-400', desc: tAudit('authorizedSessionsDesc') },
+            { label: tAudit('encryptionClusters'), value: '4/4', icon: ShieldCheck, color: 'text-emerald-400', desc: tAudit('encryptionClustersDesc') }
           ].map((stat, idx) => (
-            <div key={idx} className="p-4 bg-zinc-950/60 border border-zinc-850 rounded-2xl flex flex-col justify-between space-y-3">
+            <div key={idx} className="p-4.5 bg-zinc-950/70 border border-zinc-850 rounded-2xl flex flex-col justify-between space-y-3">
               <div className="flex justify-between items-start gap-4">
-                <div className="space-y-0.5">
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block">{stat.label}</span>
-                  <span className="text-lg font-bold text-white font-mono">{stat.value}</span>
+                <div className="space-y-1">
+                  <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block font-sans">{stat.label}</span>
+                  <span className="text-2xl font-black text-white font-mono">{stat.value}</span>
                 </div>
-                <div className={`p-2 rounded-xl bg-zinc-900 ${stat.color}`}>
-                  <stat.icon className="w-4.5 h-4.5" />
+                <div className={`p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 ${stat.color}`}>
+                  <stat.icon className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-[11px] text-zinc-400 font-sans leading-relaxed">{stat.desc}</p>
+              <p className="text-xs text-zinc-400 font-sans leading-relaxed">{stat.desc}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* FILTER & CONTROL PANEL */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
+        <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-2xl border border-zinc-850">
           {[
-            { id: 'logs', label: '1. Immutable Security Logs', icon: Activity },
-            { id: 'checklist', label: '2. HIPAA & GDPR Checklists', icon: CheckSquare },
-            { id: 'users', label: '3. Identity Access Reviews', icon: Users }
+            { id: 'logs', key: 'logs', icon: Activity },
+            { id: 'checklist', key: 'checklist', icon: CheckSquare },
+            { id: 'users', key: 'users', icon: Users }
           ].map(t => {
             const Icon = t.icon;
             const isSel = activeTab === t.id;
+            const labelText = tAudit(`tabs.${t.key}`);
             return (
               <button
                 key={t.id}
                 onClick={() => setActiveTab(t.id as any)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-2 cursor-pointer ${
-                  isSel ? 'bg-emerald-500 text-zinc-950' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                className={`px-4 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
+                  isSel 
+                    ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-extrabold shadow-lg shadow-emerald-500/20 scale-[1.02]' 
+                    : 'bg-zinc-900/40 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{t.label}</span>
+                <Icon className="w-4 h-4 shrink-0" />
+                <span>{labelText}</span>
               </button>
             );
           })}
@@ -219,9 +224,10 @@ export default function AuditWorkspace() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => handleGenerateReport('HIPAA v2026')}
-            className="px-3.5 py-1.5 bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 text-zinc-300 font-mono text-xs flex items-center gap-1.5 rounded-xl cursor-pointer"
+            className="px-4 py-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-zinc-200 font-sans font-bold text-xs flex items-center gap-2 rounded-xl cursor-pointer transition-all shadow-sm"
           >
-            <Download className="w-4 h-4 text-emerald-400" /> Export Compliance PDF
+            <Download className="w-4 h-4 text-emerald-400" />
+            <span>{tAudit('exportPdf')}</span>
           </button>
         </div>
       </div>

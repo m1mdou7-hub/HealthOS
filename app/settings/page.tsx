@@ -13,8 +13,11 @@ import DashboardShell from '@/components/ui/DashboardShell';
 import { ShieldAlert, CreditCard } from 'lucide-react';
 import GlobalSettingsWorkspace from '@/components/ui/GlobalSettingsWorkspace';
 
+import { getTranslations } from 'next-intl/server';
+
 export default async function SettingsPage() {
   const supabase = createClient();
+  const tSet = await getTranslations('GlobalSettingsWorkspace');
   const [user, userDetails, subscription] = await Promise.all([
     getUser(supabase),
     getUserDetails(supabase),
@@ -36,14 +39,14 @@ export default async function SettingsPage() {
 
   return (
     <DashboardShell user={user}>
-      <div className="space-y-6 animate-fade-in max-w-7xl">
+      <div className="space-y-6 animate-fade-in max-w-7xl font-sans">
         {/* Title */}
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl">
-            Workspace Configuration Center
+          <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl font-sans">
+            {tSet('headerTitle')}
           </h2>
-          <p className="mt-1 text-zinc-400 text-sm">
-            Manage clinical departments, alert rule channels, API keys, and enterprise compliance metrics.
+          <p className="mt-1 text-zinc-400 text-sm font-sans">
+            {tSet('headerSubtitle')}
           </p>
         </div>
 

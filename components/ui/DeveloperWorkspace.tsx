@@ -31,6 +31,7 @@ import {
   Sliders,
   Send
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   AreaChart,
   Area,
@@ -125,6 +126,7 @@ print(patients["data"])`
 };
 
 export default function DeveloperWorkspace() {
+  const tDev = useTranslations('DeveloperWorkspace');
   const [tab, setTab] = useState<'explorer' | 'webhooks' | 'credentials' | 'docs'>('explorer');
   const [apiKeys, setApiKeys] = useState([
     { id: 'key-01', name: 'Primary Clinical Sync Key', token: 'sk_live_72bc17682f494e74a6ed0a345566dd82', created: '2026-07-15' },
@@ -236,45 +238,48 @@ export default function DeveloperWorkspace() {
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 animate-fade-in relative">
+    <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans">
       
       {/* Toast notifications */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-sans text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{toastMsg}</span>
         </div>
       )}
 
       {/* HORIZONTAL WORKSPACE TABS */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
+        <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-2xl border border-zinc-850">
           {[
-            { id: 'explorer', label: '1. API REST Explorer', icon: Terminal },
-            { id: 'webhooks', label: '2. Webhook Subscriptions', icon: Blocks },
-            { id: 'credentials', label: '3. OAuth & API Keys', icon: Key },
-            { id: 'docs', label: '4. SDKs & Documentation', icon: Code2 }
+            { id: 'explorer', key: 'explorer', icon: Terminal },
+            { id: 'webhooks', key: 'webhooks', icon: Blocks },
+            { id: 'credentials', key: 'credentials', icon: Key },
+            { id: 'docs', key: 'docs', icon: Code2 }
           ].map(t => {
             const Icon = t.icon;
             const isSel = tab === t.id;
+            const labelText = tDev(`tabs.${t.key}`);
             return (
               <button
                 key={t.id}
                 onClick={() => setTab(t.id as any)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-2 cursor-pointer ${
-                  isSel ? 'bg-blue-600 text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                className={`px-4 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
+                  isSel 
+                    ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-extrabold shadow-lg shadow-emerald-500/20 scale-[1.02]' 
+                    : 'bg-zinc-900/40 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{t.label}</span>
+                <Icon className="w-4 h-4 shrink-0" />
+                <span>{labelText}</span>
               </button>
             );
           })}
         </div>
 
-        <div className="flex items-center gap-2 px-3 py-1 bg-zinc-950 rounded-xl border border-zinc-850 text-[10px] font-mono text-zinc-400">
-          <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-          <span>Gateway Status: Operational</span>
+        <div className="flex items-center gap-2 px-3.5 py-2 bg-zinc-950/80 rounded-xl border border-zinc-800 text-xs font-semibold text-zinc-300">
+          <Activity className="w-4 h-4 text-emerald-400 animate-pulse" />
+          <span>{tDev('gatewayStatus')}</span>
         </div>
       </div>
 
@@ -283,19 +288,19 @@ export default function DeveloperWorkspace() {
 
         {/* ==================== 1. API EXPLORER ==================== */}
         {tab === 'explorer' && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-mono text-xs">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-sans text-xs">
             
             {/* Explorer sandbox controls */}
-            <div className="lg:col-span-1 p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
-              <span className="text-xs font-bold text-white uppercase tracking-wider block">Sandbox Request Builder</span>
+            <div className="lg:col-span-1 p-5 rounded-2xl bg-zinc-900/40 border border-zinc-850/80 space-y-4 shadow-lg">
+              <span className="text-sm font-bold text-white uppercase tracking-wider block font-sans">{tDev('sandbox.builderTitle')}</span>
               
               <div className="space-y-3">
                 <div className="space-y-1">
-                  <label className="text-zinc-500">HTTP Method</label>
+                  <label className="text-zinc-400 font-medium">{tDev('sandbox.httpMethod')}</label>
                   <select 
                     value={selectedMethod}
                     onChange={(e) => setSelectedMethod(e.target.value as any)}
-                    className="w-full bg-zinc-950 border border-zinc-850 p-2 text-white outline-none rounded-xl"
+                    className="w-full bg-zinc-950 border border-zinc-800 p-2.5 text-white outline-none rounded-xl font-sans"
                   >
                     <option value="GET">GET</option>
                     <option value="POST" disabled>POST (Write locked in sandbox)</option>
@@ -303,11 +308,11 @@ export default function DeveloperWorkspace() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-zinc-500">Resource Endpoint</label>
+                  <label className="text-zinc-400 font-medium">{tDev('sandbox.endpoint')}</label>
                   <select 
                     value={selectedEndpoint}
                     onChange={(e) => setSelectedEndpoint(e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-850 p-2 text-white outline-none rounded-xl"
+                    className="w-full bg-zinc-950 border border-zinc-800 p-2.5 text-white outline-none rounded-xl font-sans"
                   >
                     <option value="/api/v1/patients">/api/v1/patients</option>
                     <option value="/api/v1/clinics">/api/v1/clinics</option>
@@ -319,25 +324,25 @@ export default function DeveloperWorkspace() {
                 <button 
                   onClick={handleSendRequest}
                   disabled={isSending}
-                  className="w-full bg-blue-600 hover:bg-blue-500 text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                  className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 py-2.5 rounded-xl font-extrabold flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-md shadow-emerald-500/10"
                 >
                   {isSending ? (
                     <RefreshCw className="w-4 h-4 animate-spin" />
                   ) : (
                     <Send className="w-4 h-4" />
                   )}
-                  <span>Execute Sandbox Request</span>
+                  <span>{tDev('sandbox.executeBtn')}</span>
                 </button>
               </div>
             </div>
 
             {/* Sandbox response viewport */}
-            <div className="lg:col-span-2 p-5 rounded-2xl bg-zinc-900/20 border border-zinc-900 space-y-3.5 flex flex-col justify-between">
-              <div className="flex justify-between items-center text-[11px] text-zinc-500 border-b border-zinc-900 pb-2">
-                <span>GATEWAY METRIC PROXY LOGS</span>
+            <div className="lg:col-span-2 p-5 rounded-2xl bg-zinc-900/40 border border-zinc-850/80 space-y-3.5 flex flex-col justify-between shadow-lg">
+              <div className="flex justify-between items-center text-xs text-zinc-400 border-b border-zinc-800 pb-2 font-sans">
+                <span className="font-bold text-zinc-300">{tDev('sandbox.proxyLogs')}</span>
                 <div className="flex items-center gap-3">
-                  <span>Status: <strong className="text-emerald-400">200 OK</strong></span>
-                  <span>Latency: <strong className="text-zinc-300">{latencyText}</strong></span>
+                  <span>{tDev('sandbox.status')}: <strong className="text-emerald-400 font-bold">200 OK</strong></span>
+                  <span>{tDev('sandbox.latency')}: <strong className="text-zinc-200 font-bold font-mono">{latencyText}</strong></span>
                 </div>
               </div>
 

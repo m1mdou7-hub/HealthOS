@@ -52,6 +52,181 @@
     "Laboratory Technician": "Laboratory Technician",
     "Read-only Auditor": "Read-only Auditor"
   },
+  "OrganizationWorkspace": {
+    "headerTitle": "Organization Admin Control Center",
+    "adminConsole": "ADMIN CONSOLE",
+    "multiClinic": "MULTI-CLINIC",
+    "tenantDesc": "Enterprise Tenant ID: ORG-8820-X92 • Dedicated Secure Cloud Environment • Consolidated dashboard of subscription plan limits, clinic sites, user licenses, and storage allocations.",
+    "hipaaStatus": "HIPAA Audit: COMPLIANT",
+    "multiRegion": "Multi-Region Active",
+    "nodesSynced": "All Nodes Synchronized",
+    "tabs": {
+      "Overview": "1. Org Overview",
+      "Clinics": "2. Clinic Hubs",
+      "Departments": "3. Departments",
+      "Users": "4. User Directory",
+      "Permissions": "5. Roles & Security",
+      "Teams": "6. Clinic Teams",
+      "Audits": "7. Activity Audit",
+      "Notifications": "8. Global Alerts",
+      "Security": "9. Security Core",
+      "Settings": "10. Org Settings",
+      "Backup": "11. Disaster Recovery"
+    },
+    "badges": {
+      "unified": "Unified",
+      "matrix": "Matrix",
+      "pciLog": "PCI Log",
+      "branding": "Branding",
+      "units": "Units",
+      "active": "Active",
+      "teams": "Teams",
+      "alerts": "Alerts",
+      "archives": "Archives"
+    }
+  },
+  "DeveloperWorkspace": {
+    "headerTitle": "Developer Console & Core APIs",
+    "gatewayStatus": "Gateway Status: Operational",
+    "tabs": {
+      "explorer": "1. API REST Explorer",
+      "webhooks": "2. Webhook Subscriptions",
+      "credentials": "3. OAuth & API Keys",
+      "docs": "4. SDKs & Documentation"
+    },
+    "sandbox": {
+      "builderTitle": "Sandbox Request Builder",
+      "httpMethod": "HTTP Method",
+      "endpoint": "Resource Endpoint",
+      "executeBtn": "Execute Sandbox Request",
+      "proxyLogs": "GATEWAY METRIC PROXY LOGS",
+      "status": "Status",
+      "latency": "Latency"
+    },
+    "webhooks": {
+      "title": "Webhook Subscriptions",
+      "addTitle": "Configure Webhook Subscription",
+      "targetUrl": "Target URL",
+      "events": "Events",
+      "saveBtn": "Save Webhook Channel"
+    },
+    "credentials": {
+      "title": "OAuth & API Credentials",
+      "generateBtn": "Generate New API Key",
+      "revokeBtn": "Revoke Key",
+      "copyBtn": "Copy Key"
+    },
+    "docs": {
+      "title": "SDKs & Integration Docs",
+      "selectLang": "Select Language",
+      "copyCode": "Copy Snippet"
+    }
+  },
+  "AuditWorkspace": {
+    "headerTitle": "Audit & Compliance Console",
+    "overallStatus": "Overall Audit Status",
+    "platformIntegrity": "Platform Integrity",
+    "complianceIndex": "Compliance Index",
+    "integrityDesc": "Audit index calculated from checked technical and structural controls. All nodes are isolated.",
+    "authorizedSessions": "Authorized Tenant Sessions",
+    "authorizedSessionsDesc": "Secure, verified accounts with active clinical scope.",
+    "encryptionClusters": "Active Encryption Clusters",
+    "encryptionClustersDesc": "All storage partitions, files, and channels encrypted with AES-256 TLS.",
+    "exportPdf": "Export Compliance PDF",
+    "tabs": {
+      "logs": "1. Immutable Security Logs",
+      "checklist": "2. HIPAA & GDPR Checklists",
+      "users": "3. Identity Access Reviews"
+    },
+    "logs": {
+      "filterTitle": "Log Filtering Node",
+      "searchPlaceholder": "Search codes, operators...",
+      "streamTitle": "Encrypted Audit Stream Trail",
+      "noLogs": "No encrypted log blocks match the active filter criteria."
+    },
+    "checklist": {
+      "hipaaTitle": "HIPAA Medical Compliance Checklist",
+      "gdprTitle": "GDPR Data Protection Checklist"
+    },
+    "users": {
+      "title": "Tenant Identity & Access Security Review",
+      "statusVerified": "Verified",
+      "statusPending": "Pending Review",
+      "statusSuspended": "Suspended",
+      "revokeBtn": "Revoke Access",
+      "verifyBtn": "Verify Access"
+    }
+  },
+  "BillingWorkspace": {
+    "headerTitle": "Billing, Claims & Insurance Operations",
+    "ledgerCore": "LEDGER CORE",
+    "nodeId": "Enterprise Billing Node ID: FIN-7701-X22",
+    "ediStatus": "EDI Eligibility Check: ONLINE (100%)",
+    "paymentMethods": "Payment Methods: Active",
+    "tabs": {
+      "Dashboard": "1. Billing Dashboard",
+      "Invoices": "2. Invoice Control",
+      "InvoiceDetails": "3. Invoice Workspace",
+      "Payments": "4. Cash Desk",
+      "Insurance": "5. Insurance Center",
+      "Estimates": "6. Estimates & Quotes",
+      "Reports": "7. Revenue Reports",
+      "AIAssistant": "8. AI Assistant",
+      "Timeline": "9. Audit Timeline",
+      "Settings": "10. Billing Settings"
+    },
+    "badges": {
+      "unified": "Unified",
+      "focus": "Focus",
+      "terminal": "Terminal",
+      "claims": "Claims",
+      "plans": "Plans",
+      "audit": "Audit",
+      "insight": "Insight",
+      "liveLog": "Live Log",
+      "rules": "Rules",
+      "items": "Items"
+    }
+  },
+  "GlobalSettingsWorkspace": {
+    "headerTitle": "Workspace Configuration Center",
+    "headerSubtitle": "Manage clinical departments, alert rule channels, API keys, and enterprise compliance metrics.",
+    "nodeStatus": "HealthOS Multi-Tenant Node",
+    "tabs": {
+      "organization": "1. Organization & Staff",
+      "profile": "2. Personal Credentials",
+      "appConfig": "3. Clinical Parameters",
+      "notifications": "4. Alerts & Notifications",
+      "security": "5. Security & Audits"
+    },
+    "organization": {
+      "hierarchyTitle": "Clinical Hierarchy",
+      "hierarchySubtitle": "Manage specialized clinical departments and staffing allotments.",
+      "addDeptTitle": "Add Specialized Department",
+      "deptName": "Department Name",
+      "deptCode": "Code",
+      "deptHead": "Department Head",
+      "saveDept": "Save Department",
+      "staffTitle": "Staff Directory & Access Privileges",
+      "inviteStaffBtn": "Invite / Provision Staff"
+    },
+    "profile": {
+      "title": "Personal Account Credentials"
+    },
+    "appConfig": {
+      "title": "Clinical Parameters & AI Engine Configuration",
+      "slotDuration": "Standard Consultation Duration",
+      "aiModel": "Clinical AI Engine Model",
+      "saveConfig": "Save Parameters"
+    },
+    "notifications": {
+      "title": "Patient Alerts & Automated Channels",
+      "templatesTitle": "Notification Message Templates"
+    },
+    "security": {
+      "title": "Security, Password Rules & Immutable Audit Trail"
+    }
+  },
   "Navigation": {
     "dashboard": "Dashboard",
     "patients": "Patients",

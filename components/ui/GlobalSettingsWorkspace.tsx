@@ -26,6 +26,7 @@ import {
   Activity
 } from 'lucide-react';
 
+import { useTranslations } from 'next-intl';
 import { staffAuthService, StaffMember, StaffRole } from '@/utils/services/staffAuthService';
 
 // --- MOCK CONSTANTS FOR ENTERPRISE WORKSPACE ---
@@ -63,6 +64,7 @@ interface GlobalSettingsProps {
 }
 
 export default function GlobalSettingsWorkspace({ personalForms }: GlobalSettingsProps) {
+  const tSet = useTranslations('GlobalSettingsWorkspace');
   const [tab, setTab] = useState<'profile' | 'organization' | 'app-config' | 'notifications' | 'security'>('organization');
   
   // Organization state
@@ -152,7 +154,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
     const dep = departments.find(d => d.id === id);
     if (!dep) return;
     setDepartments(departments.filter(d => d.id !== id));
-    triggerToast(`Department "${dep.name}" removed successfully.`);
+    triggerToast(`Department "${dep.name}" removed.`);
   };
 
   const handleInviteStaff = (e: React.FormEvent) => {
@@ -174,46 +176,49 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 animate-fade-in relative">
+    <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans">
       
       {/* Success Toast */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-sans text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
           <CheckCircle2 className="w-5 h-5 shrink-0 text-white" />
           <span>{toastMsg}</span>
         </div>
       )}
 
       {/* SECTION TABS HEADER */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/50 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
+        <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-2xl border border-zinc-850">
           {[
-            { id: 'organization', label: '1. Organization & Staff', icon: Building },
-            { id: 'profile', label: '2. Personal Credentials', icon: User },
-            { id: 'app-config', label: '3. Clinical Parameters', icon: Settings },
-            { id: 'notifications', label: '4. Alerts & Notifications', icon: Bell },
-            { id: 'security', label: '5. Security & Audits', icon: Shield }
+            { id: 'organization', key: 'organization', icon: Building },
+            { id: 'profile', key: 'profile', icon: User },
+            { id: 'app-config', key: 'appConfig', icon: Settings },
+            { id: 'notifications', key: 'notifications', icon: Bell },
+            { id: 'security', key: 'security', icon: Shield }
           ].map(t => {
             const Icon = t.icon;
             const isSel = tab === t.id;
+            const labelText = tSet(`tabs.${t.key}`);
             return (
               <button
                 key={t.id}
                 onClick={() => setTab(t.id as any)}
-                className={`px-3 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-2 cursor-pointer ${
-                  isSel ? 'bg-blue-600 text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                className={`px-4 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
+                  isSel 
+                    ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-extrabold shadow-lg shadow-emerald-500/20 scale-[1.02]' 
+                    : 'bg-zinc-900/40 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{t.label}</span>
+                <Icon className="w-4 h-4 shrink-0" />
+                <span>{labelText}</span>
               </button>
             );
           })}
         </div>
 
-        <div className="flex items-center gap-2 px-3 py-1 bg-zinc-950 rounded-xl border border-zinc-850 text-[10px] font-mono text-zinc-400">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>HealthOS Multi-Tenant Node</span>
+        <div className="flex items-center gap-2 px-3.5 py-2 bg-zinc-950/80 rounded-xl border border-zinc-800 text-xs font-semibold text-zinc-300 font-sans">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>{tSet('nodeStatus')}</span>
         </div>
       </div>
 

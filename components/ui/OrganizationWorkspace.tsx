@@ -45,6 +45,7 @@ import {
   CheckSquare
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslations } from 'next-intl';
 import {
   getClinics,
   addClinicLocation,
@@ -204,6 +205,7 @@ const PERMISSION_ROLES_TEMPLATES = {
 };
 
 export default function OrganizationWorkspace() {
+  const tOrg = useTranslations('OrganizationWorkspace');
   // Navigation Tabs matching 11 requested areas (including SLA backups)
   const [activeTab, setActiveTab] = useState<
     'Overview' | 'Clinics' | 'Departments' | 'Users' | 'Permissions' | 'Teams' | 'Audits' | 'Notifications' | 'Security' | 'Settings' | 'Backup'
@@ -442,64 +444,65 @@ export default function OrganizationWorkspace() {
           </div>
           <div>
             <div className="flex items-center gap-2.5 flex-wrap">
-              <h2 className="text-lg font-bold text-white tracking-tight">Organization Admin Control Center</h2>
+              <h2 className="text-lg font-bold text-white tracking-tight">{tOrg('headerTitle')}</h2>
               <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold px-3 py-0.5 rounded-full">
-                ADMIN CONSOLE
+                {tOrg('adminConsole')}
               </span>
               <span className="bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold px-3 py-0.5 rounded-full">
-                {brandColor.toUpperCase()} MULTI-CLINIC
+                {brandColor.toUpperCase()} {tOrg('multiClinic')}
               </span>
             </div>
             <p className="text-xs text-zinc-400 mt-1 font-sans">
-              Enterprise Tenant ID: <span className="text-emerald-400 font-semibold font-mono">ORG-8820-X92</span> • Dedicated Secure Cloud Environment • Consolidated dashboard of subscription plan limits, clinic sites, user licenses, and storage allocations.
+              {tOrg('tenantDesc')}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3 shrink-0 flex-wrap">
-          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-medium">
+          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-semibold">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-            <span>HIPAA Audit: <strong className="text-white">COMPLIANT</strong></span>
+            <span>{tOrg('hipaaStatus')}</span>
           </div>
-          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-medium">
+          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-semibold">
             <Globe className="w-4 h-4 text-emerald-400 animate-pulse" />
-            <span>Multi-Region Active</span>
+            <span>{tOrg('multiRegion')}</span>
           </div>
         </div>
       </div>
 
       {/* 11 SUBMODULES HORIZONTAL / GRID NAV TABS */}
-      <div className="bg-zinc-900/40 p-2 rounded-2xl border border-zinc-850/80 flex flex-wrap gap-1.5">
+      <div className="bg-zinc-900/40 p-2 rounded-2xl border border-zinc-850/80 flex flex-wrap gap-1.5 shadow-md">
         {[
-          { id: 'Overview', label: '1. Org Overview', icon: Layers, badge: 'Unified' },
-          { id: 'Clinics', label: '2. Clinic Hubs', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} OK` },
-          { id: 'Departments', label: '3. Departments', icon: Sliders, badge: `${departments.length} Units` },
-          { id: 'Users', label: '4. User Directory', icon: Users, badge: `${activeUsersCount} Active` },
-          { id: 'Permissions', label: '5. Roles & Security', icon: ShieldCheck, badge: 'Matrix' },
-          { id: 'Teams', label: '6. Clinic Teams', icon: UserCheck, badge: `${teams.length} Teams` },
-          { id: 'Audits', label: '7. Activity Audit', icon: History, badge: 'PCI Log' },
-          { id: 'Notifications', label: '8. Global Alerts', icon: Bell, badge: `${announcements.length} Alerts`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
-          { id: 'Security', label: '9. Security Core', icon: Lock, badge: `${securityScore}/100`, badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
-          { id: 'Settings', label: '10. Org Settings', icon: Settings2, badge: 'Branding' },
-          { id: 'Backup', label: '11. Disaster Recovery', icon: Database, badge: `${backups.length} Archives`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' }
+          { id: 'Overview', key: 'Overview', icon: Layers, badge: tOrg('badges.unified') },
+          { id: 'Clinics', key: 'Clinics', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} OK` },
+          { id: 'Departments', key: 'Departments', icon: Sliders, badge: `${departments.length} ${tOrg('badges.units')}` },
+          { id: 'Users', key: 'Users', icon: Users, badge: `${activeUsersCount} ${tOrg('badges.active')}` },
+          { id: 'Permissions', key: 'Permissions', icon: ShieldCheck, badge: tOrg('badges.matrix') },
+          { id: 'Teams', key: 'Teams', icon: UserCheck, badge: `${teams.length} ${tOrg('badges.teams')}` },
+          { id: 'Audits', key: 'Audits', icon: History, badge: tOrg('badges.pciLog') },
+          { id: 'Notifications', key: 'Notifications', icon: Bell, badge: `${announcements.length} ${tOrg('badges.alerts')}`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+          { id: 'Security', key: 'Security', icon: Lock, badge: `${securityScore}/100`, badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
+          { id: 'Settings', key: 'Settings', icon: Settings2, badge: tOrg('badges.branding') },
+          { id: 'Backup', key: 'Backup', icon: Database, badge: `${backups.length} ${tOrg('badges.archives')}`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' }
         ].map(item => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
+          const labelText = tOrg(`tabs.${item.key}`);
           return (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id as any)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
+              className={`px-3.5 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
                 isActive 
-                  ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-bold shadow-lg shadow-emerald-500/10' 
-                  : 'bg-zinc-950/60 text-zinc-400 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
+                  ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-extrabold shadow-lg shadow-emerald-500/20 scale-[1.02]' 
+                  : 'bg-zinc-950/60 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
               }`}
             >
-              <Icon className="w-3.5 h-3.5" />
-              <span>{item.label}</span>
+              <Icon className="w-4 h-4 shrink-0" />
+              <span>{labelText}</span>
               {item.badge && (
-                <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono font-bold border ${
-                  item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-900 text-zinc-500 border-zinc-800')
+                <span className={`text-[10px] px-1.5 py-0.5 rounded font-sans font-bold border ${
+                  item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-900 text-zinc-400 border-zinc-800')
                 }`}>
                   {item.badge}
                 </span>

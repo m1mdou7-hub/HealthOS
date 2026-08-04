@@ -48,6 +48,7 @@ import {
   Building
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslations } from 'next-intl';
 import {
   AreaChart,
   Area,
@@ -448,6 +449,7 @@ export default function BillingWorkspace({
   initialPatients = [],
   initialSettings
 }: BillingWorkspaceProps) {
+  const tBill = useTranslations('BillingWorkspace');
   // Navigation Tabs matching 10 requested areas
   const [activeTab, setActiveTab] = useState<
     'Dashboard' | 'Invoices' | 'InvoiceDetails' | 'Payments' | 'Insurance' | 'Estimates' | 'Reports' | 'AIAssistant' | 'Timeline' | 'Settings'
@@ -1093,132 +1095,96 @@ export default function BillingWorkspace({
   };
 
   return (
-    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl overflow-hidden flex flex-col shadow-2xl h-[780px] font-sans antialiased text-zinc-100 relative">
+    <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans">
       
-      {/* BRAND & HEADER STATUS BAR */}
-      <div className="bg-zinc-900/85 border-b border-zinc-900 px-6 py-4 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-            <CreditCard className="w-5 h-5" />
+      {/* HEADER BANNER */}
+      <div className="p-6 rounded-3xl bg-zinc-900/50 border border-zinc-850/80 shadow-xl backdrop-blur-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
+            <CreditCard className="w-6 h-6" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-xs font-black uppercase tracking-wider text-white">HealthOS Portal Billing</h2>
-              <span className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[9px] font-mono font-black px-2 py-0.5 rounded-full">
-                LEDGER CORE
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <h2 className="text-lg font-bold text-white tracking-tight">{tBill('headerTitle')}</h2>
+              <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold px-3 py-0.5 rounded-full">
+                {tBill('ledgerCore')}
               </span>
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">
-              Enterprise Billing Node ID: <span className="text-zinc-300 font-bold">FIN-7701-X22</span> • {demoMode ? 'Demo gateways active' : 'Owner-isolated ledger active'}
+            <p className="text-xs text-zinc-400 mt-1 font-sans">
+              {tBill('nodeId')} • {demoMode ? 'Demo gateways active' : 'Owner-isolated ledger active'}
             </p>
           </div>
         </div>
 
-        {/* TOP STATUS ROW */}
-        <div className="hidden lg:flex items-center gap-4 bg-zinc-950/80 border border-zinc-800 px-4 py-2 rounded-2xl">
-          <div className="flex items-center gap-1.5 font-mono text-[10px]">
-            <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="text-zinc-400 font-bold">EDI Eligibility check:</span>
-            <span className="text-emerald-400 font-extrabold">ONLINE (100%)</span>
+        <div className="flex items-center gap-3 shrink-0 flex-wrap">
+          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-semibold font-sans">
+            <TrendingUp className="w-4 h-4 text-emerald-400" />
+            <span>{tBill('ediStatus')}</span>
           </div>
-          <div className="h-4 w-[1px] bg-zinc-800" />
-          <div className="flex items-center gap-1.5 font-mono text-[10px]">
-            <Receipt className="w-3.5 h-3.5 text-zinc-500" />
-            <span className="text-zinc-400 font-bold">Payment Methods:</span>
-            <span className="text-white">Active (Stripe Terminal/Cash/ACH)</span>
+          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-semibold font-sans">
+            <DollarSign className="w-4 h-4 text-emerald-400" />
+            <span>{tBill('paymentMethods')}</span>
           </div>
-        </div>
-
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-[10px] bg-zinc-950 border border-zinc-850 text-zinc-300 px-3 py-1.5 rounded-full font-mono font-bold">
-              <DollarSign className="w-3.5 h-3.5 text-emerald-400" /> {selectedCurrency} Active
-            </div>
         </div>
       </div>
 
-      {/* WORKSPACE SIDEBAR NAVIGATION */}
-      <div className="flex-1 flex overflow-hidden">
-        
-        {/* BILLING MODULE LEFT MENU */}
-        <div className="w-60 bg-zinc-900 border-r border-zinc-900 flex flex-col shrink-0 overflow-hidden select-none">
-          <div className="p-4 border-b border-zinc-900 shrink-0">
-            <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-1">Financial Sections</span>
-            <p className="text-[10px] text-zinc-400 font-mono leading-relaxed">Select specialized workspace ledger:</p>
-          </div>
+      {/* 10 SUBMODULES HORIZONTAL / GRID NAV TABS */}
+      <div className="bg-zinc-900/40 p-2 rounded-2xl border border-zinc-850/80 flex flex-wrap gap-1.5 shadow-md">
+        {[
+          { id: 'Dashboard', key: 'Dashboard', icon: CreditCard, badge: tBill('badges.unified') },
+          { id: 'Invoices', key: 'Invoices', icon: FileText, badge: `${invoices.length} ${tBill('badges.items')}` },
+          { id: 'InvoiceDetails', key: 'InvoiceDetails', icon: Sliders, badge: tBill('badges.focus') },
+          { id: 'Payments', key: 'Payments', icon: DollarSign, badge: tBill('badges.terminal') },
+          { id: 'Insurance', key: 'Insurance', icon: ShieldCheck, badge: `${claims.length} ${tBill('badges.claims')}` },
+          { id: 'Estimates', key: 'Estimates', icon: FileSpreadsheet, badge: `${estimates.length} ${tBill('badges.plans')}` },
+          { id: 'Reports', key: 'Reports', icon: TrendingUp, badge: tBill('badges.audit') },
+          { id: 'AIAssistant', key: 'AIAssistant', icon: Sparkles, badge: tBill('badges.insight'), badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
+          { id: 'Timeline', key: 'Timeline', icon: History, badge: tBill('badges.liveLog') },
+          { id: 'Settings', key: 'Settings', icon: SlidersHorizontal, badge: tBill('badges.rules') }
+        ].map(item => {
+          const Icon = item.icon;
+          const isActive = activeTab === item.id;
+          const labelText = tBill(`tabs.${item.key}`);
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id as any)}
+              className={`px-3.5 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
+                isActive 
+                  ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-extrabold shadow-lg shadow-emerald-500/20 scale-[1.02]' 
+                  : 'bg-zinc-950/60 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
+              }`}
+            >
+              <Icon className="w-4 h-4 shrink-0" />
+              <span>{labelText}</span>
+              {item.badge && (
+                <span className={`text-[10px] px-1.5 py-0.5 rounded font-sans font-bold border ${
+                  item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-900 text-zinc-400 border-zinc-800')
+                }`}>
+                  {item.badge}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
 
-          <div className="flex-1 overflow-y-auto p-2.5 space-y-1 scrollbar-thin">
-            {[
-              { id: 'Dashboard', label: '1. Billing Dashboard', icon: CreditCard, badge: 'Unified' },
-              { id: 'Invoices', label: '2. Invoice Control', icon: FileText, badge: `${invoices.length} Items` },
-              { id: 'InvoiceDetails', label: '3. Invoice Workspace', icon: Sliders, badge: 'Focus' },
-              { id: 'Payments', label: '4. Cash Desk', icon: DollarSign, badge: 'Terminal' },
-              { id: 'Insurance', label: '5. Insurance Center', icon: ShieldCheck, badge: `${claims.length} Claims` },
-              { id: 'Estimates', label: '6. Estimates & Quotes', icon: FileSpreadsheet, badge: `${estimates.length} Plans` },
-              { id: 'Reports', label: '7. Revenue Reports', icon: TrendingUp, badge: 'Audit' },
-              { id: 'AIAssistant', label: '8. AI Assistant', icon: Sparkles, badge: 'Insight', badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
-              { id: 'Timeline', label: '9. Audit Timeline', icon: History, badge: 'Live Log' },
-              { id: 'Settings', label: '10. Billing Settings', icon: SlidersHorizontal, badge: 'Rules' }
-            ].map(item => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id as any)}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center justify-between border cursor-pointer ${
-                    isActive 
-                      ? 'bg-emerald-500 text-zinc-950 border-emerald-400 shadow-md' 
-                      : 'bg-transparent text-zinc-400 border-transparent hover:bg-zinc-950/40 hover:text-white hover:border-zinc-800'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 shrink-0" />
-                    <span>{item.label}</span>
-                  </div>
-                  {item.badge && (
-                    <span className={`text-[8px] font-mono font-black px-1.5 py-0.5 rounded-md border ${
-                      item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-950 text-zinc-500 border-zinc-850')
-                    }`}>
-                      {item.badge}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+      {/* TAB CONTENT PANELS */}
+      <div className="space-y-6">
+        {billingError && (
+          <div className="mb-4 flex items-center justify-between rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-2 text-xs text-rose-300">
+            <span>{billingError}</span>
+            <button
+              type="button"
+              onClick={() => setBillingError('')}
+              className="text-rose-300 hover:text-white"
+              aria-label="Dismiss billing error"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
-
-          <div className="p-3 bg-zinc-950/80 border-t border-zinc-900 shrink-0 space-y-2">
-            <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Billing Controller</span>
-            <div className="flex items-center gap-2.5 p-2 bg-zinc-900 border border-zinc-850 rounded-xl">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-md">
-                BO
-              </div>
-              <div className="min-w-0 flex-1">
-                <h5 className="text-[11px] font-bold text-white truncate">Admin Ledger</h5>
-                <p className="text-[9px] text-zinc-500 font-mono truncate">Role: Billing Manager</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* WORKSPACE VIEW CONTAINER */}
-        <div className="flex-1 bg-zinc-950 flex flex-col overflow-hidden relative">
-          
-          <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
-            {billingError && (
-              <div className="mb-4 flex items-center justify-between rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-2 text-xs text-rose-300">
-                <span>{billingError}</span>
-                <button
-                  type="button"
-                  onClick={() => setBillingError('')}
-                  className="text-rose-300 hover:text-white"
-                  aria-label="Dismiss billing error"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-            )}
-            <AnimatePresence mode="wait">
+        )}
+        <AnimatePresence mode="wait">
               
               {/* ==================================================
                   1. BILLING DASHBOARD
@@ -2300,18 +2266,6 @@ export default function BillingWorkspace({
 
             </AnimatePresence>
           </div>
-
-          {/* SHARED CONTROL BOTTOM PANEL */}
-          <div className="p-4 bg-zinc-900/50 border-t border-zinc-900 shrink-0 flex justify-between items-center text-[10px] font-mono text-zinc-500">
-            <span>HealthOS Ledger Version: v1.4.22</span>
-            <span className="text-emerald-400 font-bold">● CLOUD SERVER LINK ACTIVE</span>
-            <span>Operator IP Logged: 192.168.1.1</span>
-          </div>
-
         </div>
-
-      </div>
-
-    </div>
   );
 }

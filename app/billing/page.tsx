@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 import { createClient } from '@/utils/supabase/server';
 import { getUser } from '@/utils/supabase/queries';
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import DashboardShell from '@/components/ui/DashboardShell';
 import BillingWorkspace from '@/components/ui/BillingWorkspace';
 
@@ -130,14 +131,16 @@ export default async function BillingPage() {
     user: row.actor_name
   }));
 
+  const tBill = await getTranslations('BillingWorkspace');
+
   return (
     <DashboardShell user={user}>
-      <div className="space-y-6 animate-fade-in">
+      <div className="space-y-6 animate-fade-in font-sans">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl">
-            Billing, Claims & Insurance Operations
+          <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl font-sans">
+            {tBill('headerTitle')}
           </h2>
-          <p className="mt-1 text-zinc-400 text-sm">
+          <p className="mt-1 text-zinc-400 text-sm font-sans">
             Configure patient invoices, handle ADA procedure code validations, submit claims, record cash/credit cards, and review financial reports.
           </p>
         </div>

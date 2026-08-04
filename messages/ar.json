@@ -52,6 +52,181 @@
     "Laboratory Technician": "فني مختبر أسنان (Lab Tech)",
     "Read-only Auditor": "مراجع سلامة وحسابات (Auditor)"
   },
+  "OrganizationWorkspace": {
+    "headerTitle": "مركز التحكم وإدارة المنظمة والعيادات",
+    "adminConsole": "لوحة الإدارة الرئيسية",
+    "multiClinic": "متعدد العيادات",
+    "tenantDesc": "معرف المنظمة: ORG-8820-X92 • بيئة سحابية مشفرة ومخصصة • لوحة موحدة لإدارة العيادات، صلاحيات المستخدمين، وسعة التخزين.",
+    "hipaaStatus": "فحص HIPAA: مطابق للمقاييس",
+    "multiRegion": "نشط في مناطق متعددة",
+    "nodesSynced": "جميع الأنظمة متزامنة",
+    "tabs": {
+      "Overview": "1. نظرة عامة للمنظمة",
+      "Clinics": "2. مراكز العيادات",
+      "Departments": "3. الأقسام التخصصية",
+      "Users": "4. دليل الموظفين",
+      "Permissions": "5. الأدوار والأمان",
+      "Teams": "6. فرق العمل الطبية",
+      "Audits": "7. سجل الأنشطة والتدقيق",
+      "Notifications": "8. التنبيهات العامة",
+      "Security": "9. مركز أمان النظام",
+      "Settings": "10. إعدادات الهوية والعلامة",
+      "Backup": "11. النسخ الاحتياطي والتعافي"
+    },
+    "badges": {
+      "unified": "مكثف",
+      "matrix": "مصفوفة",
+      "pciLog": "سجل PCI",
+      "branding": "الهوية",
+      "units": "وحدة",
+      "active": "نشط",
+      "teams": "فرق",
+      "alerts": "تنبيهات",
+      "archives": "أرشيفات"
+    }
+  },
+  "DeveloperWorkspace": {
+    "headerTitle": "منصة المطورين والربط البرمجي (APIs)",
+    "gatewayStatus": "حالة البوابة: تعمل بنجاح",
+    "tabs": {
+      "explorer": "1. مستكشف API وتجربة الطلبات",
+      "webhooks": "2. اشتراكات Webhooks الفورية",
+      "credentials": "3. مفاتيح API وتوثيق OAuth",
+      "docs": "4. حزم SDK والتوثيق البرمجي"
+    },
+    "sandbox": {
+      "builderTitle": "منشئ طلبات البيئة التجريبية (Sandbox)",
+      "httpMethod": "نوع الطلب (HTTP Method)",
+      "endpoint": "مسار الـ API Endpoint",
+      "executeBtn": "تنفيذ الطلب في البيئة التجريبية",
+      "proxyLogs": "سجل استجابة بوابة البث",
+      "status": "الحالة",
+      "latency": "زمن الاستجابة"
+    },
+    "webhooks": {
+      "title": "قنوات الإشعارات الفورية (Webhooks)",
+      "addTitle": "إضافة رابط Webhook جديد",
+      "targetUrl": "رابط الاستقبال (Target URL)",
+      "events": "الأحداث المغطاة",
+      "saveBtn": "إضافة وتفعيل القناة"
+    },
+    "credentials": {
+      "title": "مفاتيح الوصول وتأمين الـ API",
+      "generateBtn": "توليد مفتاح API جديد",
+      "revokeBtn": "إلغاء المفتاح",
+      "copyBtn": "نسخ المفتاح"
+    },
+    "docs": {
+      "title": "حزم التطوير وثائق التكامل (SDKs & Docs)",
+      "selectLang": "اختر لغة البرمجة",
+      "copyCode": "نسخ الكود"
+    }
+  },
+  "AuditWorkspace": {
+    "headerTitle": "منصة التدقيق والامتثال ومراقبة الأمان",
+    "overallStatus": "حالة التدقيق العامة",
+    "platformIntegrity": "سلامة النظام والبيانات",
+    "complianceIndex": "مؤشر الامتثال",
+    "integrityDesc": "مؤشر الامتثال محسوب بناءً على الضوابط الفنية والهيكلية المكتملة. جميع النوى معزولة ومحمية.",
+    "authorizedSessions": "جلسات المستعملين المصرح لهم",
+    "authorizedSessionsDesc": "حسابات موثوقة ومفعلة ضمن النطاق الطبي المصرح به.",
+    "encryptionClusters": "عناقيد التشفير النشطة",
+    "encryptionClustersDesc": "جميع الأقسام والملفات والقنوات مشفرة بمعايير AES-256 و TLS الفائقة.",
+    "exportPdf": "تصدير تقرير الامتثال PDF",
+    "tabs": {
+      "logs": "1. سجلات الأمان والأنشطة",
+      "checklist": "2. قواميس الامتثال HIPAA و GDPR",
+      "users": "3. مراجعة مصفوفة الصلاحيات والوصول"
+    },
+    "logs": {
+      "filterTitle": "تصفية سجلات الأنشطة",
+      "searchPlaceholder": "ابحث بالرمز أو اسم المستخدم...",
+      "streamTitle": "سجل التتبع المشفر والأنشطة المباشرة",
+      "noLogs": "لا توجد سجلات تطابق شروط البحث الحالية."
+    },
+    "checklist": {
+      "hipaaTitle": "قائمة الامتثال لمعايير HIPAA الطبية",
+      "gdprTitle": "قائمة الامتثال لحماية البيانات GDPR"
+    },
+    "users": {
+      "title": "مراجعة وصول موظفي المنظمة والأنشطة النشطة",
+      "statusVerified": "موثق ومفعل",
+      "statusPending": "قيد المراجعة",
+      "statusSuspended": "معلق الوصول",
+      "revokeBtn": "تعليق الوصول",
+      "verifyBtn": "تفعيل الوصول"
+    }
+  },
+  "BillingWorkspace": {
+    "headerTitle": "نظام الفوترة والمطالبات والعمليات المالية",
+    "ledgerCore": "سجل الفوترة الرئيسي",
+    "nodeId": "معرف وحدة الفوترة: FIN-7701-X22",
+    "ediStatus": "فحص الأهلية EDI: نشط (100%)",
+    "paymentMethods": "طرق الدفع: حية (بطاقات/نقد/تحويل)",
+    "tabs": {
+      "Dashboard": "1. لوحة تحكم الفوترة",
+      "Invoices": "2. إدارة الفواتير",
+      "InvoiceDetails": "3. تفاصيل الفاتورة",
+      "Payments": "4. الصندوق والمدفوعات",
+      "Insurance": "5. مركز التأمين والمطالبات",
+      "Estimates": "6. عروض الأسعار والتقديرات",
+      "Reports": "7. تقارير الإيرادات",
+      "AIAssistant": "8. مساعد الفوترة الذكي",
+      "Timeline": "9. سجل الأنشطة والتدقيق",
+      "Settings": "10. إعدادات الفوترة"
+    },
+    "badges": {
+      "unified": "مكثف",
+      "focus": "تركيز",
+      "terminal": "الصندوق",
+      "claims": "مطالبات",
+      "plans": "عروض",
+      "audit": "تدقيق",
+      "insight": "تحليل",
+      "liveLog": "مباشر",
+      "rules": "قواعد",
+      "items": "عنصر"
+    }
+  },
+  "GlobalSettingsWorkspace": {
+    "headerTitle": "مركز إعدادات النظام وهيئة العمليات",
+    "headerSubtitle": "إدارة الأقسام التخصصية، قواعد التنبيهات، مفاتيح الربط البرمجي، ومعايير أمان المنظمة.",
+    "nodeStatus": "عقدة المنظمة: مشفرة ونشطة",
+    "tabs": {
+      "organization": "1. المنظمة ونشاط الموظفين",
+      "profile": "2. البيانات والحساب الشخصي",
+      "appConfig": "3. المعايير والمؤشرات الطبية",
+      "notifications": "4. قنوات التنبيهات والإشعارات",
+      "security": "5. أمان ودليل تدقيق النظام"
+    },
+    "organization": {
+      "hierarchyTitle": "الهيكل والتدرج الطبي للأقسام",
+      "hierarchySubtitle": "إدارة الأقسام الطبية التخصصية وتوزيع الطواقم الطبية.",
+      "addDeptTitle": "إضافة قسم تخصصي جديد",
+      "deptName": "اسم القسم",
+      "deptCode": "الرمز",
+      "deptHead": "رئيس القسم",
+      "saveDept": "حفظ القسم",
+      "staffTitle": "دليل الموظفين والطاقم الطبي",
+      "inviteStaffBtn": "دعوة / تعيين موظف جديد"
+    },
+    "profile": {
+      "title": "إدارة الاعتمادات والحساب الشخصي"
+    },
+    "appConfig": {
+      "title": "إعدادات ومعايير التطبيق والذكاء الاصطناعي",
+      "slotDuration": "مدة الموعد القياسية",
+      "aiModel": "نموذج الذكاء الاصطناعي السريري",
+      "saveConfig": "حفظ المعايير"
+    },
+    "notifications": {
+      "title": "قنوات إشعارات وتنبيهات المرضى",
+      "templatesTitle": "قوالب الرسائل الجاهزة"
+    },
+    "security": {
+      "title": "معايير الأمان والتشفير وسجلات الأنشطة"
+    }
+  },
   "Navigation": {
     "dashboard": "لوحة التحكم",
     "patients": "المرضى",
