@@ -36,7 +36,8 @@ import {
   Sparkle,
   Lock,
   ShieldAlert,
-  UserCheck
+  UserCheck,
+  UserPlus
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { handleRequest } from '@/utils/auth-helpers/client';
@@ -49,6 +50,7 @@ import {
 } from '@/utils/enterpriseState';
 import LicenseGate from '@/components/licensing/LicenseGate';
 import LanguageSwitcher from '@/components/ui/language-switcher';
+import { staffAuthService, StaffRole } from '@/utils/services/staffAuthService';
 
 interface DashboardShellProps {
   user: any;
@@ -141,6 +143,32 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
   const [commandQuery, setCommandQuery] = useState('');
   const [commandFeedback, setCommandFeedback] = useState('');
   const [activeRole, setActiveRoleState] = useState<UserRole>('Super Admin');
+
+  // Quick Staff Invite Modal State
+  const [showQuickInviteModal, setShowQuickInviteModal] = useState(false);
+  const [quickInviteForm, setQuickInviteForm] = useState({
+    name: '',
+    email: '',
+    role: 'clinician' as StaffRole,
+    tempPassword: 'doctor123'
+  });
+
+  const handleQuickInviteSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const newMember = staffAuthService.inviteStaffMember({
+        name: quickInviteForm.name,
+        email: quickInviteForm.email,
+        role: quickInviteForm.role,
+        passwordHash: quickInviteForm.tempPassword
+      });
+      setShowQuickInviteModal(false);
+      setQuickInviteForm({ name: '', email: '', role: 'clinician', tempPassword: 'doctor123' });
+      triggerFeedback(`تمت إضافة ودعوة الموظف "${newMember.name}" بنجاح!`);
+    } catch (err: any) {
+      alert(err.message || 'تعذر إضافة الموظف.');
+    }
+  };
 
   // Sync active role with localStorage and event notifications
   useEffect(() => {
@@ -454,6 +482,19 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               </select>
             </div>
 
+            {/* Quick Invite Staff Button for Admins */}
+            {(activeRole === 'Super Admin' || activeRole === 'Clinic Owner') && (
+              <button
+                type="button"
+                onClick={() => setShowQuickInviteModal(true)}
+                className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-md shadow-emerald-500/10 cursor-pointer transition-all"
+                title="إضافة وتحديد صلاحيات موظف جديد"
+              >
+                <UserPlus className="w-3.5 h-3.5" />
+                <span className="hidden md:inline">+ دعوة موظف</span>
+              </button>
+            )}
+
             <span className="text-xs text-zinc-400 font-mono hidden xl:inline">
               {tCommon('systemStatus')}: <span className="text-emerald-400 font-semibold">{tCommon('secure')}</span>
             </span>
@@ -598,6 +639,95 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <span>ESC to dismiss</span>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Quick Invite Staff Modal */}
+      {showQuickInviteModal && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+          <form onSubmit={handleQuickInviteSubmit} className="bg-zinc-950 border border-zinc-850 p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans text-right" dir="rtl">
+            <div className="flex justify-between items-center border-b border-zinc-850 pb-3">
+              <div>
+                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <UserPlus className="w-4 h-4 text-emerald-400" /> دعوة / إضافة موظف جديد لـ HealthOS
+                </h3>
+                <p className="text-[11px] text-zinc-400 mt-0.5">يمكن للموظف استخدام البريد وكلمة المرور للدخول المباشر دون كود تفعيل.</p>
+              </div>
+              <button type="button" onClick={() => setShowQuickInviteModal(false)} className="text-zinc-500 hover:text-white p-1">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <label className="text-zinc-300 font-semibold block">اسم الموظف الكامل</label>
+                <input
+                  type="text"
+                  required
+                  autoFocus
+                  value={quickInviteForm.name}
+                  onChange={(e) => setQuickInviteForm({ ...quickInviteForm, name: e.target.value })}
+                  placeholder="د. محمد السعيد"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-zinc-300 font-semibold block">البريد الإلكتروني للموظف</label>
+                <input
+                  type="email"
+                  required
+                  value={quickInviteForm.email}
+                  onChange={(e) => setQuickInviteForm({ ...quickInviteForm, email: e.target.value })}
+                  placeholder="m.alsaeed@healthos.io"
+                  dir="ltr"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-zinc-300 font-semibold block">الدور والصلاحية (Role / RBAC)</label>
+                <select
+                  value={quickInviteForm.role}
+                  onChange={(e) => setQuickInviteForm({ ...quickInviteForm, role: e.target.value as StaffRole })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none font-mono focus:border-emerald-500"
+                >
+                  <option value="clinician">🩺 طبيب معالج (Clinician - Full EHR Access)</option>
+                  <option value="receptionist">📋 مسؤول استقبال (Receptionist - Appointments & Check-in)</option>
+                  <option value="lab_tech">🧪 فني مختبر (Lab Tech - CAD/CAM & STL)</option>
+                  <option value="admin">👑 مدير نظام (Clinic Admin)</option>
+                  <option value="auditor">🛡️ مراجع سلامة (HIPAA Auditor)</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-zinc-300 font-semibold block">كلمة المرور المبدئية للموظف</label>
+                <input
+                  type="text"
+                  required
+                  value={quickInviteForm.tempPassword}
+                  onChange={(e) => setQuickInviteForm({ ...quickInviteForm, tempPassword: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none focus:border-emerald-500"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 border-t border-zinc-855 pt-3">
+              <button
+                type="button"
+                onClick={() => setShowQuickInviteModal(false)}
+                className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 font-semibold text-xs"
+              >
+                إلغاء
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/20"
+              >
+                إرسال الدعوة واعتماد الحساب
+              </button>
+            </div>
+          </form>
         </div>
       )}
     </div>
