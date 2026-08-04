@@ -1,4 +1,12 @@
-{
+/**
+ * Rebuild ar.json with correct UTF-8 Arabic translations
+ * Run: node scripts/rebuild_ar_json.js
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+const ar = {
   "Common": {
     "appName": "هيلث أو إس",
     "search": "بحث",
@@ -709,4 +717,14 @@
       "notes": "ملاحظات"
     }
   }
-}
+};
+
+const outputPath = path.join(__dirname, '..', 'messages', 'ar.json');
+fs.writeFileSync(outputPath, JSON.stringify(ar, null, 2), 'utf8');
+console.log('✅ ar.json rebuilt successfully with correct Arabic UTF-8 encoding!');
+console.log('File size:', fs.statSync(outputPath).size, 'bytes');
+
+// Verify it's valid
+const verify = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+console.log('✅ JSON validation passed!');
+console.log('Sections:', Object.keys(verify).join(', '));
