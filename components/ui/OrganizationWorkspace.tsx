@@ -626,7 +626,7 @@ export default function OrganizationWorkspace() {
                 {/* Platform Quick Actions */}
                 <div className="p-6 bg-zinc-900/40 border border-zinc-850/80 rounded-3xl space-y-4 flex flex-col justify-between shadow-xl">
                   <div>
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono border-b border-zinc-850 pb-3">Platform Quick Actions</h4>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider font-sans border-b border-zinc-850 pb-3">Platform Quick Actions</h4>
                     <div className="space-y-3 pt-3">
                       
                       <button 
@@ -638,7 +638,7 @@ export default function OrganizationWorkspace() {
                         </div>
                         <div>
                           <p className="text-white text-xs font-bold font-sans group-hover:text-emerald-400 transition-colors">Provision User Seat</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5">Configure core credential roles</p>
+                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">Configure core credential roles</p>
                         </div>
                       </button>
 
@@ -651,7 +651,7 @@ export default function OrganizationWorkspace() {
                         </div>
                         <div>
                           <p className="text-white text-xs font-bold font-sans group-hover:text-purple-400 transition-colors">Audit Permission Matrix</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5">Adjust clinical access parameters</p>
+                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">Adjust clinical access parameters</p>
                         </div>
                       </button>
 
@@ -664,7 +664,7 @@ export default function OrganizationWorkspace() {
                         </div>
                         <div>
                           <p className="text-white text-xs font-bold font-sans group-hover:text-rose-400 transition-colors">Trigger Security Scan</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5">Review HIPAA logs and 2FA compliance</p>
+                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">Review HIPAA logs and 2FA compliance</p>
                         </div>
                       </button>
 
@@ -682,16 +682,16 @@ export default function OrganizationWorkspace() {
                   </div>
                   <div>
                     <h5 className="font-bold text-white">Dr. C. Avery</h5>
-                    <p className="text-[11px] text-zinc-400">Role: System Owner • Active Operator</p>
+                    <p className="text-[11px] text-zinc-400 font-sans">Role: System Owner • Active Operator</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 font-mono text-emerald-400 font-semibold bg-emerald-500/10 px-3.5 py-1.5 rounded-xl border border-emerald-500/20">
+                <div className="flex items-center gap-2 font-sans text-emerald-400 font-semibold bg-emerald-500/10 px-3.5 py-1.5 rounded-xl border border-emerald-500/20">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   <span>Enterprise PACS Server State: Synchronized with US-East-1 AWS Cloud</span>
                 </div>
 
-                <div className="text-zinc-400 font-mono text-xs">
+                <div className="text-zinc-400 font-sans text-xs">
                   Owner Contact: <strong className="text-white">HealthOS Admin</strong>
                 </div>
               </div>
@@ -709,8 +709,8 @@ export default function OrganizationWorkspace() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
                       <div>
-                        <h3 className="text-base font-black text-white uppercase tracking-tight">Active Clinic Sites & Facilities</h3>
-                        <p className="text-xs text-zinc-500 font-mono">Monitor real-time clinical room utilization and manager assignments.</p>
+                        <h3 className="text-base font-black text-white uppercase tracking-tight font-sans">Active Clinic Sites & Facilities</h3>
+                        <p className="text-xs text-zinc-400 font-sans">Monitor real-time clinical room utilization and manager assignments.</p>
                       </div>
                       {showAddClinicForm ? (
                         <button 
