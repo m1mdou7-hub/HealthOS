@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { DollarSign, Plus, CheckCircle2, ShieldAlert, Clock, ArrowUpDown, FileText } from 'lucide-react';
-import { clinicalService, BillingInvoice, BillingPayment } from '../../../utils/services/clinicalService';
+import { DollarSign, Plus, CheckCircle2, ShieldAlert, Clock, ArrowUpDown, FileText, Printer, ShieldCheck, Calculator, QrCode, X, Building2, User, Calendar } from 'lucide-react';
+import { clinicalService, BillingInvoice, BillingPayment, InsuranceClaim } from '../../../utils/services/clinicalService';
 import { Patient } from '../PatientWorkspace';
 
 interface BillingOverviewProps {
@@ -20,6 +20,12 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
 
   const [showInvoiceModal, setShowInvoiceModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showPrintModal, setShowPrintModal] = useState(false);
+  const [showClaimModal, setShowClaimModal] = useState(false);
+  const [showInstallmentModal, setShowInstallmentModal] = useState(false);
+
+  const [selectedInvoiceForPrint, setSelectedInvoiceForPrint] = useState<BillingInvoice | null>(null);
+  const [installmentMonths, setInstallmentMonths] = useState<number>(3);
 
   // Forms states
   const [invoiceForm, setInvoiceForm] = useState({
@@ -39,7 +45,15 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
     notes: ''
   });
 
-  // 1. Fetch Invoices and Payments using TanStack Query
+  const [claimForm, setClaimForm] = useState({
+    invoiceId: '',
+    provider: 'Bupa Healthcare Arabia',
+    policyNumber: 'POL-2026-881',
+    preAuthRequired: true,
+    amountClaimed: 1800
+  });
+
+  // 1. Fetch Invoices, Payments, Claims using TanStack Query
   const { data: invoices = [], isLoading: isLoadingInvoices } = useQuery({
     queryKey: ['invoices', activePatient.id],
     queryFn: () => clinicalService.getInvoices(supabase, activePatient.id, demoMode),
@@ -49,6 +63,12 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
   const { data: payments = [], isLoading: isLoadingPayments } = useQuery({
     queryKey: ['payments', activePatient.id],
     queryFn: () => clinicalService.getPayments(supabase, activePatient.id, demoMode),
+    enabled: !!activePatient.id
+  });
+
+  const { data: claims = [] } = useQuery({
+    queryKey: ['claims', activePatient.id],
+    queryFn: () => clinicalService.getClaims(supabase, activePatient.id, demoMode),
     enabled: !!activePatient.id
   });
 
@@ -78,6 +98,16 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       queryClient.invalidateQueries({ queryKey: ['payments', activePatient.id] });
       queryClient.invalidateQueries({ queryKey: ['invoices', activePatient.id] });
       setShowPaymentModal(false);
+    }
+  });
+
+  const submitClaimMutation = useMutation({
+    mutationFn: (claimData: Omit<InsuranceClaim, 'id' | 'patientId' | 'patientName' | 'submittedAt'>) =>
+      clinicalService.submitClaim(supabase, activePatient.id, activePatient.name, claimData, demoMode),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['claims', activePatient.id] });
+      queryClient.invalidateQueries({ queryKey: ['invoices', activePatient.id] });
+      setShowClaimModal(false);
     }
   });
 
@@ -125,6 +155,27 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
     });
   };
 
+  const handleClaimSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const matchedInvoice = invoices.find(inv => inv.id === claimForm.invoiceId);
+    if (!matchedInvoice) return;
+
+    submitClaimMutation.mutate({
+      invoiceId: claimForm.invoiceId,
+      invoiceNumber: matchedInvoice.invoiceNumber,
+      provider: claimForm.provider,
+      policyNumber: claimForm.policyNumber,
+      preAuthRequired: claimForm.preAuthRequired,
+      preAuthStatus: claimForm.preAuthRequired ? 'Approved' : 'Not Required',
+      amountClaimed: claimForm.amountClaimed,
+      amountApproved: claimForm.amountClaimed,
+      status: 'Submitted',
+      timeline: [
+        { title: 'Electronic Claim Submitted', date: new Date().toISOString().split('T')[0], description: `Submitted to ${claimForm.provider}` }
+      ]
+    });
+  };
+
   return (
     <div className="space-y-6 text-left">
       {/* Overview stats cards */}
@@ -153,7 +204,34 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
           </h3>
           <p className="text-[11px] text-zinc-400 mt-0.5">{t('patient_ledger_desc')}</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {outstandingBalance > 0 && (
+            <button
+              onClick={() => setShowInstallmentModal(true)}
+              className="px-3 py-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 text-xs font-semibold flex items-center gap-1 border border-purple-500/20 transition-colors"
+            >
+              <Calculator className="w-3.5 h-3.5" /> {t('btn_installment_plan')}
+            </button>
+          )}
+          <button
+            onClick={() => {
+              if (invoices.length > 0) {
+                setClaimForm({
+                  invoiceId: invoices[0].id,
+                  provider: invoices[0].insuranceProvider || 'Bupa Healthcare Arabia',
+                  policyNumber: 'POL-2026-991',
+                  preAuthRequired: true,
+                  amountClaimed: invoices[0].treatmentItems.reduce((acc, c) => acc + c.insurance, 0)
+                });
+                setShowClaimModal(true);
+              } else {
+                alert("Please create an invoice first.");
+              }
+            }}
+            className="px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 text-xs font-semibold flex items-center gap-1 border border-blue-500/20 transition-colors"
+          >
+            <ShieldCheck className="w-3.5 h-3.5" /> {t('btn_submit_claim')}
+          </button>
           <button
             onClick={() => {
               setInvoiceForm({
@@ -216,6 +294,15 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                       <h4 className="text-xs font-bold text-white mt-0.5">{inv.clinicName} • Due {inv.dueDate}</h4>
                     </div>
                     <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => {
+                          setSelectedInvoiceForPrint(inv);
+                          setShowPrintModal(true);
+                        }}
+                        className="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-[10px] font-mono flex items-center gap-1 border border-zinc-800 transition-colors"
+                      >
+                        <Printer className="w-3 h-3 text-emerald-400" /> {t('btn_print_invoice')}
+                      </button>
                       <span className={`px-2 py-0.5 rounded text-[8px] uppercase font-mono font-bold border ${
                         inv.paymentStatus === 'Paid' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
                         inv.paymentStatus === 'Partially Paid' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
@@ -317,7 +404,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               <button
                 type="button"
                 onClick={() => setShowInvoiceModal(false)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-855 text-zinc-400 text-xs"
+                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs"
               >
                 Cancel
               </button>
@@ -378,7 +465,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               <button
                 type="button"
                 onClick={() => setShowPaymentModal(false)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-855 text-zinc-400 text-xs"
+                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs"
               >
                 Cancel
               </button>
@@ -391,6 +478,262 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               </button>
             </div>
           </form>
+        </div>
+      )}
+
+      {/* e-Claim Submission Modal */}
+      {showClaimModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <form onSubmit={handleClaimSubmit} className="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl w-full max-w-md space-y-4 text-xs">
+            <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
+              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-blue-400" /> {t('btn_submit_claim')}
+              </h3>
+              <button type="button" onClick={() => setShowClaimModal(false)} className="text-zinc-500 hover:text-white">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <label className="text-zinc-400">Target Invoice</label>
+                <select
+                  value={claimForm.invoiceId}
+                  onChange={(e) => setClaimForm({ ...claimForm, invoiceId: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
+                >
+                  {invoices.map(inv => (
+                    <option key={inv.id} value={inv.id}>{inv.invoiceNumber} - {inv.insuranceProvider}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-1">
+                <label className="text-zinc-400">{t('claim_provider_policy')}</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="text"
+                    value={claimForm.provider}
+                    onChange={(e) => setClaimForm({ ...claimForm, provider: e.target.value })}
+                    className="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
+                    placeholder="Insurer Name"
+                  />
+                  <input
+                    type="text"
+                    value={claimForm.policyNumber}
+                    onChange={(e) => setClaimForm({ ...claimForm, policyNumber: e.target.value })}
+                    className="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
+                    placeholder="Policy Number"
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="text-zinc-400">Amount Claimed ($)</label>
+                <input
+                  type="number"
+                  value={claimForm.amountClaimed}
+                  onChange={(e) => setClaimForm({ ...claimForm, amountClaimed: Number(e.target.value) })}
+                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
+                />
+              </div>
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 text-[11px] space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold">{t('claim_status_preauth')}</span>
+                  <span className="px-2 py-0.5 rounded bg-blue-500/20 font-bold text-[9px] font-mono text-blue-300 uppercase">Pre-Authorized (Approved)</span>
+                </div>
+                <p className="text-[10px] text-blue-300/80">Electronic CDT procedure code clearance automatically verified via HealthOS Portal EDI Gateway.</p>
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
+              <button
+                type="button"
+                onClick={() => setShowClaimModal(false)}
+                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={submitClaimMutation.isPending}
+                className="px-4 py-1.5 rounded-lg bg-blue-500 hover:bg-blue-400 text-white font-bold text-xs flex items-center gap-1"
+              >
+                <ShieldCheck className="w-3.5 h-3.5" /> Submit Claim
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Installment Plan Calculator Modal */}
+      {showInstallmentModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl w-full max-w-md space-y-4 text-xs">
+            <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
+              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                <Calculator className="w-4 h-4 text-purple-400" /> {t('installment_calc_title')}
+              </h3>
+              <button type="button" onClick={() => setShowInstallmentModal(false)} className="text-zinc-500 hover:text-white">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 flex justify-between items-center">
+                <div>
+                  <span className="text-[10px] uppercase font-mono text-purple-400 block">{t('outstanding')}</span>
+                  <span className="text-lg font-bold font-mono text-white">${outstandingBalance.toLocaleString()}</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] uppercase font-mono text-purple-400 block">{t('installment_calc_monthly_val')}</span>
+                  <span className="text-lg font-bold font-mono text-purple-300">
+                    ${(outstandingBalance / installmentMonths).toFixed(2)}/mo
+                  </span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-zinc-400">{t('installment_calc_months')}</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {[3, 6, 9, 12].map(m => (
+                    <button
+                      key={m}
+                      type="button"
+                      onClick={() => setInstallmentMonths(m)}
+                      className={`py-2 rounded-xl text-xs font-mono font-bold border transition-all ${
+                        installmentMonths === m
+                          ? 'bg-purple-500 text-white border-purple-400 shadow-lg shadow-purple-500/20'
+                          : 'bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-800'
+                      }`}
+                    >
+                      {m} Months
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Installments Schedule Breakdown */}
+              <div className="space-y-1.5 border-t border-zinc-900 pt-3">
+                <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold block">Payment Schedule Breakdown</span>
+                <div className="space-y-1 max-h-36 overflow-y-auto pr-1">
+                  {Array.from({ length: installmentMonths }).map((_, idx) => {
+                    const due = new Date(Date.now() + (idx + 1) * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                    const amount = (outstandingBalance / installmentMonths).toFixed(2);
+                    return (
+                      <div key={idx} className="flex justify-between items-center p-2 rounded-lg bg-zinc-900/60 border border-zinc-900 text-[11px] font-mono">
+                        <span className="text-zinc-400">Installment #{idx + 1} • Due {due}</span>
+                        <span className="text-white font-bold">${amount}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end border-t border-zinc-900 pt-3">
+              <button
+                type="button"
+                onClick={() => setShowInstallmentModal(false)}
+                className="px-4 py-1.5 rounded-lg bg-purple-500 hover:bg-purple-400 text-white font-bold text-xs"
+              >
+                Close Calculator
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Printable Invoice / Official Receipt Modal */}
+      {showPrintModal && selectedInvoiceForPrint && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white text-zinc-950 p-8 rounded-2xl w-full max-w-2xl space-y-6 shadow-2xl relative">
+            <div className="flex justify-between items-start border-b border-zinc-200 pb-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Building2 className="w-6 h-6 text-emerald-600" />
+                  <h2 className="text-lg font-bold text-zinc-900">{selectedInvoiceForPrint.clinicName}</h2>
+                </div>
+                <p className="text-xs text-zinc-500 mt-1">HealthOS Official Dental & Medical Center • Tax ID: 300921893</p>
+              </div>
+              <div className="text-right">
+                <span className="px-3 py-1 bg-emerald-100 text-emerald-800 font-mono text-xs font-bold rounded-full">
+                  OFFICIAL RECEIPT
+                </span>
+                <span className="block text-xs font-mono text-zinc-500 mt-1">{selectedInvoiceForPrint.invoiceNumber}</span>
+              </div>
+            </div>
+
+            {/* Meta information */}
+            <div className="grid grid-cols-2 gap-4 text-xs border-b border-zinc-200 pb-4">
+              <div>
+                <span className="text-zinc-400 uppercase text-[9px] font-bold block">Patient Details</span>
+                <span className="font-bold text-zinc-900 block text-sm">{activePatient.name}</span>
+                <span className="text-zinc-600 block">ID: {activePatient.id} • Tel: {activePatient.phone || '+966 50 123 4567'}</span>
+              </div>
+              <div className="text-right">
+                <span className="text-zinc-400 uppercase text-[9px] font-bold block">Attending Clinician & Date</span>
+                <span className="font-bold text-zinc-900 block text-sm">{activePatient.primaryDoctor || 'Dr. Ahmed'}</span>
+                <span className="text-zinc-600 block">Issue Date: {selectedInvoiceForPrint.issueDate}</span>
+              </div>
+            </div>
+
+            {/* Line items table */}
+            <div className="space-y-2">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-zinc-300 text-zinc-500 text-[10px] uppercase font-bold">
+                    <th className="py-2">Procedure Description</th>
+                    <th className="py-2 text-right">Fee</th>
+                    <th className="py-2 text-right">Insurer Share</th>
+                    <th className="py-2 text-right">Patient Co-Pay</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-200 font-mono">
+                  {(selectedInvoiceForPrint.treatmentItems || []).map((item, i) => (
+                    <tr key={i}>
+                      <td className="py-2 font-sans text-zinc-900 font-medium">{item.name}</td>
+                      <td className="py-2 text-right text-zinc-700">${item.fee.toLocaleString()}</td>
+                      <td className="py-2 text-right text-purple-600">${item.insurance.toLocaleString()}</td>
+                      <td className="py-2 text-right font-bold text-zinc-900">${item.copay.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Total calculation & QR Code */}
+            <div className="flex justify-between items-center border-t border-zinc-300 pt-4">
+              <div className="flex items-center gap-3 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
+                <QrCode className="w-10 h-10 text-zinc-800" />
+                <div className="text-[10px] text-zinc-600">
+                  <span className="font-bold text-zinc-900 block">{t('official_receipt_qr')}</span>
+                  <span>Scan to verify authenticity & ZATCA e-invoicing compliance</span>
+                </div>
+              </div>
+              <div className="text-right space-y-1 font-mono text-xs">
+                <div className="flex justify-between gap-6 text-zinc-600">
+                  <span>Total Invoiced:</span>
+                  <span>${(selectedInvoiceForPrint.treatmentItems || []).reduce((s, i) => s + i.fee, 0).toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between gap-6 text-emerald-600 font-bold">
+                  <span>Amount Paid:</span>
+                  <span>${selectedInvoiceForPrint.amountPaid.toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Print & Close buttons */}
+            <div className="flex justify-end gap-2 border-t border-zinc-200 pt-4 print:hidden">
+              <button
+                type="button"
+                onClick={() => setShowPrintModal(false)}
+                className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-semibold"
+              >
+                Close Preview
+              </button>
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-emerald-600/20"
+              >
+                <Printer className="w-4 h-4" /> Print Receipt PDF
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

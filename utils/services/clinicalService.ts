@@ -72,6 +72,33 @@ export interface BillingPayment {
   receiptNumber: string;
 }
 
+export interface InsuranceClaim {
+  id: string;
+  invoiceId: string;
+  invoiceNumber: string;
+  patientId: string;
+  patientName: string;
+  provider: string;
+  policyNumber: string;
+  preAuthRequired: boolean;
+  preAuthStatus: 'Approved' | 'Not Required' | 'Pending' | 'Denied';
+  amountClaimed: number;
+  amountApproved: number;
+  status: 'Draft' | 'Submitted' | 'In Review' | 'Approved' | 'Rejected';
+  timeline: { title: string; date: string; description: string }[];
+  submittedAt: string;
+}
+
+export interface PaymentInstallmentPlan {
+  id: string;
+  invoiceId: string;
+  totalAmount: number;
+  numberOfInstallments: number;
+  monthlyAmount: number;
+  startDate: string;
+  installments: { dueDate: string; amount: number; status: 'Paid' | 'Pending' | 'Overdue' }[];
+}
+
 export interface PatientCase {
   id: string;
   name: string;
@@ -693,6 +720,108 @@ export const clinicalService = {
     }
 
     return fullPayment;
+  },
+
+  // --- INSURANCE CLAIMS ---
+  async getClaims(supabase: SupabaseClient, patientId: string, demoMode: boolean): Promise<InsuranceClaim[]> {
+    if (demoMode) {
+      const key = `healthos_claims_${patientId}`;
+      const saved = localStorage.getItem(key);
+      if (saved) return JSON.parse(saved);
+      const defaults: InsuranceClaim[] = [
+        {
+          id: `claim-101`,
+          invoiceId: 'inv-demo-1',
+          invoiceNumber: 'INV-2026-001',
+          patientId,
+          patientName: 'Patient',
+          provider: 'Delta Dental / Bupa Healthcare',
+          policyNumber: 'POL-992014-AX',
+          preAuthRequired: true,
+          preAuthStatus: 'Approved',
+          amountClaimed: 1800,
+          amountApproved: 1800,
+          status: 'Approved',
+          timeline: [
+            { title: 'Claim Drafted', date: '2026-07-15', description: 'Generated from Invoice #INV-2026-001' },
+            { title: 'Pre-Authorization Granted', date: '2026-07-16', description: 'Pre-Auth Code #PA-88192' },
+            { title: 'Claim Approved & Disbursed', date: '2026-07-18', description: 'Insurance payout of $1,800 cleared' }
+          ],
+          submittedAt: '2026-07-15'
+        }
+      ];
+      localStorage.setItem(key, JSON.stringify(defaults));
+      return defaults;
+    }
+
+    const { data, error } = await supabase
+      .from('healthos_billing_claims')
+      .select('*')
+      .eq('patient_id', patientId)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return (data || []).map((row: any) => ({
+      id: row.id,
+      invoiceId: row.invoice_id,
+      invoiceNumber: row.invoice_number,
+      patientId: row.patient_id,
+      patientName: row.patient_name,
+      provider: row.provider,
+      policyNumber: row.policy_number || '',
+      preAuthRequired: row.pre_auth_required || false,
+      preAuthStatus: row.pre_auth_status || 'Not Required',
+      amountClaimed: Number(row.amount_claimed || 0),
+      amountApproved: Number(row.amount_approved || 0),
+      status: row.status,
+      timeline: row.timeline || [],
+      submittedAt: row.created_at
+    }));
+  },
+
+  async submitClaim(supabase: SupabaseClient, patientId: string, patientName: string, claimData: Omit<InsuranceClaim, 'id' | 'patientId' | 'patientName' | 'submittedAt'>, demoMode: boolean): Promise<InsuranceClaim> {
+    const newClaim: InsuranceClaim = {
+      ...claimData,
+      id: `claim_${Math.floor(100000 + Math.random() * 900000)}`,
+      patientId,
+      patientName,
+      submittedAt: new Date().toISOString()
+    };
+
+    if (demoMode) {
+      const claimsKey = `healthos_claims_${patientId}`;
+      const claims = await this.getClaims(supabase, patientId, true);
+      const updatedClaims = [newClaim, ...claims];
+      localStorage.setItem(claimsKey, JSON.stringify(updatedClaims));
+
+      // Update insurance claim status in invoice
+      const invoicesKey = `healthos_invoices_${patientId}`;
+      const invoices = await this.getInvoices(supabase, patientId, true);
+      const updatedInvoices = invoices.map(inv => inv.id === newClaim.invoiceId ? { ...inv, insuranceClaimStatus: newClaim.status as any } : inv);
+      localStorage.setItem(invoicesKey, JSON.stringify(updatedInvoices));
+
+      return newClaim;
+    }
+
+    const { error } = await supabase
+      .from('healthos_billing_claims')
+      .insert({
+        invoice_id: newClaim.invoiceId,
+        invoice_number: newClaim.invoiceNumber,
+        patient_id: newClaim.patientId,
+        patient_name: newClaim.patientName,
+        provider: newClaim.provider,
+        policy_number: newClaim.policyNumber,
+        pre_auth_required: newClaim.preAuthRequired,
+        pre_auth_status: newClaim.preAuthStatus,
+        amount_claimed: newClaim.amountClaimed,
+        amount_approved: newClaim.amountApproved,
+        status: newClaim.status,
+        timeline: newClaim.timeline
+      });
+
+    if (error) throw error;
+    return newClaim;
   },
 
   // --- TREATMENT PLANS ---
