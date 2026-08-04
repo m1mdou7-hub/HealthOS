@@ -42,6 +42,16 @@
     "arabic": "العربية",
     "english": "English"
   },
+  "Roles": {
+    "Super Admin": "Super Admin",
+    "Clinic Owner": "Clinic Owner",
+    "Prosthodontist": "Prosthodontist",
+    "General Dentist": "General Dentist",
+    "Assistant": "Assistant",
+    "Receptionist": "Receptionist",
+    "Laboratory Technician": "Laboratory Technician",
+    "Read-only Auditor": "Read-only Auditor"
+  },
   "Navigation": {
     "dashboard": "Dashboard",
     "patients": "Patients",

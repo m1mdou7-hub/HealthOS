@@ -42,6 +42,16 @@
     "arabic": "العربية",
     "english": "English"
   },
+  "Roles": {
+    "Super Admin": "مدير النظام الرئيسي (Super Admin)",
+    "Clinic Owner": "مالك العيادة (Clinic Owner)",
+    "Prosthodontist": "استشاري تركيبة وزراعة (Prosthodontist)",
+    "General Dentist": "طبيب أسنان عام (General Dentist)",
+    "Assistant": "مساعد طبيب (Assistant)",
+    "Receptionist": "مسؤول الاستقبال (Receptionist)",
+    "Laboratory Technician": "فني مختبر أسنان (Lab Tech)",
+    "Read-only Auditor": "مراجع سلامة وحسابات (Auditor)"
+  },
   "Navigation": {
     "dashboard": "لوحة التحكم",
     "patients": "المرضى",

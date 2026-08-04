@@ -135,6 +135,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
   const tNav = useTranslations('Navigation');
   const tCommon = useTranslations('Common');
   const tAccess = useTranslations('Access');
+  const tRoles = useTranslations('Roles');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState('');
@@ -436,14 +437,20 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                 }}
                 className="bg-transparent border-none text-xs font-semibold text-zinc-300 outline-none pr-1.5 cursor-pointer font-sans"
               >
-                <option value="Super Admin" className="bg-zinc-950 text-white">Super Admin</option>
-                <option value="Clinic Owner" className="bg-zinc-950 text-white">Clinic Owner</option>
-                <option value="Prosthodontist" className="bg-zinc-950 text-white">Prosthodontist</option>
-                <option value="General Dentist" className="bg-zinc-950 text-white font-mono">General Dentist</option>
-                <option value="Assistant" className="bg-zinc-950 text-white">Assistant</option>
-                <option value="Receptionist" className="bg-zinc-950 text-white">Receptionist</option>
-                <option value="Laboratory Technician" className="bg-zinc-950 text-white">Laboratory Technician</option>
-                <option value="Read-only Auditor" className="bg-zinc-950 text-white">Read-only Auditor</option>
+                {[
+                  'Super Admin',
+                  'Clinic Owner',
+                  'Prosthodontist',
+                  'General Dentist',
+                  'Assistant',
+                  'Receptionist',
+                  'Laboratory Technician',
+                  'Read-only Auditor'
+                ].map((roleKey) => (
+                  <option key={roleKey} value={roleKey} className="bg-zinc-950 text-white font-sans py-1">
+                    {tRoles(roleKey)}
+                  </option>
+                ))}
               </select>
             </div>
 
