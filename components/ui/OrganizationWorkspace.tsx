@@ -526,59 +526,59 @@ export default function OrganizationWorkspace() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
                 {/* Stat 1: Org ID */}
-                <div className="p-5 bg-zinc-900/40 border border-zinc-850/80 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all">
+                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Organization ID</span>
-                    <Building2 className="w-4 h-4 text-emerald-400" />
+                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.orgId')}</span>
+                    <Building2 className="w-4 h-4 text-gold-400" />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-white font-mono">ORG-8820-X92</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 truncate font-sans">{workspaceName}</p>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                    <div className="h-full bg-emerald-500 rounded-full w-full" />
+                    <div className="h-full bg-gold-500 rounded-full w-full shadow-gold-glow" />
                   </div>
                 </div>
 
                 {/* Stat 2: Clinics & Rooms */}
-                <div className="p-5 bg-zinc-900/40 border border-zinc-850/80 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all">
+                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Clinics & Rooms</span>
-                    <Globe className="w-4 h-4 text-emerald-400" />
+                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.clinicsRooms')}</span>
+                    <Globe className="w-4 h-4 text-gold-400" />
                   </div>
                   <div>
-                    <h4 className="text-2xl font-bold text-white">{totalClinics} Site{totalClinics > 1 ? 's' : ''}</h4>
-                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">Total of 21 Clinical Suites active</p>
+                    <h4 className="text-2xl font-bold text-white">{totalClinics} {tOrg('overview_stats.sitesLabel')}</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.totalSuitesActive', { count: 21 })}</p>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                    <div className="h-full bg-emerald-500 rounded-full w-4/5" />
+                    <div className="h-full bg-gold-500 rounded-full w-4/5 shadow-gold-glow" />
                   </div>
                 </div>
 
                 {/* Stat 3: License Seats */}
-                <div className="p-5 bg-zinc-900/40 border border-zinc-850/80 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all">
+                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">License Seats</span>
-                    <span className="text-xs text-emerald-400 font-mono font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">28 free</span>
+                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.licenseSeats')}</span>
+                    <span className="text-xs text-gold-400 font-mono font-bold bg-gold-500/10 px-2 py-0.5 rounded border border-gold-500/20">{tOrg('overview_stats.freeCount', { count: 28 })}</span>
                   </div>
                   <div>
                     <h4 className="text-2xl font-bold text-white font-mono">122 / 150</h4>
-                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">81.3% subscription capacity</p>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.subscriptionCapacity')}</p>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                    <div className="h-full bg-emerald-500 rounded-full w-[81.3%]" />
+                    <div className="h-full bg-gold-500 rounded-full w-[81.3%] shadow-gold-glow" />
                   </div>
                 </div>
 
                 {/* Stat 4: Secure Cloud Storage */}
-                <div className="p-5 bg-zinc-900/40 border border-zinc-850/80 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all">
+                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Secure Cloud Storage</span>
+                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.secureCloudStorage')}</span>
                     <span className="text-xs text-cyan-400 font-mono font-bold bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">24%</span>
                   </div>
                   <div>
                     <h4 className="text-2xl font-bold text-white font-mono">1.2 / 5.0 TB</h4>
-                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">Mainly PACS and STL Scan storage</p>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.mainStlStorage')}</p>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
                     <div className="h-full bg-cyan-400 rounded-full w-[24%]" />
@@ -591,14 +591,14 @@ export default function OrganizationWorkspace() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
                 {/* AI API Utilization Trend Chart */}
-                <div className="lg:col-span-2 p-6 bg-zinc-900/40 border border-zinc-850/80 rounded-3xl space-y-4 shadow-xl">
-                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-zinc-850 pb-3">
+                <div className="lg:col-span-2 p-6 bg-[#0d0d16]/30 border border-white/5 rounded-3xl space-y-4 shadow-xl card-luxury">
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-white/5 pb-3">
                     <div>
-                      <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono">AI API Utilization Trend</h4>
-                      <p className="text-xs text-zinc-400 mt-0.5 font-sans">Real-time clinical AI model telemetry and laboratory inference calls.</p>
+                      <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono">{tOrg('overview_stats.aiTrendTitle')}</h4>
+                      <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.aiTrendSub')}</p>
                     </div>
-                    <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-xl self-start sm:self-auto font-semibold">
-                      Total processed this month: 42,650 calls
+                    <span className="text-xs font-mono text-gold-400 bg-gold-500/10 border border-gold-500/20 px-3 py-1 rounded-xl self-start sm:self-auto font-semibold">
+                      {tOrg('overview_stats.aiTrendProcessed', { count: '42,650' })}
                     </span>
                   </div>
 
@@ -607,19 +607,19 @@ export default function OrganizationWorkspace() {
                       <AreaChart data={AI_UTILIZATION_DATA}>
                         <defs>
                           <linearGradient id="callsGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.35}/>
-                            <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#c9a84c" stopOpacity={0.35}/>
+                            <stop offset="95%" stopColor="#c9a84c" stopOpacity={0}/>
                           </linearGradient>
                           <linearGradient id="clinicalGrad" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.35}/>
                             <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
                           </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#27272a" opacity={0.6} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#27272a" opacity={0.3} />
                         <XAxis dataKey="date" stroke="#a1a1aa" style={{ fontSize: '11px' }} />
                         <YAxis stroke="#a1a1aa" style={{ fontSize: '11px' }} />
-                        <Tooltip contentStyle={{ backgroundColor: '#09090b', borderColor: '#27272a', borderRadius: '12px', fontSize: '12px' }} />
-                        <Area type="monotone" dataKey="calls" stroke="#10b981" strokeWidth={2.5} fillOpacity={1} fill="url(#callsGrad)" name="Total AI Calls" />
+                        <Tooltip contentStyle={{ backgroundColor: '#07070c', borderColor: 'rgba(255,255,255,0.05)', borderRadius: '12px', fontSize: '12px' }} />
+                        <Area type="monotone" dataKey="calls" stroke="#c9a84c" strokeWidth={2.5} fillOpacity={1} fill="url(#callsGrad)" name="Total AI Calls" />
                         <Area type="monotone" dataKey="clinical" stroke="#8b5cf6" strokeWidth={2.5} fillOpacity={1} fill="url(#clinicalGrad)" name="Clinical AI" />
                       </AreaChart>
                     </ResponsiveContainer>
@@ -627,47 +627,47 @@ export default function OrganizationWorkspace() {
                 </div>
 
                 {/* Platform Quick Actions */}
-                <div className="p-6 bg-zinc-900/40 border border-zinc-850/80 rounded-3xl space-y-4 flex flex-col justify-between shadow-xl">
+                <div className="p-6 bg-[#0d0d16]/30 border border-white/5 rounded-3xl space-y-4 flex flex-col justify-between shadow-xl card-luxury">
                   <div>
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider font-sans border-b border-zinc-850 pb-3">Platform Quick Actions</h4>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider font-sans border-b border-white/5 pb-3">{tOrg('overview_stats.quickActionsTitle')}</h4>
                     <div className="space-y-3 pt-3">
                       
                       <button 
                         onClick={() => { setActiveTab('Users') }}
-                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-emerald-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
                       >
-                        <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl group-hover:bg-emerald-500 group-hover:text-zinc-950 transition-colors">
+                        <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Plus className="w-5 h-5" />
                         </div>
                         <div>
-                          <p className="text-white text-xs font-bold font-sans group-hover:text-emerald-400 transition-colors">Provision User Seat</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">Configure core credential roles</p>
+                          <p className="text-white text-xs font-bold font-sans group-hover:text-gold-400 transition-colors">{tOrg('overview_stats.provisionUser')}</p>
+                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.provisionUserSub')}</p>
                         </div>
                       </button>
 
                       <button 
                         onClick={() => { setActiveTab('Permissions') }}
-                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-purple-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
                       >
-                        <div className="p-2 bg-purple-500/10 text-purple-400 rounded-xl group-hover:bg-purple-500 group-hover:text-zinc-950 transition-colors">
+                        <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Sliders className="w-5 h-5" />
                         </div>
                         <div>
-                          <p className="text-white text-xs font-bold font-sans group-hover:text-purple-400 transition-colors">Audit Permission Matrix</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">Adjust clinical access parameters</p>
+                          <p className="text-white text-xs font-bold font-sans group-hover:text-gold-400 transition-colors">{tOrg('overview_stats.auditMatrix')}</p>
+                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.auditMatrixSub')}</p>
                         </div>
                       </button>
 
                       <button 
                         onClick={() => { setActiveTab('Security') }}
-                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-rose-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
                       >
                         <div className="p-2 bg-rose-500/10 text-rose-400 rounded-xl group-hover:bg-rose-500 group-hover:text-zinc-950 transition-colors">
                           <Lock className="w-5 h-5" />
                         </div>
                         <div>
-                          <p className="text-white text-xs font-bold font-sans group-hover:text-rose-400 transition-colors">Trigger Security Scan</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">Review HIPAA logs and 2FA compliance</p>
+                          <p className="text-white text-xs font-bold font-sans group-hover:text-gold-400 transition-colors">{tOrg('overview_stats.triggerScan')}</p>
+                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.triggerScanSub')}</p>
                         </div>
                       </button>
 
@@ -678,24 +678,24 @@ export default function OrganizationWorkspace() {
               </div>
 
               {/* Active Operator & Bottom Telemetry Bar */}
-              <div className="p-4 bg-zinc-900/30 border border-zinc-850/80 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-sans">
+              <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-sans card-luxury">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-md">
                     CA
                   </div>
                   <div>
                     <h5 className="font-bold text-white">Dr. C. Avery</h5>
-                    <p className="text-[11px] text-zinc-400 font-sans">Role: System Owner • Active Operator</p>
+                    <p className="text-[11px] text-zinc-400 font-sans">{tOrg('overview_stats.roleLabel')}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 font-sans text-emerald-400 font-semibold bg-emerald-500/10 px-3.5 py-1.5 rounded-xl border border-emerald-500/20">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>Enterprise PACS Server State: Synchronized with US-East-1 AWS Cloud</span>
+                <div className="flex items-center gap-2 font-sans text-gold-400 font-semibold bg-gold-500/10 px-3.5 py-1.5 rounded-xl border border-gold-500/20">
+                  <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse" />
+                  <span>{tOrg('overview_stats.pacsServerState')}</span>
                 </div>
 
                 <div className="text-zinc-400 font-sans text-xs">
-                  Owner Contact: <strong className="text-white">HealthOS Admin</strong>
+                  {tOrg('overview_stats.ownerContact', { name: 'HealthOS Admin' })}
                 </div>
               </div>
 
@@ -710,17 +710,17 @@ export default function OrganizationWorkspace() {
                   className="h-full flex flex-col justify-between"
                 >
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
+                    <div className="flex justify-between items-center border-b border-white/5 pb-2">
                       <div>
-                        <h3 className="text-base font-black text-white uppercase tracking-tight font-sans">Active Clinic Sites & Facilities</h3>
-                        <p className="text-xs text-zinc-400 font-sans">Monitor real-time clinical room utilization and manager assignments.</p>
+                        <h3 className="text-base font-black text-white uppercase tracking-tight font-sans">{tOrg('clinics.activeSitesHeader')}</h3>
+                        <p className="text-xs text-zinc-400 font-sans">{tOrg('clinics.activeSitesSub')}</p>
                       </div>
                       {showAddClinicForm ? (
                         <button 
                           onClick={() => setShowAddClinicForm(false)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold transition-all"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0d0d16] hover:bg-[#131320] text-zinc-300 text-xs font-bold transition-all border border-white/5"
                         >
-                          Cancel Registration
+                          {tOrg('clinics.cancelReg')}
                         </button>
                       ) : (
                         <button 
@@ -729,43 +729,43 @@ export default function OrganizationWorkspace() {
                             setClinicNameInput('');
                             setClinicLocInput('');
                           }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-black text-xs font-bold transition-all"
                         >
-                          <Plus className="w-3.5 h-3.5" /> Provision Clinic Site
+                          <Plus className="w-3.5 h-3.5" /> {tOrg('clinics.provisionSite')}
                         </button>
                       )}
                     </div>
 
                     {showAddClinicForm && (
-                      <div className="p-4 bg-zinc-900 border border-emerald-500/30 rounded-2xl space-y-3 animate-fade-in">
-                        <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-widest block">Register Clinic Hub Profile</span>
+                      <div className="p-4 bg-[#0d0d16] border border-white/5 rounded-2xl space-y-3 animate-fade-in card-luxury">
+                        <span className="text-[10px] font-mono font-bold text-gold-400 uppercase tracking-widest block">{tOrg('clinics.registerProfile')}</span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">Clinic Name</label>
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.clinicNameLabel')}</label>
                             <input
                               type="text"
                               value={clinicNameInput}
                               onChange={(e) => setClinicNameInput(e.target.value)}
-                              placeholder="e.g. Springfield South Implant Clinic"
-                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-emerald-500"
+                              placeholder={tOrg('clinics.clinicNamePlaceholder')}
+                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-gold-500"
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">Location Address</label>
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.locationLabel')}</label>
                             <input
                               type="text"
                               value={clinicLocInput}
                               onChange={(e) => setClinicLocInput(e.target.value)}
-                              placeholder="e.g. 102 King Blvd, Springfield"
-                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-emerald-500"
+                              placeholder={tOrg('clinics.locationPlaceholder')}
+                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-gold-500"
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">Clinical timezone</label>
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.timezoneLabel')}</label>
                             <select
                               value={clinicTimezoneInput}
                               onChange={(e) => setClinicTimezoneInput(e.target.value)}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-300 text-xs outline-none focus:border-emerald-500"
+                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-300 text-xs outline-none focus:border-gold-500"
                             >
                               <option value="America/New_York (EST)">America/New_York (EST)</option>
                               <option value="Europe/London (GMT)">Europe/London (GMT)</option>
@@ -774,13 +774,13 @@ export default function OrganizationWorkspace() {
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">Operational Hours</label>
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.hoursLabel')}</label>
                             <input
                               type="text"
                               value={clinicHoursInput}
                               onChange={(e) => setClinicHoursInput(e.target.value)}
-                              placeholder="e.g. 08:00 - 18:00"
-                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-emerald-500"
+                              placeholder={tOrg('clinics.hoursPlaceholder')}
+                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-gold-500"
                             />
                           </div>
                         </div>
@@ -798,9 +798,9 @@ export default function OrganizationWorkspace() {
                               });
                               setShowAddClinicForm(false);
                             }}
-                            className="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-bold rounded-xl uppercase transition-all"
+                            className="px-4 py-1.5 bg-gold-500 hover:bg-gold-400 text-zinc-950 text-xs font-bold rounded-xl uppercase transition-all"
                           >
-                            Save Clinic Hub
+                            {tOrg('clinics.saveBtn')}
                           </button>
                         </div>
                       </div>
@@ -814,8 +814,8 @@ export default function OrganizationWorkspace() {
                           type="text"
                           value={clinicSearch}
                           onChange={(e) => setClinicSearch(e.target.value)}
-                          placeholder="Search clinic hubs by name, location, manager..."
-                          className="w-full pl-8 pr-3 py-1.5 bg-zinc-900 border border-zinc-800 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
+                          placeholder={tOrg('clinics.searchPlaceholder')}
+                          className="w-full pl-8 pr-3 py-1.5 bg-zinc-900 border border-zinc-800 text-xs rounded-xl outline-none focus:border-gold-500 text-white font-mono placeholder:text-zinc-600"
                         />
                       </div>
                       <div className="flex items-center gap-2 justify-end">
