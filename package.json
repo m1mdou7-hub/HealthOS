@@ -43,6 +43,7 @@
     "electron": "^43.2.0",
     "lucide-react": "0.330.0",
     "motion": "^12.42.2",
+    "framer-motion": "^11.18.2",
     "next": "14.2.3",
     "next-intl": "^4.13.4",
     "react": "^18.3.1",

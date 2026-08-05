@@ -8,6 +8,7 @@ import {
   ChevronUp, Move, RefreshCw, Volume2, Sun 
 } from 'lucide-react';
 import ThreeDemoWorkspace from '@/components/ui/ThreeDemoWorkspace';
+import FramerMotionShowcase from '@/components/ui/FramerMotionShowcase';
 
 export default function AppleDemoWorkspace() {
   const t = useTranslations('AppleDemo');
@@ -342,6 +343,9 @@ export default function AppleDemoWorkspace() {
 
       {/* ── 3D Interactive Lab Workspace ── */}
       <ThreeDemoWorkspace />
+
+      {/* ── Framer Motion Showcase ── */}
+      <FramerMotionShowcase />
 
       {/* Premium Minimalist Header (Emil Style: Pitch Black, White border, Muted typography) */}
       <div className="relative p-8 rounded-3xl border border-zinc-800/80 bg-black shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
