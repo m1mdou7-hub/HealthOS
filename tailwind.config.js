@@ -22,19 +22,19 @@ module.exports = {
         serif: ['Cormorant Garamond', 'Georgia', ...fontFamily.serif],
       },
       colors: {
-        // Luxury gold accent system
+        // Apple Minimalist Accent system (mapping old gold tags to zinc/white)
         gold: {
-          50:  '#fdf8ec',
-          100: '#f7e9c0',
-          200: '#edda8a',
-          300: '#e3c45a',
-          400: '#d9b03a',
-          500: '#c9a84c',
-          600: '#a8882a',
-          700: '#7a6030',
-          800: '#5a4520',
-          900: '#3a2c14',
-          950: '#1e1608',
+          50:  '#ffffff',
+          100: '#f4f4f5',
+          200: '#e4e4e7',
+          300: '#d4d4d8',
+          400: '#a1a1aa',
+          500: '#ffffff',
+          600: '#e4e4e7',
+          700: '#71717a',
+          800: '#3f3f46',
+          900: '#27272a',
+          950: '#18181b',
         },
       },
       keyframes: {
@@ -62,13 +62,13 @@ module.exports = {
         'blink':          'blink 2s ease-in-out infinite',
       },
       backgroundImage: {
-        'gold-gradient': 'linear-gradient(135deg, #7a6030 0%, #c9a84c 60%, #e3c45a 100%)',
+        'gold-gradient': 'linear-gradient(135deg, #ffffff 0%, #fafafa 50%, #d4d4d8 100%)',
       },
       boxShadow: {
-        'gold-sm':  '0 2px 12px rgba(201,168,76,0.25)',
-        'gold-md':  '0 4px 24px rgba(201,168,76,0.35)',
-        'gold-lg':  '0 8px 40px rgba(201,168,76,0.3)',
-        'gold-glow':'0 0 20px rgba(201,168,76,0.2)',
+        'gold-sm':  '0 2px 12px rgba(255,255,255,0.05)',
+        'gold-md':  '0 4px 24px rgba(255,255,255,0.1)',
+        'gold-lg':  '0 8px 40px rgba(255,255,255,0.12)',
+        'gold-glow':'0 0 20px rgba(255,255,255,0.08)',
       },
     }
   },

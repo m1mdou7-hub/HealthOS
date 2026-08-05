@@ -432,7 +432,8 @@
     "developer": "Developer",
     "help": "Help Center",
     "settings": "Settings",
-    "workspacePlatform": "Workspace Platform"
+    "workspacePlatform": "Workspace Platform",
+    "appleDemo": "Apple Design Sandbox"
   },
   "Dashboard": {
     "title": "Dashboard",
@@ -933,5 +934,23 @@
       "enforceMFADesc": "Require TOTP token for clinical logins.",
       "saveBtn": "Save Security Policies"
     }
+  },
+  "AppleDemo": {
+    "title": "Apple Design System Sandbox",
+    "subtitle": "An interactive playground demonstrating Apple's fluid design foundations and physics-driven motion on the web.",
+    "responseTitle": "1. Latency & Response",
+    "responseDesc": "Touch and click animations must trigger on pointerdown, not release, to eliminate perceived lag.",
+    "directTitle": "2. Direct Manipulation & Velocity Handoff",
+    "directDesc": "Drag the card below. Releasing it hands off finger velocity to a spring, and it can be grabbed mid-flight.",
+    "sheetTitle": "3. Fluid Bottom Sheet",
+    "sheetDesc": "A critically damped sheet that slides, bounces, and snaps beautifully using projected momentum.",
+    "controlTitle": "4. Control Center Tactility",
+    "controlDesc": "Tactile micro-feedbacks: widgets shrink instantly when pressed, and sliders swell to provide touch cushions.",
+    "springTitle": "5. X & Y Spring Separation",
+    "springDesc": "Observe X and Y springs moving independently, eliminating unnatural diagonal rigid lines.",
+    "reset": "Reset Cards",
+    "damping": "Damping Ratio",
+    "response": "Response Speed",
+    "openSheet": "Open Fluid Sheet"
   }
 }

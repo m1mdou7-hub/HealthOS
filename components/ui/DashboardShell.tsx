@@ -83,6 +83,7 @@ const NAV_ITEMS = [
   { name: 'Developer', labelKey: 'developer', href: '/developer', icon: Terminal },
   { name: 'Help Center', labelKey: 'help', href: '/help', icon: HelpCircle },
   { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+  { name: 'Apple Demo', labelKey: 'appleDemo', href: '/apple-demo', icon: Sparkle },
 ];
 
 const ROLE_NAV_ITEMS: Record<string, typeof NAV_ITEMS> = {
@@ -95,6 +96,7 @@ const ROLE_NAV_ITEMS: Record<string, typeof NAV_ITEMS> = {
     { name: 'Audit & Compliance', labelKey: 'audit', href: '/audit', icon: ShieldCheck },
     { name: 'Billing', labelKey: 'billing', href: '/billing', icon: CreditCard },
     { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+    { name: 'Apple Demo', labelKey: 'appleDemo', href: '/apple-demo', icon: Sparkle },
   ],
   'Clinic Owner': [
     { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
@@ -105,6 +107,7 @@ const ROLE_NAV_ITEMS: Record<string, typeof NAV_ITEMS> = {
     { name: 'Laboratory', labelKey: 'laboratory', href: '/laboratory', icon: FlaskConical },
     { name: 'Analytics', labelKey: 'analytics', href: '/analytics', icon: LineChart },
     { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+    { name: 'Apple Demo', labelKey: 'appleDemo', href: '/apple-demo', icon: Sparkle },
   ],
   'Laboratory Technician': [
     { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
@@ -112,6 +115,7 @@ const ROLE_NAV_ITEMS: Record<string, typeof NAV_ITEMS> = {
     { name: 'Imaging', labelKey: 'imaging', href: '/imaging', icon: Activity },
     { name: 'Inventory', labelKey: 'inventory', href: '/inventory', icon: Package },
     { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+    { name: 'Apple Demo', labelKey: 'appleDemo', href: '/apple-demo', icon: Sparkle },
   ],
   'Receptionist': [
     { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
@@ -119,11 +123,13 @@ const ROLE_NAV_ITEMS: Record<string, typeof NAV_ITEMS> = {
     { name: 'Patients', labelKey: 'patients', href: '/patients', icon: Users },
     { name: 'Communication', labelKey: 'communication', href: '/communication', icon: MessageSquare },
     { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+    { name: 'Apple Demo', labelKey: 'appleDemo', href: '/apple-demo', icon: Sparkle },
   ],
   'Read-only Auditor': [
     { name: 'Dashboard', labelKey: 'dashboard', href: '/', icon: LayoutDashboard },
     { name: 'Audit & Compliance', labelKey: 'audit', href: '/audit', icon: ShieldCheck },
     { name: 'Settings', labelKey: 'settings', href: '/settings', icon: Settings },
+    { name: 'Apple Demo', labelKey: 'appleDemo', href: '/apple-demo', icon: Sparkle },
   ]
 };
 

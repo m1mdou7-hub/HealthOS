@@ -1,26 +1,26 @@
 /* ─── Google Fonts ───────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Luxury CSS Variables ───────────────────────────────────── */
+/* ─── Apple Design Minimalist Variables ────────────────────────── */
 :root {
-  /* Gold system */
-  --gold:       #c9a84c;
-  --gold-hi:    #e3c45a;
-  --gold-dim:   #7a6030;
-  --gold-glow:  rgba(201,168,76,0.15);
-  --gold-glow2: rgba(201,168,76,0.07);
+  /* White/Zinc Accent system */
+  --gold:       #ffffff;
+  --gold-hi:    #f4f4f5;
+  --gold-dim:   #a1a1aa;
+  --gold-glow:  rgba(255,255,255,0.08);
+  --gold-glow2: rgba(255,255,255,0.04);
 
-  /* Depth palette */
-  --ink:        #07070c;
-  --ink-2:      #0d0d16;
-  --ink-3:      #131320;
-  --ink-4:      #191928;
+  /* Pitch Black Depth palette */
+  --ink:        #000000;
+  --ink-2:      #09090b;
+  --ink-3:      #18181b;
+  --ink-4:      #27272a;
   --border-dim: rgba(255,255,255,0.06);
-  --border-mid: rgba(255,255,255,0.11);
+  --border-mid: rgba(255,255,255,0.12);
 }
 
 /* ─── Base overrides ─────────────────────────────────────────── */
@@ -48,17 +48,12 @@ html {
 
 html,
 body {
-  font-family: 'Inter', -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro Icons", "Inter", system-ui, sans-serif;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   @apply text-white antialiased;
   background-color: var(--ink);
-  /* Subtle ambient gold glow at top */
-  background-image: radial-gradient(
-    ellipse 80% 50% at 50% -10%,
-    rgba(201,168,76,0.05) 0%,
-    transparent 60%
-  );
+  background-image: none;
 }
 
 body {
@@ -195,26 +190,26 @@ p a {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(201,168,76,0.35);
+  background: rgba(255,255,255,0.25);
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(201,168,76,0.2) transparent;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
 }
 
-/* ─── Global Luxury Utilities ────────────────────────────────── */
+/* ─── Global Minimalist Utilities ────────────────────────────── */
 
 /* Serif headings helper */
 .font-display {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
+  letter-spacing: -0.02em;
 }
 
-/* Gold text gradient */
+/* White text gradient */
 .text-gold-gradient {
-  background: linear-gradient(135deg, var(--gold-dim), var(--gold), var(--gold-hi));
+  background: linear-gradient(135deg, #ffffff 0%, #e4e4e7 60%, #a1a1aa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -231,7 +226,7 @@ p a {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.07) 50%, transparent 90%);
+  background: linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.06) 50%, transparent 90%);
   pointer-events: none;
 }
 
@@ -244,9 +239,9 @@ p a {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(201,168,76,0.6) 20%,
-    rgba(227,196,90,0.9) 50%,
-    rgba(201,168,76,0.6) 80%,
+    rgba(255,255,255,0.2) 20%,
+    rgba(255,255,255,0.55) 50%,
+    rgba(255,255,255,0.2) 80%,
     transparent 100%
   );
   animation: shimmer 3s ease-in-out infinite;
