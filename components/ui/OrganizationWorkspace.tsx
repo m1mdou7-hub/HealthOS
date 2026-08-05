@@ -44,7 +44,7 @@ import {
   MoreVertical,
   CheckSquare
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import {
   getClinics,
@@ -535,68 +535,91 @@ export default function OrganizationWorkspace() {
           {activeTab === 'Overview' && (
             <WorkspaceTabPanel className="space-y-6">
               
-              {/* Bento Box 4 Stats Cards */}
+              {/* Bento Box 4 Stats Cards (Emil Kowalski Fluid Motion + Taste Skill Aesthetics) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
                 {/* Stat 1: Org ID */}
-                <div className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl">
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -3, borderColor: 'rgba(225,29,72,0.4)', transition: { type: 'spring', stiffness: 400, damping: 25 } }}
+                  className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl transition-all select-none"
+                >
                   <div className="flex justify-between items-center">
                     <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">معرف المنظمة</span>
                     <Building2 className="w-4 h-4 text-rose-400" />
                   </div>
                   <div>
-                    <h4 className="text-base font-bold text-white font-mono">ORG-8820-X92</h4>
+                    <h4 className="text-base font-bold text-white font-mono tracking-tight">ORG-8820-X92</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 truncate font-sans">{workspaceName}</p>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
                     <div className="h-full bg-rose-500 rounded-full w-full" />
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Stat 2: Clinics & Rooms */}
-                <div className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl">
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 }}
+                  whileHover={{ y: -3, borderColor: 'rgba(225,29,72,0.4)', transition: { type: 'spring', stiffness: 400, damping: 25 } }}
+                  className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl transition-all select-none"
+                >
                   <div className="flex justify-between items-center">
                     <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">العيادات والفروع</span>
                     <Globe className="w-4 h-4 text-rose-400" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-white">{totalClinics} عيادات ومراكز نَشِطة</h4>
+                    <h4 className="text-xl font-bold text-white tracking-tight">{totalClinics} عيادات ومراكز نَشِطة</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 font-sans">إجمالي العيادات النشطة: 21 غرف علاج</p>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
                     <div className="h-full bg-rose-500 rounded-full w-4/5" />
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Stat 3: License Seats */}
-                <div className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl">
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  whileHover={{ y: -3, borderColor: 'rgba(225,29,72,0.4)', transition: { type: 'spring', stiffness: 400, damping: 25 } }}
+                  className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl transition-all select-none"
+                >
                   <div className="flex justify-between items-center">
                     <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">تراخيص المستخدِمين</span>
                     <span className="text-xs text-rose-400 font-mono font-bold bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">28 ترخيص متاح</span>
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-white font-mono">122 / 150</h4>
+                    <h4 className="text-xl font-bold text-white font-mono tracking-tight">122 / 150</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 font-sans">سعة الاشتراك الكلية للمجموعة</p>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
                     <div className="h-full bg-rose-500 rounded-full w-[81.3%]" />
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Stat 4: Secure Cloud Storage */}
-                <div className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl">
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                  whileHover={{ y: -3, borderColor: 'rgba(6,182,212,0.4)', transition: { type: 'spring', stiffness: 400, damping: 25 } }}
+                  className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl transition-all select-none"
+                >
                   <div className="flex justify-between items-center">
                     <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">التخزين السحابي الآمن</span>
                     <span className="text-xs text-cyan-400 font-mono font-bold bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">24%</span>
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-white font-mono">1.2 / 5.0 TB</h4>
+                    <h4 className="text-xl font-bold text-white font-mono tracking-tight">1.2 / 5.0 TB</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 font-sans">تخزين فحص الأشعة وملفات STL بشكل أساسي</p>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
                     <div className="h-full bg-cyan-400 rounded-full w-[24%]" />
                   </div>
-                </div>
+                </motion.div>
 
               </div>
 
