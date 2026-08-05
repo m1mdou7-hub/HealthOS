@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useWorkspaceToast } from './Workspace/useWorkspaceToast';
 import React, { useState, useMemo } from 'react';
 import {
