@@ -49,6 +49,7 @@ import {
   startPhoneRingtone,
   stopPhoneRingtone
 } from '@/utils/services/audioChimes';
+import { initRealtimeIntercom, broadcastIntercomSignal } from '@/utils/services/realtimeIntercom';
 
 // ── Extension Directory ──────────────────────────────────────────────────────
 interface StaffExtension {
@@ -94,28 +95,75 @@ export default function StaffPhoneIntercom() {
     setTimeout(() => setFeedback(null), 3500);
   };
 
-  // ── Global Sound Event Listener ──
+  // ── Realtime Cross-Device Signaling Listener ──
   useEffect(() => {
+    const unsubscribe = initRealtimeIntercom((payload) => {
+      if (payload.type === 'call_initiate') {
+        // Trigger incoming call modal for target extension or reception
+        const caller = STAFF_EXTENSIONS.find(s => s.ext === payload.callerExt) || {
+          ext: payload.callerExt || '102',
+          name: payload.callerName || 'د. أرثر - العيادة 1',
+          role: 'Clinician',
+          status: 'available',
+          icon: User,
+          avatarBg: 'bg-rose-500/20 text-rose-400'
+        };
+        setIncomingCall(caller);
+        startPhoneRingtone();
+        showToast(`📞 [شبكي حي] اتصال وارد من ${caller.name} (Ext ${caller.ext})`);
+      } else if (payload.type === 'call_answer') {
+        stopPhoneRingtone();
+        showToast('✅ [شبكي حي] تم الرد على المكالمة من الطرف الآخر');
+      } else if (payload.type === 'call_end') {
+        stopPhoneRingtone();
+        playIntercomChirp(false);
+        setActiveCall(null);
+        setIncomingCall(null);
+        showToast('🔴 [شبكي حي] تم إنهاء المكالمة من الطرف الآخر');
+      } else if (payload.type === 'sound_chime') {
+        if (payload.chimeType === 'patient_present') {
+          playNextPatientPresentChime();
+          showToast('🟢 [شبكي حي] اقتراب الموعد: المريض متواجد في الاستقبال!');
+        } else if (payload.chimeType === 'patient_absent') {
+          playNextPatientAbsentChime();
+          showToast('🟡 [شبكي حي] تنبيه: المريض لم يصل بعد إلى الاستقبال!');
+        } else if (payload.chimeType === 'new_patient') {
+          playNewPatientChime();
+          showToast('🔵 [شبكي حي] تم تسجيل موعد مريض جديد من الاستقبال!');
+        } else if (payload.chimeType === 'doctor_pager') {
+          playDoctorPagerChime();
+          showToast('🔴 [شبكي حي] نداء طبي عاجل للاستقبال (Pager)!');
+        }
+      }
+    });
+
     const handleSoundEvent = (e: Event) => {
       const ev = e as CustomEvent;
       if (ev.detail?.type === 'patient_present') {
         playNextPatientPresentChime();
+        broadcastIntercomSignal({ type: 'sound_chime', chimeType: 'patient_present' });
         showToast('🟢 اقتراب الموعد: المريض متواجد وجاهز في الاستقبال!');
       } else if (ev.detail?.type === 'patient_absent') {
         playNextPatientAbsentChime();
+        broadcastIntercomSignal({ type: 'sound_chime', chimeType: 'patient_absent' });
         showToast('🟡 تنبيه اقتراب الموعد: المريض لم يصل بعد إلى الاستقبال!');
       } else if (ev.detail?.type === 'new_patient') {
         playNewPatientChime();
+        broadcastIntercomSignal({ type: 'sound_chime', chimeType: 'new_patient' });
         showToast('🔵 تم تسجيل موعد مريض جديد في الاستقبال!');
       } else if (ev.detail?.type === 'doctor_pager') {
         playDoctorPagerChime();
+        broadcastIntercomSignal({ type: 'sound_chime', chimeType: 'doctor_pager' });
         showToast('🔴 نغمة نداء: الطبيب يطلب الاستقبال فوراً!');
       } else if (ev.detail?.type === 'phone_incoming') {
         triggerSimulatedIncomingCall('101');
       }
     };
     window.addEventListener('healthos_sound_event', handleSoundEvent);
-    return () => window.removeEventListener('healthos_sound_event', handleSoundEvent);
+    return () => {
+      window.removeEventListener('healthos_sound_event', handleSoundEvent);
+      if (unsubscribe) unsubscribe();
+    };
   }, []);
 
   // ── Active Call Timer ──
@@ -137,6 +185,15 @@ export default function StaffPhoneIntercom() {
     setIncomingCall(null);
     playIntercomChirp(true);
     setActiveCall({ ext: extObj, duration: 0, isMuted: false, isHeld: false });
+
+    // Broadcast live call signal across network
+    broadcastIntercomSignal({
+      type: 'call_initiate',
+      callerExt: '102',
+      callerName: 'د. أرثر - العيادة 1',
+      targetExt: extObj.ext
+    });
+
     showToast(`جاري الاتصال بـ ${extObj.name} (Ext ${extObj.ext})...`);
   };
 
@@ -147,6 +204,8 @@ export default function StaffPhoneIntercom() {
     setActiveCall({ ext: incomingCall, duration: 0, isMuted: false, isHeld: false });
     setIncomingCall(null);
     playIntercomChirp(true);
+
+    broadcastIntercomSignal({ type: 'call_answer' });
     showToast(`تم الرد على مكالمة ${incomingCall.name}`);
   };
 
@@ -156,6 +215,8 @@ export default function StaffPhoneIntercom() {
     playIntercomChirp(false);
     setActiveCall(null);
     setIncomingCall(null);
+
+    broadcastIntercomSignal({ type: 'call_end' });
     showToast('تم إنهاء المكالمة');
   };
 
