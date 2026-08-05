@@ -414,7 +414,7 @@ export default function StaffPhoneIntercom() {
               {/* Tab 2: Sound Effects Preview & Trigger Console */}
               {activeTab === 'chimes' && (
                 <div className="p-3 space-y-2.5">
-                  <p className="text-[10px] text-zinc-500 font-mono mb-2">نغمات التنبيهات الطبية الفاخرة المخصصة:</p>
+                  <p className="text-[10px] text-zinc-500 font-mono mb-2">نغمات طبية متباينة الصوت لسهولة التمييز الفوري:</p>
 
                   {/* 🟢 1. Next Patient Present & Ready Chime */}
                   <div className="p-3 rounded-2xl bg-white/[0.03] border border-emerald-500/20 flex items-center justify-between">
@@ -423,7 +423,7 @@ export default function StaffPhoneIntercom() {
                         <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
                         اقتراب الموعد + المريض متواجد 🟢
                       </p>
-                      <p className="text-[10px] text-zinc-400 mt-0.5">نغمة ماريمبا دافئة عند حضور المريض وصعوده للانتظار</p>
+                      <p className="text-[10px] text-zinc-400 mt-0.5">🔔 جرس كريستالي صاعد مرتفع النبرة (C6-C7)</p>
                     </div>
                     <button
                       onClick={() => playNextPatientPresentChime()}
@@ -441,7 +441,7 @@ export default function StaffPhoneIntercom() {
                         <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />
                         اقتراب الموعد + المريض غير موجود 🟡
                       </p>
-                      <p className="text-[10px] text-zinc-400 mt-0.5">تنبيه ناعم مزدوج إذا لم يصل المريض بعد للمستشفى</p>
+                      <p className="text-[10px] text-zinc-400 mt-0.5">🪵 صوت خشبي منخفض جداً ومزدوج (D4-A3)</p>
                     </div>
                     <button
                       onClick={() => playNextPatientAbsentChime()}
@@ -459,7 +459,7 @@ export default function StaffPhoneIntercom() {
                         <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
                         تسجيل موعد مريض جديد 🔵
                       </p>
-                      <p className="text-[10px] text-zinc-400 mt-0.5">نغمة ثلاثية ثلاثية النغم عند حجز الاستقبال لمريض</p>
+                      <p className="text-[10px] text-zinc-400 mt-0.5">🎵 نغمة رقمية ثلاثية متوازنة (G5-G6)</p>
                     </div>
                     <button
                       onClick={() => playNewPatientChime()}
@@ -477,7 +477,7 @@ export default function StaffPhoneIntercom() {
                         <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse shrink-0" />
                         نداء الاستقبال الفوري (Pager) 🔴
                       </p>
-                      <p className="text-[10px] text-zinc-400 mt-0.5">نغمة نداء الطبيب لاستدعاء مريض أو ممرضة</p>
+                      <p className="text-[10px] text-zinc-400 mt-0.5">🚨 بيجر طبي حاد مرتفع التنبيه (F#6 Pulse)</p>
                     </div>
                     <button
                       onClick={() => playDoctorPagerChime()}
