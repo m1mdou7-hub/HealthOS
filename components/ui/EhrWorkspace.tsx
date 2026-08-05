@@ -148,7 +148,10 @@ const INITIAL_TEETH_STATE: ToothState[] = [
 
 export default function EhrWorkspace() {
   // Active Main Category / Grouping and selected tab
-  const [activeTab, setActiveTab] = useState<string>('Overview');
+  const [activeTab, setActiveTab] = useState<string>('Visual Profile');
+  const [familyHistoryOpen, setFamilyHistoryOpen] = useState(false);
+  const [socialHistoryOpen, setSocialHistoryOpen] = useState(false);
+  const [profileCardOpen, setProfileCardOpen] = useState(true);
 
   // Local Editable States
   const [patient, setPatient] = useState<PatientInfo>(INITIAL_PATIENT);
@@ -184,11 +187,11 @@ export default function EhrWorkspace() {
   const [newRxName, setNewRxName] = useState('');
   const [newRxInst, setNewRxInst] = useState('');
 
-  // Categorized Left Sidebar navigation
   const tabsConfig = [
     {
       group: 'Summary & Intelligence',
       items: [
+        { name: 'Visual Profile', icon: Sparkles },
         { name: 'Overview', icon: FolderOpen },
         { name: 'Timeline', icon: History },
         { name: 'AI Copilot', icon: Sparkles }
@@ -503,6 +506,253 @@ export default function EhrWorkspace() {
 
           {/* Active Tab Component Renderings */}
           <div className="flex-1">
+
+            {activeTab === 'Visual Profile' && (
+              <div className="space-y-6 animate-fade-in relative">
+                {/* Background Red/Orange Glow */}
+                <div className="absolute top-12 left-1/2 -translate-x-1/2 w-80 h-48 bg-rose-600/10 rounded-full blur-[80px] pointer-events-none z-0" />
+                
+                {/* 1. Header controls (hexagon, sliders, bell) */}
+                <div className="relative z-10 flex items-center justify-between p-4 bg-zinc-950/60 border border-zinc-900 rounded-3xl backdrop-blur-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center font-bold">
+                      {/* Hexagon shape */}
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-white tracking-tight">Clinical Visual Profile</h4>
+                      <p className="text-[10px] text-zinc-500 font-mono uppercase">Node: {patient.id}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400">
+                      <Sliders className="w-4 h-4" />
+                    </div>
+                    <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 relative">
+                      <span className="w-2 h-2 rounded-full bg-red-500 absolute top-1 right-1 border border-zinc-950" />
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Accordions */}
+                <div className="relative z-10 space-y-3">
+                  {/* Family History */}
+                  <div className="bg-zinc-950/60 border border-zinc-900 rounded-3xl overflow-hidden backdrop-blur-xl">
+                    <button 
+                      onClick={() => setFamilyHistoryOpen(!familyHistoryOpen)}
+                      className="w-full flex items-center justify-between p-5 text-sm font-bold text-white hover:bg-zinc-900/40 transition-colors"
+                    >
+                      <span>Record: Family History</span>
+                      <svg 
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+                        className={`transition-transform duration-200 ${familyHistoryOpen ? 'rotate-180' : ''}`}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </button>
+                    {familyHistoryOpen && (
+                      <div className="p-5 border-t border-zinc-900/80 text-xs text-zinc-400 space-y-2 leading-relaxed">
+                        <p>• Maternal Grandmother: Diagnosed with Type II Diabetes, managed under standard insulin protocol.</p>
+                        <p>• Paternal Uncle: History of early-onset cardiovascular disease (Myocardial Infarction at age 48).</p>
+                        <p>• No recorded history of congenital anomalies or amelogenesis imperfecta.</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Social History */}
+                  <div className="bg-zinc-950/60 border border-zinc-900 rounded-3xl overflow-hidden backdrop-blur-xl">
+                    <button 
+                      onClick={() => setSocialHistoryOpen(!socialHistoryOpen)}
+                      className="w-full flex items-center justify-between p-5 text-sm font-bold text-white hover:bg-zinc-900/40 transition-colors"
+                    >
+                      <span>Anamnesis: Social History</span>
+                      <svg 
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+                        className={`transition-transform duration-200 ${socialHistoryOpen ? 'rotate-180' : ''}`}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </button>
+                    {socialHistoryOpen && (
+                      <div className="p-5 border-t border-zinc-900/80 text-xs text-zinc-400 space-y-2 leading-relaxed">
+                        <p>• Occupation: Senior software developer, high visual workstation strain.</p>
+                        <p>• Habits: Occasional social wine consumer (1-2 units weekly). Non-smoker.</p>
+                        <p>• Diet: High acidic beverage intake (black coffee, citrus water), monitored for micro-erosion.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 3. Patient Profile Card */}
+                <div className="relative z-10 bg-zinc-950/70 border border-zinc-900 rounded-3xl p-6 backdrop-blur-xl space-y-6">
+                  <div className="flex items-center justify-between border-b border-zinc-900 pb-4">
+                    <div>
+                      <h4 className="text-sm font-bold text-white tracking-tight">Patient Profile</h4>
+                      <p className="text-[10px] text-zinc-500 uppercase font-mono mt-0.5">Summary Case Data</p>
+                    </div>
+                    <button 
+                      onClick={() => setProfileCardOpen(!profileCardOpen)}
+                      className="p-1.5 rounded-lg hover:bg-zinc-900 text-zinc-400 transition-colors"
+                    >
+                      <svg 
+                        width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+                        className={`transition-transform duration-200 ${profileCardOpen ? '' : 'rotate-180'}`}
+                      >
+                        <path d="M18 15l-6-6-6 6" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {profileCardOpen && (
+                    <div className="space-y-6">
+                      {/* Grid Data */}
+                      <div className="grid grid-cols-3 gap-4 text-xs font-sans">
+                        <div>
+                          <span className="text-[10px] font-bold text-zinc-500 block uppercase tracking-wider font-mono">Age:</span>
+                          <span className="text-white font-medium block mt-1">{patient.age} / {patient.gender === 'Female' ? 'Female' : 'Male'}</span>
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold text-zinc-500 block uppercase tracking-wider font-mono">Gender:</span>
+                          <span className="text-white font-medium block mt-1">{patient.gender}</span>
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold text-zinc-500 block uppercase tracking-wider font-mono">Ethnicity:</span>
+                          <span className="text-white font-medium block mt-1">Other / Caucasian</span>
+                        </div>
+                      </div>
+
+                      {/* Weight and Trend */}
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider font-mono">Weight and Trend</span>
+                          <span className="text-white font-bold text-sm">63.6 kg</span>
+                        </div>
+                        {/* Custom Dash/Dot SVG sparkline */}
+                        <div className="py-2.5 bg-zinc-950/60 border border-zinc-900 rounded-xl px-4 flex items-center">
+                          <svg className="w-full h-4 text-white/50" viewBox="0 0 400 20" preserveAspectRatio="none">
+                            <line 
+                              x1="10" y1="10" x2="390" y2="10" 
+                              stroke="currentColor" 
+                              strokeWidth="3.5" 
+                              strokeLinecap="round" 
+                              strokeDasharray="2 6 20 6 35 6 3 6 6 6 3 6 45 6 15 6 3 6"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* Biological Age */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center pt-4 border-t border-zinc-900/60">
+                        <div>
+                          <span className="text-[10px] font-bold text-zinc-500 block uppercase tracking-wider font-mono">Biological Age</span>
+                          <div className="flex items-center gap-3 mt-1">
+                            <span className="text-[11px] font-mono text-zinc-500">ID: SV-7294</span>
+                            <div className="flex items-center gap-1.5 px-2 py-0.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded font-bold text-[9px] uppercase tracking-wider">
+                              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                              Critical
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col gap-2 border border-zinc-900 bg-zinc-950/40 p-3 rounded-2xl">
+                          <div className="flex items-center justify-between gap-4 text-[11px]">
+                            <div className="flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                              <span className="text-rose-400 font-bold font-mono">31.2</span>
+                            </div>
+                            <div className="w-24 bg-zinc-900 h-1.5 rounded-full overflow-hidden relative">
+                              <div className="bg-rose-500 h-full rounded-full" style={{ width: '85%' }} />
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between gap-4 text-[11px]">
+                            <div className="flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                              <span className="text-emerald-400 font-bold font-mono">19.2</span>
+                            </div>
+                            <div className="w-24 bg-zinc-900 h-1.5 rounded-full overflow-hidden relative">
+                              <div className="bg-emerald-500 h-full rounded-full" style={{ width: '45%' }} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* 4. Clinical Folder Sleeves (Tomography & Radiography) */}
+                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                  {/* Tomography Folder Sleeve */}
+                  <div className="p-5 rounded-3xl bg-zinc-950/60 border border-zinc-900 relative overflow-hidden group min-h-[240px] flex flex-col justify-between hover:bg-zinc-900/30 transition-all cursor-pointer">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h5 className="font-bold text-white text-base">Tomography</h5>
+                        <p className="text-xs text-zinc-500 font-mono mt-0.5">Jan 12, 2020</p>
+                      </div>
+                      <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white transition-colors">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Popping-out radiography scan stacked previews */}
+                    <div className="relative h-24 mt-4 flex items-center justify-center">
+                      {/* Scan Left */}
+                      <div className="absolute w-20 h-24 bg-zinc-950 border border-zinc-850 rounded-xl overflow-hidden shadow-2xl transition-all duration-300 transform -rotate-12 -translate-x-7 group-hover:-translate-y-4 group-hover:-rotate-15">
+                        <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=200&h=200&fit=crop" className="w-full h-full object-cover opacity-50 filter grayscale contrast-125 select-none pointer-events-none" />
+                      </div>
+                      {/* Scan Right */}
+                      <div className="absolute w-20 h-24 bg-zinc-950 border border-zinc-850 rounded-xl overflow-hidden shadow-2xl transition-all duration-300 transform rotate-12 translate-x-7 group-hover:-translate-y-4 group-hover:rotate-15">
+                        <img src="https://images.unsplash.com/photo-1559757175-006f15d7426c?q=80&w=200&h=200&fit=crop" className="w-full h-full object-cover opacity-50 filter grayscale contrast-125 select-none pointer-events-none" />
+                      </div>
+                      {/* Scan Center */}
+                      <div className="absolute w-24 h-28 bg-zinc-950 border border-zinc-700 rounded-xl overflow-hidden shadow-2xl transition-all duration-300 transform group-hover:-translate-y-6 group-hover:scale-105 z-10 flex flex-col justify-end">
+                        <img src="https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?q=80&w=200&h=200&fit=crop" className="absolute inset-0 w-full h-full object-cover opacity-75 filter grayscale contrast-125 select-none pointer-events-none" />
+                        <span className="relative z-10 w-full bg-zinc-950/80 text-center py-1 font-mono text-[9px] text-zinc-400 border-t border-zinc-850">image: 12</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Radiography Folder Sleeve */}
+                  <div className="p-5 rounded-3xl bg-zinc-950/60 border border-zinc-900 relative overflow-hidden group min-h-[240px] flex flex-col justify-between hover:bg-zinc-900/30 transition-all cursor-pointer">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h5 className="font-bold text-white text-base">Radiography</h5>
+                        <p className="text-xs text-zinc-500 font-mono mt-0.5">Feb 14, 2022</p>
+                      </div>
+                      <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white transition-colors">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Popping-out radiography scan stacked previews */}
+                    <div className="relative h-24 mt-4 flex items-center justify-center">
+                      {/* Scan Left */}
+                      <div className="absolute w-20 h-24 bg-zinc-950 border border-zinc-850 rounded-xl overflow-hidden shadow-2xl transition-all duration-300 transform -rotate-12 -translate-x-7 group-hover:-translate-y-4 group-hover:-rotate-15">
+                        <img src="https://images.unsplash.com/photo-1559757175-006f15d7426c?q=80&w=200&h=200&fit=crop" className="w-full h-full object-cover opacity-50 filter grayscale contrast-125 select-none pointer-events-none" />
+                      </div>
+                      {/* Scan Right */}
+                      <div className="absolute w-20 h-24 bg-zinc-950 border border-zinc-850 rounded-xl overflow-hidden shadow-2xl transition-all duration-300 transform rotate-12 translate-x-7 group-hover:-translate-y-4 group-hover:rotate-15">
+                        <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=200&h=200&fit=crop" className="w-full h-full object-cover opacity-50 filter grayscale contrast-125 select-none pointer-events-none" />
+                      </div>
+                      {/* Scan Center */}
+                      <div className="absolute w-24 h-28 bg-zinc-950 border border-zinc-700 rounded-xl overflow-hidden shadow-2xl transition-all duration-300 transform group-hover:-translate-y-6 group-hover:scale-105 z-10 flex flex-col justify-end">
+                        <img src="https://images.unsplash.com/photo-1579684389782-64d84b5e901d?q=80&w=200&h=200&fit=crop" className="absolute inset-0 w-full h-full object-cover opacity-75 filter grayscale contrast-125 select-none pointer-events-none" />
+                        <span className="relative z-10 w-full bg-zinc-950/80 text-center py-1 font-mono text-[9px] text-zinc-400 border-t border-zinc-850">image: 14</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* ==================================================
                 3. OVERVIEW TAB
