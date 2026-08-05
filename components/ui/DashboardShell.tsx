@@ -52,6 +52,7 @@ import LicenseGate from '@/components/licensing/LicenseGate';
 import LanguageSwitcher from '@/components/ui/language-switcher';
 import { staffAuthService, StaffRole } from '@/utils/services/staffAuthService';
 import VoiceSystem from '@/components/ui/VoiceSystem';
+import StaffPhoneIntercom from '@/components/ui/StaffPhoneIntercom';
 
 interface DashboardShellProps {
   user: any;
@@ -462,6 +463,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Internal Staff Phone & Intercom Widget */}
+            <StaffPhoneIntercom />
+
             {/* Voice System Widget */}
             <VoiceSystem />
 
