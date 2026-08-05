@@ -269,3 +269,234 @@ p a {
   outline: none;
   box-shadow: 0 0 0 2px var(--gold-glow), 0 0 0 1px var(--gold-dim);
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   ██████╗ ██╗      █████╗ ███████╗███████╗
+  ██╔════╝ ██║     ██╔══██╗██╔════╝██╔════╝
+  ██║  ███╗██║     ███████║███████╗███████╗
+  ██║   ██║██║     ██╔══██║╚════██║╚════██║
+  ╚██████╔╝███████╗██║  ██║███████║███████║
+   ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝
+  GLASSMORPHISM SYSTEM — Rondesign Crimson Edition
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Core Glass Variables ───────────────────────────────────── */
+:root {
+  --glass-fill:         rgba(255, 255, 255, 0.04);
+  --glass-fill-hover:   rgba(255, 255, 255, 0.07);
+  --glass-border:       rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.14);
+  --glass-shine:        rgba(255, 255, 255, 0.06);
+  --glass-blur:         20px;
+  --glass-blur-heavy:   40px;
+  --crimson-glow:       rgba(225, 29, 72, 0.18);
+  --crimson-glow-soft:  rgba(225, 29, 72, 0.08);
+}
+
+/* ─── Base Glass Card ────────────────────────────────────────── */
+.glass {
+  background: var(--glass-fill);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Inner top-edge shine line */
+.glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.12) 30%,
+    rgba(255,255,255,0.22) 50%,
+    rgba(255,255,255,0.12) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Crimson inner glow from top-left corner */
+.glass::after {
+  content: '';
+  position: absolute;
+  top: -40px; left: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(225,29,72,0.10) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Glass Hover State ──────────────────────────────────────── */
+.glass:hover {
+  background: var(--glass-fill-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255,255,255,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* ─── Glass Panel (heavier blur, darker) ─────────────────────── */
+.glass-panel {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(var(--glass-blur-heavy)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy)) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.10) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ─── Crimson Glow Glass (accent cards) ─────────────────────── */
+.glass-crimson {
+  background: rgba(225, 29, 72, 0.06);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid rgba(225, 29, 72, 0.18);
+  border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(225, 29, 72, 0.08), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.glass-crimson::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(225,29,72,0.4) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ─── Global Card Override — Convert zinc cards → glass ──────── */
+/* This converts ALL existing dark zinc cards across every page */
+
+/* bg-zinc-900 + border-zinc-800 card pattern */
+.bg-zinc-900.border.border-zinc-800,
+.bg-zinc-900.border.border-zinc-700,
+div[class*="bg-zinc-900"][class*="border"],
+div[class*="bg-zinc-900"][class*="rounded-3xl"],
+div[class*="bg-zinc-900"][class*="rounded-2xl"] {
+  background: var(--glass-fill) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border-color: var(--glass-border) !important;
+}
+
+/* bg-zinc-950 card pattern */
+div[class*="bg-zinc-950"][class*="rounded-3xl"],
+div[class*="bg-zinc-950"][class*="rounded-2xl"] {
+  background: rgba(0,0,0,0.5) !important;
+  backdrop-filter: blur(24px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+
+/* ─── Sidebar Glass ──────────────────────────────────────────── */
+nav,
+aside,
+[class*="sidebar"] {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(40px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ─── Header Glass ───────────────────────────────────────────── */
+header {
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(40px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
+}
+
+/* ─── Modal / Dropdown Glass ─────────────────────────────────── */
+[role="dialog"],
+[data-radix-popper-content-wrapper] > div,
+.dropdown-glass {
+  background: rgba(10, 10, 15, 0.85) !important;
+  backdrop-filter: blur(40px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.04) !important;
+}
+
+/* ─── Input Glass ────────────────────────────────────────────── */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+textarea,
+select {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(225, 29, 72, 0.4) !important;
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.08) !important;
+  outline: none !important;
+}
+
+/* ─── Animated Glass Shimmer ─────────────────────────────────── */
+@keyframes glass-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.glass-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 60%
+  );
+  animation: glass-shimmer 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ─── Scrollbar Crimson Update ───────────────────────────────── */
+::-webkit-scrollbar-thumb {
+  background: rgba(225,29,72,0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(225,29,72,0.45);
+}
