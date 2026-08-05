@@ -41,8 +41,9 @@ import {
 } from 'lucide-react';
 
 import {
+  playNextPatientPresentChime,
+  playNextPatientAbsentChime,
   playNewPatientChime,
-  playAppointmentWarningChime,
   playDoctorPagerChime,
   playIntercomChirp,
   startPhoneRingtone,
@@ -97,12 +98,15 @@ export default function StaffPhoneIntercom() {
   useEffect(() => {
     const handleSoundEvent = (e: Event) => {
       const ev = e as CustomEvent;
-      if (ev.detail?.type === 'new_patient') {
+      if (ev.detail?.type === 'patient_present') {
+        playNextPatientPresentChime();
+        showToast('🟢 اقتراب الموعد: المريض متواجد وجاهز في الاستقبال!');
+      } else if (ev.detail?.type === 'patient_absent') {
+        playNextPatientAbsentChime();
+        showToast('🟡 تنبيه اقتراب الموعد: المريض لم يصل بعد إلى الاستقبال!');
+      } else if (ev.detail?.type === 'new_patient') {
         playNewPatientChime();
-        showToast('🟢 نغمة: تم تسجيل موعد مريض جديد في الاستقبال!');
-      } else if (ev.detail?.type === 'appointment_warning') {
-        playAppointmentWarningChime();
-        showToast('🟡 نغمة تنبيه: الموعد القادم خلال 5 دقائق!');
+        showToast('🔵 تم تسجيل موعد مريض جديد في الاستقبال!');
       } else if (ev.detail?.type === 'doctor_pager') {
         playDoctorPagerChime();
         showToast('🔴 نغمة نداء: الطبيب يطلب الاستقبال فوراً!');
@@ -348,57 +352,75 @@ export default function StaffPhoneIntercom() {
 
               {/* Tab 2: Sound Effects Preview & Trigger Console */}
               {activeTab === 'chimes' && (
-                <div className="p-3 space-y-2">
-                  <p className="text-[10px] text-zinc-500 font-mono mb-2">تجربة واستعراض أصوات الإشعارات المخصصة:</p>
+                <div className="p-3 space-y-2.5">
+                  <p className="text-[10px] text-zinc-500 font-mono mb-2">نغمات التنبيهات الطبية الفاخرة المخصصة:</p>
 
-                  {/* 🟢 New Patient Booking Chime */}
-                  <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between">
-                    <div>
+                  {/* 🟢 1. Next Patient Present & Ready Chime */}
+                  <div className="p-3 rounded-2xl bg-white/[0.03] border border-emerald-500/20 flex items-center justify-between">
+                    <div className="min-w-0 pr-2">
                       <p className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                        نغمة تسجيل موعد جديد
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+                        اقتراب الموعد + المريض متواجد 🟢
                       </p>
-                      <p className="text-[10px] text-zinc-500">نغمة صاعدة عند تسجيل موعد من الاستقبال</p>
+                      <p className="text-[10px] text-zinc-400 mt-0.5">نغمة ماريمبا دافئة عند حضور المريض وصعوده للانتظار</p>
+                    </div>
+                    <button
+                      onClick={() => playNextPatientPresentChime()}
+                      className="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1 cursor-pointer shrink-0"
+                    >
+                      <Play className="w-3 h-3" />
+                      <span>تشغيل</span>
+                    </button>
+                  </div>
+
+                  {/* 🟡 2. Next Patient Absent Warning Chime */}
+                  <div className="p-3 rounded-2xl bg-white/[0.03] border border-amber-500/20 flex items-center justify-between">
+                    <div className="min-w-0 pr-2">
+                      <p className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />
+                        اقتراب الموعد + المريض غير موجود 🟡
+                      </p>
+                      <p className="text-[10px] text-zinc-400 mt-0.5">تنبيه ناعم مزدوج إذا لم يصل المريض بعد للمستشفى</p>
+                    </div>
+                    <button
+                      onClick={() => playNextPatientAbsentChime()}
+                      className="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-1 cursor-pointer shrink-0"
+                    >
+                      <Play className="w-3 h-3" />
+                      <span>تشغيل</span>
+                    </button>
+                  </div>
+
+                  {/* 🔵 3. New Patient Booking Chime */}
+                  <div className="p-3 rounded-2xl bg-white/[0.03] border border-cyan-500/20 flex items-center justify-between">
+                    <div className="min-w-0 pr-2">
+                      <p className="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+                        تسجيل موعد مريض جديد 🔵
+                      </p>
+                      <p className="text-[10px] text-zinc-400 mt-0.5">نغمة ثلاثية ثلاثية النغم عند حجز الاستقبال لمريض</p>
                     </div>
                     <button
                       onClick={() => playNewPatientChime()}
-                      className="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 text-cyan-300 text-xs font-bold flex items-center gap-1 cursor-pointer shrink-0"
                     >
                       <Play className="w-3 h-3" />
                       <span>تشغيل</span>
                     </button>
                   </div>
 
-                  {/* 🟡 Appointment Warning Chime */}
-                  <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between">
-                    <div>
-                      <p className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-amber-400" />
-                        نغمة اقتراب الموعد (5 دقائق)
-                      </p>
-                      <p className="text-[10px] text-zinc-500">تنبيه الموعد القادم للمريض</p>
-                    </div>
-                    <button
-                      onClick={() => playAppointmentWarningChime()}
-                      className="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-1 cursor-pointer"
-                    >
-                      <Play className="w-3 h-3" />
-                      <span>تشغيل</span>
-                    </button>
-                  </div>
-
-                  {/* 🔴 Doctor Pager Chime */}
-                  <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between">
-                    <div>
+                  {/* 🔴 4. Doctor Pager Chime */}
+                  <div className="p-3 rounded-2xl bg-white/[0.03] border border-rose-500/20 flex items-center justify-between">
+                    <div className="min-w-0 pr-2">
                       <p className="text-xs font-bold text-rose-400 flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse" />
-                        نغمة نداء الاستقبال (Pager)
+                        <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse shrink-0" />
+                        نداء الاستقبال الفوري (Pager) 🔴
                       </p>
-                      <p className="text-[10px] text-zinc-500">نغمة نداء الطبيب الفورية للاستقبال</p>
+                      <p className="text-[10px] text-zinc-400 mt-0.5">نغمة نداء الطبيب لاستدعاء مريض أو ممرضة</p>
                     </div>
                     <button
                       onClick={() => playDoctorPagerChime()}
-                      className="px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 text-rose-300 text-xs font-bold flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 text-rose-300 text-xs font-bold flex items-center gap-1 cursor-pointer shrink-0"
                     >
                       <Play className="w-3 h-3" />
                       <span>تشغيل</span>

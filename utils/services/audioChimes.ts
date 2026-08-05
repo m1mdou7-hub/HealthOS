@@ -1,11 +1,10 @@
 /**
- * HealthOS Audio Chimes & Sound Synthesizer Service
+ * HealthOS Advanced Sound Synthesizer Engine (v2)
  * ─────────────────────────────────────────────────────────────
- * Uses native Web Audio API (AudioContext) for 100% reliable, zero-latency
- * medical notification chimes, phone ringtones, and pager beeps without external MP3 dependencies.
+ * Smooth, warm, multi-harmonic bell & marimba audio synthesizer for medical environments.
+ * Uses soft attack/release envelopes, sine overtones, and harmonic resonance.
  */
 
-// Global AudioContext singleton instance
 let audioCtx: AudioContext | null = null;
 
 function getAudioContext(): AudioContext | null {
@@ -23,141 +22,139 @@ function getAudioContext(): AudioContext | null {
 }
 
 /**
- * 🟢 1. New Patient Booking Chime (Ascending 3-tone harmonic chime)
- * Played when Reception registers a new patient appointment for the doctor.
+ * Helper: Play a warm, organic bell/marimba note with harmonic overtones
+ */
+function playHarmonicBellNote(freq: number, startTime: number, duration = 0.8, volume = 0.25, type: OscillatorType = 'sine') {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  // Fundamental frequency
+  const osc1 = ctx.createOscillator();
+  const gain1 = ctx.createGain();
+
+  // 1st Harmonic overtone for warmth
+  const osc2 = ctx.createOscillator();
+  const gain2 = ctx.createGain();
+
+  osc1.type = type;
+  osc1.frequency.setValueAtTime(freq, startTime);
+
+  osc2.type = 'sine';
+  osc2.frequency.setValueAtTime(freq * 2, startTime); // 1 octave higher overtone
+
+  // Soft attack and smooth exponential decay envelope
+  gain1.gain.setValueAtTime(0.0001, startTime);
+  gain1.gain.linearRampToValueAtTime(volume, startTime + 0.02); // 20ms soft attack
+  gain1.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+  gain2.gain.setValueAtTime(0.0001, startTime);
+  gain2.gain.linearRampToValueAtTime(volume * 0.35, startTime + 0.02);
+  gain2.gain.exponentialRampToValueAtTime(0.0001, startTime + duration * 0.6);
+
+  osc1.connect(gain1);
+  gain1.connect(ctx.destination);
+
+  osc2.connect(gain2);
+  gain2.connect(ctx.destination);
+
+  osc1.start(startTime);
+  osc2.start(startTime);
+
+  osc1.stop(startTime + duration + 0.05);
+  osc2.stop(startTime + duration + 0.05);
+}
+
+/**
+ * 🟢 1. نغمة اقتراب الموعد + المريض متواجد في الاستقبال وجاهز (Patient Present & Ready)
+ * Warm, uplifting 4-note marimba/chime chord (E5 -> G#5 -> B5 -> E6)
+ */
+export function playNextPatientPresentChime() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const now = ctx.currentTime;
+  const sequence = [
+    { freq: 659.25, time: 0 },    // E5
+    { freq: 830.61, time: 0.12 },  // G#5
+    { freq: 987.77, time: 0.24 },  // B5
+    { freq: 1318.51, time: 0.36 }  // E6
+  ];
+
+  sequence.forEach(note => {
+    playHarmonicBellNote(note.freq, now + note.time, 1.0, 0.25);
+  });
+}
+
+/**
+ * 🟡 2. نغمة اقتراب الموعد + المريض لم يصل بعد (Patient NOT Present / Late Warning)
+ * Soft amber two-pulse warning chime (C5-F5 -> pause -> C5-F5)
+ */
+export function playNextPatientAbsentChime() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const now = ctx.currentTime;
+  const sequence = [
+    { freq: 523.25, time: 0 },    // C5
+    { freq: 698.46, time: 0.14 },  // F5
+    { freq: 523.25, time: 0.45 },  // C5
+    { freq: 698.46, time: 0.59 }   // F5
+  ];
+
+  sequence.forEach(note => {
+    playHarmonicBellNote(note.freq, now + note.time, 0.6, 0.22, 'sine');
+  });
+}
+
+/**
+ * 🔵 3. نغمة تسجيل موعد جديد في الاستقبال (New Patient Booking Chime)
+ * Elegant 3-note ascending chime (A4 -> C#5 -> E5)
  */
 export function playNewPatientChime() {
   const ctx = getAudioContext();
   if (!ctx) return;
 
   const now = ctx.currentTime;
-  const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
-
-  notes.forEach((freq, idx) => {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, now + idx * 0.12);
-
-    gain.gain.setValueAtTime(0.01, now + idx * 0.12);
-    gain.gain.exponentialRampToValueAtTime(0.3, now + idx * 0.12 + 0.03);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.4);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start(now + idx * 0.12);
-    osc.stop(now + idx * 0.12 + 0.45);
-  });
-}
-
-/**
- * 🟡 2. Upcoming Appointment Warning Chime (Dual alert pulse tone)
- * Played 5 minutes before the next patient's appointment time.
- */
-export function playAppointmentWarningChime() {
-  const ctx = getAudioContext();
-  if (!ctx) return;
-
-  const now = ctx.currentTime;
-  const pulses = [
-    { freq: 440, time: 0 },       // A4
-    { freq: 880, time: 0.18 },    // A5
-    { freq: 440, time: 0.36 },    // A4
-    { freq: 880, time: 0.54 }     // A5
+  const sequence = [
+    { freq: 440.00, time: 0 },    // A4
+    { freq: 554.37, time: 0.14 },  // C#5
+    { freq: 659.25, time: 0.28 }   // E5
   ];
 
-  pulses.forEach(p => {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(p.freq, now + p.time);
-
-    gain.gain.setValueAtTime(0.01, now + p.time);
-    gain.gain.linearRampToValueAtTime(0.25, now + p.time + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + p.time + 0.15);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start(now + p.time);
-    osc.stop(now + p.time + 0.16);
+  sequence.forEach(note => {
+    playHarmonicBellNote(note.freq, now + note.time, 0.9, 0.24);
   });
 }
 
 /**
- * 🔴 3. Doctor Pager Call Chime (Attention dual-frequency medical pager)
- * Played when Doctor summons Reception or vice versa.
+ * 🔴 4. نغمة نداء الاستقبال الفوري (Doctor Pager Call)
+ * High-clarity dual-chime tone (F#5 + C#6)
  */
 export function playDoctorPagerChime() {
   const ctx = getAudioContext();
   if (!ctx) return;
 
   const now = ctx.currentTime;
-
-  [0, 0.25].forEach(delay => {
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc1.type = 'square';
-    osc2.type = 'sine';
-
-    osc1.frequency.setValueAtTime(1046.50, now + delay); // C6
-    osc2.frequency.setValueAtTime(1318.51, now + delay); // E6
-
-    gain.gain.setValueAtTime(0.01, now + delay);
-    gain.gain.linearRampToValueAtTime(0.2, now + delay + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.18);
-
-    osc1.connect(gain);
-    osc2.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc1.start(now + delay);
-    osc2.start(now + delay);
-
-    osc1.stop(now + delay + 0.2);
-    osc2.stop(now + delay + 0.2);
+  [0, 0.22].forEach(delay => {
+    playHarmonicBellNote(739.99, now + delay, 0.7, 0.28);  // F#5
+    playHarmonicBellNote(1108.73, now + delay + 0.05, 0.7, 0.22); // C#6
   });
 }
 
 /**
- * 📻 4. Push-to-Talk Intercom Chirp
- * Walkie-talkie start/end transmission chirp sound.
+ * 📻 5. Push-to-Talk Intercom Chirp
  */
 export function playIntercomChirp(isStart = true) {
   const ctx = getAudioContext();
   if (!ctx) return;
 
   const now = ctx.currentTime;
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-
-  osc.type = 'sine';
-  const startFreq = isStart ? 1200 : 800;
-  const endFreq = isStart ? 1600 : 500;
-
-  osc.frequency.setValueAtTime(startFreq, now);
-  osc.frequency.exponentialRampToValueAtTime(endFreq, now + 0.08);
-
-  gain.gain.setValueAtTime(0.15, now);
-  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
-
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-
-  osc.start(now);
-  osc.stop(now + 0.1);
+  playHarmonicBellNote(isStart ? 880 : 587.33, now, 0.15, 0.15);
 }
 
 /**
- * 📞 5. Internal Phone Electronic Ringtone
- * Loopable ringing sound generator for incoming internal VoIP staff calls.
+ * 📞 6. Internal Phone Electronic Ringtone
  */
-
 let activeRingtoneInterval: NodeJS.Timeout | null = null;
 
 export function startPhoneRingtone() {
@@ -166,38 +163,17 @@ export function startPhoneRingtone() {
   const ringOnce = () => {
     const ctx = getAudioContext();
     if (!ctx) return;
-
     const now = ctx.currentTime;
 
-    // Dual-tone US/EU phone ringing frequencies (440Hz + 480Hz)
-    [0, 0.15, 0.8, 0.95].forEach(offset => {
-      const osc1 = ctx.createOscillator();
-      const osc2 = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc1.type = 'sine';
-      osc2.type = 'sine';
-
-      osc1.frequency.setValueAtTime(440, now + offset);
-      osc2.frequency.setValueAtTime(480, now + offset);
-
-      gain.gain.setValueAtTime(0.01, now + offset);
-      gain.gain.linearRampToValueAtTime(0.2, now + offset + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.12);
-
-      osc1.connect(gain);
-      osc2.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc1.start(now + offset);
-      osc2.start(now + offset);
-      osc1.stop(now + offset + 0.13);
-      osc2.stop(now + offset + 0.13);
+    // Dual soft ring pulse
+    [0, 0.16, 0.8, 0.96].forEach(offset => {
+      playHarmonicBellNote(587.33, now + offset, 0.4, 0.2); // D5
+      playHarmonicBellNote(880.00, now + offset + 0.02, 0.4, 0.15); // A5
     });
   };
 
   ringOnce();
-  activeRingtoneInterval = setInterval(ringOnce, 2200);
+  activeRingtoneInterval = setInterval(ringOnce, 2400);
 }
 
 export function stopPhoneRingtone() {
@@ -208,9 +184,9 @@ export function stopPhoneRingtone() {
 }
 
 /**
- * Dispatcher helper for global application audio event triggers
+ * Dispatcher helper for global sound triggers
  */
-export function triggerSoundEvent(type: 'new_patient' | 'appointment_warning' | 'doctor_pager' | 'phone_incoming') {
+export function triggerSoundEvent(type: 'patient_present' | 'patient_absent' | 'new_patient' | 'doctor_pager' | 'phone_incoming') {
   if (typeof window === 'undefined') return;
   window.dispatchEvent(new CustomEvent('healthos_sound_event', { detail: { type } }));
 }
