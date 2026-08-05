@@ -226,21 +226,22 @@ export default function StaffPhoneIntercom() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="absolute right-0 top-12 w-88 z-[9999] bg-[#09090e] border border-rose-500/20 rounded-3xl shadow-2xl shadow-black/90 overflow-hidden"
+              className="absolute right-0 top-12 w-96 z-[9999] bg-[#09090e] border border-rose-500/20 rounded-3xl shadow-2xl shadow-black/90 overflow-hidden text-right"
+              dir="rtl"
             >
               {/* Header */}
               <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-white/[0.08] bg-zinc-950">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400">
-                    <PhoneCall className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 shrink-0">
+                    <PhoneCall className="w-4 h-4" />
                   </div>
-                  <div>
-                    <h3 className="text-xs font-bold text-white">الهاتف الداخلي واللاسلكي</h3>
-                    <p className="text-[10px] text-zinc-500 font-mono">Internal VoIP & Audio Alerts</p>
+                  <div className="min-w-0 text-right">
+                    <h3 className="text-xs font-bold text-white truncate">الهاتف الداخلي واللاسلكي</h3>
+                    <p className="text-[10px] text-zinc-500 font-mono truncate">Internal VoIP & Audio Alerts</p>
                   </div>
                 </div>
-                <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-lg text-zinc-500 hover:text-white cursor-pointer">
-                  <X className="w-3.5 h-3.5" />
+                <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-lg text-zinc-500 hover:text-white cursor-pointer shrink-0">
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
