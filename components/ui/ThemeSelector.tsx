@@ -20,8 +20,11 @@ export default function ThemeSelector() {
 
   const applyThemeToDocument = (theme: ActiveTheme) => {
     const root = document.documentElement;
+    const body = document.body;
     root.classList.remove('theme-crimson', 'theme-earthy', 'theme-amethyst');
+    body.classList.remove('theme-crimson', 'theme-earthy', 'theme-amethyst');
     root.classList.add(theme);
+    body.classList.add(theme);
     localStorage.setItem('healthos_user_theme', theme);
   };
 
