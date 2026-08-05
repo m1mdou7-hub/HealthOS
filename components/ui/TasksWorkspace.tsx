@@ -256,7 +256,7 @@ export default function TasksWorkspace() {
           { label: 'Completed Actions', value: stats.completedCount, icon: CheckSquare, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
           { label: 'Platform Backlog', value: stats.total, icon: Activity, color: 'text-purple-400', bg: 'bg-purple-500/10' }
         ].map((stat, idx) => (
-          <div key={idx} className="p-4 rounded-2xl bg-zinc-900/40 border border-zinc-900 flex items-center justify-between gap-4">
+          <div key={idx} className="p-4 rounded-3xl bg-zinc-900/40 border border-zinc-900 flex items-center justify-between gap-4">
             <div className="space-y-1">
               <span className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider block">{stat.label}</span>
               <span className="text-xl font-bold text-white font-mono">{stat.value}</span>
@@ -270,7 +270,7 @@ export default function TasksWorkspace() {
 
       {/* FILTER & VIEW SWITCH BAR */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850">
           {[
             { id: 'kanban', label: 'Kanban board', icon: Layout },
             { id: 'list', label: 'EHR Grid List', icon: Sliders },
@@ -336,7 +336,7 @@ export default function TasksWorkspace() {
           {viewMode === 'kanban' && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full items-stretch">
               {Object.entries(kanbanColumns).map(([colName, colTasks]) => (
-                <div key={colName} className="p-4 rounded-2xl bg-zinc-950/40 border border-zinc-900 flex flex-col justify-start space-y-3 min-h-[400px]">
+                <div key={colName} className="p-4 rounded-3xl bg-zinc-950/40 border border-zinc-900 flex flex-col justify-start space-y-3 min-h-[400px]">
                   <div className="flex items-center justify-between border-b border-zinc-900 pb-2">
                     <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">
                       {colName}
@@ -402,7 +402,7 @@ export default function TasksWorkspace() {
                   <div
                     key={task.id}
                     onClick={() => setSelectedTaskId(task.id)}
-                    className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+                    className={`p-4 rounded-3xl border transition-all cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 ${
                       isSelected 
                         ? 'bg-zinc-900 border-zinc-800' 
                         : 'bg-zinc-950/20 border-transparent hover:bg-zinc-900/30'
@@ -499,7 +499,7 @@ export default function TasksWorkspace() {
               
               <div className="space-y-4">
                 {filteredTasks.map(task => (
-                  <div key={task.id} className="p-3 bg-zinc-950/60 border border-zinc-900 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div key={task.id} className="p-3 bg-zinc-950/60 border border-zinc-900 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <h4 className="text-xs font-bold text-white">{task.title}</h4>
                       <p className="text-[10px] text-zinc-500">Case Owner: {task.assignee}</p>

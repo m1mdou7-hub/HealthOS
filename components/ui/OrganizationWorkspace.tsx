@@ -439,7 +439,7 @@ export default function OrganizationWorkspace() {
       {/* HEADER BANNER */}
       <div className="p-6 rounded-3xl bg-zinc-900/50 border border-zinc-850/80 shadow-xl backdrop-blur-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
+          <div className="p-3 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
             <Building2 className="w-6 h-6" />
           </div>
           <div>
@@ -471,7 +471,7 @@ export default function OrganizationWorkspace() {
       </div>
 
       {/* 11 SUBMODULES HORIZONTAL / GRID NAV TABS */}
-      <div className="bg-zinc-900/40 p-2 rounded-2xl border border-zinc-850/80 flex flex-wrap gap-1.5 shadow-md">
+      <div className="bg-zinc-900/40 p-2 rounded-3xl border border-zinc-850/80 flex flex-wrap gap-1.5 shadow-md">
         {[
           { id: 'Overview', key: 'Overview', icon: Layers, badge: tOrg('badges.unified') },
           { id: 'Clinics', key: 'Clinics', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} OK` },
@@ -526,7 +526,7 @@ export default function OrganizationWorkspace() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
                 {/* Stat 1: Org ID */}
-                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
+                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-3xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.orgId')}</span>
                     <Building2 className="w-4 h-4 text-gold-400" />
@@ -541,7 +541,7 @@ export default function OrganizationWorkspace() {
                 </div>
 
                 {/* Stat 2: Clinics & Rooms */}
-                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
+                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-3xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.clinicsRooms')}</span>
                     <Globe className="w-4 h-4 text-gold-400" />
@@ -556,7 +556,7 @@ export default function OrganizationWorkspace() {
                 </div>
 
                 {/* Stat 3: License Seats */}
-                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
+                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-3xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.licenseSeats')}</span>
                     <span className="text-xs text-gold-400 font-mono font-bold bg-gold-500/10 px-2 py-0.5 rounded border border-gold-500/20">{tOrg('overview_stats.freeCount', { count: 28 })}</span>
@@ -571,7 +571,7 @@ export default function OrganizationWorkspace() {
                 </div>
 
                 {/* Stat 4: Secure Cloud Storage */}
-                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-2xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
+                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-3xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.secureCloudStorage')}</span>
                     <span className="text-xs text-cyan-400 font-mono font-bold bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">24%</span>
@@ -634,7 +634,7 @@ export default function OrganizationWorkspace() {
                       
                       <button 
                         onClick={() => { setActiveTab('Users') }}
-                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
                       >
                         <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Plus className="w-5 h-5" />
@@ -647,7 +647,7 @@ export default function OrganizationWorkspace() {
 
                       <button 
                         onClick={() => { setActiveTab('Permissions') }}
-                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
                       >
                         <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Sliders className="w-5 h-5" />
@@ -660,7 +660,7 @@ export default function OrganizationWorkspace() {
 
                       <button 
                         onClick={() => { setActiveTab('Security') }}
-                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-2xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
                       >
                         <div className="p-2 bg-rose-500/10 text-rose-400 rounded-xl group-hover:bg-rose-500 group-hover:text-zinc-950 transition-colors">
                           <Lock className="w-5 h-5" />
@@ -678,7 +678,7 @@ export default function OrganizationWorkspace() {
               </div>
 
               {/* Active Operator & Bottom Telemetry Bar */}
-              <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-sans card-luxury">
+              <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-sans card-luxury">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-md">
                     CA
@@ -737,7 +737,7 @@ export default function OrganizationWorkspace() {
                     </div>
 
                     {showAddClinicForm && (
-                      <div className="p-4 bg-[#0d0d16] border border-white/5 rounded-2xl space-y-3 animate-fade-in card-luxury">
+                      <div className="p-4 bg-[#0d0d16] border border-white/5 rounded-3xl space-y-3 animate-fade-in card-luxury">
                         <span className="text-[10px] font-mono font-bold text-gold-400 uppercase tracking-widest block">{tOrg('clinics.registerProfile')}</span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
                           <div className="space-y-1">
@@ -836,7 +836,7 @@ export default function OrganizationWorkspace() {
                     {/* Clinic Grid with visual rooms layout */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[380px] overflow-y-auto pr-1">
                       {filteredClinics.map((c) => (
-                        <div key={c.id} className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[180px] space-y-3">
+                        <div key={c.id} className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[180px] space-y-3">
                           <div className="flex justify-between items-start">
                             <div>
                               <div className="flex items-center gap-2">
@@ -879,7 +879,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>TOTAL REGISTERED CLINICS: {clinics.length}</span>
                     <span>ONLINE MAP INTEGRATION: INACTIVE</span>
                   </div>
@@ -904,7 +904,7 @@ export default function OrganizationWorkspace() {
                     {/* Grid of existing departments with interactive custom adding form */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                       {/* Left form */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-3 h-[380px] flex flex-col justify-between">
+                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3 h-[380px] flex flex-col justify-between">
                         <div className="space-y-2">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Provisions Custom Unit</span>
                           <p className="text-[10px] text-zinc-400 font-mono leading-relaxed">Instantly add a new specialty clinic segment to the EHR platform.</p>
@@ -957,7 +957,7 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Right list */}
-                      <div className="lg:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-2xl h-[380px] overflow-y-auto scrollbar-thin space-y-2">
+                      <div className="lg:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-2">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Registered Speciality Directory</span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                           {departments.map((dept, idx) => (
@@ -975,7 +975,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>DEPARTMENT TOTAL: {departments.length} UNITS CONFIGURATION</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1119,7 +1119,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>SEAT COUNT: {filteredUsers.length} MEMBERS ACCORDING TO FILTER</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1141,7 +1141,7 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
                       {/* Left list of roles */}
-                      <div className="p-3.5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-1 h-[380px] overflow-y-auto">
+                      <div className="p-3.5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-1 h-[380px] overflow-y-auto">
                         <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Role Template</span>
                         {Object.keys(rolePermissions).map((role) => (
                           <button
@@ -1159,7 +1159,7 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Right permission toggles */}
-                      <div className="lg:col-span-3 p-4 bg-zinc-900/10 border border-zinc-850 rounded-2xl h-[380px] space-y-4 flex flex-col justify-between">
+                      <div className="lg:col-span-3 p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] space-y-4 flex flex-col justify-between">
                         <div>
                           <div className="flex justify-between items-center border-b border-zinc-900 pb-2 mb-3">
                             <span className="text-xs font-black text-white font-mono uppercase">
@@ -1215,7 +1215,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>AUDIT ACTION LOGGED: TRUE</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1256,7 +1256,7 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pr-1">
                       {teams.map((t) => (
-                        <div key={t.id} className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[180px] space-y-3">
+                        <div key={t.id} className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[180px] space-y-3">
                           <div className="flex justify-between items-start">
                             <div>
                               <div className="flex items-center gap-2">
@@ -1303,7 +1303,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>ROSTER TEAMS TOTAL: {teams.length} ON-CALL SHIFTS</span>
                     <span>ONLINE REALTIME FEED: ACTIVE</span>
                   </div>
@@ -1369,7 +1369,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>IMMUTABLE LEDGER HASH: SHA-256 SECURED BY HEALTHOS SHARED TRUST</span>
                     <span>PCI COMPLIANT: TRUE</span>
                   </div>
@@ -1393,7 +1393,7 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                       {/* Left publish form */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-3 h-[380px] flex flex-col justify-between font-sans">
+                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3 h-[380px] flex flex-col justify-between font-sans">
                         <div className="space-y-1">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block">{tOrg('notices.draftTitle')}</span>
                           <p className="text-[10px] text-zinc-400 font-sans">{tOrg('notices.draftDesc')}</p>
@@ -1445,7 +1445,7 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Right active announcements list */}
-                      <div className="lg:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-2xl h-[380px] overflow-y-auto scrollbar-thin space-y-3 font-sans">
+                      <div className="lg:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-3 font-sans">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block mb-2">{tOrg('notices.boardTitle')}</span>
                         <div className="space-y-2.5">
                           {announcements.map((item) => (
@@ -1476,7 +1476,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>BROADCASTS LOGGED: TRUE</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1511,7 +1511,7 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Security Parameters Panel */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl h-[380px] flex flex-col justify-between space-y-3">
+                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[380px] flex flex-col justify-between space-y-3">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Credential policies</span>
                         
                         <div className="space-y-4 flex-1 mt-2">
@@ -1583,7 +1583,7 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Device List & Health Console */}
-                      <div className="md:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-2xl h-[380px] space-y-4 flex flex-col justify-between">
+                      <div className="md:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] space-y-4 flex flex-col justify-between">
                         <div>
                           <div className="flex justify-between items-center border-b border-zinc-900 pb-2 mb-3">
                             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Active Operator Device Nodes</span>
@@ -1629,7 +1629,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>SECURITY PARAMS RE-AUDITED: COMPLETED SUCCESSFULLY</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1651,7 +1651,7 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Left form params */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl h-[380px] flex flex-col justify-between space-y-3">
+                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[380px] flex flex-col justify-between space-y-3">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Tenant Localization Settings</span>
                         
                         <div className="space-y-3 flex-1 mt-2">
@@ -1720,13 +1720,13 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Right preview card */}
-                      <div className="p-4 bg-zinc-900/10 border border-zinc-850 rounded-2xl h-[380px] flex flex-col justify-between">
+                      <div className="p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] flex flex-col justify-between">
                         <div className="space-y-4">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Custom Client Branding Preview</span>
                           <p className="text-[10px] text-zinc-400 font-mono">This preview reflects how patient-facing letters and portals render.</p>
 
                           {/* Preview visual card */}
-                          <div className="p-5 rounded-2xl bg-zinc-950 border border-zinc-900 space-y-4 shadow-xl">
+                          <div className="p-5 rounded-3xl bg-zinc-950 border border-zinc-900 space-y-4 shadow-xl">
                             <div className="flex justify-between items-start">
                               <div className="flex items-center gap-2">
                                 <div className={`w-8 h-8 rounded-lg ${
@@ -1770,7 +1770,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>BRAND PARAMETERS COMPILATION STATUS: OK</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1818,7 +1818,7 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                       {/* Left: SLA Health Telemetry */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[380px] space-y-3">
+                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[380px] space-y-3">
                         <div>
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Cryptographic Cluster Checksum</span>
                           
@@ -1864,7 +1864,7 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Right: Backups Archive list */}
-                      <div className="lg:col-span-2 p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[380px]">
+                      <div className="lg:col-span-2 p-4 bg-zinc-900/30 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[380px]">
                         <div className="space-y-2 flex-1 overflow-hidden flex flex-col">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-1">Cryptographically Authenticated Backups List</span>
                           
@@ -1911,7 +1911,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>SECURITY COMPLIANCE AUDITING: AES-256 ENCRYPTED</span>
                     <span>DR CONSOLE VERSION: v1.0.4-LTS</span>
                   </div>

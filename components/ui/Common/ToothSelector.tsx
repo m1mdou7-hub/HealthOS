@@ -96,7 +96,7 @@ export function ToothSelector({
   };
 
   return (
-    <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/40 space-y-4">
+    <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/40 space-y-4">
       {/* Header */}
       <div className="flex justify-between items-center border-b border-zinc-900/60 pb-3">
         <div>

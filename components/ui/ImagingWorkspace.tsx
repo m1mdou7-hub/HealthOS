@@ -646,7 +646,7 @@ export default function ImagingWorkspace() {
                         {filteredStudies.map((study) => (
                           <div
                             key={study.id}
-                            className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[155px]"
+                            className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[155px]"
                           >
                             <div className="flex justify-between items-start">
                               <span className="text-[9px] font-bold font-mono bg-zinc-900 border border-zinc-850 text-zinc-400 px-1.5 py-0.5 rounded">
@@ -720,7 +720,7 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* QUICK STATS FOR EXCELSIOR PACS */}
-                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex items-center justify-between text-xs font-mono">
+                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex items-center justify-between text-xs font-mono">
                     <div className="flex items-center gap-3">
                       <span className="text-zinc-500 font-bold">PACS ARCHIVE SIZE:</span>
                       <span className="text-zinc-300">308.9 MB</span>
@@ -748,7 +748,7 @@ export default function ImagingWorkspace() {
                   <div className="flex-1 grid grid-cols-2 gap-3 h-full">
                     
                     {/* PLANE 1: AXIAL SLICE */}
-                    <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-3 flex flex-col justify-between relative overflow-hidden group">
+                    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl p-3 flex flex-col justify-between relative overflow-hidden group">
                       <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
                         <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">AXIAL VIEW</span>
                         <span>Slice {activeSlice}/120</span>
@@ -794,7 +794,7 @@ export default function ImagingWorkspace() {
                     </div>
 
                     {/* PLANE 2: CORONAL SLICE */}
-                    <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-3 flex flex-col justify-between relative overflow-hidden">
+                    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl p-3 flex flex-col justify-between relative overflow-hidden">
                       <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
                         <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">CORONAL VIEW</span>
                         <span>Slice {activeSlice}/120</span>
@@ -825,7 +825,7 @@ export default function ImagingWorkspace() {
                     </div>
 
                     {/* PLANE 3: SAGITTAL SLICE */}
-                    <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-3 flex flex-col justify-between relative overflow-hidden">
+                    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl p-3 flex flex-col justify-between relative overflow-hidden">
                       <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
                         <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">SAGITTAL VIEW</span>
                         <span>Slice {activeSlice}/120</span>
@@ -853,7 +853,7 @@ export default function ImagingWorkspace() {
                     </div>
 
                     {/* PLANE 4: 3D RECONSTRUCTION */}
-                    <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-3 flex flex-col justify-between relative overflow-hidden">
+                    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl p-3 flex flex-col justify-between relative overflow-hidden">
                       <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
                         <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">3D RECONSTRUCTION</span>
                         <span>VOLUMETRIC RENDER</span>
@@ -878,7 +878,7 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* CBCT Panel controls, bookmarks & measurements (Right col) */}
-                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between space-y-4">
+                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between space-y-4">
                     <div className="space-y-4">
                       
                       {/* Active Study info */}
@@ -989,7 +989,7 @@ export default function ImagingWorkspace() {
                 >
                   
                   {/* Rotating point cloud canvas simulation (Workstation viewport) */}
-                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden select-none">
+                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between relative overflow-hidden select-none">
                     <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
                       <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
                         EXOCAD CAD/CAM VIEWPORT
@@ -1075,7 +1075,7 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* Comments, version history & specifications (Right col) */}
-                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between space-y-4">
+                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between space-y-4">
                     <div className="space-y-4">
                       
                       {/* Scan Metadata */}
@@ -1152,7 +1152,7 @@ export default function ImagingWorkspace() {
                 >
                   
                   {/* Active Aesthetic Canvas Area with SVG overlay guide lines */}
-                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden select-none">
+                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between relative overflow-hidden select-none">
                     <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
                       <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
                         DIGITAL SMILE DESIGN (DSD) FRAME
@@ -1230,7 +1230,7 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* Smile design control panel & guide toggles (Right col) */}
-                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between space-y-4">
+                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between space-y-4">
                     <div className="space-y-4">
                       
                       {/* Frame Select */}
@@ -1364,7 +1364,7 @@ export default function ImagingWorkspace() {
                 >
                   
                   {/* AI Scanner / Highlighting view */}
-                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden select-none">
+                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between relative overflow-hidden select-none">
                     <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
                       <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-pulse" /> AI Computer Vision telemetry
@@ -1375,7 +1375,7 @@ export default function ImagingWorkspace() {
                     {/* Volumetric / Highlighting mock render */}
                     <div className="flex-1 relative flex items-center justify-center m-4">
                       
-                      <div className="w-80 h-48 bg-zinc-900/40 rounded-2xl border border-zinc-900 flex items-center justify-center relative overflow-hidden">
+                      <div className="w-80 h-48 bg-zinc-900/40 rounded-3xl border border-zinc-900 flex items-center justify-center relative overflow-hidden">
                         
                         {/* Mock Panoramic trace */}
                         <div className="w-72 h-1 bg-zinc-800 rounded-full" />
@@ -1422,7 +1422,7 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* AI command dashboard (Right col) */}
-                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between space-y-4">
+                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between space-y-4">
                     <div className="space-y-4 flex-1 flex flex-col">
                       
                       <div className="border-b border-zinc-900 pb-3">
@@ -1514,7 +1514,7 @@ export default function ImagingWorkspace() {
                             <div className="w-1.5 h-1.5 rounded-full bg-zinc-950" />
                           </div>
 
-                          <div className="p-4 bg-zinc-900/30 hover:bg-zinc-900/60 rounded-2xl border border-zinc-900 transition-all space-y-2">
+                          <div className="p-4 bg-zinc-900/30 hover:bg-zinc-900/60 rounded-3xl border border-zinc-900 transition-all space-y-2">
                             <div className="flex justify-between items-start text-xs font-mono">
                               <div>
                                 <span className="font-bold text-white text-[13px] tracking-tight block">
@@ -1542,7 +1542,7 @@ export default function ImagingWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-2xl text-[10px] font-mono text-zinc-500 text-center">
+                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-3xl text-[10px] font-mono text-zinc-500 text-center">
                     All radiographic imaging entries comply with the federal HHS DICOM Part 15 standards.
                   </div>
                 </WorkspaceTabPanel>
@@ -1602,7 +1602,7 @@ export default function ImagingWorkspace() {
               </div>
 
               {/* Export warnings */}
-              <div className="p-3.5 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-start gap-2.5 text-[10px] text-amber-400 font-mono">
+              <div className="p-3.5 bg-amber-500/10 border border-amber-500/20 rounded-3xl flex items-start gap-2.5 text-[10px] text-amber-400 font-mono">
                 <Info className="w-4 h-4 shrink-0 mt-0.5" />
                 <p>Exporting raw patient telemetry triggers an automated audit trail log under federal HIPAA requirements.</p>
               </div>
@@ -1658,7 +1658,7 @@ export default function ImagingWorkspace() {
               </div>
 
               {/* Report content */}
-              <div className="bg-zinc-900/40 p-4 rounded-2xl border border-zinc-900 space-y-4 text-xs font-mono max-h-[350px] overflow-y-auto scrollbar-thin text-zinc-300 leading-relaxed">
+              <div className="bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900 space-y-4 text-xs font-mono max-h-[350px] overflow-y-auto scrollbar-thin text-zinc-300 leading-relaxed">
                 <div className="border-b border-zinc-800 pb-2 flex justify-between">
                   <span className="font-bold text-white">HEALTHOS MACHINE VISION VERDICT</span>
                   <span className="text-emerald-400">CONFIDENCE: 98.4%</span>

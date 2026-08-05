@@ -359,7 +359,7 @@ export default function AppleDemoWorkspace() {
         </div>
 
         {/* Global Control Tweak Panel (Minimalist black layout) */}
-        <div className="p-5 rounded-2xl bg-zinc-950 border border-zinc-850 text-xs text-zinc-300 w-full md:w-80 space-y-4">
+        <div className="p-5 rounded-3xl bg-zinc-950 border border-zinc-850 text-xs text-zinc-300 w-full md:w-80 space-y-4">
           <div className="font-bold text-white flex items-center justify-between font-mono text-[10px] tracking-wider">
             <span>SPRING COEFFICIENTS</span>
             <Sliders className="w-3.5 h-3.5 text-zinc-300" />
@@ -427,7 +427,7 @@ export default function AppleDemoWorkspace() {
           {/* Draggable Sandbox Arena */}
           <div 
             ref={dragContainerRef}
-            className="flex-1 relative w-full rounded-2xl bg-zinc-950/60 border border-zinc-900 overflow-hidden min-h-[260px] flex items-center justify-center pointer-events-auto"
+            className="flex-1 relative w-full rounded-3xl bg-zinc-950/60 border border-zinc-900 overflow-hidden min-h-[260px] flex items-center justify-center pointer-events-auto"
           >
             {/* Centered target coordinates indicator */}
             <div className="absolute w-6 h-6 border border-dashed border-zinc-700/50 rounded-full flex items-center justify-center pointer-events-none" />
@@ -442,7 +442,7 @@ export default function AppleDemoWorkspace() {
                 transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
                 touchAction: 'none'
               }}
-              className={`absolute left-0 top-0 w-32 h-32 rounded-2xl border flex flex-col items-center justify-center p-3 select-none cursor-grab active:cursor-grabbing transition-shadow duration-300 ${
+              className={`absolute left-0 top-0 w-32 h-32 rounded-3xl border flex flex-col items-center justify-center p-3 select-none cursor-grab active:cursor-grabbing transition-shadow duration-300 ${
                 isDragging 
                   ? "bg-zinc-900 border-zinc-200 text-white shadow-xl scale-[1.01]" 
                   : momentumActive
@@ -489,12 +489,12 @@ export default function AppleDemoWorkspace() {
           </div>
 
           {/* CC Widgets Grid (Pure Black minimalist capsules) */}
-          <div className="flex-1 grid grid-cols-2 gap-4 items-center justify-center p-4 bg-zinc-950/60 rounded-2xl border border-zinc-900">
+          <div className="flex-1 grid grid-cols-2 gap-4 items-center justify-center p-4 bg-zinc-950/60 rounded-3xl border border-zinc-900">
             
             {/* Brightness Slider */}
             <div className="h-full flex flex-col items-center justify-center space-y-3">
               <div 
-                className={`relative w-16 h-36 rounded-2xl bg-zinc-900 border border-zinc-800 overflow-hidden transition-all duration-200 cursor-row-resize ${
+                className={`relative w-16 h-36 rounded-3xl bg-zinc-900 border border-zinc-800 overflow-hidden transition-all duration-200 cursor-row-resize ${
                   sliderActive === 'brightness' ? 'ring-1 ring-white/20 scale-x-[1.06] shadow-lg' : ''
                 }`}
                 onPointerDown={(e) => {
@@ -534,7 +534,7 @@ export default function AppleDemoWorkspace() {
             {/* Volume Slider */}
             <div className="h-full flex flex-col items-center justify-center space-y-3">
               <div 
-                className={`relative w-16 h-36 rounded-2xl bg-zinc-900 border border-zinc-800 overflow-hidden transition-all duration-200 cursor-row-resize ${
+                className={`relative w-16 h-36 rounded-3xl bg-zinc-900 border border-zinc-800 overflow-hidden transition-all duration-200 cursor-row-resize ${
                   sliderActive === 'volume' ? 'ring-1 ring-white/20 scale-x-[1.06] shadow-lg' : ''
                 }`}
                 onPointerDown={(e) => {
@@ -617,7 +617,7 @@ export default function AppleDemoWorkspace() {
             </p>
           </div>
 
-          <div className="flex-1 flex flex-col items-center justify-center p-6 bg-zinc-950/60 rounded-2xl border border-zinc-900 min-h-[200px]">
+          <div className="flex-1 flex flex-col items-center justify-center p-6 bg-zinc-950/60 rounded-3xl border border-zinc-900 min-h-[200px]">
             <button
               onClick={() => setIsSheetOpen(true)}
               className="px-6 py-3 bg-white hover:bg-zinc-200 text-black rounded-xl font-bold font-mono tracking-wide text-xs active:scale-97 hover:scale-[1.01] transition-all flex items-center gap-2"
@@ -648,7 +648,7 @@ export default function AppleDemoWorkspace() {
           <div 
             ref={springPlaygroundRef}
             onClick={handleSpringPlaygroundClick}
-            className="flex-1 relative w-full rounded-2xl bg-zinc-950/60 border border-zinc-900 overflow-hidden min-h-[200px] cursor-crosshair"
+            className="flex-1 relative w-full rounded-3xl bg-zinc-950/60 border border-zinc-900 overflow-hidden min-h-[200px] cursor-crosshair"
           >
             {/* Click target coordinates indicator */}
             <div 

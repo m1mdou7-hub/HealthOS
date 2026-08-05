@@ -88,7 +88,7 @@ export default function DocumentsPanel({ supabase, activePatient, demoMode }: Do
   return (
     <div className="space-y-6 text-left">
       {/* Header and actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-2xl border border-zinc-900 gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <HardDrive className="w-4 h-4 text-emerald-400" /> Patient Document Center
@@ -129,7 +129,7 @@ export default function DocumentsPanel({ supabase, activePatient, demoMode }: Do
         {isLoading ? (
           <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading documents...</div>
         ) : filteredDocs.length === 0 ? (
-          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-2xl bg-zinc-950/20">
+          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-3xl bg-zinc-950/20">
             No files found under this category.
           </div>
         ) : (
@@ -195,7 +195,7 @@ export default function DocumentsPanel({ supabase, activePatient, demoMode }: Do
       {/* Upload Document Modal */}
       {showUploadModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleUpload} className="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl w-full max-w-sm space-y-4 text-xs">
+          <form onSubmit={handleUpload} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
             <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">Register Patient Document</h3>
             <div className="space-y-3">
               <div className="space-y-1">
@@ -248,7 +248,7 @@ export default function DocumentsPanel({ supabase, activePatient, demoMode }: Do
       {/* Rename Document Modal */}
       {showRenameModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleRename} className="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl w-full max-w-sm space-y-4 text-xs">
+          <form onSubmit={handleRename} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
             <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">Rename File Record</h3>
             <div className="space-y-1">
               <label className="text-zinc-400">File Name</label>

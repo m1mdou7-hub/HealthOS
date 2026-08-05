@@ -189,7 +189,7 @@ export default function SoapNoteEditor({
       <div className="md:col-span-8">
         {isCreating ? (
           /* Creating Form */
-          <form onSubmit={handleCreateNote} className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/20 space-y-4">
+          <form onSubmit={handleCreateNote} className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
             <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
               <h3 className="text-xs font-bold text-white uppercase font-mono tracking-wider">{t('draft_soap_title')}</h3>
               <button
@@ -284,12 +284,12 @@ export default function SoapNoteEditor({
             </div>
           </form>
         ) : !activeNote ? (
-          <div className="p-8 rounded-2xl border border-zinc-900 bg-zinc-950/20 text-center text-zinc-500 text-xs">
+          <div className="p-8 rounded-3xl border border-zinc-900 bg-zinc-950/20 text-center text-zinc-500 text-xs">
             No SOAP records selected. Create one using the left panel.
           </div>
         ) : (
           /* View Note Details */
-          <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/20 space-y-4">
+          <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
             <div className="flex justify-between items-start border-b border-zinc-900/60 pb-3">
               <div>
                 <span className="text-[9px] font-mono text-zinc-500">{t('record_id')}: {activeNote.id} • Dr. {activeNote.author}</span>

@@ -71,7 +71,7 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
   };
 
   return (
-    <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/30 space-y-5 hover:border-zinc-800 transition-all group">
+    <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/30 space-y-5 hover:border-zinc-800 transition-all group">
       {/* Top bar */}
       <div className="flex flex-wrap justify-between items-start gap-3">
         <div className="flex-1 min-w-[200px]">
@@ -232,7 +232,7 @@ export default function LaboratoryPanel({
   return (
     <div className="space-y-6 text-left">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-2xl border border-zinc-900 gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <FlaskConical className="w-4 h-4 text-emerald-400" /> {t('lab_title')}
@@ -268,7 +268,7 @@ export default function LaboratoryPanel({
       {/* Cases */}
       <div className="space-y-4">
         {cases.length === 0 ? (
-          <div className="text-zinc-500 text-xs text-center py-10 border border-zinc-900 rounded-2xl bg-zinc-950/20 flex flex-col items-center gap-2">
+          <div className="text-zinc-500 text-xs text-center py-10 border border-zinc-900 rounded-3xl bg-zinc-950/20 flex flex-col items-center gap-2">
             <FlaskConical className="w-8 h-8 text-zinc-800" />
             {t('lab_no_cases')}
           </div>
@@ -286,7 +286,7 @@ export default function LaboratoryPanel({
       </div>
 
       {/* 3D STL files */}
-      <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/20 space-y-4">
+      <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
         <h4 className="text-xs font-bold text-white font-mono uppercase tracking-wider flex items-center gap-1.5">
           <Box className="w-4 h-4 text-emerald-400" /> {t('lab_stl_title')}
         </h4>

@@ -187,7 +187,7 @@ export default function AnalyticsWorkspace() {
       
       {/* Toast Notification */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-3 border border-emerald-500 animate-slide-in">
           <CheckCircle2 className="w-5 h-5 shrink-0 text-white" />
           <span>{toastMessage}</span>
         </div>
@@ -197,7 +197,7 @@ export default function AnalyticsWorkspace() {
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/50 p-4 rounded-3xl border border-zinc-900">
         
         {/* Custom Tab Selector */}
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850">
           {[
             { id: 'executive', label: '1. Executive & Insights', icon: Gauge },
             { id: 'financial', label: '2. Financial Analytics', icon: DollarSign },
@@ -250,7 +250,7 @@ export default function AnalyticsWorkspace() {
 
       {/* KPI HIGHLIGHT CARDS (Global Values based on timeframe) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <div className="p-4 rounded-2xl bg-zinc-900/40 border border-zinc-900 flex flex-col justify-between h-[105px]">
+        <div className="p-4 rounded-3xl bg-zinc-900/40 border border-zinc-900 flex flex-col justify-between h-[105px]">
           <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">YTD Capitalized Yield</span>
           <span className="text-xl font-black text-white font-mono">${stats.totalRev.toLocaleString()}</span>
           <span className="text-[9px] text-emerald-400 font-bold flex items-center gap-1">
@@ -258,13 +258,13 @@ export default function AnalyticsWorkspace() {
           </span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-zinc-900/40 border border-zinc-900 flex flex-col justify-between h-[105px]">
+        <div className="p-4 rounded-3xl bg-zinc-900/40 border border-zinc-900 flex flex-col justify-between h-[105px]">
           <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Claims Realization Rate</span>
           <span className="text-xl font-black text-white font-mono">94.8%</span>
           <span className="text-[9px] text-zinc-400 font-mono">Avg Claim: ${(stats.avgClaims).toLocaleString(undefined, {maximumFractionDigits: 0})} / mo</span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-zinc-900/40 border border-zinc-900 flex flex-col justify-between h-[105px]">
+        <div className="p-4 rounded-3xl bg-zinc-900/40 border border-zinc-900 flex flex-col justify-between h-[105px]">
           <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Case Completion Index</span>
           <span className="text-xl font-black text-white font-mono">{(stats.avgCompletion).toFixed(1)}%</span>
           <span className="text-[9px] text-blue-400 font-bold flex items-center gap-1">
@@ -272,7 +272,7 @@ export default function AnalyticsWorkspace() {
           </span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-zinc-900/40 border border-zinc-900 flex flex-col justify-between h-[105px]">
+        <div className="p-4 rounded-3xl bg-zinc-900/40 border border-zinc-900 flex flex-col justify-between h-[105px]">
           <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Patient Intake Growth</span>
           <span className="text-xl font-black text-emerald-400 font-mono">+{stats.totalGrowth}</span>
           <span className="text-[9px] text-zinc-500 font-mono">Registered outpatient referrals</span>
@@ -288,7 +288,7 @@ export default function AnalyticsWorkspace() {
             
             {/* Executive AI Insights */}
             <div className="lg:col-span-2 space-y-4">
-              <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-3">
+              <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-3">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-amber-400" />
@@ -319,7 +319,7 @@ export default function AnalyticsWorkspace() {
               </div>
 
               {/* Business intelligence Line Chart */}
-              <div className="p-5 rounded-2xl bg-zinc-900/20 border border-zinc-900 space-y-4">
+              <div className="p-5 rounded-3xl bg-zinc-900/20 border border-zinc-900 space-y-4">
                 <div className="flex justify-between items-center">
                   <div>
                     <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">YTD Operational Cost vs Collection Efficiency</h4>
@@ -343,7 +343,7 @@ export default function AnalyticsWorkspace() {
 
             {/* Side summary details */}
             <div className="space-y-4">
-              <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
+              <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4">
                 <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Clinician Yield Rankings</span>
                 <div className="space-y-3">
                   {MOCK_DOCTORS.map(doc => (
@@ -376,7 +376,7 @@ export default function AnalyticsWorkspace() {
         {/* ==================== 2. FINANCIAL ANALYTICS ==================== */}
         {subTab === 'financial' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 p-5 rounded-2xl bg-zinc-900/20 border border-zinc-900 space-y-4">
+            <div className="lg:col-span-2 p-5 rounded-3xl bg-zinc-900/20 border border-zinc-900 space-y-4">
               <div>
                 <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">Revenue Streaming & Claims Realization Flow</h4>
                 <p className="text-[10px] text-zinc-500 font-mono">Comparison of submitted insurance claims versus actual patient collections.</p>
@@ -405,7 +405,7 @@ export default function AnalyticsWorkspace() {
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-zinc-900/40 border border-zinc-900 space-y-4">
+            <div className="p-5 rounded-3xl bg-zinc-900/40 border border-zinc-900 space-y-4">
               <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Collection Aging Bucket</span>
               <div className="space-y-4 text-xs font-mono">
                 {[
@@ -432,7 +432,7 @@ export default function AnalyticsWorkspace() {
         {/* ==================== 3. CLINICAL & OPERATIONS ==================== */}
         {subTab === 'clinical' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 p-5 rounded-2xl bg-zinc-900/20 border border-zinc-900 space-y-4">
+            <div className="lg:col-span-2 p-5 rounded-3xl bg-zinc-900/20 border border-zinc-900 space-y-4">
               <div>
                 <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">Case Completion Indices & Outpatient Traffic</h4>
                 <p className="text-[10px] text-zinc-500 font-mono">Comparing outpatient referral volume against final medical case clearances.</p>
@@ -451,7 +451,7 @@ export default function AnalyticsWorkspace() {
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-zinc-900/40 border border-zinc-900 space-y-4">
+            <div className="p-5 rounded-3xl bg-zinc-900/40 border border-zinc-900 space-y-4">
               <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Departmental Resource Weight</span>
               <div className="flex justify-center py-2">
                 <div className="h-40 w-40 relative flex items-center justify-center">
@@ -497,7 +497,7 @@ export default function AnalyticsWorkspace() {
         {/* ==================== 4. MATERIALS & LAB ==================== */}
         {subTab === 'materials' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 p-5 rounded-2xl bg-zinc-900/20 border border-zinc-900 space-y-4">
+            <div className="lg:col-span-2 p-5 rounded-3xl bg-zinc-900/20 border border-zinc-900 space-y-4">
               <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">Top Materials Consumed by Volume</span>
               <table className="w-full text-left text-xs font-mono">
                 <thead className="bg-zinc-900 text-zinc-400 border-b border-zinc-800">
@@ -525,7 +525,7 @@ export default function AnalyticsWorkspace() {
               </table>
             </div>
 
-            <div className="p-5 rounded-2xl bg-zinc-900/40 border border-zinc-900 space-y-4">
+            <div className="p-5 rounded-3xl bg-zinc-900/40 border border-zinc-900 space-y-4">
               <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Reagent Expiry Risk Summary</span>
               <div className="space-y-3 font-mono text-[11px]">
                 <div className="p-3 bg-red-950/20 border border-red-900/30 rounded-xl space-y-1">
@@ -552,7 +552,7 @@ export default function AnalyticsWorkspace() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             {/* Configurator */}
-            <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
+            <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4">
               <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">Configure Report Schema</span>
               
               <form onSubmit={handleCreateReport} className="space-y-3 font-mono text-xs">
@@ -643,7 +643,7 @@ export default function AnalyticsWorkspace() {
             </div>
 
             {/* Saved and Scheduled Reports List */}
-            <div className="lg:col-span-2 p-5 rounded-2xl bg-zinc-900/20 border border-zinc-900 space-y-4">
+            <div className="lg:col-span-2 p-5 rounded-3xl bg-zinc-900/20 border border-zinc-900 space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">Active Saved Reports & Schedule</span>
                 <div className="relative w-48">

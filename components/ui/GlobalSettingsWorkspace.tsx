@@ -205,7 +205,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
       
       {/* Success Toast */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-sans text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-sans text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
           <CheckCircle2 className="w-5 h-5 shrink-0 text-white" />
           <span>{toastMsg}</span>
         </div>
@@ -213,7 +213,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
       {/* SECTION TABS HEADER */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-950 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
-        <div className="flex flex-wrap gap-2 p-1.5 bg-black rounded-2xl border border-zinc-850 relative">
+        <div className="flex flex-wrap gap-2 p-1.5 bg-black rounded-3xl border border-zinc-850 relative">
           {[
             { id: 'organization', key: 'organization', icon: Building, color: 'bg-blue-500/10 text-blue-400 border border-blue-500/10' },
             { id: 'profile', key: 'profile', icon: User, color: 'bg-zinc-800 text-zinc-300 border border-zinc-700' },
@@ -276,7 +276,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
               <div className="space-y-3">
                 {departments.map(dep => (
-                  <div key={dep.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex items-center justify-between text-sm">
+                  <div key={dep.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between text-sm">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
                         <Building className="w-4 h-4" />
@@ -347,7 +347,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 {team.map(member => (
-                  <div key={member.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex items-start justify-between">
+                  <div key={member.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 flex items-center justify-center shrink-0">
                         <User className="w-4 h-4" />
@@ -376,7 +376,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-4 text-sm">
               <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest block">{tSet('org.subscriptionTitle')}</span>
               <div className="space-y-3.5">
-                <div className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl">
+                <div className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
                   <p className="text-white font-extrabold text-base">{tSet('org.enterprisePlan')}</p>
                   <p className="text-xs text-zinc-400 mt-1">{tSet('org.planExpiry')}</p>
                 </div>
@@ -557,7 +557,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-zinc-950 border border-zinc-850 rounded-2xl">
+                  <div className="flex items-center justify-between p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
                     <div>
                       <p className="text-white font-bold">{tSet('appConfig.allowCancel')}</p>
                       <p className="text-xs text-zinc-400 mt-1">{tSet('appConfig.allowCancelDesc')}</p>
@@ -604,7 +604,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     </div>
                   </div>
 
-                  <div className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl space-y-1.5 text-xs md:text-sm">
+                  <div className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl space-y-1.5 text-xs md:text-sm">
                     <div className="flex justify-between items-center text-emerald-400 font-bold">
                       <span className="flex items-center gap-1.5">
                         <Key className="w-4 h-4" /> {tSet('appConfig.apiKeyStatus')}
@@ -676,7 +676,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
                 <div className="space-y-3">
                   {smsTemplates.map(t => (
-                    <div key={t.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl space-y-2">
+                    <div key={t.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl space-y-2">
                       <div className="flex justify-between items-center text-sm">
                         <span className="font-bold text-white">{t.name}</span>
                         <span className="text-[10px] bg-zinc-850 text-zinc-300 border border-zinc-800 px-2.5 py-0.5 rounded-md font-semibold">{t.channel}</span>
@@ -694,7 +694,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                 <span className="text-base font-bold text-white tracking-tight block">{tSet('notifications.channelsTitle')}</span>
                 
                 <div className="space-y-3.5">
-                  <div className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-850 rounded-2xl">
+                  <div className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                         <Mail className="w-4 h-4" />
@@ -710,7 +710,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     />
                   </div>
 
-                  <div className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-850 rounded-2xl">
+                  <div className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
                         <Smartphone className="w-4 h-4" />
@@ -726,7 +726,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     />
                   </div>
 
-                  <div className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-850 rounded-2xl">
+                  <div className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
                         <Activity className="w-4 h-4" />
@@ -766,7 +766,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
                 <div className="space-y-2.5">
                   {AUDIT_LOGS.map((log, i) => (
-                    <div key={i} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex justify-between items-center text-sm">
+                    <div key={i} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex justify-between items-center text-sm">
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="text-xs text-zinc-400 font-semibold">{log.timestamp}</span>
@@ -802,7 +802,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     </select>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-zinc-950 border border-zinc-850 rounded-2xl text-sm">
+                  <div className="flex items-center justify-between p-4 bg-zinc-950 border border-zinc-850 rounded-3xl text-sm">
                     <div>
                       <p className="text-white font-bold">{tSet('security.enforceMFA')}</p>
                       <p className="text-xs text-zinc-400 mt-1">{tSet('security.enforceMFADesc')}</p>

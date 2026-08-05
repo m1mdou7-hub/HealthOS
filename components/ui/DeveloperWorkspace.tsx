@@ -242,7 +242,7 @@ export default function DeveloperWorkspace() {
       
       {/* Toast notifications */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-sans text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-sans text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -250,7 +250,7 @@ export default function DeveloperWorkspace() {
 
       {/* HORIZONTAL WORKSPACE TABS */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
-        <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-3xl border border-zinc-850">
           {[
             { id: 'explorer', key: 'explorer', icon: Terminal },
             { id: 'webhooks', key: 'webhooks', icon: Blocks },
@@ -291,7 +291,7 @@ export default function DeveloperWorkspace() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-sans text-xs">
             
             {/* Explorer sandbox controls */}
-            <div className="lg:col-span-1 p-5 rounded-2xl bg-zinc-900/40 border border-zinc-850/80 space-y-4 shadow-lg">
+            <div className="lg:col-span-1 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-850/80 space-y-4 shadow-lg">
               <span className="text-sm font-bold text-white uppercase tracking-wider block font-sans">{tDev('sandbox.builderTitle')}</span>
               
               <div className="space-y-3">
@@ -337,7 +337,7 @@ export default function DeveloperWorkspace() {
             </div>
 
             {/* Sandbox response viewport */}
-            <div className="lg:col-span-2 p-5 rounded-2xl bg-zinc-900/40 border border-zinc-850/80 space-y-3.5 flex flex-col justify-between shadow-lg">
+            <div className="lg:col-span-2 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-850/80 space-y-3.5 flex flex-col justify-between shadow-lg">
               <div className="flex justify-between items-center text-xs text-zinc-400 border-b border-zinc-800 pb-2 font-sans">
                 <span className="font-bold text-zinc-300">{tDev('sandbox.proxyLogs')}</span>
                 <div className="flex items-center gap-3">
@@ -372,7 +372,7 @@ export default function DeveloperWorkspace() {
               <span className="text-xs font-bold text-white uppercase tracking-wider block">Registered Endpoint Observers</span>
               
               {webhooks.map(wh => (
-                <div key={wh.id} className="p-4 bg-zinc-900/30 border border-zinc-900 rounded-2xl flex justify-between items-start">
+                <div key={wh.id} className="p-4 bg-zinc-900/30 border border-zinc-900 rounded-3xl flex justify-between items-start">
                   <div className="space-y-1.5 flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className={`w-2.5 h-2.5 rounded-full ${wh.active ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-600'}`} />
@@ -413,7 +413,7 @@ export default function DeveloperWorkspace() {
             </div>
 
             {/* Create Webhook subscription */}
-            <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
+            <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4">
               <span className="text-xs font-bold text-white uppercase tracking-wider block">Register Webhook Target</span>
               
               <form onSubmit={handleAddWebhook} className="space-y-3">
@@ -469,7 +469,7 @@ export default function DeveloperWorkspace() {
         {tab === 'credentials' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-mono text-xs">
             <div className="lg:col-span-2 space-y-4">
-              <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
+              <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4">
                 <div className="flex justify-between items-center">
                   <div>
                     <h4 className="text-xs font-bold text-white uppercase tracking-wider block">Live Authorization Secret Keys</h4>
@@ -518,7 +518,7 @@ export default function DeveloperWorkspace() {
 
             {/* Security advisory */}
             <div className="space-y-4">
-              <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-3">
+              <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-3">
                 <div className="flex gap-2.5 items-center text-rose-400">
                   <ShieldAlert className="w-4 h-4 shrink-0" />
                   <span className="text-xs font-bold uppercase tracking-wider block">Developer Warning</span>
@@ -534,7 +534,7 @@ export default function DeveloperWorkspace() {
         {/* ==================== 4. DOCUMENTATION ==================== */}
         {tab === 'docs' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-mono text-xs animate-fade-in">
-            <div className="lg:col-span-2 p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
+            <div className="lg:col-span-2 p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4">
               <span className="text-xs font-bold text-white uppercase tracking-wider block">SDK Code Implementations</span>
               <p className="text-[10px] text-zinc-500">Developer libraries wrapper methods for instant patient and laboratory integrations.</p>
 
@@ -576,7 +576,7 @@ export default function DeveloperWorkspace() {
 
             {/* SDK download files */}
             <div className="space-y-4">
-              <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4 font-mono text-xs">
+              <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4 font-mono text-xs">
                 <span className="text-xs font-bold text-white uppercase tracking-wider block">Developer Downloads</span>
                 <div className="space-y-2">
                   {[

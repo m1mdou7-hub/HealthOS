@@ -37,10 +37,10 @@ export default async function AIAssistantPage() {
         </div>
 
         {/* Chat Area Placeholder */}
-        <div className="h-96 rounded-2xl border border-zinc-800 bg-zinc-900/50 flex flex-col justify-between overflow-hidden">
+        <div className="h-96 rounded-3xl border border-zinc-800 bg-zinc-900/50 flex flex-col justify-between overflow-hidden">
           {/* Output area */}
           <div className="flex-1 p-6 flex flex-col justify-center items-center text-center space-y-4">
-            <div className="p-4 bg-purple-500/15 text-purple-400 rounded-2xl">
+            <div className="p-4 bg-purple-500/15 text-purple-400 rounded-3xl">
               <BrainCircuit className="w-8 h-8" />
             </div>
             <div className="space-y-1">

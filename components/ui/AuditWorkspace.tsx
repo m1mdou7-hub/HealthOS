@@ -177,7 +177,7 @@ export default function AuditWorkspace() {
             { label: tAudit('authorizedSessions'), value: users.filter(u => u.status === 'Verified').length, icon: Users, color: 'text-blue-400', desc: tAudit('authorizedSessionsDesc') },
             { label: tAudit('encryptionClusters'), value: '4/4', icon: ShieldCheck, color: 'text-emerald-400', desc: tAudit('encryptionClustersDesc') }
           ].map((stat, idx) => (
-            <div key={idx} className="p-4.5 bg-zinc-950/70 border border-zinc-850 rounded-2xl flex flex-col justify-between space-y-3">
+            <div key={idx} className="p-4.5 bg-zinc-950/70 border border-zinc-850 rounded-3xl flex flex-col justify-between space-y-3">
               <div className="flex justify-between items-start gap-4">
                 <div className="space-y-1">
                   <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block font-sans">{stat.label}</span>
@@ -195,7 +195,7 @@ export default function AuditWorkspace() {
 
       {/* FILTER & CONTROL PANEL */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
-        <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-3xl border border-zinc-850">
           {[
             { id: 'logs', key: 'logs', icon: Activity },
             { id: 'checklist', key: 'checklist', icon: CheckSquare },
@@ -294,7 +294,7 @@ export default function AuditWorkspace() {
                 </div>
               ) : (
                 filteredLogs.map(lg => (
-                  <div key={lg.id} className="p-3.5 bg-zinc-950 border border-zinc-850 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div key={lg.id} className="p-3.5 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-[10px] font-bold text-white uppercase bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800">
@@ -356,7 +356,7 @@ export default function AuditWorkspace() {
                 <div 
                   key={item.id} 
                   onClick={() => toggleHipaaItem(item.id)}
-                  className="p-3 bg-zinc-950 border border-zinc-850 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:border-zinc-800 transition-colors"
+                  className="p-3 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between gap-4 cursor-pointer hover:border-zinc-800 transition-colors"
                 >
                   <div className="space-y-1">
                     <span className="text-[9px] text-zinc-500 font-black uppercase block">{item.tag}</span>
@@ -390,7 +390,7 @@ export default function AuditWorkspace() {
                 <div 
                   key={item.id} 
                   onClick={() => toggleGdprItem(item.id)}
-                  className="p-3 bg-zinc-950 border border-zinc-850 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:border-zinc-800 transition-colors"
+                  className="p-3 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between gap-4 cursor-pointer hover:border-zinc-800 transition-colors"
                 >
                   <div className="space-y-1">
                     <span className="text-[9px] text-zinc-500 font-black uppercase block">{item.tag}</span>
@@ -418,7 +418,7 @@ export default function AuditWorkspace() {
 
           <div className="space-y-3">
             {users.map(u => (
-              <div key={u.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div key={u.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
                   <h4 className="font-bold text-white text-sm">{u.name}</h4>
                   <p className="text-[10px] text-zinc-500">System Role: <strong className="text-zinc-300 font-sans">{u.role}</strong> • IP Limit: {u.ip}</p>

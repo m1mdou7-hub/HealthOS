@@ -41,7 +41,7 @@ export default function PatientWorkspaceSkeleton() {
         {Array.from({ length: 8 }).map((_, idx) => (
           <div
             key={idx}
-            className="p-5 rounded-2xl border border-zinc-900 bg-zinc-900/5 h-36 flex flex-col justify-between"
+            className="p-5 rounded-3xl border border-zinc-900 bg-zinc-900/5 h-36 flex flex-col justify-between"
           >
             <div className="flex justify-between items-start">
               <div className="w-24 h-3 bg-zinc-900 rounded" />
@@ -56,7 +56,7 @@ export default function PatientWorkspaceSkeleton() {
       </div>
 
       {/* 4. Timeline Segment Skeleton */}
-      <div className="p-6 rounded-2xl border border-zinc-900 bg-zinc-900/5 space-y-4">
+      <div className="p-6 rounded-3xl border border-zinc-900 bg-zinc-900/5 space-y-4">
         <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
           <div className="w-48 h-5 bg-zinc-800 rounded" />
           <div className="w-24 h-4 bg-zinc-900 rounded" />

@@ -182,7 +182,7 @@ export default function AutomationsWorkspace() {
       
       {/* Toast Alert */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -190,7 +190,7 @@ export default function AutomationsWorkspace() {
 
       {/* HORIZONTAL WORKSPACE TABS */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850">
           {[
             { id: 'workflows', label: '1. Active Flow Automations', icon: Zap },
             { id: 'logs', label: '2. Cron Execution Logs', icon: Play }
@@ -239,7 +239,7 @@ export default function AutomationsWorkspace() {
               {filteredWorkflows.map(flow => (
                 <div 
                   key={flow.id} 
-                  className={`p-5 rounded-2xl border transition-all space-y-3.5 relative ${
+                  className={`p-5 rounded-3xl border transition-all space-y-3.5 relative ${
                     flow.active ? 'bg-zinc-900/40 border-zinc-900' : 'bg-zinc-950/20 border-zinc-950/60 opacity-60'
                   }`}
                 >
@@ -295,7 +295,7 @@ export default function AutomationsWorkspace() {
           <div className="space-y-4">
             
             {/* visual flowchart mockup */}
-            <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4">
+            <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4">
               <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">Workflow Visual Path Preview</span>
               
               <div className="space-y-4 font-mono text-[11px] relative py-2">
@@ -328,7 +328,7 @@ export default function AutomationsWorkspace() {
             </div>
 
             {/* Creation Wizard */}
-            <div className="p-5 rounded-2xl bg-zinc-900/30 border border-zinc-900 space-y-4 font-mono text-xs">
+            <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4 font-mono text-xs">
               <span className="text-xs font-bold text-white uppercase tracking-wider block">Create Visual Macro Rule</span>
               
               <form onSubmit={handleCreateWorkflow} className="space-y-3">

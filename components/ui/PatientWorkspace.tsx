@@ -363,7 +363,7 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
                     alertsCount={activePatient.medicalAlerts?.filter(a => a !== 'None').length || 0}
                     onNavigateTab={setWorkspaceTab}
                   />
-                  <div className="p-6 rounded-2xl border border-white/5 bg-[#0d0d16]/20 text-left space-y-2 card-luxury">
+                  <div className="p-6 rounded-3xl border border-white/5 bg-[#0d0d16]/20 text-left space-y-2 card-luxury">
                     <h3 className="text-xs font-bold text-gold-400 font-display uppercase tracking-wider">{t('demographics')}</h3>
                     <p className="text-xs text-zinc-400">{t('chiefComplaint')}: <strong className="text-zinc-200">{activePatient.summary}</strong></p>
                     <p className="text-xs text-zinc-400">{t('primaryInsurer')}: <strong className="text-zinc-200">{activePatient.allergyStatus}</strong></p>

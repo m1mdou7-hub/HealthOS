@@ -120,7 +120,7 @@ export default function ClinicalDashboard({
             <div
               key={idx}
               onClick={() => onNavigateTab(card.tab)}
-              className="p-5 rounded-2xl border border-zinc-900 bg-zinc-900/10 hover:bg-zinc-900/20 hover:border-zinc-800 transition-all duration-200 cursor-pointer text-left flex flex-col justify-between h-36 relative group overflow-hidden"
+              className="p-5 rounded-3xl border border-zinc-900 bg-zinc-900/10 hover:bg-zinc-900/20 hover:border-zinc-800 transition-all duration-200 cursor-pointer text-left flex flex-col justify-between h-36 relative group overflow-hidden"
             >
               {/* Hover glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
@@ -145,7 +145,7 @@ export default function ClinicalDashboard({
       </div>
 
       {/* Real-time AI Clinical Decision Support alerts panel */}
-      <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/20 space-y-4">
+      <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
         <div className="flex justify-between items-center border-b border-zinc-900/60 pb-3">
           <div>
             <h4 className="text-xs font-bold text-white flex items-center gap-1.5 font-mono">

@@ -105,11 +105,11 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
       {/* Right Column: Workflow Controls and Status Timeline (Col span 8) */}
       <div className="md:col-span-8">
         {!activeReferral ? (
-          <div className="p-8 rounded-2xl border border-zinc-900 bg-zinc-950/20 text-center text-zinc-500 text-xs">
+          <div className="p-8 rounded-3xl border border-zinc-900 bg-zinc-950/20 text-center text-zinc-500 text-xs">
             Select a referral letter from the inbox to process.
           </div>
         ) : (
-          <div className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/20 space-y-6">
+          <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-6">
             {/* Header info */}
             <div className="flex justify-between items-start border-b border-zinc-900/60 pb-3">
               <div>

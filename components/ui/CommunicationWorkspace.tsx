@@ -203,7 +203,7 @@ export default function CommunicationWorkspace() {
       
       {/* Toast Warning */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500/30">
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 border border-emerald-500/30">
           <Check className="w-4 h-4 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -211,7 +211,7 @@ export default function CommunicationWorkspace() {
 
       {/* TOP HEADER CONTROLS */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850">
           {[
             { id: 'threads', label: '1. Communication Inbox & Chat', icon: MessageSquare },
             { id: 'calls', label: '2. Call & Video Consultation', icon: PhoneCall },
@@ -248,7 +248,7 @@ export default function CommunicationWorkspace() {
 
       {/* CALL CONSOLE OVERLAY PANEL */}
       {isCalling && (
-        <div className="p-6 rounded-2xl bg-zinc-950 border-2 border-emerald-500/40 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 animate-pulse">
+        <div className="p-6 rounded-3xl bg-zinc-950 border-2 border-emerald-500/40 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 animate-pulse">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
               <Phone className="w-6 h-6 animate-bounce" />
@@ -322,7 +322,7 @@ export default function CommunicationWorkspace() {
                       setActiveChannelId(ch.id);
                       setChannels(prev => prev.map(c => c.id === ch.id ? { ...c, unread: 0 } : c));
                     }}
-                    className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex gap-3 relative ${
+                    className={`p-3.5 rounded-3xl border transition-all cursor-pointer flex gap-3 relative ${
                       isSelected 
                         ? 'bg-zinc-900/80 border-zinc-800' 
                         : 'bg-zinc-950/20 border-transparent hover:bg-zinc-900/30'
@@ -422,7 +422,7 @@ export default function CommunicationWorkspace() {
                   const isMe = msg.sender === 'doctor' || msg.sender === 'Dr. Ahmed';
                   return (
                     <div key={msg.id || i} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[85%] rounded-2xl p-3.5 space-y-1 ${
+                      <div className={`max-w-[85%] rounded-3xl p-3.5 space-y-1 ${
                         isMe 
                           ? 'bg-emerald-500/10 border border-emerald-500/20 text-white rounded-br-none' 
                           : 'bg-zinc-950 border border-zinc-900 text-zinc-100 rounded-bl-none'
@@ -535,7 +535,7 @@ export default function CommunicationWorkspace() {
 
           <div className="space-y-3">
             {CALL_HISTORY.map(call => (
-              <div key={call.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 font-mono text-xs">
+              <div key={call.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4 font-mono text-xs">
                 <div className="flex items-center gap-4">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                     call.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'
@@ -656,7 +656,7 @@ export default function CommunicationWorkspace() {
           
           <div className="space-y-3">
             {ANNOUNCEMENTS.map(ann => (
-              <div key={ann.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl space-y-2">
+              <div key={ann.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl space-y-2">
                 <div className="flex justify-between items-start">
                   <h4 className="text-sm font-bold text-white">{ann.title}</h4>
                   <span className="text-[10px] text-zinc-500">{ann.date}</span>

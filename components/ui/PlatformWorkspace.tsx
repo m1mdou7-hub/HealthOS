@@ -111,7 +111,7 @@ export default function PlatformWorkspace() {
           { label: 'Active Feature Flags', value: flags.filter(f => f.enabled).length, icon: Settings2, color: 'text-purple-400', bg: 'bg-purple-500/10' },
           { label: 'Exocad API Heartbeat', value: '99.98%', icon: Activity, color: 'text-orange-400', bg: 'bg-orange-500/10' }
         ].map((stat, idx) => (
-          <div key={idx} className="p-4 rounded-2xl bg-zinc-900/40 border border-zinc-900 flex items-center justify-between gap-4">
+          <div key={idx} className="p-4 rounded-3xl bg-zinc-900/40 border border-zinc-900 flex items-center justify-between gap-4">
             <div className="space-y-1">
               <span className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider block">{stat.label}</span>
               <span className="text-xl font-bold text-white font-mono">{stat.value}</span>
@@ -125,7 +125,7 @@ export default function PlatformWorkspace() {
 
       {/* TABS SWAP CONTROLS */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850">
           {[
             { id: 'tenants', label: '1. Tenant Organizations', icon: Building },
             { id: 'flags', label: '2. Global Feature Flags', icon: Settings2 },
@@ -165,7 +165,7 @@ export default function PlatformWorkspace() {
 
             <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
               {tenants.map(tenant => (
-                <div key={tenant.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div key={tenant.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <h4 className="font-bold text-white text-sm">{tenant.name}</h4>
                     <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-zinc-500">
@@ -274,7 +274,7 @@ export default function PlatformWorkspace() {
               <div 
                 key={flag.id} 
                 onClick={() => handleToggleFlag(flag.id)}
-                className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:border-zinc-800 transition-colors"
+                className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between gap-4 cursor-pointer hover:border-zinc-800 transition-colors"
               >
                 <div className="space-y-1">
                   <span className="text-[9px] text-purple-400 font-bold uppercase block">{flag.tag}</span>
@@ -304,7 +304,7 @@ export default function PlatformWorkspace() {
               { title: 'Sync Central Exocad API', desc: 'Trigger active validation ping on all client-side rendering licenses.', action: 'Flush Licenses' },
               { title: 'Telemetry Node Calibration', desc: 'Sync furnace temperature logs and calibrate IoT sensors.', action: 'Run Calibration' }
             ].map((maint, idx) => (
-              <div key={idx} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex flex-col justify-between space-y-4">
+              <div key={idx} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col justify-between space-y-4">
                 <div className="space-y-1">
                   <h4 className="font-bold text-white text-xs">{maint.title}</h4>
                   <p className="text-[11px] text-zinc-500 font-sans leading-relaxed">{maint.desc}</p>

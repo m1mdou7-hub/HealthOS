@@ -89,7 +89,7 @@ export function CopilotSidebar({
                     {msg.role === 'user' ? 'Dentist' : 'Copilot'}
                   </span>
                   <div
-                    className={`p-3 rounded-2xl max-w-[90%] text-xs leading-relaxed whitespace-pre-wrap ${
+                    className={`p-3 rounded-3xl max-w-[90%] text-xs leading-relaxed whitespace-pre-wrap ${
                       msg.role === 'user'
                         ? 'bg-purple-600 text-white rounded-tr-none font-sans'
                         : 'bg-zinc-900 text-zinc-300 border border-zinc-850 rounded-tl-none font-mono'
@@ -103,7 +103,7 @@ export function CopilotSidebar({
               {loading && (
                 <div className="flex flex-col items-start">
                   <span className="text-[9px] font-mono text-zinc-500 mb-1">Copilot</span>
-                  <div className="p-3 rounded-2xl bg-zinc-900 border border-zinc-850 rounded-tl-none text-xs flex items-center gap-2 text-purple-400 font-mono animate-pulse">
+                  <div className="p-3 rounded-3xl bg-zinc-900 border border-zinc-850 rounded-tl-none text-xs flex items-center gap-2 text-purple-400 font-mono animate-pulse">
                     <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-bounce" />
                     <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-bounce [animation-delay:0.2s]" />
                     <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-bounce [animation-delay:0.4s]" />

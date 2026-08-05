@@ -448,7 +448,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             {/* Command Palette Launcher Button */}
             <button
               onClick={() => setCommandMenuOpen(true)}
-              className="hidden md:flex items-center gap-2 bg-[#0d0d16]/70 hover:bg-[#131320]/70 border border-white/5 px-3.5 py-2 rounded-2xl text-zinc-500 hover:text-zinc-400 text-xs font-mono transition-all cursor-pointer select-none focus-gold"
+              className="hidden md:flex items-center gap-2 bg-[#0d0d16]/70 hover:bg-[#131320]/70 border border-white/5 px-3.5 py-2 rounded-3xl text-zinc-500 hover:text-zinc-400 text-xs font-mono transition-all cursor-pointer select-none focus-gold"
             >
               <Search className="w-4 h-4 text-zinc-650" />
               <span>{tCommon('searchOrRunCommand')}</span>
@@ -461,7 +461,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             <LanguageSwitcher />
 
             {/* Active Role Selector Dropdown */}
-            <div className="relative flex items-center gap-2 bg-[#0d0d16] border border-white/5 rounded-2xl px-3 py-1.5 hover:bg-zinc-850 transition-colors">
+            <div className="relative flex items-center gap-2 bg-[#0d0d16] border border-white/5 rounded-3xl px-3 py-1.5 hover:bg-zinc-850 transition-colors">
               <UserCheck className="w-3.5 h-3.5 text-gold-400 shrink-0" />
               <select
                 value={activeRole}
@@ -531,7 +531,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-950/80 rounded-2xl border border-white/5 text-left space-y-2">
+                    <div className="p-4 bg-zinc-950/80 rounded-3xl border border-white/5 text-left space-y-2">
                       <span className="text-[10px] font-bold font-mono text-gold-400 block uppercase tracking-wider">
                         Access Denied Policy ID: HealthOS-RBAC-0441
                       </span>

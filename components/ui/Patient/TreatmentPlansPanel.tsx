@@ -146,7 +146,7 @@ export default function TreatmentPlansPanel({ supabase, activePatient, demoMode 
   return (
     <div className="space-y-6 text-left">
       {/* Header action panel */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-2xl border border-zinc-900 gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <Clipboard className="w-4 h-4 text-emerald-400" /> {t('tx_coordinator')}
@@ -178,7 +178,7 @@ export default function TreatmentPlansPanel({ supabase, activePatient, demoMode 
         {isLoading ? (
           <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading treatment plans...</div>
         ) : plans.length === 0 ? (
-          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-2xl bg-zinc-950/20">
+          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-3xl bg-zinc-950/20">
             {t('no_plans_logged')}
           </div>
         ) : (
@@ -186,7 +186,7 @@ export default function TreatmentPlansPanel({ supabase, activePatient, demoMode 
             const isExpanded = !!expandedPlans[plan.id];
 
             return (
-              <div key={plan.id} className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/20 space-y-4">
+              <div key={plan.id} className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
                 {/* Header card info */}
                 <div className="flex flex-wrap justify-between items-start gap-4">
                   <div className="text-left flex-1 min-w-[200px]">
@@ -312,7 +312,7 @@ export default function TreatmentPlansPanel({ supabase, activePatient, demoMode 
       {/* Plan Modal */}
       {showPlanModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleSavePlan} className="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl w-full max-w-lg space-y-4 text-xs">
+          <form onSubmit={handleSavePlan} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-lg space-y-4 text-xs">
             <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">
               {editingPlan ? t('btn_edit_plan') : t('btn_add_plan')}
             </h3>

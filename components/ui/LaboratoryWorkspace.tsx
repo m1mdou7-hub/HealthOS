@@ -298,7 +298,7 @@ export default function LaboratoryWorkspace() {
         </div>
 
         {/* WORK ORDER STATE BANNER */}
-        <div className="hidden lg:flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 px-4 py-1.5 rounded-2xl">
+        <div className="hidden lg:flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 px-4 py-1.5 rounded-3xl">
           <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Loaded Specimen:</span>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-white font-mono">{activeCase.id}</span>
@@ -505,7 +505,7 @@ export default function LaboratoryWorkspace() {
                             setSelectedCaseId(c.id);
                             setActiveTab('CaseWorkspace');
                           }}
-                          className={`p-4 bg-zinc-900/40 border rounded-2xl flex flex-col justify-between h-[175px] cursor-pointer transition-all text-left ${
+                          className={`p-4 bg-zinc-900/40 border rounded-3xl flex flex-col justify-between h-[175px] cursor-pointer transition-all text-left ${
                             selectedCaseId === c.id ? 'border-emerald-500 ring-2 ring-emerald-500/20' : 'border-zinc-850 hover:border-zinc-700'
                           }`}
                         >
@@ -589,7 +589,7 @@ export default function LaboratoryWorkspace() {
                   )}
 
                   {/* FOOTER STATS */}
-                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex items-center justify-between text-xs font-mono">
+                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex items-center justify-between text-xs font-mono">
                     <span className="text-zinc-500 font-bold">REGISTRY COUNT: {filteredCases.length} OF {cases.length}</span>
                     <span className="text-zinc-500">EXOCAD SYNC STATUS: OK</span>
                     <span className="text-emerald-400 font-bold">READY FOR WORKFLOW COMPILATION</span>
@@ -616,7 +616,7 @@ export default function LaboratoryWorkspace() {
                   className="h-full flex flex-col lg:flex-row gap-5"
                 >
                   {/* Rotating solid crown simulator (Exocad viewport) */}
-                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden select-none min-h-[360px]">
+                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between relative overflow-hidden select-none min-h-[360px]">
                     <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
                       <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
                         {activeCase.doctorName}&apos;s Case Workstation
@@ -726,7 +726,7 @@ export default function LaboratoryWorkspace() {
                   </div>
 
                   {/* Right side parameters */}
-                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between space-y-4 text-left">
+                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between space-y-4 text-left">
                     <div className="space-y-4">
                       <div className="border-b border-zinc-900 pb-3">
                         <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Design values</span>
@@ -836,7 +836,7 @@ export default function LaboratoryWorkspace() {
                       { title: 'PMMA Temp Discs', count: 12, limit: '>= 10', desc: 'Provisional restoration custom blocks', warn: false },
                       { title: 'Titanium Abutment Blanks', count: 4, limit: '>= 8', desc: 'Grade 5 customized raw blanks', warn: true }
                     ].map((mat, i) => (
-                      <div key={i} className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl flex flex-col justify-between h-[150px]">
+                      <div key={i} className="p-4 bg-zinc-950 border border-zinc-900 rounded-3xl flex flex-col justify-between h-[150px]">
                         <div className="space-y-1">
                           <div className="flex justify-between items-start">
                             <span className="text-xs font-black uppercase tracking-wider font-mono">{mat.title}</span>
@@ -885,7 +885,7 @@ export default function LaboratoryWorkspace() {
                           key={act.id}
                           id={`ai-btn-${act.id}`}
                           onClick={() => triggerAiLabAnalysis(act.id as any)}
-                          className="p-3.5 bg-zinc-900/40 border border-zinc-855 hover:border-purple-500/40 hover:bg-zinc-950/80 rounded-2xl text-left cursor-pointer transition-all space-y-1 group"
+                          className="p-3.5 bg-zinc-900/40 border border-zinc-855 hover:border-purple-500/40 hover:bg-zinc-950/80 rounded-3xl text-left cursor-pointer transition-all space-y-1 group"
                         >
                           <div className="flex items-center gap-1.5">
                             <Zap className="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform" />
@@ -896,7 +896,7 @@ export default function LaboratoryWorkspace() {
                       ))}
                     </div>
 
-                    <div className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl flex flex-col justify-between h-[230px]">
+                    <div className="p-4 bg-zinc-950 border border-zinc-900 rounded-3xl flex flex-col justify-between h-[230px]">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-1.5 mb-2">
                           Neural Log Console Output
@@ -989,7 +989,7 @@ export default function LaboratoryWorkspace() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Production Output */}
-                      <div className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl h-[220px] flex flex-col justify-between">
+                      <div className="p-4 bg-zinc-950 border border-zinc-900 rounded-3xl h-[220px] flex flex-col justify-between">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-1.5">
                           Daily CAD Case Production Output
                         </span>
@@ -1013,7 +1013,7 @@ export default function LaboratoryWorkspace() {
                       </div>
 
                       {/* Material Consumption */}
-                      <div className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl h-[220px] flex flex-col justify-between">
+                      <div className="p-4 bg-zinc-950 border border-zinc-900 rounded-3xl h-[220px] flex flex-col justify-between">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-1.5">
                           Material Consumption Ratio
                         </span>

@@ -189,7 +189,7 @@ export default function IntegrationsWorkspace() {
       
       {/* Toast alert */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -199,7 +199,7 @@ export default function IntegrationsWorkspace() {
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
         
         {/* Horizontal Category Pill selector */}
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850">
           {CATEGORIES.map(cat => {
             const isSel = selectedCat === cat;
             return (
@@ -236,7 +236,7 @@ export default function IntegrationsWorkspace() {
           return (
             <div 
               key={item.id} 
-              className={`p-5 rounded-2xl border transition-all flex flex-col justify-between h-[230px] relative overflow-hidden group ${
+              className={`p-5 rounded-3xl border transition-all flex flex-col justify-between h-[230px] relative overflow-hidden group ${
                 isConn ? 'bg-zinc-900/30 border-zinc-900' : 'bg-zinc-950/20 border-zinc-950 opacity-70 hover:opacity-90'
               }`}
             >

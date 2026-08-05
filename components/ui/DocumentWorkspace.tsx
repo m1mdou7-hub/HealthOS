@@ -236,7 +236,7 @@ export default function DocumentWorkspace() {
 
       {/* FILTER CONTROL PANEL */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850">
           <button
             onClick={() => { setSelectedFolder(null); setSelectedTagFilter(null); }}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition-all ${
@@ -291,7 +291,7 @@ export default function DocumentWorkspace() {
                 <div
                   key={fold.name}
                   onClick={() => setSelectedFolder(isSelected ? null : fold.name)}
-                  className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
+                  className={`p-3 rounded-3xl border transition-all cursor-pointer flex items-center justify-between ${
                     isSelected 
                       ? 'bg-emerald-500/10 border-emerald-500/20 text-white' 
                       : 'bg-zinc-950/20 border-transparent hover:bg-zinc-900/30'
@@ -356,7 +356,7 @@ export default function DocumentWorkspace() {
                   <div
                     key={doc.id}
                     onClick={() => setActiveDocId(doc.id)}
-                    className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-start justify-between gap-4 ${
+                    className={`p-3 rounded-3xl border transition-all cursor-pointer flex items-start justify-between gap-4 ${
                       isSelected 
                         ? 'bg-zinc-900 border-zinc-800' 
                         : 'bg-zinc-950/20 border-transparent hover:bg-zinc-900/30'

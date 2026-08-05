@@ -61,7 +61,7 @@ export default function LanguageSwitcher({
         disabled={isPending}
         aria-label={`Switch language to ${LABELS[other]}`}
         title={LABELS[other]}
-        className={`flex items-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-zinc-300 transition-colors hover:bg-zinc-800 disabled:opacity-50 ${className}`}
+        className={`flex items-center gap-2 rounded-3xl border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-zinc-300 transition-colors hover:bg-zinc-800 disabled:opacity-50 ${className}`}
       >
         <Globe className="h-3.5 w-3.5 shrink-0 text-emerald-400" />
         <span>{LABELS[other]}</span>
@@ -71,7 +71,7 @@ export default function LanguageSwitcher({
 
   return (
     <div
-      className={`inline-flex items-center gap-1 rounded-2xl border border-zinc-800 bg-zinc-900 p-1 ${className}`}
+      className={`inline-flex items-center gap-1 rounded-3xl border border-zinc-800 bg-zinc-900 p-1 ${className}`}
       role="group"
       aria-label="Language switcher"
     >

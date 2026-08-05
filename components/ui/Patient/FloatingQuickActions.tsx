@@ -46,7 +46,7 @@ export default function FloatingQuickActions({ onActionTrigger }: FloatingQuickA
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 15, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="flex flex-col gap-2 z-40 bg-zinc-950/95 border border-zinc-900 p-3 rounded-2xl shadow-2xl w-56 text-left"
+              className="flex flex-col gap-2 z-40 bg-zinc-950/95 border border-zinc-900 p-3 rounded-3xl shadow-2xl w-56 text-left"
             >
               <div className="px-2.5 pb-2 border-b border-zinc-900">
                 <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold">Quick Patient Intake</span>

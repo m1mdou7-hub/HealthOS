@@ -351,7 +351,7 @@ export default function EhrWorkspace() {
       {/* ==================================================
           1. PATIENT HEADER (HIPAA Compliant)
           ================================================== */}
-      <div id="patient-header" className="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-4 shadow-xl">
+      <div id="patient-header" className="p-6 rounded-3xl bg-zinc-900 border border-zinc-800 space-y-4 shadow-xl">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           
           {/* Avatar and Name */}
@@ -435,7 +435,7 @@ export default function EhrWorkspace() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* Left Side Navigation (EHR Tab Groups) */}
-        <div className="lg:col-span-3 space-y-4 bg-zinc-900 border border-zinc-800 p-4 rounded-2xl shadow-xl">
+        <div className="lg:col-span-3 space-y-4 bg-zinc-900 border border-zinc-800 p-4 rounded-3xl shadow-xl">
           <div className="px-2 pb-2 border-b border-zinc-800 flex items-center justify-between">
             <span className="text-[11px] font-black tracking-wider uppercase text-zinc-400 font-mono flex items-center gap-1.5">
               <Shield className="w-4 h-4 text-emerald-400" /> EHR Explorer Panel
@@ -476,7 +476,7 @@ export default function EhrWorkspace() {
         </div>
 
         {/* Right Side Content Panel */}
-        <div className="lg:col-span-9 bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-xl min-h-[640px] flex flex-col justify-between">
+        <div className="lg:col-span-9 bg-zinc-900 border border-zinc-800 p-6 rounded-3xl shadow-xl min-h-[640px] flex flex-col justify-between">
           
           {/* Header Title for Current Tab */}
           <div className="flex items-center justify-between border-b border-zinc-800 pb-4 mb-5">

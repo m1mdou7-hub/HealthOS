@@ -259,7 +259,7 @@ export function PatientTimeline({
       exit={{ opacity: 0, y: -5 }}
       className="space-y-6 text-left"
     >
-      <div className="p-6 rounded-2xl border border-zinc-900 bg-gradient-to-b from-zinc-900/40 to-zinc-950/40 backdrop-blur-md shadow-2xl space-y-6">
+      <div className="p-6 rounded-3xl border border-zinc-900 bg-gradient-to-b from-zinc-900/40 to-zinc-950/40 backdrop-blur-md shadow-2xl space-y-6">
         
         {/* Toolbar */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-900 pb-4 gap-4">

@@ -197,7 +197,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       </div>
 
       {/* Toolbar actions */}
-      <div className="flex flex-wrap justify-between items-center bg-[#0d0d16]/20 p-4 rounded-2xl border border-white/5 gap-3 card-luxury">
+      <div className="flex flex-wrap justify-between items-center bg-[#0d0d16]/20 p-4 rounded-3xl border border-white/5 gap-3 card-luxury">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <DollarSign className="w-4 h-4 text-gold-400" /> {t('patient_ledger_title')}
@@ -275,7 +275,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
         {isLoadingInvoices || isLoadingPayments ? (
           <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading financial records...</div>
         ) : invoices.length === 0 ? (
-          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-2xl bg-zinc-950/20">
+          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-3xl bg-zinc-950/20">
             {t('no_invoices_logged')}
           </div>
         ) : (
@@ -287,7 +287,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               const remaining = Math.max(0, copayTotal - (inv.amountPaid || 0));
 
               return (
-                <div key={inv.id} className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/20 space-y-4">
+                <div key={inv.id} className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
                   <div className="flex flex-wrap justify-between items-start gap-2 border-b border-zinc-900/60 pb-3">
                     <div className="text-left">
                       <span className="text-[9px] font-mono text-zinc-500">{inv.invoiceNumber}</span>
@@ -351,7 +351,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* Invoices Create Modal */}
       {showInvoiceModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleCreateInvoice} className="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl w-full max-w-lg space-y-4 text-xs">
+          <form onSubmit={handleCreateInvoice} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-lg space-y-4 text-xs">
             <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">{t('modal_create_invoice')}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
@@ -423,7 +423,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* Payment Record Modal */}
       {showPaymentModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleRecordPayment} className="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl w-full max-w-sm space-y-4 text-xs">
+          <form onSubmit={handleRecordPayment} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
             <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">{t('modal_record_payment')}</h3>
             <div className="space-y-3">
               <div className="space-y-1">
@@ -484,7 +484,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* e-Claim Submission Modal */}
       {showClaimModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleClaimSubmit} className="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl w-full max-w-md space-y-4 text-xs">
+          <form onSubmit={handleClaimSubmit} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-md space-y-4 text-xs">
             <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
               <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-blue-400" /> {t('btn_submit_claim')}
@@ -565,7 +565,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* Installment Plan Calculator Modal */}
       {showInstallmentModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl w-full max-w-md space-y-4 text-xs">
+          <div className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-md space-y-4 text-xs">
             <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
               <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
                 <Calculator className="w-4 h-4 text-purple-400" /> {t('installment_calc_title')}
@@ -640,7 +640,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* Printable Invoice / Official Receipt Modal */}
       {showPrintModal && selectedInvoiceForPrint && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white text-zinc-950 p-8 rounded-2xl w-full max-w-2xl space-y-6 shadow-2xl relative">
+          <div className="bg-white text-zinc-950 p-8 rounded-3xl w-full max-w-2xl space-y-6 shadow-2xl relative">
             <div className="flex justify-between items-start border-b border-zinc-200 pb-4">
               <div>
                 <div className="flex items-center gap-2">

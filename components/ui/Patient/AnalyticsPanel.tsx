@@ -18,7 +18,7 @@ export default function AnalyticsPanel({ activePatient }: AnalyticsPanelProps) {
   return (
     <div className="space-y-6 text-left">
       {/* Header */}
-      <div className="bg-zinc-900/10 p-4 rounded-2xl border border-zinc-900">
+      <div className="bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900">
         <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
           <Activity className="w-4 h-4 text-emerald-400" /> Patient Clinical Diagnostics Analytics
         </h3>

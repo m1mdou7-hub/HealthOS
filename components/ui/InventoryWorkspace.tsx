@@ -916,7 +916,7 @@ export default function InventoryWorkspace({
         </div>
 
         {/* TOP STATUS BAR ROW */}
-        <div className="hidden lg:flex items-center gap-4 bg-zinc-950/80 border border-zinc-800 px-4 py-2 rounded-2xl">
+        <div className="hidden lg:flex items-center gap-4 bg-zinc-950/80 border border-zinc-800 px-4 py-2 rounded-3xl">
           <div className="flex items-center gap-1.5 font-mono text-[10px]">
             <ThermometerSnowflake className="w-3.5 h-3.5 text-blue-400" />
             <span className="text-zinc-400 font-bold">Cold Vault:</span>
@@ -1032,7 +1032,7 @@ export default function InventoryWorkspace({
 
                   {/* High Quality Bento Cards */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[105px]">
+                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[105px]">
                       <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Total Inventory Value</span>
                       <div className="flex items-baseline gap-1">
                         <span className="text-xl font-black text-white font-mono">${stats.totalVal.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
@@ -1042,7 +1042,7 @@ export default function InventoryWorkspace({
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[105px]">
+                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[105px]">
                       <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Stock Warnings</span>
                       <div className="flex items-baseline gap-2">
                         <span className="text-xl font-black text-white font-mono">{stats.lowStockCount} Low</span>
@@ -1053,7 +1053,7 @@ export default function InventoryWorkspace({
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[105px]">
+                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[105px]">
                       <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Purchase Orders</span>
                       <div className="flex items-baseline gap-2">
                         <span className="text-xl font-black text-zinc-300 font-mono">{stats.pendingPoCount} Pending</span>
@@ -1063,7 +1063,7 @@ export default function InventoryWorkspace({
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[105px]">
+                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[105px]">
                       <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Suppliers Directory</span>
                       <div className="flex items-baseline gap-1">
                         <span className="text-xl font-black text-white font-mono">{stats.totalSuppliersCount} Connected</span>
@@ -1077,7 +1077,7 @@ export default function InventoryWorkspace({
                   {/* Chart Row */}
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     {/* Recharts Area Chart */}
-                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl col-span-2 flex flex-col justify-between h-[280px]">
+                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-3xl col-span-2 flex flex-col justify-between h-[280px]">
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Total Capitalized Stock Value (YTD)</span>
                         <div className="flex gap-4 text-[10px] font-mono">
@@ -1110,7 +1110,7 @@ export default function InventoryWorkspace({
                     </div>
 
                     {/* Quick actions panel */}
-                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[280px]">
+                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[280px]">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">Quick Logistics Dispatches</span>
                         <p className="text-[10px] text-zinc-400 font-mono leading-relaxed mb-4">Direct dispatch links for immediate procurement operations.</p>
@@ -1160,7 +1160,7 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* BOTTOM TELEMETRY BAR */}
-                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-2xl flex justify-between items-center text-xs font-mono">
+                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono">
                     <span className="text-zinc-500 font-bold uppercase tracking-wider">Storage Node Integrity:</span>
                     <span className="text-emerald-400 font-bold flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" /> Synchronized with US GS1 Registries
@@ -1213,7 +1213,7 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* Filter & Search Bar */}
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3 bg-zinc-900/30 p-4 border border-zinc-900 rounded-2xl">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3 bg-zinc-900/30 p-4 border border-zinc-900 rounded-3xl">
                     <div className="relative md:col-span-1">
                       <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                       <input
@@ -1270,7 +1270,7 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* Large Product Table */}
-                  <div className="bg-zinc-900/20 border border-zinc-900 rounded-2xl overflow-hidden">
+                  <div className="bg-zinc-900/20 border border-zinc-900 rounded-3xl overflow-hidden">
                     <table className="w-full text-left text-xs font-mono">
                       <thead className="bg-zinc-900/80 text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-900">
                         <tr>
@@ -1390,7 +1390,7 @@ export default function InventoryWorkspace({
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Left Detail Column */}
                     <div className="lg:col-span-2 space-y-4">
-                      <div className="p-6 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4">
+                      <div className="p-6 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4">
                         <div>
                           <span className="text-[10px] font-mono font-black text-blue-400 bg-blue-500/15 border border-blue-500/30 px-2.5 py-1 rounded-full">
                             {selectedProduct.category}
@@ -1439,7 +1439,7 @@ export default function InventoryWorkspace({
                       </div>
 
                       {/* Stock History Audit Table */}
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-3">
+                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3">
                         <h4 className="text-xs font-bold uppercase text-zinc-400 font-mono flex items-center gap-2">
                           <History className="w-4 h-4 text-zinc-500" /> Stock Movement History
                         </h4>
@@ -1489,7 +1489,7 @@ export default function InventoryWorkspace({
                     {/* Right Action Column */}
                     <div className="space-y-4">
                       {/* Live Stock Level Indicators */}
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4">
+                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Real-time Level Indicator</span>
                         
                         <div className="space-y-1">
@@ -1517,7 +1517,7 @@ export default function InventoryWorkspace({
                       </div>
 
                       {/* Attachments Section */}
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-3">
+                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Certificates & Specifications</span>
                         {selectedProduct.attachments.map((file, i) => (
                           <div key={i} className="flex items-center justify-between p-2 bg-zinc-950 rounded-xl border border-zinc-850 font-mono text-xs">
@@ -1555,7 +1555,7 @@ export default function InventoryWorkspace({
                       </div>
                     </div>
 
-                    <div className="bg-zinc-900/20 border border-zinc-900 rounded-2xl overflow-hidden">
+                    <div className="bg-zinc-900/20 border border-zinc-900 rounded-3xl overflow-hidden">
                       <table className="w-full text-left text-xs font-mono">
                         <thead className="bg-zinc-900/80 text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-900">
                           <tr>
@@ -1606,7 +1606,7 @@ export default function InventoryWorkspace({
                     </div>
 
                     {/* Supplier Quote Comparison */}
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-3">
+                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3">
                       <h4 className="text-xs font-bold uppercase text-zinc-400 font-mono flex items-center gap-2">
                         <Sliders className="w-4 h-4 text-zinc-500" /> Procurement Quote Matrix (Bid Analysis)
                       </h4>
@@ -1637,7 +1637,7 @@ export default function InventoryWorkspace({
 
                   {/* PO Draft Form */}
                   <div className="space-y-4">
-                    <form onSubmit={handleCreatePO} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4">
+                    <form onSubmit={handleCreatePO} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Draft PO Replenishment</span>
 
                       <div className="space-y-1.5 font-mono text-xs">
@@ -1716,7 +1716,7 @@ export default function InventoryWorkspace({
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {suppliers.map(s => (
-                      <div key={s.id} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[190px] font-mono">
+                      <div key={s.id} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[190px] font-mono">
                         <div>
                           <div className="flex justify-between items-start">
                             <h4 className="text-sm font-bold text-white leading-tight">{s.name}</h4>
@@ -1743,7 +1743,7 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* Supplier Contract Overview Table */}
-                  <div className="p-5 bg-zinc-900/20 border border-zinc-900 rounded-2xl space-y-3">
+                  <div className="p-5 bg-zinc-900/20 border border-zinc-900 rounded-3xl space-y-3">
                     <h4 className="text-xs font-bold uppercase text-zinc-400 font-mono">Supplier Performance & SLA Contracts</h4>
                     <div className="overflow-hidden rounded-xl border border-zinc-850 bg-zinc-950/40">
                       <table className="w-full text-left text-xs font-mono">
@@ -1791,7 +1791,7 @@ export default function InventoryWorkspace({
                       <p className="text-xs text-zinc-500 font-mono">Continuous digital log of inbound shipments, outbound patient treatments, transfers, and warehouse adjustments.</p>
                     </div>
 
-                    <div className="bg-zinc-900/20 border border-zinc-900 rounded-2xl overflow-hidden">
+                    <div className="bg-zinc-900/20 border border-zinc-900 rounded-3xl overflow-hidden">
                       <table className="w-full text-left text-xs font-mono">
                         <thead className="bg-zinc-900/80 text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-900">
                           <tr>
@@ -1837,7 +1837,7 @@ export default function InventoryWorkspace({
 
                   {/* Manual Stock Dispatch Form */}
                   <div>
-                    <form onSubmit={handleCreateMovement} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4 font-mono text-xs">
+                    <form onSubmit={handleCreateMovement} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono text-xs">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Dispatch Manual Stock</span>
 
                       <div className="space-y-1.5">
@@ -1927,7 +1927,7 @@ export default function InventoryWorkspace({
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {warehouses.map(w => (
-                      <div key={w.id} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[175px] font-mono">
+                      <div key={w.id} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[175px] font-mono">
                         <div>
                           <div className="flex justify-between items-center">
                             <span className="text-[9px] font-black uppercase text-blue-400">{w.type}</span>
@@ -1951,7 +1951,7 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* Cold Chain Storage Telemetry Panel */}
-                  <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
+                  <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
                     <div className="space-y-1">
                       <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Main Cold Vault</span>
                       <div className="flex items-baseline gap-2">
@@ -2015,7 +2015,7 @@ export default function InventoryWorkspace({
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Forecast Summary Indicators */}
                     <div className="space-y-4">
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4 font-mono">
+                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Automatic Reorder Suggestion</span>
                         <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl space-y-1 text-xs">
                           <p className="text-white font-bold">SKU: PP-N95-FLT-M01</p>
@@ -2025,7 +2025,7 @@ export default function InventoryWorkspace({
                         </div>
                       </div>
 
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4 font-mono">
+                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Expiry Risk Warnings</span>
                         <div className="p-3 bg-zinc-950 border border-red-900/40 bg-red-950/10 rounded-xl text-xs space-y-1">
                           <p className="text-red-400 font-bold flex items-center gap-1.5">
@@ -2039,7 +2039,7 @@ export default function InventoryWorkspace({
                     </div>
 
                     {/* Interactive Report View */}
-                    <div className="lg:col-span-2 p-6 bg-zinc-900/40 border border-zinc-850 rounded-2xl flex flex-col justify-between h-[420px]">
+                    <div className="lg:col-span-2 p-6 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[420px]">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">AI SCM Optimization Report</span>
                         {aiReport ? (
@@ -2078,7 +2078,7 @@ export default function InventoryWorkspace({
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Consumption by Department Pie */}
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl h-[280px] flex flex-col justify-between">
+                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[280px] flex flex-col justify-between">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Consumption by Department (YTD)</span>
                       <div className="flex-1 w-full min-h-[160px]">
                         <ResponsiveContainer width="100%" height="100%">
@@ -2110,7 +2110,7 @@ export default function InventoryWorkspace({
                     </div>
 
                     {/* Top Used Materials Bar Chart */}
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl h-[280px] flex flex-col justify-between">
+                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[280px] flex flex-col justify-between">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Top Material Consumption Logs</span>
                       <div className="flex-1 w-full min-h-[180px]">
                         <ResponsiveContainer width="100%" height="100%">
@@ -2126,7 +2126,7 @@ export default function InventoryWorkspace({
                     </div>
 
                     {/* Waste & Discard Analysis Card */}
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl h-[280px] flex flex-col justify-between font-mono">
+                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[280px] flex flex-col justify-between font-mono">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block mb-3">Waste & Shrinkage Report</span>
                         <div className="space-y-3 text-xs pt-1">
@@ -2170,7 +2170,7 @@ export default function InventoryWorkspace({
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Measurement Units & Categories */}
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4 font-mono text-xs">
+                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono text-xs">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Measurement Units & Expiry Rules</span>
                       
                       <div className="space-y-2">
@@ -2197,7 +2197,7 @@ export default function InventoryWorkspace({
                     </div>
 
                     {/* SCM Approval Workflow */}
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-2xl space-y-4 font-mono text-xs">
+                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono text-xs">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Purchase Order Workflows</span>
                       
                       <div className="space-y-3">

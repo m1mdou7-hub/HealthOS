@@ -306,7 +306,7 @@ export default function ClinicalPanel({
                       className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                     >
                       <span className="text-[9px] font-mono text-zinc-500 mb-0.5">{msg.role === 'user' ? 'Dentist' : 'Copilot'}</span>
-                      <div className={`p-3 rounded-2xl max-w-[90%] text-xs leading-relaxed whitespace-pre-line ${
+                      <div className={`p-3 rounded-3xl max-w-[90%] text-xs leading-relaxed whitespace-pre-line ${
                         msg.role === 'user'
                           ? 'bg-purple-600 text-white rounded-tr-none'
                           : 'bg-zinc-900 text-zinc-300 border border-zinc-850 rounded-tl-none font-mono'
@@ -318,7 +318,7 @@ export default function ClinicalPanel({
                   {chatLoading && (
                     <div className="flex flex-col items-start">
                       <span className="text-[9px] font-mono text-zinc-500 mb-0.5">Copilot</span>
-                      <div className="p-3 rounded-2xl bg-zinc-900 border border-zinc-850 rounded-tl-none text-xs text-purple-400 font-mono animate-pulse">
+                      <div className="p-3 rounded-3xl bg-zinc-900 border border-zinc-850 rounded-tl-none text-xs text-purple-400 font-mono animate-pulse">
                         Scribing clinical correlations...
                       </div>
                     </div>

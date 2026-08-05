@@ -79,7 +79,7 @@ export default function PatientListView({
   return (
     <div className="space-y-6 text-left">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-zinc-900/25 p-4 rounded-2xl border border-zinc-900/80 backdrop-blur-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-zinc-900/25 p-4 rounded-3xl border border-zinc-900/80 backdrop-blur-sm">
         <div>
           <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl flex items-center gap-2">
             Patients Workspace
@@ -98,7 +98,7 @@ export default function PatientListView({
       </div>
 
       {/* Toolbar filter */}
-      <div className="flex flex-col md:flex-row justify-between items-center bg-zinc-900/10 p-4 rounded-2xl border border-zinc-900 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-4">
         <div className="relative w-full max-w-sm">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
           <input
@@ -142,7 +142,7 @@ export default function PatientListView({
 
       {/* Grid or Table List */}
       {viewMode === 'table' ? (
-        <div className="overflow-x-auto rounded-2xl border border-zinc-900 bg-zinc-950/20">
+        <div className="overflow-x-auto rounded-3xl border border-zinc-900 bg-zinc-950/20">
           <table className="w-full text-xs text-left text-zinc-300">
             <thead className="bg-zinc-900/40 text-[10px] font-mono uppercase tracking-wider text-zinc-500 border-b border-zinc-900">
               <tr>
@@ -221,7 +221,7 @@ export default function PatientListView({
             <div
               key={p.id}
               onClick={() => onSelectPatient(p.id)}
-              className="p-5 rounded-2xl border border-zinc-900 bg-zinc-950/20 hover:bg-zinc-900/25 transition-all cursor-pointer flex flex-col justify-between h-48"
+              className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 hover:bg-zinc-900/25 transition-all cursor-pointer flex flex-col justify-between h-48"
             >
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">

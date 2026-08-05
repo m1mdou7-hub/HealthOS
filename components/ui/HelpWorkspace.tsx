@@ -124,7 +124,7 @@ export default function HelpWorkspace() {
       </div>
 
       {/* FILTER & VIEW SWAP CONTROLS */}
-      <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850 w-max">
+      <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850 w-max">
         {[
           { id: 'kb', label: '1. Knowledge Base & FAQs', icon: BookOpen },
           { id: 'tickets', label: '2. Support Tickets', icon: FileText },
@@ -160,7 +160,7 @@ export default function HelpWorkspace() {
 
             <div className="space-y-4">
               {filteredArticles.map(art => (
-                <div key={art.id} className="p-4 bg-zinc-950/40 border border-zinc-900 hover:border-zinc-800 rounded-2xl space-y-2 transition-all group">
+                <div key={art.id} className="p-4 bg-zinc-950/40 border border-zinc-900 hover:border-zinc-800 rounded-3xl space-y-2 transition-all group">
                   <div className="flex justify-between items-start gap-4">
                     <span className="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
                       {art.category}
@@ -190,7 +190,7 @@ export default function HelpWorkspace() {
 
             <div className="space-y-3.5">
               {TUTORIAL_VIDEOS.map(vid => (
-                <div key={vid.id} className="p-3 bg-zinc-950 border border-zinc-850 rounded-2xl space-y-3 relative overflow-hidden group">
+                <div key={vid.id} className="p-3 bg-zinc-950 border border-zinc-850 rounded-3xl space-y-3 relative overflow-hidden group">
                   {/* Aspect Ratio Screen mockup */}
                   <div className="h-32 rounded-xl bg-zinc-900 flex items-center justify-center relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent opacity-80" />
@@ -284,7 +284,7 @@ export default function HelpWorkspace() {
 
             <div className="space-y-3">
               {ticketsList.map(t => (
-                <div key={t.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div key={t.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-white">{t.ticketId}</span>
@@ -326,7 +326,7 @@ export default function HelpWorkspace() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {SYSTEM_STATUS.map(sys => (
-              <div key={sys.node} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl flex items-center justify-between gap-4">
+              <div key={sys.node} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between gap-4">
                 <div className="space-y-1">
                   <h4 className="font-bold text-white text-xs">{sys.node}</h4>
                   <p className="text-[10px] text-zinc-500">Secure AES TLS Channel • Gateway Latency: <strong className="text-zinc-300">{sys.latency}</strong></p>
@@ -352,7 +352,7 @@ export default function HelpWorkspace() {
               { version: 'v2026.3.0', date: 'July 12, 2026', title: 'Exocad Digital Articulator & DICOM multi-layered mapping', desc: 'Introduced automatic multi-point alignments for translucent dental crowns. Ingested tooth specific parameters from SprintRay printers directly into the local clinic records.' },
               { version: 'v2026.2.4', date: 'June 28, 2026', title: 'Twilio Patient Recall SMS Workflows', desc: 'Added conditional triggers and clinical SMS macros under active tracking. Fully integrated patient pre-authorization templates for major carriers.' }
             ].map(rel => (
-              <div key={rel.version} className="p-4 bg-zinc-950 border border-zinc-850 rounded-2xl space-y-2">
+              <div key={rel.version} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl space-y-2">
                 <div className="flex justify-between items-center">
                   <h4 className="text-xs font-black text-emerald-400">{rel.version} Update</h4>
                   <span className="text-[10px] text-zinc-500">{rel.date}</span>

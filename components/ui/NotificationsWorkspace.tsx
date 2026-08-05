@@ -192,7 +192,7 @@ export default function NotificationsWorkspace() {
 
       {/* FILTER & CONTROL PANEL */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850">
           {CATEGORIES.map(cat => {
             const isSel = selectedCategory === cat;
             return (
@@ -267,7 +267,7 @@ export default function NotificationsWorkspace() {
                 return (
                   <div
                     key={notif.id}
-                    className={`p-4 rounded-2xl border transition-all flex items-start justify-between gap-4 relative ${
+                    className={`p-4 rounded-3xl border transition-all flex items-start justify-between gap-4 relative ${
                       notif.unread 
                         ? 'bg-zinc-900 border-zinc-800 shadow-lg' 
                         : 'bg-zinc-950/20 border-transparent hover:bg-zinc-900/30'
