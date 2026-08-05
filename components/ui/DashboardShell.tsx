@@ -439,7 +439,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
         <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-rose-600/5 rounded-full blur-[120px] pointer-events-none z-0" />
 
         {/* Top bar */}
-        <header className="flex items-center justify-between h-16 px-6 border-b border-white/5 bg-[#07070c]/50 backdrop-blur-xl relative header-shimmer">
+        <header className="flex items-center justify-between h-16 px-6 border-b border-white/5 bg-[#07070c]/90 backdrop-blur-xl relative z-40 header-shimmer">
           <div className="flex items-center">
             {/* Mobile toggle */}
             <button
