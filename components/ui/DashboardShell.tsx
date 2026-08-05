@@ -54,6 +54,8 @@ import { staffAuthService, StaffRole } from '@/utils/services/staffAuthService';
 import VoiceSystem from '@/components/ui/VoiceSystem';
 import StaffPhoneIntercom from '@/components/ui/StaffPhoneIntercom';
 import ThemeSelector from '@/components/ui/ThemeSelector';
+import { motion, AnimatePresence } from 'framer-motion';
+import { EASE } from '@/components/ui/design-system/motion';
 
 interface DashboardShellProps {
   user: any;
@@ -252,7 +254,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
   return (
     <LicenseGate>
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: 'var(--bg)' }}>
       {isDevBypass && (
         <div id="dev-mode-banner" className="bg-amber-500 text-black text-xs font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 border-b border-amber-600 select-none shrink-0 z-50">
           <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-black text-amber-400 font-bold uppercase tracking-wider text-[9px] leading-none">
@@ -261,21 +263,23 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           <span>Bypassing Supabase authentication for local development. Production authentication remains active and untouched.</span>
         </div>
       )}
-      <div className="flex flex-1 bg-transparent text-zinc-100 overflow-hidden font-sans relative">
+      <div className="flex flex-1 bg-transparent overflow-hidden font-sans relative">
       {/* Sidebar Spacer for Desktop layout */}
       <div className="hidden lg:block w-[72px] shrink-0" />
 
       {/* Sidebar for Desktop */}
-      <aside className="hidden lg:flex lg:flex-col absolute left-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-r border-white/5 bg-[#07070c]/60 backdrop-blur-xl transition-all duration-300 ease-in-out group shadow-xl shadow-black/45">
+      <aside className="hidden lg:flex lg:flex-col absolute left-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-r transition-all duration-300 ease-in-out group shadow-xl group-hover:[&>nav]:opacity-100">
         {/* Brand Header */}
-        <div className="flex items-center h-16 px-[20px] border-b border-white/5 gap-3 overflow-hidden shrink-0">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gold-gradient text-black shrink-0">
+        <div className="flex items-center h-16 px-[20px] border-b gap-3 overflow-hidden shrink-0" style={{ borderColor: 'var(--border)' }}>
+          <div className="relative flex items-center justify-center w-9 h-9 rounded-xl shrink-0">
+            <div className="absolute inset-0 rounded-xl" style={{ background: 'var(--gradient)', opacity: 0.9 }} />
             <svg
-              width="18"
-              height="18"
+              className="relative z-10"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="currentColor"
+              stroke="#fff"
               strokeWidth="3"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -284,14 +288,17 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
           </div>
-          <span className="font-semibold text-lg tracking-tight text-white opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-display">HealthOS</span>
-          <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-gold-500/10 text-gold-400 border border-gold-500/20 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
+          <span className="font-semibold text-lg tracking-tight opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-display">
+            <span className="text-gradient">HealthOS</span>
+          </span>
+          <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap"
+            style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)' }}>
             PRO
           </span>
         </div>
 
         {/* Navigation links */}
-        <nav className="flex-1 px-3.5 py-6 space-y-1.5 overflow-y-auto scrollbar-none">
+        <nav className="flex-1 px-3.5 py-6 space-y-1 overflow-y-auto scrollbar-none">
           {getNavItemsForRole(activeRole).map((item) => {
             const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
             const Icon = item.icon;
@@ -299,35 +306,46 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <Link
                 key={tNav(item.labelKey)}
                 href={item.href}
-                className={`flex items-center px-2.5 py-2.5 text-sm font-medium rounded-xl transition-all duration-150 group/nav overflow-hidden ${
-                  isActive
-                    ? 'bg-gold-500/10 text-gold-400 border-l-2 border-gold-500 shadow-gold-glow'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
-                }`}
+                className="group/nav relative flex items-center px-2.5 py-2.5 text-sm font-medium rounded-2xl transition-all duration-150 overflow-hidden"
+                style={{
+                  background: isActive ? 'var(--accent-glow2)' : 'transparent',
+                  color: isActive ? 'var(--accent)' : 'var(--text-muted)'
+                }}
               >
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute inset-0 rounded-2xl"
+                    style={{ background: 'var(--accent-glow2)', boxShadow: 'inset 0 0 0 1px var(--border-strong)' }}
+                    transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+                  />
+                )}
                 <Icon
-                  className={`w-5 h-5 shrink-0 transition-transform duration-150 group-hover/nav:scale-105 ${
-                    isActive ? 'text-gold-400' : 'text-zinc-400 group-hover/nav:text-zinc-100'
-                  }`}
+                  className={`relative z-10 w-5 h-5 shrink-0 transition-transform duration-150 group-hover/nav:scale-105`}
+                  style={{ color: isActive ? 'var(--accent)' : undefined }}
                 />
-                <span className="ml-3 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">{tNav(item.labelKey)}</span>
+                <span className="relative z-10 ml-3 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">{tNav(item.labelKey)}</span>
+                {isActive && (
+                  <span className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full" style={{ background: 'var(--accent)' }} />
+                )}
               </Link>
             );
           })}
         </nav>
 
         {/* Bottom User Area */}
-        <div className="p-3.5 border-t border-white/5 bg-[#0d0d16]/30 overflow-hidden shrink-0">
+        <div className="p-3.5 border-t overflow-hidden shrink-0" style={{ borderColor: 'var(--border)' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center min-w-0 gap-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-800 text-zinc-300 shrink-0">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
+                style={{ background: 'var(--surface-2)', color: 'var(--text-sub)', border: '1px solid var(--border)' }}>
                 <User className="w-4 h-4" />
               </div>
               <div className="min-w-0 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
-                <p className="text-xs font-medium text-zinc-200 truncate">
+                <p className="text-xs font-medium truncate" style={{ color: 'var(--text)' }}>
                   {user?.email || 'Medical Operator'}
                 </p>
-                <p className="text-[10px] text-zinc-500 truncate font-mono">Operator Console</p>
+                <p className="text-[10px] truncate font-mono" style={{ color: 'var(--text-muted)' }}>Operator Console</p>
               </div>
             </div>
             <form onSubmit={(e) => handleRequest(e, SignOut, router)} className="opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shrink-0">
@@ -335,9 +353,12 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <button
                 type="submit"
                 title="Sign out"
-                className="p-1.5 rounded-lg text-zinc-400 hover:text-red-400 hover:bg-zinc-800 transition-colors"
+                className="p-1.5 rounded-lg transition-colors"
+                style={{ color: 'var(--text-muted)' }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#f87171')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
               >
-                <LogOut className="w-4.5 h-4.5" />
+                <LogOut className="w-4 h-4" />
               </button>
             </form>
           </div>
@@ -345,43 +366,53 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       </aside>
 
       {/* Mobile Sidebar (Drawer) */}
+      <AnimatePresence>
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden">
           {/* Backdrop */}
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
           />
 
-          <div className="relative flex flex-col w-full max-w-xs flex-1 bg-[#0d0d16] border-r border-white/5">
+          <motion.div
+            initial={{ x: -300 }}
+            animate={{ x: 0 }}
+            exit={{ x: -300 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+            className="relative flex flex-col w-full max-w-xs flex-1 border-r"
+            style={{ background: 'var(--surface-solid)', borderColor: 'var(--border)' }}
+          >
             {/* Close button */}
             <div className="absolute top-4 right-4">
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white"
+                className="flex items-center justify-center w-8 h-8 rounded-lg"
+                style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Brand Header */}
-            <div className="flex items-center h-16 px-6 border-b border-white/5 gap-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gold-gradient text-black">
+            <div className="flex items-center h-16 px-6 border-b gap-3" style={{ borderColor: 'var(--border)' }}>
+              <div className="relative flex items-center justify-center w-8 h-8 rounded-lg">
+                <div className="absolute inset-0 rounded-lg" style={{ background: 'var(--gradient)' }} />
                 <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  className="relative z-10"
+                  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3"
+                  strokeLinecap="round" strokeLinejoin="round"
                 >
                   <line x1="12" y1="5" x2="12" y2="19"></line>
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
               </div>
-              <span className="font-semibold text-lg tracking-tight text-white font-display">HealthOS</span>
+              <span className="font-semibold text-lg tracking-tight font-display">
+                <span className="text-gradient">HealthOS</span>
+              </span>
             </div>
 
             {/* Navigation links */}
@@ -394,13 +425,16 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                     key={tNav(item.labelKey)}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-150 ${
-                      isActive
-                        ? 'bg-gold-500/10 text-gold-400 border-l-2 border-gold-500'
-                        : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800'
+                    className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-150 ${
+                      isActive ? 'border-l-2' : ''
                     }`}
+                    style={{
+                      background: isActive ? 'var(--accent-glow2)' : 'transparent',
+                      color: isActive ? 'var(--accent)' : 'var(--text-sub)',
+                      borderColor: 'var(--accent)'
+                    }}
                   >
-                    <Icon className="w-5 h-5 mr-3 text-zinc-400" />
+                    <Icon className="w-5 h-5 mr-3" />
                     {tNav(item.labelKey)}
                   </Link>
                 );
@@ -408,58 +442,76 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             </nav>
 
             {/* Bottom User Area */}
-            <div className="p-4 border-t border-zinc-800 bg-zinc-900/30">
+            <div className="p-4 border-t" style={{ borderColor: 'var(--border)', background: 'var(--surface-2)' }}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center min-w-0 gap-3">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-800 text-zinc-300">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full"
+                    style={{ background: 'var(--surface-2)', color: 'var(--text-sub)' }}>
                     <User className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-medium text-zinc-200 truncate">{user?.email}</p>
-                    <p className="text-[10px] text-zinc-500">Workspace Operator</p>
+                    <p className="text-xs font-medium truncate" style={{ color: 'var(--text)' }}>{user?.email}</p>
+                    <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Workspace Operator</p>
                   </div>
                 </div>
                 <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
                   <input type="hidden" name="pathName" value={pathname} />
                   <button
                     type="submit"
-                    className="p-1.5 rounded-lg text-zinc-400 hover:text-red-400 hover:bg-zinc-800"
+                    className="p-1.5 rounded-lg"
+                    style={{ color: 'var(--text-muted)' }}
                   >
                     <LogOut className="w-4 h-4" />
                   </button>
                 </form>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
+      </AnimatePresence>
 
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden relative">
-        {/* Rondesign Red Glowing Backdrop Elements */}
-        <div className="absolute top-[-10%] left-[20%] w-[350px] h-[350px] bg-rose-600/5 rounded-full blur-[100px] pointer-events-none z-0" />
-        <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-rose-600/5 rounded-full blur-[120px] pointer-events-none z-0" />
+        {/* Ambient glowing backdrop elements */}
+        <div className="absolute top-[-10%] left-[20%] w-[350px] h-[350px] rounded-full blur-[100px] pointer-events-none z-0 float-y"
+          style={{ background: 'var(--accent-glow2)' }} />
+        <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none z-0 pulse-glow"
+          style={{ background: 'var(--accent-glow2)' }} />
 
         {/* Top bar */}
-        <header className="flex items-center justify-between h-16 px-6 border-b border-white/5 bg-[#07070c]/90 backdrop-blur-xl relative z-40 header-shimmer">
+        <header className="flex items-center justify-between h-16 px-6 border-b relative z-40 header-shimmer"
+          style={{ borderColor: 'var(--border)' }}>
           <div className="flex items-center">
             {/* Mobile toggle */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="p-1.5 mr-4 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 lg:hidden focus:outline-none"
+              className="p-1.5 mr-4 rounded-lg lg:hidden focus:outline-none"
+              style={{ color: 'var(--text-muted)' }}
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-lg font-semibold text-white tracking-tight mr-6 font-display text-gold-gradient">{pageTitle}</h1>
+            <h1 className="text-lg font-semibold tracking-tight mr-6 font-display text-gradient">{pageTitle}</h1>
             
             {/* Command Palette Launcher Button */}
             <button
               onClick={() => setCommandMenuOpen(true)}
-              className="hidden md:flex items-center gap-2 bg-[#0d0d16]/70 hover:bg-[#131320]/70 border border-white/5 px-3.5 py-2 rounded-3xl text-zinc-500 hover:text-zinc-400 text-xs font-mono transition-all cursor-pointer select-none focus-gold"
+              className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-mono transition-all cursor-pointer select-none"
+              style={{
+                background: 'var(--glass-fill)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-muted)',
+                backdropFilter: 'blur(12px)'
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent)')}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
             >
-              <Search className="w-4 h-4 text-zinc-650" />
+              <Search className="w-4 h-4" />
               <span>{tCommon('searchOrRunCommand')}</span>
-              <kbd className="ml-4 px-1.5 py-0.5 text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-650 font-mono">⌘K</kbd>
+              <span className="ml-4 px-1.5 py-0.5 text-[9px] rounded font-mono"
+                style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
+                ⌘K
+              </span>
             </button>
           </div>
 
@@ -470,22 +522,24 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             {/* Voice System Widget */}
             <VoiceSystem />
 
-            {/* Theme Selector (Crimson, Earthy Sage, Royal Amethyst) */}
+            {/* Theme Selector (2 themes × light/dark) */}
             <ThemeSelector />
 
             {/* Language Switcher */}
             <LanguageSwitcher />
 
             {/* Active Role Selector Dropdown */}
-            <div className="relative flex items-center gap-1.5 bg-zinc-900/80 border border-white/10 rounded-2xl px-3 py-1.5 hover:bg-zinc-800 transition-colors shrink-0">
-              <UserCheck className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+            <div className="relative flex items-center gap-1.5 rounded-2xl px-3 py-1.5 transition-colors shrink-0"
+              style={{ background: 'var(--glass-fill)', border: '1px solid var(--border)' }}>
+              <UserCheck className="w-3.5 h-3.5 shrink-0" style={{ color: 'var(--accent)' }} />
               <select
                 value={activeRole}
                 onChange={(e) => {
                   const targetRole = e.target.value as UserRole;
                   setActiveRole(targetRole);
                 }}
-                className="bg-transparent border-none text-xs font-bold text-zinc-200 outline-none cursor-pointer font-sans"
+                className="bg-transparent border-none text-xs font-bold outline-none cursor-pointer font-sans"
+                style={{ color: 'var(--text)' }}
               >
                 {[
                   'Super Admin',
@@ -497,14 +551,14 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   'Laboratory Technician',
                   'Read-only Auditor'
                 ].map((roleKey) => (
-                  <option key={roleKey} value={roleKey} className="bg-zinc-950 text-white font-sans py-1">
+                  <option key={roleKey} value={roleKey} style={{ background: 'var(--surface-solid)', color: 'var(--text)' }}>
                     {tRoles(roleKey)}
                   </option>
                 ))}
               </select>
             </div>
 
-            {/* Quick Invite Staff Button for Admins (21st.dev Magic UI Shimmer Button) */}
+            {/* Quick Invite Staff Button for Admins */}
             {(activeRole === 'Super Admin' || activeRole === 'Clinic Owner') && (
               <button
                 type="button"
@@ -512,13 +566,13 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                 className="magic-shimmer-btn px-3 py-1.5 text-white font-bold text-xs rounded-2xl flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 shrink-0"
                 title="إضافة وتحديد صلاحيات موظف جديد"
               >
-                <UserPlus className="w-3.5 h-3.5 text-rose-400" />
+                <UserPlus className="w-3.5 h-3.5" style={{ color: 'var(--accent)' }} />
                 <span className="hidden lg:inline">+ دعوة موظف</span>
               </button>
             )}
 
-            <div className="hidden xl:flex items-center gap-2 border-r border-white/10 pr-3 mr-1 shrink-0">
-              <span className="text-xs text-zinc-400 font-mono">
+            <div className="hidden xl:flex items-center gap-2 border-r pr-3 mr-1 shrink-0" style={{ borderColor: 'var(--border)' }}>
+              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
                 {tCommon('systemStatus')}: <span className="uupm-badge-glass text-[10px] uppercase">{tCommon('secure')}</span>
               </span>
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50" />
@@ -532,28 +586,35 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             const access = checkPageAccess(pathname, activeRole);
             if (!access.allowed) {
               return (
-                <div className="min-h-[70vh] flex items-center justify-center p-4">
-                  <div className="w-full max-w-xl bg-[#0d0d16]/40 border border-white/5 rounded-3xl p-8 text-center space-y-6 backdrop-blur-md relative overflow-hidden card-luxury">
-                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gold-gradient" />
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: EASE }}
+                  className="min-h-[70vh] flex items-center justify-center p-4"
+                >
+                  <div className="w-full max-w-xl card-elevated p-8 text-center space-y-6 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'var(--gradient)' }} />
                     
-                    <div className="mx-auto w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-gold-400 animate-pulse">
+                    <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center animate-pulse"
+                      style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
                       <ShieldAlert className="w-8 h-8" />
                     </div>
 
                     <div className="space-y-2">
-                      <h3 className="text-xl font-bold text-white tracking-tight font-display text-gold-gradient">
-                        {tAccess('clearanceRequired')}
+                      <h3 className="text-xl font-bold tracking-tight font-display">
+                        <span className="text-gradient">{tAccess('clearanceRequired')}</span>
                       </h3>
-                      <p className="text-xs font-mono text-zinc-400" dir="ltr">
+                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }} dir="ltr">
                         {tAccess('pathway')}: {pathname.toUpperCase()} • {tAccess('privilegeLevel')}: {activeRole.toUpperCase()}
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-950/80 rounded-3xl border border-white/5 text-left space-y-2">
-                      <span className="text-[10px] font-bold font-mono text-gold-400 block uppercase tracking-wider">
+                    <div className="p-4 rounded-3xl text-left space-y-2"
+                      style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
+                      <span className="text-[10px] font-bold font-mono block uppercase tracking-wider" style={{ color: 'var(--accent)' }}>
                         Access Denied Policy ID: HealthOS-RBAC-0441
                       </span>
-                      <p className="text-xs text-zinc-300 leading-relaxed font-sans">
+                      <p className="text-xs leading-relaxed font-sans" style={{ color: 'var(--text-sub)' }}>
                         {access.reason || "Your active seat role subscription does not possess the permissions necessary to view this module."}
                       </p>
                     </div>
@@ -561,21 +622,23 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                     <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                       <button
                         onClick={() => setActiveRole('Super Admin')}
-                        className="w-full sm:w-auto px-5 py-2.5 bg-white text-zinc-950 text-xs font-bold rounded-xl hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                        className="w-full sm:w-auto px-5 py-2.5 text-xs font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer"
+                        style={{ background: 'var(--gradient)', color: '#fff' }}
                       >
                         <UserCheck className="w-4 h-4" />
                         <span>Impersonate Super Admin</span>
                       </button>
                       <button
                         onClick={() => router.push('/')}
-                        className="w-full sm:w-auto px-5 py-2.5 bg-zinc-900 border border-zinc-800 text-xs font-semibold rounded-xl hover:bg-zinc-800 transition-colors flex items-center justify-center gap-2 cursor-pointer text-zinc-300"
+                        className="w-full sm:w-auto px-5 py-2.5 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 cursor-pointer"
+                        style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text-sub)' }}
                       >
                         <Lock className="w-4 h-4" />
                         <span>Return to Main Terminal</span>
                       </button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             }
             return children;
@@ -584,30 +647,41 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       </div>
 
       {/* Universal Search & Command Palette Modal Overlay */}
+      <AnimatePresence>
       {commandMenuOpen && (
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-[12vh] px-4">
           {/* Backdrop blur */}
-          <div 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={() => setCommandMenuOpen(false)}
             className="fixed inset-0 bg-black/80 backdrop-blur-sm cursor-default"
           />
 
           {/* Modal Container */}
-          <div className="relative w-full max-w-2xl bg-[#0d0d16] border border-white/5 rounded-3xl shadow-gold-md flex flex-col overflow-hidden font-mono text-xs animate-fade-in max-h-[70vh] card-luxury">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 12 }}
+            transition={{ duration: 0.28, ease: EASE }}
+            className="relative w-full max-w-2xl card-elevated rounded-3xl flex flex-col overflow-hidden font-mono text-xs max-h-[70vh]"
+          >
             {/* Header Input Search */}
-            <div className="p-4 border-b border-white/5 flex items-center gap-3">
-              <Command className="w-5 h-5 text-gold-400 shrink-0" />
+            <div className="p-4 border-b flex items-center gap-3" style={{ borderColor: 'var(--border)' }}>
+              <Command className="w-5 h-5 shrink-0" style={{ color: 'var(--accent)' }} />
               <input
                 type="text"
                 autoFocus
                 value={commandQuery}
                 onChange={(e) => setCommandQuery(e.target.value)}
                 placeholder="Search resources, navigate, or run local console procedures..."
-                className="flex-1 bg-transparent border-none text-xs outline-none text-white placeholder-zinc-650 font-mono"
+                className="flex-1 bg-transparent border-none text-xs outline-none font-mono"
               />
               <button 
                 onClick={() => setCommandMenuOpen(false)}
-                className="p-1 hover:bg-zinc-900 rounded text-zinc-500 hover:text-white"
+                className="p-1 rounded transition-colors"
+                style={{ color: 'var(--text-muted)' }}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -615,7 +689,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Command Feedback status banner if triggered */}
             {commandFeedback && (
-              <div className="bg-gold-500/10 border-b border-gold-500/20 px-4 py-2 text-gold-400 font-bold font-mono text-[10px] flex items-center gap-2 animate-pulse">
+              <div className="px-4 py-2 text-[10px] font-bold font-mono flex items-center gap-2 animate-pulse"
+                style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', borderBottom: '1px solid var(--border-strong)' }}>
                 <Sparkle className="w-4 h-4 shrink-0" />
                 <span>{commandFeedback}</span>
               </div>
@@ -623,13 +698,13 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Commands list grouped by category */}
             <div className="flex-1 overflow-y-auto p-2 space-y-3 max-h-[380px]">
-              <div className="px-3 py-1 text-[10px] text-zinc-600 font-bold uppercase">
+              <div className="px-3 py-1 text-[10px] font-bold uppercase" style={{ color: 'var(--text-muted)' }}>
                 {commandQuery ? 'Search matches' : 'Authorized commands & shortcut routines'}
               </div>
 
               <div className="space-y-1">
                 {filteredCommands.length === 0 ? (
-                  <div className="py-8 text-center text-zinc-600">No telemetry procedures matched query.</div>
+                  <div className="py-8 text-center" style={{ color: 'var(--text-muted)' }}>No telemetry procedures matched query.</div>
                 ) : (
                   filteredCommands.map((cmd, idx) => (
                     <div
@@ -640,17 +715,19 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                           setCommandMenuOpen(false);
                         }
                       }}
-                      className="px-3 py-2.5 rounded-xl hover:bg-zinc-900 flex items-center justify-between gap-4 cursor-pointer transition-colors group"
+                      className="px-3 py-2.5 rounded-xl flex items-center justify-between gap-4 cursor-pointer transition-colors group"
+                      style={{ color: 'var(--text-sub)' }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--surface-2)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="text-[10px] uppercase font-bold text-zinc-500 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-850 font-mono">
+                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded border font-mono"
+                          style={{ color: 'var(--accent)', background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)' }}>
                           {cmd.category}
                         </span>
-                        <span className="text-zinc-200 font-sans group-hover:text-gold-400 transition-colors">
-                          {cmd.name}
-                        </span>
+                        <span className="font-sans transition-colors">{cmd.name}</span>
                       </div>
-                      <ArrowRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-gold-400 transition-colors group-hover:translate-x-0.5" />
+                      <ArrowRight className="w-3.5 h-3.5 transition-all group-hover:translate-x-0.5" style={{ color: 'var(--text-muted)' }} />
                     </div>
                   ))
                 )}
@@ -658,33 +735,43 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             </div>
 
             {/* Footer hints */}
-            <div className="p-3 border-t border-zinc-900 bg-zinc-900/10 text-zinc-600 text-[10px] flex items-center justify-between">
-              <span>Use <kbd className="bg-zinc-900 px-1 py-0.5 rounded text-zinc-400">↑↓</kbd> to select and <kbd className="bg-zinc-900 px-1 py-0.5 rounded text-zinc-400">Enter</kbd> to execute</span>
+            <div className="p-3 border-t text-[10px] flex items-center justify-between"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
+              <span>Use <kbd className="px-1 py-0.5 rounded" style={{ background: 'var(--surface-2)' }}>↑↓</kbd> to select and <kbd className="px-1 py-0.5 rounded" style={{ background: 'var(--surface-2)' }}>Enter</kbd> to execute</span>
               <span>ESC to dismiss</span>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
+      </AnimatePresence>
 
       {/* Quick Invite Staff Modal */}
+      <AnimatePresence>
       {showQuickInviteModal && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleQuickInviteSubmit} className="bg-[#0d0d16] border border-white/5 p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans text-right card-luxury shadow-gold-md" dir="rtl">
-            <div className="flex justify-between items-center border-b border-white/5 pb-3">
+          <motion.form
+            initial={{ opacity: 0, scale: 0.95, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 16 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            onSubmit={handleQuickInviteSubmit}
+            className="card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans text-right" dir="rtl"
+          >
+            <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--border)' }}>
               <div>
-                <h3 className="text-sm font-bold text-white flex items-center gap-2 font-display text-gold-gradient">
-                  <UserPlus className="w-4 h-4 text-gold-400" /> دعوة / إضافة موظف جديد لـ HealthOS
+                <h3 className="text-sm font-bold flex items-center gap-2 font-display">
+                  <UserPlus className="w-4 h-4" style={{ color: 'var(--accent)' }} /> دعوة / إضافة موظف جديد لـ HealthOS
                 </h3>
-                <p className="text-[11px] text-zinc-400 mt-0.5">يمكن للموظف استخدام البريد وكلمة المرور للدخول المباشر دون كود تفعيل.</p>
+                <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>يمكن للموظف استخدام البريد وكلمة المرور للدخول المباشر دون كود تفعيل.</p>
               </div>
-              <button type="button" onClick={() => setShowQuickInviteModal(false)} className="text-zinc-500 hover:text-white p-1">
+              <button type="button" onClick={() => setShowQuickInviteModal(false)} className="p-1" style={{ color: 'var(--text-muted)' }}>
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="space-y-3">
               <div className="space-y-1">
-                <label className="text-zinc-300 font-semibold block">اسم الموظف الكامل</label>
+                <label className="font-semibold block" style={{ color: 'var(--text-sub)' }}>اسم الموظف الكامل</label>
                 <input
                   type="text"
                   required
@@ -692,12 +779,12 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   value={quickInviteForm.name}
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, name: e.target.value })}
                   placeholder="د. محمد السعيد"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none focus:border-gold-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-zinc-300 font-semibold block">البريد الإلكتروني للموظف</label>
+                <label className="font-semibold block" style={{ color: 'var(--text-sub)' }}>البريد الإلكتروني للموظف</label>
                 <input
                   type="email"
                   required
@@ -705,55 +792,58 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, email: e.target.value })}
                   placeholder="m.alsaeed@healthos.io"
                   dir="ltr"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none focus:border-gold-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border font-mono outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-zinc-300 font-semibold block">الدور والصلاحية (Role / RBAC)</label>
+                <label className="font-semibold block" style={{ color: 'var(--text-sub)' }}>الدور والصلاحية (Role / RBAC)</label>
                 <select
                   value={quickInviteForm.role}
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, role: e.target.value as StaffRole })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none font-mono focus:border-gold-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border font-mono outline-none"
                 >
-                  <option value="clinician" className="bg-zinc-950">🩺 طبيب معالج (Clinician - EHR Access)</option>
-                  <option value="receptionist" className="bg-zinc-950">📋 مسؤول استقبال (Receptionist - Scheduling)</option>
-                  <option value="lab_tech" className="bg-zinc-950">🧪 فني مختبر (Lab Tech - CAD/CAM & STL)</option>
-                  <option value="admin" className="bg-zinc-950">👑 مدير نظام (Clinic Admin)</option>
-                  <option value="auditor" className="bg-zinc-950">🛡️ مراجع سلامة (HIPAA Auditor)</option>
+                  <option value="clinician">🩺 طبيب معالج (Clinician - EHR Access)</option>
+                  <option value="receptionist">📋 مسؤول استقبال (Receptionist - Scheduling)</option>
+                  <option value="lab_tech">🧪 فني مختبر (Lab Tech - CAD/CAM & STL)</option>
+                  <option value="admin">👑 مدير نظام (Clinic Admin)</option>
+                  <option value="auditor">🛡️ مراجع سلامة (HIPAA Auditor)</option>
                 </select>
               </div>
 
               <div className="space-y-1">
-                <label className="text-zinc-300 font-semibold block">كلمة المرور المبدئية للموظف</label>
+                <label className="font-semibold block" style={{ color: 'var(--text-sub)' }}>كلمة المرور المبدئية للموظف</label>
                 <input
                   type="text"
                   required
                   value={quickInviteForm.tempPassword}
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, tempPassword: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono outline-none focus:border-gold-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border font-mono outline-none"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 border-t border-white/5 pt-3">
+            <div className="flex justify-end gap-2 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
               <button
                 type="button"
                 onClick={() => setShowQuickInviteModal(false)}
-                className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 font-semibold text-xs"
+                className="px-4 py-2 rounded-xl font-semibold text-xs cursor-pointer"
+                style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}
               >
                 إلغاء
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 rounded-xl bg-gold-500 hover:bg-gold-400 text-zinc-950 font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-gold-sm"
+                className="px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 cursor-pointer"
+                style={{ background: 'var(--gradient)', color: '#fff' }}
               >
                 إرسال الدعوة واعتماد الحساب
               </button>
             </div>
-          </form>
+          </motion.form>
         </div>
       )}
+      </AnimatePresence>
     </div>
   </div>
   </LicenseGate>

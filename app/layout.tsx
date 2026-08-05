@@ -59,7 +59,15 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   const dir = getDirection(locale);
 
   return (
-    <html lang={locale} dir={dir}>
+    <html lang={locale} dir={dir} data-theme="graphite" data-mode="dark">
+      <head>
+        {/* Bootstrap persisted theme before first paint to avoid flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('healthos_theme_id')||'graphite';var m=localStorage.getItem('healthos_mode');if(m!=='light'&&m!=='dark'){m=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}var r=document.documentElement;r.setAttribute('data-theme',t);r.setAttribute('data-mode',m);r.classList.remove('theme-crimson','theme-earthy','theme-amethyst');}catch(e){}})();`
+          }}
+        />
+      </head>
       <body className="antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ReactQueryProvider>

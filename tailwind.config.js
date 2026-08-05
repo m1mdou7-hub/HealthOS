@@ -2,7 +2,7 @@ const { fontFamily } = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['class', '[data-theme="dark"]'],
+  darkMode: ['class', '[data-mode="dark"]'],
   content: [
     'app/**/*.{ts,tsx}',
     'components/**/*.{ts,tsx}',
@@ -18,50 +18,70 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans:  ['var(--font-sans)', ...fontFamily.sans],
-        serif: ['Cormorant Garamond', 'Georgia', ...fontFamily.serif],
+        sans:  ['Manrope', 'Inter', ...fontFamily.sans],
+        display: ['Manrope', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', ...fontFamily.mono],
+        serif: ['Cormorant Garamond', 'Georgia', ...fontFamily.serif]
       },
       colors: {
-        // Apple Rondesign Crimson Accent system (mapping old gold tags to rose/crimson)
-        gold: {
-          50:  '#fff1f2',
-          100: '#ffe4e6',
-          200: '#fecdd3',
-          300: '#fda4af',
-          400: '#fb7185',
-          500: '#e11d48',
-          600: '#be123c',
-          700: '#9f1239',
-          800: '#881337',
-          900: '#4c0519',
-          950: '#1c020a',
+        // Dark Professional (Graphite & Amethyst)
+        amethyst: {
+          50:  '#FBF1FF',
+          100: '#EAD7F2',
+          200: '#D3B4E0',
+          300: '#BC92CE',
+          400: '#AB7FC2',
+          500: '#9B71B2',
+          600: '#7A4F92',
+          700: '#5A3371',
+          800: '#3A1C36',
+          900: '#241022',
+          950: '#0b0710'
         },
-        emerald: {
-          50:  '#fff1f2',
-          100: '#ffe4e6',
-          200: '#fecdd3',
-          300: '#fda4af',
-          400: '#fb7185',
-          500: '#e11d48',
-          600: '#be123c',
-          700: '#9f1239',
-          800: '#881337',
-          900: '#4c0519',
-          950: '#1c020a',
+        // Luxury Earth
+        chestnut: {
+          50:  '#E8E1DA',
+          100: '#D4C7BC',
+          200: '#B7A28F',
+          300: '#997E66',
+          400: '#77614F',
+          500: '#55443A',
+          600: '#45372F',
+          700: '#352A24',
+          800: '#251E1A',
+          900: '#191511'
         },
-        green: {
-          50:  '#fff1f2',
-          100: '#ffe4e6',
-          200: '#fecdd3',
-          300: '#fda4af',
-          400: '#fb7185',
-          500: '#e11d48',
-          600: '#be123c',
-          700: '#9f1239',
-          800: '#881337',
-          900: '#4c0519',
-          950: '#1c020a',
+        morning: {
+          50:  '#EEF1EF',
+          100: '#D9DEDA',
+          200: '#BFCAC4',
+          300: '#A5B3AC',
+          400: '#97A69E',
+          500: '#8A9992',
+          600: '#6C7A74',
+          700: '#4F5C56',
+          800: '#333D39',
+          900: '#1F2623'
         },
+        almond: {
+          50:  '#F7F7F5',
+          100: '#E9E9E5',
+          200: '#D9DAD5',
+          300: '#CFD0CD',
+          400: '#A9AAA6',
+          500: '#838480'
+        },
+        graphite: {
+          400: '#9a8fa8',
+          500: '#6f5f73',
+          600: '#4D2308',
+          700: '#3a1c14',
+          800: '#26120c'
+        }
+      },
+      borderRadius: {
+        '4xl': '2rem',
+        '5xl': '2.5rem'
       },
       keyframes: {
         'accordion-down': {
@@ -74,28 +94,47 @@ module.exports = {
         },
         'shimmer': {
           '0%, 100%': { opacity: '0.5' },
-          '50%':       { opacity: '1'   },
+          '50%':       { opacity: '1'   }
         },
         'blink': {
           '0%, 100%': { opacity: '1'   },
-          '50%':       { opacity: '0.3' },
+          '50%':       { opacity: '0.3' }
         },
+        'float-y': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%':      { transform: 'translateY(-16px)' }
+        },
+        'pulse-glow': {
+          '0%, 100%': { opacity: '0.55' },
+          '50%':      { opacity: '1' }
+        },
+        'aurora': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)', opacity: '0.5' },
+          '33%':      { transform: 'translate(40px, -30px) scale(1.15)', opacity: '0.8' },
+          '66%':      { transform: 'translate(-30px, 20px) scale(0.95)', opacity: '0.6' }
+        },
+        'marquee': {
+          '0%':   { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' }
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up':   'accordion-up 0.2s ease-out',
         'shimmer':        'shimmer 3s ease-in-out infinite',
         'blink':          'blink 2s ease-in-out infinite',
-      },
-      backgroundImage: {
-        'gold-gradient': 'linear-gradient(135deg, #e11d48 0%, #be123c 60%, #4c0519 100%)',
+        'float-y':        'float-y 7s ease-in-out infinite',
+        'pulse-glow':     'pulse-glow 3.2s ease-in-out infinite',
+        'aurora':         'aurora 14s ease-in-out infinite',
+        'marquee':        'marquee 30s linear infinite'
       },
       boxShadow: {
-        'gold-sm':  '0 2px 12px rgba(225,29,72,0.15)',
-        'gold-md':  '0 4px 24px rgba(225,29,72,0.2)',
-        'gold-lg':  '0 8px 40px rgba(225,29,72,0.25)',
-        'gold-glow':'0 0 20px rgba(225,29,72,0.12)',
-      },
+        'soft':      '0 2px 12px rgba(0,0,0,0.08)',
+        'elevated':  '0 24px 64px -24px rgba(0,0,0,0.55)',
+        'glow':      '0 0 0 1px var(--border-strong), 0 12px 40px -12px var(--accent-glow)',
+        'glow-lg':   '0 0 0 1px var(--border-strong), 0 32px 80px -32px var(--accent-glow)',
+        'inner-line':'inset 0 1px 0 0 rgba(255,255,255,0.06)'
+      }
     }
   },
   plugins: [
