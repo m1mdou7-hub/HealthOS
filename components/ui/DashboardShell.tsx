@@ -53,6 +53,7 @@ import LanguageSwitcher from '@/components/ui/language-switcher';
 import { staffAuthService, StaffRole } from '@/utils/services/staffAuthService';
 import VoiceSystem from '@/components/ui/VoiceSystem';
 import StaffPhoneIntercom from '@/components/ui/StaffPhoneIntercom';
+import ThemeSelector from '@/components/ui/ThemeSelector';
 
 interface DashboardShellProps {
   user: any;
@@ -468,6 +469,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Voice System Widget */}
             <VoiceSystem />
+
+            {/* Theme Selector (Crimson, Earthy Sage Image 1, Royal Amethyst Image 2) */}
+            <ThemeSelector />
 
             {/* Language Switcher */}
             <LanguageSwitcher />

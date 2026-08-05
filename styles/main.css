@@ -5,22 +5,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Apple Design Minimalist Variables ────────────────────────── */
-:root {
-  /* Apple Crimson Accent system */
-  --gold:       #e11d48;
-  --gold-hi:    #ffe4e6;
-  --gold-dim:   #be123c;
-  --gold-glow:  rgba(225,29,72,0.12);
-  --gold-glow2: rgba(225,29,72,0.06);
+/* ─── Apple Design & Custom Themes System ────────────────────────── */
+:root,
+.theme-crimson {
+  /* Crimson Accent system */
+  --accent:       #e11d48;
+  --accent-hi:    #ffe4e6;
+  --accent-dim:   #be123c;
+  --accent-glow:  rgba(225,29,72,0.18);
+  --accent-glow2: rgba(225,29,72,0.08);
 
   /* Pitch Black Depth palette */
   --ink:        #000000;
-  --ink-2:      #09090b;
-  --ink-3:      #18181b;
-  --ink-4:      #27272a;
+  --ink-2:      #09090e;
+  --ink-3:      #12121a;
+  --ink-4:      #1a1a24;
   --border-dim: rgba(255,255,255,0.06);
   --border-mid: rgba(255,255,255,0.12);
+}
+
+/* 🌿 Theme 1: Earthy Sage & Arsenic (Image 1) */
+.theme-earthy {
+  --accent:       #8A9992; /* Morning Blue */
+  --accent-hi:    #CFD0CD; /* Almond Light */
+  --accent-dim:   #55443A; /* Liver Chestnut */
+  --accent-glow:  rgba(138, 153, 146, 0.22);
+  --accent-glow2: rgba(85, 68, 58, 0.15);
+
+  --ink:        #121817; /* Arsenic Mineral Deep */
+  --ink-2:      #1a2221;
+  --ink-3:      #232d2b;
+  --ink-4:      #2e3a38;
+  --border-dim: rgba(207, 208, 205, 0.08);
+  --border-mid: rgba(138, 153, 146, 0.2);
+}
+
+/* 💜 Theme 2: Royal Amethyst & Dark Purple (Image 2) */
+.theme-amethyst {
+  --accent:       #9B71B2; /* Amethyst */
+  --accent-hi:    #FBF1FF; /* Pale Orchid */
+  --accent-dim:   #E3D0EA; /* Thistle */
+  --accent-glow:  rgba(155, 113, 178, 0.25);
+  --accent-glow2: rgba(227, 208, 234, 0.12);
+
+  --ink:        #180a17; /* Dark Purple Deep */
+  --ink-2:      #221021;
+  --ink-3:      #2e162c;
+  --ink-4:      #3d1e3a;
+  --border-dim: rgba(251, 241, 255, 0.08);
+  --border-mid: rgba(155, 113, 178, 0.22);
 }
 
 /* ─── Base overrides ─────────────────────────────────────────── */
@@ -541,12 +574,25 @@ select:focus {
 
 /* UI/UX Pro Max Glass Badge */
 .uupm-badge-glass {
-  background: rgba(225, 29, 72, 0.1);
-  border: 1px solid rgba(225, 29, 72, 0.25);
-  color: #f43f5e;
+  background: var(--accent-glow);
+  border: 1px solid var(--border-mid);
+  color: var(--accent);
   font-family: monospace;
   font-weight: 700;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
-  box-shadow: 0 0 12px rgba(225, 29, 72, 0.15);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* 🎨 Image 3 Mesh Gradient Backdrops & Aesthetics */
+.mesh-backdrop-crimson {
+  background: radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.15) 0%, rgba(0, 0, 0, 0.98) 70%);
+}
+
+.mesh-backdrop-earthy {
+  background: radial-gradient(circle at 50% 0%, rgba(138, 153, 146, 0.25) 0%, rgba(85, 68, 58, 0.15) 45%, rgba(18, 24, 23, 0.98) 85%);
+}
+
+.mesh-backdrop-amethyst {
+  background: radial-gradient(circle at 50% 0%, rgba(155, 113, 178, 0.3) 0%, rgba(58, 28, 54, 0.2) 50%, rgba(24, 10, 23, 0.98) 85%);
 }
