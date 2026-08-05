@@ -7,12 +7,12 @@
 
 /* ─── Apple Design Minimalist Variables ────────────────────────── */
 :root {
-  /* White/Zinc Accent system */
-  --gold:       #ffffff;
-  --gold-hi:    #f4f4f5;
-  --gold-dim:   #a1a1aa;
-  --gold-glow:  rgba(255,255,255,0.08);
-  --gold-glow2: rgba(255,255,255,0.04);
+  /* Apple Crimson Accent system */
+  --gold:       #e11d48;
+  --gold-hi:    #ffe4e6;
+  --gold-dim:   #be123c;
+  --gold-glow:  rgba(225,29,72,0.12);
+  --gold-glow2: rgba(225,29,72,0.06);
 
   /* Pitch Black Depth palette */
   --ink:        #000000;

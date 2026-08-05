@@ -432,7 +432,11 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       )}
 
       {/* Main Content Area */}
-      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+      <div className="flex flex-col flex-1 min-w-0 overflow-hidden relative">
+        {/* Rondesign Red Glowing Backdrop Elements */}
+        <div className="absolute top-[-10%] left-[20%] w-[350px] h-[350px] bg-rose-600/5 rounded-full blur-[100px] pointer-events-none z-0" />
+        <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-rose-600/5 rounded-full blur-[120px] pointer-events-none z-0" />
+
         {/* Top bar */}
         <header className="flex items-center justify-between h-16 px-6 border-b border-white/5 bg-[#07070c]/50 backdrop-blur-xl relative header-shimmer">
           <div className="flex items-center">
