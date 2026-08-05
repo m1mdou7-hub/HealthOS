@@ -82,13 +82,7 @@ body,
 aside,
 header,
 main,
-div,
 section,
-button,
-a,
-input,
-select,
-textarea,
 .rounded-3xl,
 .rounded-2xl,
 .rounded-xl {
@@ -102,64 +96,22 @@ html, body {
   color: var(--text-main) !important;
 }
 
-/* Dynamic Card Backdrops & Borders */
+/* Glass Card Surfaces for Themes */
 .theme-earthy .bg-zinc-950,
-.theme-earthy .bg-zinc-900,
-.theme-earthy .bg-black,
-.theme-earthy .bg-\[\#09090e\],
 .theme-earthy .bg-\[\#0d0d16\],
 .theme-amethyst .bg-zinc-950,
-.theme-amethyst .bg-zinc-900,
-.theme-amethyst .bg-black,
-.theme-amethyst .bg-\[\#09090e\],
 .theme-amethyst .bg-\[\#0d0d16\] {
   background-color: var(--card-bg) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-/* Dynamic Borders */
-.theme-earthy .border-zinc-800,
-.theme-earthy .border-zinc-900,
-.theme-earthy .border-zinc-850,
-.theme-earthy .border-white\/10,
-.theme-earthy .border-white\/5,
-.theme-earthy .border-white\/\[0\.08\],
-.theme-amethyst .border-zinc-800,
-.theme-amethyst .border-zinc-900,
-.theme-amethyst .border-zinc-850,
-.theme-amethyst .border-white\/10,
-.theme-amethyst .border-white\/5,
-.theme-amethyst .border-white\/\[0\.08\] {
-  border-color: var(--border-mid) !important;
-}
-
-/* Dynamic Accents, Buttons, Highlights & Icons */
-.theme-earthy .bg-rose-600,
-.theme-earthy .bg-rose-500,
-.theme-earthy .bg-gold-500,
-.theme-amethyst .bg-rose-600,
-.theme-amethyst .bg-rose-500,
-.theme-amethyst .bg-gold-500 {
-  background-color: var(--accent) !important;
-  color: #ffffff !important;
-}
-
+/* Dynamic Accent Text Highlights */
 .theme-earthy .text-rose-400,
-.theme-earthy .text-rose-500,
 .theme-earthy .text-gold-400,
 .theme-amethyst .text-rose-400,
-.theme-amethyst .text-rose-500,
 .theme-amethyst .text-gold-400 {
   color: var(--accent) !important;
-}
-
-.theme-earthy .text-zinc-400,
-.theme-amethyst .text-zinc-400 {
-  color: var(--text-sub) !important;
-}
-
-.theme-earthy .text-white,
-.theme-amethyst .text-white {
-  color: var(--text-main) !important;
 }
 
 /* ─── Base overrides ─────────────────────────────────────────── */

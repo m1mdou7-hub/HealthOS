@@ -470,39 +470,52 @@ export default function OrganizationWorkspace() {
         </div>
       </div>
 
-      {/* 11 SUBMODULES HORIZONTAL / GRID NAV TABS */}
-      <div className="bg-zinc-900/40 p-2 rounded-3xl border border-zinc-850/80 flex flex-wrap gap-1.5 shadow-md">
+      {/* 11 SUBMODULES HORIZONTAL NAV TABS (Clean Scrollable Bar) */}
+      <div className="bg-zinc-950/80 p-2 rounded-2xl border border-white/10 flex items-center gap-2 overflow-x-auto scrollbar-none shadow-xl">
         {[
-          { id: 'Overview', key: 'Overview', icon: Layers, badge: tOrg('badges.unified') },
-          { id: 'Clinics', key: 'Clinics', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} OK` },
-          { id: 'Departments', key: 'Departments', icon: Sliders, badge: `${departments.length} ${tOrg('badges.units')}` },
-          { id: 'Users', key: 'Users', icon: Users, badge: `${activeUsersCount} ${tOrg('badges.active')}` },
-          { id: 'Permissions', key: 'Permissions', icon: ShieldCheck, badge: tOrg('badges.matrix') },
-          { id: 'Teams', key: 'Teams', icon: UserCheck, badge: `${teams.length} ${tOrg('badges.teams')}` },
-          { id: 'Audits', key: 'Audits', icon: History, badge: tOrg('badges.pciLog') },
-          { id: 'Notifications', key: 'Notifications', icon: Bell, badge: `${announcements.length} ${tOrg('badges.alerts')}`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+          { id: 'Overview', key: 'Overview', icon: Layers, badge: 'موحد' },
+          { id: 'Clinics', key: 'Clinics', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} نشط` },
+          { id: 'Departments', key: 'Departments', icon: Sliders, badge: `${departments.length} أقسام` },
+          { id: 'Users', key: 'Users', icon: Users, badge: `${activeUsersCount} موظف` },
+          { id: 'Permissions', key: 'Permissions', icon: ShieldCheck, badge: 'مصفوفة' },
+          { id: 'Teams', key: 'Teams', icon: UserCheck, badge: `${teams.length} فرق` },
+          { id: 'Audits', key: 'Audits', icon: History, badge: 'سجل الأنشطة' },
+          { id: 'Notifications', key: 'Notifications', icon: Bell, badge: `${announcements.length} تنبيهات`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
           { id: 'Security', key: 'Security', icon: Lock, badge: `${securityScore}/100`, badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
-          { id: 'Settings', key: 'Settings', icon: Settings2, badge: tOrg('badges.branding') },
-          { id: 'Backup', key: 'Backup', icon: Database, badge: `${backups.length} ${tOrg('badges.archives')}`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' }
+          { id: 'Settings', key: 'Settings', icon: Settings2, badge: 'إعدادات' },
+          { id: 'Backup', key: 'Backup', icon: Database, badge: `${backups.length} الأرشيف`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' }
         ].map(item => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
-          const labelText = tOrg(`tabs.${item.key}`);
+          const labelsMap: Record<string, string> = {
+            Overview: '1. نظرة عامة',
+            Clinics: '2. العيادات والمراكز',
+            Departments: '3. الأقسام التخصصية',
+            Users: '4. الموظفون والطاقم',
+            Permissions: '5. الصلاحيات والتحكم',
+            Teams: '6. فرق العمل والوردية',
+            Audits: '7. سجل التدقيق والأنشطة',
+            Notifications: '8. التنبيهات العامة',
+            Security: '9. مركز أمان النظام',
+            Settings: '10. الهوية والعلامة',
+            Backup: '11. النسخ والاستعادة'
+          };
+          const labelText = labelsMap[item.key] || item.key;
           return (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id as any)}
-              className={`px-3.5 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all flex items-center gap-2 cursor-pointer border ${
                 isActive 
-                  ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-extrabold shadow-lg shadow-emerald-500/20 scale-[1.02]' 
-                  : 'bg-zinc-950/60 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
+                  ? 'bg-rose-600 text-white border-rose-500 shadow-lg shadow-rose-600/30 scale-[1.02]' 
+                  : 'bg-zinc-900/60 text-zinc-400 border-white/10 hover:bg-zinc-900 hover:text-white'
               }`}
             >
-              <Icon className="w-4 h-4 shrink-0" />
+              <Icon className="w-3.5 h-3.5 shrink-0 text-rose-300" />
               <span>{labelText}</span>
               {item.badge && (
-                <span className={`text-[10px] px-1.5 py-0.5 rounded font-sans font-bold border ${
-                  item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-900 text-zinc-400 border-zinc-800')
+                <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold border ${
+                  item.badgeColor || (isActive ? 'bg-zinc-950 text-white border-rose-400' : 'bg-zinc-950 text-zinc-400 border-white/10')
                 }`}>
                   {item.badge}
                 </span>
@@ -526,61 +539,61 @@ export default function OrganizationWorkspace() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
                 {/* Stat 1: Org ID */}
-                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-3xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
+                <div className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.orgId')}</span>
-                    <Building2 className="w-4 h-4 text-gold-400" />
+                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">معرف المنظمة</span>
+                    <Building2 className="w-4 h-4 text-rose-400" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-white font-mono">ORG-8820-X92</h4>
+                    <h4 className="text-base font-bold text-white font-mono">ORG-8820-X92</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 truncate font-sans">{workspaceName}</p>
                   </div>
-                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                    <div className="h-full bg-gold-500 rounded-full w-full shadow-gold-glow" />
+                  <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
+                    <div className="h-full bg-rose-500 rounded-full w-full" />
                   </div>
                 </div>
 
                 {/* Stat 2: Clinics & Rooms */}
-                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-3xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
+                <div className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.clinicsRooms')}</span>
-                    <Globe className="w-4 h-4 text-gold-400" />
+                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">العيادات والفروع</span>
+                    <Globe className="w-4 h-4 text-rose-400" />
                   </div>
                   <div>
-                    <h4 className="text-2xl font-bold text-white">{totalClinics} {tOrg('overview_stats.sitesLabel')}</h4>
-                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.totalSuitesActive', { count: 21 })}</p>
+                    <h4 className="text-xl font-bold text-white">{totalClinics} عيادات ومراكز نَشِطة</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">إجمالي العيادات النشطة: 21 غرف علاج</p>
                   </div>
-                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                    <div className="h-full bg-gold-500 rounded-full w-4/5 shadow-gold-glow" />
+                  <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
+                    <div className="h-full bg-rose-500 rounded-full w-4/5" />
                   </div>
                 </div>
 
                 {/* Stat 3: License Seats */}
-                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-3xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
+                <div className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.licenseSeats')}</span>
-                    <span className="text-xs text-gold-400 font-mono font-bold bg-gold-500/10 px-2 py-0.5 rounded border border-gold-500/20">{tOrg('overview_stats.freeCount', { count: 28 })}</span>
+                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">تراخيص المستخدِمين</span>
+                    <span className="text-xs text-rose-400 font-mono font-bold bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">28 ترخيص متاح</span>
                   </div>
                   <div>
-                    <h4 className="text-2xl font-bold text-white font-mono">122 / 150</h4>
-                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.subscriptionCapacity')}</p>
+                    <h4 className="text-xl font-bold text-white font-mono">122 / 150</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">سعة الاشتراك الكلية للمجموعة</p>
                   </div>
-                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
-                    <div className="h-full bg-gold-500 rounded-full w-[81.3%] shadow-gold-glow" />
+                  <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
+                    <div className="h-full bg-rose-500 rounded-full w-[81.3%]" />
                   </div>
                 </div>
 
                 {/* Stat 4: Secure Cloud Storage */}
-                <div className="p-5 bg-[#0d0d16]/40 border border-white/5 rounded-3xl flex flex-col justify-between space-y-3 shadow-lg hover:border-zinc-800 transition-all card-luxury">
+                <div className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">{tOrg('overview_stats.secureCloudStorage')}</span>
+                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">التخزين السحابي الآمن</span>
                     <span className="text-xs text-cyan-400 font-mono font-bold bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">24%</span>
                   </div>
                   <div>
-                    <h4 className="text-2xl font-bold text-white font-mono">1.2 / 5.0 TB</h4>
-                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.mainStlStorage')}</p>
+                    <h4 className="text-xl font-bold text-white font-mono">1.2 / 5.0 TB</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">تخزين فحص الأشعة وملفات STL بشكل أساسي</p>
                   </div>
-                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-850">
+                  <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
                     <div className="h-full bg-cyan-400 rounded-full w-[24%]" />
                   </div>
                 </div>

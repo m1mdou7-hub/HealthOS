@@ -463,29 +463,29 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             </button>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar py-1">
             {/* Internal Staff Phone & Intercom Widget */}
             <StaffPhoneIntercom />
 
             {/* Voice System Widget */}
             <VoiceSystem />
 
-            {/* Theme Selector (Crimson, Earthy Sage Image 1, Royal Amethyst Image 2) */}
+            {/* Theme Selector (Crimson, Earthy Sage, Royal Amethyst) */}
             <ThemeSelector />
 
             {/* Language Switcher */}
             <LanguageSwitcher />
 
             {/* Active Role Selector Dropdown */}
-            <div className="relative flex items-center gap-2 bg-[#0d0d16] border border-white/5 rounded-3xl px-3 py-1.5 hover:bg-zinc-850 transition-colors">
-              <UserCheck className="w-3.5 h-3.5 text-gold-400 shrink-0" />
+            <div className="relative flex items-center gap-1.5 bg-zinc-900/80 border border-white/10 rounded-2xl px-3 py-1.5 hover:bg-zinc-800 transition-colors shrink-0">
+              <UserCheck className="w-3.5 h-3.5 text-rose-400 shrink-0" />
               <select
                 value={activeRole}
                 onChange={(e) => {
                   const targetRole = e.target.value as UserRole;
                   setActiveRole(targetRole);
                 }}
-                className="bg-transparent border-none text-xs font-semibold text-zinc-300 outline-none pr-1.5 cursor-pointer font-sans"
+                className="bg-transparent border-none text-xs font-bold text-zinc-200 outline-none cursor-pointer font-sans"
               >
                 {[
                   'Super Admin',
@@ -509,18 +509,20 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <button
                 type="button"
                 onClick={() => setShowQuickInviteModal(true)}
-                className="magic-shimmer-btn px-3.5 py-1.5 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
+                className="magic-shimmer-btn px-3 py-1.5 text-white font-bold text-xs rounded-2xl flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 shrink-0"
                 title="إضافة وتحديد صلاحيات موظف جديد"
               >
                 <UserPlus className="w-3.5 h-3.5 text-rose-400" />
-                <span className="hidden md:inline">+ دعوة موظف</span>
+                <span className="hidden lg:inline">+ دعوة موظف</span>
               </button>
             )}
 
-            <span className="text-xs text-zinc-400 font-mono hidden xl:inline">
-              {tCommon('systemStatus')}: <span className="uupm-badge-glass text-[10px] uppercase">{tCommon('secure')}</span>
-            </span>
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50" />
+            <div className="hidden xl:flex items-center gap-2 border-r border-white/10 pr-3 mr-1 shrink-0">
+              <span className="text-xs text-zinc-400 font-mono">
+                {tCommon('systemStatus')}: <span className="uupm-badge-glass text-[10px] uppercase">{tCommon('secure')}</span>
+              </span>
+              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50" />
+            </div>
           </div>
         </header>
 
