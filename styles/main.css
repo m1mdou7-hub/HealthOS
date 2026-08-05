@@ -500,3 +500,53 @@ select:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(225,29,72,0.45);
 }
+
+/* ─── 21st.dev Magic UI & UI/UX Pro Max Design System Tokens ───── */
+
+/* Magic Shimmer Animated Button */
+@keyframes magic-shimmer {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+.magic-shimmer-btn {
+  background: linear-gradient(110deg, #09090e 45%, rgba(225,29,72,0.3) 55%, #09090e 65%);
+  background-size: 200% 100%;
+  animation: magic-shimmer 3s linear infinite;
+  border: 1px solid rgba(225, 29, 72, 0.3);
+  box-shadow: 0 0 20px rgba(225, 29, 72, 0.15);
+}
+
+.magic-shimmer-btn:hover {
+  border-color: rgba(225, 29, 72, 0.6);
+  box-shadow: 0 0 30px rgba(225, 29, 72, 0.3);
+}
+
+/* Magic Spotlight Card Glow */
+.magic-spotlight-card {
+  position: relative;
+  background: rgba(9, 9, 14, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.magic-spotlight-card:hover {
+  border-color: rgba(225, 29, 72, 0.4);
+  box-shadow: 0 10px 40px -10px rgba(225, 29, 72, 0.2);
+}
+
+/* UI/UX Pro Max Glass Badge */
+.uupm-badge-glass {
+  background: rgba(225, 29, 72, 0.1);
+  border: 1px solid rgba(225, 29, 72, 0.25);
+  color: #f43f5e;
+  font-family: monospace;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  box-shadow: 0 0 12px rgba(225, 29, 72, 0.15);
+}

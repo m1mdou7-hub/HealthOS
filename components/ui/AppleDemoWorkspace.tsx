@@ -7,6 +7,7 @@ import {
   Hand, Sliders, Activity, Sparkles, Layers, X, 
   ChevronUp, Move, RefreshCw, Volume2, Sun 
 } from 'lucide-react';
+import ThreeDemoWorkspace from '@/components/ui/ThreeDemoWorkspace';
 
 export default function AppleDemoWorkspace() {
   const t = useTranslations('AppleDemo');
@@ -337,8 +338,11 @@ export default function AppleDemoWorkspace() {
   }, [springTarget, damping, response]);
 
   return (
-    <div className="space-y-6 text-zinc-100 font-sans tracking-tight">
-      
+    <div className="max-w-7xl mx-auto space-y-6 select-none p-4 md:p-6 font-sans">
+
+      {/* ── 3D Interactive Lab Workspace ── */}
+      <ThreeDemoWorkspace />
+
       {/* Premium Minimalist Header (Emil Style: Pitch Black, White border, Muted typography) */}
       <div className="relative p-8 rounded-3xl border border-zinc-800/80 bg-black shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2 max-w-xl">

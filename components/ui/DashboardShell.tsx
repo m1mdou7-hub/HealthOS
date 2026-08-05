@@ -500,23 +500,23 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               </select>
             </div>
 
-            {/* Quick Invite Staff Button for Admins */}
+            {/* Quick Invite Staff Button for Admins (21st.dev Magic UI Shimmer Button) */}
             {(activeRole === 'Super Admin' || activeRole === 'Clinic Owner') && (
               <button
                 type="button"
                 onClick={() => setShowQuickInviteModal(true)}
-                className="px-3 py-1.5 bg-gold-500 hover:bg-gold-400 text-zinc-950 font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-md shadow-gold-sm cursor-pointer transition-all"
+                className="magic-shimmer-btn px-3.5 py-1.5 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
                 title="إضافة وتحديد صلاحيات موظف جديد"
               >
-                <UserPlus className="w-3.5 h-3.5" />
+                <UserPlus className="w-3.5 h-3.5 text-rose-400" />
                 <span className="hidden md:inline">+ دعوة موظف</span>
               </button>
             )}
 
             <span className="text-xs text-zinc-400 font-mono hidden xl:inline">
-              {tCommon('systemStatus')}: <span className="text-emerald-400 font-semibold">{tCommon('secure')}</span>
+              {tCommon('systemStatus')}: <span className="uupm-badge-glass text-[10px] uppercase">{tCommon('secure')}</span>
             </span>
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50" />
           </div>
         </header>
 
