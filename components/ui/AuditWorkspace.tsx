@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { useWorkspaceToast } from './Workspace/useWorkspaceToast';
 import { WorkspaceToast } from './Workspace/WorkspaceToast';
 import React, { useState, useMemo, useEffect } from 'react';
@@ -195,11 +196,11 @@ export default function AuditWorkspace() {
 
       {/* FILTER & CONTROL PANEL */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
-        <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-3xl border border-zinc-850">
+        <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-3xl border border-zinc-850 relative">
           {[
-            { id: 'logs', key: 'logs', icon: Activity },
-            { id: 'checklist', key: 'checklist', icon: CheckSquare },
-            { id: 'users', key: 'users', icon: Users }
+            { id: 'logs', key: 'logs', icon: Activity, color: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/10' },
+            { id: 'checklist', key: 'checklist', icon: CheckSquare, color: 'bg-blue-500/10 text-blue-400 border border-blue-500/10' },
+            { id: 'users', key: 'users', icon: Users, color: 'bg-zinc-800 text-zinc-300 border border-zinc-700' }
           ].map(t => {
             const Icon = t.icon;
             const isSel = activeTab === t.id;
@@ -208,14 +209,27 @@ export default function AuditWorkspace() {
               <button
                 key={t.id}
                 onClick={() => setActiveTab(t.id as any)}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
-                  isSel 
-                    ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-extrabold shadow-lg shadow-emerald-500/20 scale-[1.02]' 
-                    : 'bg-zinc-900/40 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
-                }`}
+                className="relative px-4 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer outline-none active:scale-97"
               >
-                <Icon className="w-4 h-4 shrink-0" />
-                <span>{labelText}</span>
+                {isSel && (
+                  <motion.div
+                    layoutId="activeAuditTabUnderlay"
+                    className="absolute inset-0 bg-white rounded-xl border border-zinc-200 z-0"
+                    transition={{ type: "spring", bounce: 0.15, duration: 0.35 }}
+                  />
+                )}
+                <span className={`relative z-10 flex items-center gap-2 ${
+                  isSel ? 'text-black font-bold' : 'text-zinc-400 hover:text-zinc-200'
+                }`}>
+                  <div className={`w-6 h-6 rounded-md flex items-center justify-center border transition-all ${
+                    isSel 
+                      ? 'bg-zinc-900 text-white border-zinc-800' 
+                      : t.color
+                  }`}>
+                    <Icon className="w-3.5 h-3.5 shrink-0" />
+                  </div>
+                  <span>{labelText}</span>
+                </span>
               </button>
             );
           })}

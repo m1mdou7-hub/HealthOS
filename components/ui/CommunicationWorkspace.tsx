@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { useWorkspaceToast } from './Workspace/useWorkspaceToast';
 import React, { useState, useMemo } from 'react';
 import {
@@ -211,12 +212,12 @@ export default function CommunicationWorkspace() {
 
       {/* TOP HEADER CONTROLS */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-4 rounded-3xl border border-zinc-900">
-        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 rounded-3xl border border-zinc-850 relative">
           {[
-            { id: 'threads', label: '1. Communication Inbox & Chat', icon: MessageSquare },
-            { id: 'calls', label: '2. Call & Video Consultation', icon: PhoneCall },
-            { id: 'broadcast', label: '3. Patient Broadcast Engine', icon: Megaphone },
-            { id: 'announcements', label: '4. Internal Announcements', icon: Inbox }
+            { id: 'threads', label: '1. Communication Inbox & Chat', icon: MessageSquare, color: 'bg-blue-500/10 text-blue-400 border border-blue-500/10' },
+            { id: 'calls', label: '2. Call & Video Consultation', icon: PhoneCall, color: 'bg-amber-500/10 text-amber-400 border border-amber-500/10' },
+            { id: 'broadcast', label: '3. Patient Broadcast Engine', icon: Megaphone, color: 'bg-purple-500/10 text-purple-400 border border-purple-500/10' },
+            { id: 'announcements', label: '4. Internal Announcements', icon: Inbox, color: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/10' }
           ].map(t => {
             const Icon = t.icon;
             const isSel = activeTab === t.id;
@@ -225,12 +226,27 @@ export default function CommunicationWorkspace() {
                 key={t.id}
                 id={`btn-tab-${t.id}`}
                 onClick={() => setActiveTab(t.id as any)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-2 cursor-pointer ${
-                  isSel ? 'bg-emerald-500 text-zinc-950' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-                }`}
+                className="relative px-4 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer outline-none active:scale-97"
               >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{t.label}</span>
+                {isSel && (
+                  <motion.div
+                    layoutId="activeCommTabUnderlay"
+                    className="absolute inset-0 bg-white rounded-xl border border-zinc-200 z-0"
+                    transition={{ type: "spring", bounce: 0.15, duration: 0.35 }}
+                  />
+                )}
+                <span className={`relative z-10 flex items-center gap-2.5 ${
+                  isSel ? 'text-black font-bold' : 'text-zinc-400 hover:text-zinc-200'
+                }`}>
+                  <div className={`w-6 h-6 rounded-md flex items-center justify-center border transition-all ${
+                    isSel 
+                      ? 'bg-zinc-900 text-white border-zinc-800' 
+                      : t.color
+                  }`}>
+                    <Icon className="w-3.5 h-3.5 shrink-0" />
+                  </div>
+                  <span>{t.label}</span>
+                </span>
               </button>
             );
           })}
