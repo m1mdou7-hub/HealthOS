@@ -25,12 +25,15 @@ export default function StickyPatientHeader({
   const allergiesCount = activePatient.allergies?.length || 0;
 
   return (
-    <div className="sticky top-0 z-40 bg-[#07070c]/70 backdrop-blur-xl border-b border-white/5 px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-3 shadow-lg shadow-black/45 relative overflow-hidden header-shimmer">
+    <div
+      className="sticky top-0 z-40 glass rounded-none border-0 border-b px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-3 header-shimmer"
+      style={{ borderBottom: '1px solid var(--border)' }}
+    >
       {/* Left Back Arrow and Core Demographics */}
       <div className="flex items-center gap-3 shrink-0">
         <button
           onClick={onBack}
-          className="p-1.5 rounded-lg bg-[#0d0d16] hover:bg-[#131320] border border-white/5 text-zinc-400 hover:text-white transition-all active:scale-95"
+          className="btn-ghost p-1.5 rounded-lg text-zinc-400 hover:text-white transition-all active:scale-95"
           title={t('backToDirectory')}
         >
           <ChevronLeft className="w-4 h-4 text-gold-400" />
@@ -38,13 +41,9 @@ export default function StickyPatientHeader({
         <div className="flex flex-col text-left">
           <div className="flex items-center gap-2">
             <h2 className="text-sm sm:text-base font-bold text-white tracking-tight font-display text-gold-gradient">{activePatient.name}</h2>
-            <span className="text-[9px] font-mono bg-[#0d0d16] border border-white/5 px-2 py-0.5 rounded text-zinc-400">
-              {activePatient.id}
-            </span>
-            <span className={`px-2 py-0.5 rounded-full text-[8px] font-mono uppercase font-semibold border hidden sm:inline-block ${
-              activePatient.status === 'Completed'
-                ? 'bg-gold-500/10 text-gold-400 border-gold-500/20 shadow-gold-glow'
-                : 'bg-purple-500/10 text-purple-400 border-purple-500/20'
+            <span className="kbd px-2 py-0.5">{activePatient.id}</span>
+            <span className={`badge hidden sm:inline-flex ${
+              activePatient.status === 'Completed' ? 'badge-success' : ''
             }`}>
               {activePatient.status}
             </span>
@@ -62,14 +61,14 @@ export default function StickyPatientHeader({
       {/* Middle Warning Badges (Alerts & Allergies) */}
       <div className="flex items-center gap-2 shrink-0">
         {alertsCount > 0 && (
-          <div className="px-2 py-1 rounded bg-red-950/20 border border-red-500/20 flex items-center gap-1 text-[10px] text-red-400 font-mono font-medium animate-pulse">
+          <div className="badge badge-danger px-2 py-1 text-[10px] animate-pulse">
             <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
             <span className="hidden md:inline">{t('medicalAlerts')}:</span>
             <span>{alertsCount}</span>
           </div>
         )}
         {allergiesCount > 0 && (
-          <div className="px-2 py-1 rounded bg-amber-950/25 border border-amber-500/20 flex items-center gap-1 text-[10px] text-amber-300 font-mono font-medium">
+          <div className="badge badge-warning px-2 py-1 text-[10px]">
             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
             <span className="hidden md:inline">{t('allergies')}:</span>
             <span>{activePatient.allergyStatus === 'No Known Allergies' ? t('none') : activePatient.allergyStatus}</span>

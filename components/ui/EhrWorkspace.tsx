@@ -35,6 +35,7 @@ import {
   HardDrive
 } from 'lucide-react';
 import Image from 'next/image';
+import { AmbientGlow } from '@/components/ui/design-system';
 
 // --- TYPE DEFINITIONS ---
 interface PatientInfo {
@@ -349,13 +350,15 @@ export default function EhrWorkspace() {
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 animate-fade-in">
+    <div className="space-y-6 text-[var(--text)] animate-fade-in">
 
       {/* ==================================================
           1. PATIENT HEADER (HIPAA Compliant)
           ================================================== */}
-      <div id="patient-header" className="p-6 rounded-3xl bg-zinc-900 border border-zinc-800 space-y-4 shadow-xl">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div id="patient-header" className="relative card-gradient p-6 space-y-4">
+        <AmbientGlow className="-top-24 -end-28 w-72 h-72 opacity-60" />
+        <AmbientGlow className="-bottom-32 -start-24 w-80 h-80 opacity-40 pulse-glow" />
+        <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           
           {/* Avatar and Name */}
           <div className="flex items-center gap-4">
@@ -370,8 +373,8 @@ export default function EhrWorkspace() {
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-3">
-                <h1 className="text-xl font-black text-white">{patient.name}</h1>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black font-mono bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                <h1 className="section-title text-xl">{patient.name}</h1>
+                <span className="badge badge-success font-mono">
                   {patient.id}
                 </span>
               </div>
@@ -389,7 +392,7 @@ export default function EhrWorkspace() {
           </div>
 
           {/* Core Metrics & Dates */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 bg-zinc-950/50 p-4 rounded-xl border border-zinc-800/80 text-xs shrink-0 font-mono">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 card-elevated p-4 text-xs shrink-0 font-mono">
             <div>
               <span className="text-zinc-500 block uppercase font-bold text-[10px]">Primary Dentist</span>
               <span className="text-zinc-200 font-semibold">{patient.primaryDentist}</span>
@@ -411,7 +414,7 @@ export default function EhrWorkspace() {
         </div>
 
         {/* Alerts and Allergies Section */}
-        <div className="flex flex-wrap gap-2.5 border-t border-zinc-800/80 pt-4">
+        <div className="relative flex flex-wrap gap-2.5 border-t border-zinc-800/80 pt-4">
           <div className="flex items-center gap-1.5 text-xs bg-rose-500/10 text-rose-400 border border-rose-500/20 px-3 py-1.5 rounded-xl font-bold">
             <AlertTriangle className="w-4 h-4" />
             <span className="uppercase font-mono text-[10px]">Allergies:</span>
@@ -438,18 +441,18 @@ export default function EhrWorkspace() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* Left Side Navigation (EHR Tab Groups) */}
-        <div className="lg:col-span-3 space-y-4 bg-zinc-900 border border-zinc-800 p-4 rounded-3xl shadow-xl">
+        <div className="lg:col-span-3 space-y-4 card-elevated p-4">
           <div className="px-2 pb-2 border-b border-zinc-800 flex items-center justify-between">
-            <span className="text-[11px] font-black tracking-wider uppercase text-zinc-400 font-mono flex items-center gap-1.5">
-              <Shield className="w-4 h-4 text-emerald-400" /> EHR Explorer Panel
+            <span className="text-[11px] font-black tracking-wider uppercase text-[var(--text-muted)] font-mono flex items-center gap-1.5">
+              <Shield className="w-4 h-4 text-[var(--accent)]" /> EHR Explorer Panel
             </span>
-            <span className="text-[9px] font-mono text-zinc-500 font-bold">v3.5.0-PRO</span>
+            <span className="text-[9px] font-mono text-[var(--text-muted)] font-bold">v3.5.0-PRO</span>
           </div>
 
           <div className="space-y-4">
             {tabsConfig.map((group) => (
               <div key={group.group} className="space-y-1">
-                <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest px-2 font-mono">{group.group}</h4>
+                <h4 className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest px-2 font-mono">{group.group}</h4>
                 <div className="space-y-0.5">
                   {group.items.map((item) => {
                     const IconComponent = item.icon;
@@ -458,17 +461,15 @@ export default function EhrWorkspace() {
                       <button
                         key={item.name}
                         onClick={() => setActiveTab(item.name)}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold tracking-tight transition-all cursor-pointer ${
-                          isActive 
-                            ? 'bg-emerald-500 text-zinc-950 font-bold shadow-lg shadow-emerald-500/10' 
-                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800/60'
+                        className={`nav-item justify-between w-full text-xs ${
+                          isActive ? 'active font-bold' : ''
                         }`}
                       >
                         <div className="flex items-center gap-2">
-                          <IconComponent className={`w-4 h-4 ${isActive ? 'text-zinc-950' : 'text-zinc-500'}`} />
+                          <IconComponent className={`w-4 h-4 ${isActive ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`} />
                           <span>{item.name}</span>
                         </div>
-                        <ChevronRight className={`w-3.5 h-3.5 opacity-50 ${isActive ? 'text-zinc-950' : 'text-zinc-600'}`} />
+                        <ChevronRight className={`w-3.5 h-3.5 ${isActive ? 'text-[var(--accent)] opacity-80' : 'text-[var(--text-muted)] opacity-50'}`} />
                       </button>
                     );
                   })}
@@ -479,16 +480,16 @@ export default function EhrWorkspace() {
         </div>
 
         {/* Right Side Content Panel */}
-        <div className="lg:col-span-9 bg-zinc-900 border border-zinc-800 p-6 rounded-3xl shadow-xl min-h-[640px] flex flex-col justify-between">
-          
+        <div className="lg:col-span-9 card-gradient p-6 min-h-[640px] flex flex-col justify-between">
+
           {/* Header Title for Current Tab */}
           <div className="flex items-center justify-between border-b border-zinc-800 pb-4 mb-5">
             <div>
-              <h3 className="text-base font-black text-white tracking-tight flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              <h3 className="section-title text-base flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: 'var(--accent)', boxShadow: '0 0 12px var(--accent-glow)' }} />
                 {activeTab}
               </h3>
-              <p className="text-xs text-zinc-500 mt-0.5">Clinical dashboard data segment of the electronic health chart.</p>
+              <p className="text-xs text-[var(--text-muted)] mt-0.5">Clinical dashboard data segment of the electronic health chart.</p>
             </div>
             <div className="flex items-center gap-2 text-xs font-mono">
               <span className="p-1.5 rounded-lg bg-zinc-950 border border-zinc-850 text-zinc-400 flex items-center gap-1.5">
@@ -496,7 +497,7 @@ export default function EhrWorkspace() {
               </span>
               <button 
                 onClick={() => window.print()} 
-                className="p-1.5 rounded-lg bg-zinc-950 border border-zinc-850 hover:bg-zinc-800 text-zinc-300 transition-colors cursor-pointer"
+                className="btn-secondary p-2 cursor-pointer"
                 title="Print EHR Segment"
               >
                 <Printer className="w-4 h-4" />
@@ -510,12 +511,12 @@ export default function EhrWorkspace() {
             {activeTab === 'Visual Profile' && (
               <div className="space-y-6 animate-fade-in relative">
                 {/* Background Red/Orange Glow */}
-                <div className="absolute top-12 left-1/2 -translate-x-1/2 w-80 h-48 bg-rose-600/10 rounded-full blur-[80px] pointer-events-none z-0" />
+                <div className="absolute top-12 left-1/2 -translate-x-1/2 w-80 h-48 rounded-full blur-[100px] pointer-events-none z-0 pulse-glow" style={{ background: 'var(--accent-glow2)' }} />
                 
                 {/* 1. Header controls (hexagon, sliders, bell) */}
-                <div className="relative z-10 flex items-center justify-between p-4 bg-zinc-950/60 border border-zinc-900 rounded-3xl backdrop-blur-xl">
+                <div className="relative z-10 card-gradient flex items-center justify-between p-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center font-bold">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)' }}>
                       {/* Hexagon shape */}
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
@@ -528,10 +529,10 @@ export default function EhrWorkspace() {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400">
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)' }}>
                       <Sliders className="w-4 h-4" />
                     </div>
-                    <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 relative">
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center relative" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)' }}>
                       <span className="w-2 h-2 rounded-full bg-red-500 absolute top-1 right-1 border border-zinc-950" />
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" />
@@ -543,7 +544,7 @@ export default function EhrWorkspace() {
                 {/* 2. Accordions */}
                 <div className="relative z-10 space-y-3">
                   {/* Family History */}
-                  <div className="bg-zinc-950/60 border border-zinc-900 rounded-3xl overflow-hidden backdrop-blur-xl">
+                  <div className="card-elevated overflow-hidden">
                     <button 
                       onClick={() => setFamilyHistoryOpen(!familyHistoryOpen)}
                       className="w-full flex items-center justify-between p-5 text-sm font-bold text-white hover:bg-zinc-900/40 transition-colors"
@@ -566,7 +567,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Social History */}
-                  <div className="bg-zinc-950/60 border border-zinc-900 rounded-3xl overflow-hidden backdrop-blur-xl">
+                  <div className="card-elevated overflow-hidden">
                     <button 
                       onClick={() => setSocialHistoryOpen(!socialHistoryOpen)}
                       className="w-full flex items-center justify-between p-5 text-sm font-bold text-white hover:bg-zinc-900/40 transition-colors"
@@ -590,7 +591,7 @@ export default function EhrWorkspace() {
                 </div>
 
                 {/* 3. Patient Profile Card */}
-                <div className="relative z-10 bg-zinc-950/70 border border-zinc-900 rounded-3xl p-6 backdrop-blur-xl space-y-6">
+                <div className="relative z-10 card-elevated p-6 space-y-6">
                   <div className="flex items-center justify-between border-b border-zinc-900 pb-4">
                     <div>
                       <h4 className="text-sm font-bold text-white tracking-tight">Patient Profile</h4>
@@ -598,7 +599,7 @@ export default function EhrWorkspace() {
                     </div>
                     <button 
                       onClick={() => setProfileCardOpen(!profileCardOpen)}
-                      className="p-1.5 rounded-lg hover:bg-zinc-900 text-zinc-400 transition-colors"
+                      className="btn-ghost p-1.5 cursor-pointer"
                     >
                       <svg 
                         width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
@@ -634,7 +635,7 @@ export default function EhrWorkspace() {
                           <span className="text-white font-bold text-sm">63.6 kg</span>
                         </div>
                         {/* Custom Dash/Dot SVG sparkline */}
-                        <div className="py-2.5 bg-zinc-950/60 border border-zinc-900 rounded-xl px-4 flex items-center">
+                        <div className="py-2.5 card-elevated px-4 flex items-center">
                           <svg className="w-full h-4 text-white/50" viewBox="0 0 400 20" preserveAspectRatio="none">
                             <line 
                               x1="10" y1="10" x2="390" y2="10" 
@@ -653,14 +654,14 @@ export default function EhrWorkspace() {
                           <span className="text-[10px] font-bold text-zinc-500 block uppercase tracking-wider font-mono">Biological Age</span>
                           <div className="flex items-center gap-3 mt-1">
                             <span className="text-[11px] font-mono text-zinc-500">ID: SV-7294</span>
-                            <div className="flex items-center gap-1.5 px-2 py-0.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded font-bold text-[9px] uppercase tracking-wider">
-                              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                            <div className="flex items-center gap-1.5 badge badge-danger">
+                              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
                               Critical
                             </div>
                           </div>
                         </div>
 
-                        <div className="flex flex-col gap-2 border border-zinc-900 bg-zinc-950/40 p-3 rounded-2xl">
+                        <div className="flex flex-col gap-2 card-elevated p-3">
                           <div className="flex items-center justify-between gap-4 text-[11px]">
                             <div className="flex items-center gap-1.5">
                               <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
@@ -688,13 +689,13 @@ export default function EhrWorkspace() {
                 {/* 4. Clinical Folder Sleeves (Tomography & Radiography) */}
                 <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                   {/* Tomography Folder Sleeve */}
-                  <div className="p-5 rounded-3xl bg-zinc-950/60 border border-zinc-900 relative overflow-hidden group min-h-[240px] flex flex-col justify-between hover:bg-zinc-900/30 transition-all cursor-pointer">
+                  <div className="card-gradient p-5 group min-h-[240px] flex flex-col justify-between card-hover cursor-pointer">
                     <div className="flex justify-between items-start">
                       <div>
                         <h5 className="font-bold text-white text-base">Tomography</h5>
                         <p className="text-xs text-zinc-500 font-mono mt-0.5">Jan 12, 2020</p>
                       </div>
-                      <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white transition-colors">
+                      <div className="w-8 h-8 rounded-xl flex items-center justify-center group-hover:text-white transition-colors" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)' }}>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                           <path d="M7 17L17 7M17 7H7M17 7V17" />
                         </svg>
@@ -720,13 +721,13 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Radiography Folder Sleeve */}
-                  <div className="p-5 rounded-3xl bg-zinc-950/60 border border-zinc-900 relative overflow-hidden group min-h-[240px] flex flex-col justify-between hover:bg-zinc-900/30 transition-all cursor-pointer">
+                  <div className="card-gradient p-5 group min-h-[240px] flex flex-col justify-between card-hover cursor-pointer">
                     <div className="flex justify-between items-start">
                       <div>
                         <h5 className="font-bold text-white text-base">Radiography</h5>
                         <p className="text-xs text-zinc-500 font-mono mt-0.5">Feb 14, 2022</p>
                       </div>
-                      <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white transition-colors">
+                      <div className="w-8 h-8 rounded-xl flex items-center justify-center group-hover:text-white transition-colors" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)' }}>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                           <path d="M7 17L17 7M17 7H7M17 7V17" />
                         </svg>
@@ -762,7 +763,7 @@ export default function EhrWorkspace() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                   
                   {/* Summary Card */}
-                  <div className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850/80 space-y-2">
+                  <div className="p-4 card-elevated space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 font-mono block">Patient Summary</span>
                     <p className="text-xs text-zinc-300 leading-normal">
                       Amelia is a 34 y/o healthy female patient currently in the restorative phase of an aesthetic implant reconstruction. 
@@ -771,7 +772,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Medical Conditions */}
-                  <div className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850/80 space-y-2">
+                  <div className="p-4 card-elevated space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 font-mono block">Medical Conditions</span>
                     <ul className="text-xs space-y-1.5 text-zinc-300">
                       <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-rose-500" /> Mild Mitral Valve Prolapse</li>
@@ -781,7 +782,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Medications & Allergies */}
-                  <div className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850/80 space-y-2">
+                  <div className="p-4 card-elevated space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 font-mono block">Medications & Allergies</span>
                     <div className="space-y-2">
                       <div>
@@ -796,7 +797,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Treatment Progress */}
-                  <div className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850/80 space-y-2">
+                  <div className="p-4 card-elevated space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 font-mono block">Treatment Progress</span>
                     <div className="space-y-1.5">
                       <div className="flex justify-between text-xs font-mono font-bold">
@@ -811,7 +812,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Upcoming Appointment */}
-                  <div className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850/80 space-y-2">
+                  <div className="p-4 card-elevated space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 font-mono block">Upcoming Appointment</span>
                     <div className="space-y-1">
                       <p className="text-xs text-zinc-200 font-bold">July 20, 2026 at 09:00 AM</p>
@@ -823,7 +824,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Financial Summary */}
-                  <div className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850/80 space-y-2">
+                  <div className="p-4 card-elevated space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 font-mono block">Financial Summary</span>
                     <div className="space-y-1 text-xs font-mono">
                       <div className="flex justify-between text-zinc-400"><span>Estimated Cost:</span> <span>$8,450.00</span></div>
@@ -835,7 +836,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Outstanding Lab Cases */}
-                  <div className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850/80 space-y-2 md:col-span-2">
+                  <div className="p-4 card-elevated space-y-2 md:col-span-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 font-mono block">Outstanding Lab Cases</span>
                     <div className="flex items-center justify-between text-xs bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-800">
                       <div>
@@ -849,7 +850,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Recent Images */}
-                  <div className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850/80 space-y-2">
+                  <div className="p-4 card-elevated space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 font-mono block">Recent Images</span>
                     <div className="flex gap-2">
                       <div className="w-12 h-12 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center relative overflow-hidden text-[9px] font-bold text-zinc-500" title="CBCT Slice">CBCT</div>
@@ -870,7 +871,7 @@ export default function EhrWorkspace() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   
                   <div className="space-y-4">
-                    <div className="bg-zinc-950/40 border border-zinc-850 p-4 rounded-xl space-y-2">
+                    <div className="p-4 card-elevated space-y-2">
                       <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Systemic & Medical Conditions</h4>
                       <div className="space-y-2 text-xs">
                         <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 flex justify-between">
@@ -887,7 +888,7 @@ export default function EhrWorkspace() {
                       </div>
                     </div>
 
-                    <div className="bg-zinc-950/40 border border-zinc-850 p-4 rounded-xl space-y-2">
+                    <div className="p-4 card-elevated space-y-2">
                       <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Surgeries & Hospitalizations</h4>
                       <ul className="text-xs space-y-2 text-zinc-400">
                         <li className="flex items-start gap-2">
@@ -909,7 +910,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="bg-zinc-950/40 border border-zinc-850 p-4 rounded-xl space-y-2">
+                    <div className="p-4 card-elevated space-y-2">
                       <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Social & Family Medical Background</h4>
                       <div className="grid grid-cols-2 gap-3 text-xs">
                         <div className="p-2.5 rounded bg-zinc-900/60 border border-zinc-850">
@@ -928,7 +929,7 @@ export default function EhrWorkspace() {
                       </div>
                     </div>
 
-                    <div className="bg-zinc-950/40 border border-zinc-850 p-4 rounded-xl space-y-2">
+                    <div className="p-4 card-elevated space-y-2">
                       <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Clinical Risk Assessment</h4>
                       <div className="space-y-2.5 text-xs font-mono">
                         <div>
@@ -973,7 +974,7 @@ export default function EhrWorkspace() {
               <div className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
                   
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Surgical & Restorative History</h4>
                     <ul className="space-y-2 text-zinc-300">
                       <li className="flex justify-between items-center bg-zinc-900 p-2 rounded border border-zinc-850">
@@ -991,7 +992,7 @@ export default function EhrWorkspace() {
                     </ul>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Endodontic & Extraction History</h4>
                     <ul className="space-y-2 text-zinc-300">
                       <li className="flex justify-between items-center bg-zinc-900 p-2 rounded border border-zinc-850">
@@ -1009,7 +1010,7 @@ export default function EhrWorkspace() {
                     </ul>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Orthodontic Profile</h4>
                     <div className="p-3 rounded bg-zinc-900 border border-zinc-850 space-y-1.5 text-zinc-300">
                       <p className="font-bold text-white">Invisalign Treatment (2015):</p>
@@ -1017,7 +1018,7 @@ export default function EhrWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Periodontal History</h4>
                     <div className="p-3 rounded bg-zinc-900 border border-zinc-850 space-y-1.5 text-zinc-300 font-mono">
                       <div className="flex justify-between"><span>Average Pocket Depths:</span> <span className="text-emerald-400">2 - 3 mm</span></div>
@@ -1038,7 +1039,7 @@ export default function EhrWorkspace() {
               <div className="space-y-6">
                 
                 {/* SOAP Note Entry Form */}
-                <form onSubmit={handleAddSoapNote} className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850 space-y-4">
+                <form onSubmit={handleAddSoapNote} className="p-4 card-gradient space-y-4">
                   <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
                     <span className="text-xs font-black text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
                       <Plus className="w-4 h-4 text-emerald-400" /> Compile New Clinical SOAP Entry
@@ -1101,7 +1102,7 @@ export default function EhrWorkspace() {
                   <h4 className="text-xs font-black text-zinc-400 uppercase tracking-wider font-mono">Historical Clinical SOAP Timeline</h4>
                   <div className="space-y-3">
                     {soapNotes.map((note) => (
-                      <div key={note.id} className="p-4 rounded-xl bg-zinc-950/20 border border-zinc-850 space-y-2.5 text-xs">
+                      <div key={note.id} className="p-4 card-elevated space-y-2.5 text-xs">
                         <div className="flex justify-between items-center border-b border-zinc-850/60 pb-1.5 font-mono">
                           <span className="font-bold text-zinc-300">{note.clinician}</span>
                           <span className="text-zinc-500 text-[11px] font-bold">{note.date} • {note.id}</span>
@@ -1206,7 +1207,7 @@ export default function EhrWorkspace() {
                 <div className="space-y-4">
                   
                   {/* Phase 1: Surgical */}
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <div className="flex justify-between items-center border-b border-zinc-850 pb-2">
                       <div className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
@@ -1237,7 +1238,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Phase 2: Restorative */}
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <div className="flex justify-between items-center border-b border-zinc-850 pb-2">
                       <div className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
@@ -1269,7 +1270,7 @@ export default function EhrWorkspace() {
             {activeTab === 'Dental Chart' && (
               <div className="space-y-6">
                 
-                <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3 text-xs">
+                <div className="p-4 card-elevated space-y-3 text-xs">
                   <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Clinical Restoration Toggle Map</h4>
                   <p className="text-zinc-500">Click a tooth in the rows below to inspect its status and map a physical restoration condition.</p>
                   
@@ -1375,7 +1376,7 @@ export default function EhrWorkspace() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
                   
                   {/* Panoramic Scan */}
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Panoramic Radiographic Image</h4>
                     <div className="relative h-44 bg-zinc-950 border border-zinc-800 rounded flex flex-col items-center justify-center text-center p-4">
                       {/* Panoramic SVG visualization representation */}
@@ -1397,7 +1398,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Smile Aesthetics Photos */}
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">High-Definition Smile / Aesthetic Photos</h4>
                     <div className="relative h-44 bg-zinc-950 border border-zinc-800 rounded flex flex-col items-center justify-center text-center p-4">
                       <svg className="w-20 h-20 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1410,14 +1411,14 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Periapical & Bitewing Scans */}
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Periapical Zoom Scan (#11 Osteotomy Site)</h4>
                     <div className="h-32 bg-zinc-950 border border-zinc-800 rounded flex items-center justify-center text-[11px] text-zinc-500 font-mono">
                       [High-Contrast Bone Density PA Radiograph • 12.4mm Ridge Height]
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Bitewing Decay Scan (Left & Right Posterior Quadrants)</h4>
                     <div className="h-32 bg-zinc-950 border border-zinc-800 rounded flex items-center justify-center text-[11px] text-zinc-500 font-mono">
                       [Posterior Molar BW Scans • Verified Class I Composite #14 Dentin caries]
@@ -1456,7 +1457,7 @@ export default function EhrWorkspace() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
                   
                   {/* Viewport viewport */}
-                  <div className="lg:col-span-8 p-4 bg-zinc-950 border border-zinc-850 rounded-xl space-y-4">
+                  <div className="lg:col-span-8 p-4 card-elevated space-y-4">
                     <div className="relative h-64 bg-zinc-950 rounded flex items-center justify-center border border-zinc-900 overflow-hidden">
                       <div className="absolute inset-4 border border-emerald-500/10 rounded flex items-center justify-center">
                         {/* Interactive crosshair mockup representing axial scan section */}
@@ -1492,7 +1493,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Bone stats */}
-                  <div className="lg:col-span-4 p-4 bg-zinc-950/40 border border-zinc-850 rounded-xl space-y-4 text-xs font-mono">
+                  <div className="lg:col-span-4 p-4 card-elevated space-y-4 text-xs font-mono">
                     <h5 className="text-[10px] font-black text-white uppercase tracking-wider">Site #11 Bone Density Metric</h5>
                     
                     <div className="space-y-3.5">
@@ -1525,7 +1526,7 @@ export default function EhrWorkspace() {
                 ================================================== */}
             {activeTab === 'Intraoral Scans' && (
               <div className="space-y-4">
-                <div className="p-4 bg-zinc-950/40 border border-zinc-850 rounded-xl space-y-3 text-xs">
+                <div className="p-4 card-elevated space-y-3 text-xs">
                   <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">3Shape TRIOS Intraoral Scanning Telemetry</h4>
                   <p className="text-zinc-500">Live 3D telemetry of maxilla and mandible arches. High-fidelity optical capture has been mapped into physical STL models.</p>
                   
@@ -1584,7 +1585,7 @@ export default function EhrWorkspace() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
                   
                   {/* STL Mesh Viewport */}
-                  <div className="lg:col-span-8 p-4 bg-zinc-950 border border-zinc-850 rounded-xl space-y-4">
+                  <div className="lg:col-span-8 p-4 card-elevated space-y-4">
                     <div className="relative h-64 bg-zinc-950 rounded border border-zinc-900 overflow-hidden flex items-center justify-center">
                       <div className="absolute inset-4 flex items-center justify-center">
                         
@@ -1611,7 +1612,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Mesh metadata */}
-                  <div className="lg:col-span-4 p-4 bg-zinc-950/40 border border-zinc-850 rounded-xl space-y-4 text-xs font-mono">
+                  <div className="lg:col-span-4 p-4 card-elevated space-y-4 text-xs font-mono">
                     <h5 className="text-[10px] font-black text-white uppercase tracking-wider">CAD/CAM Mesh Properties</h5>
                     
                     <div className="space-y-3">
@@ -1645,7 +1646,7 @@ export default function EhrWorkspace() {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-850/80 space-y-3 text-xs">
+                  <div className="p-4 card-elevated space-y-3 text-xs">
                     <div className="flex justify-between border-b border-zinc-850 pb-2">
                       <div>
                         <span className="font-bold text-white block text-sm">#11 Zirconia Surgical Guide Guide</span>
@@ -1664,7 +1665,7 @@ export default function EhrWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-850/80 space-y-3 text-xs">
+                  <div className="p-4 card-elevated space-y-3 text-xs">
                     <div className="flex justify-between border-b border-zinc-850 pb-2">
                       <div>
                         <span className="font-bold text-white block text-sm">#11 Layered Zirconia Screw-Retained Crown</span>
@@ -1699,7 +1700,7 @@ export default function EhrWorkspace() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs font-mono">
                   
                   {/* File List */}
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-3">
+                  <div className="p-4 card-elevated space-y-3">
                     <h4 className="text-xs font-black text-white uppercase tracking-wider font-mono">Document Vault Archive</h4>
                     
                     <div className="space-y-2">
@@ -1739,7 +1740,7 @@ export default function EhrWorkspace() {
                   </div>
 
                   {/* Document preview mockup */}
-                  <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 flex flex-col justify-between">
+                  <div className="p-4 card-elevated flex flex-col justify-between">
                     <div>
                       <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 block">PDF Preview Viewport</span>
                       <p className="text-[11px] text-zinc-400 leading-normal mt-2">
@@ -1764,7 +1765,7 @@ export default function EhrWorkspace() {
               <div className="space-y-6">
                 
                 {/* New Rx Form */}
-                <form onSubmit={handleAddPrescription} className="p-4 rounded-xl bg-zinc-950/50 border border-zinc-850 space-y-3">
+                <form onSubmit={handleAddPrescription} className="p-4 card-gradient space-y-3">
                   <div className="flex items-center justify-between border-b border-zinc-850 pb-2">
                     <span className="text-xs font-black text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
                       <Plus className="w-4 h-4 text-emerald-400" /> Write New Prescription (Rx)
@@ -1841,7 +1842,7 @@ export default function EhrWorkspace() {
                 </div>
 
                 <div className="space-y-3 text-xs font-mono">
-                  <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-850 flex items-center justify-between gap-4">
+                  <div className="p-4 card-elevated flex items-center justify-between gap-4">
                     <div>
                       <span className="font-bold text-white block">Surgical Implant Placement Informed Consent</span>
                       <p className="text-[11px] text-zinc-400 mt-0.5">Comprehensive disclosure of localized nerve blocks, osteotomy drill risks, and prosthetic expectations.</p>
@@ -1852,7 +1853,7 @@ export default function EhrWorkspace() {
                     </span>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-850 flex items-center justify-between gap-4">
+                  <div className="p-4 card-elevated flex items-center justify-between gap-4">
                     <div>
                       <span className="font-bold text-white block">Nitrous Oxide & Local Anesthesia Authorization</span>
                       <p className="text-[11px] text-zinc-400 mt-0.5">Authorization for localized articulation epinephrine 1:100,000 block injection during drilling.</p>
@@ -1978,7 +1979,7 @@ export default function EhrWorkspace() {
               <div className="space-y-5">
                 
                 {/* Copilot Clinical Workspace */}
-                <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-4">
+                <div className="p-4 card-elevated space-y-4">
                   <div className="flex items-center justify-between border-b border-zinc-800 pb-2.5">
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-5 h-5 text-emerald-400" />

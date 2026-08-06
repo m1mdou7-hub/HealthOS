@@ -6,6 +6,7 @@ import {
   LayoutDashboard, Calendar, Shield, Users, RefreshCw, 
   Bell, Activity, UserCheck, Search, HelpCircle, Sparkles
 } from 'lucide-react';
+import { AmbientGlow } from '@/components/ui/design-system';
 
 // Subcomponents
 const EnterpriseScheduler = lazy(() => import('./EnterpriseScheduler'));
@@ -89,33 +90,33 @@ export default function OperationsWorkspace({
   ] as const;
 
   return (
-    <div className="space-y-6 max-w-[1600px] mx-auto text-zinc-100 pb-12 animate-fade-in">
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-12 animate-fade-in" style={{ color: 'var(--text)' }}>
       
       {/* Platform Title Banner */}
-      <div className="p-6 rounded-2xl border border-zinc-900 bg-zinc-900/10 flex flex-col md:flex-row md:items-center justify-between gap-6 text-left">
-        <div className="space-y-1.5">
+      <div className="p-6 card-gradient flex flex-col md:flex-row md:items-center justify-between gap-6 text-left relative overflow-hidden">
+        <div className="relative space-y-1.5">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 uppercase tracking-widest animate-pulse">
+            <span className="badge badge-success uppercase tracking-widest animate-pulse">
               HealthOS Enterprise Node
             </span>
-            <span className="text-zinc-500">•</span>
-            <span className="text-xs text-zinc-400 font-mono">Clinical Operations Platform (Sprint 4 Module)</span>
+            <span style={{ color: 'var(--text-muted)' }}>•</span>
+            <span className="text-xs font-mono" style={{ color: 'var(--text-sub)' }}>Clinical Operations Platform (Sprint 4 Module)</span>
           </div>
-          <h2 className="text-xl md:text-2xl font-black text-white tracking-tight">
+          <h2 className="section-title text-xl md:text-2xl">
             Multi-Doctor Prosthodontic Control Console
           </h2>
-          <p className="text-zinc-400 text-xs">
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
             Integrated live data bus bridging operatory suites, surgeon schedules, waiting lists, and active EHR session histories.
           </p>
         </div>
-        <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded-xl text-xs font-mono text-purple-300 flex items-center gap-2 self-start md:self-auto">
-          <Sparkles className="w-4 h-4 text-purple-400 shrink-0" />
+        <div className="p-3 card-elevated rounded-xl text-xs font-mono flex items-center gap-2 self-start md:self-auto" style={{ color: 'var(--accent)' }}>
+          <Sparkles className="w-4 h-4 shrink-0" style={{ color: 'var(--accent)' }} />
           <span>Real-time Clinical Sync Engine active</span>
         </div>
       </div>
 
       {/* Horizontal Nav Bar */}
-      <div className="border border-zinc-900 bg-zinc-950 p-2 rounded-2xl flex flex-wrap items-center gap-1">
+      <div className="card-elevated p-2 rounded-2xl flex flex-wrap items-center gap-1">
         {tabs.map((t) => {
           const isActive = activeTab === t.id;
           const Icon = t.icon;
@@ -123,11 +124,7 @@ export default function OperationsWorkspace({
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all ${
-                isActive 
-                  ? 'bg-purple-600 text-white font-bold shadow-lg shadow-purple-600/20' 
-                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60'
-              }`}
+              className={`nav-item px-4 py-2.5 text-xs font-semibold ${isActive ? 'active font-bold' : ''}`}
             >
               <Icon className="w-4 h-4 shrink-0" />
               <span>{t.name}</span>

@@ -59,44 +59,45 @@ export default function NotificationCenter({
   };
 
   return (
-    <div id="notification-center" className="p-6 bg-zinc-900/30 border border-zinc-900 rounded-2xl space-y-6">
+    <div id="notification-center" className="p-6 card-elevated rounded-2xl space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-bold font-mono text-white flex items-center gap-2">
-              <Bell className="w-4 h-4 text-purple-400" /> Clinic Dispatch Notification Hub
+            <h3 className="text-sm font-bold font-mono flex items-center gap-2" style={{ color: 'var(--text)' }}>
+              <Bell className="w-4 h-4" style={{ color: 'var(--accent)' }} /> Clinic Dispatch Notification Hub
             </h3>
             {unreadCount > 0 && (
-              <span className="bg-rose-500 text-white font-mono font-black text-[10px] px-2 py-0.5 rounded-full animate-bounce">
+              <span className="badge badge-danger font-mono font-black text-[10px] px-2 py-0.5 rounded-full animate-bounce">
                 {unreadCount} Unread
               </span>
             )}
           </div>
-          <p className="text-zinc-400 text-xs mt-1">
+          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
             Stay aligned with system updates, AI margin warnings, medical alert conditions, and prosthetic milling cycles.
           </p>
         </div>
 
         <button
           onClick={handleMarkAllRead}
-          className="px-3 py-1.5 rounded-lg bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800 text-xs font-semibold flex items-center gap-1.5 transition-all self-start md:self-auto"
+          className="btn-secondary px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all self-start md:self-auto"
         >
           <CheckSquare className="w-3.5 h-3.5" /> Mark All as Read
         </button>
       </div>
 
       {/* Filter Toolbar */}
-      <div className="flex flex-wrap items-center gap-3 bg-zinc-950 p-3 rounded-xl border border-zinc-900/80">
+      <div className="flex flex-wrap items-center gap-3 p-3 rounded-xl card-gradient">
         <div className="flex items-center gap-1.5">
-          <Filter className="w-3.5 h-3.5 text-zinc-500" />
-          <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold">Filters:</span>
+          <Filter className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+          <span className="text-[10px] font-mono uppercase font-bold" style={{ color: 'var(--text-muted)' }}>Filters:</span>
         </div>
 
         {/* Category Filter */}
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="bg-zinc-900 text-zinc-300 text-xs py-1 px-2.5 rounded-lg border border-zinc-850 font-mono"
+          className="text-xs py-1 px-2.5 rounded-lg border font-mono"
+          style={{ background: 'var(--surface-2)', color: 'var(--text-sub)', borderColor: 'var(--border)' }}
         >
           <option value="All">All Categories</option>
           <option value="Appointments">Appointments</option>
@@ -111,7 +112,8 @@ export default function NotificationCenter({
         <select
           value={selectedPriority}
           onChange={(e) => setSelectedPriority(e.target.value)}
-          className="bg-zinc-900 text-zinc-300 text-xs py-1 px-2.5 rounded-lg border border-zinc-850 font-mono"
+          className="text-xs py-1 px-2.5 rounded-lg border font-mono"
+          style={{ background: 'var(--surface-2)', color: 'var(--text-sub)', borderColor: 'var(--border)' }}
         >
           <option value="All">All Priorities</option>
           <option value="High">High Urgency</option>
@@ -129,28 +131,28 @@ export default function NotificationCenter({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, x: -50 }}
-              className={`p-4 rounded-xl border text-left flex items-start gap-3.5 transition-all ${
+              className={`p-4 rounded-xl border text-left flex items-start gap-3.5 transition-all card-hover ${
                 notif.unread 
-                  ? 'bg-zinc-900/60 border-purple-500/20 shadow-sm shadow-purple-500/[0.02]' 
-                  : 'bg-zinc-950/40 border-zinc-900 text-zinc-400'
+                  ? 'card-gradient' 
+                  : 'card-elevated'
               }`}
             >
-              <div className={`p-2 rounded-lg bg-zinc-900 border border-zinc-850 shrink-0`}>
+              <div className="p-2 rounded-lg border shrink-0" style={{ background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
                 {getCategoryIcon(notif.category)}
               </div>
 
               <div className="space-y-1 flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-white text-xs">{notif.title}</span>
+                    <span className="font-bold text-xs" style={{ color: 'var(--text)' }}>{notif.title}</span>
                     <span className={`text-[8px] px-1.5 py-0.5 rounded font-mono border font-bold ${getPriorityBadge(notif.priority)}`}>
                       {notif.priority}
                     </span>
                   </div>
-                  <span className="text-[10px] text-zinc-500 font-mono whitespace-nowrap">{notif.time}</span>
+                  <span className="text-[10px] font-mono whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{notif.time}</span>
                 </div>
-                <p className="text-zinc-400 text-xs leading-relaxed">{notif.desc}</p>
-                <div className="pt-1.5 flex items-center gap-2 text-[10px] font-mono text-zinc-500">
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-sub)' }}>{notif.desc}</p>
+                <div className="pt-1.5 flex items-center gap-2 text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
                   <span>Category: {notif.category}</span>
                 </div>
               </div>
@@ -159,7 +161,8 @@ export default function NotificationCenter({
                 {notif.unread && (
                   <button
                     onClick={() => handleMarkRead(notif.id)}
-                    className="p-1 rounded hover:bg-zinc-800 text-emerald-400 hover:text-emerald-300"
+                    className="p-1 rounded hover:opacity-80"
+                    style={{ color: 'var(--success)' }}
                     title="Mark as read"
                   >
                     <Check className="w-4 h-4" />
@@ -167,7 +170,8 @@ export default function NotificationCenter({
                 )}
                 <button
                   onClick={() => handleDelete(notif.id)}
-                  className="p-1 rounded hover:bg-zinc-800 text-zinc-500 hover:text-rose-400"
+                  className="p-1 rounded hover:opacity-80"
+                  style={{ color: 'var(--text-muted)' }}
                   title="Dismiss notification"
                 >
                   <X className="w-4 h-4" />
@@ -177,7 +181,7 @@ export default function NotificationCenter({
           ))}
         </AnimatePresence>
         {filteredNotifications.length === 0 && (
-          <div className="p-8 text-center text-zinc-600 text-xs italic">
+          <div className="p-8 text-center text-xs italic" style={{ color: 'var(--text-muted)' }}>
             No dispatch alerts found.
           </div>
         )}

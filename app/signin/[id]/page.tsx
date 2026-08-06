@@ -60,8 +60,18 @@ export default async function SignIn({
   }
 
   return (
-    <div className="flex justify-center height-screen-helper">
-      <div className="flex flex-col justify-between max-w-lg p-3 m-auto w-80 ">
+    <div className="relative flex justify-center height-screen-helper overflow-hidden" style={{ background: 'var(--bg)' }}>
+      {/* Ambient decorative glow */}
+      <div
+        className="absolute top-[-15%] right-[-10%] w-[420px] h-[420px] rounded-full blur-[120px] pointer-events-none float-y"
+        style={{ background: 'var(--accent-glow2)' }}
+      />
+      <div
+        className="absolute bottom-[-15%] left-[-10%] w-[480px] h-[480px] rounded-full blur-[140px] pointer-events-none pulse-glow"
+        style={{ background: 'var(--accent-glow2)' }}
+      />
+
+      <div className="flex flex-col justify-between max-w-lg p-3 m-auto w-80 relative">
         <div className="flex justify-center pb-12 ">
           <Logo width="64px" height="64px" />
         </div>

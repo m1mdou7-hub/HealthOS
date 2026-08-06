@@ -63,13 +63,13 @@ export default function RecallCenter({
   };
 
   return (
-    <div id="recall-center" className="p-6 bg-zinc-900/30 border border-zinc-900 rounded-2xl space-y-6">
+    <div id="recall-center" className="p-6 card-elevated rounded-2xl space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h3 className="text-sm font-bold font-mono text-white flex items-center gap-2">
-            <RefreshCw className="w-4 h-4 text-emerald-400" /> Active Recall & Patient Retention Center
+          <h3 className="text-sm font-bold font-mono flex items-center gap-2" style={{ color: 'var(--text)' }}>
+            <RefreshCw className="w-4 h-4" style={{ color: 'var(--success)' }} /> Active Recall & Patient Retention Center
           </h3>
-          <p className="text-zinc-400 text-xs mt-1">
+          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
             Re-engage dormant prosthesis patients. Generate recall pipelines, trigger mass dispatches, and schedule hygiene checks.
           </p>
         </div>
@@ -82,16 +82,17 @@ export default function RecallCenter({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="p-3 bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs rounded-xl flex items-center gap-2 text-left"
+            className="p-3 rounded-xl flex items-center gap-2 text-xs text-left"
+            style={{ background: 'color-mix(in srgb, var(--accent) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', color: 'var(--accent)' }}
           >
-            <MessageSquare className="w-4 h-4 text-purple-400 shrink-0" />
+            <MessageSquare className="w-4 h-4 shrink-0" style={{ color: 'var(--accent)' }} />
             <span>{lastActionMessage}</span>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Tab Selectors with badge counts */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-zinc-900 pb-3">
+      <div className="flex flex-wrap items-center gap-2 border-b pb-3" style={{ borderColor: 'var(--border)' }}>
         {(['Today', 'Overdue', 'Upcoming', 'Completed', 'Missing'] as const).map(tab => {
           const count = recalls.filter(r => r.status === tab).length;
           const isActive = activeTab === tab;
@@ -99,11 +100,7 @@ export default function RecallCenter({
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all ${
-                isActive 
-                  ? 'bg-purple-600 text-white font-bold' 
-                  : 'bg-zinc-950 border border-zinc-900 text-zinc-400 hover:text-zinc-200'
-              }`}
+              className={`nav-item px-4 py-2 text-xs font-semibold flex items-center gap-2 ${isActive ? 'active font-bold' : ''}`}
             >
               {tab} Recalls
               <span className={`px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold ${getTabBadgeColor(tab)}`}>
@@ -115,8 +112,8 @@ export default function RecallCenter({
       </div>
 
       {/* Recall Table */}
-      <div className="border border-zinc-900 rounded-xl overflow-hidden bg-zinc-950/40">
-        <div className="grid grid-cols-12 bg-zinc-950 p-3.5 text-[10px] font-mono font-bold text-zinc-500 uppercase tracking-widest border-b border-zinc-900">
+      <div className="rounded-xl overflow-hidden card-elevated">
+        <div className="grid grid-cols-12 p-3.5 text-[10px] font-mono font-bold uppercase tracking-widest border-b" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)', background: 'var(--surface-2)' }}>
           <div className="col-span-3 text-left">Patient</div>
           <div className="col-span-3 text-left">Recall Protocol</div>
           <div className="col-span-2 text-left">Target Date</div>
@@ -124,53 +121,53 @@ export default function RecallCenter({
           <div className="col-span-2 text-center">Engagement Trigger</div>
         </div>
 
-        <div className="divide-y divide-zinc-900/60 text-left">
+        <div className="divide-y text-left" style={{ borderColor: 'var(--border)' }}>
           {filteredRecalls.map(item => (
-            <div key={item.id} className="grid grid-cols-12 p-3.5 text-xs text-zinc-300 items-center hover:bg-zinc-900/10">
-              <div className="col-span-3 font-semibold text-white">
+            <div key={item.id} className="grid grid-cols-12 p-3.5 text-xs items-center hover:bg-zinc-900/10" style={{ color: 'var(--text-sub)' }}>
+              <div className="col-span-3 font-semibold" style={{ color: 'var(--text)' }}>
                 <p>{item.patientName}</p>
-                <p className="text-[10px] text-zinc-500 font-mono">{item.phone}</p>
+                <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>{item.phone}</p>
               </div>
 
               <div className="col-span-3">
-                <span className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-850 font-mono text-[10px] font-semibold text-zinc-300">
+                <span className="px-2 py-0.5 rounded border font-mono text-[10px] font-semibold" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
                   {item.type}
                 </span>
               </div>
 
-              <div className="col-span-2 font-mono text-zinc-400">
+              <div className="col-span-2 font-mono" style={{ color: 'var(--text-muted)' }}>
                 {item.dueDate}
               </div>
 
-              <div className="col-span-2 font-mono text-zinc-500 text-[11px]">
+              <div className="col-span-2 font-mono text-[11px]" style={{ color: 'var(--text-muted)' }}>
                 {item.lastContacted || 'Never contacted'}
               </div>
 
               <div className="col-span-2 flex items-center justify-center gap-1.5">
                 <button
                   onClick={() => triggerOutreach(item.patientName, 'Call')}
-                  className="p-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white"
+                  className="btn-ghost p-1.5 rounded"
                   title="Telephone call"
                 >
                   <Phone className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => triggerOutreach(item.patientName, 'SMS')}
-                  className="p-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white"
+                  className="btn-ghost p-1.5 rounded"
                   title="SMS dispatch"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => triggerOutreach(item.patientName, 'Email')}
-                  className="p-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white"
+                  className="btn-ghost p-1.5 rounded"
                   title="Email campaign"
                 >
                   <Mail className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => onBookRecall(item.patientName, item.type)}
-                  className="p-1.5 rounded bg-purple-950 hover:bg-purple-900 text-purple-400 hover:text-purple-300 border border-purple-900/40"
+                  className="p-1.5 rounded btn-secondary"
                   title="Instant Appointment"
                 >
                   <Calendar className="w-3.5 h-3.5" />
@@ -178,7 +175,8 @@ export default function RecallCenter({
                 {item.status !== 'Completed' && (
                   <button
                     onClick={() => handleMarkCompleted(item.id)}
-                    className="p-1.5 rounded bg-emerald-950/40 hover:bg-emerald-900 text-emerald-400 hover:text-emerald-300 border border-emerald-900/30"
+                    className="p-1.5 rounded"
+                    style={{ background: 'color-mix(in srgb, var(--success) 12%, transparent)', color: 'var(--success)', border: '1px solid color-mix(in srgb, var(--success) 25%, transparent)' }}
                     title="Mark Completed"
                   >
                     <CheckCircle className="w-3.5 h-3.5" />
@@ -188,7 +186,7 @@ export default function RecallCenter({
             </div>
           ))}
           {filteredRecalls.length === 0 && (
-            <div className="p-8 text-center text-zinc-600 text-xs italic">
+            <div className="p-8 text-center text-xs italic" style={{ color: 'var(--text-muted)' }}>
               No recalls found for this category state.
             </div>
           )}

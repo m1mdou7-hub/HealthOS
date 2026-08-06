@@ -180,11 +180,11 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
     <div className="space-y-6 text-left">
       {/* Overview stats cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-xl border border-white/5 bg-[#0d0d16]/40 shadow-gold-glow card-luxury">
+        <div className="p-4 card-elevated rounded-2xl">
           <span className="text-[10px] text-zinc-500 font-mono uppercase block">{t('total_fees_invoiced')}</span>
           <span className="text-base font-bold text-white font-mono block mt-1">${totalInvoiced.toLocaleString()}</span>
         </div>
-        <div className="p-4 rounded-xl border border-white/5 bg-[#0d0d16]/40 shadow-gold-glow card-luxury">
+        <div className="p-4 card-elevated rounded-2xl">
           <span className="text-[10px] text-zinc-500 font-mono uppercase block">{t('amount_paid_settled')}</span>
           <span className="text-base font-bold text-emerald-400 font-mono block mt-1">${totalPaid.toLocaleString()}</span>
         </div>
@@ -197,7 +197,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       </div>
 
       {/* Toolbar actions */}
-      <div className="flex flex-wrap justify-between items-center bg-[#0d0d16]/20 p-4 rounded-3xl border border-white/5 gap-3 card-luxury">
+      <div className="flex flex-wrap justify-between items-center p-4 card-elevated rounded-3xl gap-3">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <DollarSign className="w-4 h-4 text-gold-400" /> {t('patient_ledger_title')}
@@ -208,7 +208,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
           {outstandingBalance > 0 && (
             <button
               onClick={() => setShowInstallmentModal(true)}
-              className="px-3 py-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 text-xs font-semibold flex items-center gap-1 border border-purple-500/20 transition-colors"
+              className="btn-secondary px-3 py-1.5 rounded-lg text-xs"
             >
               <Calculator className="w-3.5 h-3.5" /> {t('btn_installment_plan')}
             </button>
@@ -228,7 +228,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                 alert("Please create an invoice first.");
               }
             }}
-            className="px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 text-xs font-semibold flex items-center gap-1 border border-blue-500/20 transition-colors"
+            className="btn-secondary px-3 py-1.5 rounded-lg text-xs"
           >
             <ShieldCheck className="w-3.5 h-3.5" /> {t('btn_submit_claim')}
           </button>
@@ -245,7 +245,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               });
               setShowInvoiceModal(true);
             }}
-            className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold flex items-center gap-1 border border-zinc-800 transition-colors"
+            className="btn-ghost px-3 py-1.5 rounded-lg text-xs"
           >
             <Plus className="w-3.5 h-3.5" /> {t('btn_create_invoice')}
           </button>
@@ -263,7 +263,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                 alert("Please create an invoice before recording a payment.");
               }
             }}
-            className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all shadow-md shadow-emerald-500/10"
+            className="btn-primary px-3.5 py-1.5 rounded-lg text-xs"
           >
             {t('btn_record_payment')}
           </button>
@@ -275,8 +275,13 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
         {isLoadingInvoices || isLoadingPayments ? (
           <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading financial records...</div>
         ) : invoices.length === 0 ? (
-          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-3xl bg-zinc-950/20">
-            {t('no_invoices_logged')}
+          <div className="py-8 card-elevated rounded-3xl text-center">
+            <div className="mx-auto w-10 h-10 rounded-2xl flex items-center justify-center mb-3" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+              <DollarSign className="w-5 h-5" />
+            </div>
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              {t('no_invoices_logged')}
+            </p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -287,7 +292,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               const remaining = Math.max(0, copayTotal - (inv.amountPaid || 0));
 
               return (
-                <div key={inv.id} className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
+                <div key={inv.id} className="p-5 card-elevated rounded-3xl space-y-4">
                   <div className="flex flex-wrap justify-between items-start gap-2 border-b border-zinc-900/60 pb-3">
                     <div className="text-left">
                       <span className="text-[9px] font-mono text-zinc-500">{inv.invoiceNumber}</span>
@@ -299,14 +304,14 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                           setSelectedInvoiceForPrint(inv);
                           setShowPrintModal(true);
                         }}
-                        className="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-[10px] font-mono flex items-center gap-1 border border-zinc-800 transition-colors"
+                        className="btn-ghost px-2.5 py-1 rounded-lg text-[10px]"
                       >
                         <Printer className="w-3 h-3 text-emerald-400" /> {t('btn_print_invoice')}
                       </button>
-                      <span className={`px-2 py-0.5 rounded text-[8px] uppercase font-mono font-bold border ${
-                        inv.paymentStatus === 'Paid' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                        inv.paymentStatus === 'Partially Paid' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                        'bg-zinc-900 text-zinc-400 border-zinc-800'
+                      <span className={`badge ${
+                        inv.paymentStatus === 'Paid' ? 'badge-success' :
+                        inv.paymentStatus === 'Partially Paid' ? 'badge-warning' :
+                        ''
                       }`}>
                         {inv.paymentStatus}
                       </span>
@@ -351,8 +356,8 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* Invoices Create Modal */}
       {showInvoiceModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleCreateInvoice} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-lg space-y-4 text-xs">
-            <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">{t('modal_create_invoice')}</h3>
+          <form onSubmit={handleCreateInvoice} className="card-elevated p-6 rounded-3xl w-full max-w-lg space-y-4 text-xs">
+            <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">{t('modal_create_invoice')}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
                 <label className="text-zinc-400">Invoice Number</label>
@@ -404,14 +409,14 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               <button
                 type="button"
                 onClick={() => setShowInvoiceModal(false)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs"
+                className="btn-ghost px-3 py-1.5 rounded-lg text-xs"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={createInvoiceMutation.isPending}
-                className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs"
+                className="btn-primary px-4 py-1.5 rounded-lg text-xs"
               >
                 Publish Invoice
               </button>
@@ -423,8 +428,8 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* Payment Record Modal */}
       {showPaymentModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleRecordPayment} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
-            <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">{t('modal_record_payment')}</h3>
+          <form onSubmit={handleRecordPayment} className="card-elevated p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
+            <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">{t('modal_record_payment')}</h3>
             <div className="space-y-3">
               <div className="space-y-1">
                 <label className="text-zinc-400">Target Invoice</label>
@@ -465,14 +470,14 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               <button
                 type="button"
                 onClick={() => setShowPaymentModal(false)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs"
+                className="btn-ghost px-3 py-1.5 rounded-lg text-xs"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={recordPaymentMutation.isPending}
-                className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs"
+                className="btn-primary px-4 py-1.5 rounded-lg text-xs"
               >
                 Record Payment
               </button>
@@ -484,9 +489,9 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* e-Claim Submission Modal */}
       {showClaimModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleClaimSubmit} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-md space-y-4 text-xs">
+          <form onSubmit={handleClaimSubmit} className="card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-xs">
             <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
-              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+              <h3 className="text-sm font-bold section-title flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-blue-400" /> {t('btn_submit_claim')}
               </h3>
               <button type="button" onClick={() => setShowClaimModal(false)} className="text-zinc-500 hover:text-white">
@@ -546,14 +551,14 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               <button
                 type="button"
                 onClick={() => setShowClaimModal(false)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs"
+                className="btn-ghost px-3 py-1.5 rounded-lg text-xs"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitClaimMutation.isPending}
-                className="px-4 py-1.5 rounded-lg bg-blue-500 hover:bg-blue-400 text-white font-bold text-xs flex items-center gap-1"
+                className="btn-primary px-4 py-1.5 rounded-lg text-xs flex items-center gap-1"
               >
                 <ShieldCheck className="w-3.5 h-3.5" /> Submit Claim
               </button>
@@ -565,9 +570,9 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* Installment Plan Calculator Modal */}
       {showInstallmentModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-md space-y-4 text-xs">
+          <div className="card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-xs">
             <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
-              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+              <h3 className="text-sm font-bold section-title flex items-center gap-1.5">
                 <Calculator className="w-4 h-4 text-purple-400" /> {t('installment_calc_title')}
               </h3>
               <button type="button" onClick={() => setShowInstallmentModal(false)} className="text-zinc-500 hover:text-white">
@@ -597,8 +602,8 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                       onClick={() => setInstallmentMonths(m)}
                       className={`py-2 rounded-xl text-xs font-mono font-bold border transition-all ${
                         installmentMonths === m
-                          ? 'bg-purple-500 text-white border-purple-400 shadow-lg shadow-purple-500/20'
-                          : 'bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-800'
+                          ? 'btn-primary'
+                          : 'btn-secondary'
                       }`}
                     >
                       {m} Months
@@ -628,7 +633,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               <button
                 type="button"
                 onClick={() => setShowInstallmentModal(false)}
-                className="px-4 py-1.5 rounded-lg bg-purple-500 hover:bg-purple-400 text-white font-bold text-xs"
+                className="btn-primary px-4 py-1.5 rounded-lg text-xs"
               >
                 Close Calculator
               </button>

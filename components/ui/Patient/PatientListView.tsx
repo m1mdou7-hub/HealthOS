@@ -79,11 +79,11 @@ export default function PatientListView({
   return (
     <div className="space-y-6 text-left">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-zinc-900/25 p-4 rounded-3xl border border-zinc-900/80 backdrop-blur-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 card-gradient rounded-3xl">
         <div>
           <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl flex items-center gap-2">
             Patients Workspace
-            <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest">
+            <span className="badge badge-success">
               {patients.length} Registered
             </span>
           </h2>
@@ -91,14 +91,14 @@ export default function PatientListView({
         </div>
         <button
           onClick={onAddPatient}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all shadow-lg shadow-emerald-500/10 self-start sm:self-auto"
+          className="btn-primary px-4 py-2 rounded-xl text-xs self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" /> Add Patient Record
         </button>
       </div>
 
       {/* Toolbar filter */}
-      <div className="flex flex-col md:flex-row justify-between items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-center p-4 card-elevated rounded-3xl gap-4">
         <div className="relative w-full max-w-sm">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
           <input
@@ -110,20 +110,20 @@ export default function PatientListView({
           />
         </div>
         <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-          <div className="flex items-center gap-1 bg-zinc-950/50 p-1 rounded-xl border border-zinc-900">
+          <div className="flex items-center gap-1 p-1 rounded-xl card-elevated">
             {['All', 'Active', 'New', 'Under Treatment', 'Completed'].map((status) => (
               <button
                 key={status}
                 onClick={() => setStatusFilter(status as any)}
                 className={`px-3 py-1.5 rounded-lg text-[10px] font-semibold transition-all ${
-                  statusFilter === status ? 'bg-zinc-800 text-white border border-zinc-700' : 'text-zinc-400 hover:text-zinc-200'
+                  statusFilter === status ? 'bg-[#0d0d16] text-gold-400 border border-gold-500' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
                 {status}
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-1 bg-zinc-950/50 p-1 rounded-xl border border-zinc-900">
+          <div className="flex items-center gap-1 p-1 rounded-xl card-elevated">
             <button
               onClick={() => setViewMode('table')}
               className={`p-1.5 rounded-lg ${viewMode === 'table' ? 'bg-zinc-850 text-emerald-400' : 'text-zinc-500 hover:text-zinc-300'}`}
@@ -142,7 +142,7 @@ export default function PatientListView({
 
       {/* Grid or Table List */}
       {viewMode === 'table' ? (
-        <div className="overflow-x-auto rounded-3xl border border-zinc-900 bg-zinc-950/20">
+        <div className="overflow-x-auto rounded-3xl card-elevated">
           <table className="w-full text-xs text-left text-zinc-300">
             <thead className="bg-zinc-900/40 text-[10px] font-mono uppercase tracking-wider text-zinc-500 border-b border-zinc-900">
               <tr>
@@ -169,7 +169,8 @@ export default function PatientListView({
                       alt={p.name}
                       width={32}
                       height={32}
-                      className="w-8 h-8 rounded-full border border-zinc-800 object-cover"
+                      className="w-8 h-8 rounded-2xl object-cover"
+                      style={{ border: '1px solid var(--border-strong)' }}
                       referrerPolicy="no-referrer"
                     />
                     {p.name}
@@ -181,10 +182,8 @@ export default function PatientListView({
                   </td>
                   <td className="px-6 py-4 font-mono">{p.lastVisit}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-0.5 rounded-full text-[8px] font-mono border ${
-                      p.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                      p.status === 'Under Treatment' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                      'bg-zinc-900 text-zinc-400 border-zinc-800'
+                    <span className={`badge ${
+                      p.status === 'Completed' ? 'badge-success' : ''
                     }`}>
                       {p.status}
                     </span>
@@ -192,19 +191,19 @@ export default function PatientListView({
                   <td className="px-6 py-4 text-right flex justify-end gap-1.5" onClick={e => e.stopPropagation()}>
                     <button
                       onClick={(e) => onEditPatient(p, e)}
-                      className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white"
+                      className="btn-ghost p-1.5 rounded-lg"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={(e) => onArchivePatient(p.id, e)}
-                      className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-zinc-400 hover:text-white"
+                      className="btn-ghost p-1.5 rounded-lg"
                     >
                       <Archive className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={(e) => onDeletePatient(p.id, e)}
-                      className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-950 border border-zinc-800 text-red-400 hover:text-red-300"
+                      className="btn-ghost p-1.5 rounded-lg text-red-400 hover:text-red-300"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -221,7 +220,7 @@ export default function PatientListView({
             <div
               key={p.id}
               onClick={() => onSelectPatient(p.id)}
-              className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 hover:bg-zinc-900/25 transition-all cursor-pointer flex flex-col justify-between h-48"
+              className="p-5 card-elevated card-hover rounded-3xl cursor-pointer flex flex-col justify-between h-48"
             >
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
@@ -230,7 +229,8 @@ export default function PatientListView({
                     alt={p.name}
                     width={40}
                     height={40}
-                    className="w-10 h-10 rounded-full border border-zinc-800 object-cover"
+                    className="w-10 h-10 rounded-2xl object-cover"
+                    style={{ border: '1px solid var(--border-strong)' }}
                     referrerPolicy="no-referrer"
                   />
                   <div>
@@ -238,9 +238,8 @@ export default function PatientListView({
                     <span className="text-[9px] font-mono text-zinc-500">{p.id}</span>
                   </div>
                 </div>
-                <span className={`px-2 py-0.5 rounded-full text-[8px] font-mono border ${
-                  p.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                  'bg-purple-500/10 text-purple-400 border-purple-500/20'
+                <span className={`badge ${
+                  p.status === 'Completed' ? 'badge-success' : ''
                 }`}>
                   {p.status}
                 </span>
@@ -272,14 +271,14 @@ export default function PatientListView({
             <button
               onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
-              className="px-3 py-1.5 rounded-lg bg-zinc-950 hover:bg-zinc-900 border border-zinc-900 disabled:opacity-40"
+              className="btn-secondary px-3 py-1.5 rounded-lg text-[10px] disabled:opacity-40"
             >
               Previous
             </button>
             <button
               onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
               disabled={currentPage === totalPages}
-              className="px-3 py-1.5 rounded-lg bg-zinc-950 hover:bg-zinc-900 border border-zinc-900 disabled:opacity-40"
+              className="btn-secondary px-3 py-1.5 rounded-lg text-[10px] disabled:opacity-40"
             >
               Next
             </button>

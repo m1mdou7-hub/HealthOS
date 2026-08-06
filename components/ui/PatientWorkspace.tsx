@@ -328,7 +328,7 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
             />
 
             {/* Horizontal Tabs Menu */}
-            <div className="overflow-x-auto pb-1 flex border-b border-white/5 scrollbar-none gap-1 bg-[#0d0d16]/30 p-2 rounded-xl border border-white/5 text-xs">
+            <div className="overflow-x-auto pb-1 flex scrollbar-none gap-1 p-2 rounded-2xl text-xs card-elevated">
               {menuTabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -363,10 +363,10 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
                     alertsCount={activePatient.medicalAlerts?.filter(a => a !== 'None').length || 0}
                     onNavigateTab={setWorkspaceTab}
                   />
-                  <div className="p-6 rounded-3xl border border-white/5 bg-[#0d0d16]/20 text-left space-y-2 card-luxury">
-                    <h3 className="text-xs font-bold text-gold-400 font-display uppercase tracking-wider">{t('demographics')}</h3>
-                    <p className="text-xs text-zinc-400">{t('chiefComplaint')}: <strong className="text-zinc-200">{activePatient.summary}</strong></p>
-                    <p className="text-xs text-zinc-400">{t('primaryInsurer')}: <strong className="text-zinc-200">{activePatient.allergyStatus}</strong></p>
+                  <div className="p-6 card-gradient rounded-3xl text-left space-y-2">
+                    <h3 className="eyebrow">{t('demographics')}</h3>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('chiefComplaint')}: <strong style={{ color: 'var(--text)' }}>{activePatient.summary}</strong></p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('primaryInsurer')}: <strong style={{ color: 'var(--text)' }}>{activePatient.allergyStatus}</strong></p>
                   </div>
                 </div>
               )}
@@ -441,7 +441,7 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
             {/* Right Collapsible AI Sidebar */}
             <button
               onClick={() => setIsCopilotSidebarOpen(!isCopilotSidebarOpen)}
-              className="fixed bottom-6 right-20 z-45 px-4 py-2.5 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-xl shadow-purple-600/10 active:scale-95 transition-all"
+              className="fixed bottom-6 right-20 z-45 magic-shimmer-btn rounded-full px-4 py-2.5 text-xs font-bold flex items-center gap-1.5 shadow-xl active:scale-95"
             >
               <Sparkles className="w-4 h-4" /> AI Diagnostics
             </button>

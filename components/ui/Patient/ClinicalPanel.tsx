@@ -167,7 +167,7 @@ export default function ClinicalPanel({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 h-full w-full max-w-[400px] bg-zinc-950 border-l border-zinc-900 z-50 shadow-2xl flex flex-col text-left"
+            className="fixed top-0 right-0 h-full w-full max-w-[400px] bg-[#0d0d16] border-l border-zinc-900 z-50 shadow-2xl flex flex-col text-left backdrop-blur-2xl"
           >
             {/* Header */}
             <div className="p-4 border-b border-zinc-900 bg-zinc-900/10 flex items-center justify-between">
@@ -213,12 +213,12 @@ export default function ClinicalPanel({
               {activeTab === 'diagnostics' ? (
                 <>
                   {/* Action manual refresh trigger */}
-                  <div className="flex justify-between items-center bg-zinc-900/10 p-2.5 rounded-xl border border-zinc-900">
+                  <div className="flex justify-between items-center p-2.5 card-elevated rounded-2xl">
                     <span className="text-[10px] text-zinc-400 font-medium">Automatic clinical metrics active.</span>
                     <button
                       onClick={runClinicalDiagnosticScan}
                       disabled={scanLoading}
-                      className="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] text-zinc-300 flex items-center gap-1.5 transition-all disabled:opacity-40"
+                      className="btn-secondary px-2.5 py-1 rounded-lg text-[10px] disabled:opacity-40"
                     >
                       <RefreshCw className={`w-3 h-3 ${scanLoading ? 'animate-spin' : ''}`} /> Refresh Scan
                     </button>
@@ -227,21 +227,21 @@ export default function ClinicalPanel({
                   {/* Core parameters metrics */}
                   <div className="space-y-3.5">
                     {/* Chief Complaint */}
-                    <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900/60">
+                    <div className="p-3 card-elevated rounded-2xl">
                       <span className="text-[9px] text-zinc-500 font-mono font-bold uppercase block mb-1">Chief Complaint</span>
                       <p className="text-xs text-white font-medium">{chiefComplaint || "No complaint logged."}</p>
                     </div>
 
                     {/* Medical Alerts & Allergies */}
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900/60">
+                      <div className="p-3 card-elevated rounded-2xl">
                         <span className="text-[9px] text-zinc-500 font-mono font-bold uppercase block mb-1">Medical Alerts</span>
                         <div className="flex items-center gap-1.5 text-xs text-red-400 font-mono mt-0.5">
                           <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
                           <span className="truncate">{activePatient?.medicalAlerts?.filter(a => a !== 'None').join(', ') || 'None'}</span>
                         </div>
                       </div>
-                      <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900/60">
+                      <div className="p-3 card-elevated rounded-2xl">
                         <span className="text-[9px] text-zinc-500 font-mono font-bold uppercase block mb-1">Drug Allergies</span>
                         <div className="flex items-center gap-1.5 text-xs text-amber-400 font-mono mt-0.5">
                           <Heart className="w-3.5 h-3.5 shrink-0" />
@@ -252,15 +252,15 @@ export default function ClinicalPanel({
 
                     {/* Balance, Procedures, Appointments */}
                     <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                      <div className="p-2 bg-zinc-950 rounded-xl border border-zinc-900/60">
+                      <div className="p-2 card-elevated rounded-2xl">
                         <span className="text-[8px] text-zinc-500 font-mono uppercase block">Balance</span>
                         <span className="font-bold text-amber-400 font-mono mt-0.5 block">${outstandingBalance.toLocaleString()}</span>
                       </div>
-                      <div className="p-2 bg-zinc-950 rounded-xl border border-zinc-900/60">
+                      <div className="p-2 card-elevated rounded-2xl">
                         <span className="text-[8px] text-zinc-500 font-mono uppercase block">Pending</span>
                         <span className="font-bold text-zinc-300 font-mono mt-0.5 block">{pendingProceduresCount} tx</span>
                       </div>
-                      <div className="p-2 bg-zinc-950 rounded-xl border border-zinc-900/60">
+                      <div className="p-2 card-elevated rounded-2xl">
                         <span className="text-[8px] text-zinc-500 font-mono uppercase block">Next Visit</span>
                         <span className="font-bold text-purple-400 font-mono mt-0.5 block truncate max-w-[80px]" title={upcomingAppointmentText}>
                           {upcomingAppointmentText.split(' ')[0] || 'None'}

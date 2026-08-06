@@ -894,45 +894,45 @@ export default function InventoryWorkspace({
   };
 
   return (
-    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl overflow-hidden flex flex-col shadow-2xl h-[780px] font-sans antialiased text-zinc-100 relative">
+    <div className="card-elevated rounded-3xl overflow-hidden flex flex-col h-[780px] font-sans antialiased relative">
       
       {/* BRAND & HEADER STATUS BAR */}
-      <div className="bg-zinc-900/85 border-b border-zinc-900 px-6 py-4 flex items-center justify-between shrink-0">
+      <div className="px-6 py-4 flex items-center justify-between shrink-0" style={{ background: 'var(--surface-solid)', borderBottom: '1px solid var(--border)' }}>
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400">
+          <div className="p-2.5 rounded-xl" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
             <Package className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-xs font-black uppercase tracking-wider text-white">HealthOS Procurement & SCM</h2>
-              <span className="bg-blue-500/15 border border-blue-500/30 text-blue-400 text-[9px] font-mono font-black px-2 py-0.5 rounded-full">
+              <h2 className="section-title text-xs font-black uppercase tracking-wider">HealthOS Procurement & SCM</h2>
+              <span className="badge text-[9px] font-mono px-2 py-0.5 rounded-full">
                 ERP CORE
               </span>
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">
-              SCM Node ID: <span className="text-zinc-300 font-bold">INV-9902-S8</span> • Real-time GS1 barcode integration
+            <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+              SCM Node ID: <span className="font-bold" style={{ color: 'var(--text)' }}>INV-9902-S8</span> • Real-time GS1 barcode integration
             </p>
           </div>
         </div>
 
         {/* TOP STATUS BAR ROW */}
-        <div className="hidden lg:flex items-center gap-4 bg-zinc-950/80 border border-zinc-800 px-4 py-2 rounded-3xl">
+        <div className="hidden lg:flex items-center gap-4 glass px-4 py-2 rounded-2xl">
           <div className="flex items-center gap-1.5 font-mono text-[10px]">
-            <ThermometerSnowflake className="w-3.5 h-3.5 text-blue-400" />
-            <span className="text-zinc-400 font-bold">Cold Vault:</span>
-            <span className="text-emerald-400 font-extrabold">-18.4°C (Optimal)</span>
+            <ThermometerSnowflake className="w-3.5 h-3.5" style={{ color: 'var(--info)' }} />
+            <span className="font-bold" style={{ color: 'var(--text-sub)' }}>Cold Vault:</span>
+            <span className="font-extrabold" style={{ color: 'var(--success)' }}>-18.4°C (Optimal)</span>
           </div>
-          <div className="h-4 w-[1px] bg-zinc-800" />
+          <div className="h-4 w-[1px]" style={{ background: 'var(--border)' }} />
           <div className="flex items-center gap-1.5 font-mono text-[10px]">
-            <Shield className="w-3.5 h-3.5 text-zinc-500" />
-            <span className="text-zinc-400 font-bold">FDA Compliance:</span>
-            <span className="text-white font-extrabold">Validated (2026)</span>
+            <Shield className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+            <span className="font-bold" style={{ color: 'var(--text-sub)' }}>FDA Compliance:</span>
+            <span className="font-extrabold" style={{ color: 'var(--text)' }}>Validated (2026)</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="flex items-center gap-1.5 text-[10px] bg-zinc-950 border border-zinc-850 text-zinc-300 px-3 py-1.5 rounded-full font-mono font-bold">
-            <Sliders className="w-3.5 h-3.5 text-blue-400" /> GS1-Active
+          <span className="badge flex items-center gap-1.5 text-[10px] font-mono px-3 py-1.5">
+            <Sliders className="w-3.5 h-3.5" /> GS1-Active
           </span>
         </div>
       </div>
@@ -941,13 +941,13 @@ export default function InventoryWorkspace({
       <div className="flex-1 flex overflow-hidden">
         
         {/* MODULE LEFT NAVIGATION */}
-        <div className="w-60 bg-zinc-900 border-r border-zinc-900 flex flex-col shrink-0 overflow-hidden select-none">
-          <div className="p-4 border-b border-zinc-900 shrink-0">
-            <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-1">ERP Modules</span>
-            <p className="text-[10px] text-zinc-400 font-mono leading-relaxed">Enterprise Supply Chain Console:</p>
+        <div className="w-60 flex flex-col shrink-0 overflow-hidden select-none" style={{ background: 'var(--surface-solid)', borderRight: '1px solid var(--border)' }}>
+          <div className="p-4 shrink-0" style={{ borderBottom: '1px solid var(--border)' }}>
+            <span className="eyebrow text-[9px] block mb-1">ERP Modules</span>
+            <p className="text-[10px] font-mono leading-relaxed" style={{ color: 'var(--text-sub)' }}>Enterprise Supply Chain Console:</p>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-2.5 space-y-1 scrollbar-thin">
+          <div className="flex-1 overflow-y-auto p-2.5 space-y-1 scrollbar-none">
             {[
               { id: 'Dashboard', label: '1. Inventory Dashboard', icon: Layers, badge: 'Main Console' },
               { id: 'Catalog', label: '2. Catalog Register', icon: ClipboardList, badge: `${products.length} Products` },
@@ -966,20 +966,14 @@ export default function InventoryWorkspace({
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id as any)}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center justify-between border cursor-pointer ${
-                    isActive 
-                      ? 'bg-blue-500 text-zinc-950 border-blue-400 shadow-md' 
-                      : 'bg-transparent text-zinc-400 border-transparent hover:bg-zinc-950/40 hover:text-white hover:border-zinc-800'
-                  }`}
+                  className={`nav-item w-full text-left text-xs font-bold font-mono justify-between ${isActive ? 'active' : ''}`}
                 >
                   <div className="flex items-center gap-2">
                     <Icon className="w-4 h-4 shrink-0" />
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className={`text-[8px] font-mono font-black px-1.5 py-0.5 rounded-md border ${
-                      item.badgeColor || (isActive ? 'bg-zinc-950 text-blue-400 border-blue-500/30' : 'bg-zinc-950 text-zinc-500 border-zinc-850')
-                    }`}>
+                    <span className="badge text-[8px] font-mono px-1.5 py-0.5 rounded-md">
                       {item.badge}
                     </span>
                   )}
@@ -988,26 +982,26 @@ export default function InventoryWorkspace({
             })}
           </div>
 
-          <div className="p-3 bg-zinc-950/80 border-t border-zinc-900 shrink-0 space-y-2">
-            <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">SCM Controller</span>
-            <div className="flex items-center gap-2.5 p-2 bg-zinc-900 border border-zinc-850 rounded-xl">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-md">
+          <div className="p-3 shrink-0 space-y-2" style={{ background: 'var(--bg-2)', borderTop: '1px solid var(--border)' }}>
+            <span className="eyebrow text-[9px] block">SCM Controller</span>
+            <div className="card-elevated flex items-center gap-2.5 p-2 rounded-xl">
+              <div className="bg-gold-gradient w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black uppercase shadow-md" style={{ color: 'var(--bg)' }}>
                 SC
               </div>
               <div className="min-w-0 flex-1">
-                <h5 className="text-[11px] font-bold text-white truncate">Supply Control</h5>
-                <p className="text-[9px] text-zinc-500 font-mono truncate">Role: Procurement Director</p>
+                <h5 className="text-[11px] font-bold truncate" style={{ color: 'var(--text)' }}>Supply Control</h5>
+                <p className="text-[9px] font-mono truncate" style={{ color: 'var(--text-muted)' }}>Role: Procurement Director</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* WORKSPACE VIEW CONTENT AREA */}
-        <div className="flex-1 bg-zinc-950 flex flex-col overflow-hidden relative">
+        <div className="flex-1 flex flex-col overflow-hidden relative" style={{ background: 'var(--bg)' }}>
           
           <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
             {inventoryError && (
-              <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs font-mono text-red-300">
+              <div className="mb-4 rounded-xl px-4 py-3 text-xs font-mono" style={{ background: 'color-mix(in srgb, var(--danger) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)', color: 'var(--danger)' }}>
                 {inventoryError}
               </div>
             )}
@@ -1020,55 +1014,55 @@ export default function InventoryWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
+                  <div className="pb-2 flex justify-between items-center" style={{ borderBottom: '1px solid var(--border)' }}>
                     <div>
-                      <h3 className="text-base font-black text-white uppercase tracking-tight font-sans">Enterprise SCM & Stock Operations</h3>
-                      <p className="text-xs text-zinc-500 font-mono">Consolidated overview of pharmaceutical inventories, low stock levels, pending purchase orders, and supplier ratings.</p>
+                      <h3 className="section-title text-base font-black uppercase tracking-tight">Enterprise SCM & Stock Operations</h3>
+                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Consolidated overview of pharmaceutical inventories, low stock levels, pending purchase orders, and supplier ratings.</p>
                     </div>
-                    <span className="text-xs font-mono text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-xl">
+                    <span className="badge text-xs font-mono px-3 py-1 rounded-xl">
                       FDA & DEA Drug Compliant
                     </span>
                   </div>
 
                   {/* High Quality Bento Cards */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[105px]">
-                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Total Inventory Value</span>
+                    <div className="card-gradient card-luxury p-4 flex flex-col justify-between h-[105px] card-hover">
+                      <span className="eyebrow text-[9px]">Total Inventory Value</span>
                       <div className="flex items-baseline gap-1">
-                        <span className="text-xl font-black text-white font-mono">${stats.totalVal.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
+                        <span className="text-gradient text-xl font-black font-mono">${stats.totalVal.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
                       </div>
-                      <p className="text-[9px] text-emerald-400 font-semibold flex items-center gap-1">
+                      <p className="text-[9px] font-semibold flex items-center gap-1" style={{ color: 'var(--success)' }}>
                         <TrendingUp className="w-3 h-3" /> +4.2% vs last quarter
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[105px]">
-                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Stock Warnings</span>
+                    <div className="card-elevated p-4 flex flex-col justify-between h-[105px] card-hover">
+                      <span className="eyebrow text-[9px]">Stock Warnings</span>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-black text-white font-mono">{stats.lowStockCount} Low</span>
-                        <span className="text-xs text-red-400 font-black font-mono">/ {stats.outOfStockCount} Out</span>
+                        <span className="text-xl font-black font-mono" style={{ color: 'var(--text)' }}>{stats.lowStockCount} Low</span>
+                        <span className="text-xs font-black font-mono" style={{ color: 'var(--danger)' }}>/ {stats.outOfStockCount} Out</span>
                       </div>
-                      <p className="text-[9px] text-zinc-400 font-mono flex items-center gap-1">
-                        <AlertTriangle className="w-3 h-3 text-amber-500" /> {stats.expiringSoonCount} Expiring within 30 days
+                      <p className="text-[9px] font-mono flex items-center gap-1" style={{ color: 'var(--text-sub)' }}>
+                        <AlertTriangle className="w-3 h-3" style={{ color: 'var(--warning)' }} /> {stats.expiringSoonCount} Expiring within 30 days
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[105px]">
-                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Purchase Orders</span>
+                    <div className="card-elevated p-4 flex flex-col justify-between h-[105px] card-hover">
+                      <span className="eyebrow text-[9px]">Purchase Orders</span>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-black text-zinc-300 font-mono">{stats.pendingPoCount} Pending</span>
+                        <span className="text-xl font-black font-mono" style={{ color: 'var(--text)' }}>{stats.pendingPoCount} Pending</span>
                       </div>
-                      <p className="text-[9px] text-zinc-500 font-mono">
+                      <p className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>
                         Awaiting financial approval workflow
                       </p>
                     </div>
 
-                    <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[105px]">
-                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Suppliers Directory</span>
+                    <div className="card-elevated p-4 flex flex-col justify-between h-[105px] card-hover">
+                      <span className="eyebrow text-[9px]">Suppliers Directory</span>
                       <div className="flex items-baseline gap-1">
-                        <span className="text-xl font-black text-white font-mono">{stats.totalSuppliersCount} Connected</span>
+                        <span className="text-xl font-black font-mono" style={{ color: 'var(--text)' }}>{stats.totalSuppliersCount} Connected</span>
                       </div>
-                      <p className="text-[9px] text-emerald-400 font-semibold">
+                      <p className="text-[9px] font-semibold" style={{ color: 'var(--success)' }}>
                         91.2% Average Performance
                       </p>
                     </div>
@@ -1077,12 +1071,12 @@ export default function InventoryWorkspace({
                   {/* Chart Row */}
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     {/* Recharts Area Chart */}
-                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-3xl col-span-2 flex flex-col justify-between h-[280px]">
+                    <div className="card-elevated p-4 col-span-2 flex flex-col justify-between h-[280px]">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Total Capitalized Stock Value (YTD)</span>
-                        <div className="flex gap-4 text-[10px] font-mono">
-                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-blue-500" /> Pharma</span>
-                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-indigo-500" /> Consumables</span>
+                        <span className="eyebrow text-[10px] font-mono">Total Capitalized Stock Value (YTD)</span>
+                        <div className="flex gap-4 text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded" style={{ background: 'var(--info)' }} /> Pharma</span>
+                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded" style={{ background: 'var(--accent)' }} /> Consumables</span>
                         </div>
                       </div>
                       <div className="flex-1 w-full min-h-[200px]">
@@ -1110,49 +1104,49 @@ export default function InventoryWorkspace({
                     </div>
 
                     {/* Quick actions panel */}
-                    <div className="p-4 bg-zinc-900/30 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[280px]">
+                    <div className="card-gradient p-4 flex flex-col justify-between h-[280px]">
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">Quick Logistics Dispatches</span>
-                        <p className="text-[10px] text-zinc-400 font-mono leading-relaxed mb-4">Direct dispatch links for immediate procurement operations.</p>
+                        <span className="eyebrow text-[10px] font-mono block mb-3">Quick Logistics Dispatches</span>
+                        <p className="text-[10px] font-mono leading-relaxed mb-4" style={{ color: 'var(--text-sub)' }}>Direct dispatch links for immediate procurement operations.</p>
                       </div>
 
                       <div className="space-y-2">
                         <button 
                           onClick={() => { setActiveTab('Procurement') }}
-                          className="w-full text-left p-2.5 bg-zinc-950 border border-zinc-850 hover:border-blue-500 rounded-xl flex items-center gap-3 transition-colors text-xs font-bold font-mono cursor-pointer"
+                          className="btn-ghost w-full justify-start text-left p-2.5 rounded-xl flex items-center gap-3 text-xs font-bold font-mono cursor-pointer"
                         >
-                          <div className="p-1.5 bg-blue-500/10 text-blue-400 rounded-lg">
+                          <div className="p-1.5 rounded-lg" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
                             <Plus className="w-4 h-4" />
                           </div>
                           <div>
-                            <p className="text-white text-[11px]">Draft Purchase Order</p>
-                            <p className="text-[9px] text-zinc-500">Initiate bulk replenishment</p>
+                            <p className="text-[11px]" style={{ color: 'var(--text)' }}>Draft Purchase Order</p>
+                            <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>Initiate bulk replenishment</p>
                           </div>
                         </button>
 
                         <button 
                           onClick={() => { setActiveTab('StockMovements') }}
-                          className="w-full text-left p-2.5 bg-zinc-950 border border-zinc-850 hover:border-blue-500 rounded-xl flex items-center gap-3 transition-colors text-xs font-bold font-mono cursor-pointer"
+                          className="btn-ghost w-full justify-start text-left p-2.5 rounded-xl flex items-center gap-3 text-xs font-bold font-mono cursor-pointer"
                         >
-                          <div className="p-1.5 bg-indigo-500/10 text-indigo-400 rounded-lg">
+                          <div className="p-1.5 rounded-lg" style={{ background: 'var(--accent-glow2)', color: 'var(--info)' }}>
                             <History className="w-4 h-4" />
                           </div>
                           <div>
-                            <p className="text-white text-[11px]">Log Stock Movement</p>
-                            <p className="text-[9px] text-zinc-500">Record clinical consumption</p>
+                            <p className="text-[11px]" style={{ color: 'var(--text)' }}>Log Stock Movement</p>
+                            <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>Record clinical consumption</p>
                           </div>
                         </button>
 
                         <button 
                           onClick={() => { setActiveTab('AIAssistant') }}
-                          className="w-full text-left p-2.5 bg-zinc-950 border border-zinc-850 hover:border-blue-500 rounded-xl flex items-center gap-3 transition-colors text-xs font-bold font-mono cursor-pointer"
+                          className="btn-ghost w-full justify-start text-left p-2.5 rounded-xl flex items-center gap-3 text-xs font-bold font-mono cursor-pointer"
                         >
-                          <div className="p-1.5 bg-purple-500/10 text-purple-400 rounded-lg">
+                          <div className="p-1.5 rounded-lg" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
                             <Sparkles className="w-4 h-4" />
                           </div>
                           <div>
-                            <p className="text-white text-[11px]">AI Demand Forecast</p>
-                            <p className="text-[9px] text-zinc-500">Run clinical usage analytics</p>
+                            <p className="text-[11px]" style={{ color: 'var(--text)' }}>AI Demand Forecast</p>
+                            <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>Run clinical usage analytics</p>
                           </div>
                         </button>
                       </div>
@@ -1160,12 +1154,12 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* BOTTOM TELEMETRY BAR */}
-                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono">
-                    <span className="text-zinc-500 font-bold uppercase tracking-wider">Storage Node Integrity:</span>
-                    <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" /> Synchronized with US GS1 Registries
+                  <div className="card-elevated p-4 flex justify-between items-center text-xs font-mono">
+                    <span className="font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Storage Node Integrity:</span>
+                    <span className="font-bold flex items-center gap-1.5" style={{ color: 'var(--success)' }}>
+                      <span className="w-1.5 h-1.5 rounded-full animate-ping" style={{ background: 'var(--success)' }} /> Synchronized with US GS1 Registries
                     </span>
-                    <span className="text-zinc-400">DEA Register: <span className="text-white font-bold">ACTIVE-DEA-2026</span></span>
+                    <span style={{ color: 'var(--text-sub)' }}>DEA Register: <span className="font-bold" style={{ color: 'var(--text)' }}>ACTIVE-DEA-2026</span></span>
                   </div>
                 </WorkspaceTabPanel>
               )}
@@ -1177,25 +1171,26 @@ export default function InventoryWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-4"
                 >
-                  <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
+                  <div className="flex justify-between items-center pb-2" style={{ borderBottom: '1px solid var(--border)' }}>
                     <div>
-                      <h3 className="text-base font-black text-white uppercase tracking-tight">Active Product Registry</h3>
-                      <p className="text-xs text-zinc-500 font-mono">GS1 SKU database of drugs, disposable components, sterile shields and reagents.</p>
+                      <h3 className="section-title text-base font-black uppercase tracking-tight">Active Product Registry</h3>
+                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>GS1 SKU database of drugs, disposable components, sterile shields and reagents.</p>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                       {bulkCheckedIds.length > 0 && (
-                        <div className="flex gap-2 items-center mr-2 bg-zinc-900 px-3 py-1.5 rounded-xl border border-zinc-800 text-xs">
-                          <span className="text-zinc-400 font-mono">{bulkCheckedIds.length} checked</span>
+                        <div className="flex gap-2 items-center me-2 px-3 py-1.5 rounded-xl" style={{ background: 'var(--glass-fill)', border: '1px solid var(--border)' }}>
+                          <span className="font-mono" style={{ color: 'var(--text-sub)' }}>{bulkCheckedIds.length} checked</span>
                           <button 
                             onClick={handleBulkReorder}
-                            className="bg-blue-600 hover:bg-blue-500 text-white font-mono px-2 py-1 rounded text-[10px] font-bold cursor-pointer"
+                            className="btn-primary font-mono px-2 py-1 rounded text-[10px] font-bold cursor-pointer"
                           >
                             Bulk Reorder
                           </button>
                           <button 
                             onClick={handleBulkDisposal}
-                            className="bg-red-950/40 hover:bg-red-900 text-red-300 border border-red-900/40 font-mono px-2 py-1 rounded text-[10px] font-bold cursor-pointer"
+                            className="btn-ghost font-mono px-2 py-1 rounded text-[10px] font-bold cursor-pointer"
+                            style={{ color: 'var(--danger)' }}
                           >
                             Bulk Discard
                           </button>
@@ -1205,7 +1200,7 @@ export default function InventoryWorkspace({
                       <button 
                         onClick={handleRegisterProduct}
                         disabled={inventoryBusy}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500 hover:bg-blue-400 text-black text-xs font-bold transition-all cursor-pointer"
+                        className="btn-primary inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
                       >
                         <Plus className="w-3.5 h-3.5" /> Register SKU
                       </button>
@@ -1213,15 +1208,15 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* Filter & Search Bar */}
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3 bg-zinc-900/30 p-4 border border-zinc-900 rounded-3xl">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3 card-elevated p-4">
                     <div className="relative md:col-span-1">
-                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                      <Search className="absolute start-2.5 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                       <input
                         type="text"
                         value={catSearch}
                         onChange={(e) => setCatSearch(e.target.value)}
                         placeholder="Search SKU, name, brand, bar..."
-                        className="w-full pl-8 pr-3 py-1.5 bg-zinc-950 border border-zinc-800 text-xs rounded-xl outline-none focus:border-blue-500 text-white font-mono placeholder:text-zinc-650"
+                        className="w-full ps-8 pe-3 py-1.5 text-xs rounded-xl outline-none font-mono"
                       />
                     </div>
 
@@ -1229,7 +1224,7 @@ export default function InventoryWorkspace({
                       <select
                         value={catCategoryFilter}
                         onChange={(e) => setCatCategoryFilter(e.target.value)}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-blue-500"
+                        className="w-full rounded-xl text-xs font-mono p-1.5 outline-none"
                       >
                         <option value="All">All Categories</option>
                         <option value="Pharmaceuticals">Pharmaceuticals</option>
@@ -1244,7 +1239,7 @@ export default function InventoryWorkspace({
                       <select
                         value={catWarehouseFilter}
                         onChange={(e) => setCatWarehouseFilter(e.target.value)}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-blue-500"
+                        className="w-full rounded-xl text-xs font-mono p-1.5 outline-none"
                       >
                         <option value="All">All Warehouses</option>
                         <option value="HealthOS Central Warehouse">Central Warehouse</option>
@@ -1258,7 +1253,7 @@ export default function InventoryWorkspace({
                       <select
                         value={catStatusFilter}
                         onChange={(e) => setCatStatusFilter(e.target.value)}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-blue-500"
+                        className="w-full rounded-xl text-xs font-mono p-1.5 outline-none"
                       >
                         <option value="All">All Stock Statuses</option>
                         <option value="In Stock">In Stock</option>
@@ -1270,9 +1265,9 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* Large Product Table */}
-                  <div className="bg-zinc-900/20 border border-zinc-900 rounded-3xl overflow-hidden">
+                  <div className="card-elevated overflow-hidden rounded-3xl">
                     <table className="w-full text-left text-xs font-mono">
-                      <thead className="bg-zinc-900/80 text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-900">
+                      <thead className="text-[10px]">
                         <tr>
                           <th className="py-3 px-4 w-8">
                             <input 
@@ -1295,12 +1290,12 @@ export default function InventoryWorkspace({
                           <th className="py-3 px-4 text-center">Action</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-zinc-900">
+                      <tbody>
                         {filteredProducts.map(p => {
                           const totalVal = p.stockQuantity * p.valuePerUnit;
                           const isChecked = bulkCheckedIds.includes(p.id);
                           return (
-                            <tr key={p.id} className="hover:bg-zinc-900/50 transition-colors">
+                            <tr key={p.id}>
                               <td className="py-2.5 px-4">
                                 <input 
                                   type="checkbox"
@@ -1320,7 +1315,7 @@ export default function InventoryWorkspace({
                                 {p.name}
                               </td>
                               <td className="py-2.5 px-4 text-[10px]">
-                                <span className="bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded-md text-zinc-400">
+                                <span className="badge px-2 py-0.5 rounded-md text-[10px]">
                                   {p.category}
                                 </span>
                               </td>
@@ -1334,11 +1329,11 @@ export default function InventoryWorkspace({
                                 ${totalVal.toLocaleString(undefined, {minimumFractionDigits: 2})}
                               </td>
                               <td className="py-2.5 px-4 text-center">
-                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border ${
-                                  p.status === 'In Stock' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                  p.status === 'Low Stock' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                                  p.status === 'Expiring Soon' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                                  'bg-red-500/10 text-red-400 border-red-500/20'
+                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
+                                  p.status === 'In Stock' ? 'badge-success' :
+                                  p.status === 'Low Stock' ? 'badge-warning' :
+                                  p.status === 'Expiring Soon' ? 'badge-info' :
+                                  'badge-danger'
                                 }`}>
                                   {p.status}
                                 </span>
@@ -1350,7 +1345,8 @@ export default function InventoryWorkspace({
                                       setSelectedProductId(p.id);
                                       setActiveTab('ProductWorkspace');
                                     }}
-                                    className="p-1 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded transition-colors"
+                                    className="btn-ghost rounded"
+                                    style={{ color: 'var(--text-sub)', padding: '0.25rem', borderRadius: '0.5rem' }}
                                     title="View Product Workspace"
                                   >
                                     <Eye className="w-3.5 h-3.5" />
@@ -1358,7 +1354,8 @@ export default function InventoryWorkspace({
                                   <button 
                                     onClick={() => handleAdjustStock(p)}
                                     disabled={inventoryBusy}
-                                    className="p-1 hover:bg-zinc-800 text-zinc-400 hover:text-blue-400 rounded transition-colors"
+                                    className="btn-ghost rounded"
+                                    style={{ color: 'var(--text-sub)', padding: '0.25rem', borderRadius: '0.5rem' }}
                                     title="Edit Quantity"
                                   >
                                     <Edit className="w-3.5 h-3.5" />
@@ -1381,72 +1378,72 @@ export default function InventoryWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="flex items-center gap-2 text-zinc-500 text-xs font-mono border-b border-zinc-900 pb-2">
+                  <div className="flex items-center gap-2 text-xs font-mono pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
                     <span className="cursor-pointer hover:text-white" onClick={() => setActiveTab('Catalog')}>Catalog</span>
                     <ChevronRight className="w-3.5 h-3.5" />
-                    <span className="text-white font-bold">{selectedProduct.sku}</span>
+                    <span className="font-bold" style={{ color: 'var(--text)' }}>{selectedProduct.sku}</span>
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Left Detail Column */}
                     <div className="lg:col-span-2 space-y-4">
-                      <div className="p-6 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4">
+                      <div className="card-elevated p-6 space-y-4">
                         <div>
-                          <span className="text-[10px] font-mono font-black text-blue-400 bg-blue-500/15 border border-blue-500/30 px-2.5 py-1 rounded-full">
+                          <span className="badge text-[10px] font-mono font-black px-2.5 py-1 rounded-full">
                             {selectedProduct.category}
                           </span>
-                          <h3 className="text-xl font-bold text-white mt-2 font-sans">{selectedProduct.name}</h3>
-                          <p className="text-xs text-zinc-400 mt-1 font-mono">{selectedProduct.description}</p>
+                          <h3 className="section-title text-xl font-bold mt-2">{selectedProduct.name}</h3>
+                          <p className="text-xs mt-1 font-mono" style={{ color: 'var(--text-sub)' }}>{selectedProduct.description}</p>
                         </div>
 
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-zinc-850">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
                           <div>
-                            <span className="text-[9px] text-zinc-500 font-mono block">Brand</span>
-                            <span className="text-xs font-bold text-white font-mono">{selectedProduct.brand}</span>
+                            <span className="text-[9px] font-mono block" style={{ color: 'var(--text-muted)' }}>Brand</span>
+                            <span className="text-xs font-bold font-mono" style={{ color: 'var(--text)' }}>{selectedProduct.brand}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-zinc-500 font-mono block">Manufacturer</span>
-                            <span className="text-xs font-bold text-white font-mono">{selectedProduct.manufacturer}</span>
+                            <span className="text-[9px] font-mono block" style={{ color: 'var(--text-muted)' }}>Manufacturer</span>
+                            <span className="text-xs font-bold font-mono" style={{ color: 'var(--text)' }}>{selectedProduct.manufacturer}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-zinc-500 font-mono block">Preferred Supplier</span>
-                            <span className="text-xs font-bold text-white font-mono">{selectedProduct.supplierName}</span>
+                            <span className="text-[9px] font-mono block" style={{ color: 'var(--text-muted)' }}>Preferred Supplier</span>
+                            <span className="text-xs font-bold font-mono" style={{ color: 'var(--text)' }}>{selectedProduct.supplierName}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-zinc-500 font-mono block">Storage Location</span>
-                            <span className="text-xs font-bold text-white font-mono">{selectedProduct.storageLocation}</span>
+                            <span className="text-[9px] font-mono block" style={{ color: 'var(--text-muted)' }}>Storage Location</span>
+                            <span className="text-xs font-bold font-mono" style={{ color: 'var(--text)' }}>{selectedProduct.storageLocation}</span>
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-zinc-850 font-mono">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 font-mono" style={{ borderTop: '1px solid var(--border)' }}>
                           <div>
-                            <span className="text-[9px] text-zinc-500 block">Batch Number</span>
-                            <span className="text-xs font-bold text-zinc-300">{selectedProduct.batchNumber}</span>
+                            <span className="text-[9px] block" style={{ color: 'var(--text-muted)' }}>Batch Number</span>
+                            <span className="text-xs font-bold" style={{ color: 'var(--text-sub)' }}>{selectedProduct.batchNumber}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-zinc-500 block">Lot Number</span>
-                            <span className="text-xs font-bold text-zinc-300">{selectedProduct.lotNumber}</span>
+                            <span className="text-[9px] block" style={{ color: 'var(--text-muted)' }}>Lot Number</span>
+                            <span className="text-xs font-bold" style={{ color: 'var(--text-sub)' }}>{selectedProduct.lotNumber}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-zinc-500 block">Barcode (EAN-13)</span>
-                            <span className="text-xs font-bold text-zinc-350">{selectedProduct.barcode}</span>
+                            <span className="text-[9px] block" style={{ color: 'var(--text-muted)' }}>Barcode (EAN-13)</span>
+                            <span className="text-xs font-bold" style={{ color: 'var(--text-sub)' }}>{selectedProduct.barcode}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-zinc-500 block">Expiration Date</span>
-                            <span className="text-xs font-bold text-purple-400">{selectedProduct.expiryDate}</span>
+                            <span className="text-[9px] block" style={{ color: 'var(--text-muted)' }}>Expiration Date</span>
+                            <span className="text-xs font-bold" style={{ color: 'var(--warning)' }}>{selectedProduct.expiryDate}</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Stock History Audit Table */}
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3">
-                        <h4 className="text-xs font-bold uppercase text-zinc-400 font-mono flex items-center gap-2">
-                          <History className="w-4 h-4 text-zinc-500" /> Stock Movement History
+                      <div className="card-elevated p-5 space-y-3">
+                        <h4 className="eyebrow text-xs font-bold flex items-center gap-2">
+                          <History className="w-4 h-4" /> Stock Movement History
                         </h4>
                         <div className="overflow-x-auto">
                           <table className="w-full text-left text-xs font-mono">
                             <thead>
-                              <tr className="text-zinc-500 border-b border-zinc-850 text-[10px]">
+                              <tr className="text-[10px]">
                                 <th className="pb-2">Timestamp</th>
                                 <th className="pb-2">Type</th>
                                 <th className="pb-2 text-right">Quantity</th>
@@ -1456,26 +1453,26 @@ export default function InventoryWorkspace({
                             </thead>
                             <tbody>
                               {movements.filter(m => m.sku === selectedProduct.sku).map((m, idx) => (
-                                <tr key={idx} className="border-b border-zinc-900 last:border-0 hover:bg-zinc-900/30">
-                                  <td className="py-2 text-zinc-400">{m.timestamp}</td>
+                                <tr key={idx}>
+                                  <td className="py-2" style={{ color: 'var(--text-sub)' }}>{m.timestamp}</td>
                                   <td className="py-2">
                                     <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
-                                      m.type === 'Inbound' ? 'bg-emerald-500/10 text-emerald-400' :
-                                      m.type === 'Outbound' ? 'bg-amber-500/10 text-amber-400' :
-                                      m.type === 'Transfer' ? 'bg-blue-500/10 text-blue-400' :
-                                      'bg-purple-500/10 text-purple-400'
+                                      m.type === 'Inbound' ? 'badge-success' :
+                                      m.type === 'Outbound' ? 'badge-warning' :
+                                      m.type === 'Transfer' ? 'badge-info' :
+                                      'badge'
                                     }`}>
                                       {m.type}
                                     </span>
                                   </td>
-                                  <td className="py-2 text-right font-bold text-white">{m.quantity > 0 ? `+${m.quantity}` : m.quantity}</td>
-                                  <td className="py-2 text-zinc-400">{m.authorizedBy}</td>
-                                  <td className="py-2 text-zinc-500">{m.referenceDoc}</td>
+                                  <td className="py-2 text-right font-bold" style={{ color: 'var(--text)' }}>{m.quantity > 0 ? `+${m.quantity}` : m.quantity}</td>
+                                  <td className="py-2" style={{ color: 'var(--text-sub)' }}>{m.authorizedBy}</td>
+                                  <td className="py-2" style={{ color: 'var(--text-muted)' }}>{m.referenceDoc}</td>
                                 </tr>
                               ))}
                               {movements.filter(m => m.sku === selectedProduct.sku).length === 0 && (
                                 <tr>
-                                  <td colSpan={5} className="py-4 text-center text-zinc-650 font-mono text-[10px]">
+                                  <td colSpan={5} className="py-4 text-center font-mono text-[10px]" style={{ color: 'var(--text-muted)' }}>
                                     No ledgered transaction history found for this SKU.
                                   </td>
                                 </tr>
@@ -1489,15 +1486,15 @@ export default function InventoryWorkspace({
                     {/* Right Action Column */}
                     <div className="space-y-4">
                       {/* Live Stock Level Indicators */}
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Real-time Level Indicator</span>
+                      <div className="card-elevated p-5 space-y-4">
+                        <span className="eyebrow text-[10px] font-mono block">Real-time Level Indicator</span>
                         
                         <div className="space-y-1">
                           <div className="flex justify-between text-xs font-mono">
-                            <span className="text-zinc-400">Current Qty</span>
-                            <span className="text-white font-bold">{selectedProduct.stockQuantity} / {selectedProduct.minimumStock} min</span>
+                            <span style={{ color: 'var(--text-sub)' }}>Current Qty</span>
+                            <span className="font-bold" style={{ color: 'var(--text)' }}>{selectedProduct.stockQuantity} / {selectedProduct.minimumStock} min</span>
                           </div>
-                          <div className="w-full bg-zinc-950 h-2.5 rounded-full overflow-hidden border border-zinc-850">
+                          <div className="w-full h-2.5 rounded-full overflow-hidden" style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
                             <div 
                               className={`h-full rounded-full transition-all ${
                                 selectedProduct.status === 'In Stock' ? 'bg-emerald-500' :
@@ -1509,29 +1506,27 @@ export default function InventoryWorkspace({
                         </div>
 
                         <div className="pt-2 flex justify-between items-center text-xs font-mono">
-                          <span className="text-zinc-500">Stock Rating:</span>
-                          <span className={`font-bold ${
-                            selectedProduct.status === 'In Stock' ? 'text-emerald-400' : 'text-amber-400'
-                          }`}>{selectedProduct.status}</span>
+                          <span style={{ color: 'var(--text-muted)' }}>Stock Rating:</span>
+                          <span className="font-bold" style={{ color: selectedProduct.status === 'In Stock' ? 'var(--success)' : 'var(--warning)' }}>{selectedProduct.status}</span>
                         </div>
                       </div>
 
                       {/* Attachments Section */}
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Certificates & Specifications</span>
+                      <div className="card-elevated p-5 space-y-3">
+                        <span className="eyebrow text-[10px] font-mono block">Certificates & Specifications</span>
                         {selectedProduct.attachments.map((file, i) => (
-                          <div key={i} className="flex items-center justify-between p-2 bg-zinc-950 rounded-xl border border-zinc-850 font-mono text-xs">
+                          <div key={i} className="flex items-center justify-between p-2 rounded-xl font-mono text-xs" style={{ background: 'var(--glass-fill)', border: '1px solid var(--border)' }}>
                             <div className="flex items-center gap-2 min-w-0">
-                              <FileText className="w-4 h-4 text-blue-400 shrink-0" />
-                              <span className="text-zinc-300 truncate">{file}</span>
+                              <FileText className="w-4 h-4 shrink-0" style={{ color: 'var(--info)' }} />
+                              <span className="truncate" style={{ color: 'var(--text-sub)' }}>{file}</span>
                             </div>
-                            <Download className="w-4 h-4 text-zinc-500 hover:text-white cursor-pointer" />
+                            <Download className="w-4 h-4 cursor-pointer" style={{ color: 'var(--text-muted)' }} />
                           </div>
                         ))}
                         {selectedProduct.attachments.length === 0 && (
-                          <p className="text-[10px] text-zinc-650 text-center font-mono py-2">No FDA COA attached.</p>
+                          <p className="text-[10px] text-center font-mono py-2" style={{ color: 'var(--text-muted)' }}>No FDA COA attached.</p>
                         )}
-                        <button className="w-full py-1.5 border border-dashed border-zinc-800 text-zinc-500 hover:text-white rounded-xl text-xs font-mono font-bold transition-colors">
+                        <button className="btn-ghost w-full py-1.5 rounded-xl text-xs font-mono font-bold border border-dashed" style={{ borderColor: 'var(--border-strong)', color: 'var(--text-muted)' }}>
                           + Attach FDA COA Document
                         </button>
                       </div>
@@ -1548,16 +1543,16 @@ export default function InventoryWorkspace({
                   className="grid grid-cols-1 lg:grid-cols-3 gap-6"
                 >
                   <div className="lg:col-span-2 space-y-4">
-                    <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
+                    <div className="flex justify-between items-center pb-2" style={{ borderBottom: '1px solid var(--border)' }}>
                       <div>
-                        <h3 className="text-base font-black text-white uppercase tracking-tight">Purchase Orders (PO) Registry</h3>
-                        <p className="text-xs text-zinc-500 font-mono">Approve clinical replenishment schedules, track supplier delivery timetables.</p>
+                        <h3 className="section-title text-base font-black uppercase tracking-tight">Purchase Orders (PO) Registry</h3>
+                        <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Approve clinical replenishment schedules, track supplier delivery timetables.</p>
                       </div>
                     </div>
 
-                    <div className="bg-zinc-900/20 border border-zinc-900 rounded-3xl overflow-hidden">
+                    <div className="card-elevated overflow-hidden rounded-3xl">
                       <table className="w-full text-left text-xs font-mono">
-                        <thead className="bg-zinc-900/80 text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-900">
+                        <thead className="text-[10px]">
                           <tr>
                             <th className="py-3 px-4">PO Number</th>
                             <th className="py-3 px-4">Supplier</th>
@@ -1568,20 +1563,20 @@ export default function InventoryWorkspace({
                             <th className="py-3 px-4 text-center">Action</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-900">
+                        <tbody>
                           {pos.map(po => (
-                            <tr key={po.id} className="hover:bg-zinc-900/50 transition-colors">
-                              <td className="py-2.5 px-4 font-bold text-white">{po.poNumber}</td>
-                              <td className="py-2.5 px-4 text-zinc-300">{po.supplierName}</td>
-                              <td className="py-2.5 px-4 text-zinc-400">{po.orderDate}</td>
+                            <tr key={po.id}>
+                              <td className="py-2.5 px-4 font-bold" style={{ color: 'var(--text)' }}>{po.poNumber}</td>
+                              <td className="py-2.5 px-4" style={{ color: 'var(--text-sub)' }}>{po.supplierName}</td>
+                              <td className="py-2.5 px-4" style={{ color: 'var(--text-sub)' }}>{po.orderDate}</td>
                               <td className="py-2.5 px-4 text-right">{po.itemsCount}</td>
-                              <td className="py-2.5 px-4 text-right font-bold text-emerald-400">${po.totalCost.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                              <td className="py-2.5 px-4 text-right font-bold" style={{ color: 'var(--success)' }}>${po.totalCost.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
                               <td className="py-2.5 px-4 text-center">
-                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border ${
-                                  po.status === 'Received' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                  po.status === 'Approved' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                                  po.status === 'Pending Approval' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                                  'bg-zinc-800 text-zinc-500 border-zinc-700'
+                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
+                                  po.status === 'Received' ? 'badge-success' :
+                                  po.status === 'Approved' ? 'badge-info' :
+                                  po.status === 'Pending Approval' ? 'badge-warning' :
+                                  'badge'
                                 }`}>
                                   {po.status}
                                 </span>
@@ -1591,12 +1586,12 @@ export default function InventoryWorkspace({
                                   <button 
                                     onClick={() => handleApprovePO(po)}
                                     disabled={inventoryBusy}
-                                    className="bg-blue-600 hover:bg-blue-500 text-white font-mono text-[9px] font-bold px-2 py-1 rounded cursor-pointer"
+                                    className="btn-primary font-mono text-[9px] font-bold px-2 py-1 rounded cursor-pointer"
                                   >
                                     Approve
                                   </button>
                                 ) : (
-                                  <span className="text-zinc-650 text-[10px]">-</span>
+                                  <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>-</span>
                                 )}
                               </td>
                             </tr>
@@ -1606,30 +1601,30 @@ export default function InventoryWorkspace({
                     </div>
 
                     {/* Supplier Quote Comparison */}
-                    <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3">
-                      <h4 className="text-xs font-bold uppercase text-zinc-400 font-mono flex items-center gap-2">
-                        <Sliders className="w-4 h-4 text-zinc-500" /> Procurement Quote Matrix (Bid Analysis)
+                    <div className="card-elevated p-5 space-y-3">
+                      <h4 className="eyebrow text-xs font-bold flex items-center gap-2">
+                        <Sliders className="w-4 h-4" /> Procurement Quote Matrix (Bid Analysis)
                       </h4>
-                      <p className="text-[10px] text-zinc-500 font-mono">Comparing multiple clinical bidders for Disposable Syringe bulk orders:</p>
+                      <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>Comparing multiple clinical bidders for Disposable Syringe bulk orders:</p>
                       
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
-                        <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl font-mono text-[11px] space-y-1">
-                          <p className="text-white font-bold">Global MedSurg (Winner)</p>
-                          <p className="text-zinc-400">Unit Bid: <span className="text-emerald-400 font-bold">$0.08</span></p>
-                          <p className="text-zinc-500">Lead Time: <span className="text-white">3 Days</span></p>
-                          <p className="text-zinc-500">Contract Rate: Locked</p>
+                        <div className="card-elevated p-3 rounded-xl font-mono text-[11px] space-y-1">
+                          <p className="font-bold" style={{ color: 'var(--text)' }}>Global MedSurg (Winner)</p>
+                          <p style={{ color: 'var(--text-sub)' }}>Unit Bid: <span className="font-bold" style={{ color: 'var(--success)' }}>$0.08</span></p>
+                          <p style={{ color: 'var(--text-muted)' }}>Lead Time: <span style={{ color: 'var(--text)' }}>3 Days</span></p>
+                          <p style={{ color: 'var(--text-muted)' }}>Contract Rate: Locked</p>
                         </div>
-                        <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl font-mono text-[11px] space-y-1 opacity-60">
-                          <p className="text-white font-bold">PharmaLink Distributions</p>
-                          <p className="text-zinc-400">Unit Bid: $0.10</p>
-                          <p className="text-zinc-500">Lead Time: 5 Days</p>
-                          <p className="text-zinc-500">Contract Rate: Open</p>
+                        <div className="card-elevated p-3 rounded-xl font-mono text-[11px] space-y-1 opacity-60">
+                          <p className="font-bold" style={{ color: 'var(--text)' }}>PharmaLink Distributions</p>
+                          <p style={{ color: 'var(--text-sub)' }}>Unit Bid: $0.10</p>
+                          <p style={{ color: 'var(--text-muted)' }}>Lead Time: 5 Days</p>
+                          <p style={{ color: 'var(--text-muted)' }}>Contract Rate: Open</p>
                         </div>
-                        <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl font-mono text-[11px] space-y-1 opacity-60">
-                          <p className="text-white font-bold">SafeMed Global</p>
-                          <p className="text-zinc-400">Unit Bid: $0.11</p>
-                          <p className="text-zinc-500">Lead Time: 7 Days</p>
-                          <p className="text-zinc-500">Contract Rate: Spot</p>
+                        <div className="card-elevated p-3 rounded-xl font-mono text-[11px] space-y-1 opacity-60">
+                          <p className="font-bold" style={{ color: 'var(--text)' }}>SafeMed Global</p>
+                          <p style={{ color: 'var(--text-sub)' }}>Unit Bid: $0.11</p>
+                          <p style={{ color: 'var(--text-muted)' }}>Lead Time: 7 Days</p>
+                          <p style={{ color: 'var(--text-muted)' }}>Contract Rate: Spot</p>
                         </div>
                       </div>
                     </div>
@@ -1637,15 +1632,15 @@ export default function InventoryWorkspace({
 
                   {/* PO Draft Form */}
                   <div className="space-y-4">
-                    <form onSubmit={handleCreatePO} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Draft PO Replenishment</span>
+                    <form onSubmit={handleCreatePO} className="card-elevated p-5 space-y-4">
+                      <span className="eyebrow text-[10px] font-mono block">Draft PO Replenishment</span>
 
                       <div className="space-y-1.5 font-mono text-xs">
-                        <label className="text-zinc-400">Preferred Supplier</label>
+                        <label style={{ color: 'var(--text-sub)' }}>Preferred Supplier</label>
                         <select 
                           value={poSupplier}
                           onChange={(e) => setPoSupplier(e.target.value)}
-                          className="w-full bg-zinc-950 border border-zinc-800 text-zinc-200 rounded-xl p-2 outline-none"
+                          className="w-full rounded-xl p-2 outline-none"
                         >
                           {suppliers.map(s => (
                             <option key={s.id} value={s.name}>{s.name}</option>
@@ -1655,20 +1650,20 @@ export default function InventoryWorkspace({
 
                       <div className="grid grid-cols-2 gap-3 font-mono text-xs">
                         <div className="space-y-1.5">
-                          <label className="text-zinc-400">Items Count</label>
+                          <label style={{ color: 'var(--text-sub)' }}>Items Count</label>
                           <input 
                             type="number"
                             value={poItemsCount}
                             onChange={(e) => setPoItemsCount(e.target.value)}
-                            className="w-full bg-zinc-950 border border-zinc-800 text-zinc-200 rounded-xl p-2 outline-none"
+                            className="w-full rounded-xl p-2 outline-none"
                           />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-zinc-400">Payment Terms</label>
+                          <label style={{ color: 'var(--text-sub)' }}>Payment Terms</label>
                           <select 
                             value={poPaymentTerms}
                             onChange={(e) => setPoPaymentTerms(e.target.value)}
-                            className="w-full bg-zinc-950 border border-zinc-800 text-zinc-200 rounded-xl p-2 outline-none"
+                            className="w-full rounded-xl p-2 outline-none"
                           >
                             <option value="Net 30">Net 30</option>
                             <option value="Net 15">Net 15</option>
@@ -1679,19 +1674,20 @@ export default function InventoryWorkspace({
                       </div>
 
                       <div className="space-y-1.5 font-mono text-xs">
-                        <label className="text-zinc-400">Estimated Total Cost ($)</label>
+                        <label style={{ color: 'var(--text-sub)' }}>Estimated Total Cost ($)</label>
                         <input 
                           type="text"
                           value={poTotalCost}
                           onChange={(e) => setPoTotalCost(e.target.value)}
-                          className="w-full bg-zinc-950 border border-zinc-800 text-zinc-200 rounded-xl p-2 outline-none text-right font-bold text-emerald-400"
+                          className="w-full rounded-xl p-2 outline-none text-right font-bold"
+                          style={{ color: 'var(--success) !important' }}
                         />
                       </div>
 
                       <button 
                         type="submit"
                         disabled={inventoryBusy}
-                        className="w-full py-2 bg-blue-500 hover:bg-blue-400 text-black font-bold text-xs rounded-xl font-mono transition-colors cursor-pointer"
+                        className="btn-primary w-full py-2 font-bold text-xs rounded-xl font-mono cursor-pointer"
                       >
                         {inventoryBusy ? 'Saving...' : 'Submit Purchase Order Draft'}
                       </button>
@@ -1707,35 +1703,35 @@ export default function InventoryWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-4"
                 >
-                  <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
+                  <div className="flex justify-between items-center pb-2" style={{ borderBottom: '1px solid var(--border)' }}>
                     <div>
-                      <h3 className="text-base font-black text-white uppercase tracking-tight">Validated Suppliers Directory</h3>
-                      <p className="text-xs text-zinc-500 font-mono">FDA approved pharmaceuticals & medical consumables logistics vendors.</p>
+                      <h3 className="section-title text-base font-black uppercase tracking-tight">Validated Suppliers Directory</h3>
+                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>FDA approved pharmaceuticals & medical consumables logistics vendors.</p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {suppliers.map(s => (
-                      <div key={s.id} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[190px] font-mono">
+                      <div key={s.id} className="card-elevated card-hover p-5 flex flex-col justify-between h-[190px] font-mono">
                         <div>
                           <div className="flex justify-between items-start">
-                            <h4 className="text-sm font-bold text-white leading-tight">{s.name}</h4>
+                            <h4 className="section-title text-sm font-bold leading-tight">{s.name}</h4>
                             <span className={`text-[9px] font-black px-1.5 py-0.5 rounded ${
-                              s.performanceScore >= 90 ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
+                              s.performanceScore >= 90 ? 'badge-success' : 'badge-warning'
                             }`}>{s.performanceScore}% Score</span>
                           </div>
-                          <p className="text-[10px] text-zinc-500 mt-1">{s.contactName} • {s.phone}</p>
-                          <p className="text-[10px] text-zinc-400 mt-2 truncate">{s.email}</p>
+                          <p className="text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>{s.contactName} • {s.phone}</p>
+                          <p className="text-[10px] mt-2 truncate" style={{ color: 'var(--text-sub)' }}>{s.email}</p>
                         </div>
 
-                        <div className="space-y-1 pt-3 border-t border-zinc-850 text-[11px]">
+                        <div className="space-y-1 pt-3 text-[11px]" style={{ borderTop: '1px solid var(--border)' }}>
                           <div className="flex justify-between">
-                            <span className="text-zinc-500">Lead Time:</span>
-                            <span className="text-zinc-300 font-bold">{s.leadTimeDays} Days</span>
+                            <span style={{ color: 'var(--text-muted)' }}>Lead Time:</span>
+                            <span className="font-bold" style={{ color: 'var(--text-sub)' }}>{s.leadTimeDays} Days</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-zinc-500">Total Spent:</span>
-                            <span className="text-emerald-400 font-bold">${s.totalSpent.toLocaleString()}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>Total Spent:</span>
+                            <span className="font-bold" style={{ color: 'var(--success)' }}>${s.totalSpent.toLocaleString()}</span>
                           </div>
                         </div>
                       </div>
@@ -1743,11 +1739,11 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* Supplier Contract Overview Table */}
-                  <div className="p-5 bg-zinc-900/20 border border-zinc-900 rounded-3xl space-y-3">
-                    <h4 className="text-xs font-bold uppercase text-zinc-400 font-mono">Supplier Performance & SLA Contracts</h4>
-                    <div className="overflow-hidden rounded-xl border border-zinc-850 bg-zinc-950/40">
+                  <div className="card-elevated p-5 space-y-3">
+                    <h4 className="eyebrow text-xs font-bold">Supplier Performance & SLA Contracts</h4>
+                    <div className="overflow-hidden rounded-xl">
                       <table className="w-full text-left text-xs font-mono">
-                        <thead className="bg-zinc-900/60 text-zinc-400 text-[10px] uppercase">
+                        <thead className="text-[10px]">
                           <tr>
                             <th className="p-2 px-3">Supplier Name</th>
                             <th className="p-2 px-3">Active Contracts</th>
@@ -1756,20 +1752,20 @@ export default function InventoryWorkspace({
                             <th className="p-2 px-3">Risk Assessment</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-900">
+                        <tbody>
                           <tr>
-                            <td className="p-2 px-3 text-white font-bold">PharmaLink Distributions</td>
+                            <td className="p-2 px-3 font-bold" style={{ color: 'var(--text)' }}>PharmaLink Distributions</td>
                             <td className="p-2 px-3">3 Active MSA</td>
-                            <td className="p-2 px-3 text-emerald-400">98% Ontime Delivery</td>
+                            <td className="p-2 px-3" style={{ color: 'var(--success)' }}>98% Ontime Delivery</td>
                             <td className="p-2 px-3">Net 30</td>
-                            <td className="p-2 px-3 text-emerald-500">Low Risk</td>
+                            <td className="p-2 px-3" style={{ color: 'var(--success)' }}>Low Risk</td>
                           </tr>
                           <tr>
-                            <td className="p-2 px-3 text-white font-bold">SafeMed Global</td>
+                            <td className="p-2 px-3 font-bold" style={{ color: 'var(--text)' }}>SafeMed Global</td>
                             <td className="p-2 px-3">1 MSA</td>
-                            <td className="p-2 px-3 text-amber-400">84% Ontime Delivery</td>
+                            <td className="p-2 px-3" style={{ color: 'var(--warning)' }}>84% Ontime Delivery</td>
                             <td className="p-2 px-3">Net 15</td>
-                            <td className="p-2 px-3 text-amber-500">Moderate (Delayed Lead)</td>
+                            <td className="p-2 px-3" style={{ color: 'var(--warning)' }}>Moderate (Delayed Lead)</td>
                           </tr>
                         </tbody>
                       </table>
@@ -1786,14 +1782,14 @@ export default function InventoryWorkspace({
                   className="grid grid-cols-1 lg:grid-cols-3 gap-6"
                 >
                   <div className="lg:col-span-2 space-y-4">
-                    <div className="border-b border-zinc-900 pb-2">
-                      <h3 className="text-base font-black text-white uppercase tracking-tight">Stock Movement Audit Trail</h3>
-                      <p className="text-xs text-zinc-500 font-mono">Continuous digital log of inbound shipments, outbound patient treatments, transfers, and warehouse adjustments.</p>
+                    <div className="pb-2" style={{ borderBottom: '1px solid var(--border)' }}>
+                      <h3 className="section-title text-base font-black uppercase tracking-tight">Stock Movement Audit Trail</h3>
+                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Continuous digital log of inbound shipments, outbound patient treatments, transfers, and warehouse adjustments.</p>
                     </div>
 
-                    <div className="bg-zinc-900/20 border border-zinc-900 rounded-3xl overflow-hidden">
+                    <div className="card-elevated overflow-hidden rounded-3xl">
                       <table className="w-full text-left text-xs font-mono">
-                        <thead className="bg-zinc-900/80 text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-900">
+                        <thead className="text-[10px]">
                           <tr>
                             <th className="py-3 px-4">Timestamp</th>
                             <th className="py-3 px-4">SKU / Product</th>
@@ -1803,31 +1799,31 @@ export default function InventoryWorkspace({
                             <th className="py-3 px-4">Authorized By</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-900">
+                        <tbody>
                           {movements.map(m => (
-                            <tr key={m.id} className="hover:bg-zinc-900/50 transition-colors">
-                              <td className="py-2.5 px-4 text-zinc-400 text-[10px]">{m.timestamp}</td>
+                            <tr key={m.id}>
+                              <td className="py-2.5 px-4 text-[10px]" style={{ color: 'var(--text-sub)' }}>{m.timestamp}</td>
                               <td className="py-2.5 px-4">
-                                <p className="text-white font-bold">{m.productName}</p>
-                                <p className="text-[9px] text-zinc-500">{m.sku}</p>
+                                <p className="font-bold" style={{ color: 'var(--text)' }}>{m.productName}</p>
+                                <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>{m.sku}</p>
                               </td>
                               <td className="py-2.5 px-4">
-                                <span className={`text-[9px] font-black px-2 py-0.5 rounded-full border ${
-                                  m.type === 'Inbound' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                  m.type === 'Outbound' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                                  m.type === 'Transfer' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                                  'bg-purple-500/10 text-purple-400 border-purple-500/20'
+                                <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${
+                                  m.type === 'Inbound' ? 'badge-success' :
+                                  m.type === 'Outbound' ? 'badge-danger' :
+                                  m.type === 'Transfer' ? 'badge-info' :
+                                  'badge'
                                 }`}>
                                   {m.type}
                                 </span>
                               </td>
-                              <td className="py-2.5 px-4 text-right font-bold text-white">
+                              <td className="py-2.5 px-4 text-right font-bold" style={{ color: 'var(--text)' }}>
                                 {m.quantity > 0 ? `+${m.quantity}` : m.quantity}
                               </td>
-                              <td className="py-2.5 px-4 text-zinc-400 max-w-[120px] truncate">
+                              <td className="py-2.5 px-4 max-w-[120px] truncate" style={{ color: 'var(--text-sub)' }}>
                                 {m.fromLocation} → {m.toLocation}
                               </td>
-                              <td className="py-2.5 px-4 text-zinc-400 text-[10px]">{m.authorizedBy}</td>
+                              <td className="py-2.5 px-4 text-[10px]" style={{ color: 'var(--text-sub)' }}>{m.authorizedBy}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -1837,15 +1833,15 @@ export default function InventoryWorkspace({
 
                   {/* Manual Stock Dispatch Form */}
                   <div>
-                    <form onSubmit={handleCreateMovement} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono text-xs">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Dispatch Manual Stock</span>
+                    <form onSubmit={handleCreateMovement} className="card-elevated p-5 space-y-4 font-mono text-xs">
+                      <span className="eyebrow text-[10px] block">Dispatch Manual Stock</span>
 
                       <div className="space-y-1.5">
-                        <label className="text-zinc-400">Select Registered SKU</label>
+                        <label style={{ color: 'var(--text-sub)' }}>Select Registered SKU</label>
                         <select 
                           value={moveSku}
                           onChange={(e) => setMoveSku(e.target.value)}
-                          className="w-full bg-zinc-950 border border-zinc-800 text-zinc-250 rounded-xl p-2 outline-none"
+                          className="w-full rounded-xl p-2 outline-none"
                         >
                           {products.map(p => (
                             <option key={p.id} value={p.sku}>{p.brand} ({p.sku})</option>
@@ -1855,11 +1851,11 @@ export default function InventoryWorkspace({
 
                       <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
-                          <label className="text-zinc-400">Movement Type</label>
+                          <label style={{ color: 'var(--text-sub)' }}>Movement Type</label>
                           <select 
                             value={moveType}
                             onChange={(e) => setMoveType(e.target.value as any)}
-                            className="w-full bg-zinc-950 border border-zinc-800 text-zinc-250 rounded-xl p-2 outline-none"
+                            className="w-full rounded-xl p-2 outline-none"
                           >
                             <option value="Inbound">Inbound</option>
                             <option value="Outbound">Outbound</option>
@@ -1869,40 +1865,40 @@ export default function InventoryWorkspace({
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-zinc-400">Qty (UOM)</label>
+                          <label style={{ color: 'var(--text-sub)' }}>Qty (UOM)</label>
                           <input 
                             type="number"
                             value={moveQty}
                             onChange={(e) => setMoveQty(e.target.value)}
-                            className="w-full bg-zinc-950 border border-zinc-800 text-zinc-250 rounded-xl p-2 outline-none text-right font-bold"
+                            className="w-full rounded-xl p-2 outline-none text-right font-bold"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-1.5">
-                        <label className="text-zinc-400">From Depot / Location</label>
+                        <label style={{ color: 'var(--text-sub)' }}>From Depot / Location</label>
                         <input 
                           type="text"
                           value={moveFrom}
                           onChange={(e) => setMoveFrom(e.target.value)}
-                          className="w-full bg-zinc-950 border border-zinc-800 text-zinc-250 rounded-xl p-2 outline-none"
+                          className="w-full rounded-xl p-2 outline-none"
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <label className="text-zinc-400">To Destination Depot</label>
+                        <label style={{ color: 'var(--text-sub)' }}>To Destination Depot</label>
                         <input 
                           type="text"
                           value={moveTo}
                           onChange={(e) => setMoveTo(e.target.value)}
-                          className="w-full bg-zinc-950 border border-zinc-800 text-zinc-250 rounded-xl p-2 outline-none"
+                          className="w-full rounded-xl p-2 outline-none"
                         />
                       </div>
 
                       <button 
                         type="submit"
                         disabled={inventoryBusy || products.length === 0}
-                        className="w-full py-2 bg-blue-500 hover:bg-blue-400 text-black font-bold rounded-xl transition-colors cursor-pointer"
+                        className="btn-primary w-full py-2 font-bold rounded-xl cursor-pointer"
                       >
                         {inventoryBusy ? 'Saving...' : 'Commit Movement Transaction'}
                       </button>
@@ -1918,30 +1914,30 @@ export default function InventoryWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-4"
                 >
-                  <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
+                  <div className="flex justify-between items-center pb-2" style={{ borderBottom: '1px solid var(--border)' }}>
                     <div>
-                      <h3 className="text-base font-black text-white uppercase tracking-tight">Depot & Storage Area Registers</h3>
-                      <p className="text-xs text-zinc-500 font-mono">Oversee multiple physical warehouses, cold storage vaults, clinical ward cupboards and lab reagent depots.</p>
+                      <h3 className="section-title text-base font-black uppercase tracking-tight">Depot & Storage Area Registers</h3>
+                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Oversee multiple physical warehouses, cold storage vaults, clinical ward cupboards and lab reagent depots.</p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {warehouses.map(w => (
-                      <div key={w.id} className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[175px] font-mono">
+                      <div key={w.id} className="card-elevated card-hover p-5 flex flex-col justify-between h-[175px] font-mono">
                         <div>
                           <div className="flex justify-between items-center">
-                            <span className="text-[9px] font-black uppercase text-blue-400">{w.type}</span>
-                            <span className="text-[10px] text-zinc-500 font-bold">Occupancy: {w.occupancyPercent}%</span>
+                            <span className="eyebrow text-[9px] font-black uppercase">{w.type}</span>
+                            <span className="text-[10px] font-bold" style={{ color: 'var(--text-muted)' }}>Occupancy: {w.occupancyPercent}%</span>
                           </div>
-                          <h4 className="text-sm font-bold text-white mt-1 leading-tight">{w.name}</h4>
-                          <p className="text-[10px] text-zinc-450 mt-1 truncate">{w.address}</p>
+                          <h4 className="section-title text-sm font-bold mt-1 leading-tight">{w.name}</h4>
+                          <p className="text-[10px] mt-1 truncate" style={{ color: 'var(--text-muted)' }}>{w.address}</p>
                         </div>
 
-                        <div className="pt-3 border-t border-zinc-850 space-y-2">
-                          <div className="w-full bg-zinc-950 h-2 rounded-full overflow-hidden">
-                            <div className="h-full bg-blue-500" style={{ width: `${w.occupancyPercent}%` }} />
+                        <div className="pt-3 space-y-2" style={{ borderTop: '1px solid var(--border)' }}>
+                          <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'var(--surface-2)' }}>
+                            <div className="h-full" style={{ width: `${w.occupancyPercent}%`, background: 'var(--accent)' }} />
                           </div>
-                          <div className="flex justify-between text-[10px] text-zinc-500">
+                          <div className="flex justify-between text-[10px]" style={{ color: 'var(--text-muted)' }}>
                             <span>Shelves: {w.shelvesCount} sectors</span>
                             <span>Safe Range Checked</span>
                           </div>
@@ -1951,32 +1947,32 @@ export default function InventoryWorkspace({
                   </div>
 
                   {/* Cold Chain Storage Telemetry Panel */}
-                  <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
+                  <div className="card-elevated p-5 grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
                     <div className="space-y-1">
-                      <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Main Cold Vault</span>
+                      <span className="eyebrow text-[10px] block">Main Cold Vault</span>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-black text-white">-18.4°C</span>
-                        <span className="text-emerald-400 text-xs font-bold">Stable</span>
+                        <span className="text-2xl font-black" style={{ color: 'var(--text)' }}>-18.4°C</span>
+                        <span className="text-xs font-bold" style={{ color: 'var(--success)' }}>Stable</span>
                       </div>
-                      <p className="text-[10px] text-zinc-400 leading-relaxed">Storage: Covid Reagents, Vaccines, RNA active chains.</p>
+                      <p className="text-[10px] leading-relaxed" style={{ color: 'var(--text-sub)' }}>Storage: Covid Reagents, Vaccines, RNA active chains.</p>
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Lab Depot Temperature</span>
+                      <span className="eyebrow text-[10px] block">Lab Depot Temperature</span>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-black text-white">4.2°C</span>
-                        <span className="text-emerald-400 text-xs font-bold">Stable</span>
+                        <span className="text-2xl font-black" style={{ color: 'var(--text)' }}>4.2°C</span>
+                        <span className="text-xs font-bold" style={{ color: 'var(--success)' }}>Stable</span>
                       </div>
-                      <p className="text-[10px] text-zinc-400 leading-relaxed">Storage: Normal insulin vials, enzyme buffers.</p>
+                      <p className="text-[10px] leading-relaxed" style={{ color: 'var(--text-sub)' }}>Storage: Normal insulin vials, enzyme buffers.</p>
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Humidity Sensor Node #4</span>
+                      <span className="eyebrow text-[10px] block">Humidity Sensor Node #4</span>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-black text-white">38% rH</span>
-                        <span className="text-emerald-400 text-xs font-bold">Optimal</span>
+                        <span className="text-2xl font-black" style={{ color: 'var(--text)' }}>38% rH</span>
+                        <span className="text-xs font-bold" style={{ color: 'var(--success)' }}>Optimal</span>
                       </div>
-                      <p className="text-[10px] text-zinc-400 leading-relaxed">Dry conditions preserved to prevent capsule degradation.</p>
+                      <p className="text-[10px] leading-relaxed" style={{ color: 'var(--text-sub)' }}>Dry conditions preserved to prevent capsule degradation.</p>
                     </div>
                   </div>
                 </WorkspaceTabPanel>
@@ -1989,16 +1985,16 @@ export default function InventoryWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
+                  <div className="pb-2 flex justify-between items-center" style={{ borderBottom: '1px solid var(--border)' }}>
                     <div>
-                      <h3 className="text-base font-black text-white uppercase tracking-tight">AI Stock & Demand Engine</h3>
-                      <p className="text-xs text-zinc-500 font-mono">Automate clinical stock replenishment, predict stock shortages, calculate supplier lead times, and optimize SCM.</p>
+                      <h3 className="section-title text-base font-black uppercase tracking-tight">AI Stock & Demand Engine</h3>
+                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Automate clinical stock replenishment, predict stock shortages, calculate supplier lead times, and optimize SCM.</p>
                     </div>
 
                     <button 
                       onClick={triggerAIAnalysis}
                       disabled={aiAnalyzing}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500 hover:bg-purple-400 text-zinc-950 text-xs font-black transition-all cursor-pointer"
+                      className="btn-primary inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer"
                     >
                       {aiAnalyzing ? (
                         <>
@@ -2015,25 +2011,25 @@ export default function InventoryWorkspace({
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Forecast Summary Indicators */}
                     <div className="space-y-4">
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Automatic Reorder Suggestion</span>
-                        <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl space-y-1 text-xs">
-                          <p className="text-white font-bold">SKU: PP-N95-FLT-M01</p>
-                          <p className="text-zinc-400">Reorder Quantity: <span className="text-blue-400 font-bold">2,000 Units</span></p>
-                          <p className="text-zinc-500">Suggested Supplier: <span className="text-white">SafeMed Global</span></p>
-                          <p className="text-zinc-500">Est Savings: $240.00 via contract</p>
+                      <div className="card-elevated p-5 space-y-4 font-mono">
+                        <span className="eyebrow text-[10px] block">Automatic Reorder Suggestion</span>
+                        <div className="card-elevated p-3 rounded-xl space-y-1 text-xs">
+                          <p className="font-bold" style={{ color: 'var(--text)' }}>SKU: PP-N95-FLT-M01</p>
+                          <p style={{ color: 'var(--text-sub)' }}>Reorder Quantity: <span className="font-bold" style={{ color: 'var(--accent)' }}>2,000 Units</span></p>
+                          <p style={{ color: 'var(--text-muted)' }}>Suggested Supplier: <span style={{ color: 'var(--text)' }}>SafeMed Global</span></p>
+                          <p style={{ color: 'var(--text-muted)' }}>Est Savings: $240.00 via contract</p>
                         </div>
                       </div>
 
-                      <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Expiry Risk Warnings</span>
-                        <div className="p-3 bg-zinc-950 border border-red-900/40 bg-red-950/10 rounded-xl text-xs space-y-1">
-                          <p className="text-red-400 font-bold flex items-center gap-1.5">
+                      <div className="card-elevated p-5 space-y-4 font-mono">
+                        <span className="eyebrow text-[10px] block">Expiry Risk Warnings</span>
+                        <div className="p-3 rounded-xl text-xs space-y-1" style={{ background: 'color-mix(in srgb, var(--danger) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)' }}>
+                          <p className="font-bold flex items-center gap-1.5" style={{ color: 'var(--danger)' }}>
                             <AlertTriangle className="w-3.5 h-3.5" /> High Expiry Risk
                           </p>
-                          <p className="text-zinc-300">TaqPath COVID PCR (450 Kits)</p>
-                          <p className="text-zinc-400">Expires: <span className="text-zinc-200">2026-08-25</span></p>
-                          <p className="text-zinc-550">Recommended: Transfer to Westside Pediatric</p>
+                          <p style={{ color: 'var(--text)' }}>TaqPath COVID PCR (450 Kits)</p>
+                          <p style={{ color: 'var(--text-sub)' }}>Expires: <span style={{ color: 'var(--text)' }}>2026-08-25</span></p>
+                          <p style={{ color: 'var(--text-muted)' }}>Recommended: Transfer to Westside Pediatric</p>
                         </div>
                       </div>
                     </div>

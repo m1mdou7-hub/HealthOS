@@ -65,7 +65,7 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
     <div className="grid grid-cols-1 md:grid-cols-12 gap-6 text-left">
       {/* Left Column: Referrals Inbox List (Col span 4) */}
       <div className="md:col-span-4 space-y-4">
-        <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-900">
+        <div className="p-4 card-elevated rounded-2xl">
           <h3 className="text-xs font-bold text-white font-mono uppercase tracking-wider mb-3">Referrals Inbox</h3>
           {isLoading ? (
             <div className="text-zinc-500 text-xs py-4 animate-pulse">Loading inbox...</div>
@@ -105,11 +105,11 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
       {/* Right Column: Workflow Controls and Status Timeline (Col span 8) */}
       <div className="md:col-span-8">
         {!activeReferral ? (
-          <div className="p-8 rounded-3xl border border-zinc-900 bg-zinc-950/20 text-center text-zinc-500 text-xs">
+          <div className="p-8 card-elevated rounded-3xl text-center text-xs" style={{ color: 'var(--text-muted)' }}>
             Select a referral letter from the inbox to process.
           </div>
         ) : (
-          <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-6">
+          <div className="p-5 card-elevated rounded-3xl space-y-6">
             {/* Header info */}
             <div className="flex justify-between items-start border-b border-zinc-900/60 pb-3">
               <div>
@@ -117,18 +117,18 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
                 <h3 className="text-sm font-bold text-white mt-0.5">{activeReferral.name}</h3>
                 <p className="text-xs text-zinc-400 mt-1">Classification: Specialist Referral Clearance</p>
               </div>
-              <span className={`text-xs px-2.5 py-1 rounded border font-mono font-bold uppercase ${
-                activeReferral.status === 'Accepted' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                activeReferral.status === 'Rejected' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                activeReferral.status === 'Info Requested' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                'bg-zinc-900 text-zinc-400 border-zinc-800'
+              <span className={`badge ${
+                activeReferral.status === 'Accepted' ? 'badge-success' :
+                activeReferral.status === 'Rejected' ? 'badge-danger' :
+                activeReferral.status === 'Info Requested' ? 'badge-info' :
+                ''
               }`}>
                 {activeReferral.status || 'Pending Review'}
               </span>
             </div>
 
             {/* Referral description mock copy */}
-            <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-900 text-xs text-zinc-300 leading-relaxed font-sans">
+            <div className="p-4 card-elevated rounded-2xl text-xs leading-relaxed font-sans" style={{ color: 'var(--text-sub)' }}>
               <p className="font-bold text-white mb-2">CLINICAL DIRECTIVE & DIAGNOSIS OVERVIEW</p>
               <p>Referred for evaluation of localized bone volume deficiencies in the posterior maxilla. Recommend sinus floor elevation (osteotome prep) and bone graft augmentation before scheduling full arch zirconia bridge delivery.</p>
               <p className="mt-2 font-mono text-[10px] text-zinc-500">Referring Physician: Specialist Diagnostics Unit | Authenticator: REFERRAL_OK_AUTH_9918</p>
@@ -140,7 +140,7 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleUpdateReferral(activeReferral.id, 'Accepted', 'Referral review completed. Patient cleared for clinical course.')}
-                    className="flex-1 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/5 transition-all"
+                    className="btn-primary flex-1 py-2 rounded-xl text-xs"
                   >
                     <CheckCircle2 className="w-4 h-4" /> Accept Referral
                   </button>
@@ -152,14 +152,14 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
                   </button>
                   <button
                     onClick={() => setShowRequestBox(!showRequestBox)}
-                    className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-semibold text-xs flex items-center gap-1.5 transition-colors"
+                    className="btn-secondary px-4 py-2 rounded-xl text-xs"
                   >
                     <Info className="w-4 h-4" /> Request Info
                   </button>
                 </div>
 
                 {showRequestBox && (
-                  <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900 space-y-2">
+                  <div className="p-3 card-elevated rounded-2xl space-y-2">
                     <label className="text-[10px] text-zinc-400 block font-bold">Specify Information Request Details</label>
                     <div className="flex gap-2">
                       <input
@@ -172,7 +172,7 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
                       <button
                         onClick={() => handleUpdateReferral(activeReferral.id, 'Info Requested', `Information Request dispatched: "${infoRequestText}"`)}
                         disabled={!infoRequestText.trim()}
-                        className="px-3 py-2 bg-blue-600 hover:bg-blue-500 disabled:bg-zinc-800 text-white rounded-lg font-bold text-xs"
+                        className="btn-secondary px-3 py-2 rounded-lg text-xs"
                       >
                         Send
                       </button>

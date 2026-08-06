@@ -116,13 +116,13 @@ export default function WaitingQueue({
   };
 
   return (
-    <div id="waiting-queue" className="p-6 bg-zinc-900/30 border border-zinc-900 rounded-2xl space-y-6">
+    <div id="waiting-queue" className="p-6 card-elevated rounded-2xl space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h3 className="text-sm font-bold font-mono text-white flex items-center gap-2">
-            <ListCollapse className="w-4 h-4 text-amber-400" /> Triage waiting & walk-in queue
+          <h3 className="text-sm font-bold font-mono flex items-center gap-2" style={{ color: 'var(--text)' }}>
+            <ListCollapse className="w-4 h-4" style={{ color: 'var(--warning)' }} /> Triage waiting & walk-in queue
           </h3>
-          <p className="text-zinc-400 text-xs mt-1">
+          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
             Prioritize physical check-ins. Use AI-assisted triage calculations to sort emergencies and VIPs.
           </p>
         </div>
@@ -130,31 +130,32 @@ export default function WaitingQueue({
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={optimizeQueue}
-            className="px-3.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 border border-amber-500/20 text-xs font-semibold flex items-center gap-1.5 transition-all"
+            className="px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all"
+            style={{ background: 'color-mix(in srgb, var(--warning) 12%, transparent)', color: 'var(--warning)', border: '1px solid color-mix(in srgb, var(--warning) 25%, transparent)' }}
           >
             <Sparkles className="w-3.5 h-3.5" /> Optimize Queue Order
           </button>
           <button
             onClick={() => setShowAddForm(true)}
-            className="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow-lg shadow-purple-600/10 active:scale-95"
+            className="btn-primary px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all"
           >
             <UserPlus className="w-3.5 h-3.5" /> Check-in Patient
           </button>
         </div>
       </div>
 
-      <div className="border border-zinc-900 rounded-2xl overflow-hidden bg-zinc-950/40">
-        <div className="grid grid-cols-12 bg-zinc-950 p-3.5 text-[10px] font-mono font-bold text-zinc-500 uppercase tracking-widest border-b border-zinc-900">
+      <div className="rounded-2xl overflow-hidden card-elevated">
+        <div className="grid grid-cols-12 p-3.5 text-[10px] font-mono font-bold uppercase tracking-widest border-b" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)', background: 'var(--surface-2)' }}>
           <div className="col-span-1 text-center">Rank</div>
           <div className="col-span-3 text-left">Patient Chart</div>
           <div className="col-span-2 text-left">Category</div>
           <div className="col-span-2 text-left">Urgency</div>
           <div className="col-span-2 text-center">Wait Duration</div>
-          <div className="col-span-1 text-center font-bold text-amber-400">Score</div>
+          <div className="col-span-1 text-center font-bold" style={{ color: 'var(--warning)' }}>Score</div>
           <div className="col-span-1 text-center">Actions</div>
         </div>
 
-        <div className="divide-y divide-zinc-900/60">
+        <div className="divide-y" style={{ borderColor: 'var(--border)' }}>
           <AnimatePresence initial={false}>
             {queue.map((item, index) => {
               const priorityScore = calculatePriorityScore(item);
@@ -164,13 +165,14 @@ export default function WaitingQueue({
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="grid grid-cols-12 p-3.5 text-xs text-zinc-300 items-center hover:bg-zinc-900/20 text-left"
+                  className="grid grid-cols-12 p-3.5 text-xs items-center hover:bg-zinc-900/20 text-left"
+                  style={{ color: 'var(--text-sub)' }}
                 >
-                  <div className="col-span-1 text-center font-mono text-zinc-500 font-bold">
+                  <div className="col-span-1 text-center font-mono font-bold" style={{ color: 'var(--text-muted)' }}>
                     #{index + 1}
                   </div>
                   
-                  <div className="col-span-3 font-semibold text-white">
+                  <div className="col-span-3 font-semibold" style={{ color: 'var(--text)' }}>
                     {item.patientName}
                   </div>
 
@@ -184,11 +186,11 @@ export default function WaitingQueue({
                     <span className={getUrgencyBadge(item.urgency)}>{item.urgency}</span>
                   </div>
 
-                  <div className="col-span-2 text-center font-mono text-zinc-400 flex items-center justify-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-zinc-600" /> {item.waitTime}m
+                  <div className="col-span-2 text-center font-mono flex items-center justify-center gap-1" style={{ color: 'var(--text-muted)' }}>
+                    <Clock className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} /> {item.waitTime}m
                   </div>
 
-                  <div className="col-span-1 text-center font-mono font-black text-amber-400 text-sm">
+                  <div className="col-span-1 text-center font-mono font-black text-sm" style={{ color: 'var(--warning)' }}>
                     {priorityScore}
                   </div>
 
@@ -196,7 +198,7 @@ export default function WaitingQueue({
                     <button
                       onClick={() => handleMoveUp(index)}
                       disabled={index === 0}
-                      className="p-1 rounded bg-zinc-900 text-zinc-400 hover:text-white disabled:opacity-30 disabled:hover:text-zinc-400"
+                      className="btn-ghost p-1 rounded disabled:opacity-30"
                       title="Move Up"
                     >
                       <ChevronUp className="w-3.5 h-3.5" />
@@ -204,14 +206,15 @@ export default function WaitingQueue({
                     <button
                       onClick={() => handleMoveDown(index)}
                       disabled={index === queue.length - 1}
-                      className="p-1 rounded bg-zinc-900 text-zinc-400 hover:text-white disabled:opacity-30 disabled:hover:text-zinc-400"
+                      className="btn-ghost p-1 rounded disabled:opacity-30"
                       title="Move Down"
                     >
                       <ChevronDown className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => handleRemove(item.id)}
-                      className="p-1 rounded bg-zinc-900 text-zinc-500 hover:text-rose-400"
+                      className="p-1 rounded hover:opacity-80"
+                      style={{ color: 'var(--text-muted)' }}
                       title="Complete / Remove"
                     >
                       <X className="w-3.5 h-3.5" />
@@ -222,7 +225,7 @@ export default function WaitingQueue({
             })}
           </AnimatePresence>
           {queue.length === 0 && (
-            <div className="p-8 text-center text-zinc-600 text-xs italic">
+            <div className="p-8 text-center text-xs italic" style={{ color: 'var(--text-muted)' }}>
               No patients checked in right now.
             </div>
           )}
@@ -237,26 +240,27 @@ export default function WaitingQueue({
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-zinc-950 border border-zinc-900 rounded-2xl max-w-sm w-full p-6 text-left shadow-2xl"
+              className="card-elevated rounded-2xl max-w-sm w-full p-6 text-left shadow-2xl"
             >
-              <div className="flex items-center justify-between border-b border-zinc-900 pb-3">
-                <h3 className="text-sm font-bold font-mono text-white">In-Clinic Patient Check-in</h3>
+              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--border)' }}>
+                <h3 className="text-sm font-bold font-mono" style={{ color: 'var(--text)' }}>In-Clinic Patient Check-in</h3>
                 <button 
                   onClick={() => setShowAddForm(false)}
-                  className="p-1 rounded hover:bg-zinc-900 text-zinc-500 hover:text-white"
+                  className="btn-ghost p-1 rounded"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="space-y-4 pt-4 text-xs text-zinc-300">
+              <div className="space-y-4 pt-4 text-xs" style={{ color: 'var(--text-sub)' }}>
                 <div>
-                  <label className="block text-[10px] uppercase font-mono text-zinc-500 mb-1 font-bold">Patient Name</label>
+                  <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient Name</label>
                   <input
                     type="text"
                     value={patientName}
                     onChange={(e) => setPatientName(e.target.value)}
-                    className="w-full p-2.5 bg-zinc-900 border border-zinc-850 rounded-lg text-white"
+                    className="w-full p-2.5 rounded-lg border"
+                    style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
                     placeholder="e.g. Clark Kent"
                     autoFocus
                   />
@@ -264,11 +268,12 @@ export default function WaitingQueue({
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono text-zinc-500 mb-1 font-bold">Intake Type</label>
+                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Intake Type</label>
                     <select
                       value={patientType}
                       onChange={(e) => setPatientType(e.target.value as any)}
-                      className="w-full p-2 bg-zinc-900 border border-zinc-850 rounded-lg text-white"
+                      className="w-full p-2 rounded-lg border"
+                      style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
                     >
                       <option value="Walk-in">Walk-in</option>
                       <option value="Emergency">Emergency</option>
@@ -277,11 +282,12 @@ export default function WaitingQueue({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono text-zinc-500 mb-1 font-bold">Pain / Urgency</label>
+                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Pain / Urgency</label>
                     <select
                       value={urgency}
                       onChange={(e) => setUrgency(e.target.value as any)}
-                      className="w-full p-2 bg-zinc-900 border border-zinc-850 rounded-lg text-white"
+                      className="w-full p-2 rounded-lg border"
+                      style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
                     >
                       <option value="Low">Low (No pain)</option>
                       <option value="Medium">Medium (Discomfort)</option>
@@ -292,11 +298,12 @@ export default function WaitingQueue({
                 </div>
 
                 <div>
-                  <label className="block text-[10px] uppercase font-mono text-zinc-500 mb-1 font-bold">Preferred Operator</label>
+                  <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Preferred Operator</label>
                   <select
                     value={doctorId}
                     onChange={(e) => setDoctorId(e.target.value)}
-                    className="w-full p-2 bg-zinc-900 border border-zinc-850 rounded-lg text-white font-mono"
+                    className="w-full p-2 rounded-lg border font-mono"
+                    style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
                   >
                     {MOCK_DOCTORS.map(d => (
                       <option key={d.id} value={d.id}>{d.name} ({d.specialty})</option>
@@ -305,18 +312,18 @@ export default function WaitingQueue({
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 mt-6 pt-3 border-t border-zinc-900">
+              <div className="flex justify-end gap-2 mt-6 pt-3 border-t" style={{ borderColor: 'var(--border)' }}>
                 <button
                   type="button"
                   onClick={() => setShowAddForm(false)}
-                  className="px-4 py-2 rounded-xl text-xs bg-zinc-900 hover:bg-zinc-850 text-zinc-400 hover:text-white"
+                  className="btn-ghost px-4 py-2 rounded-xl text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
                   onClick={handleAddPatient}
-                  className="px-4 py-2 rounded-xl text-xs bg-purple-600 hover:bg-purple-500 text-white font-bold"
+                  className="btn-primary px-4 py-2 rounded-xl text-xs font-bold"
                 >
                   Check-in Triage
                 </button>

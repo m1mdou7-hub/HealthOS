@@ -120,7 +120,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
   return (
     <div className="space-y-6 text-left">
       {/* Header toolbar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 card-gradient rounded-3xl gap-3">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <CalendarIcon className="w-4 h-4 text-emerald-400" /> Patient Appointment Desk
@@ -139,7 +139,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
             });
             setShowBookModal(true);
           }}
-          className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold flex items-center gap-1 self-stretch sm:self-auto justify-center"
+          className="btn-primary px-3.5 py-1.5 rounded-lg text-xs self-stretch sm:self-auto justify-center"
         >
           <Plus className="w-3.5 h-3.5" /> Book Appointment
         </button>
@@ -150,20 +150,25 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
         {isLoading ? (
           <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading appointments...</div>
         ) : appointments.length === 0 ? (
-          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-3xl bg-zinc-950/20">
-            No active appointments registered. Use the toolbar to schedule a visit.
+          <div className="py-8 card-elevated rounded-3xl text-center">
+            <div className="mx-auto w-10 h-10 rounded-2xl flex items-center justify-center mb-3" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+              <CalendarIcon className="w-5 h-5" />
+            </div>
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              No active appointments registered. Use the toolbar to schedule a visit.
+            </p>
           </div>
         ) : (
           appointments.map((appt) => (
-            <div key={appt.id} className="p-4 rounded-xl bg-zinc-950/20 border border-zinc-900 flex flex-col sm:flex-row justify-between gap-4 hover:border-zinc-800 transition-colors">
+            <div key={appt.id} className="p-4 card-elevated rounded-2xl flex flex-col sm:flex-row justify-between gap-4">
               <div className="space-y-1.5 text-left">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-xs font-mono font-bold text-zinc-500">{appt.date} • {appt.startTime} ({appt.duration} mins)</span>
-                  <span className={`text-[8px] px-2 py-0.5 rounded font-mono font-bold border uppercase ${
-                    appt.status === 'Confirmed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                    appt.status === 'In-Progress' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                    appt.status === 'Completed' ? 'bg-zinc-900 text-zinc-400 border-zinc-800' :
-                    'bg-red-500/10 text-red-400 border-red-500/20'
+                  <span className={`badge ${
+                    appt.status === 'Confirmed' ? 'badge-success' :
+                    appt.status === 'In-Progress' ? 'badge-info' :
+                    appt.status === 'Completed' ? '' :
+                    'badge-danger'
                   }`}>
                     {appt.status}
                   </span>
@@ -179,7 +184,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                   {appt.status === 'Pending' && (
                     <button
                       onClick={() => handleAction(appt.id, 'Confirm')}
-                      className="px-2.5 py-1.5 rounded-lg bg-emerald-500 text-black text-[10px] font-bold"
+                      className="btn-primary px-2.5 py-1.5 rounded-lg text-[10px]"
                     >
                       Confirm
                     </button>
@@ -187,7 +192,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                   {appt.status === 'Confirmed' && (
                     <button
                       onClick={() => handleAction(appt.id, 'Check In')}
-                      className="px-2.5 py-1.5 rounded-lg bg-blue-600 text-white text-[10px] font-bold"
+                      className="btn-secondary px-2.5 py-1.5 rounded-lg text-[10px]"
                     >
                       Check In
                     </button>
@@ -195,7 +200,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                   {appt.status === 'In-Progress' && (
                     <button
                       onClick={() => handleAction(appt.id, 'Complete')}
-                      className="px-2.5 py-1.5 rounded-lg bg-emerald-500 text-black text-[10px] font-bold"
+                      className="btn-primary px-2.5 py-1.5 rounded-lg text-[10px]"
                     >
                       Complete
                     </button>
@@ -210,19 +215,19 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                         doctorName: appt.doctorName
                       });
                     }}
-                    className="px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] text-zinc-300"
+                    className="btn-secondary px-2.5 py-1.5 rounded-lg text-[10px]"
                   >
                     Reschedule
                   </button>
                   <button
                     onClick={() => handleAction(appt.id, 'No Show')}
-                    className="px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] text-amber-400"
+                    className="btn-secondary px-2.5 py-1.5 rounded-lg text-[10px] text-amber-400"
                   >
                     No Show
                   </button>
                   <button
                     onClick={() => handleAction(appt.id, 'Cancel')}
-                    className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-950 border border-zinc-800 text-[10px] text-red-400"
+                    className="btn-ghost p-1.5 rounded-lg text-red-400"
                     title="Cancel Visit"
                   >
                     <XCircle className="w-3.5 h-3.5" />
@@ -237,8 +242,8 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
       {/* Book Appointment Modal */}
       {showBookModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleBookAppointment} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
-            <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">Schedule Patient Intake</h3>
+          <form onSubmit={handleBookAppointment} className="card-elevated p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
+            <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">Schedule Patient Intake</h3>
             <div className="space-y-3">
               <div className="space-y-1">
                 <label className="text-zinc-400">Procedure Description</label>
@@ -300,14 +305,14 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
               <button
                 type="button"
                 onClick={() => setShowBookModal(false)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 text-zinc-400"
+                className="btn-ghost px-3 py-1.5 rounded-lg"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={createMutation.isPending}
-                className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold"
+                className="btn-primary px-4 py-1.5 rounded-lg"
               >
                 Schedule
               </button>
@@ -319,8 +324,8 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
       {/* Reschedule Modal */}
       {reschedulingAppt && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleRescheduleSubmit} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
-            <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">Reschedule Visit</h3>
+          <form onSubmit={handleRescheduleSubmit} className="card-elevated p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
+            <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">Reschedule Visit</h3>
             <div className="space-y-3">
               <div className="space-y-1">
                 <label className="text-zinc-400">Date</label>
@@ -357,14 +362,14 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
               <button
                 type="button"
                 onClick={() => setReschedulingAppt(null)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 text-zinc-400"
+                className="btn-ghost px-3 py-1.5 rounded-lg"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={rescheduleMutation.isPending}
-                className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold"
+                className="btn-primary px-4 py-1.5 rounded-lg"
               >
                 Save
               </button>

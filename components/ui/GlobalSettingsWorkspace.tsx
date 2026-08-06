@@ -201,25 +201,26 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans text-sm">
+    <div className="space-y-6 animate-fade-in relative font-sans text-sm" style={{ color: 'var(--text)' }}>
       
       {/* Success Toast */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-sans text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 right-6 z-50 text-white font-sans text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 animate-slide-in"
+          style={{ background: 'var(--success)', border: '1px solid var(--border)' }}>
           <CheckCircle2 className="w-5 h-5 shrink-0 text-white" />
           <span>{toastMsg}</span>
         </div>
       )}
 
       {/* SECTION TABS HEADER */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-950 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
-        <div className="flex flex-wrap gap-2 p-1.5 bg-black rounded-3xl border border-zinc-850 relative">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 p-3 rounded-3xl card-elevated">
+        <div className="flex flex-wrap gap-2 p-1.5 rounded-3xl card-gradient relative">
           {[
-            { id: 'organization', key: 'organization', icon: Building, color: 'bg-blue-500/10 text-blue-400 border border-blue-500/10' },
-            { id: 'profile', key: 'profile', icon: User, color: 'bg-zinc-800 text-zinc-300 border border-zinc-700' },
-            { id: 'app-config', key: 'appConfig', icon: Settings, color: 'bg-zinc-800 text-zinc-300 border border-zinc-700' },
-            { id: 'notifications', key: 'notifications', icon: Bell, color: 'bg-amber-500/10 text-amber-400 border border-amber-500/10' },
-            { id: 'security', key: 'security', icon: Shield, color: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/10' }
+            { id: 'organization', key: 'organization', icon: Building },
+            { id: 'profile', key: 'profile', icon: User },
+            { id: 'app-config', key: 'appConfig', icon: Settings },
+            { id: 'notifications', key: 'notifications', icon: Bell },
+            { id: 'security', key: 'security', icon: Shield }
           ].map(t => {
             const Icon = t.icon;
             const isSel = tab === t.id;
@@ -228,23 +229,14 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
               <button
                 key={t.id}
                 onClick={() => setTab(t.id as any)}
-                className="relative px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold font-sans transition-all flex items-center gap-2 cursor-pointer outline-none active:scale-97"
+                className={`nav-item relative px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold font-sans transition-all flex items-center gap-2 cursor-pointer outline-none active:scale-95 ${isSel ? 'active font-bold' : ''}`}
               >
-                {isSel && (
-                  <motion.div
-                    layoutId="activeTabUnderlay"
-                    className="absolute inset-0 bg-white rounded-xl border border-zinc-200 z-0"
-                    transition={{ type: "spring", bounce: 0.15, duration: 0.35 }}
-                  />
-                )}
-                <span className={`relative z-10 flex items-center gap-2.5 ${
-                  isSel ? 'text-black font-bold' : 'text-zinc-400 hover:text-zinc-200'
-                }`}>
-                  <div className={`w-6 h-6 rounded-md flex items-center justify-center border transition-all ${
-                    isSel 
-                      ? 'bg-zinc-900 text-white border-zinc-800' 
-                      : t.color
-                  }`}>
+                <span className="relative z-10 flex items-center gap-2.5" style={{ color: isSel ? 'var(--text)' : 'var(--text-muted)' }}>
+                  <div className="w-6 h-6 rounded-md flex items-center justify-center border" style={{
+                    background: isSel ? 'var(--accent)' : 'var(--surface-2)',
+                    borderColor: isSel ? 'transparent' : 'var(--border)',
+                    color: isSel ? 'var(--surface-solid)' : 'var(--text-sub)'
+                  }}>
                     <Icon className="w-3.5 h-3.5 shrink-0" />
                   </div>
                   <span>{labelText}</span>
@@ -254,8 +246,8 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
           })}
         </div>
 
-        <div className="flex items-center gap-2 px-3.5 py-2 bg-zinc-950/80 rounded-xl border border-zinc-800 text-xs md:text-sm font-semibold text-zinc-300 font-sans">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl card-elevated text-xs md:text-sm font-semibold font-sans" style={{ color: 'var(--text-sub)' }}>
+          <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: 'var(--success)' }}></span>
           <span>{tSet('nodeStatus')}</span>
         </div>
       </div>
@@ -266,35 +258,35 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
           <div className="lg:col-span-2 space-y-6">
             
             {/* Department List */}
-            <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-5">
+            <div className="p-6 rounded-3xl card-elevated space-y-5">
               <div className="flex justify-between items-center">
                 <div>
-                  <span className="text-base font-bold text-white tracking-tight block">{tSet('org.hierarchyTitle')}</span>
-                  <p className="text-xs md:text-sm text-zinc-400 mt-1 leading-normal">{tSet('org.hierarchyDesc')}</p>
+                  <span className="text-base font-bold tracking-tight block" style={{ color: 'var(--text)' }}>{tSet('org.hierarchyTitle')}</span>
+                  <p className="text-xs md:text-sm mt-1 leading-normal" style={{ color: 'var(--text-muted)' }}>{tSet('org.hierarchyDesc')}</p>
                 </div>
               </div>
 
               <div className="space-y-3">
                 {departments.map(dep => (
-                  <div key={dep.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between text-sm">
+                  <div key={dep.id} className="p-4 card-elevated card-hover rounded-3xl flex items-center justify-between text-sm">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'color-mix(in srgb, var(--accent) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', color: 'var(--accent)' }}>
                         <Building className="w-4 h-4" />
                       </div>
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded-md border border-zinc-700 font-mono font-bold">{dep.code}</span>
-                          <h5 className="font-semibold text-white text-[15px]">{dep.name}</h5>
+                          <span className="text-[10px] px-2 py-0.5 rounded-md border font-mono font-bold" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>{dep.code}</span>
+                          <h5 className="font-semibold text-[15px]" style={{ color: 'var(--text)' }}>{dep.name}</h5>
                         </div>
-                        <p className="text-xs text-zinc-400">
-                          {tSet('org.head')}: <span className="text-zinc-200 font-medium">{dep.head}</span> • {tSet('org.staffSize')}: <span className="text-zinc-200 font-bold">{dep.activeStaff}</span>
+                        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                          {tSet('org.head')}: <span className="font-medium" style={{ color: 'var(--text-sub)' }}>{dep.head}</span> • {tSet('org.staffSize')}: <span className="font-bold" style={{ color: 'var(--text-sub)' }}>{dep.activeStaff}</span>
                         </p>
                       </div>
                     </div>
 
                     <button 
                       onClick={() => handleRemoveDept(dep.id)}
-                      className="p-2 hover:bg-zinc-900 text-zinc-500 hover:text-red-400 transition-all cursor-pointer rounded-xl border border-transparent hover:border-zinc-800"
+                      className="btn-ghost p-2 rounded-xl cursor-pointer"
                       title="Delete department"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -304,13 +296,14 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
               </div>
 
               {/* Add Dept Form */}
-              <form onSubmit={handleAddDept} className="grid grid-cols-1 md:grid-cols-4 gap-3 pt-4 border-t border-zinc-900 text-sm">
+              <form onSubmit={handleAddDept} className="grid grid-cols-1 md:grid-cols-4 gap-3 pt-4 border-t text-sm" style={{ borderColor: 'var(--border)' }}>
                 <input 
                   type="text" 
                   placeholder={tSet('org.deptNamePlaceholder')}
                   value={newDepName}
                   onChange={(e) => setNewDepName(e.target.value)}
-                  className="md:col-span-2 bg-zinc-950 border border-zinc-850 px-4 py-2.5 text-white outline-none rounded-xl focus:border-zinc-700 text-sm"
+                  className="md:col-span-2 px-4 py-2.5 outline-none rounded-xl text-sm"
+                  style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)' }}
                 />
                 <input 
                   type="text" 
@@ -318,11 +311,12 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                   value={newDepCode}
                   onChange={(e) => setNewDepCode(e.target.value)}
                   maxLength={5}
-                  className="bg-zinc-950 border border-zinc-850 px-4 py-2.5 text-white outline-none rounded-xl uppercase focus:border-zinc-700 text-sm font-mono"
+                  className="px-4 py-2.5 outline-none rounded-xl uppercase text-sm font-mono"
+                  style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)' }}
                 />
                 <button 
                   type="submit"
-                  className="bg-white hover:bg-zinc-100 text-black font-bold px-4 py-2.5 rounded-xl text-center flex items-center justify-center gap-1.5 cursor-pointer text-sm"
+                  className="btn-primary font-bold px-4 py-2.5 rounded-xl text-center flex items-center justify-center gap-1.5 cursor-pointer text-sm"
                 >
                   <Plus className="w-4 h-4" /> {tSet('org.addDept')}
                 </button>
@@ -330,16 +324,16 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             </div>
 
             {/* Team seat licenses & Staff Management */}
-            <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-5">
+            <div className="p-6 rounded-3xl card-elevated space-y-5">
               <div className="flex justify-between items-center">
                 <div>
-                  <span className="text-base font-bold text-white tracking-tight block">{tSet('org.staffTitle')}</span>
-                  <p className="text-xs md:text-sm text-zinc-400 mt-1 leading-normal">{tSet('org.staffDesc')}</p>
+                  <span className="text-base font-bold tracking-tight block" style={{ color: 'var(--text)' }}>{tSet('org.staffTitle')}</span>
+                  <p className="text-xs md:text-sm mt-1 leading-normal" style={{ color: 'var(--text-muted)' }}>{tSet('org.staffDesc')}</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setShowInviteModal(true)}
-                  className="px-4 py-2.5 bg-white text-black hover:bg-zinc-100 font-bold text-sm rounded-xl flex items-center gap-1.5 shadow-md cursor-pointer"
+                  className="btn-primary font-bold text-sm rounded-xl flex items-center gap-1.5 shadow-md cursor-pointer px-4 py-2.5"
                 >
                   <Plus className="w-4 h-4" /> {tSet('org.inviteBtn')}
                 </button>
@@ -347,21 +341,21 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 {team.map(member => (
-                  <div key={member.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-start justify-between">
+                  <div key={member.id} className="p-4 card-elevated card-hover rounded-3xl flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text-sub)' }}>
                         <User className="w-4 h-4" />
                       </div>
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <p className="text-white font-bold text-[15px]">{member.name}</p>
-                          <span className="text-[10px] text-zinc-300 px-2 py-0.5 bg-zinc-900 border border-zinc-800 rounded font-semibold uppercase">{member.role}</span>
+                          <p className="font-bold text-[15px]" style={{ color: 'var(--text)' }}>{member.name}</p>
+                          <span className="text-[10px] px-2 py-0.5 rounded font-semibold uppercase" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', border: '1px solid var(--border)' }}>{member.role}</span>
                         </div>
-                        <p className="text-xs text-zinc-400">{member.email}</p>
+                        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{member.email}</p>
                       </div>
                     </div>
                     <span className={`text-[10px] px-2.5 py-0.5 rounded font-bold uppercase border ${
-                      member.status === 'Active' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                      member.status === 'Active' ? 'badge-success' : 'badge-warning'
                     }`}>
                       {member.status}
                     </span>
@@ -373,25 +367,25 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
           {/* Sub Info panel */}
           <div className="space-y-4">
-            <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-4 text-sm">
-              <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest block">{tSet('org.subscriptionTitle')}</span>
+            <div className="p-6 rounded-3xl card-gradient space-y-4 text-sm">
+              <span className="text-xs font-bold uppercase tracking-widest block" style={{ color: 'var(--text-muted)' }}>{tSet('org.subscriptionTitle')}</span>
               <div className="space-y-3.5">
-                <div className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
-                  <p className="text-white font-extrabold text-base">{tSet('org.enterprisePlan')}</p>
-                  <p className="text-xs text-zinc-400 mt-1">{tSet('org.planExpiry')}</p>
+                <div className="p-4 card-elevated rounded-3xl">
+                  <p className="font-extrabold text-base" style={{ color: 'var(--text)' }}>{tSet('org.enterprisePlan')}</p>
+                  <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{tSet('org.planExpiry')}</p>
                 </div>
-                <div className="space-y-2 text-zinc-400 text-sm">
+                <div className="space-y-2 text-sm" style={{ color: 'var(--text-sub)' }}>
                   <div className="flex justify-between">
                     <span>{tSet('org.seatLicenses')}</span>
-                    <span className="text-white font-bold">{team.length} {tSet('org.seats')}</span>
+                    <span className="font-bold" style={{ color: 'var(--text)' }}>{team.length} {tSet('org.seats')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>{tSet('org.multiClinic')}</span>
-                    <span className="text-white font-bold">{tSet('org.activeClinics')}</span>
+                    <span className="font-bold" style={{ color: 'var(--text)' }}>{tSet('org.activeClinics')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>{tSet('org.supportDesk')}</span>
-                    <span className="text-emerald-400 font-bold">{tSet('org.dedicatedSupport')}</span>
+                    <span className="font-bold" style={{ color: 'var(--success)' }}>{tSet('org.dedicatedSupport')}</span>
                   </div>
                 </div>
               </div>
@@ -426,36 +420,37 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                   setShowInviteModal(false);
                 }
               }}
-              className="relative bg-zinc-950 border border-zinc-850 p-6 rounded-3xl w-full max-w-md space-y-4 text-sm font-sans shadow-2xl z-10 select-none touch-none"
+              className="relative card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-sm font-sans shadow-2xl z-10 select-none touch-none"
             >
               {/* Drag Handle for mobile sheet aesthetics */}
-              <div className="mx-auto w-12 h-1 bg-zinc-800 rounded-full mb-1 cursor-grab active:cursor-grabbing shrink-0" />
+              <div className="mx-auto w-12 h-1 rounded-full mb-1 cursor-grab active:cursor-grabbing shrink-0" style={{ background: 'var(--text-muted)' }} />
               
               <form onSubmit={handleInviteStaff} className="space-y-4">
-                <div className="flex justify-between items-center border-b border-zinc-850 pb-3">
+                <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--border)' }}>
                   <div>
-                    <h3 className="text-base font-bold text-white flex items-center gap-2">
-                      <User className="w-4 h-4 text-white" /> {tSet('invite.title')}
+                    <h3 className="text-base font-bold flex items-center gap-2" style={{ color: 'var(--text)' }}>
+                      <User className="w-4 h-4" /> {tSet('invite.title')}
                     </h3>
-                    <p className="text-xs text-zinc-400 mt-1">{tSet('invite.subtitle')}</p>
+                    <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{tSet('invite.subtitle')}</p>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <div className="space-y-1">
-                    <label className="text-zinc-300 font-semibold">{tSet('invite.fullName')}</label>
+                    <label className="font-semibold" style={{ color: 'var(--text-sub)' }}>{tSet('invite.fullName')}</label>
                     <input
                       type="text"
                       required
                       value={inviteForm.name}
                       onChange={(e) => setInviteForm({ ...inviteForm, name: e.target.value })}
                       placeholder={tSet('invite.namePlaceholder')}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none focus:border-zinc-700 text-sm"
+                      className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                      style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-zinc-300 font-semibold">{tSet('invite.email')}</label>
+                    <label className="font-semibold" style={{ color: 'var(--text-sub)' }}>{tSet('invite.email')}</label>
                     <input
                       type="email"
                       required
@@ -463,16 +458,18 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                       onChange={(e) => setInviteForm({ ...inviteForm, email: e.target.value })}
                       placeholder={tSet('invite.emailPlaceholder')}
                       dir="ltr"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none focus:border-zinc-700 text-sm"
+                      className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                      style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-zinc-300 font-semibold">{tSet('invite.role')}</label>
+                    <label className="font-semibold" style={{ color: 'var(--text-sub)' }}>{tSet('invite.role')}</label>
                     <select
                       value={inviteForm.role}
                       onChange={(e) => setInviteForm({ ...inviteForm, role: e.target.value as StaffRole })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none focus:border-zinc-700 text-sm"
+                      className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                      style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                     >
                       <option value="clinician">🩺 {tSet('invite.roleClinician')}</option>
                       <option value="receptionist">📋 {tSet('invite.roleReceptionist')}</option>
@@ -483,28 +480,29 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-zinc-300 font-semibold">{tSet('invite.tempPassword')}</label>
+                    <label className="font-semibold" style={{ color: 'var(--text-sub)' }}>{tSet('invite.tempPassword')}</label>
                     <input
                       type="text"
                       required
                       value={inviteForm.tempPassword}
                       onChange={(e) => setInviteForm({ ...inviteForm, tempPassword: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white outline-none focus:border-zinc-700 text-sm"
+                      className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                      style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                     />
                   </div>
                 </div>
 
-                <div className="flex justify-end gap-2 border-t border-zinc-850 pt-3">
+                <div className="flex justify-end gap-2 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
                   <button
                     type="button"
                     onClick={() => setShowInviteModal(false)}
-                    className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 font-semibold text-sm active:scale-95 transition-transform"
+                    className="btn-ghost px-4 py-2 rounded-xl font-semibold text-sm active:scale-95 transition-transform"
                   >
                     {tSet('invite.cancel')}
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-white text-black hover:bg-zinc-100 font-bold text-sm flex items-center gap-1.5 active:scale-95 transition-transform"
+                    className="btn-primary px-5 py-2 rounded-xl font-bold text-sm flex items-center gap-1.5 active:scale-95 transition-transform"
                   >
                     {tSet('invite.submit')}
                   </button>
@@ -528,16 +526,17 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             <div className="lg:col-span-2 space-y-4">
               
               {/* App defaults settings */}
-              <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-4">
-                <span className="text-base font-bold text-white tracking-tight block">{tSet('appConfig.appointmentTitle')}</span>
+              <div className="p-6 rounded-3xl card-elevated space-y-4">
+                <span className="text-base font-bold tracking-tight block" style={{ color: 'var(--text)' }}>{tSet('appConfig.appointmentTitle')}</span>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="text-zinc-400">{tSet('appConfig.slotDuration')}</label>
+                      <label style={{ color: 'var(--text-muted)' }}>{tSet('appConfig.slotDuration')}</label>
                       <select 
                         value={slotDuration} 
                         onChange={(e) => setSlotDuration(e.target.value)}
-                        className="w-full bg-zinc-950 border border-zinc-850 px-3.5 py-2.5 rounded-xl text-white outline-none focus:border-zinc-700 text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                        style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                       >
                         <option value="15">15 min</option>
                         <option value="30">30 min</option>
@@ -546,9 +545,10 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                       </select>
                     </div>
                     <div className="space-y-1">
-                      <label className="text-zinc-400">{tSet('appConfig.cancellationPeriod')}</label>
+                      <label style={{ color: 'var(--text-muted)' }}>{tSet('appConfig.cancellationPeriod')}</label>
                       <select 
-                        className="w-full bg-zinc-950 border border-zinc-850 px-3.5 py-2.5 rounded-xl text-white outline-none focus:border-zinc-700 text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                        style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                       >
                         <option>{tSet('appConfig.cancel24h')}</option>
                         <option>{tSet('appConfig.cancel48h')}</option>
@@ -557,10 +557,10 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
+                  <div className="flex items-center justify-between p-4 card-elevated card-hover rounded-3xl">
                     <div>
-                      <p className="text-white font-bold">{tSet('appConfig.allowCancel')}</p>
-                      <p className="text-xs text-zinc-400 mt-1">{tSet('appConfig.allowCancelDesc')}</p>
+                      <p className="font-bold" style={{ color: 'var(--text)' }}>{tSet('appConfig.allowCancel')}</p>
+                      <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{tSet('appConfig.allowCancelDesc')}</p>
                     </div>
                     <SpringSwitch 
                       checked={allowCancel}
@@ -571,19 +571,20 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
               </div>
 
               {/* AI/Gemini configurations */}
-              <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-4">
+              <div className="p-6 rounded-3xl card-elevated space-y-4">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-white" />
-                  <span className="text-base font-bold text-white tracking-tight block">{tSet('appConfig.aiTitle')}</span>
+                  <Sparkles className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+                  <span className="text-base font-bold tracking-tight block" style={{ color: 'var(--text)' }}>{tSet('appConfig.aiTitle')}</span>
                 </div>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="text-zinc-400">{tSet('appConfig.primaryModel')}</label>
+                      <label style={{ color: 'var(--text-muted)' }}>{tSet('appConfig.primaryModel')}</label>
                       <select 
                         value={geminiModel} 
                         onChange={(e) => setGeminiModel(e.target.value)}
-                        className="w-full bg-zinc-950 border border-zinc-850 px-3.5 py-2.5 rounded-xl text-white outline-none focus:border-zinc-700 text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                        style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                       >
                         <option value="gemini-3.5-flash">Gemini 3.5 Flash (Default)</option>
                         <option value="gemini-3.5-pro">Gemini 3.5 Pro (Clinical Notes)</option>
@@ -591,11 +592,12 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                       </select>
                     </div>
                     <div className="space-y-1">
-                      <label className="text-zinc-400">{tSet('appConfig.temperature')}</label>
+                      <label style={{ color: 'var(--text-muted)' }}>{tSet('appConfig.temperature')}</label>
                       <select 
                         value={geminiTemp} 
                         onChange={(e) => setGeminiTemp(e.target.value)}
-                        className="w-full bg-zinc-950 border border-zinc-850 px-3.5 py-2.5 rounded-xl text-white outline-none focus:border-zinc-700 text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                        style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                       >
                         <option value="0.0">0.0 (Deterministic / Safe)</option>
                         <option value="0.2">0.2 (Recommended Clinical)</option>
@@ -604,14 +606,14 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     </div>
                   </div>
 
-                  <div className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl space-y-1.5 text-xs md:text-sm">
-                    <div className="flex justify-between items-center text-emerald-400 font-bold">
+                  <div className="p-4 card-elevated rounded-3xl space-y-1.5 text-xs md:text-sm">
+                    <div className="flex justify-between items-center font-bold" style={{ color: 'var(--success)' }}>
                       <span className="flex items-center gap-1.5">
                         <Key className="w-4 h-4" /> {tSet('appConfig.apiKeyStatus')}
                       </span>
                       <span>{tSet('appConfig.apiKeyConfigured')}</span>
                     </div>
-                    <p className="text-xs text-zinc-400 mt-1 leading-normal">{tSet('appConfig.apiKeyDesc')}</p>
+                    <p className="text-xs mt-1 leading-normal" style={{ color: 'var(--text-muted)' }}>{tSet('appConfig.apiKeyDesc')}</p>
                   </div>
                 </div>
               </div>
@@ -619,15 +621,16 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
             {/* Language / Region Settings */}
             <div className="space-y-4">
-              <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-4">
-                <span className="text-base font-bold text-white tracking-tight block">{tSet('appConfig.regionTitle')}</span>
+              <div className="p-6 rounded-3xl card-gradient space-y-4">
+                <span className="text-base font-bold tracking-tight block" style={{ color: 'var(--text)' }}>{tSet('appConfig.regionTitle')}</span>
                 <div className="space-y-3">
                   <div className="space-y-1">
-                    <label className="text-zinc-400">{tSet('appConfig.defaultLanguage')}</label>
+                    <label style={{ color: 'var(--text-muted)' }}>{tSet('appConfig.defaultLanguage')}</label>
                     <select 
                       value={selectedLanguage}
                       onChange={(e) => setSelectedLanguage(e.target.value)}
-                      className="w-full bg-zinc-950 border border-zinc-850 px-3.5 py-2.5 rounded-xl text-white outline-none focus:border-zinc-700 text-sm"
+                      className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                      style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                     >
                       <option>English (US)</option>
                       <option>English (UK)</option>
@@ -638,11 +641,12 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-zinc-400">{tSet('appConfig.timezone')}</label>
+                    <label style={{ color: 'var(--text-muted)' }}>{tSet('appConfig.timezone')}</label>
                     <select 
                       value={selectedTimezone}
                       onChange={(e) => setSelectedTimezone(e.target.value)}
-                      className="w-full bg-zinc-950 border border-zinc-850 px-3.5 py-2.5 rounded-xl text-white outline-none focus:border-zinc-700 text-sm"
+                      className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                      style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                     >
                       <option value="America/Los_Angeles">America/Los_Angeles</option>
                       <option value="America/New_York">America/New_York</option>
@@ -655,7 +659,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
                 <button 
                   onClick={() => triggerToast(tSet('appConfig.applyBtn'))}
-                  className="w-full bg-white hover:bg-zinc-100 text-black font-bold p-3 rounded-xl text-center cursor-pointer transition-colors block mt-2 text-sm"
+                  className="w-full btn-primary font-bold p-3 rounded-xl text-center cursor-pointer transition-colors block mt-2 text-sm"
                 >
                   {tSet('appConfig.applyBtn')}
                 </button>
@@ -670,18 +674,18 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             
             {/* Active alert rules */}
             <div className="lg:col-span-2 space-y-4">
-              <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-4">
-                <span className="text-base font-bold text-white tracking-tight block">{tSet('notifications.templatesTitle')}</span>
-                <p className="text-xs md:text-sm text-zinc-400 mt-1 leading-normal">{tSet('notifications.templatesDesc')}</p>
+              <div className="p-6 rounded-3xl card-elevated space-y-4">
+                <span className="text-base font-bold tracking-tight block" style={{ color: 'var(--text)' }}>{tSet('notifications.templatesTitle')}</span>
+                <p className="text-xs md:text-sm mt-1 leading-normal" style={{ color: 'var(--text-muted)' }}>{tSet('notifications.templatesDesc')}</p>
 
                 <div className="space-y-3">
                   {smsTemplates.map(t => (
-                    <div key={t.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl space-y-2">
+                    <div key={t.id} className="p-4 card-elevated card-hover rounded-3xl space-y-2">
                       <div className="flex justify-between items-center text-sm">
-                        <span className="font-bold text-white">{t.name}</span>
-                        <span className="text-[10px] bg-zinc-850 text-zinc-300 border border-zinc-800 px-2.5 py-0.5 rounded-md font-semibold">{t.channel}</span>
+                        <span className="font-bold" style={{ color: 'var(--text)' }}>{t.name}</span>
+                        <span className="text-[10px] px-2.5 py-0.5 rounded-md font-semibold" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', border: '1px solid var(--border)' }}>{t.channel}</span>
                       </div>
-                      <p className="text-xs md:text-sm text-zinc-300 bg-zinc-900/30 p-3 rounded-xl border border-zinc-900/40 leading-relaxed font-sans">{t.body}</p>
+                      <p className="text-xs md:text-sm p-3 rounded-xl border leading-relaxed font-sans" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>{t.body}</p>
                     </div>
                   ))}
                 </div>
@@ -690,18 +694,18 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
             {/* Channels toggle */}
             <div className="space-y-4">
-              <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-4">
-                <span className="text-base font-bold text-white tracking-tight block">{tSet('notifications.channelsTitle')}</span>
+              <div className="p-6 rounded-3xl card-gradient space-y-4">
+                <span className="text-base font-bold tracking-tight block" style={{ color: 'var(--text)' }}>{tSet('notifications.channelsTitle')}</span>
                 
                 <div className="space-y-3.5">
-                  <div className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
+                  <div className="flex justify-between items-center p-4 card-elevated card-hover rounded-3xl">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'color-mix(in srgb, var(--success) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--success) 25%, transparent)', color: 'var(--success)' }}>
                         <Mail className="w-4 h-4" />
                       </div>
                       <div>
-                        <p className="text-white font-bold">{tSet('notifications.emailChannel')}</p>
-                        <p className="text-xs text-zinc-400 mt-0.5">{tSet('notifications.emailGateway')}</p>
+                        <p className="font-bold" style={{ color: 'var(--text)' }}>{tSet('notifications.emailChannel')}</p>
+                        <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{tSet('notifications.emailGateway')}</p>
                       </div>
                     </div>
                     <SpringSwitch 
@@ -710,14 +714,14 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     />
                   </div>
 
-                  <div className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
+                  <div className="flex justify-between items-center p-4 card-elevated card-hover rounded-3xl">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'color-mix(in srgb, var(--info) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--info) 25%, transparent)', color: 'var(--info)' }}>
                         <Smartphone className="w-4 h-4" />
                       </div>
                       <div>
-                        <p className="text-white font-bold">{tSet('notifications.smsChannel')}</p>
-                        <p className="text-xs text-zinc-400 mt-0.5">{tSet('notifications.smsGateway')}</p>
+                        <p className="font-bold" style={{ color: 'var(--text)' }}>{tSet('notifications.smsChannel')}</p>
+                        <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{tSet('notifications.smsGateway')}</p>
                       </div>
                     </div>
                     <SpringSwitch 
@@ -726,14 +730,14 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     />
                   </div>
 
-                  <div className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-850 rounded-3xl">
+                  <div className="flex justify-between items-center p-4 card-elevated card-hover rounded-3xl">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'color-mix(in srgb, var(--accent) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', color: 'var(--accent)' }}>
                         <Activity className="w-4 h-4" />
                       </div>
                       <div>
-                        <p className="text-white font-bold">{tSet('notifications.whatsappChannel')}</p>
-                        <p className="text-xs text-zinc-400 mt-0.5">{tSet('notifications.whatsappGateway')}</p>
+                        <p className="font-bold" style={{ color: 'var(--text)' }}>{tSet('notifications.whatsappChannel')}</p>
+                        <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{tSet('notifications.whatsappGateway')}</p>
                       </div>
                     </div>
                     <SpringSwitch 
@@ -745,7 +749,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
                 <button 
                   onClick={() => triggerToast(tSet('notifications.saveBtn'))}
-                  className="w-full bg-white hover:bg-zinc-100 text-black font-bold p-3 rounded-xl text-center cursor-pointer transition-all block mt-2 text-sm"
+                  className="w-full btn-primary font-bold p-3 rounded-xl text-center cursor-pointer transition-all block mt-2 text-sm"
                 >
                   {tSet('notifications.saveBtn')}
                 </button>
@@ -760,21 +764,21 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
             
             {/* Audit Log Table */}
             <div className="lg:col-span-2 space-y-4">
-              <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-4">
-                <span className="text-base font-bold text-white tracking-tight block">{tSet('security.auditTitle')}</span>
-                <p className="text-xs md:text-sm text-zinc-400 mt-1 leading-normal">{tSet('security.auditDesc')}</p>
+              <div className="p-6 rounded-3xl card-elevated space-y-4">
+                <span className="text-base font-bold tracking-tight block" style={{ color: 'var(--text)' }}>{tSet('security.auditTitle')}</span>
+                <p className="text-xs md:text-sm mt-1 leading-normal" style={{ color: 'var(--text-muted)' }}>{tSet('security.auditDesc')}</p>
 
                 <div className="space-y-2.5">
                   {AUDIT_LOGS.map((log, i) => (
-                    <div key={i} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex justify-between items-center text-sm">
+                    <div key={i} className="p-4 card-elevated card-hover rounded-3xl flex justify-between items-center text-sm">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-zinc-400 font-semibold">{log.timestamp}</span>
-                          <span className="font-bold text-white">{log.action}</span>
+                          <span className="text-xs font-semibold" style={{ color: 'var(--text-muted)' }}>{log.timestamp}</span>
+                          <span className="font-bold" style={{ color: 'var(--text)' }}>{log.action}</span>
                         </div>
-                        <p className="text-xs text-zinc-450 mt-1 leading-normal">{tSet('security.auditActor')}: {log.user} • {tSet('security.auditAsset')}: {log.resource}</p>
+                        <p className="text-xs mt-1 leading-normal" style={{ color: 'var(--text-muted)' }}>{tSet('security.auditActor')}: {log.user} • {tSet('security.auditAsset')}: {log.resource}</p>
                       </div>
-                      <span className="text-xs text-zinc-400 bg-zinc-900 border border-zinc-850 px-2.5 py-1 rounded-xl font-mono">
+                      <span className="text-xs px-2.5 py-1 rounded-xl font-mono" style={{ color: 'var(--text-muted)', background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
                         {log.ip}
                       </span>
                     </div>
@@ -785,16 +789,17 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
             {/* Security preferences */}
             <div className="space-y-4">
-              <div className="p-6 rounded-3xl bg-zinc-950/20 border border-zinc-900 space-y-4">
-                <span className="text-base font-bold text-white tracking-tight block">{tSet('security.hipaaTitle')}</span>
+              <div className="p-6 rounded-3xl card-gradient space-y-4">
+                <span className="text-base font-bold tracking-tight block" style={{ color: 'var(--text)' }}>{tSet('security.hipaaTitle')}</span>
                 
                 <div className="space-y-3.5">
                   <div className="space-y-1">
-                    <label className="text-zinc-400">{tSet('security.passwordPolicy')}</label>
+                    <label style={{ color: 'var(--text-muted)' }}>{tSet('security.passwordPolicy')}</label>
                     <select 
                       value={pwdComplexity} 
                       onChange={(e) => setPwdComplexity(e.target.value)}
-                      className="w-full bg-zinc-950 border border-zinc-850 px-3.5 py-2.5 rounded-xl text-white outline-none focus:border-zinc-700 text-sm"
+                      className="w-full px-3.5 py-2.5 rounded-xl text-sm"
+                      style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text)', outline: 'none' }}
                     >
                       <option>{tSet('security.pwdStandard')}</option>
                       <option>{tSet('security.pwdHigh')}</option>
@@ -802,10 +807,10 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     </select>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-zinc-950 border border-zinc-850 rounded-3xl text-sm">
+                  <div className="flex items-center justify-between p-4 card-elevated card-hover rounded-3xl text-sm">
                     <div>
-                      <p className="text-white font-bold">{tSet('security.enforceMFA')}</p>
-                      <p className="text-xs text-zinc-400 mt-1">{tSet('security.enforceMFADesc')}</p>
+                      <p className="font-bold" style={{ color: 'var(--text)' }}>{tSet('security.enforceMFA')}</p>
+                      <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{tSet('security.enforceMFADesc')}</p>
                     </div>
                     <SpringSwitch 
                       checked={mfaEnforce}
@@ -816,7 +821,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
 
                 <button 
                   onClick={() => triggerToast(tSet('security.saveBtn'))}
-                  className="w-full bg-white hover:bg-zinc-100 text-black font-bold p-3 rounded-xl text-center cursor-pointer transition-all block mt-2 text-sm"
+                  className="w-full btn-primary font-bold p-3 rounded-xl text-center cursor-pointer transition-all block mt-2 text-sm"
                 >
                   {tSet('security.saveBtn')}
                 </button>

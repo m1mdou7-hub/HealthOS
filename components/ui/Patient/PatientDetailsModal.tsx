@@ -22,8 +22,8 @@ export default function PatientDetailsModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <form onSubmit={onSubmit} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-xl space-y-4 text-xs text-left max-h-[90vh] overflow-y-auto scrollbar-thin">
-        <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">
+      <form onSubmit={onSubmit} className="card-elevated p-6 rounded-3xl w-full max-w-xl space-y-4 text-xs text-left max-h-[90vh] overflow-y-auto scrollbar-thin">
+        <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">
           {editingPatient ? 'Modify Clinical Patient Record' : 'Register New Patient Profile'}
         </h3>
 
@@ -136,13 +136,13 @@ export default function PatientDetailsModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 text-zinc-400"
+            className="btn-ghost px-3 py-1.5 rounded-lg"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold"
+            className="btn-primary px-4 py-1.5 rounded-lg"
           >
             Save Record
           </button>

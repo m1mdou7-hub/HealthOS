@@ -120,10 +120,8 @@ export default function ClinicalDashboard({
             <div
               key={idx}
               onClick={() => onNavigateTab(card.tab)}
-              className="p-5 rounded-3xl border border-zinc-900 bg-zinc-900/10 hover:bg-zinc-900/20 hover:border-zinc-800 transition-all duration-200 cursor-pointer text-left flex flex-col justify-between h-36 relative group overflow-hidden"
+              className="p-5 card-gradient card-hover rounded-3xl cursor-pointer text-left flex flex-col justify-between h-36 relative group overflow-hidden"
             >
-              {/* Hover glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
               <div className="flex justify-between items-start">
                 <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold tracking-wider">{card.title}</span>
@@ -145,7 +143,7 @@ export default function ClinicalDashboard({
       </div>
 
       {/* Real-time AI Clinical Decision Support alerts panel */}
-      <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
+      <div className="p-5 card-elevated rounded-3xl space-y-4">
         <div className="flex justify-between items-center border-b border-zinc-900/60 pb-3">
           <div>
             <h4 className="text-xs font-bold text-white flex items-center gap-1.5 font-mono">
@@ -154,14 +152,14 @@ export default function ClinicalDashboard({
             </h4>
             <p className="text-[11px] text-zinc-500 mt-0.5">Automated diagnostic guardrails scanning active allergy status and medical history context.</p>
           </div>
-          <span className="text-[9px] font-mono bg-rose-500/10 border border-rose-500/20 text-rose-400 px-2 py-0.5 rounded">
+          <span className="badge badge-danger">
             Active Guardrails: 2 Warnings
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Warning 1: Allergy */}
-          <div className="p-4 rounded-xl border border-rose-500/20 bg-rose-500/[0.02] flex gap-3 text-xs text-left">
+          <div className="p-4 card-elevated rounded-2xl flex gap-3 text-xs text-left border-rose-500/20">
             <div className="p-2 h-fit rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 shrink-0">
               <ShieldAlert className="w-4 h-4" />
             </div>
@@ -180,7 +178,7 @@ export default function ClinicalDashboard({
           </div>
 
           {/* Warning 2: Epinephrine */}
-          <div className="p-4 rounded-xl border border-amber-500/20 bg-amber-500/[0.01] flex gap-3 text-xs text-left">
+          <div className="p-4 card-elevated rounded-2xl flex gap-3 text-xs text-left border-amber-500/20">
             <div className="p-2 h-fit rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
               <ShieldAlert className="w-4 h-4" />
             </div>

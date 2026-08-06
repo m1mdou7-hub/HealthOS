@@ -18,7 +18,7 @@ export default function AnalyticsPanel({ activePatient }: AnalyticsPanelProps) {
   return (
     <div className="space-y-6 text-left">
       {/* Header */}
-      <div className="bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900">
+      <div className="p-4 card-gradient rounded-3xl">
         <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
           <Activity className="w-4 h-4 text-emerald-400" /> Patient Clinical Diagnostics Analytics
         </h3>
@@ -27,7 +27,7 @@ export default function AnalyticsPanel({ activePatient }: AnalyticsPanelProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {metrics.map((m, idx) => (
-          <div key={idx} className="p-5 rounded-xl border border-zinc-900 bg-zinc-950/40 space-y-4">
+          <div key={idx} className="p-5 card-elevated rounded-2xl space-y-4">
             <div className="flex justify-between items-start">
               <div>
                 <span className="text-[10px] text-zinc-500 font-mono uppercase block">{m.label}</span>
@@ -50,7 +50,7 @@ export default function AnalyticsPanel({ activePatient }: AnalyticsPanelProps) {
       </div>
 
       {/* HIPAA compliance statement */}
-      <div className="p-4 rounded-xl border border-zinc-900/60 bg-zinc-950/20 flex items-center gap-3 text-xs text-zinc-400">
+      <div className="p-4 card-elevated rounded-2xl flex items-center gap-3 text-xs" style={{ color: 'var(--text-muted)' }}>
         <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
         <p className="leading-relaxed">
           EHR Diagnostic Analytics synchronized securely with HIPAA-compliant hospital clouds. Longitudinal statistics are compiled utilizing virtual PACS articulators and real-time intraoral scan registries.

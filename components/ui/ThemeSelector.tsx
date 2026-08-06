@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Palette, Check, Sun, Moon, Sparkles } from 'lucide-react';
 
-export type ThemeId = 'graphite' | 'earthy';
+export type ThemeId = 'purple' | 'earth';
 export type Mode = 'dark' | 'light';
 
 export const THEME_STORAGE_KEY = 'healthos_theme_id';
@@ -19,28 +19,30 @@ export const THEMES: {
   bgHex: string;
 }[] = [
   {
-    id: 'graphite',
-    name: 'بروفيشنال داكن',
-    enName: 'Dark Professional',
-    subtitle: 'Amethyst Purple · Graphite · Orchid',
+    id: 'purple',
+    name: 'بنفسجي فاخر',
+    enName: 'Luxury Purple',
+    subtitle: 'Amethyst · Graphite · Orchid',
     previewGradient: 'from-[#9B71B2] via-[#3A1C36] to-[#0b0710]',
     accentHex: '#9B71B2',
-    bgHex: '#0b0710'
+    bgHex: '#FBF1FF'
   },
   {
-    id: 'earthy',
+    id: 'earth',
     name: 'إيرث فاخر',
     enName: 'Luxury Earth',
     subtitle: 'Chestnut · Morning Blue · Almond',
-    previewGradient: 'from-[#8A9992] via-[#55443A] to-[#100d0b]',
+    previewGradient: 'from-[#8A9992] via-[#55443A] to-[#4D2308]',
     accentHex: '#8A9992',
-    bgHex: '#100d0b'
+    bgHex: '#CFD0CD'
   }
 ];
 
 export function getInitialTheme(): ThemeId {
-  if (typeof window === 'undefined') return 'graphite';
-  return (localStorage.getItem(THEME_STORAGE_KEY) as ThemeId) || 'graphite';
+  if (typeof window === 'undefined') return 'purple';
+  const stored = localStorage.getItem(THEME_STORAGE_KEY);
+  if (stored === 'purple' || stored === 'earth') return stored;
+  return 'purple';
 }
 
 export function getInitialMode(): Mode {
@@ -61,7 +63,7 @@ export function applyThemeToDocument(theme: ThemeId, mode: Mode) {
 }
 
 export default function ThemeSelector() {
-  const [currentTheme, setCurrentTheme] = useState<ThemeId>('graphite');
+  const [currentTheme, setCurrentTheme] = useState<ThemeId>('purple');
   const [mode, setMode] = useState<Mode>('dark');
   const [isOpen, setIsOpen] = useState(false);
 

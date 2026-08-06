@@ -51,21 +51,21 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 text-left">
-      <div className="border-b border-zinc-900 pb-3 flex justify-between items-center">
+    <div className="space-y-6 text-left" style={{ color: 'var(--text)' }}>
+      <div className="flex justify-between items-center pb-3" style={{ borderBottom: '1px solid var(--border)' }}>
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-base font-black text-white uppercase tracking-tight">Laboratory Case Manager</h3>
-            <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-mono px-2 py-0.5 rounded font-bold uppercase">
+            <h3 className="section-title text-base uppercase tracking-tight">Laboratory Case Manager</h3>
+            <span className="badge badge-success font-mono">
               {activeCase.id}
             </span>
           </div>
-          <p className="text-xs text-zinc-500 font-mono">View full clinical prescription parameters, audit logs, and status triggers.</p>
+          <p className="text-xs mt-0.5 font-mono" style={{ color: 'var(--text-muted)' }}>View full clinical prescription parameters, audit logs, and status triggers.</p>
         </div>
         <button
           onClick={handleSave}
           id="save-case-manager-btn"
-          className="bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs font-mono px-4 py-2 rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+          className="btn-primary font-bold text-xs font-mono px-4 py-2 flex items-center gap-2"
         >
           <Save className="w-3.5 h-3.5" />
           <span>{isSaved ? 'SAVED!' : 'SAVE CHANGES'}</span>
@@ -75,35 +75,35 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Core Case Attributes */}
-        <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4 md:col-span-2">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
+        <div className="p-5 card-gradient rounded-2xl space-y-4 md:col-span-2">
+          <span className="text-[10px] font-bold uppercase tracking-widest font-mono block pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
             Prescription Parameters
           </span>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
-            <div className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl space-y-1">
-              <span className="text-[10px] text-zinc-500 uppercase font-bold flex items-center gap-1"><User className="w-3 h-3 text-emerald-400" /> Patient</span>
-              <p className="text-sm font-bold text-white">{activeCase.patientName}</p>
+            <div className="p-3 card-elevated rounded-xl space-y-1">
+              <span className="text-[10px] uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><User className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Patient</span>
+              <p className="text-sm font-bold" style={{ color: 'var(--text)' }}>{activeCase.patientName}</p>
             </div>
 
-            <div className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl space-y-1">
-              <span className="text-[10px] text-zinc-500 uppercase font-bold flex items-center gap-1"><User className="w-3 h-3 text-emerald-400" /> Clinician</span>
-              <p className="text-sm font-semibold text-zinc-200">Dr. {activeCase.doctorName}</p>
+            <div className="p-3 card-elevated rounded-xl space-y-1">
+              <span className="text-[10px] uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><User className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Clinician</span>
+              <p className="text-sm font-semibold" style={{ color: 'var(--text-sub)' }}>Dr. {activeCase.doctorName}</p>
             </div>
 
-            <div className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl space-y-1">
-              <span className="text-[10px] text-zinc-500 uppercase font-bold flex items-center gap-1"><Home className="w-3 h-3 text-emerald-400" /> Fulfillment Lab</span>
-              <p className="text-sm text-zinc-300">{activeCase.laboratoryName}</p>
+            <div className="p-3 card-elevated rounded-xl space-y-1">
+              <span className="text-[10px] uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><Home className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Fulfillment Lab</span>
+              <p className="text-sm" style={{ color: 'var(--text-sub)' }}>{activeCase.laboratoryName}</p>
             </div>
 
-            <div className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl space-y-1">
-              <span className="text-[10px] text-zinc-500 uppercase font-bold flex items-center gap-1"><Clipboard className="w-3 h-3 text-emerald-400" /> Restoration & Format</span>
-              <p className="text-sm text-zinc-200">{activeCase.restorationType} ({activeCase.caseType})</p>
+            <div className="p-3 card-elevated rounded-xl space-y-1">
+              <span className="text-[10px] uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><Clipboard className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Restoration & Format</span>
+              <p className="text-sm" style={{ color: 'var(--text-sub)' }}>{activeCase.restorationType} ({activeCase.caseType})</p>
             </div>
           </div>
 
           <div className="space-y-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">
+            <span className="text-[10px] font-bold uppercase tracking-widest font-mono block" style={{ color: 'var(--text-muted)' }}>
               Internal Technical Notes
             </span>
             <textarea
@@ -111,25 +111,25 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
               id="case-internal-notes-textarea"
               onChange={(e) => setInternalNotes(e.target.value)}
               placeholder="Enter micro-marginal adjustments, ceramic layering mix guidelines, sintering speeds, or technician specific instructions..."
-              className="w-full bg-zinc-900/50 border border-zinc-800 text-xs rounded-xl p-3 h-28 focus:border-emerald-500 text-zinc-300 outline-none font-mono placeholder:text-zinc-700"
+              className="w-full text-xs rounded-xl p-3 h-28 font-mono"
             />
           </div>
         </div>
 
         {/* Manufacturing status controls */}
-        <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
+        <div className="p-5 card-elevated rounded-2xl space-y-4">
+          <span className="text-[10px] font-bold uppercase tracking-widest font-mono block pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
             Workflow Configuration
           </span>
 
           <div className="space-y-4 font-mono text-xs">
             <div className="space-y-1.5">
-              <label className="text-[10px] text-zinc-500 uppercase font-bold block">Manufacturing Status</label>
+              <label className="text-[10px] uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Manufacturing Status</label>
               <select
                 value={status}
                 id="case-status-select"
                 onChange={(e) => setStatus(e.target.value as ManufacturingStage)}
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 outline-none focus:border-emerald-500 text-zinc-200"
+                className="w-full rounded-xl p-2"
               >
                 <option value="Prescription received">Prescription received</option>
                 <option value="Design">Design</option>
@@ -147,12 +147,12 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] text-zinc-500 uppercase font-bold block">Manufacturing Priority</label>
+              <label className="text-[10px] uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Manufacturing Priority</label>
               <select
                 value={priority}
                 id="case-priority-select"
                 onChange={(e) => setPriority(e.target.value as CasePriority)}
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 outline-none focus:border-emerald-500 text-zinc-200"
+                className="w-full rounded-xl p-2"
               >
                 <option value="Urgent">Urgent</option>
                 <option value="High">High</option>
@@ -162,18 +162,18 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] text-zinc-500 uppercase font-bold block">Delivery Target Date</label>
+              <label className="text-[10px] uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Delivery Target Date</label>
               <input
                 type="date"
                 value={dueDate}
                 id="case-due-date-input"
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 outline-none focus:border-emerald-500 text-zinc-200"
+                className="w-full rounded-xl p-2"
               />
             </div>
           </div>
 
-          <div className="pt-3 border-t border-zinc-900/60 font-mono text-[10px] text-zinc-500">
+          <div className="pt-3 font-mono text-[10px]" style={{ borderTop: '1px solid var(--border)', color: 'var(--text-muted)' }}>
             <span className="block font-bold">PACS Audit Trail:</span>
             <p className="mt-1">Case record loaded on local node. Encryption layer enabled (AES-256).</p>
           </div>
@@ -182,28 +182,37 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
       </div>
 
       {/* Case Timeline Section */}
-      <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
+      <div className="p-5 card-gradient rounded-2xl space-y-4">
+        <span className="text-[10px] font-bold uppercase tracking-widest font-mono block pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
           Milestone Timeline Log
         </span>
 
-        <div className="relative border-l border-zinc-800 ml-4 pl-6 space-y-4 font-mono text-xs">
+        <div className="relative font-mono text-xs space-y-4 ml-4 pl-6" style={{ borderLeft: '1px solid var(--border-strong)' }}>
           {activeCase.timeline.map((item, idx) => {
             const isActive = item.stage === status;
             return (
               <div key={idx} className="relative">
-                <span className={`absolute -left-[30px] top-1.5 h-2 w-2 rounded-full ${
-                  item.completed ? 'bg-emerald-400' : isActive ? 'bg-amber-400 animate-ping' : 'bg-zinc-800'
-                }`} />
+                <span
+                  className={`absolute -left-[30px] top-1.5 h-2 w-2 rounded-full ${
+                    item.completed ? '' : isActive ? 'animate-ping' : ''
+                  }`}
+                  style={{
+                    background: item.completed ? 'var(--success)' : isActive ? 'var(--warning)' : 'var(--surface-3)',
+                    boxShadow: item.completed ? '0 0 8px var(--success)' : isActive ? '0 0 8px var(--warning)' : 'none'
+                  }}
+                />
                 <div className="flex justify-between items-start">
                   <div>
-                    <h5 className={`font-bold ${item.completed ? 'text-white' : isActive ? 'text-amber-400' : 'text-zinc-500'}`}>
+                    <h5
+                      className="font-bold"
+                      style={{ color: item.completed ? 'var(--text)' : isActive ? 'var(--warning)' : 'var(--text-muted)' }}
+                    >
                       {item.stage}
                     </h5>
-                    {item.note && <p className="text-[11px] text-zinc-400 mt-0.5">{item.note}</p>}
+                    {item.note && <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>{item.note}</p>}
                   </div>
                   {item.timestamp && (
-                    <span className="text-[9px] text-zinc-500 font-bold bg-zinc-900/40 px-2 py-0.5 border border-zinc-900 rounded">
+                    <span className="text-[9px] font-bold px-2 py-0.5 rounded kbd" style={{ color: 'var(--text-muted)' }}>
                       {item.timestamp}
                     </span>
                   )}

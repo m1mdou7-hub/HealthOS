@@ -19,15 +19,15 @@ module.exports = {
     extend: {
       fontFamily: {
         sans:  ['Manrope', 'Inter', ...fontFamily.sans],
-        display: ['Manrope', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'Manrope', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', ...fontFamily.mono],
         serif: ['Cormorant Garamond', 'Georgia', ...fontFamily.serif]
       },
       colors: {
-        // Dark Professional (Graphite & Amethyst)
-        amethyst: {
+        // Luxury Purple (Amethyst & Orchid)
+        purple: {
           50:  '#FBF1FF',
-          100: '#EAD7F2',
+          100: '#E3D0EA',
           200: '#D3B4E0',
           300: '#BC92CE',
           400: '#AB7FC2',
@@ -70,13 +70,6 @@ module.exports = {
           300: '#CFD0CD',
           400: '#A9AAA6',
           500: '#838480'
-        },
-        graphite: {
-          400: '#9a8fa8',
-          500: '#6f5f73',
-          600: '#4D2308',
-          700: '#3a1c14',
-          800: '#26120c'
         }
       },
       borderRadius: {

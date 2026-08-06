@@ -392,17 +392,17 @@ export default function ImagingWorkspace() {
   };
 
   return (
-    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl overflow-hidden flex flex-col shadow-2xl h-[780px] font-sans antialiased text-zinc-100 relative">
+    <div className="card-gradient overflow-hidden flex flex-col h-[780px] font-sans antialiased text-zinc-100 relative">
       
       {/* PACS TITLE / META STRIP */}
       <div className="bg-zinc-900/80 border-b border-zinc-900 px-6 py-3 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
-          <div className="p-1.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+          <div className="p-1.5 rounded-xl border" style={{ background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)' }}>
             <Compass className="w-5 h-5 text-emerald-400 animate-spin-slow" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-xs font-black uppercase tracking-wider text-white">HealthOS Imaging Studio Pro</h2>
+              <h2 className="text-xs font-black uppercase tracking-wider text-gradient">HealthOS Imaging Studio Pro</h2>
               <span className="bg-zinc-800 text-[9px] font-mono font-bold text-zinc-400 px-1.5 py-0.5 rounded">V2.4.9-PACS</span>
             </div>
             <p className="text-[10px] text-zinc-500 font-mono">Amelia Vance • EHR-2026-9482 • HIPAA-Encrypted Client Session</p>
@@ -410,7 +410,7 @@ export default function ImagingWorkspace() {
         </div>
 
         {/* WORKSPACE SELECTOR TAB GROUP */}
-        <div className="flex bg-zinc-950 p-1 rounded-xl border border-zinc-800">
+        <div className="flex card-elevated p-1">
           {(['Library', 'CBCT', 'STL', 'SmileDesign', 'AI', 'Timeline'] as const).map(tab => {
             const isActive = activeWorkspaceTab === tab;
             let displayLabel: string = tab;
@@ -443,7 +443,7 @@ export default function ImagingWorkspace() {
           </div>
           <button
             onClick={() => setExportModalOpen(true)}
-            className="flex items-center gap-1 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold px-3 py-1.5 rounded-xl text-xs font-mono transition-colors cursor-pointer"
+            className="btn-primary text-xs font-mono font-bold"
           >
             <Download className="w-3.5 h-3.5" /> EXPORT
           </button>
@@ -460,7 +460,7 @@ export default function ImagingWorkspace() {
         >
           {/* SEARCH & FILTER FOR CURRENT TAB */}
           <div className="p-4 border-b border-zinc-900 space-y-3 shrink-0">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">PACS Study Explorer</span>
+            <span className="eyebrow block">PACS Study Explorer</span>
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
               <input
@@ -501,10 +501,10 @@ export default function ImagingWorkspace() {
                   else if (study.type === 'Smile Photos') setActiveWorkspaceTab('SmileDesign');
                   else setActiveWorkspaceTab('Library');
                 }}
-                className="p-3 bg-zinc-950/60 hover:bg-zinc-950 rounded-xl border border-zinc-850 hover:border-emerald-500/40 cursor-pointer transition-all space-y-2 group"
+                className="p-3 card-elevated card-hover cursor-pointer transition-all space-y-2 group"
               >
                 <div className="flex justify-between items-start">
-                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold font-mono bg-zinc-900 border border-zinc-800 text-emerald-400">
+                  <span className="badge badge-info">
                     {study.type}
                   </span>
                   <div className="flex items-center gap-1.5">
@@ -538,14 +538,14 @@ export default function ImagingWorkspace() {
             ))}
 
             {filteredStudies.length === 0 && (
-              <p className="text-center text-xs text-zinc-600 italic py-10 font-mono">No matching PACS studies found.</p>
+              <p className="text-center text-xs italic py-10 font-mono" style={{ color: 'var(--text-muted)' }}>No matching PACS studies found.</p>
             )}
           </div>
 
           {/* IMAGE WORKSTATION REBUILD DIALOGS */}
           <div className="p-4 bg-zinc-950/80 border-t border-zinc-900 space-y-3 shrink-0">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Workstation Calibration</span>
+              <span className="eyebrow">Workstation Calibration</span>
               <button 
                 onClick={() => {
                   setPacsContrast(50);
@@ -622,8 +622,9 @@ export default function ImagingWorkspace() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
                       <div>
-                        <h3 className="text-base font-black text-white uppercase tracking-tight">PACS Multi-Study Library</h3>
-                        <p className="text-xs text-zinc-500 font-mono">Overview of high-density radiological scans stored in Amelia&apos;s chart.</p>
+                        <span className="eyebrow block mb-1">Imaging Library</span>
+                        <h3 className="text-base font-black uppercase tracking-tight text-gradient">PACS Multi-Study Library</h3>
+                        <p className="text-xs text-zinc-500 font-mono mt-1">Overview of high-density radiological scans stored in Amelia&apos;s chart.</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <button
@@ -646,10 +647,10 @@ export default function ImagingWorkspace() {
                         {filteredStudies.map((study) => (
                           <div
                             key={study.id}
-                            className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[155px]"
+                            className="p-4 card-elevated flex flex-col justify-between h-[155px]"
                           >
                             <div className="flex justify-between items-start">
-                              <span className="text-[9px] font-bold font-mono bg-zinc-900 border border-zinc-850 text-zinc-400 px-1.5 py-0.5 rounded">
+                              <span className="badge badge-info">
                                 {study.type}
                               </span>
                               <span className="text-[9px] font-mono text-zinc-500 font-bold">{study.date}</span>
@@ -679,10 +680,10 @@ export default function ImagingWorkspace() {
                         ))}
                       </div>
                     ) : (
-                      <div className="overflow-x-auto rounded-xl border border-zinc-900 max-h-[460px] overflow-y-auto">
+                      <div className="overflow-x-auto rounded-xl max-h-[460px] overflow-y-auto">
                         <table className="w-full text-left border-collapse text-xs font-mono">
                           <thead>
-                            <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
+                            <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold">
                               <th className="p-3">ID</th>
                               <th className="p-3">Study Type</th>
                               <th className="p-3">Title</th>
@@ -691,11 +692,11 @@ export default function ImagingWorkspace() {
                               <th className="p-3">Action</th>
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-zinc-900/60 text-zinc-300">
+                          <tbody className="text-zinc-300">
                             {filteredStudies.map((study) => (
-                              <tr key={study.id} className="hover:bg-zinc-900/20">
+                              <tr key={study.id}>
                                 <td className="p-3 text-emerald-400 font-bold">{study.id}</td>
-                                <td className="p-3"><span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-850 text-zinc-400">{study.type}</span></td>
+                                <td className="p-3"><span className="badge badge-info">{study.type}</span></td>
                                 <td className="p-3 font-semibold text-zinc-100">{study.title}</td>
                                 <td className="p-3">{study.doctor}</td>
                                 <td className="p-3 text-zinc-500">{study.fileSize}</td>
@@ -720,7 +721,7 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* QUICK STATS FOR EXCELSIOR PACS */}
-                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex items-center justify-between text-xs font-mono">
+                  <div className="p-4 card-elevated flex items-center justify-between text-xs font-mono">
                     <div className="flex items-center gap-3">
                       <span className="text-zinc-500 font-bold">PACS ARCHIVE SIZE:</span>
                       <span className="text-zinc-300">308.9 MB</span>
@@ -748,9 +749,9 @@ export default function ImagingWorkspace() {
                   <div className="flex-1 grid grid-cols-2 gap-3 h-full">
                     
                     {/* PLANE 1: AXIAL SLICE */}
-                    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl p-3 flex flex-col justify-between relative overflow-hidden group">
+                    <div className="card-gradient p-3 flex flex-col justify-between relative overflow-hidden group">
                       <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
-                        <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">AXIAL VIEW</span>
+                        <span className="badge">AXIAL VIEW</span>
                         <span>Slice {activeSlice}/120</span>
                       </div>
                       
@@ -794,9 +795,9 @@ export default function ImagingWorkspace() {
                     </div>
 
                     {/* PLANE 2: CORONAL SLICE */}
-                    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl p-3 flex flex-col justify-between relative overflow-hidden">
+                    <div className="card-gradient p-3 flex flex-col justify-between relative overflow-hidden">
                       <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
-                        <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">CORONAL VIEW</span>
+                        <span className="badge">CORONAL VIEW</span>
                         <span>Slice {activeSlice}/120</span>
                       </div>
 
@@ -825,9 +826,9 @@ export default function ImagingWorkspace() {
                     </div>
 
                     {/* PLANE 3: SAGITTAL SLICE */}
-                    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl p-3 flex flex-col justify-between relative overflow-hidden">
+                    <div className="card-gradient p-3 flex flex-col justify-between relative overflow-hidden">
                       <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
-                        <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">SAGITTAL VIEW</span>
+                        <span className="badge">SAGITTAL VIEW</span>
                         <span>Slice {activeSlice}/120</span>
                       </div>
 
@@ -853,9 +854,9 @@ export default function ImagingWorkspace() {
                     </div>
 
                     {/* PLANE 4: 3D RECONSTRUCTION */}
-                    <div className="bg-zinc-950 border border-zinc-900 rounded-3xl p-3 flex flex-col justify-between relative overflow-hidden">
+                    <div className="card-gradient p-3 flex flex-col justify-between relative overflow-hidden">
                       <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
-                        <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">3D RECONSTRUCTION</span>
+                        <span className="badge">3D RECONSTRUCTION</span>
                         <span>VOLUMETRIC RENDER</span>
                       </div>
 
@@ -878,13 +879,13 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* CBCT Panel controls, bookmarks & measurements (Right col) */}
-                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between space-y-4">
+                  <div className="w-full lg:w-72 card-elevated p-4 flex flex-col justify-between space-y-4">
                     <div className="space-y-4">
                       
                       {/* Active Study info */}
                       <div className="border-b border-zinc-900 pb-3">
-                        <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Study Context</span>
-                        <h4 className="text-xs font-bold text-white">Planmeca CBCT 3D Maxillary Scan</h4>
+                        <span className="eyebrow block">Study Context</span>
+                        <h4 className="text-xs font-bold text-white mt-1">Planmeca CBCT 3D Maxillary Scan</h4>
                         <span className="text-[10px] text-zinc-400 font-mono font-bold">Slice Height control</span>
                         <div className="flex items-center gap-2 mt-2">
                           <input
@@ -906,7 +907,7 @@ export default function ImagingWorkspace() {
 
                       {/* Measurement Tool Selector */}
                       <div className="space-y-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">PACS Calipers</span>
+                        <span className="eyebrow block">PACS Calipers</span>
                         <div className="grid grid-cols-3 gap-1">
                           {(['Distance', 'Angle', 'Density'] as const).map(tool => (
                             <button
@@ -926,7 +927,7 @@ export default function ImagingWorkspace() {
                           ))}
                         </div>
                         {measurementTool !== 'None' && (
-                          <div className="p-2 bg-rose-500/10 border border-rose-500/20 rounded-xl text-[9px] text-rose-300 font-mono text-center animate-pulse">
+                          <div className="badge badge-danger w-full justify-center text-center animate-pulse">
                             CALIPER ACTIVE: Click on the AXIAL VIEW to place points.
                           </div>
                         )}
@@ -935,7 +936,7 @@ export default function ImagingWorkspace() {
                       {/* Radiographic annotations */}
                       <div className="space-y-2">
                         <div className="flex justify-between items-center border-b border-zinc-900 pb-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Bookmarks</span>
+                          <span className="eyebrow">Bookmarks</span>
                           <span className="text-[9px] font-mono text-zinc-600 font-bold">4 REGISTERED</span>
                         </div>
                         <div className="space-y-1.5 max-h-[160px] overflow-y-auto scrollbar-none">
@@ -948,11 +949,10 @@ export default function ImagingWorkspace() {
                                   setSelectedAnnotationId(ann.id);
                                   setActiveSlice(ann.sliceNum);
                                 }}
-                                className={`p-2 rounded-xl text-xs font-mono cursor-pointer transition-all border ${
-                                  isSel 
-                                    ? 'bg-zinc-950 border-emerald-500/40' 
-                                    : 'bg-zinc-950/40 border-zinc-900 hover:border-zinc-800'
+                                className={`p-2 card-elevated text-xs font-mono cursor-pointer transition-all ${
+                                  isSel ? 'ring-1 ring-emerald-500/30' : ''
                                 }`}
+                                style={isSel ? { borderColor: 'var(--success)' } : undefined}
                               >
                                 <div className="flex justify-between font-bold text-[10px] mb-0.5">
                                   <span className="text-zinc-400 truncate w-[130px]">{ann.label}</span>
@@ -970,7 +970,7 @@ export default function ImagingWorkspace() {
 
                     </div>
 
-                    <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900 text-[10px] text-zinc-500 font-mono space-y-1">
+                    <div className="p-3 card-elevated text-[10px] text-zinc-500 font-mono space-y-1">
                       <span className="text-zinc-400 font-bold uppercase tracking-wider block">Diagnostics metadata:</span>
                       <p>Dose Index: 145 &mu;Gy</p>
                       <p>Matrix: 512 x 512 x 512 px</p>
@@ -989,9 +989,9 @@ export default function ImagingWorkspace() {
                 >
                   
                   {/* Rotating point cloud canvas simulation (Workstation viewport) */}
-                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between relative overflow-hidden select-none">
+                  <div className="flex-1 card-gradient p-4 flex flex-col justify-between relative overflow-hidden select-none">
                     <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
-                      <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
+                      <span className="badge">
                         EXOCAD CAD/CAM VIEWPORT
                       </span>
                       <span>MESH ORIENTATION X: {meshRotateX}° Y: {meshRotateY}°</span>
@@ -1059,7 +1059,7 @@ export default function ImagingWorkspace() {
                         ))}
                       </div>
 
-                      <div className="absolute bottom-4 left-4 p-3 bg-zinc-900/60 border border-zinc-850 rounded-xl text-[9px] font-mono text-zinc-400 space-y-1">
+                      <div className="absolute bottom-4 left-4 p-3 card-elevated text-[9px] font-mono text-zinc-400 space-y-1">
                         <span className="text-white font-bold block uppercase">Analysis Findings</span>
                         <p>Mesh Triangle Count: 89,450</p>
                         <p>Mesh Margin Proximity: 99.1% (Ideal)</p>
@@ -1075,22 +1075,22 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* Comments, version history & specifications (Right col) */}
-                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between space-y-4">
+                  <div className="w-full lg:w-72 card-elevated p-4 flex flex-col justify-between space-y-4">
                     <div className="space-y-4">
                       
                       {/* Scan Metadata */}
                       <div className="border-b border-zinc-900 pb-3 space-y-1">
-                        <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Active STL Context</span>
+                        <span className="eyebrow block">Active STL Context</span>
                         <h4 className="text-xs font-bold text-white">Tooth #11 Prosthetic Wax-up Scan</h4>
                         <span className="text-[10px] text-zinc-400 font-mono font-bold block">Author: Dr. Elena Rostova</span>
                       </div>
 
                       {/* STL Comment Thread */}
                       <div className="space-y-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Exocad Comments</span>
+                        <span className="eyebrow block">Exocad Comments</span>
                         <div className="space-y-1.5 max-h-[140px] overflow-y-auto scrollbar-none">
                           {stlComments.map((com, idx) => (
-                            <div key={idx} className="p-2 bg-zinc-950 rounded-xl border border-zinc-900 text-[10px] font-mono text-zinc-300">
+                            <div key={idx} className="p-2 card-elevated text-[10px] font-mono text-zinc-300">
                               {com}
                             </div>
                           ))}
@@ -1105,7 +1105,7 @@ export default function ImagingWorkspace() {
                           />
                           <button
                             type="submit"
-                            className="px-2 py-1 bg-emerald-500 text-zinc-950 text-[10px] font-mono font-bold rounded hover:bg-emerald-400 transition-colors cursor-pointer"
+                            className="btn-primary text-[10px] font-mono font-bold"
                           >
                             SEND
                           </button>
@@ -1115,12 +1115,12 @@ export default function ImagingWorkspace() {
                       {/* STL Version History */}
                       <div className="space-y-2">
                         <div className="flex justify-between items-center border-b border-zinc-900 pb-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Version History</span>
+                          <span className="eyebrow">Version History</span>
                           <span className="text-[9px] font-mono text-zinc-600 font-bold">3 DIGITAL SAVES</span>
                         </div>
                         <div className="space-y-1.5 max-h-[140px] overflow-y-auto scrollbar-none text-[10px] font-mono">
                           {STL_VERSION_HISTORY.map((hist, idx) => (
-                            <div key={idx} className="p-2 bg-zinc-950/40 border border-zinc-900 rounded-xl space-y-1">
+                            <div key={idx} className="p-2 card-elevated space-y-1">
                               <div className="flex justify-between font-bold text-[9px] text-zinc-300">
                                 <span className="text-emerald-400">{hist.version}</span>
                                 <span>{hist.date}</span>
@@ -1133,7 +1133,7 @@ export default function ImagingWorkspace() {
 
                     </div>
 
-                    <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900 text-[10px] text-zinc-500 font-mono space-y-1">
+                    <div className="p-3 card-elevated text-[10px] text-zinc-500 font-mono space-y-1">
                       <span className="text-zinc-400 font-bold uppercase tracking-wider block">STL Volume info:</span>
                       <p>Watertight Solid: YES</p>
                       <p>Slicing profile: 0.02mm</p>
@@ -1152,9 +1152,9 @@ export default function ImagingWorkspace() {
                 >
                   
                   {/* Active Aesthetic Canvas Area with SVG overlay guide lines */}
-                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between relative overflow-hidden select-none">
+                  <div className="flex-1 card-gradient p-4 flex flex-col justify-between relative overflow-hidden select-none">
                     <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
-                      <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
+                      <span className="badge">
                         DIGITAL SMILE DESIGN (DSD) FRAME
                       </span>
                       <span>ACTIVE RENDER: {smileAfterActive ? 'SIMULATED AFTER' : 'DIAGNOSTIC BEFORE'}</span>
@@ -1230,12 +1230,12 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* Smile design control panel & guide toggles (Right col) */}
-                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between space-y-4">
+                  <div className="w-full lg:w-72 card-elevated p-4 flex flex-col justify-between space-y-4">
                     <div className="space-y-4">
                       
                       {/* Frame Select */}
                       <div className="border-b border-zinc-900 pb-3">
-                        <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">DSD Frame Switch</span>
+                        <span className="eyebrow block">DSD Frame Switch</span>
                         <div className="grid grid-cols-2 gap-1.5 mt-2">
                           <button
                             onClick={() => setSmileAfterActive(false)}
@@ -1262,7 +1262,7 @@ export default function ImagingWorkspace() {
 
                       {/* Guideline Toggles */}
                       <div className="space-y-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Guideline Overlays</span>
+                        <span className="eyebrow block">Guideline Overlays</span>
                         <div className="space-y-1.5">
                           <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
                             <span className="flex items-center gap-1.5">
@@ -1316,7 +1316,7 @@ export default function ImagingWorkspace() {
 
                       {/* Interactive Slider controls */}
                       <div className="space-y-2 border-t border-zinc-900 pt-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Overlay Calibrator</span>
+                        <span className="eyebrow block">Overlay Calibrator</span>
                         <div className="space-y-2 text-[10px] font-mono text-zinc-400">
                           <div className="space-y-1">
                             <div className="flex justify-between"><span>Midline Shift:</span> <span>{midlineX}%</span></div>
@@ -1346,7 +1346,7 @@ export default function ImagingWorkspace() {
 
                     </div>
 
-                    <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900 text-[10px] text-zinc-500 font-mono space-y-1">
+                    <div className="p-3 card-elevated text-[10px] text-zinc-500 font-mono space-y-1">
                       <span className="text-zinc-400 font-bold uppercase tracking-wider block">Proposed Ratios:</span>
                       <p>Width:Height Ratio: 1 : 1.25</p>
                       <p>Golden Proportion score: 94%</p>
@@ -1364,9 +1364,9 @@ export default function ImagingWorkspace() {
                 >
                   
                   {/* AI Scanner / Highlighting view */}
-                  <div className="flex-1 bg-zinc-950 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between relative overflow-hidden select-none">
+                  <div className="flex-1 card-gradient p-4 flex flex-col justify-between relative overflow-hidden select-none">
                     <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
-                      <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded flex items-center gap-1.5">
+                      <span className="badge flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-pulse" /> AI Computer Vision telemetry
                       </span>
                       <span>ACTIVE SCAN: PANORAMIC Study ST-7182</span>
@@ -1422,61 +1422,61 @@ export default function ImagingWorkspace() {
                   </div>
 
                   {/* AI command dashboard (Right col) */}
-                  <div className="w-full lg:w-72 bg-zinc-900/30 border border-zinc-900 rounded-3xl p-4 flex flex-col justify-between space-y-4">
+                  <div className="w-full lg:w-72 card-elevated p-4 flex flex-col justify-between space-y-4">
                     <div className="space-y-4 flex-1 flex flex-col">
                       
                       <div className="border-b border-zinc-900 pb-3">
-                        <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">AI Restorations suite</span>
-                        <h4 className="text-xs font-bold text-white">Generate Neural Diagnostics</h4>
+                        <span className="eyebrow block">AI Restorations suite</span>
+                        <h4 className="text-xs font-bold text-white mt-1">Generate Neural Diagnostics</h4>
                       </div>
 
                       {/* AI Command list */}
                       <div className="grid grid-cols-1 gap-2 shrink-0">
                         <button
                           onClick={() => triggerAiAnalysis('findings')}
-                          className="w-full py-1.5 px-3 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 transition-colors cursor-pointer"
+                          className="w-full py-2 px-3 card-elevated hover:-translate-y-0.5 transition-all text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 cursor-pointer"
                         >
                           &bull; Generate Findings Report
                         </button>
 
                         <button
                           onClick={() => triggerAiAnalysis('implant')}
-                          className="w-full py-1.5 px-3 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 transition-colors cursor-pointer"
+                          className="w-full py-2 px-3 card-elevated hover:-translate-y-0.5 transition-all text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 cursor-pointer"
                         >
                           &bull; Implant Planning Suggestions
                         </button>
 
                         <button
                           onClick={() => triggerAiAnalysis('density')}
-                          className="w-full py-1.5 px-3 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 transition-colors cursor-pointer"
+                          className="w-full py-2 px-3 card-elevated hover:-translate-y-0.5 transition-all text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 cursor-pointer"
                         >
                           &bull; Alveolar Bone Density Profile
                         </button>
 
                         <button
                           onClick={() => triggerAiAnalysis('smile')}
-                          className="w-full py-1.5 px-3 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 transition-colors cursor-pointer"
+                          className="w-full py-2 px-3 card-elevated hover:-translate-y-0.5 transition-all text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 cursor-pointer"
                         >
                           &bull; Digital Smile Aesthetics analysis
                         </button>
 
                         <button
                           onClick={() => triggerAiAnalysis('margins')}
-                          className="w-full py-1.5 px-3 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 transition-colors cursor-pointer"
+                          className="w-full py-2 px-3 card-elevated hover:-translate-y-0.5 transition-all text-left text-[11px] font-mono font-bold text-zinc-200 hover:text-emerald-400 cursor-pointer"
                         >
                           &bull; Margin Line analysis
                         </button>
                       </div>
 
                       {/* Dynamic Output Logs panel */}
-                      <div className="flex-1 bg-zinc-950 border border-zinc-900 p-3 rounded-xl overflow-y-auto max-h-[160px] scrollbar-none space-y-2">
-                        <span className="text-[8px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-1">AI Output Log</span>
+                      <div className="flex-1 card-elevated p-3 overflow-y-auto max-h-[160px] scrollbar-none space-y-2">
+                        <span className="eyebrow block border-b border-zinc-900 pb-1">AI Output Log</span>
                         {aiAnalysisLog ? (
                           <div className="text-[10px] font-mono text-zinc-300 leading-relaxed whitespace-pre-wrap">
                             {aiAnalysisLog}
                           </div>
                         ) : (
-                          <p className="text-[9px] text-zinc-600 italic font-mono text-center pt-8">Select a neural operation above to begin compilation.</p>
+                          <p className="text-[9px] italic font-mono text-center pt-8" style={{ color: 'var(--text-muted)' }}>Select a neural operation above to begin compilation.</p>
                         )}
                       </div>
 
@@ -1484,7 +1484,7 @@ export default function ImagingWorkspace() {
 
                     <button
                       onClick={compileAndGenerateReport}
-                      className="w-full py-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold rounded-xl text-xs font-mono transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="btn-primary w-full text-xs font-mono font-bold flex items-center justify-center gap-1.5"
                     >
                       <FileCheck className="w-4 h-4" /> COMPILATE REPORT
                     </button>
@@ -1501,8 +1501,9 @@ export default function ImagingWorkspace() {
                 >
                   <div className="space-y-4">
                     <div className="border-b border-zinc-900 pb-2">
-                      <h3 className="text-base font-black text-white uppercase tracking-tight">PACS Study Chronology</h3>
-                      <p className="text-xs text-zinc-500 font-mono">Sequential imaging events recorded chronologically.</p>
+                      <span className="eyebrow block mb-1">Study Chronology</span>
+                      <h3 className="text-base font-black uppercase tracking-tight text-gradient">PACS Study Chronology</h3>
+                      <p className="text-xs text-zinc-500 font-mono mt-1">Sequential imaging events recorded chronologically.</p>
                     </div>
 
                     <div className="relative pl-6 border-l border-zinc-900 space-y-6 max-h-[440px] overflow-y-auto scrollbar-thin pr-2">
@@ -1514,7 +1515,7 @@ export default function ImagingWorkspace() {
                             <div className="w-1.5 h-1.5 rounded-full bg-zinc-950" />
                           </div>
 
-                          <div className="p-4 bg-zinc-900/30 hover:bg-zinc-900/60 rounded-3xl border border-zinc-900 transition-all space-y-2">
+                          <div className="p-4 card-elevated card-hover transition-all space-y-2">
                             <div className="flex justify-between items-start text-xs font-mono">
                               <div>
                                 <span className="font-bold text-white text-[13px] tracking-tight block">
@@ -1542,7 +1543,7 @@ export default function ImagingWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-zinc-900/20 border border-zinc-900 rounded-3xl text-[10px] font-mono text-zinc-500 text-center">
+                  <div className="p-4 card-elevated text-[10px] font-mono text-zinc-500 text-center">
                     All radiographic imaging entries comply with the federal HHS DICOM Part 15 standards.
                   </div>
                 </WorkspaceTabPanel>
@@ -1565,10 +1566,10 @@ export default function ImagingWorkspace() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="w-full max-w-md bg-zinc-950 border border-zinc-900 p-6 rounded-3xl space-y-6 shadow-2xl relative"
+              className="w-full max-w-md card-gradient p-6 space-y-6 relative"
             >
               <div className="space-y-1.5 border-b border-zinc-900 pb-3">
-                <h3 className="text-base font-black text-white uppercase tracking-tight flex items-center gap-2">
+                <h3 className="text-base font-black uppercase tracking-tight flex items-center gap-2 text-gradient">
                   <Download className="w-5 h-5 text-emerald-400" /> Secure Diagnostic Export
                 </h3>
                 <p className="text-xs text-zinc-500 font-mono">Configure outbound patient package formats complying with HIPAA rules.</p>
@@ -1588,11 +1589,10 @@ export default function ImagingWorkspace() {
                     <button
                       key={form.val}
                       onClick={() => setExportFormat(form.val as any)}
-                      className={`p-3 rounded-xl border text-left space-y-1 transition-all cursor-pointer ${
-                        exportFormat === form.val 
-                          ? 'bg-emerald-500/10 border-emerald-500 text-white' 
-                          : 'bg-zinc-900/40 border-zinc-900 hover:border-zinc-800 text-zinc-400'
+                      className={`p-3 card-elevated card-hover text-left space-y-1 transition-all cursor-pointer ${
+                        exportFormat === form.val ? 'ring-1 ring-emerald-500/30' : ''
                       }`}
+                      style={exportFormat === form.val ? { borderColor: 'var(--success)' } : undefined}
                     >
                       <span className="text-xs font-bold font-mono block text-white">{form.label}</span>
                       <span className="text-[10px] text-zinc-500 font-mono block leading-tight">{form.desc}</span>

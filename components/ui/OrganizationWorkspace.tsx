@@ -437,18 +437,18 @@ export default function OrganizationWorkspace() {
     <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans">
       
       {/* HEADER BANNER */}
-      <div className="p-6 rounded-3xl bg-zinc-900/50 border border-zinc-850/80 shadow-xl backdrop-blur-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div className="card-gradient p-6 rounded-3xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative">
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
+          <div className="p-3 rounded-3xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
             <Building2 className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2.5 flex-wrap">
-              <h2 className="text-lg font-bold text-white tracking-tight">{tOrg('headerTitle')}</h2>
-              <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold px-3 py-0.5 rounded-full">
+              <h2 className="text-lg font-bold tracking-tight text-gradient">{tOrg('headerTitle')}</h2>
+              <span className="badge badge-success text-xs font-semibold px-3 py-0.5 rounded-full">
                 {tOrg('adminConsole')}
               </span>
-              <span className="bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold px-3 py-0.5 rounded-full">
+              <span className="badge badge-info text-xs font-semibold px-3 py-0.5 rounded-full">
                 {brandColor.toUpperCase()} {tOrg('multiClinic')}
               </span>
             </div>
@@ -459,11 +459,11 @@ export default function OrganizationWorkspace() {
         </div>
 
         <div className="flex items-center gap-3 shrink-0 flex-wrap">
-          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-semibold">
+          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-semibold font-sans">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
             <span>{tOrg('hipaaStatus')}</span>
           </div>
-          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-semibold">
+          <div className="flex items-center gap-2 text-xs bg-zinc-950/80 border border-zinc-800 text-zinc-300 px-3.5 py-2 rounded-xl font-semibold font-sans">
             <Globe className="w-4 h-4 text-emerald-400 animate-pulse" />
             <span>{tOrg('multiRegion')}</span>
           </div>
@@ -471,7 +471,7 @@ export default function OrganizationWorkspace() {
       </div>
 
       {/* 11 SUBMODULES HORIZONTAL NAV TABS (Clean Scrollable Bar) */}
-      <div className="bg-zinc-950/80 p-2 rounded-2xl border border-white/10 flex items-center gap-2 overflow-x-auto scrollbar-none shadow-xl">
+      <div className="card-elevated p-2 flex items-center gap-2 overflow-x-auto scrollbar-none">
         {[
           { id: 'Overview', key: 'Overview', icon: Layers, badge: 'موحد' },
           { id: 'Clinics', key: 'Clinics', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} نشط` },
@@ -505,17 +505,17 @@ export default function OrganizationWorkspace() {
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id as any)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all flex items-center gap-2 cursor-pointer border ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all flex items-center gap-2 cursor-pointer border font-sans ${
                 isActive 
-                  ? 'bg-rose-600 text-white border-rose-500 shadow-lg shadow-rose-600/30 scale-[1.02]' 
-                  : 'bg-zinc-900/60 text-zinc-400 border-white/10 hover:bg-zinc-900 hover:text-white'
+                  ? 'nav-item active font-extrabold scale-[1.02]'
+                  : 'nav-item bg-zinc-950/60 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
               }`}
             >
-              <Icon className="w-3.5 h-3.5 shrink-0 text-rose-300" />
+              <Icon className="w-3.5 h-3.5 shrink-0" />
               <span>{labelText}</span>
               {item.badge && (
                 <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold border ${
-                  item.badgeColor || (isActive ? 'bg-zinc-950 text-white border-rose-400' : 'bg-zinc-950 text-zinc-400 border-white/10')
+                  item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-900 text-zinc-400 border-zinc-800')
                 }`}>
                   {item.badge}
                 </span>
@@ -543,7 +543,7 @@ export default function OrganizationWorkspace() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   whileHover={{ y: -3, borderColor: 'rgba(225,29,72,0.4)', transition: { type: 'spring', stiffness: 400, damping: 25 } }}
-                  className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl transition-all select-none"
+                  className="p-5 card-gradient rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
                     <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">معرف المنظمة</span>
@@ -553,7 +553,7 @@ export default function OrganizationWorkspace() {
                     <h4 className="text-base font-bold text-white font-mono tracking-tight">ORG-8820-X92</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 truncate font-sans">{workspaceName}</p>
                   </div>
-                  <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
+                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--surface-3)' }}>
                     <div className="h-full bg-rose-500 rounded-full w-full" />
                   </div>
                 </motion.div>
@@ -564,7 +564,7 @@ export default function OrganizationWorkspace() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.05 }}
                   whileHover={{ y: -3, borderColor: 'rgba(225,29,72,0.4)', transition: { type: 'spring', stiffness: 400, damping: 25 } }}
-                  className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl transition-all select-none"
+                  className="p-5 card-elevated rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
                     <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">العيادات والفروع</span>
@@ -574,7 +574,7 @@ export default function OrganizationWorkspace() {
                     <h4 className="text-xl font-bold text-white tracking-tight">{totalClinics} عيادات ومراكز نَشِطة</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 font-sans">إجمالي العيادات النشطة: 21 غرف علاج</p>
                   </div>
-                  <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
+                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--surface-3)' }}>
                     <div className="h-full bg-rose-500 rounded-full w-4/5" />
                   </div>
                 </motion.div>
@@ -585,17 +585,17 @@ export default function OrganizationWorkspace() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
                   whileHover={{ y: -3, borderColor: 'rgba(225,29,72,0.4)', transition: { type: 'spring', stiffness: 400, damping: 25 } }}
-                  className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl transition-all select-none"
+                  className="p-5 card-elevated rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
                     <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">تراخيص المستخدِمين</span>
-                    <span className="text-xs text-rose-400 font-mono font-bold bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">28 ترخيص متاح</span>
+                    <span className="badge font-mono text-xs">28 ترخيص متاح</span>
                   </div>
                   <div>
                     <h4 className="text-xl font-bold text-white font-mono tracking-tight">122 / 150</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 font-sans">سعة الاشتراك الكلية للمجموعة</p>
                   </div>
-                  <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
+                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--surface-3)' }}>
                     <div className="h-full bg-rose-500 rounded-full w-[81.3%]" />
                   </div>
                 </motion.div>
@@ -606,17 +606,17 @@ export default function OrganizationWorkspace() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 }}
                   whileHover={{ y: -3, borderColor: 'rgba(6,182,212,0.4)', transition: { type: 'spring', stiffness: 400, damping: 25 } }}
-                  className="p-5 bg-zinc-950 border border-white/10 rounded-3xl flex flex-col justify-between space-y-3 shadow-xl transition-all select-none"
+                  className="p-5 card-elevated rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
                     <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">التخزين السحابي الآمن</span>
-                    <span className="text-xs text-cyan-400 font-mono font-bold bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">24%</span>
+                    <span className="badge badge-info font-mono text-xs">24%</span>
                   </div>
                   <div>
                     <h4 className="text-xl font-bold text-white font-mono tracking-tight">1.2 / 5.0 TB</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 font-sans">تخزين فحص الأشعة وملفات STL بشكل أساسي</p>
                   </div>
-                  <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
+                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--surface-3)' }}>
                     <div className="h-full bg-cyan-400 rounded-full w-[24%]" />
                   </div>
                 </motion.div>
@@ -627,7 +627,7 @@ export default function OrganizationWorkspace() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
                 {/* AI API Utilization Trend Chart */}
-                <div className="lg:col-span-2 p-6 bg-[#0d0d16]/30 border border-white/5 rounded-3xl space-y-4 shadow-xl card-luxury">
+                <div className="lg:col-span-2 p-6 card-elevated rounded-3xl space-y-4 card-luxury">
                   <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-white/5 pb-3">
                     <div>
                       <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono">{tOrg('overview_stats.aiTrendTitle')}</h4>
@@ -663,14 +663,14 @@ export default function OrganizationWorkspace() {
                 </div>
 
                 {/* Platform Quick Actions */}
-                <div className="p-6 bg-[#0d0d16]/30 border border-white/5 rounded-3xl space-y-4 flex flex-col justify-between shadow-xl card-luxury">
+                <div className="p-6 card-elevated rounded-3xl space-y-4 flex flex-col justify-between card-luxury">
                   <div>
                     <h4 className="text-sm font-bold text-white uppercase tracking-wider font-sans border-b border-white/5 pb-3">{tOrg('overview_stats.quickActionsTitle')}</h4>
                     <div className="space-y-3 pt-3">
                       
                       <button 
                         onClick={() => { setActiveTab('Users') }}
-                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                        className="w-full text-left p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
                       >
                         <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Plus className="w-5 h-5" />
@@ -683,7 +683,7 @@ export default function OrganizationWorkspace() {
 
                       <button 
                         onClick={() => { setActiveTab('Permissions') }}
-                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                        className="w-full text-left p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
                       >
                         <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Sliders className="w-5 h-5" />
@@ -696,7 +696,7 @@ export default function OrganizationWorkspace() {
 
                       <button 
                         onClick={() => { setActiveTab('Security') }}
-                        className="w-full text-left p-3.5 bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/60 hover:bg-zinc-850 rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group shadow-sm"
+                        className="w-full text-left p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
                       >
                         <div className="p-2 bg-rose-500/10 text-rose-400 rounded-xl group-hover:bg-rose-500 group-hover:text-zinc-950 transition-colors">
                           <Lock className="w-5 h-5" />
@@ -714,7 +714,7 @@ export default function OrganizationWorkspace() {
               </div>
 
               {/* Active Operator & Bottom Telemetry Bar */}
-              <div className="p-4 bg-[#0d0d16]/30 border border-white/5 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-sans card-luxury">
+              <div className="p-4 card-elevated rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-sans card-luxury">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-md">
                     CA
@@ -754,7 +754,7 @@ export default function OrganizationWorkspace() {
                       {showAddClinicForm ? (
                         <button 
                           onClick={() => setShowAddClinicForm(false)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0d0d16] hover:bg-[#131320] text-zinc-300 text-xs font-bold transition-all border border-white/5"
+                          className="btn-secondary inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold"
                         >
                           {tOrg('clinics.cancelReg')}
                         </button>
@@ -765,7 +765,7 @@ export default function OrganizationWorkspace() {
                             setClinicNameInput('');
                             setClinicLocInput('');
                           }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-black text-xs font-bold transition-all"
+                          className="btn-primary inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold"
                         >
                           <Plus className="w-3.5 h-3.5" /> {tOrg('clinics.provisionSite')}
                         </button>
@@ -773,7 +773,7 @@ export default function OrganizationWorkspace() {
                     </div>
 
                     {showAddClinicForm && (
-                      <div className="p-4 bg-[#0d0d16] border border-white/5 rounded-3xl space-y-3 animate-fade-in card-luxury">
+                      <div className="p-4 card-elevated rounded-3xl space-y-3 animate-fade-in card-luxury">
                         <span className="text-[10px] font-mono font-bold text-gold-400 uppercase tracking-widest block">{tOrg('clinics.registerProfile')}</span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
                           <div className="space-y-1">
@@ -783,7 +783,7 @@ export default function OrganizationWorkspace() {
                               value={clinicNameInput}
                               onChange={(e) => setClinicNameInput(e.target.value)}
                               placeholder={tOrg('clinics.clinicNamePlaceholder')}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-gold-500"
+                              className="w-full p-2 rounded-xl text-white text-xs outline-none focus:border-gold-500"
                             />
                           </div>
                           <div className="space-y-1">
@@ -793,7 +793,7 @@ export default function OrganizationWorkspace() {
                               value={clinicLocInput}
                               onChange={(e) => setClinicLocInput(e.target.value)}
                               placeholder={tOrg('clinics.locationPlaceholder')}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-gold-500"
+                              className="w-full p-2 rounded-xl text-white text-xs outline-none focus:border-gold-500"
                             />
                           </div>
                           <div className="space-y-1">
@@ -801,7 +801,7 @@ export default function OrganizationWorkspace() {
                             <select
                               value={clinicTimezoneInput}
                               onChange={(e) => setClinicTimezoneInput(e.target.value)}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-300 text-xs outline-none focus:border-gold-500"
+                              className="w-full p-2 rounded-xl text-zinc-300 text-xs outline-none focus:border-gold-500"
                             >
                               <option value="America/New_York (EST)">America/New_York (EST)</option>
                               <option value="Europe/London (GMT)">Europe/London (GMT)</option>
@@ -816,7 +816,7 @@ export default function OrganizationWorkspace() {
                               value={clinicHoursInput}
                               onChange={(e) => setClinicHoursInput(e.target.value)}
                               placeholder={tOrg('clinics.hoursPlaceholder')}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-xs outline-none focus:border-gold-500"
+                              className="w-full p-2 rounded-xl text-white text-xs outline-none focus:border-gold-500"
                             />
                           </div>
                         </div>
@@ -834,7 +834,7 @@ export default function OrganizationWorkspace() {
                               });
                               setShowAddClinicForm(false);
                             }}
-                            className="px-4 py-1.5 bg-gold-500 hover:bg-gold-400 text-zinc-950 text-xs font-bold rounded-xl uppercase transition-all"
+                            className="btn-primary px-4 py-1.5 text-xs font-bold uppercase"
                           >
                             {tOrg('clinics.saveBtn')}
                           </button>
@@ -851,7 +851,7 @@ export default function OrganizationWorkspace() {
                           value={clinicSearch}
                           onChange={(e) => setClinicSearch(e.target.value)}
                           placeholder={tOrg('clinics.searchPlaceholder')}
-                          className="w-full pl-8 pr-3 py-1.5 bg-zinc-900 border border-zinc-800 text-xs rounded-xl outline-none focus:border-gold-500 text-white font-mono placeholder:text-zinc-600"
+                          className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl outline-none focus:border-gold-500 text-white font-mono placeholder:text-zinc-600"
                         />
                       </div>
                       <div className="flex items-center gap-2 justify-end">
@@ -859,7 +859,7 @@ export default function OrganizationWorkspace() {
                         <select
                           value={clinicStatusFilter}
                           onChange={(e) => setClinicStatusFilter(e.target.value)}
-                          className="bg-zinc-905 border border-zinc-850 rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-36"
+                          className="rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-36"
                         >
                           <option value="All">All statuses</option>
                           <option value="Active">Active</option>
@@ -872,7 +872,7 @@ export default function OrganizationWorkspace() {
                     {/* Clinic Grid with visual rooms layout */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[380px] overflow-y-auto pr-1">
                       {filteredClinics.map((c) => (
-                        <div key={c.id} className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[180px] space-y-3">
+                        <div key={c.id} className="p-4 card-elevated rounded-3xl card-hover flex flex-col justify-between h-[180px] space-y-3">
                           <div className="flex justify-between items-start">
                             <div>
                               <div className="flex items-center gap-2">
@@ -883,10 +883,10 @@ export default function OrganizationWorkspace() {
                               </div>
                               <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{c.location}</p>
                             </div>
-                            <span className={`text-[9px] font-mono font-black px-2 py-0.5 rounded-full border ${
-                              c.status === 'Active' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                              c.status === 'Maintenance' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                              'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                            <span className={`badge ${
+                              c.status === 'Active' ? 'badge-success' :
+                              c.status === 'Maintenance' ? 'badge-warning' :
+                              'badge'
                             }`}>
                               {c.status}
                             </span>
@@ -915,7 +915,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>TOTAL REGISTERED CLINICS: {clinics.length}</span>
                     <span>ONLINE MAP INTEGRATION: INACTIVE</span>
                   </div>
@@ -940,7 +940,7 @@ export default function OrganizationWorkspace() {
                     {/* Grid of existing departments with interactive custom adding form */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                       {/* Left form */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3 h-[380px] flex flex-col justify-between">
+                      <div className="p-4 card-elevated rounded-3xl space-y-3 h-[380px] flex flex-col justify-between">
                         <div className="space-y-2">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Provisions Custom Unit</span>
                           <p className="text-[10px] text-zinc-400 font-mono leading-relaxed">Instantly add a new specialty clinic segment to the EHR platform.</p>
@@ -954,7 +954,7 @@ export default function OrganizationWorkspace() {
                               value={newDepartmentName}
                               onChange={(e) => setNewDepartmentName(e.target.value)}
                               placeholder="e.g. Cosmetic Dentistry"
-                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
+                              className="w-full p-2 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
                             />
                           </div>
 
@@ -963,7 +963,7 @@ export default function OrganizationWorkspace() {
                             <select
                               value={newDepartmentHead}
                               onChange={(e) => setNewDepartmentHead(e.target.value)}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-zinc-300 font-mono"
+                              className="w-full p-2 text-xs rounded-xl outline-none focus:border-emerald-500 text-zinc-300 font-mono"
                             >
                               <option value="Dr. Catherine Avery">Dr. Catherine Avery</option>
                               <option value="Dr. Bruce Wayne">Dr. Bruce Wayne</option>
@@ -979,13 +979,13 @@ export default function OrganizationWorkspace() {
                               value={newDepartmentRooms}
                               onChange={(e) => setNewDepartmentRooms(e.target.value)}
                               placeholder="e.g. Suite C-04"
-                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
+                              className="w-full p-2 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
                             />
                           </div>
 
                           <button
                             type="submit"
-                            className="w-full py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-black uppercase font-mono tracking-wider transition-colors cursor-pointer"
+                            className="btn-primary w-full py-2 text-xs font-black uppercase font-mono tracking-wider"
                           >
                             Add Specialty Unit
                           </button>
@@ -993,7 +993,7 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Right list */}
-                      <div className="lg:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-2">
+                      <div className="lg:col-span-2 p-4 card-elevated rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-2">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Registered Speciality Directory</span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                           {departments.map((dept, idx) => (
@@ -1011,7 +1011,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>DEPARTMENT TOTAL: {departments.length} UNITS CONFIGURATION</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1045,7 +1045,7 @@ export default function OrganizationWorkspace() {
                           };
                           setUsers([...users, newU]);
                         }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all"
+                        className="btn-primary inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold"
                       >
                         <Plus className="w-3.5 h-3.5" /> Invite Team Seat
                       </button>
@@ -1060,7 +1060,7 @@ export default function OrganizationWorkspace() {
                           value={userSearch}
                           onChange={(e) => setUserSearch(e.target.value)}
                           placeholder="Search users by name, email..."
-                          className="w-full pl-8 pr-3 py-1.5 bg-zinc-900 border border-zinc-800 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
+                          className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
                         />
                       </div>
 
@@ -1069,7 +1069,7 @@ export default function OrganizationWorkspace() {
                         <select
                           value={userRoleFilter}
                           onChange={(e) => setUserRoleFilter(e.target.value)}
-                          className="bg-zinc-905 border border-zinc-850 rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-full"
+                          className="rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-full"
                         >
                           <option value="All">All roles</option>
                           <option value="Owner">Owner</option>
@@ -1087,7 +1087,7 @@ export default function OrganizationWorkspace() {
                         <select
                           value={userStatusFilter}
                           onChange={(e) => setUserStatusFilter(e.target.value)}
-                          className="bg-zinc-905 border border-zinc-850 rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-full"
+                          className="rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-full"
                         >
                           <option value="All">All statuses</option>
                           <option value="Active">Active</option>
@@ -1098,7 +1098,7 @@ export default function OrganizationWorkspace() {
                     </div>
 
                     {/* Large tabular layout */}
-                    <div className="overflow-x-auto rounded-xl border border-zinc-900 max-h-[340px] overflow-y-auto">
+                    <div className="overflow-x-auto rounded-2xl max-h-[340px] overflow-y-auto">
                       <table className="w-full text-left border-collapse text-xs font-mono">
                         <thead>
                           <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
@@ -1130,10 +1130,10 @@ export default function OrganizationWorkspace() {
                               <td className="p-3 text-[10px] text-zinc-500">{u.phone}</td>
                               <td className="p-3 font-bold text-emerald-400">{u.id}</td>
                               <td className="p-3">
-                                <span className={`px-2 py-0.5 rounded text-[9px] ${
-                                  u.status === 'Active' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                                  u.status === 'Inactive' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' :
-                                  'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                                <span className={`badge ${
+                                  u.status === 'Active' ? 'badge-success' :
+                                  u.status === 'Inactive' ? 'badge-danger' :
+                                  'badge-warning'
                                 }`}>
                                   {u.status}
                                 </span>
@@ -1155,7 +1155,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>SEAT COUNT: {filteredUsers.length} MEMBERS ACCORDING TO FILTER</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1177,16 +1177,16 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
                       {/* Left list of roles */}
-                      <div className="p-3.5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-1 h-[380px] overflow-y-auto">
+                      <div className="p-3.5 card-elevated rounded-3xl space-y-1 h-[380px] overflow-y-auto">
                         <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Role Template</span>
                         {Object.keys(rolePermissions).map((role) => (
                           <button
                             key={role}
                             onClick={() => setSelectedPermissionRole(role as any)}
-                            className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold font-mono border transition-all cursor-pointer ${
+                            className={`nav-item w-full text-left px-3 py-2 rounded-xl text-xs font-bold font-mono ${
                               selectedPermissionRole === role 
-                                ? 'bg-purple-500 text-zinc-950 border-purple-400' 
-                                : 'bg-transparent text-zinc-400 border-transparent hover:bg-zinc-950/40 hover:text-white'
+                                ? 'active'
+                                : ''
                             }`}
                           >
                             {role}
@@ -1195,7 +1195,7 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Right permission toggles */}
-                      <div className="lg:col-span-3 p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] space-y-4 flex flex-col justify-between">
+                      <div className="lg:col-span-3 p-4 card-elevated rounded-3xl h-[380px] space-y-4 flex flex-col justify-between">
                         <div>
                           <div className="flex justify-between items-center border-b border-zinc-900 pb-2 mb-3">
                             <span className="text-xs font-black text-white font-mono uppercase">
@@ -1224,7 +1224,7 @@ export default function OrganizationWorkspace() {
                                   className={`p-3 rounded-xl border transition-all cursor-pointer select-none flex items-start gap-3 ${
                                     isChecked 
                                       ? 'bg-purple-500/10 border-purple-500/40 text-purple-200' 
-                                      : 'bg-zinc-950 border-zinc-900 text-zinc-400 hover:border-zinc-800'
+                                      : 'bg-zinc-950 border-zinc-900 text-zinc-400 card-hover'
                                   }`}
                                 >
                                   <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 ${
@@ -1251,7 +1251,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>AUDIT ACTION LOGGED: TRUE</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1284,7 +1284,7 @@ export default function OrganizationWorkspace() {
                           };
                           setTeams([...teams, newTeam]);
                         }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all"
+                        className="btn-primary inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold"
                       >
                         <Plus className="w-3.5 h-3.5" /> Launch Shift Team
                       </button>
@@ -1292,7 +1292,7 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pr-1">
                       {teams.map((t) => (
-                        <div key={t.id} className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[180px] space-y-3">
+                        <div key={t.id} className="p-4 card-elevated rounded-3xl flex flex-col justify-between h-[180px] space-y-3">
                           <div className="flex justify-between items-start">
                             <div>
                               <div className="flex items-center gap-2">
@@ -1303,10 +1303,10 @@ export default function OrganizationWorkspace() {
                               </div>
                               <p className="text-[9px] text-zinc-500 font-mono mt-0.5">Focus: {t.type} operations</p>
                             </div>
-                            <span className={`text-[9px] font-mono font-black px-2 py-0.5 rounded-full border ${
-                              t.status === 'On Duty' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                              t.status === 'On Call' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                              'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                            <span className={`badge ${
+                              t.status === 'On Duty' ? 'badge-success' :
+                              t.status === 'On Call' ? 'badge-warning' :
+                              'badge'
                             }`}>
                               {t.status}
                             </span>
@@ -1339,7 +1339,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>ROSTER TEAMS TOTAL: {teams.length} ON-CALL SHIFTS</span>
                     <span>ONLINE REALTIME FEED: ACTIVE</span>
                   </div>
@@ -1360,7 +1360,7 @@ export default function OrganizationWorkspace() {
                     </div>
 
                     {/* Table-based Audit Log */}
-                    <div className="overflow-x-auto rounded-xl border border-zinc-900 max-h-[380px] overflow-y-auto">
+                    <div className="overflow-x-auto rounded-2xl max-h-[380px] overflow-y-auto">
                       <table className="w-full text-left border-collapse text-xs font-mono">
                         <thead>
                           <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
@@ -1390,10 +1390,10 @@ export default function OrganizationWorkspace() {
                               <td className="p-3 text-zinc-100 max-w-[200px] truncate">{log.action}</td>
                               <td className="p-3 text-zinc-500">{log.ipAddress}</td>
                               <td className="p-3">
-                                <span className={`text-[9px] font-black font-mono px-2 py-0.5 rounded-full ${
-                                  log.status === 'Success' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                                  log.status === 'Warn' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
-                                  'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                                <span className={`badge ${
+                                  log.status === 'Success' ? 'badge-success' :
+                                  log.status === 'Warn' ? 'badge-warning' :
+                                  'badge-danger'
                                 }`}>
                                   {log.status.toUpperCase()}
                                 </span>
@@ -1405,7 +1405,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>IMMUTABLE LEDGER HASH: SHA-256 SECURED BY HEALTHOS SHARED TRUST</span>
                     <span>PCI COMPLIANT: TRUE</span>
                   </div>
@@ -1429,7 +1429,7 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                       {/* Left publish form */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-3 h-[380px] flex flex-col justify-between font-sans">
+                      <div className="p-4 card-elevated rounded-3xl space-y-3 h-[380px] flex flex-col justify-between font-sans">
                         <div className="space-y-1">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block">{tOrg('notices.draftTitle')}</span>
                           <p className="text-[10px] text-zinc-400 font-sans">{tOrg('notices.draftDesc')}</p>
@@ -1443,7 +1443,7 @@ export default function OrganizationWorkspace() {
                               value={newAnnouncementTitle}
                               onChange={(e) => setNewAnnouncementTitle(e.target.value)}
                               placeholder={tOrg('notices.titlePlaceholder')}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-sans placeholder:text-zinc-600"
+                              className="w-full p-2 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-sans placeholder:text-zinc-600"
                             />
                           </div>
 
@@ -1452,7 +1452,7 @@ export default function OrganizationWorkspace() {
                             <select
                               value={newAnnouncementType}
                               onChange={(e: any) => setNewAnnouncementType(e.target.value)}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-zinc-300 font-sans"
+                              className="w-full p-2 text-xs rounded-xl outline-none focus:border-emerald-500 text-zinc-300 font-sans"
                             >
                               <option value="Announcement">{tOrg('notices.types.standard')}</option>
                               <option value="Critical">{tOrg('notices.types.critical')}</option>
@@ -1467,13 +1467,13 @@ export default function OrganizationWorkspace() {
                               onChange={(e) => setNewAnnouncementContent(e.target.value)}
                               rows={3}
                               placeholder={tOrg('notices.bodyPlaceholder')}
-                              className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-sans placeholder:text-zinc-600 resize-none"
+                              className="w-full p-2 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-sans placeholder:text-zinc-600 resize-none"
                             />
                           </div>
 
                           <button
                             type="submit"
-                            className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-extrabold uppercase font-sans tracking-wider transition-colors cursor-pointer"
+                            className="btn-primary w-full py-2.5 text-xs font-extrabold uppercase font-sans tracking-wider"
                           >
                             {tOrg('notices.broadcastBtn')}
                           </button>
@@ -1481,15 +1481,15 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Right active announcements list */}
-                      <div className="lg:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-3 font-sans">
+                      <div className="lg:col-span-2 p-4 card-elevated rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-3 font-sans">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block mb-2">{tOrg('notices.boardTitle')}</span>
                         <div className="space-y-2.5">
                           {announcements.map((item) => (
                             <div key={item.id} className="p-4.5 bg-zinc-950 border border-zinc-900 rounded-xl space-y-2 relative group font-sans">
-                              <span className={`text-[9px] font-sans font-bold px-2 py-0.5 rounded-full border absolute top-3 right-3 ${
-                                item.type === 'Critical' ? 'bg-rose-500/15 text-rose-400 border-rose-500/30' :
-                                item.type === 'Maintenance' ? 'bg-amber-500/15 text-amber-400 border-amber-500/30' :
-                                'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+                              <span className={`badge absolute top-3 right-3 ${
+                                item.type === 'Critical' ? 'badge-danger' :
+                                item.type === 'Maintenance' ? 'badge-warning' :
+                                'badge-success'
                               }`}>
                                 {item.type === 'Critical' ? tOrg('notices.types.critical') :
                                  item.type === 'Maintenance' ? tOrg('notices.types.maintenance') :
@@ -1512,7 +1512,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>BROADCASTS LOGGED: TRUE</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1535,10 +1535,10 @@ export default function OrganizationWorkspace() {
                       <button
                         onClick={runSecurityScan}
                         disabled={securityScanRunning}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition-all uppercase ${
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold font-mono transition-all uppercase ${
                           securityScanRunning 
-                            ? 'bg-zinc-800 text-zinc-600 border border-zinc-750 cursor-not-allowed' 
-                            : 'bg-rose-500 hover:bg-rose-400 text-zinc-950 cursor-pointer'
+                            ? 'btn-secondary opacity-60 cursor-not-allowed' 
+                            : 'btn-primary cursor-pointer'
                         }`}
                       >
                         {securityScanRunning ? 'Scanning Server...' : 'Trigger Compliance Audit'}
@@ -1547,7 +1547,7 @@ export default function OrganizationWorkspace() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Security Parameters Panel */}
-                      <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[380px] flex flex-col justify-between space-y-3">
+                      <div className="p-4 card-elevated rounded-3xl h-[380px] flex flex-col justify-between space-y-3">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Credential policies</span>
                         
                         <div className="space-y-4 flex-1 mt-2">
@@ -1619,7 +1619,7 @@ export default function OrganizationWorkspace() {
                       </div>
 
                       {/* Device List & Health Console */}
-                      <div className="md:col-span-2 p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] space-y-4 flex flex-col justify-between">
+                      <div className="md:col-span-2 p-4 card-elevated rounded-3xl h-[380px] space-y-4 flex flex-col justify-between">
                         <div>
                           <div className="flex justify-between items-center border-b border-zinc-900 pb-2 mb-3">
                             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Active Operator Device Nodes</span>
@@ -1665,7 +1665,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>SECURITY PARAMS RE-AUDITED: COMPLETED SUCCESSFULLY</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1806,7 +1806,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>BRAND PARAMETERS COMPILATION STATUS: OK</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
@@ -1947,7 +1947,7 @@ export default function OrganizationWorkspace() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-zinc-900/20 border border-zinc-900 rounded-3xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
                     <span>SECURITY COMPLIANCE AUDITING: AES-256 ENCRYPTED</span>
                     <span>DR CONSOLE VERSION: v1.0.4-LTS</span>
                   </div>
