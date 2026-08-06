@@ -37,7 +37,8 @@ import {
   Lock,
   ShieldAlert,
   UserCheck,
-  UserPlus
+  UserPlus,
+  Grid
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { handleRequest } from '@/utils/auth-helpers/client';
@@ -48,6 +49,9 @@ import {
   checkPageAccess, 
   UserRole 
 } from '@/utils/enterpriseState';
+import { getWorkspaceForRole, getWorkspaceById } from '@/utils/enterprise/directory';
+import { getOrganizationProfile } from '@/utils/enterprise/practice';
+import { isConsolidatedPractice } from '@/utils/enterprise/adaptive';
 import LicenseGate from '@/components/licensing/LicenseGate';
 import LanguageSwitcher from '@/components/ui/language-switcher';
 import { staffAuthService, StaffRole } from '@/utils/services/staffAuthService';
@@ -557,6 +561,25 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                 ))}
               </select>
             </div>
+
+            {/* Auto-resolved Primary Workspace for Active Role (adaptive) */}
+            {(() => {
+              const profile = getOrganizationProfile();
+              const consolidated = profile ? isConsolidatedPractice(profile.practiceTypeId) : false;
+              const ws = getWorkspaceById(getWorkspaceForRole(activeRole));
+              if (!ws) return null;
+              return (
+                <div className="hidden lg:flex items-center gap-1.5 rounded-2xl px-3 py-1.5 shrink-0"
+                  style={{ background: consolidated ? 'rgba(245,158,11,0.10)' : 'var(--glass-fill)', border: consolidated ? '1px solid rgba(245,158,11,0.35)' : '1px solid var(--border)' }}
+                  title={consolidated ? `Consolidated workspace: ${ws.name}` : `Primary Workspace: ${ws.name}`}
+                >
+                  <Grid className="w-3.5 h-3.5 shrink-0" style={{ color: consolidated ? '#fbbf24' : 'var(--accent)' }} />
+                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono" style={{ color: consolidated ? '#fbbf24' : 'var(--text-muted)' }}>
+                    {ws.name}{consolidated ? ' · Unified' : ''}
+                  </span>
+                </div>
+              );
+            })()}
 
             {/* Quick Invite Staff Button for Admins */}
             {(activeRole === 'Super Admin' || activeRole === 'Clinic Owner') && (

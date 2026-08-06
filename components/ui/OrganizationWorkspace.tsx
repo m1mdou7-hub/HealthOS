@@ -22,6 +22,7 @@ import {
   X,
   Sparkles,
   Layers,
+  LayoutGrid,
   Sliders,
   History,
   FileSpreadsheet,
@@ -41,8 +42,7 @@ import {
   Smartphone,
   Fingerprint,
   RefreshCw,
-  MoreVertical,
-  CheckSquare
+  MoreVertical
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
@@ -60,6 +60,25 @@ import {
   BackupArchive
 } from '@/utils/enterpriseState';
 import {
+  DEPARTMENTS,
+  SPECIALTIES,
+  getSpecialtiesByDepartment,
+  EMPLOYMENT_TYPES,
+  EMPLOYMENT_STATUSES,
+  ACCESS_SCOPES,
+  getPermissionTemplates,
+  WORKSPACES,
+  resolveWorkspacesForUser,
+  getWorkspaceById,
+  type DepartmentId,
+  type EmploymentType,
+  type EmploymentStatus,
+  type ModulePermissions,
+  type PermissionTemplate,
+  type AccessScopeType,
+  type WorkspaceId
+} from '@/utils/enterprise/directory';
+import {
   AreaChart,
   Area,
   XAxis,
@@ -73,7 +92,26 @@ import {
   Pie,
   Cell
 } from 'recharts';
-
+import FirstRunSetupWizard from './onboarding/FirstRunSetupWizard';
+import {
+  getOrganizationProfile,
+  isFirstRun,
+  saveOrganizationProfile,
+  getPracticeType,
+  getPracticeTemplate,
+  savePracticeTemplate,
+  resetPracticeTemplate,
+  buildPracticeTemplate,
+  type OrganizationProfile,
+  type PracticeType,
+  type PracticeTemplate,
+  type NavKey
+} from '@/utils/enterprise/practice';
+import { RESPONSIBILITIES } from '@/utils/enterprise/responsibilities';
+import type { ResponsibilityId } from '@/utils/enterprise/responsibilities';
+import { resolveAdaptiveWorkspaces, isConsolidatedPractice } from '@/utils/enterprise/adaptive';
+import WorkspaceBuilder from './workspace-builder/WorkspaceBuilder';
+import PermissionTemplateManager, { type AssignableUser } from './enterprise/PermissionTemplateManager';
 // --- MOCK INTERFACES FOR THE ENTERPRISE SYSTEM ---
 type ClinicHub = ClinicLocation;
 
@@ -86,6 +124,15 @@ interface OrgUser {
   status: 'Active' | 'Inactive' | 'Pending';
   avatarColor: string;
   phone: string;
+  departmentId?: DepartmentId;
+  specialtyId?: string;
+  jobTitle?: string;
+  responsibilities?: ResponsibilityId[];
+  employmentType?: EmploymentType;
+  employmentStatus?: EmploymentStatus;
+  permissionTemplateId?: string;
+  accessScope?: AccessScopeType;
+  workspace?: WorkspaceId;
 }
 
 interface TeamUnit {
@@ -128,16 +175,16 @@ const INITIAL_CLINICS: ClinicHub[] = [
 ];
 
 const INITIAL_USERS: OrgUser[] = [
-  { id: 'U-101', name: 'د. كاترين أفيري', role: 'Owner', email: 'catherine.avery@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Active', avatarColor: 'from-emerald-500 to-teal-600', phone: '+966 50 102 3920' },
-  { id: 'U-102', name: 'د. بروس واين', role: 'Doctor', email: 'b.wayne@healthos-group.com', clinic: 'مركز الجراحة والاستعاضة الشرقية', status: 'Active', avatarColor: 'from-slate-700 to-zinc-900', phone: '+966 55 902 1244' },
-  { id: 'U-103', name: 'ماركوس ستيرلينغ', role: 'Lab Technician', email: 'm.sterling@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Active', avatarColor: 'from-amber-500 to-rose-600', phone: '+966 54 482 1922' },
-  { id: 'U-104', name: 'لوسيوس فوكس', role: 'Administrator', email: 'l.fox@healthos-group.com', clinic: 'مركز الجراحة والاستعاضة الشرقية', status: 'Active', avatarColor: 'from-blue-600 to-indigo-700', phone: '+966 56 302 8854' },
-  { id: 'U-105', name: 'سيلينا كاين', role: 'Manager', email: 's.kyle@healthos-group.com', clinic: 'مركز طب أسنان الأطفال والغرب', status: 'Active', avatarColor: 'from-purple-600 to-fuchsia-700', phone: '+966 50 120 4493' },
-  { id: 'U-106', name: 'آنيا تشالوترا', role: 'Assistant', email: 'a.chalotra@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Active', avatarColor: 'from-pink-500 to-rose-600', phone: '+966 53 882 9411' },
-  { id: 'U-107', name: 'د. إلينا روستوفا', role: 'Doctor', email: 'e.rostova@healthos-group.com', clinic: 'مركز طب أسنان الأطفال والغرب', status: 'Active', avatarColor: 'from-red-500 to-orange-600', phone: '+966 50 441 2902' },
-  { id: 'U-108', name: 'باميلا إيسلي', role: 'Receptionist', email: 'p.isley@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Pending', avatarColor: 'from-green-500 to-emerald-600', phone: '+966 55 773 1945' },
-  { id: 'U-109', name: 'د. روبرت كارتر', role: 'Doctor', email: 'r.carter@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Active', avatarColor: 'from-cyan-500 to-blue-600', phone: '+966 50 832 4410' },
-  { id: 'U-110', name: 'هارلي كوين', role: 'Assistant', email: 'h.quinn@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Inactive', avatarColor: 'from-rose-500 to-red-700', phone: '+966 54 293 1110' },
+  { id: 'U-101', name: 'د. كاترين أفيري', role: 'Owner', email: 'catherine.avery@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Active', avatarColor: 'from-emerald-500 to-teal-600', phone: '+966 50 102 3920', departmentId: 'administration', jobTitle: 'Clinical Director', responsibilities: ['owner', 'clinical', 'administration', 'finance', 'analytics', 'quality'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'owner', accessScope: 'organization', workspace: 'administration' },
+  { id: 'U-102', name: 'د. بروس واين', role: 'Doctor', email: 'b.wayne@healthos-group.com', clinic: 'مركز الجراحة والاستعاضة الشرقية', status: 'Active', avatarColor: 'from-slate-700 to-zinc-900', phone: '+966 55 902 1244', departmentId: 'dentistry', specialtyId: 'oral-surgery', jobTitle: 'Oral & Maxillofacial Surgeon', responsibilities: ['clinical', 'imaging', 'owner'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'doctor', accessScope: 'department', workspace: 'doctor' },
+  { id: 'U-103', name: 'ماركوس ستيرلينغ', role: 'Lab Technician', email: 'm.sterling@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Active', avatarColor: 'from-amber-500 to-rose-600', phone: '+966 54 482 1922', departmentId: 'laboratory', specialtyId: 'lab-manager', jobTitle: 'Digital Lab Technician', responsibilities: ['laboratory', 'imaging', 'inventory'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'lab-technician', accessScope: 'department', workspace: 'laboratory' },
+  { id: 'U-104', name: 'لوسيوس فوكس', role: 'Administrator', email: 'l.fox@healthos-group.com', clinic: 'مركز الجراحة والاستعاضة الشرقية', status: 'Active', avatarColor: 'from-blue-600 to-indigo-700', phone: '+966 56 302 8854', departmentId: 'administration', jobTitle: 'Systems Administrator', responsibilities: ['administration', 'it', 'finance'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'admin', accessScope: 'organization', workspace: 'administration' },
+  { id: 'U-105', name: 'سيلينا كاين', role: 'Manager', email: 's.kyle@healthos-group.com', clinic: 'مركز طب أسنان الأطفال والغرب', status: 'Active', avatarColor: 'from-purple-600 to-fuchsia-700', phone: '+966 50 120 4493', departmentId: 'front-desk', jobTitle: 'Practice Manager', responsibilities: ['reception', 'administration', 'finance', 'hr', 'marketing'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'manager', accessScope: 'branch', workspace: 'reception' },
+  { id: 'U-106', name: 'آنيا تشالوترا', role: 'Assistant', email: 'a.chalotra@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Active', avatarColor: 'from-pink-500 to-rose-600', phone: '+966 53 882 9411', departmentId: 'dentistry', jobTitle: 'Clinical Assistant', responsibilities: ['clinical', 'reception'], employmentType: 'Part Time', employmentStatus: 'Active', permissionTemplateId: 'assistant', accessScope: 'department', workspace: 'doctor' },
+  { id: 'U-107', name: 'د. إلينا روستوفا', role: 'Doctor', email: 'e.rostova@healthos-group.com', clinic: 'مركز طب أسنان الأطفال والغرب', status: 'Active', avatarColor: 'from-red-500 to-orange-600', phone: '+966 50 441 2902', departmentId: 'dentistry', specialtyId: 'orthodontics', jobTitle: 'Orthodontist', responsibilities: ['clinical'], employmentType: 'Consultant', employmentStatus: 'Active', permissionTemplateId: 'doctor', accessScope: 'department', workspace: 'doctor' },
+  { id: 'U-108', name: 'باميلا إيسلي', role: 'Receptionist', email: 'p.isley@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Pending', avatarColor: 'from-green-500 to-emerald-600', phone: '+966 55 773 1945', departmentId: 'front-desk', specialtyId: 'receptionist', jobTitle: 'Receptionist', responsibilities: ['reception', 'marketing'], employmentType: 'Part Time', employmentStatus: 'Active', permissionTemplateId: 'receptionist', accessScope: 'branch', workspace: 'reception' },
+  { id: 'U-109', name: 'د. روبرت كارتر', role: 'Doctor', email: 'r.carter@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Active', avatarColor: 'from-cyan-500 to-blue-600', phone: '+966 50 832 4410', departmentId: 'dentistry', specialtyId: 'general-dentistry', jobTitle: 'General Dentist', responsibilities: ['clinical'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'doctor', accessScope: 'department', workspace: 'doctor' },
+  { id: 'U-110', name: 'هارلي كوين', role: 'Assistant', email: 'h.quinn@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Inactive', avatarColor: 'from-rose-500 to-red-700', phone: '+966 54 293 1110', departmentId: 'front-desk', jobTitle: 'Front Desk Assistant', responsibilities: ['reception'], employmentType: 'Intern', employmentStatus: 'Vacation', permissionTemplateId: 'receptionist', accessScope: 'branch', workspace: 'reception' },
 ];
 
 const INITIAL_DEPARTMENTS = [
@@ -194,21 +241,33 @@ const LICENSE_STATUS_CHART = [
   { name: 'Available Licenses', value: 28, color: '#4b5563' }
 ];
 
-const PERMISSION_ROLES_TEMPLATES = {
-  Owner: { charts: true, prescribe: true, billing: true, admin: true, directory: true, labs: true, ai: true },
-  Administrator: { charts: false, prescribe: false, billing: true, admin: true, directory: true, labs: true, ai: true },
-  Doctor: { charts: true, prescribe: true, billing: false, admin: false, directory: false, labs: true, ai: true },
-  'Lab Technician': { charts: false, prescribe: false, billing: false, admin: false, directory: false, labs: true, ai: true },
-  Assistant: { charts: true, prescribe: false, billing: false, admin: false, directory: false, labs: true, ai: false },
-  Receptionist: { charts: false, prescribe: false, billing: true, admin: false, directory: false, labs: false, ai: false },
-  Manager: { charts: false, prescribe: false, billing: true, admin: true, directory: true, labs: false, ai: true }
+const ROLE_TEMPLATE_MAP: Record<OrgUser['role'], string> = {
+  Owner: 'owner',
+  Administrator: 'admin',
+  Doctor: 'doctor',
+  'Lab Technician': 'lab-technician',
+  Assistant: 'assistant',
+  Receptionist: 'receptionist',
+  Manager: 'manager'
 };
+
+function getDepartmentName(id?: DepartmentId): string {
+  return DEPARTMENTS.find((d) => d.id === id)?.name ?? '—';
+}
+
+function getSpecialtyName(id?: string): string {
+  return SPECIALTIES.find((s) => s.id === id)?.name ?? '—';
+}
 
 export default function OrganizationWorkspace() {
   const tOrg = useTranslations('OrganizationWorkspace');
+  const tDir = useTranslations('EnterpriseDirectory');
+  const tOnboard = useTranslations('Onboarding');
+  const tTemplate = useTranslations('PracticeTemplate');
+const tBuilder = useTranslations('WorkspaceBuilder');
   // Navigation Tabs matching 11 requested areas (including SLA backups)
   const [activeTab, setActiveTab] = useState<
-    'Overview' | 'Clinics' | 'Departments' | 'Users' | 'Permissions' | 'Teams' | 'Audits' | 'Notifications' | 'Security' | 'Settings' | 'Backup'
+    'Overview' | 'Clinics' | 'Departments' | 'Users' | 'Permissions' | 'Teams' | 'Audits' | 'Notifications' | 'Security' | 'Settings' | 'Backup' | 'Workspaces' | 'PracticeSetup' | 'WorkspaceBuilder'
   >('Overview');
 
   // Interactive core state
@@ -224,7 +283,9 @@ export default function OrganizationWorkspace() {
   useEffect(() => {
     setClinics(getClinics());
     setBackups(getBackups());
-
+    setTemplates(getPermissionTemplates());
+    setOrgProfile(getOrganizationProfile());
+    setShowSetupWizard(isFirstRun());
     const handleSync = (e: Event) => {
       const customEvent = e as CustomEvent;
       if (customEvent.detail) {
@@ -246,6 +307,11 @@ export default function OrganizationWorkspace() {
             ipAddress: l.ipAddress
           }));
           setAudits(prev => [...mappedLogs, ...prev.filter(p => !p.id.startsWith('AUD-'))].slice(0, 40));
+        } else if (customEvent.detail.type === 'org-profile') {
+          setOrgProfile(getOrganizationProfile());
+          setShowSetupWizard(false);
+        } else if (customEvent.detail.type === 'practice-template') {
+          syncPracticeTemplate();
         }
       }
     };
@@ -266,6 +332,12 @@ export default function OrganizationWorkspace() {
   const [clinicTimezoneInput, setClinicTimezoneInput] = useState('America/New_York (EST)');
   const [clinicHoursInput, setClinicHoursInput] = useState('08:00 - 20:00');
 
+  // First-run adaptive setup wizard state
+  const [showSetupWizard, setShowSetupWizard] = useState(false);
+  const [orgProfile, setOrgProfile] = useState<OrganizationProfile | null>(null);
+  const [practiceTemplate, setPracticeTemplate] = useState<PracticeTemplate | null>(null);
+  const [practiceTemplateStatus, setPracticeTemplateStatus] = useState<string | null>(null);
+
   // Search & Filters
   const [userSearch, setUserSearch] = useState('');
   const [userRoleFilter, setUserRoleFilter] = useState('All');
@@ -275,8 +347,35 @@ export default function OrganizationWorkspace() {
   const [clinicStatusFilter, setClinicStatusFilter] = useState('All');
 
   // Permission matrix role selector
-  const [selectedPermissionRole, setSelectedPermissionRole] = useState<keyof typeof PERMISSION_ROLES_TEMPLATES>('Doctor');
-  const [rolePermissions, setRolePermissions] = useState(PERMISSION_ROLES_TEMPLATES);
+  const [templates, setTemplates] = useState<PermissionTemplate[]>([]);
+
+  // User directory filters & seat editing
+  const [userDepartmentFilter, setUserDepartmentFilter] = useState('All');
+  const [userEmploymentTypeFilter, setUserEmploymentTypeFilter] = useState('All');
+  const [userEmploymentStatusFilter, setUserEmploymentStatusFilter] = useState('All');
+  const [userResponsibilityFilter, setUserResponsibilityFilter] = useState('All');
+  const [editingUser, setEditingUser] = useState<OrgUser | null>(null);
+  const [seatForm, setSeatForm] = useState<{
+    departmentId: DepartmentId;
+    specialtyId: string;
+    jobTitle: string;
+    responsibilities: ResponsibilityId[];
+    employmentType: EmploymentType;
+    employmentStatus: EmploymentStatus;
+    permissionTemplateId: string;
+    accessScope: AccessScopeType;
+    workspace: WorkspaceId;
+  }>({
+    departmentId: 'administration',
+    specialtyId: '',
+    jobTitle: '',
+    responsibilities: ['administration'],
+    employmentType: 'Full Time',
+    employmentStatus: 'Active',
+    permissionTemplateId: 'admin',
+    accessScope: 'organization',
+    workspace: 'administration'
+  });
 
   // Security Center simulation states
   const [passwordMinLength, setPasswordMinLength] = useState(12);
@@ -361,31 +460,97 @@ export default function OrganizationWorkspace() {
     setNewAnnouncementContent('');
   };
 
-  // Toggle single permission state
-  const togglePermission = (permKey: keyof typeof PERMISSION_ROLES_TEMPLATES['Doctor']) => {
-    setRolePermissions(prev => {
-      const updatedRole = {
-        ...prev[selectedPermissionRole],
-        [permKey]: !prev[selectedPermissionRole][permKey]
-      };
+  // Open the seat editor for a user
+  const openSeatEditor = (u: OrgUser) => {
+    setEditingUser(u);
+    setSeatForm({
+      departmentId: u.departmentId ?? 'administration',
+      specialtyId: u.specialtyId ?? '',
+      jobTitle: u.jobTitle ?? '',
+      responsibilities: u.responsibilities ?? ['administration'],
+      employmentType: u.employmentType ?? 'Full Time',
+      employmentStatus: u.employmentStatus ?? 'Active',
+      permissionTemplateId: u.permissionTemplateId ?? ROLE_TEMPLATE_MAP[u.role],
+      accessScope: u.accessScope ?? 'organization',
+      workspace: u.workspace ?? 'administration'
+    });
+  };
+
+  // Save the seat editor changes back to the directory
+  const saveSeatEditor = () => {
+    if (!editingUser) return;
+    setUsers(prev => prev.map(u => {
+      if (u.id !== editingUser.id) return u;
+      return { ...u, ...seatForm };
+    }));
+    appendAuditLog(
+      'Chief Security Officer',
+      `Updated seat profile for ${editingUser.name}: department=${seatForm.departmentId}, template=${seatForm.permissionTemplateId}, responsibilities=[${seatForm.responsibilities.join(', ')}].`,
+      'System Admin',
+      'Success'
+    );
+    setEditingUser(null);
+  };
+
+  const toggleSeatResponsibility = (id: ResponsibilityId) => {
+    setSeatForm(prev => {
+      const current = prev.responsibilities;
       return {
         ...prev,
-        [selectedPermissionRole]: updatedRole
+        responsibilities: current.includes(id)
+          ? current.filter(r => r !== id)
+          : [...current, id]
       };
     });
+  };
 
-    // Append to audit log
-    const newLog: AuditLog = {
-      id: `LOG-${Math.floor(Math.random() * 1000)}`,
-      timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19),
-      actor: 'Chief Security Officer (You)',
-      role: 'Owner',
-      action: `Updated permission '${permKey}' for role template '${selectedPermissionRole}'`,
-      module: 'System Admin',
-      status: 'Success',
-      ipAddress: '192.168.1.1'
+  // Duplicate a user including their permissions, responsibilities and workspace
+  const cloneUser = (u: OrgUser) => {
+    const usedIds = new Set(users.map(x => x.id));
+    let nextNum = 102;
+    let nextId = 'U-' + nextNum;
+    while (usedIds.has(nextId)) {
+      nextNum += 1;
+      nextId = 'U-' + nextNum;
+    }
+    const clone: OrgUser = {
+      ...u,
+      id: nextId,
+      name: u.name + ' (Copy)',
+      email: u.email.replace(/@/, '+copy@'),
+      status: 'Pending'
     };
-    setAudits([newLog, ...audits]);
+    setUsers(prev => [...prev, clone]);
+    appendAuditLog(
+      'Chief Security Officer',
+      `Cloned user ${u.name} (${u.id}) to ${clone.name} (${clone.id}) with template=${clone.permissionTemplateId}, responsibilities=[${(clone.responsibilities ?? []).join(', ')}], workspace=${clone.workspace}.`,
+      'System Admin',
+      'Success'
+    );
+  };
+
+  // Resolve the permission set that applies to a given user
+  const getUserModulePermissions = (u: OrgUser): ModulePermissions => {
+    const tpl = templates.find(t => t.id === (u.permissionTemplateId ?? ROLE_TEMPLATE_MAP[u.role]));
+    return tpl?.modulePermissions ?? {};
+  };
+
+  // Resolve assigned workspaces for a user
+  const getUserWorkspaces = (u: OrgUser): WorkspaceId[] => {
+    return resolveWorkspacesForUser({
+      departmentId: u.departmentId,
+      modulePermissions: getUserModulePermissions(u)
+    });
+  };
+
+  // Adaptive resolution: responsibilities + practice type shape the workspaces
+  const getUserAdaptive = (u: OrgUser) => {
+    return resolveAdaptiveWorkspaces({
+      practiceTypeId: orgProfile?.practiceTypeId,
+      responsibilities: u.responsibilities,
+      departmentId: u.departmentId,
+      modulePermissions: getUserModulePermissions(u)
+    });
   };
 
   // Compute stats for overview metrics
@@ -400,9 +565,13 @@ export default function OrganizationWorkspace() {
       const matchSearch = u.name.toLowerCase().includes(userSearch.toLowerCase()) || u.email.toLowerCase().includes(userSearch.toLowerCase());
       const matchRole = userRoleFilter === 'All' || u.role === userRoleFilter;
       const matchStatus = userStatusFilter === 'All' || u.status === userStatusFilter;
-      return matchSearch && matchRole && matchStatus;
+      const matchDepartment = userDepartmentFilter === 'All' || u.departmentId === userDepartmentFilter;
+      const matchEmploymentType = userEmploymentTypeFilter === 'All' || u.employmentType === userEmploymentTypeFilter;
+      const matchEmploymentStatus = userEmploymentStatusFilter === 'All' || u.employmentStatus === userEmploymentStatusFilter;
+      const matchResponsibility = userResponsibilityFilter === 'All' || (u.responsibilities ?? []).includes(userResponsibilityFilter as ResponsibilityId);
+      return matchSearch && matchRole && matchStatus && matchDepartment && matchEmploymentType && matchEmploymentStatus && matchResponsibility;
     });
-  }, [users, userSearch, userRoleFilter, userStatusFilter]);
+  }, [users, userSearch, userRoleFilter, userStatusFilter, userDepartmentFilter, userEmploymentTypeFilter, userEmploymentStatusFilter, userResponsibilityFilter]);
 
   const filteredClinics = useMemo(() => {
     return clinics.filter(c => {
@@ -433,7 +602,59 @@ export default function OrganizationWorkspace() {
     }, 1200);
   };
 
+
+  // Practice template editor handlers
+  const syncPracticeTemplate = () => {
+    setPracticeTemplate(getPracticeTemplate());
+  };
+
+  useEffect(() => {
+    if (orgProfile) syncPracticeTemplate();
+  }, [orgProfile]);
+
+  const toggleTemplateItem = (
+    key: 'departments' | 'workspaces' | 'responsibilities' | 'navigation' | 'permissionTemplateIds',
+    value: string
+  ) => {
+    setPracticeTemplate((prev) => {
+      if (!prev) return prev;
+      const current = prev[key] as string[];
+      const next = current.includes(value)
+        ? current.filter((v) => v !== value)
+        : [...current, value];
+      return { ...prev, [key]: next, source: 'custom' as const };
+    });
+  };
+
+  const handleSavePracticeTemplate = () => {
+    if (!practiceTemplate) return;
+    savePracticeTemplate(practiceTemplate);
+    appendAuditLog(
+      'Practice Manager',
+      `Updated adaptive practice template for [${practiceTemplate.practiceTypeId}]`,
+      'System Admin',
+      'Success'
+    );
+    setPracticeTemplateStatus('saved');
+    setTimeout(() => setPracticeTemplateStatus(null), 2500);
+  };
+
+  const handleResetPracticeTemplate = () => {
+    if (!practiceTemplate) return;
+    resetPracticeTemplate();
+    syncPracticeTemplate();
+    appendAuditLog(
+      'Practice Manager',
+      `Reset adaptive practice template to suggested defaults`,
+      'System Admin',
+      'Success'
+    );
+    setPracticeTemplateStatus('reset');
+    setTimeout(() => setPracticeTemplateStatus(null), 2500);
+  };
+
   return (
+    <>
     <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans">
       
       {/* HEADER BANNER */}
@@ -451,6 +672,11 @@ export default function OrganizationWorkspace() {
               <span className="badge badge-info text-xs font-semibold px-3 py-0.5 rounded-full">
                 {brandColor.toUpperCase()} {tOrg('multiClinic')}
               </span>
+              {orgProfile && (
+                <span className="badge badge-adaptive text-xs font-semibold px-3 py-0.5 rounded-full" style={{ background: 'rgba(168,85,247,0.14)', borderColor: 'rgba(168,85,247,0.4)', color: '#d8b4fe' }}>
+                  <Sparkles className="w-3 h-3 inline-block mr-1" />
+                  {tOnboard(`practiceTypes.${orgProfile.practiceTypeId}`)}                </span>
+              )}
             </div>
             <p className="text-xs text-zinc-400 mt-1 font-sans">
               {tOrg('tenantDesc')}
@@ -470,7 +696,7 @@ export default function OrganizationWorkspace() {
         </div>
       </div>
 
-      {/* 11 SUBMODULES HORIZONTAL NAV TABS (Clean Scrollable Bar) */}
+      {/* 12 SUBMODULES HORIZONTAL NAV TABS (Clean Scrollable Bar) */}
       <div className="card-elevated p-2 flex items-center gap-2 overflow-x-auto scrollbar-none">
         {[
           { id: 'Overview', key: 'Overview', icon: Layers, badge: 'موحد' },
@@ -483,7 +709,10 @@ export default function OrganizationWorkspace() {
           { id: 'Notifications', key: 'Notifications', icon: Bell, badge: `${announcements.length} تنبيهات`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
           { id: 'Security', key: 'Security', icon: Lock, badge: `${securityScore}/100`, badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
           { id: 'Settings', key: 'Settings', icon: Settings2, badge: 'إعدادات' },
-          { id: 'Backup', key: 'Backup', icon: Database, badge: `${backups.length} الأرشيف`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' }
+          { id: 'Backup', key: 'Backup', icon: Database, badge: `${backups.length} الأرشيف`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
+          { id: 'Workspaces', key: 'Workspaces', icon: Grid, badge: `${WORKSPACES.length} مساحات`, badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
+          { id: 'PracticeSetup', key: 'PracticeSetup', icon: Sparkles, badge: 'تكييف', badgeColor: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
+          { id: 'WorkspaceBuilder', key: 'WorkspaceBuilder', icon: LayoutGrid, badge: 'منشئ', badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' }
         ].map(item => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -498,7 +727,10 @@ export default function OrganizationWorkspace() {
             Notifications: '8. التنبيهات العامة',
             Security: '9. مركز أمان النظام',
             Settings: '10. الهوية والعلامة',
-            Backup: '11. النسخ والاستعادة'
+            Backup: '11. النسخ والاستعادة',
+            Workspaces: '12. مساحات العمل',
+            PracticeSetup: '13. إعداد الممارسة',
+            WorkspaceBuilder: '14. منشئ مساحات العمل'
           };
           const labelText = labelsMap[item.key] || item.key;
           return (
@@ -1009,10 +1241,44 @@ export default function OrganizationWorkspace() {
                         </div>
                       </div>
                     </div>
+
+                    {/* Enterprise Department Catalog with specialty chips */}
+                    <div className="p-4 card-elevated rounded-3xl space-y-3">
+                      <div className="border-b border-zinc-900 pb-2">
+                        <h4 className="text-xs font-black text-white uppercase tracking-tight">{tDir('headerTitle')} — {tDir('department')} Catalog</h4>
+                        <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{tDir('headerSubtitle')}</p>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5 max-h-[380px] overflow-y-auto pr-1">
+                        {DEPARTMENTS.map((dept) => {
+                          const deptSpecialties = getSpecialtiesByDepartment(dept.id);
+                          return (
+                            <div key={dept.id} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-2">
+                              <div className="flex items-center justify-between">
+                                <h5 className="text-[11px] font-black text-white">{dept.name}</h5>
+                                <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-purple-400">
+                                  {dept.code}
+                                </span>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {deptSpecialties.length > 0 ? (
+                                  deptSpecialties.map((s) => (
+                                    <span key={s.id} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900/80 border border-zinc-800 text-zinc-400">
+                                      {s.name}
+                                    </span>
+                                  ))
+                                ) : (
+                                  <span className="text-[9px] font-mono text-zinc-600">General department • no fixed specialties</span>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
-                    <span>DEPARTMENT TOTAL: {departments.length} UNITS CONFIGURATION</span>
+                    <span>DEPARTMENT TOTAL: {departments.length} UNITS CONFIGURATION • {DEPARTMENTS.length} CATALOG</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
                 </WorkspaceTabPanel>
@@ -1041,7 +1307,14 @@ export default function OrganizationWorkspace() {
                             clinic: 'Westside Pediatric Dentistry',
                             status: 'Pending',
                             avatarColor: 'from-fuchsia-500 to-pink-600',
-                            phone: '+1 (555) 002-3392'
+                            phone: '+1 (555) 002-3392',
+                            departmentId: 'front-desk',
+                            jobTitle: 'Front Desk Assistant',
+                            employmentType: 'Intern',
+                            employmentStatus: 'Active',
+                            permissionTemplateId: 'receptionist',
+                            accessScope: 'branch',
+                            workspace: 'reception'
                           };
                           setUsers([...users, newU]);
                         }}
@@ -1052,7 +1325,7 @@ export default function OrganizationWorkspace() {
                     </div>
 
                     {/* Filter controls */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                       <div className="relative">
                         <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                         <input
@@ -1095,6 +1368,62 @@ export default function OrganizationWorkspace() {
                           <option value="Pending">Pending</option>
                         </select>
                       </div>
+
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('department')}:</span>
+                        <select
+                          value={userDepartmentFilter}
+                          onChange={(e) => setUserDepartmentFilter(e.target.value)}
+                          className="rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-full"
+                        >
+                          <option value="All">{tDir('allDepartments')}</option>
+                          {DEPARTMENTS.map((d) => (
+                            <option key={d.id} value={d.id}>{d.name}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tTemplate('responsibilities')}:</span>
+                          <select
+                            value={userResponsibilityFilter}
+                            onChange={(e) => setUserResponsibilityFilter(e.target.value)}
+                            className="rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-full"
+                          >
+                            <option value="All">All responsibilities</option>
+                            {RESPONSIBILITIES.map((r) => (
+                              <option key={r.id} value={r.id}>{r.name}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentType')}:</span>
+                        <select
+                          value={userEmploymentTypeFilter}
+                          onChange={(e) => setUserEmploymentTypeFilter(e.target.value)}
+                          className="rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-full"
+                        >
+                          <option value="All">{tDir('allTypes')}</option>
+                          {EMPLOYMENT_TYPES.map((t) => (
+                            <option key={t} value={t}>{t}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentStatus')}:</span>
+                        <select
+                          value={userEmploymentStatusFilter}
+                          onChange={(e) => setUserEmploymentStatusFilter(e.target.value)}
+                          className="rounded-xl text-xs font-mono text-zinc-300 p-1.5 outline-none focus:border-emerald-500 w-full"
+                        >
+                          <option value="All">{tDir('allStatuses')}</option>
+                          {EMPLOYMENT_STATUSES.map((s) => (
+                            <option key={s} value={s}>{s}</option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
 
                     {/* Large tabular layout */}
@@ -1105,7 +1434,11 @@ export default function OrganizationWorkspace() {
                             <th className="p-3">Staff Member</th>
                             <th className="p-3">Role</th>
                             <th className="p-3">Facility Node</th>
-                            <th className="p-3">Contact</th>
+                            <th className="p-3">{tDir('department')}</th>
+                            <th className="p-3">{tDir('specialty')}</th>
+                            <th className="p-3">{tTemplate('responsibilities')}</th>
+                            <th className="p-3">{tDir('employmentType')}</th>
+                            <th className="p-3">{tDir('workspace')}</th>
                             <th className="p-3">ID Link</th>
                             <th className="p-3">Security Token</th>
                             <th className="p-3">Action</th>
@@ -1127,7 +1460,44 @@ export default function OrganizationWorkspace() {
                               </td>
                               <td className="p-3 font-bold text-zinc-200">{u.role}</td>
                               <td className="p-3 text-zinc-400">{u.clinic}</td>
-                              <td className="p-3 text-[10px] text-zinc-500">{u.phone}</td>
+                              <td className="p-3 text-zinc-400">{getDepartmentName(u.departmentId)}</td>
+                              <td className="p-3 text-zinc-400">{getSpecialtyName(u.specialtyId)}</td>
+                              <td className="p-3">
+                                <div className="flex flex-wrap gap-1 max-w-[180px]">
+                                  {u.responsibilities && u.responsibilities.length > 0 ? (
+                                    u.responsibilities.map((r) => {
+                                      const resp = RESPONSIBILITIES.find(x => x.id === r);
+                                      return (
+                                        <span key={r} className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                          {resp?.name ?? r}
+                                        </span>
+                                      );
+                                    })
+                                  ) : (
+                                    <span className="text-zinc-600">—</span>
+                                  )}
+                                </div>
+                              </td>
+                              <td className="p-3 space-y-1">
+                                <span className="text-[10px] text-zinc-300 block">{u.employmentType ?? '—'}</span>
+                                <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold ${
+                                  u.employmentStatus === 'Active' ? 'bg-emerald-500/15 text-emerald-400' :
+                                  u.employmentStatus === 'Vacation' || u.employmentStatus === 'On Leave' ? 'bg-amber-500/15 text-amber-400' :
+                                  u.employmentStatus === 'Suspended' ? 'bg-rose-500/15 text-rose-400' :
+                                  'bg-zinc-900 text-zinc-400'
+                                }`}>
+                                  {u.employmentStatus ?? '—'}
+                                </span>
+                              </td>
+                              <td className="p-3">
+                                {u.workspace ? (
+                                  <span className="bg-purple-500/15 text-purple-300 border border-purple-500/30 text-[10px] px-2 py-0.5 rounded-lg font-bold">
+                                    {getWorkspaceById(u.workspace)?.name ?? u.workspace}
+                                  </span>
+                                ) : (
+                                  <span className="text-zinc-600">—</span>
+                                )}
+                              </td>
                               <td className="p-3 font-bold text-emerald-400">{u.id}</td>
                               <td className="p-3">
                                 <span className={`badge ${
@@ -1139,14 +1509,28 @@ export default function OrganizationWorkspace() {
                                 </span>
                               </td>
                               <td className="p-3">
-                                <button 
-                                  onClick={() => {
-                                    setUsers(users.filter(item => item.id !== u.id));
-                                  }}
-                                  className="text-rose-400 hover:text-rose-300 font-bold text-[10px] transition-colors"
-                                >
-                                  SUSPEND
-                                </button>
+                                <div className="flex items-center gap-2.5">
+                                  <button 
+                                    onClick={() => openSeatEditor(u)}
+                                    className="text-purple-400 hover:text-purple-300 font-bold text-[10px] transition-colors"
+                                  >
+                                    EDIT
+                                  </button>
+                                  <button 
+                                    onClick={() => {
+                                      setUsers(users.filter(item => item.id !== u.id));
+                                    }}
+                                    className="text-rose-400 hover:text-rose-300 font-bold text-[10px] transition-colors"
+                                  >
+                                    SUSPEND
+                                  </button>
+                                  <button
+                                    onClick={() => cloneUser(u)}
+                                    className="text-cyan-400 hover:text-cyan-300 font-bold text-[10px] transition-colors"
+                                  >
+                                    CLONE
+                                  </button>
+                                </div>
                               </td>
                             </tr>
                           ))}
@@ -1159,6 +1543,157 @@ export default function OrganizationWorkspace() {
                     <span>SEAT COUNT: {filteredUsers.length} MEMBERS ACCORDING TO FILTER</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
+
+                  {/* Seat editor overlay */}
+                  {editingUser && (
+                    <div className="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+                      <div className="card-elevated rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 space-y-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="text-sm font-black text-white uppercase tracking-tight font-mono">{tDir('editSeatTitle')}</h4>
+                            <p className="text-xs text-zinc-400 mt-0.5 font-mono">{editingUser.name} • {editingUser.email}</p>
+                          </div>
+                          <button onClick={() => setEditingUser(null)} className="p-1.5 rounded-lg hover:bg-zinc-900 text-zinc-400">
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('department')}</label>
+                            <select
+                              value={seatForm.departmentId}
+                              onChange={(e) => setSeatForm(prev => ({ ...prev, departmentId: e.target.value as DepartmentId }))}
+                              className="w-full p-2 rounded-xl text-zinc-200 text-xs outline-none focus:border-gold-500"
+                            >
+                              {DEPARTMENTS.map((d) => (
+                                <option key={d.id} value={d.id}>{d.name}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('specialty')}</label>
+                            <select
+                              value={seatForm.specialtyId}
+                              onChange={(e) => setSeatForm(prev => ({ ...prev, specialtyId: e.target.value }))}
+                              className="w-full p-2 rounded-xl text-zinc-200 text-xs outline-none focus:border-gold-500"
+                            >
+                              <option value="">—</option>
+                              {getSpecialtiesByDepartment(seatForm.departmentId).map((s) => (
+                                <option key={s.id} value={s.id}>{s.name}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('jobTitle')}</label>
+                            <input
+                              type="text"
+                              value={seatForm.jobTitle}
+                              onChange={(e) => setSeatForm(prev => ({ ...prev, jobTitle: e.target.value }))}
+                              className="w-full p-2 rounded-xl text-white text-xs outline-none focus:border-gold-500"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('employmentType')}</label>
+                            <select
+                              value={seatForm.employmentType}
+                              onChange={(e) => setSeatForm(prev => ({ ...prev, employmentType: e.target.value as EmploymentType }))}
+                              className="w-full p-2 rounded-xl text-zinc-200 text-xs outline-none focus:border-gold-500"
+                            >
+                              {EMPLOYMENT_TYPES.map((t) => (
+                                <option key={t} value={t}>{t}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('employmentStatus')}</label>
+                            <select
+                              value={seatForm.employmentStatus}
+                              onChange={(e) => setSeatForm(prev => ({ ...prev, employmentStatus: e.target.value as EmploymentStatus }))}
+                              className="w-full p-2 rounded-xl text-zinc-200 text-xs outline-none focus:border-gold-500"
+                            >
+                              {EMPLOYMENT_STATUSES.map((s) => (
+                                <option key={s} value={s}>{s}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('permissionTemplate')}</label>
+                            <select
+                              value={seatForm.permissionTemplateId}
+                              onChange={(e) => setSeatForm(prev => ({ ...prev, permissionTemplateId: e.target.value }))}
+                              className="w-full p-2 rounded-xl text-zinc-200 text-xs outline-none focus:border-gold-500"
+                            >
+                              {templates.map((t) => (
+                                <option key={t.id} value={t.id}>{t.name}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('accessScope')}</label>
+                            <select
+                              value={seatForm.accessScope}
+                              onChange={(e) => setSeatForm(prev => ({ ...prev, accessScope: e.target.value as AccessScopeType }))}
+                              className="w-full p-2 rounded-xl text-zinc-200 text-xs outline-none focus:border-gold-500"
+                            >
+                              {ACCESS_SCOPES.map((s) => (
+                                <option key={s.type} value={s.type}>{tDir(`scopes.${s.type}`)}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('workspace')}</label>
+                            <select
+                              value={seatForm.workspace}
+                              onChange={(e) => setSeatForm(prev => ({ ...prev, workspace: e.target.value as WorkspaceId }))}
+                              className="w-full p-2 rounded-xl text-zinc-200 text-xs outline-none focus:border-gold-500"
+                            >
+                              {WORKSPACES.map((w) => (
+                                <option key={w.id} value={w.id}>{w.name}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tTemplate('responsibilities')}</label>
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                              {tTemplate('n_selected', { count: seatForm.responsibilities.length })}
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {RESPONSIBILITIES.map((r) => {
+                              const active = seatForm.responsibilities.includes(r.id);
+                              return (
+                                <button
+                                  key={r.id}
+                                  type="button"
+                                  onClick={() => toggleSeatResponsibility(r.id)}
+                                  className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
+                                    active
+                                      ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
+                                      : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
+                                  }`}
+                                >
+                                  {r.name}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        <div className="flex justify-end gap-2 pt-2">
+                          <button onClick={() => setEditingUser(null)} className="btn-secondary px-4 py-1.5 text-xs font-bold">
+                            {tDir('cancel')}
+                          </button>
+                          <button onClick={saveSeatEditor} className="btn-primary px-4 py-1.5 text-xs font-bold">
+                            {tDir('save')}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </WorkspaceTabPanel>
               )}
 
@@ -1166,100 +1701,27 @@ export default function OrganizationWorkspace() {
                   5. ROLES & PERMISSIONS
                   ================================================== */}
               {activeTab === 'Permissions' && (
-                <WorkspaceTabPanel
-                  className="h-full flex flex-col justify-between"
-                >
-                  <div className="space-y-4">
-                    <div className="border-b border-zinc-900 pb-2">
-                      <h3 className="text-base font-black text-white uppercase tracking-tight">Fine-Grained Role Access Matrices</h3>
-                      <p className="text-xs text-zinc-500 font-mono">Control HIPAA compliance scopes, treating clinical screens as modules with permission bounds.</p>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                      {/* Left list of roles */}
-                      <div className="p-3.5 card-elevated rounded-3xl space-y-1 h-[380px] overflow-y-auto">
-                        <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Role Template</span>
-                        {Object.keys(rolePermissions).map((role) => (
-                          <button
-                            key={role}
-                            onClick={() => setSelectedPermissionRole(role as any)}
-                            className={`nav-item w-full text-left px-3 py-2 rounded-xl text-xs font-bold font-mono ${
-                              selectedPermissionRole === role 
-                                ? 'active'
-                                : ''
-                            }`}
-                          >
-                            {role}
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Right permission toggles */}
-                      <div className="lg:col-span-3 p-4 card-elevated rounded-3xl h-[380px] space-y-4 flex flex-col justify-between">
-                        <div>
-                          <div className="flex justify-between items-center border-b border-zinc-900 pb-2 mb-3">
-                            <span className="text-xs font-black text-white font-mono uppercase">
-                              Active Matrix: <span className="text-purple-400">{selectedPermissionRole}</span>
-                            </span>
-                            <span className="text-[9px] font-mono text-zinc-500 bg-zinc-950 px-2 py-0.5 border border-zinc-850 rounded">
-                              HIPAA Scope Enforcement
-                            </span>
-                          </div>
-
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {[
-                              { key: 'charts', title: 'Read Treatment Charts', desc: 'Allows viewing visual restorative tooth charts and periodontal grids.' },
-                              { key: 'prescribe', title: 'Write Prescription Parameters', desc: 'Allows issuing active medical recipes, pharmacotherapy guidelines.' },
-                              { key: 'billing', title: 'View Financial Invoicing', desc: 'Allows access to billing modules, insurance claims, and price settings.' },
-                              { key: 'admin', title: 'Full System Modifications', desc: 'Permission to adjust general workspace layouts, branding settings.' },
-                              { key: 'directory', title: 'Edit Staff Access Sheets', desc: 'Allows adding, modifying, or terminating user access credentials.' },
-                              { key: 'labs', title: 'Configure CAD/CAM Lab Orders', desc: 'Allows creating and managing mill/sinter manufacturing workflows.' },
-                              { key: 'ai', title: 'Trigger Clinical AI Assist', desc: 'Permission to run automated model clinical diagnostics and summaries.' },
-                            ].map((perm) => {
-                              const isChecked = (rolePermissions[selectedPermissionRole] as any)[perm.key];
-                              return (
-                                <div
-                                  key={perm.key}
-                                  onClick={() => togglePermission(perm.key as any)}
-                                  className={`p-3 rounded-xl border transition-all cursor-pointer select-none flex items-start gap-3 ${
-                                    isChecked 
-                                      ? 'bg-purple-500/10 border-purple-500/40 text-purple-200' 
-                                      : 'bg-zinc-950 border-zinc-900 text-zinc-400 card-hover'
-                                  }`}
-                                >
-                                  <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 ${
-                                    isChecked ? 'bg-purple-500 border-purple-400 text-zinc-950' : 'border-zinc-800 bg-zinc-900'
-                                  }`}>
-                                    {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
-                                  </div>
-                                  <div>
-                                    <h5 className="text-[11px] font-bold text-white">{perm.title}</h5>
-                                    <p className="text-[9px] text-zinc-500 leading-relaxed font-mono">{perm.desc}</p>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-
-                        {/* Audit Log Preview */}
-                        <div className="p-2 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-[9px] text-zinc-500">
-                          <span>LAST AUDITED: {new Date().toLocaleDateString()}</span>
-                          <span className="text-purple-400 font-bold">MUTABLE ON-THE-FLY</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
-                    <span>AUDIT ACTION LOGGED: TRUE</span>
-                    <span>RESTRICTED EXPORT: TRUE</span>
-                  </div>
+                <WorkspaceTabPanel className="space-y-4">
+                  <PermissionTemplateManager
+                    templates={templates}
+                    setTemplates={setTemplates}
+                    users={users.map((u) => ({
+                      id: u.id,
+                      name: u.name,
+                      role: u.role,
+                      departmentId: u.departmentId,
+                      responsibilityIds: u.responsibilities,
+                      permissionTemplateId: u.permissionTemplateId
+                    }))}
+                    onAssign={(userIds, templateId) => {
+                      setUsers(prev => prev.map(u => userIds.includes(u.id) ? { ...u, permissionTemplateId: templateId } : u));
+                    }}
+                    onAudit={(action) => appendAuditLog('Chief Security Officer', action, 'System Admin', 'Success')}
+                  />
                 </WorkspaceTabPanel>
               )}
 
               {/* ==================================================
-                  6. TEAMS
                   ================================================== */}
               {activeTab === 'Teams' && (
                 <WorkspaceTabPanel
@@ -1954,8 +2416,443 @@ export default function OrganizationWorkspace() {
                 </WorkspaceTabPanel>
               )}
 
+              {/* ==================================================
+                  12. WORKSPACES
+                  ================================================== */}
+              {activeTab === 'Workspaces' && (
+                <WorkspaceTabPanel className="h-full flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <div className="border-b border-zinc-900 pb-2">
+                      <h3 className="text-base font-black text-white uppercase tracking-tight">{tDir('workspacesHeader')}</h3>
+                      <p className="text-xs text-zinc-500 font-mono">{tDir('workspacesSub')}</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5">
+                      {WORKSPACES.map((w) => (
+                        <div key={w.id} className="p-3 card-elevated rounded-2xl space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <h5 className="text-[11px] font-black text-white">{w.name}</h5>
+                            <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-purple-500/10 border border-purple-500/30 text-purple-400 uppercase">
+                              {w.id}
+                            </span>
+                          </div>
+                          <p className="text-[8px] font-mono text-zinc-500">Primary module: <span className="text-zinc-300">{w.primaryModule}</span></p>
+                          <div className="flex flex-wrap gap-1">
+                            {w.departments.map((d) => (
+                              <span key={d} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
+                                {getDepartmentName(d)}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="p-4 card-elevated rounded-3xl space-y-3">
+                      <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
+                        <span className="text-xs font-black text-white uppercase tracking-tight font-mono">{tDir('allWorkspaces')}</span>
+                        <span className="text-[9px] font-mono text-purple-400">{tDir('derivedFrom')}: {tTemplate('responsibilities')} + {tDir('department')} + {tDir('permissionMatrix')}</span>
+                      </div>
+
+                      {/* Adaptive engine status */}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {orgProfile && (
+                          <span className={`text-[10px] font-mono px-2 py-1 rounded-lg border font-bold ${
+                            isConsolidatedPractice(orgProfile.practiceTypeId)
+                              ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                              : 'bg-purple-500/10 border-purple-500/30 text-purple-300'
+                          }`}>
+                            {isConsolidatedPractice(orgProfile.practiceTypeId)
+                              ? 'UNIFIED SURFACE — CONSOLIDATED'
+                              : 'SEPARATED BY DEPARTMENT'}
+                          </span>
+                        )}
+                        {orgProfile && (
+                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                            {tOnboard(`practiceTypes.${orgProfile.practiceTypeId}`)}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="overflow-x-auto rounded-xl max-h-[320px] overflow-y-auto">
+                        <table className="w-full text-left border-collapse text-xs font-mono">
+                          <thead>
+                            <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
+                              <th className="p-3">Staff Member</th>
+                              <th className="p-3">{tDir('department')}</th>
+                              <th className="p-3">{tTemplate('responsibilities')}</th>
+                              <th className="p-3">{tDir('permissionTemplate')}</th>
+                              <th className="p-3">{tDir('allWorkspaces')}</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-zinc-900/60 text-zinc-300">
+                            {users.map((u) => {
+                              const adaptive = getUserAdaptive(u);
+                              return (
+                                <tr key={u.id} className="hover:bg-zinc-900/20">
+                                  <td className="p-3">
+                                    <div className="flex items-center gap-2">
+                                      <div className={`w-6 h-6 rounded-lg bg-gradient-to-tr ${u.avatarColor} flex items-center justify-center text-[9px] font-black text-white uppercase`}>
+                                        {u.name.split(' ').map(n=>n[0]).join('')}
+                                      </div>
+                                      <div>
+                                        <span className="font-bold text-white text-[11px]">{u.name}</span>
+                                        {adaptive.consolidated && (
+                                          <span className="block text-[8px] font-mono text-amber-400/80 uppercase">Unified surface</span>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td className="p-3 text-zinc-400">{getDepartmentName(u.departmentId)}</td>
+                                  <td className="p-3">
+                                    <div className="flex flex-wrap gap-1 max-w-[180px]">
+                                      {(u.responsibilities ?? []).slice(0, 3).map((r) => {
+                                        const resp = RESPONSIBILITIES.find(x => x.id === r);
+                                        return (
+                                          <span key={r} className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                            {resp?.name ?? r}
+                                          </span>
+                                        );
+                                      })}
+                                    </div>
+                                  </td>
+                                  <td className="p-3 text-zinc-400">{templates.find(t => t.id === (u.permissionTemplateId ?? ROLE_TEMPLATE_MAP[u.role]))?.name ?? '—'}</td>
+                                  <td className="p-3">
+                                    <div className="flex flex-wrap gap-1">
+                                      {adaptive.workspaces.map((wid) => (
+                                        <span key={wid} className={`text-[9px] font-bold px-2 py-0.5 rounded-lg border ${
+                                          adaptive.consolidated
+                                            ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
+                                            : 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+                                        }`}>
+                                          {getWorkspaceById(wid)?.name ?? wid}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
+                    <span>WORKSPACE ROUTING ENGINE: {orgProfile && isConsolidatedPractice(orgProfile.practiceTypeId) ? 'CONSOLIDATED' : 'AUTOMATIC'}</span>
+                    <span>{WORKSPACES.length} ROUTES CONFIGURED</span>
+                  </div>
+                </WorkspaceTabPanel>
+              )}
+
+              {/* ==================================================
+                  13. ADAPTIVE PRACTICE TEMPLATE (Phase 2)
+                  ================================================== */}
+              {activeTab === 'PracticeSetup' && (
+                <WorkspaceTabPanel className="space-y-4">
+                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-4 card-gradient rounded-3xl">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                        <Sparkles className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="text-base font-black text-white uppercase tracking-tight">{tTemplate('headerTitle')}</h3>
+                        <p className="text-xs text-zinc-400 mt-0.5 max-w-2xl font-sans">{tTemplate('headerSub')}</p>
+                      </div>
+                    </div>
+                    {orgProfile && (
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
+                          {tTemplate('practiceType')}: <span className="text-violet-300 font-bold">{tOnboard(`practiceTypes.${orgProfile.practiceTypeId}`)}</span>
+                        </span>
+                        <span className={`text-[10px] font-mono px-2 py-1 rounded-lg border ${
+                          practiceTemplate?.source === 'custom'
+                            ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                            : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                        }`}>
+                          {tTemplate(practiceTemplate?.source === 'custom' ? 'sourceCustom' : 'sourceSuggested')}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {!orgProfile ? (
+                    <div className="p-8 card-elevated rounded-3xl text-center space-y-3">
+                      <Sparkles className="w-10 h-10 text-violet-400 mx-auto" />
+                      <p className="text-sm text-zinc-400">{tTemplate('noProfile')}</p>
+                      <button
+                        type="button"
+                        onClick={() => setShowSetupWizard(true)}
+                        className="btn-primary px-4 py-2 text-xs font-bold rounded-xl cursor-pointer"
+                      >
+                        {tTemplate('goToSetup')}
+                      </button>
+                    </div>
+                  ) : practiceTemplate ? (
+                    <div className="space-y-4">
+                      {/* Departments */}
+                      <div className="p-4 card-elevated rounded-3xl space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
+                              <Building2 className="w-4 h-4 text-sky-400" /> {tTemplate('departments')}
+                            </h4>
+                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('departmentsSub')}</p>
+                          </div>
+                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                            {tTemplate('n_selected', { count: practiceTemplate.departments.length })}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {DEPARTMENTS.map((d) => {
+                            const active = practiceTemplate.departments.includes(d.id);
+                            return (
+                              <button
+                                key={d.id}
+                                type="button"
+                                onClick={() => toggleTemplateItem('departments', d.id)}
+                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                  active
+                                    ? 'bg-sky-500/15 text-sky-300 border-sky-500/40'
+                                    : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
+                                }`}
+                              >
+                                {d.name}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Workspaces */}
+                      <div className="p-4 card-elevated rounded-3xl space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
+                              <Grid className="w-4 h-4 text-purple-400" /> {tTemplate('workspaces')}
+                            </h4>
+                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('workspacesSub')}</p>
+                          </div>
+                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                            {tTemplate('n_selected', { count: practiceTemplate.workspaces.length })}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {WORKSPACES.map((w) => {
+                            const active = practiceTemplate.workspaces.includes(w.id);
+                            return (
+                              <button
+                                key={w.id}
+                                type="button"
+                                onClick={() => toggleTemplateItem('workspaces', w.id)}
+                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                  active
+                                    ? 'bg-purple-500/15 text-purple-300 border-purple-500/40'
+                                    : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
+                                }`}
+                              >
+                                {w.name}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Responsibilities */}
+                      <div className="p-4 card-elevated rounded-3xl space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
+                              <UserCheck className="w-4 h-4 text-emerald-400" /> {tTemplate('responsibilities')}
+                            </h4>
+                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('responsibilitiesSub')}</p>
+                          </div>
+                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                            {tTemplate('n_selected', { count: practiceTemplate.responsibilities.length })}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {RESPONSIBILITIES.map((r) => {
+                            const active = practiceTemplate.responsibilities.includes(r.id);
+                            return (
+                              <button
+                                key={r.id}
+                                type="button"
+                                onClick={() => toggleTemplateItem('responsibilities', r.id)}
+                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                  active
+                                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
+                                    : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
+                                }`}
+                              >
+                                {r.name}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Navigation */}
+                      <div className="p-4 card-elevated rounded-3xl space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
+                              <Layers className="w-4 h-4 text-amber-400" /> {tTemplate('navigation')}
+                            </h4>
+                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('navigationSub')}</p>
+                          </div>
+                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                            {tTemplate('n_selected', { count: practiceTemplate.navigation.length })}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {practiceTemplate.navigation.map((k) => (
+                            <button
+                              key={k}
+                              type="button"
+                              onClick={() => toggleTemplateItem('navigation', k)}
+                              className="px-3 py-1.5 rounded-xl text-[11px] font-bold border border-amber-500/40 bg-amber-500/15 text-amber-300 transition-all cursor-pointer hover:bg-amber-500/25"
+                            >
+                              {k}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Permission Templates */}
+                      <div className="p-4 card-elevated rounded-3xl space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
+                              <ShieldCheck className="w-4 h-4 text-rose-400" /> {tTemplate('permissionTemplates')}
+                            </h4>
+                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('permissionTemplatesSub')}</p>
+                          </div>
+                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                            {tTemplate('n_selected', { count: practiceTemplate.permissionTemplateIds.length })}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {templates.map((tmpl) => {
+                            const active = practiceTemplate.permissionTemplateIds.includes(tmpl.id);
+                            return (
+                              <button
+                                key={tmpl.id}
+                                type="button"
+                                onClick={() => toggleTemplateItem('permissionTemplateIds', tmpl.id)}
+                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                  active
+                                    ? 'bg-rose-500/15 text-rose-300 border-rose-500/40'
+                                    : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
+                                }`}
+                              >
+                                {tmpl.name}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center justify-between gap-3 flex-wrap">
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleSavePracticeTemplate}
+                            className="btn-primary px-5 py-2.5 text-xs font-bold rounded-2xl flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <Check className="w-4 h-4" />
+                            {tTemplate('saveTemplate')}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleResetPracticeTemplate}
+                            className="btn-secondary px-4 py-2.5 text-xs font-bold rounded-2xl flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <RefreshCw className="w-4 h-4" />
+                            {tTemplate('resetTemplate')}
+                          </button>
+                        </div>
+                        {practiceTemplateStatus && (
+                          <span className={`text-[11px] font-bold px-3 py-1.5 rounded-xl border ${
+                            practiceTemplateStatus === 'saved'
+                              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                              : 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                          }`}>
+                            {practiceTemplateStatus === 'saved' ? tTemplate('templateSaved') : tTemplate('templateReset')}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ) : null}
+                </WorkspaceTabPanel>
+              )}
+
+
+              {/* ==================================================
+                  14. ADAPTIVE WORKSPACE BUILDER (Phase 5)
+                  ================================================== */}
+              {activeTab === 'WorkspaceBuilder' && (
+                <WorkspaceTabPanel className="space-y-4">
+                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-4 card-gradient rounded-3xl">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                        <LayoutGrid className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="text-base font-black text-white uppercase tracking-tight">{tBuilder('headerTitle')}</h3>
+                        <p className="text-xs text-zinc-400 mt-0.5 max-w-2xl font-sans">{tBuilder('headerSub')}</p>
+                      </div>
+                    </div>
+                    {orgProfile && (
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
+                          {tTemplate('practiceType')}: <span className="text-cyan-300 font-bold">{tOnboard('practiceTypes.' + orgProfile.practiceTypeId)}</span>
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-cyan-500/10 border-cyan-500/30 text-cyan-300">
+                          PERSONAL LAYOUTS
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {!orgProfile ? (
+                    <div className="p-8 card-elevated rounded-3xl text-center space-y-3">
+                      <LayoutGrid className="w-10 h-10 text-cyan-400 mx-auto" />
+                      <p className="text-sm text-zinc-400">{tBuilder('noProfile')}</p>
+                      <button
+                        type="button"
+                        onClick={() => setShowSetupWizard(true)}
+                        className="btn-primary px-4 py-2 text-xs font-bold rounded-xl cursor-pointer"
+                      >
+                        {tTemplate('goToSetup')}
+                      </button>
+                    </div>
+                  ) : (
+                    <WorkspaceBuilder
+                      users={users.map((u) => ({ id: u.id, name: u.name, avatarColor: u.avatarColor }))}
+                      widgetsForUser={(userId) => {
+                        const u = users.find((x) => x.id === userId);
+                        return u ? getUserAdaptive(u).widgets : [];
+                      }}
+                    />
+                  )}
+                </WorkspaceTabPanel>
+              )}
             </AnimatePresence>
           </div>
         </div>
+
+        {/* FIRST-RUN ADAPTIVE SETUP WIZARD — only when a new organization has no profile yet */}
+        <AnimatePresence>
+          {showSetupWizard && (
+            <FirstRunSetupWizard
+              onComplete={() => setShowSetupWizard(false)}
+              onSkip={() => setShowSetupWizard(false)}
+            />
+          )}
+        </AnimatePresence>
+    </>
   );
 }

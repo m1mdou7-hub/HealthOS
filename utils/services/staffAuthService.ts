@@ -1,5 +1,14 @@
 'use client';
 
+import type {
+  AccessScopeType,
+  DepartmentId,
+  EmploymentStatus,
+  EmploymentType,
+  WorkspaceId
+} from '@/utils/enterprise/directory';
+import type { ResponsibilityId } from '@/utils/enterprise/responsibilities';
+
 export type StaffRole = 'admin' | 'clinician' | 'receptionist' | 'lab_tech' | 'auditor';
 
 export interface StaffMember {
@@ -11,6 +20,15 @@ export interface StaffMember {
   clinicName: string;
   status: 'Active' | 'Pending' | 'Suspended';
   createdAt: string;
+  departmentId?: DepartmentId;
+  specialtyId?: string;
+  jobTitle?: string;
+  responsibilities?: ResponsibilityId[];
+  employmentType?: EmploymentType;
+  employmentStatus?: EmploymentStatus;
+  permissionTemplateId?: string;
+  accessScope?: AccessScopeType;
+  workspaces?: WorkspaceId[];
 }
 
 export interface StaffSession {
@@ -32,7 +50,15 @@ const DEFAULT_STAFF_MEMBERS: (StaffMember & { passwordHash: string })[] = [
     roleTitle: 'مدير المنظمة / مالك العيادة',
     clinicName: 'مجمع هيلث أو إس التخصصي',
     status: 'Active',
-    createdAt: '2026-01-01'
+    createdAt: '2026-01-01',
+    departmentId: 'administration',
+    jobTitle: 'Organization Manager',
+    responsibilities: ['owner', 'administration', 'finance', 'analytics', 'hr', 'it'],
+    employmentType: 'Full Time',
+    employmentStatus: 'Active',
+    permissionTemplateId: 'admin',
+    accessScope: 'organization',
+    workspaces: ['administration']
   },
   {
     id: 'staff-002',
@@ -43,7 +69,16 @@ const DEFAULT_STAFF_MEMBERS: (StaffMember & { passwordHash: string })[] = [
     roleTitle: 'استشاري جراحة وزراعة الأسنان',
     clinicName: 'مجمع هيلث أو إس التخصصي',
     status: 'Active',
-    createdAt: '2026-02-15'
+    createdAt: '2026-02-15',
+    departmentId: 'dentistry',
+    specialtyId: 'implantology',
+    jobTitle: 'Implantology Consultant',
+    responsibilities: ['clinical', 'owner', 'imaging'],
+    employmentType: 'Consultant',
+    employmentStatus: 'Active',
+    permissionTemplateId: 'doctor',
+    accessScope: 'department',
+    workspaces: ['doctor']
   },
   {
     id: 'staff-003',
@@ -54,7 +89,16 @@ const DEFAULT_STAFF_MEMBERS: (StaffMember & { passwordHash: string })[] = [
     roleTitle: 'مسؤولة الاستقبال والزيارات',
     clinicName: 'مجمع هيلث أو إس التخصصي',
     status: 'Active',
-    createdAt: '2026-03-10'
+    createdAt: '2026-03-10',
+    departmentId: 'front-desk',
+    specialtyId: 'receptionist',
+    jobTitle: 'Reception & Bookings Officer',
+    responsibilities: ['reception', 'administration', 'marketing'],
+    employmentType: 'Full Time',
+    employmentStatus: 'Active',
+    permissionTemplateId: 'receptionist',
+    accessScope: 'branch',
+    workspaces: ['reception']
   },
   {
     id: 'staff-004',
@@ -65,7 +109,16 @@ const DEFAULT_STAFF_MEMBERS: (StaffMember & { passwordHash: string })[] = [
     roleTitle: 'مدير المختبر الرقمي CAD/CAM',
     clinicName: 'مجمع هيلث أو إس التخصصي',
     status: 'Active',
-    createdAt: '2026-04-05'
+    createdAt: '2026-04-05',
+    departmentId: 'laboratory',
+    specialtyId: 'cadcam-designer',
+    jobTitle: 'Digital CAD/CAM Lab Manager',
+    responsibilities: ['laboratory', 'imaging', 'inventory'],
+    employmentType: 'Full Time',
+    employmentStatus: 'Active',
+    permissionTemplateId: 'lab-technician',
+    accessScope: 'department',
+    workspaces: ['laboratory']
   }
 ];
 
@@ -124,7 +177,16 @@ export const staffAuthService = {
         roleTitle: found.roleTitle,
         clinicName: found.clinicName,
         status: found.status,
-        createdAt: found.createdAt
+        createdAt: found.createdAt,
+        departmentId: found.departmentId,
+        specialtyId: found.specialtyId,
+        jobTitle: found.jobTitle,
+        responsibilities: found.responsibilities,
+        employmentType: found.employmentType,
+        employmentStatus: found.employmentStatus,
+        permissionTemplateId: found.permissionTemplateId,
+        accessScope: found.accessScope,
+        workspaces: found.workspaces
       },
       token: `token_${found.id}_${Date.now()}`,
       loggedAt: new Date().toISOString()
@@ -148,10 +210,24 @@ export const staffAuthService = {
   },
 
   // Add new staff invite
-  inviteStaffMember(member: { name: string; email: string; role: StaffRole; roleTitle?: string; passwordHash: string }): StaffMember {
+  inviteStaffMember(member: {
+    name: string;
+    email: string;
+    role: StaffRole;
+    roleTitle?: string;
+    passwordHash: string;
+    departmentId?: DepartmentId;
+    specialtyId?: string;
+    jobTitle?: string;
+    responsibilities?: ResponsibilityId[];
+    employmentType?: EmploymentType;
+    employmentStatus?: EmploymentStatus;
+    permissionTemplateId?: string;
+    accessScope?: AccessScopeType;
+  }): StaffMember {
     const list = this.initStorage();
     const cleanEmail = member.email.trim().toLowerCase();
-    
+
     // Check duplicate
     const existing = list.find(m => m.email.toLowerCase() === cleanEmail);
     if (existing) {
@@ -166,6 +242,38 @@ export const staffAuthService = {
       auditor: 'مراجعة وتقارير الأمان'
     };
 
+    const roleDepartments: Record<StaffRole, DepartmentId> = {
+      admin: 'administration',
+      clinician: 'dentistry',
+      receptionist: 'front-desk',
+      lab_tech: 'laboratory',
+      auditor: 'quality'
+    };
+
+    const roleTemplates: Record<StaffRole, string> = {
+      admin: 'admin',
+      clinician: 'doctor',
+      receptionist: 'receptionist',
+      lab_tech: 'lab-technician',
+      auditor: 'auditor'
+    };
+
+    const roleScopes: Record<StaffRole, AccessScopeType> = {
+      admin: 'organization',
+      clinician: 'department',
+      receptionist: 'branch',
+      lab_tech: 'department',
+      auditor: 'organization'
+    };
+
+    const roleResponsibilities: Record<StaffRole, ResponsibilityId[]> = {
+      admin: ['owner', 'administration', 'hr', 'it'],
+      clinician: ['clinical'],
+      receptionist: ['reception', 'administration'],
+      lab_tech: ['laboratory', 'imaging'],
+      auditor: ['quality']
+    };
+
     const newMember: StaffMember & { passwordHash: string } = {
       id: `staff_${Math.floor(100000 + Math.random() * 900000)}`,
       name: member.name,
@@ -175,7 +283,15 @@ export const staffAuthService = {
       roleTitle: member.roleTitle || roleTitles[member.role] || 'عضو كادر طبّي',
       clinicName: 'مجمع هيلث أو إس التخصصي',
       status: 'Active',
-      createdAt: new Date().toISOString().split('T')[0]
+      createdAt: new Date().toISOString().split('T')[0],
+      departmentId: member.departmentId || roleDepartments[member.role],
+      specialtyId: member.specialtyId,
+      jobTitle: member.jobTitle,
+      responsibilities: member.responsibilities || roleResponsibilities[member.role],
+      employmentType: member.employmentType || 'Full Time',
+      employmentStatus: member.employmentStatus || 'Active',
+      permissionTemplateId: member.permissionTemplateId || roleTemplates[member.role],
+      accessScope: member.accessScope || roleScopes[member.role]
     };
 
     const updated = [newMember, ...list];
@@ -189,5 +305,17 @@ export const staffAuthService = {
     const list = this.initStorage();
     const updated = list.map(m => m.id === id ? { ...m, status } : m);
     localStorage.setItem(STORAGE_STAFF_MEMBERS_KEY, JSON.stringify(updated));
+  },
+
+  // Update enterprise profile fields of an existing staff member
+  updateStaffProfile(id: string, patch: Partial<StaffMember>): StaffMember | null {
+    const list = this.initStorage();
+    const index = list.findIndex(m => m.id === id);
+    if (index === -1) return null;
+    const updatedMember = { ...list[index], ...patch };
+    const updated = list.map(m => m.id === id ? updatedMember : m);
+    localStorage.setItem(STORAGE_STAFF_MEMBERS_KEY, JSON.stringify(updated));
+    const { passwordHash: _, ...result } = updatedMember;
+    return result;
   }
 };
