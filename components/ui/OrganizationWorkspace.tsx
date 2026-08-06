@@ -112,6 +112,7 @@ import type { ResponsibilityId } from '@/utils/enterprise/responsibilities';
 import { resolveAdaptiveWorkspaces, isConsolidatedPractice } from '@/utils/enterprise/adaptive';
 import WorkspaceBuilder from './workspace-builder/WorkspaceBuilder';
 import PermissionTemplateManager, { type AssignableUser } from './enterprise/PermissionTemplateManager';
+import OrganizationManager from './enterprise/OrganizationManager';
 // --- MOCK INTERFACES FOR THE ENTERPRISE SYSTEM ---
 type ClinicHub = ClinicLocation;
 
@@ -267,7 +268,7 @@ export default function OrganizationWorkspace() {
 const tBuilder = useTranslations('WorkspaceBuilder');
   // Navigation Tabs matching 11 requested areas (including SLA backups)
   const [activeTab, setActiveTab] = useState<
-    'Overview' | 'Clinics' | 'Departments' | 'Users' | 'Permissions' | 'Teams' | 'Audits' | 'Notifications' | 'Security' | 'Settings' | 'Backup' | 'Workspaces' | 'PracticeSetup' | 'WorkspaceBuilder'
+    'Overview' | 'Clinics' | 'Departments' | 'Users' | 'Permissions' | 'Teams' | 'Audits' | 'Notifications' | 'Security' | 'Settings' | 'Backup' | 'Workspaces' | 'PracticeSetup' | 'WorkspaceBuilder' | 'OrganizationManager'
   >('Overview');
 
   // Interactive core state
@@ -712,7 +713,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
           { id: 'Backup', key: 'Backup', icon: Database, badge: `${backups.length} الأرشيف`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
           { id: 'Workspaces', key: 'Workspaces', icon: Grid, badge: `${WORKSPACES.length} مساحات`, badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
           { id: 'PracticeSetup', key: 'PracticeSetup', icon: Sparkles, badge: 'تكييف', badgeColor: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
-          { id: 'WorkspaceBuilder', key: 'WorkspaceBuilder', icon: LayoutGrid, badge: 'منشئ', badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' }
+          { id: 'WorkspaceBuilder', key: 'WorkspaceBuilder', icon: LayoutGrid, badge: 'منشئ', badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' },
+          { id: 'OrganizationManager', key: 'OrganizationManager', icon: Building2, badge: 'إدارة', badgeColor: 'bg-lime-500/20 text-lime-300 border-lime-500/30' }
         ].map(item => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -730,7 +732,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
             Backup: '11. النسخ والاستعادة',
             Workspaces: '12. مساحات العمل',
             PracticeSetup: '13. إعداد الممارسة',
-            WorkspaceBuilder: '14. منشئ مساحات العمل'
+            WorkspaceBuilder: '14. منشئ مساحات العمل',
+            OrganizationManager: '15. إدارة المؤسسة'
           };
           const labelText = labelsMap[item.key] || item.key;
           return (
@@ -2838,6 +2841,18 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       }}
                     />
                   )}
+                </WorkspaceTabPanel>
+              )}
+
+              {/* ==================================================
+                  ORGANIZATION MANAGER — Org → Branch → Department → Room → Chair → Equipment
+                  ================================================== */}
+              {activeTab === 'OrganizationManager' && (
+                <WorkspaceTabPanel className="space-y-4">
+                  <OrganizationManager
+                    users={users.map((u) => ({ id: u.id, name: u.name, role: u.role }))}
+                    onAudit={(action) => appendAuditLog('Chief Security Officer', action, 'System Admin', 'Success')}
+                  />
                 </WorkspaceTabPanel>
               )}
             </AnimatePresence>
