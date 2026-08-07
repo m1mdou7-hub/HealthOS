@@ -511,7 +511,7 @@ export default function EhrWorkspace() {
             {activeTab === 'Visual Profile' && (
               <div className="space-y-6 animate-fade-in relative">
                 {/* Background Red/Orange Glow */}
-                <div className="absolute top-12 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 rtl:translate-x-1/2 w-80 h-48 rounded-full blur-[100px] pointer-events-none z-0 pulse-glow" style={{ background: 'var(--accent-glow2)' }} />
+                <div className="absolute top-12 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 w-80 h-48 rounded-full blur-[100px] pointer-events-none z-0 pulse-glow" style={{ background: 'var(--accent-glow2)' }} />
                 
                 {/* 1. Header controls (hexagon, sliders, bell) */}
                 <div className="relative z-10 card-gradient flex items-center justify-between p-4">

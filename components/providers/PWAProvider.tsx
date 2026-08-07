@@ -93,7 +93,7 @@ export default function PWAProvider() {
 
       {/* ── Install App banner ─────────────────────────────────────── */}
       {showBanner && installable && (
-        <div className="fixed bottom-6 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 rtl:translate-x-1/2 z-[9990] w-[90vw] max-w-md">
+        <div className="fixed bottom-6 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 z-[9990] w-[90vw] max-w-md">
           <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 flex items-center gap-4 shadow-card shadow-black/60 backdrop-blur-xl">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
               <Download className="w-5 h-5 text-emerald-400" />

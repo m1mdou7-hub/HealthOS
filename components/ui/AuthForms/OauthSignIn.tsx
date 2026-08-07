@@ -39,7 +39,7 @@ export default function OauthSignIn() {
         >
           <input type="hidden" name="provider" value={provider.name} />
           <Button
-            variant="slim"
+            size="sm"
             type="submit"
             className="w-full"
             loading={isSubmitting}

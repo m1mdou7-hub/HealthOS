@@ -771,7 +771,7 @@ export default function ImagingWorkspace() {
                           {/* Dental Arch trace line */}
                           <div className="absolute inset-2 border-2 border-dashed border-emerald-500/20 rounded-full" />
                           {/* Implant fixture outline */}
-                          <div className="absolute top-4 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 rtl:translate-x-1/2 w-4 h-8 bg-emerald-500/10 border border-emerald-400/40 rounded flex flex-col justify-between items-center" title="Preplanned NobelActive site">
+                          <div className="absolute top-4 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 w-4 h-8 bg-emerald-500/10 border border-emerald-400/40 rounded flex flex-col justify-between items-center" title="Preplanned NobelActive site">
                             <span className="text-2xs text-emerald-400 font-black scale-90">11</span>
                             <div className="w-full h-0.5 bg-emerald-500/40" />
                             <div className="w-full h-0.5 bg-emerald-500/40" />

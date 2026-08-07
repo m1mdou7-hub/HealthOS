@@ -1055,6 +1055,70 @@ This section records how the v1.0 audit findings are resolved in this constituti
 
 ---
 
+## 42. Development Environment (Validation Protocol)
+
+This section defines the **correct way to validate the HealthOS application during development**. It prevents false positives caused by automation timeouts and ensures consistent verification.
+
+### 42.1 Preferred method for running `pnpm dev`
+
+```bash
+# Terminal 1: Start the dev server (persistent session)
+pnpm dev
+
+# Terminal 2: Run commands, tests, curl requests
+pnpm build
+pnpm lint
+pnpm tsc --noEmit
+```
+
+**Do not** run `pnpm dev` through automation tools with short timeouts. The dev server is designed to run indefinitely. Automation tools that enforce timeouts (e.g., 30–120s) will kill the process, creating the illusion of a crash.
+
+### 42.2 Avoiding false positives from browser automation timeouts
+
+| Scenario | False Positive | Correct Approach |
+|----------|----------------|------------------|
+| `pnpm dev` started via tool with timeout | Tool kills process at timeout → appears as "dev server crashed" | Run `pnpm dev` in a persistent terminal; use separate terminal for verification |
+| `pnpm dev` started via `Start-Process` / background job | Works correctly — process survives | Preferred for automation: `Start-Process cmd -ArgumentList "/c pnpm dev" -WindowStyle Hidden` |
+| Health check immediately after startup | Server not ready → connection refused | Wait for "✓ Ready in Xs" message before testing routes |
+
+**Rule:** The dev server process lifetime must exceed the verification window. Never attribute a tool-enforced timeout to application instability.
+
+### 42.3 Handling port conflicts (EADDRINUSE)
+
+```bash
+# 1. Find and kill the process holding port 3000
+tasklist | findstr node
+taskkill /F /PID <PID>
+
+# Or on macOS/Linux:
+lsof -ti:3000 | xargs kill -9
+
+# 2. Clear Next.js cache (optional but recommended)
+rm -rf .next
+
+# 3. Restart
+pnpm dev
+```
+
+**Common cause:** A previous `pnpm dev` or `pnpm start` process was not cleanly terminated.
+
+### 42.4 Preferred verification order
+
+Run in sequence **after** the dev server is confirmed running ("✓ Ready in Xs"):
+
+| Step | Command | Purpose | Must Pass |
+|------|---------|---------|-----------|
+| **1. Browser validation** | Open `http://localhost:3000/clinics` (and all major routes) in browser | Visual + functional confirmation | ✅ 200 OK, no console errors, UI renders correctly |
+| **2. Build verification** | `pnpm build` | Compiles production bundle, catches type/tailwind issues | ✅ Compiled successfully |
+| **3. Lint verification** | `pnpm lint` | Enforces design constitution rules (token-only, no arbitrary values) | ✅ No errors (warnings acceptable) |
+| **4. Type verification** | `pnpm tsc --noEmit` | Full TypeScript type check | ✅ No type errors |
+
+**Do not skip step 1.** Browser validation catches runtime issues (hydration mismatches, missing env vars, auth redirects) that static analysis misses.
+
+**Do not reorder.** Browser validation is the ultimate truth — if the app works in the browser, the build/lint/type checks are secondary confirmation.
+
+---
+
 ## Appendix · Source-of-truth map
 | Canonical source | What it defines |
 |---|---|

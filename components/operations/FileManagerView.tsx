@@ -291,7 +291,7 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
                   <div className="relative flex items-center justify-center w-full h-full">
                     <div className="w-44 h-28 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-center relative">
                       <Eye className="w-6 h-6 text-emerald-400" />
-                      <span className="absolute bottom-1.5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 rtl:translate-x-1/2 text-2xs font-mono text-zinc-500">Shade photo loaded</span>
+                      <span className="absolute bottom-1.5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 text-2xs font-mono text-zinc-500">Shade photo loaded</span>
                     </div>
                   </div>
                 ) : (

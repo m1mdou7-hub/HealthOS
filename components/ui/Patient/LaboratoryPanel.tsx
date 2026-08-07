@@ -179,7 +179,7 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
               style={{ backgroundColor: shade.hex }}
             >
               {selectedShade === shade.code && (
-                <span className="absolute -bottom-5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 rtl:translate-x-1/2 text-2xs font-mono text-emerald-400 whitespace-nowrap font-bold">
+                <span className="absolute -bottom-5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 text-2xs font-mono text-emerald-400 whitespace-nowrap font-bold">
                   {shade.code}
                 </span>
               )}

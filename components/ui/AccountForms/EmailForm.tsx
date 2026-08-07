@@ -37,7 +37,7 @@ export default function EmailForm({
             We will email you to verify the change.
           </p>
           <Button
-            variant="slim"
+            size="sm"
             type="submit"
             form="emailForm"
             loading={isSubmitting}

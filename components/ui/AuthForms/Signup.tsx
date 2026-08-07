@@ -55,7 +55,7 @@ export default function SignUp({ allowEmail, redirectMethod }: SignUpProps) {
             />
           </div>
           <Button
-            variant="slim"
+            size="sm"
             type="submit"
             className="mt-1"
             loading={isSubmitting}
