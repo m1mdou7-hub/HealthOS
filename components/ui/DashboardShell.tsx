@@ -40,7 +40,8 @@ import {
   UserPlus,
   Grid
 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { getDirection } from '@/i18n/config';
 import { handleRequest } from '@/utils/auth-helpers/client';
 import { SignOut } from '@/utils/auth-helpers/server';
 import { 
@@ -153,6 +154,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
   const tCommon = useTranslations('Common');
   const tAccess = useTranslations('Access');
   const tRoles = useTranslations('Roles');
+  const locale = useLocale();
+  const isRtl = getDirection(locale) === 'rtl';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState('');
@@ -272,7 +275,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       <div className="hidden lg:block w-[72px] shrink-0" />
 
       {/* Sidebar for Desktop */}
-      <aside className="hidden lg:flex lg:flex-col absolute left-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-r transition-all duration-300 ease-in-out group shadow-xl group-hover:[&>nav]:opacity-100">
+      <aside className="hidden lg:flex lg:flex-col absolute start-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-e transition-all duration-300 ease-in-out group shadow-xl group-hover:[&>nav]:opacity-100">
         {/* Brand Header */}
         <div className="flex items-center h-16 px-[20px] border-b gap-3 overflow-hidden shrink-0" style={{ borderColor: 'var(--border)' }}>
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl shrink-0">
@@ -310,6 +313,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <Link
                 key={tNav(item.labelKey)}
                 href={item.href}
+                aria-current={isActive ? 'page' : undefined}
                 className="group/nav relative flex items-center px-2.5 py-2.5 text-sm font-medium rounded-2xl transition-all duration-150 overflow-hidden"
                 style={{
                   background: isActive ? 'var(--accent-glow2)' : 'transparent',
@@ -328,9 +332,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   className={`relative z-10 w-5 h-5 shrink-0 transition-transform duration-150 group-hover/nav:scale-105`}
                   style={{ color: isActive ? 'var(--accent)' : undefined }}
                 />
-                <span className="relative z-10 ml-3 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">{tNav(item.labelKey)}</span>
+                <span className="relative z-10 ms-3 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">{tNav(item.labelKey)}</span>
                 {isActive && (
-                  <span className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full" style={{ background: 'var(--accent)' }} />
+                  <span className="absolute start-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full" style={{ background: 'var(--accent)' }} />
                 )}
               </Link>
             );
@@ -383,15 +387,15 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           />
 
           <motion.div
-            initial={{ x: -300 }}
+            initial={{ x: isRtl ? 300 : -300 }}
             animate={{ x: 0 }}
-            exit={{ x: -300 }}
+            exit={{ x: isRtl ? 300 : -300 }}
             transition={{ type: 'spring', stiffness: 320, damping: 32 }}
-            className="relative flex flex-col w-full max-w-xs flex-1 border-r"
+            className="relative flex flex-col w-full max-w-xs flex-1 border-e"
             style={{ background: 'var(--surface-solid)', borderColor: 'var(--border)' }}
           >
             {/* Close button */}
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-4 end-4">
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center w-8 h-8 rounded-lg"
@@ -429,8 +433,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                     key={tNav(item.labelKey)}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-150 ${
-                      isActive ? 'border-l-2' : ''
+                      isActive ? 'border-s-2' : ''
                     }`}
                     style={{
                       background: isActive ? 'var(--accent-glow2)' : 'transparent',
@@ -438,7 +443,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                       borderColor: 'var(--accent)'
                     }}
                   >
-                    <Icon className="w-5 h-5 mr-3" />
+                    <Icon className="w-5 h-5 me-3" />
                     {tNav(item.labelKey)}
                   </Link>
                 );
@@ -490,12 +495,12 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             {/* Mobile toggle */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="p-1.5 mr-4 rounded-lg lg:hidden focus:outline-none"
+              className="p-1.5 me-4 rounded-lg lg:hidden focus:outline-none"
               style={{ color: 'var(--text-muted)' }}
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-lg font-semibold tracking-tight mr-6 font-display text-gradient">{pageTitle}</h1>
+            <h1 className="text-lg font-semibold tracking-tight me-6 font-display text-gradient">{pageTitle}</h1>
             
             {/* Command Palette Launcher Button */}
             <button
@@ -512,7 +517,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             >
               <Search className="w-4 h-4" />
               <span>{tCommon('searchOrRunCommand')}</span>
-              <span className="ml-4 px-1.5 py-0.5 text-[9px] rounded font-mono"
+              <span className="ms-4 px-1.5 py-0.5 text-[9px] rounded font-mono"
                 style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
                 ⌘K
               </span>
@@ -594,7 +599,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               </button>
             )}
 
-            <div className="hidden xl:flex items-center gap-2 border-r pr-3 mr-1 shrink-0" style={{ borderColor: 'var(--border)' }}>
+            <div className="hidden xl:flex items-center gap-2 border-e pe-3 me-1 shrink-0" style={{ borderColor: 'var(--border)' }}>
               <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
                 {tCommon('systemStatus')}: <span className="uupm-badge-glass text-[10px] uppercase">{tCommon('secure')}</span>
               </span>
@@ -750,7 +755,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                         </span>
                         <span className="font-sans transition-colors">{cmd.name}</span>
                       </div>
-                      <ArrowRight className="w-3.5 h-3.5 transition-all group-hover:translate-x-0.5" style={{ color: 'var(--text-muted)' }} />
+                      <ArrowRight className={`w-3.5 h-3.5 transition-all ${isRtl ? '-scale-x-100 group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5'}`} style={{ color: 'var(--text-muted)' }} />
                     </div>
                   ))
                 )}

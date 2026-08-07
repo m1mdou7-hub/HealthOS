@@ -45,7 +45,8 @@ import {
   MoreVertical
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { getDirection } from '@/i18n/config';
 import {
   getClinics,
   addClinicLocation,
@@ -260,12 +261,32 @@ function getSpecialtyName(id?: string): string {
   return SPECIALTIES.find((s) => s.id === id)?.name ?? '—';
 }
 
+const WORKSPACE_TAB_LABELS: Record<string, string> = {
+  Overview: '1. نظرة عامة',
+  Clinics: '2. العيادات والمراكز',
+  Departments: '3. الأقسام التخصصية',
+  Users: '1. الموظفون والطاقم',
+  Permissions: '2. الصلاحيات والتحكم',
+  Teams: '3. فرق العمل والوردية',
+  Audits: '1. سجل التدقيق والأنشطة',
+  Security: '2. مركز أمان النظام',
+  Notifications: '1. التنبيهات العامة',
+  Settings: '2. الهوية والعلامة',
+  Backup: '3. النسخ والاستعادة',
+  Workspaces: '1. مساحات العمل',
+  PracticeSetup: '2. إعداد الممارسة',
+  WorkspaceBuilder: '3. منشئ مساحات العمل',
+  OrganizationManager: '4. إدارة المؤسسة'
+};
+
 export default function OrganizationWorkspace() {
   const tOrg = useTranslations('OrganizationWorkspace');
   const tDir = useTranslations('EnterpriseDirectory');
   const tOnboard = useTranslations('Onboarding');
   const tTemplate = useTranslations('PracticeTemplate');
 const tBuilder = useTranslations('WorkspaceBuilder');
+  const locale = useLocale() as 'ar' | 'en';
+  const isRtl = getDirection(locale) === 'rtl';
   // Navigation Tabs matching 11 requested areas (including SLA backups)
   const [activeTab, setActiveTab] = useState<
     'Overview' | 'Clinics' | 'Departments' | 'Users' | 'Permissions' | 'Teams' | 'Audits' | 'Notifications' | 'Security' | 'Settings' | 'Backup' | 'Workspaces' | 'PracticeSetup' | 'WorkspaceBuilder' | 'OrganizationManager'
@@ -654,6 +675,81 @@ const tBuilder = useTranslations('WorkspaceBuilder');
     setTimeout(() => setPracticeTemplateStatus(null), 2500);
   };
 
+  type NavItem = {
+    id: string;
+    icon: React.ComponentType<{ className?: string }>;
+    badge: string;
+  };
+
+  type NavGroup = {
+    id: string;
+    label: Record<string, string>;
+    items: NavItem[];
+  };
+
+  const navGroups = useMemo(
+    (): NavGroup[] => [
+      {
+        id: 'organization',
+        label: { ar: 'المنظمة', en: 'Organization' },
+        items: [
+          { id: 'Overview', icon: Layers, badge: 'موحد' },
+          { id: 'Clinics', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} نشط` },
+          { id: 'Departments', icon: Sliders, badge: `${departments.length} أقسام` }
+        ]
+      },
+      {
+        id: 'people',
+        label: { ar: 'الموظفون والوصول', en: 'People & Access' },
+        items: [
+          { id: 'Users', icon: Users, badge: `${activeUsersCount} موظف` },
+          { id: 'Permissions', icon: ShieldCheck, badge: 'مصفوفة' },
+          { id: 'Teams', icon: UserCheck, badge: `${teams.length} فرق` }
+        ]
+      },
+      {
+        id: 'security',
+        label: { ar: 'الأمان والتدقيق', en: 'Security & Audit' },
+        items: [
+          { id: 'Audits', icon: History, badge: 'سجل الأنشطة' },
+          { id: 'Security', icon: Lock, badge: `${securityScore}/100` }
+        ]
+      },
+      {
+        id: 'operations',
+        label: { ar: 'العمليات والنظام', en: 'Operations & System' },
+        items: [
+          { id: 'Notifications', icon: Bell, badge: `${announcements.length} تنبيهات` },
+          { id: 'Settings', icon: Settings2, badge: 'إعدادات' },
+          { id: 'Backup', icon: Database, badge: `${backups.length} الأرشيف` }
+        ]
+      },
+      {
+        id: 'platform',
+        label: { ar: 'المنصة ومساحات العمل', en: 'Platform & Workspaces' },
+        items: [
+          { id: 'Workspaces', icon: Grid, badge: `${WORKSPACES.length} مساحات` },
+          { id: 'PracticeSetup', icon: Sparkles, badge: 'تكييف' },
+          { id: 'WorkspaceBuilder', icon: LayoutGrid, badge: 'منشئ' },
+          { id: 'OrganizationManager', icon: Building2, badge: 'إدارة' }
+        ]
+      }
+    ],
+    [activeClinicsCount, totalClinics, departments, activeUsersCount, teams, announcements, securityScore, backups]
+  );
+
+  const handleTablistKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const order = navGroups.flatMap((g) => g.items.map((i) => i.id));
+    const currentIdx = order.indexOf(activeTab);
+    const delta = isRtl ? (e.key === 'ArrowLeft' ? 1 : -1) : (e.key === 'ArrowRight' ? 1 : -1);
+    const nextIdx = (currentIdx + delta + order.length) % order.length;
+    const nextId = order[nextIdx];
+    document.getElementById(`org-tab-${nextId}`)?.focus();
+    setActiveTab(nextId as any);
+  };
+
   return (
     <>
     <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans">
@@ -674,8 +770,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                 {brandColor.toUpperCase()} {tOrg('multiClinic')}
               </span>
               {orgProfile && (
-                <span className="badge badge-adaptive text-xs font-semibold px-3 py-0.5 rounded-full" style={{ background: 'rgba(168,85,247,0.14)', borderColor: 'rgba(168,85,247,0.4)', color: '#d8b4fe' }}>
-                  <Sparkles className="w-3 h-3 inline-block mr-1" />
+                <span className="badge text-xs font-semibold px-3 py-0.5 rounded-full">
+                  <Sparkles className="w-3 h-3 inline-block me-1" />
                   {tOnboard(`practiceTypes.${orgProfile.practiceTypeId}`)}                </span>
               )}
             </div>
@@ -697,71 +793,63 @@ const tBuilder = useTranslations('WorkspaceBuilder');
         </div>
       </div>
 
-      {/* 12 SUBMODULES HORIZONTAL NAV TABS (Clean Scrollable Bar) */}
-      <div className="card-elevated p-2 flex items-center gap-2 overflow-x-auto scrollbar-none">
-        {[
-          { id: 'Overview', key: 'Overview', icon: Layers, badge: 'موحد' },
-          { id: 'Clinics', key: 'Clinics', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} نشط` },
-          { id: 'Departments', key: 'Departments', icon: Sliders, badge: `${departments.length} أقسام` },
-          { id: 'Users', key: 'Users', icon: Users, badge: `${activeUsersCount} موظف` },
-          { id: 'Permissions', key: 'Permissions', icon: ShieldCheck, badge: 'مصفوفة' },
-          { id: 'Teams', key: 'Teams', icon: UserCheck, badge: `${teams.length} فرق` },
-          { id: 'Audits', key: 'Audits', icon: History, badge: 'سجل الأنشطة' },
-          { id: 'Notifications', key: 'Notifications', icon: Bell, badge: `${announcements.length} تنبيهات`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
-          { id: 'Security', key: 'Security', icon: Lock, badge: `${securityScore}/100`, badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
-          { id: 'Settings', key: 'Settings', icon: Settings2, badge: 'إعدادات' },
-          { id: 'Backup', key: 'Backup', icon: Database, badge: `${backups.length} الأرشيف`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
-          { id: 'Workspaces', key: 'Workspaces', icon: Grid, badge: `${WORKSPACES.length} مساحات`, badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
-          { id: 'PracticeSetup', key: 'PracticeSetup', icon: Sparkles, badge: 'تكييف', badgeColor: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
-          { id: 'WorkspaceBuilder', key: 'WorkspaceBuilder', icon: LayoutGrid, badge: 'منشئ', badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' },
-          { id: 'OrganizationManager', key: 'OrganizationManager', icon: Building2, badge: 'إدارة', badgeColor: 'bg-lime-500/20 text-lime-300 border-lime-500/30' }
-        ].map(item => {
-          const Icon = item.icon;
-          const isActive = activeTab === item.id;
-          const labelsMap: Record<string, string> = {
-            Overview: '1. نظرة عامة',
-            Clinics: '2. العيادات والمراكز',
-            Departments: '3. الأقسام التخصصية',
-            Users: '4. الموظفون والطاقم',
-            Permissions: '5. الصلاحيات والتحكم',
-            Teams: '6. فرق العمل والوردية',
-            Audits: '7. سجل التدقيق والأنشطة',
-            Notifications: '8. التنبيهات العامة',
-            Security: '9. مركز أمان النظام',
-            Settings: '10. الهوية والعلامة',
-            Backup: '11. النسخ والاستعادة',
-            Workspaces: '12. مساحات العمل',
-            PracticeSetup: '13. إعداد الممارسة',
-            WorkspaceBuilder: '14. منشئ مساحات العمل',
-            OrganizationManager: '15. إدارة المؤسسة'
-          };
-          const labelText = labelsMap[item.key] || item.key;
-          return (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id as any)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all flex items-center gap-2 cursor-pointer border font-sans ${
-                isActive 
-                  ? 'nav-item active font-extrabold scale-[1.02]'
-                  : 'nav-item bg-zinc-950/60 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
-              }`}
-            >
-              <Icon className="w-3.5 h-3.5 shrink-0" />
-              <span>{labelText}</span>
-              {item.badge && (
-                <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold border ${
-                  item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-900 text-zinc-400 border-zinc-800')
-                }`}>
-                  {item.badge}
-                </span>
+      {/* 15 SUBMODULES HORIZONTAL NAV TABS — Grouped IA (Constitution §31.3) */}
+      <div
+        className="card-elevated p-2 overflow-x-auto scrollbar-none"
+        role="tablist"
+        aria-label={tOrg('adminConsole')}
+        onKeyDown={handleTablistKeyDown}
+      >
+        <div className="flex items-center gap-1.5">
+          {navGroups.map((group, groupIdx) => (
+            <div key={group.id} className="flex items-center gap-1.5 shrink-0">
+              {groupIdx > 0 && (
+                <div className="mx-1.5 h-5 w-px shrink-0" style={{ background: 'var(--border)' }} />
               )}
-            </button>
-          );
-        })}
+              <span
+                className="text-xs font-sans font-semibold select-none shrink-0"
+                style={{ color: 'var(--text-sub)' }}
+              >
+                {group.label[locale]}
+              </span>
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    id={`org-tab-${item.id}`}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={isActive ? 'org-tabpanel' : undefined}
+                    tabIndex={isActive ? 0 : -1}
+                    onClick={() => setActiveTab(item.id as any)}
+                    className={`nav-item shrink-0 ${isActive ? 'active' : ''}`}
+                  >
+                    <Icon className="w-3.5 h-3.5 shrink-0" />
+                    <span>{WORKSPACE_TAB_LABELS[item.id]}</span>
+                    {item.badge && (
+                      <span
+                        className="shrink-0 rounded-full px-2 py-0.5 text-xs font-sans font-bold border"
+                        style={{
+                          background: 'var(--surface-2)',
+                          color: 'var(--text-sub)',
+                          borderColor: 'var(--border)'
+                        }}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* TAB CONTENT PANELS */}
-      <div className="space-y-6">
+      <div className="space-y-6" role="tabpanel" id="org-tabpanel" aria-label={tOrg('adminConsole')}>
         <AnimatePresence mode="wait">
           
           {/* ==================================================

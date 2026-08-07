@@ -758,7 +758,7 @@ td {
 .nav-item.active::after {
   content: '';
   position: absolute;
-  right: 0;
+  inset-inline-start: 0;
   top: 50%;
   transform: translateY(-50%);
   width: 3px;
@@ -973,8 +973,10 @@ kbd {
 [dir='rtl'] .pr-3 { padding-right: 0; padding-left: 0.75rem; }
 [dir='rtl'] .pr-4 { padding-right: 0; padding-left: 1rem; }
 
-[dir='rtl'] .border-l, [dir='rtl'] .border-l-2 { border-left-width: 0; border-right-width: 2px; }
-[dir='rtl'] .border-r, [dir='rtl'] .border-r-2 { border-right-width: 0; border-left-width: 1px; }
+[dir='rtl'] .border-l { border-left-width: 0; border-right-width: 1px; }
+[dir='rtl'] .border-l-2 { border-left-width: 0; border-right-width: 2px; }
+[dir='rtl'] .border-r { border-right-width: 0; border-left-width: 1px; }
+[dir='rtl'] .border-r-2 { border-right-width: 0; border-left-width: 2px; }
 [dir='rtl'] .left-0 { left: auto; right: 0; }
 [dir='rtl'] .right-0 { right: auto; left: 0; }
 [dir='rtl'] .left-4 { left: auto; right: 1rem; }
