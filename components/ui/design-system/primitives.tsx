@@ -27,17 +27,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       lg: 'px-6 py-3 text-base',
     };
     const variantClasses = {
-      primary: 'btn-primary',
-      secondary: 'btn-secondary',
-      ghost: 'btn-ghost',
-      danger: 'btn-secondary', // danger uses secondary shape with error tokens
+      primary: 'velvet-btn-primary',
+      secondary: 'velvet-btn-secondary',
+      ghost: 'velvet-btn-ghost',
+      danger: 'velvet-btn-danger',
     };
     const dangerStyles: React.CSSProperties = variant === 'danger' 
       ? { 
-          background: 'var(--error-bg)', 
-          color: 'var(--error)', 
-          borderColor: 'var(--error-border)',
-          boxShadow: 'inset 0 1px 0 rgba(252,165,165,0.1)',
+          background: 'var(--velvet-error-bg)', 
+          color: 'var(--velvet-error)', 
+          borderColor: 'var(--velvet-error-border)',
+          boxShadow: 'inset 0 1px 0 rgba(248,113,113,0.1)',
         }
       : {};
 
@@ -62,24 +62,26 @@ Button.displayName = 'Button';
    ═══════════════════════════════════════════════════════════════ */
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'elevated' | 'gradient' | 'hover' | 'spotlight' | 'gradient-border';
+  variant?: 'elevated' | 'gradient' | 'hover' | 'spotlight' | 'gradient-border' | 'glass' | 'glass-heavy';
   hover?: boolean;
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'elevated', hover = true, children, ...props }, ref) => {
     const variantClasses = {
-      elevated: 'card-elevated',
-      gradient: 'card-gradient',
-      hover: 'card-elevated card-hover',
-      spotlight: 'magic-spotlight-card',
-      'gradient-border': 'gradient-border',
+      elevated: 'velvet-card',
+      gradient: 'velvet-card-gradient',
+      hover: 'velvet-card velvet-card-hover',
+      spotlight: 'velvet-spotlight-card',
+      'gradient-border': 'velvet-gradient-border',
+      glass: 'velvet-glass',
+      'glass-heavy': 'velvet-glass-heavy',
     };
     
     return (
       <div
         ref={ref}
-        className={cn(variantClasses[variant], hover && variant !== 'hover' && 'card-hover', className)}
+        className={cn(variantClasses[variant], hover && variant !== 'hover' && 'velvet-card-hover', className)}
         {...props}
       >
         {children}
@@ -92,7 +94,7 @@ Card.displayName = 'Card';
 export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cn('p-6 border-b', className)} style={{ borderColor: 'var(--border)' }} {...props}>
+    <div ref={ref} className={cn('p-6 border-b', className)} style={{ borderColor: 'var(--velvet-border)' }} {...props}>
       {children}
     </div>
   )
@@ -112,7 +114,7 @@ CardBody.displayName = 'CardBody';
 export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cn('p-4 border-t', className)} style={{ borderColor: 'var(--border)', background: 'var(--surface-2)', color: 'var(--text-muted)' }} {...props}>
+    <div ref={ref} className={cn('p-4 border-t', className)} style={{ borderColor: 'var(--velvet-border)', background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-muted)' }} {...props}>
       {children}
     </div>
   )
@@ -141,13 +143,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={cn('space-y-1.5', fullWidth && 'w-full', className)}>
         {label && (
-          <label htmlFor={inputId} className="block font-semibold text-sm" style={{ color: 'var(--text)' }}>
+          <label htmlFor={inputId} className="block font-semibold text-sm" style={{ color: 'var(--velvet-text)' }}>
             {label}
           </label>
         )}
         <div className="relative">
           {leftIcon && (
-            <div className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 shrink-0" style={{ color: 'var(--text-muted)' }}>
+            <div className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 shrink-0" style={{ color: 'var(--velvet-text-muted)' }}>
               {leftIcon}
             </div>
           )}
@@ -156,13 +158,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             id={inputId}
             className={cn(
               'w-full px-3.5 py-2.5 rounded-xl outline-none transition-all',
-              'bg-[var(--glass-fill)] backdrop-blur-[10px] border',
-              'placeholder:text-[var(--text-muted)] placeholder:opacity-80',
+              'bg-[var(--velvet-glass-fill)] backdrop-blur-[10px] border',
+              'placeholder:text-[var(--velvet-text-muted)] placeholder:opacity-80',
               leftIcon && 'ps-10',
               rightIcon && 'pe-10',
               error 
-                ? 'border-[var(--error-border)] focus:border-[var(--error)] focus:ring-3 focus:ring-[var(--error-bg)]'
-                : 'border-[var(--border)] focus:border-[var(--accent)] focus:ring-3 focus:ring-[var(--accent-glow2)]',
+                ? 'border-[var(--velvet-error-border)] focus:border-[var(--velvet-error)] focus:ring-3 focus:ring-[var(--velvet-error-bg)]'
+                : 'border-[var(--velvet-border)] focus:border-[var(--velvet-accent)] focus:ring-3 focus:ring-[var(--velvet-accent-glow2)]',
               className
             )}
             aria-invalid={error ? 'true' : 'false'}
@@ -170,19 +172,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightIcon && (
-            <div className="absolute end-3 top-1/2 -translate-y-1/2 w-4 h-4 shrink-0" style={{ color: 'var(--text-muted)' }}>
+            <div className="absolute end-3 top-1/2 -translate-y-1/2 w-4 h-4 shrink-0" style={{ color: 'var(--velvet-text-muted)' }}>
               {rightIcon}
             </div>
           )}
         </div>
         {error && (
-          <p id={errorId} className="text-sm flex items-center gap-1" role="alert" style={{ color: 'var(--error)' }}>
+          <p id={errorId} className="text-sm flex items-center gap-1" role="alert" style={{ color: 'var(--velvet-error)' }}>
             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
             {error}
           </p>
         )}
         {helperText && !error && (
-          <p id={helperId} className="text-sm" style={{ color: 'var(--text-muted)' }}>
+          <p id={helperId} className="text-sm" style={{ color: 'var(--velvet-text-muted)' }}>
             {helperText}
           </p>
         )}
@@ -208,7 +210,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className={cn('space-y-1.5', fullWidth && 'w-full', className)}>
         {label && (
-          <label htmlFor={textareaId} className="block font-semibold text-sm" style={{ color: 'var(--text)' }}>
+          <label htmlFor={textareaId} className="block font-semibold text-sm" style={{ color: 'var(--velvet-text)' }}>
             {label}
           </label>
         )}
@@ -217,11 +219,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           id={textareaId}
           className={cn(
             'w-full px-3.5 py-2.5 rounded-xl outline-none transition-all resize-y min-h-[100px]',
-            'bg-[var(--glass-fill)] backdrop-blur-[10px] border',
-            'placeholder:text-[var(--text-muted)] placeholder:opacity-80',
+            'bg-[var(--velvet-glass-fill)] backdrop-blur-[10px] border',
+            'placeholder:text-[var(--velvet-text-muted)] placeholder:opacity-80',
             error 
-              ? 'border-[var(--error-border)] focus:border-[var(--error)] focus:ring-3 focus:ring-[var(--error-bg)]'
-              : 'border-[var(--border)] focus:border-[var(--accent)] focus:ring-3 focus:ring-[var(--accent-glow2)]',
+              ? 'border-[var(--velvet-error-border)] focus:border-[var(--velvet-error)] focus:ring-3 focus:ring-[var(--velvet-error-bg)]'
+              : 'border-[var(--velvet-border)] focus:border-[var(--velvet-accent)] focus:ring-3 focus:ring-[var(--velvet-accent-glow2)]',
             className
           )}
           aria-invalid={error ? 'true' : 'false'}
@@ -229,13 +231,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         {error && (
-          <p id={errorId} className="text-sm flex items-center gap-1" role="alert" style={{ color: 'var(--error)' }}>
+          <p id={errorId} className="text-sm flex items-center gap-1" role="alert" style={{ color: 'var(--velvet-error)' }}>
             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
             {error}
           </p>
         )}
         {helperText && !error && (
-          <p id={helperId} className="text-sm" style={{ color: 'var(--text-muted)' }}>
+          <p id={helperId} className="text-sm" style={{ color: 'var(--velvet-text-muted)' }}>
             {helperText}
           </p>
         )}
@@ -267,7 +269,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className={cn('space-y-1.5', fullWidth && 'w-full', className)}>
         {label && (
-          <label htmlFor={selectId} className="block font-semibold text-sm" style={{ color: 'var(--text)' }}>
+          <label htmlFor={selectId} className="block font-semibold text-sm" style={{ color: 'var(--velvet-text)' }}>
             {label}
           </label>
         )}
@@ -277,10 +279,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             id={selectId}
             className={cn(
               'w-full px-3.5 py-2.5 pr-10 rounded-xl outline-none transition-all appearance-none',
-              'bg-[var(--glass-fill)] backdrop-blur-[10px] border',
+              'bg-[var(--velvet-glass-fill)] backdrop-blur-[10px] border',
               error 
-                ? 'border-[var(--error-border)] focus:border-[var(--error)] focus:ring-3 focus:ring-[var(--error-bg)]'
-                : 'border-[var(--border)] focus:border-[var(--accent)] focus:ring-3 focus:ring-[var(--accent-glow2)]',
+                ? 'border-[var(--velvet-error-border)] focus:border-[var(--velvet-error)] focus:ring-3 focus:ring-[var(--velvet-error-bg)]'
+                : 'border-[var(--velvet-border)] focus:border-[var(--velvet-accent)] focus:ring-3 focus:ring-[var(--velvet-accent-glow2)]',
               className
             )}
             aria-invalid={error ? 'true' : 'false'}
@@ -298,16 +300,16 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               </option>
             ))}
           </select>
-          <ChevronDown className="absolute end-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: 'var(--text-muted)' }} />
+          <ChevronDown className="absolute end-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: 'var(--velvet-text-muted)' }} />
         </div>
         {error && (
-          <p id={errorId} className="text-sm flex items-center gap-1" role="alert" style={{ color: 'var(--error)' }}>
+          <p id={errorId} className="text-sm flex items-center gap-1" role="alert" style={{ color: 'var(--velvet-error)' }}>
             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
             {error}
           </p>
         )}
         {helperText && !error && (
-          <p id={helperId} className="text-sm" style={{ color: 'var(--text-muted)' }}>
+          <p id={helperId} className="text-sm" style={{ color: 'var(--velvet-text-muted)' }}>
             {helperText}
           </p>
         )}
@@ -345,8 +347,8 @@ export function Tabs({ tabs, activeTab, onChange, className, grouped }: TabsProp
       <div className="flex items-center gap-1.5 shrink-0">
         {grouped ? grouped.map((group, groupIdx) => (
           <div key={group.id} className="flex items-center gap-1.5 shrink-0">
-            {groupIdx > 0 && <div className="mx-1.5 h-5 w-px shrink-0" style={{ background: 'var(--border)' }} />}
-            <span className="text-xs font-sans font-semibold select-none shrink-0" style={{ color: 'var(--text-sub)' }}>
+            {groupIdx > 0 && <div className="mx-1.5 h-5 w-px shrink-0" style={{ background: 'var(--velvet-border)' }} />}
+            <span className="text-xs font-sans font-semibold select-none shrink-0" style={{ color: 'var(--velvet-text-sub)' }}>
               {group.label}
             </span>
             {group.items.map((tab) => (
@@ -360,7 +362,7 @@ export function Tabs({ tabs, activeTab, onChange, className, grouped }: TabsProp
                 onClick={() => !tab.disabled && onChange(tab.id)}
                 disabled={tab.disabled}
                 className={cn(
-                  'nav-item shrink-0',
+                  'velvet-nav-item shrink-0',
                   activeTab === tab.id && 'active',
                   tab.disabled && 'opacity-50 cursor-not-allowed'
                 )}
@@ -368,7 +370,7 @@ export function Tabs({ tabs, activeTab, onChange, className, grouped }: TabsProp
                 {tab.icon && <span className="w-[18px] h-[18px] shrink-0">{tab.icon}</span>}
                 <span>{tab.label}</span>
                 {tab.badge && (
-                  <span className="shrink-0 rounded-full px-2 py-0.5 text-xs font-sans font-bold border" style={{ background: 'var(--surface-2)', color: 'var(--text-sub)', borderColor: 'var(--border)' }}>
+                  <span className="shrink-0 rounded-full px-2 py-0.5 text-xs font-sans font-bold border" style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-sub)', borderColor: 'var(--velvet-border)' }}>
                     {tab.badge}
                   </span>
                 )}
@@ -387,7 +389,7 @@ export function Tabs({ tabs, activeTab, onChange, className, grouped }: TabsProp
               onClick={() => !tab.disabled && onChange(tab.id)}
               disabled={tab.disabled}
               className={cn(
-                'nav-item shrink-0',
+                'velvet-nav-item shrink-0',
                 activeTab === tab.id && 'active',
                 tab.disabled && 'opacity-50 cursor-not-allowed'
               )}
@@ -395,7 +397,7 @@ export function Tabs({ tabs, activeTab, onChange, className, grouped }: TabsProp
               {tab.icon && <span className="w-[18px] h-[18px] shrink-0">{tab.icon}</span>}
               <span>{tab.label}</span>
               {tab.badge && (
-                <span className="shrink-0 rounded-full px-2 py-0.5 text-xs font-sans font-bold border" style={{ background: 'var(--surface-2)', color: 'var(--text-sub)', borderColor: 'var(--border)' }}>
+                <span className="shrink-0 rounded-full px-2 py-0.5 text-xs font-sans font-bold border" style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-sub)', borderColor: 'var(--velvet-border)' }}>
                   {tab.badge}
                 </span>
               )}
@@ -451,13 +453,13 @@ export interface BadgeProps {
 
 export function Badge({ children, tone = 'default', className, icon }: BadgeProps) {
   const toneStyles: Record<BadgeTone, React.CSSProperties> = {
-    default: { background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text-sub)' },
-    accent: { background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)', color: 'var(--accent)' },
-    success: { background: 'color-mix(in srgb, var(--success) 14%, transparent)', borderColor: 'color-mix(in srgb, var(--success) 40%, transparent)', color: 'var(--success)' },
-    warning: { background: 'color-mix(in srgb, var(--warning) 14%, transparent)', borderColor: 'color-mix(in srgb, var(--warning) 40%, transparent)', color: 'var(--warning)' },
-    error: { background: 'color-mix(in srgb, var(--error) 14%, transparent)', borderColor: 'color-mix(in srgb, var(--error) 40%, transparent)', color: 'var(--error)' },
-    info: { background: 'color-mix(in srgb, var(--info) 14%, transparent)', borderColor: 'color-mix(in srgb, var(--info) 40%, transparent)', color: 'var(--info)' },
-    neutral: { background: 'color-mix(in srgb, var(--neutral) 14%, transparent)', borderColor: 'color-mix(in srgb, var(--neutral) 40%, transparent)', color: 'var(--neutral)' },
+    default: { background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)', color: 'var(--velvet-text-sub)' },
+    accent: { background: 'var(--velvet-accent-glow2)', borderColor: 'var(--velvet-border-strong)', color: 'var(--velvet-accent)' },
+    success: { background: 'var(--velvet-success-bg)', borderColor: 'var(--velvet-success-border)', color: 'var(--velvet-success)' },
+    warning: { background: 'var(--velvet-warning-bg)', borderColor: 'var(--velvet-warning-border)', color: 'var(--velvet-warning)' },
+    error: { background: 'var(--velvet-error-bg)', borderColor: 'var(--velvet-error-border)', color: 'var(--velvet-error)' },
+    info: { background: 'var(--velvet-info-bg)', borderColor: 'var(--velvet-info-border)', color: 'var(--velvet-info)' },
+    neutral: { background: 'var(--velvet-neutral-bg)', borderColor: 'var(--velvet-neutral-border)', color: 'var(--velvet-neutral)' },
   };
   
   return (
@@ -563,10 +565,10 @@ export function Tooltip({ content, children, side = 'top', delay = 200 }: Toolti
     <div
       className="z-50 px-3 py-1.5 rounded-lg text-xs font-mono whitespace-nowrap pointer-events-none animate-fade-in"
       style={{
-        background: 'var(--surface-solid)',
-        color: 'var(--text)',
-        border: '1px solid var(--border-strong)',
-        boxShadow: 'var(--shadow-pop)',
+        background: 'var(--velvet-surface-solid)',
+        color: 'var(--velvet-text)',
+        border: '1px solid var(--velvet-border-strong)',
+        boxShadow: 'var(--velvet-shadow-pop)',
       }}
     >
       {content}
@@ -605,10 +607,10 @@ const alertIcons: Record<AlertTone, React.ReactNode> = {
 };
 
 const alertStyles: Record<AlertTone, React.CSSProperties> = {
-  error: { background: 'var(--error-bg)', borderColor: 'var(--error-border)', color: 'var(--error)' },
-  warning: { background: 'var(--warning-bg)', borderColor: 'var(--warning-border)', color: 'var(--warning)' },
-  info: { background: 'var(--info-bg)', borderColor: 'var(--info-border)', color: 'var(--info)' },
-  success: { background: 'var(--success-bg)', borderColor: 'var(--success-border)', color: 'var(--success)' },
+  error: { background: 'var(--velvet-error-bg)', borderColor: 'var(--velvet-error-border)', color: 'var(--velvet-error)' },
+  warning: { background: 'var(--velvet-warning-bg)', borderColor: 'var(--velvet-warning-border)', color: 'var(--velvet-warning)' },
+  info: { background: 'var(--velvet-info-bg)', borderColor: 'var(--velvet-info-border)', color: 'var(--velvet-info)' },
+  success: { background: 'var(--velvet-success-bg)', borderColor: 'var(--velvet-success-border)', color: 'var(--velvet-success)' },
 };
 
 export function Alert({ tone, title, description, actions, className, dismissible, onDismiss }: AlertProps) {
@@ -663,11 +665,11 @@ const toastIcons: Record<ToastType, React.ReactNode> = {
 };
 
 const toastStyles: Record<ToastType, React.CSSProperties> = {
-  default: { background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)', color: 'var(--accent)' },
-  success: { background: 'var(--success-bg)', borderColor: 'var(--success-border)', color: 'var(--success)' },
-  error: { background: 'var(--error-bg)', borderColor: 'var(--error-border)', color: 'var(--error)' },
-  warning: { background: 'var(--warning-bg)', borderColor: 'var(--warning-border)', color: 'var(--warning)' },
-  info: { background: 'var(--info-bg)', borderColor: 'var(--info-border)', color: 'var(--info)' },
+  default: { background: 'var(--velvet-accent-glow2)', borderColor: 'var(--velvet-border-strong)', color: 'var(--velvet-accent)' },
+  success: { background: 'var(--velvet-success-bg)', borderColor: 'var(--velvet-success-border)', color: 'var(--velvet-success)' },
+  error: { background: 'var(--velvet-error-bg)', borderColor: 'var(--velvet-error-border)', color: 'var(--velvet-error)' },
+  warning: { background: 'var(--velvet-warning-bg)', borderColor: 'var(--velvet-warning-border)', color: 'var(--velvet-warning)' },
+  info: { background: 'var(--velvet-info-bg)', borderColor: 'var(--velvet-info-border)', color: 'var(--velvet-info)' },
 };
 
 export function Toast({ type = 'default', title, description, action, duration = 5000, onClose }: ToastProps) {
@@ -686,7 +688,7 @@ export function Toast({ type = 'default', title, description, action, duration =
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 50, scale: 0.95 }}
       className="fixed bottom-6 end-6 z-50 flex items-start gap-3 max-w-sm animate-fade-in"
-      style={{ ...toastStyles[type], border: '1px solid', borderRadius: '1.75rem', padding: '1rem', boxShadow: 'var(--shadow-pop)' }}
+      style={{ ...toastStyles[type], border: '1px solid', borderRadius: '1.75rem', padding: '1rem', boxShadow: 'var(--velvet-shadow-pop)' }}
       role="alert"
     >
       <div className="shrink-0 mt-0.5" style={{ color: 'currentColor' }}>
@@ -776,7 +778,7 @@ export function Modal({ open, onOpenChange, title, description, children, action
         exit={{ opacity: 0 }}
         onClick={closeOnOverlayClick ? () => onOpenChange(false) : undefined}
         className="fixed inset-0"
-        style={{ background: 'var(--bg)', opacity: 0.6, backdropFilter: 'blur(8px)' }}
+        style={{ background: 'var(--velvet-bg)', opacity: 0.6, backdropFilter: 'blur(8px)' }}
       />
       <motion.div
         ref={contentRef}
@@ -786,11 +788,11 @@ export function Modal({ open, onOpenChange, title, description, children, action
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
         className={cn('w-full', sizeClassesModal[size], 'animate-scale-in')}
         style={{
-          background: 'var(--surface-solid)',
+          background: 'var(--velvet-surface-solid)',
           backdropFilter: 'blur(44px) saturate(200%)',
-          border: '1px solid var(--border-strong)',
+          border: '1px solid var(--velvet-border-strong)',
           borderRadius: '1.75rem',
-          boxShadow: 'var(--shadow-pop)',
+          boxShadow: 'var(--velvet-shadow-pop)',
           maxHeight: '85vh',
           display: 'flex',
           flexDirection: 'column',
@@ -800,11 +802,11 @@ export function Modal({ open, onOpenChange, title, description, children, action
         aria-labelledby="modal-title"
         aria-describedby={description ? 'modal-description' : undefined}
       >
-        <div className="flex items-start justify-between p-6 border-b" style={{ borderColor: 'var(--border)' }}>
+        <div className="flex items-start justify-between p-6 border-b" style={{ borderColor: 'var(--velvet-border)' }}>
           <div>
             <h2 id="modal-title" className="section-title text-xl">{title}</h2>
             {description && (
-              <p id="modal-description" className="text-sm mt-1" style={{ color: 'var(--text-sub)' }}>
+              <p id="modal-description" className="text-sm mt-1" style={{ color: 'var(--velvet-text-sub)' }}>
                 {description}
               </p>
             )}
@@ -812,7 +814,7 @@ export function Modal({ open, onOpenChange, title, description, children, action
           <button
             onClick={() => onOpenChange(false)}
             className="shrink-0 p-1 rounded-lg transition-colors"
-            style={{ color: 'var(--text-muted)' }}
+            style={{ color: 'var(--velvet-text-muted)' }}
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -822,7 +824,7 @@ export function Modal({ open, onOpenChange, title, description, children, action
           {children}
         </div>
         {actions && (
-          <div className="p-4 border-t flex justify-end gap-3" style={{ borderColor: 'var(--border)' }}>
+          <div className="p-4 border-t flex justify-end gap-3" style={{ borderColor: 'var(--velvet-border)' }}>
             {actions}
           </div>
         )}
@@ -878,7 +880,7 @@ export function Drawer({ open, onOpenChange, title, description, children, actio
         exit={{ opacity: 0 }}
         onClick={() => onOpenChange(false)}
         className="fixed inset-0 flex-1"
-        style={{ background: 'var(--bg)', opacity: 0.6, backdropFilter: 'blur(4px)' }}
+        style={{ background: 'var(--velvet-bg)', opacity: 0.6, backdropFilter: 'blur(4px)' }}
       />
       <motion.div
         initial={{ x: direction === 'start' ? -300 : 300 }}
@@ -887,27 +889,27 @@ export function Drawer({ open, onOpenChange, title, description, children, actio
         transition={{ type: 'spring', stiffness: 320, damping: 32 }}
         className={cn('relative flex flex-col h-full', sizeClassesDrawer[size])}
         style={{
-          background: 'var(--surface-solid)',
+          background: 'var(--velvet-surface-solid)',
           backdropFilter: 'blur(44px) saturate(180%)',
-          borderColor: 'var(--border-strong)',
-          boxShadow: 'var(--shadow-pop)',
+          borderColor: 'var(--velvet-border-strong)',
+          boxShadow: 'var(--velvet-shadow-pop)',
           borderRadius: direction === 'start' ? '0 1.75rem 1.75rem 0' : '1.75rem 0 0 1.75rem',
           borderWidth: '1px',
           borderStyle: 'solid',
           borderTop: 'none',
           borderBottom: 'none',
-          [direction === 'start' ? 'borderRight' : 'borderLeft']: '1px solid var(--border-strong)',
+          [direction === 'start' ? 'borderRight' : 'borderLeft']: '1px solid var(--velvet-border-strong)',
         }}
       >
-        <div className="flex items-start justify-between p-6 border-b" style={{ borderColor: 'var(--border)' }}>
+        <div className="flex items-start justify-between p-6 border-b" style={{ borderColor: 'var(--velvet-border)' }}>
           <div>
             <h2 className="section-title text-xl">{title}</h2>
-            {description && <p className="text-sm mt-1" style={{ color: 'var(--text-sub)' }}>{description}</p>}
+            {description && <p className="text-sm mt-1" style={{ color: 'var(--velvet-text-sub)' }}>{description}</p>}
           </div>
           <button
             onClick={() => onOpenChange(false)}
             className="shrink-0 p-1 rounded-lg transition-colors"
-            style={{ color: 'var(--text-muted)' }}
+            style={{ color: 'var(--velvet-text-muted)' }}
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -917,7 +919,7 @@ export function Drawer({ open, onOpenChange, title, description, children, actio
           {children}
         </div>
         {actions && (
-          <div className="p-4 border-t flex justify-end gap-3" style={{ borderColor: 'var(--border)' }}>
+          <div className="p-4 border-t flex justify-end gap-3" style={{ borderColor: 'var(--velvet-border)' }}>
             {actions}
           </div>
         )}
@@ -968,12 +970,12 @@ export function Table<T>({
       <div className={cn('overflow-x-auto scrollbar-none', className)}>
         <table className="w-full border-collapse" role="table">
           <thead>
-            <tr style={{ borderBottom: '1px solid var(--border)' }}>
+            <tr style={{ borderBottom: '1px solid var(--velvet-border)' }}>
               {columns.map((col) => (
                 <th
                   key={col.key}
                   className="text-start font-mono font-bold uppercase tracking-[0.18em] p-3"
-                  style={{ fontSize: '0.625rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}
+                  style={{ fontSize: '0.625rem', color: 'var(--velvet-text-muted)', whiteSpace: 'nowrap' }}
                   scope="col"
                 >
                   {col.header}
@@ -983,10 +985,10 @@ export function Table<T>({
           </thead>
           <tbody>
             {[...Array(5)].map((_, i) => (
-              <tr key={i} style={{ borderBottom: '1px solid var(--border)' }}>
+              <tr key={i} style={{ borderBottom: '1px solid var(--velvet-border)' }}>
                 {columns.map((col) => (
                   <td key={col.key} className="p-3">
-                    <div className="skeleton h-4 w-[120px]" style={{ borderRadius: '0.5rem' }} />
+                    <div className="velvet-skeleton h-4 w-[120px]" style={{ borderRadius: '0.5rem' }} />
                   </td>
                 ))}
               </tr>
@@ -999,15 +1001,15 @@ export function Table<T>({
 
   if (data.length === 0) {
     return (
-      <div className={cn('card-elevated p-12 text-center', className)}>
+      <div className={cn('velvet-card p-12 text-center', className)}>
         {emptyState || (
           <div className="space-y-4">
-            <div className="mx-auto w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}>
+            <div className="mx-auto w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-muted)' }}>
               <Search className="w-6 h-6" />
             </div>
             <div>
               <h4 className="section-title text-lg">No data</h4>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>No matching records found.</p>
+              <p className="text-sm" style={{ color: 'var(--velvet-text-muted)' }}>No matching records found.</p>
             </div>
           </div>
         )}
@@ -1019,7 +1021,7 @@ export function Table<T>({
     <div className={cn('overflow-x-auto scrollbar-none', className)}>
       <table className="w-full border-collapse" role="table">
         <thead>
-          <tr style={{ borderBottom: '1px solid var(--border)' }}>
+          <tr style={{ borderBottom: '1px solid var(--velvet-border)' }}>
             {columns.map((col, idx) => (
               <th
                 key={col.key}
@@ -1031,11 +1033,11 @@ export function Table<T>({
                 )}
                 style={{ 
                   fontSize: '0.625rem', 
-                  color: 'var(--text-muted)', 
+                  color: 'var(--velvet-text-muted)', 
                   whiteSpace: 'nowrap',
-                  background: hasSticky && idx === 0 ? 'var(--surface-solid)' : 'transparent',
-                  borderLeft: hasSticky && idx === 0 ? '1px solid var(--border)' : undefined,
-                  borderRight: hasSticky && idx === columns.length - 1 ? '1px solid var(--border)' : undefined,
+                  background: hasSticky && idx === 0 ? 'var(--velvet-surface-solid)' : 'transparent',
+                  borderLeft: hasSticky && idx === 0 ? '1px solid var(--velvet-border)' : undefined,
+                  borderRight: hasSticky && idx === columns.length - 1 ? '1px solid var(--velvet-border)' : undefined,
                 }}
                 scope="col"
               >
@@ -1050,8 +1052,8 @@ export function Table<T>({
               key={keyExtractor(row)}
               className={cn('transition-colors', rowClassName?.(row, rowIdx))}
               style={{ 
-                borderBottom: '1px solid var(--border)',
-                backgroundColor: rowIdx % 2 === 0 ? 'transparent' : 'var(--surface-2)',
+                borderBottom: '1px solid var(--velvet-border)',
+                backgroundColor: rowIdx % 2 === 0 ? 'transparent' : 'var(--velvet-surface-2)',
               }}
             >
               {columns.map((col, colIdx) => (
@@ -1065,8 +1067,8 @@ export function Table<T>({
                     col.className
                   )}
                   style={{
-                    background: hasSticky && colIdx === 0 ? 'var(--surface-solid)' : 'transparent',
-                    borderLeft: hasSticky && colIdx === 0 ? '1px solid var(--border)' : undefined,
+                    background: hasSticky && colIdx === 0 ? 'var(--velvet-surface-solid)' : 'transparent',
+                    borderLeft: hasSticky && colIdx === 0 ? '1px solid var(--velvet-border)' : undefined,
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -1097,12 +1099,12 @@ export interface EmptyStateProps {
 export function EmptyState({ icon, title, description, primaryAction, secondaryAction, className }: EmptyStateProps) {
   return (
     <div className={cn('flex flex-col items-center justify-center text-center gap-6 p-12', className)}>
-      <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--surface-2)', color: 'var(--text-muted)', opacity: 0.4 }}>
+      <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-muted)', opacity: 0.4 }}>
         {icon || <Search className="w-6 h-6" />}
       </div>
       <div className="space-y-2 max-w-sm">
         <h4 className="section-title text-lg">{title}</h4>
-        {description && <p className="text-sm" style={{ color: 'var(--text-sub)' }}>{description}</p>}
+        {description && <p className="text-sm" style={{ color: 'var(--velvet-text-sub)' }}>{description}</p>}
       </div>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-sm">
         {primaryAction}
@@ -1122,7 +1124,7 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Skeleton({ className, variant = 'rectangular', lines = 1, ...props }: SkeletonProps) {
-  const baseClass = 'skeleton';
+  const baseClass = 'velvet-skeleton';
   
   const variantClasses = {
     text: 'h-4 w-full',
@@ -1144,7 +1146,7 @@ export function Skeleton({ className, variant = 'rectangular', lines = 1, ...pro
 
   if (variant === 'card') {
     return (
-      <div className={cn(baseClass, 'card-elevated p-6 space-y-4', className)} {...props}>
+      <div className={cn(baseClass, 'velvet-card p-6 space-y-4', className)} {...props}>
         <div className="flex items-center justify-between">
           <div className={cn(baseClass, 'h-5 w-1/4')} style={{ borderRadius: '0.5rem' }} />
           <div className={cn(baseClass, 'h-9 w-9 rounded-xl')} />
@@ -1183,10 +1185,10 @@ export function Progress({ value, max = 100, size = 'md', showLabel = false, cla
   };
 
   const toneColors: Record<string, { bg: string; fill: string }> = {
-    default: { bg: 'var(--surface-2)', fill: 'var(--accent)' },
-    success: { bg: 'var(--success-bg)', fill: 'var(--success)' },
-    warning: { bg: 'var(--warning-bg)', fill: 'var(--warning)' },
-    error: { bg: 'var(--error-bg)', fill: 'var(--error)' },
+    default: { bg: 'var(--velvet-surface-2)', fill: 'var(--velvet-accent)' },
+    success: { bg: 'var(--velvet-success-bg)', fill: 'var(--velvet-success)' },
+    warning: { bg: 'var(--velvet-warning-bg)', fill: 'var(--velvet-warning)' },
+    error: { bg: 'var(--velvet-error-bg)', fill: 'var(--velvet-error)' },
   };
 
   return (
@@ -1196,7 +1198,7 @@ export function Progress({ value, max = 100, size = 'md', showLabel = false, cla
         style={{ 
           background: toneColors[tone].bg, 
           ...sizeStyles[size],
-          border: '1px solid var(--border)',
+          border: '1px solid var(--velvet-border)',
         }}
         role="progressbar"
         aria-valuenow={percentage}
@@ -1216,7 +1218,7 @@ export function Progress({ value, max = 100, size = 'md', showLabel = false, cla
         />
       </div>
       {showLabel && (
-        <div className="flex justify-between mt-1.5 text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+        <div className="flex justify-between mt-1.5 text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>
           <span>{value}</span>
           <span>{max}</span>
         </div>
@@ -1242,17 +1244,17 @@ export function CircularProgress({ value, max = 100, size = 48, strokeWidth = 4,
   const offset = circumference - (percentage / 100) * circumference;
 
   const toneColors: Record<string, string> = {
-    default: 'var(--accent)',
-    success: 'var(--success)',
-    warning: 'var(--warning)',
-    error: 'var(--error)',
+    default: 'var(--velvet-accent)',
+    success: 'var(--velvet-success)',
+    warning: 'var(--velvet-warning)',
+    error: 'var(--velvet-error)',
   };
 
   return (
     <div className={cn('relative inline-flex items-center justify-center', className)}>
       <svg width={size} height={size} className="transform -rotate-90">
         <circle
-          className="text-[var(--surface-2)]"
+          className="text-[var(--velvet-surface-2)]"
           strokeWidth={strokeWidth}
           stroke="currentColor"
           fill="none"
@@ -1264,7 +1266,7 @@ export function CircularProgress({ value, max = 100, size = 48, strokeWidth = 4,
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset: offset }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[var(--accent)]"
+          className="text-[var(--velvet-accent)]"
           strokeWidth={strokeWidth}
           stroke={toneColors[tone]}
           fill="none"
@@ -1310,7 +1312,7 @@ export function SectionTitle({ eyebrow, title, description, align = 'start', cla
       )}
       <h2 className="section-title text-2xl sm:text-3xl">{title}</h2>
       {description && (
-        <p className="text-sm leading-relaxed max-w-2xl" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-sm leading-relaxed max-w-2xl" style={{ color: 'var(--velvet-text-muted)' }}>
           {description}
         </p>
       )}
@@ -1327,7 +1329,7 @@ export function Divider({ className }: { className?: string }) {
     <div
       className={cn('h-px w-full', className)}
       style={{
-        background: 'linear-gradient(90deg, transparent 0%, var(--border-strong) 50%, transparent 100%)'
+        background: 'linear-gradient(90deg, transparent 0%, var(--velvet-border-strong) 50%, transparent 100%)'
       }}
     />
   );
@@ -1342,9 +1344,9 @@ export function Kbd({ children }: { children: React.ReactNode }) {
     <kbd
       className="px-1.5 py-0.5 text-2xs font-mono rounded-md border"
       style={{
-        background: 'var(--surface-2)',
-        borderColor: 'var(--border)',
-        color: 'var(--text-sub)'
+        background: 'var(--velvet-surface-2)',
+        borderColor: 'var(--velvet-border)',
+        color: 'var(--velvet-text-sub)'
       }}
     >
       {children}
@@ -1371,7 +1373,7 @@ export function PageHeader({ eyebrow, title, description, actions, className }: 
         {eyebrow && <div className="eyebrow">{eyebrow}</div>}
         <h1 className="section-title text-3xl sm:text-4xl">{title}</h1>
         {description && (
-          <p className="text-sm leading-relaxed max-w-2xl" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-sm leading-relaxed max-w-2xl" style={{ color: 'var(--velvet-text-muted)' }}>
             {description}
           </p>
         )}
@@ -1398,11 +1400,11 @@ export function StatCard({ label, value, delta, icon, tone = 'default', classNam
   return (
     <Card hover className={cn('p-5 min-h-[118px] flex flex-col justify-between', tone === 'accent' && 'border-strong', className)}>
       <div className="flex items-start justify-between gap-3">
-        <span className="text-2xs font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--text-muted)' }}>
+        <span className="text-2xs font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--velvet-text-muted)' }}>
           {label}
         </span>
         {icon && (
-          <div className="w-9 h-9 rounded-2xl flex items-center justify-center border" style={{ background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)', color: 'var(--accent)' }}>
+          <div className="w-9 h-9 rounded-2xl flex items-center justify-center border" style={{ background: 'var(--velvet-accent-glow2)', borderColor: 'var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
             {icon}
           </div>
         )}
@@ -1410,7 +1412,7 @@ export function StatCard({ label, value, delta, icon, tone = 'default', classNam
       <div>
         <div className="font-display font-extrabold text-3xl leading-none tracking-tight">{value}</div>
         {delta && (
-          <div className="mt-1.5 text-xs font-semibold flex items-center gap-1.5" style={{ color: delta.positive ? 'var(--success)' : 'var(--text-muted)' }}>
+          <div className="mt-1.5 text-xs font-semibold flex items-center gap-1.5" style={{ color: delta.positive ? 'var(--velvet-success)' : 'var(--velvet-text-muted)' }}>
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               {delta.positive ? <polyline points="18 15 12 9 6 15" /> : <polyline points="6 9 12 15 18 9" />}
             </svg>
@@ -1434,15 +1436,15 @@ export interface AmbientGlowProps {
 export function AmbientGlow({ className, variant = 'blob' }: AmbientGlowProps) {
   if (variant === 'ring') {
     return (
-      <div className={cn('absolute pointer-events-none rounded-full float-spin', className)} style={{ border: '1px solid var(--border-strong)', boxShadow: '0 0 40px var(--accent-glow2)' }} />
+      <div className={cn('absolute pointer-events-none rounded-full float-spin', className)} style={{ border: '1px solid var(--velvet-border-strong)', boxShadow: '0 0 40px var(--velvet-accent-glow2)' }} />
     );
   }
   if (variant === 'cube') {
     return (
-      <div className={cn('absolute pointer-events-none float-y', className)} style={{ background: 'linear-gradient(135deg, var(--accent-glow2), transparent)', border: '1px solid var(--border-strong)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 24px 48px -24px var(--accent-glow)' }} />
+      <div className={cn('absolute pointer-events-none float-y', className)} style={{ background: 'linear-gradient(135deg, var(--velvet-accent-glow2), transparent)', border: '1px solid var(--velvet-border-strong)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 24px 48px -24px var(--velvet-accent-glow)' }} />
     );
   }
   return (
-    <div className={cn('absolute pointer-events-none rounded-full blur-[100px] float-y', className)} style={{ background: 'var(--accent-glow2)' }} />
+    <div className={cn('absolute pointer-events-none rounded-full blur-[100px] float-y', className)} style={{ background: 'var(--velvet-accent-glow2)' }} />
   );
 }

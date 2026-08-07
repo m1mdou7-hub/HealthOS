@@ -65,10 +65,10 @@ export default function DoctorManagement({
     <div id="doctor-management" className="p-6 card-elevated rounded-2xl space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h3 className="text-sm font-bold font-mono flex items-center gap-2" style={{ color: 'var(--text)' }}>
-            <UserCheck className="w-4 h-4" style={{ color: 'var(--accent)' }} /> Surgeon & Prosthodontist Directory
+          <h3 className="text-sm font-bold font-mono flex items-center gap-2" style={{ color: 'var(--velvet-text)' }}>
+            <UserCheck className="w-4 h-4" style={{ color: 'var(--velvet-accent)' }} /> Surgeon & Prosthodontist Directory
           </h3>
-          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-xs mt-1" style={{ color: 'var(--velvet-text-muted)' }}>
             Monitor working slots, active break offsets, double-book prevention locks, and active leave schedules.
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function DoctorManagement({
           }}
           className="btn-secondary px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all self-start md:self-auto"
         >
-          <Calendar className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} /> Plan Vacation / Leave
+          <Calendar className="w-3.5 h-3.5" style={{ color: 'var(--velvet-text-muted)' }} /> Plan Vacation / Leave
         </button>
       </div>
 
@@ -92,35 +92,35 @@ export default function DoctorManagement({
             {/* Header */}
             <div className="space-y-1">
               <div className="flex items-start justify-between">
-                <span className="text-2xs font-mono uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>{doctor.id}</span>
+                <span className="text-2xs font-mono uppercase tracking-widest" style={{ color: 'var(--velvet-text-muted)' }}>{doctor.id}</span>
                 <span className={`px-2 py-0.5 rounded text-2xs font-mono font-bold uppercase ${getStatusBadge(doctor.status)}`}>
                   {doctor.status}
                 </span>
               </div>
-              <h4 className="font-bold text-sm" style={{ color: 'var(--text)' }}>{doctor.name}</h4>
+              <h4 className="font-bold text-sm" style={{ color: 'var(--velvet-text)' }}>{doctor.name}</h4>
               <p className={`text-xs font-mono font-bold ${getSpecialtyColor(doctor.specialty)}`}>{doctor.specialty}</p>
             </div>
 
             {/* Shift hours details */}
-            <div className="space-y-2 text-xs p-3 rounded-xl border" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
+            <div className="space-y-2 text-xs p-3 rounded-xl border" style={{ color: 'var(--velvet-text-sub)', background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)' }}>
               <div className="flex justify-between font-mono">
                 <span>Working Shift:</span>
-                <span className="font-bold" style={{ color: 'var(--text)' }}>{doctor.workingHours.start} - {doctor.workingHours.end}</span>
+                <span className="font-bold" style={{ color: 'var(--velvet-text)' }}>{doctor.workingHours.start} - {doctor.workingHours.end}</span>
               </div>
               <div className="flex justify-between font-mono">
                 <span>Lunch Break:</span>
-                <span style={{ color: 'var(--text-sub)' }}>
+                <span style={{ color: 'var(--velvet-text-sub)' }}>
                   {doctor.breaks.map(b => `${b.start}-${b.end}`).join(', ')}
                 </span>
               </div>
-              <div className="pt-1.5 border-t flex items-center gap-1 text-2xs font-mono uppercase font-bold" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
-                <ShieldAlert className="w-3 h-3" style={{ color: 'var(--success)' }} /> Conflict Protection: Active
+              <div className="pt-1.5 border-t flex items-center gap-1 text-2xs font-mono uppercase font-bold" style={{ borderColor: 'var(--velvet-border)', color: 'var(--velvet-text-muted)' }}>
+                <ShieldAlert className="w-3 h-3" style={{ color: 'var(--velvet-success)' }} /> Conflict Protection: Active
               </div>
             </div>
 
             {/* Status Change Controls */}
             <div className="space-y-1.5">
-              <span className="text-2xs font-mono uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Quick Status Switch:</span>
+              <span className="text-2xs font-mono uppercase font-bold block" style={{ color: 'var(--velvet-text-muted)' }}>Quick Status Switch:</span>
               <div className="grid grid-cols-4 gap-1">
                 {(['Active', 'Break', 'On Leave', 'Vacation'] as const).map((st) => (
                   <button
@@ -151,8 +151,8 @@ export default function DoctorManagement({
               exit={{ scale: 0.95, opacity: 0 }}
               className="card-elevated rounded-2xl max-w-sm w-full p-6 text-start shadow-card"
             >
-              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--border)' }}>
-                <h3 className="text-sm font-bold font-mono" style={{ color: 'var(--text)' }}>Leave & Vacation Dispatch</h3>
+              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--velvet-border)' }}>
+                <h3 className="text-sm font-bold font-mono" style={{ color: 'var(--velvet-text)' }}>Leave & Vacation Dispatch</h3>
                 <button 
                   onClick={() => setShowLeavePlanner(false)}
                   className="btn-ghost p-1 rounded"
@@ -161,14 +161,14 @@ export default function DoctorManagement({
                 </button>
               </div>
 
-              <div className="space-y-4 pt-4 text-xs" style={{ color: 'var(--text-sub)' }}>
+              <div className="space-y-4 pt-4 text-xs" style={{ color: 'var(--velvet-text-sub)' }}>
                 <div>
-                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Select Clinician</label>
+                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--velvet-text-muted)' }}>Select Clinician</label>
                   <select
                     value={selectedDoctor?.id || ''}
                     onChange={(e) => setSelectedDoctor(doctors.find(d => d.id === e.target.value) || null)}
                     className="w-full p-2.5 rounded-lg border font-mono"
-                    style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
+                    style={{ background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)', color: 'var(--velvet-text)' }}
                   >
                     {doctors.map(d => (
                       <option key={d.id} value={d.id}>{d.name} ({d.specialty})</option>
@@ -178,30 +178,30 @@ export default function DoctorManagement({
 
                 <div className="grid grid-cols-1 gap-3">
                   <div>
-                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Planned Start Date</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--velvet-text-muted)' }}>Planned Start Date</label>
                     <input 
                       type="date"
                       value={leaveDate}
                       onChange={(e) => setLeaveDate(e.target.value)}
                       className="w-full p-2 rounded-lg border font-mono"
-                      style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
+                      style={{ background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)', color: 'var(--velvet-text)' }}
                     />
                   </div>
                   <div>
-                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Leave Description / Reason</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--velvet-text-muted)' }}>Leave Description / Reason</label>
                     <input 
                       type="text"
                       value={leaveReason}
                       onChange={(e) => setLeaveReason(e.target.value)}
                       className="w-full p-2 rounded-lg border"
-                      style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
+                      style={{ background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)', color: 'var(--velvet-text)' }}
                       placeholder="e.g., Medical board conference"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 mt-6 pt-3 border-t" style={{ borderColor: 'var(--border)' }}>
+              <div className="flex justify-end gap-2 mt-6 pt-3 border-t" style={{ borderColor: 'var(--velvet-border)' }}>
                 <button
                   type="button"
                   onClick={() => setShowLeavePlanner(false)}

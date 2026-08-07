@@ -21,22 +21,22 @@ export default async function AIAssistantPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)', boxShadow: '0 0 24px var(--accent-glow2)' }}>
+              <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)', border: '1px solid var(--velvet-border-strong)', boxShadow: '0 0 24px var(--velvet-accent-glow2)' }}>
                 <Sparkles className="w-6 h-6" />
               </div>
               <h2 className="section-title text-xl sm:text-2xl">AI Clinical Assistant</h2>
             </div>
-            <p className="mt-2 text-sm" style={{ color: 'var(--text-muted)' }}>
+            <p className="mt-2 text-sm" style={{ color: 'var(--velvet-text-muted)' }}>
               Formulate diagnostics summaries, synthesize lab outcomes, and query research papers.
             </p>
           </div>
         </div>
 
         {/* Info panel */}
-        <div className="p-4 rounded-2xl card-elevated border flex gap-3 text-sm" style={{ color: 'var(--text-sub)', borderColor: 'var(--border-strong)' }}>
-          <ShieldAlert className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--warning)' }} />
+        <div className="p-4 rounded-2xl card-elevated border flex gap-3 text-sm" style={{ color: 'var(--velvet-text-sub)', borderColor: 'var(--velvet-border-strong)' }}>
+          <ShieldAlert className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--velvet-warning)' }} />
           <p>
-            <strong style={{ color: 'var(--text)' }}>Note:</strong> HealthOS AI is configured as a clinical decision support tool. It provides analytical guidance and synthesis of patient charts, but must be reviewed by a licensed medical professional before implementation.
+            <strong style={{ color: 'var(--velvet-text)' }}>Note:</strong> HealthOS AI is configured as a clinical decision support tool. It provides analytical guidance and synthesis of patient charts, but must be reviewed by a licensed medical professional before implementation.
           </p>
         </div>
 
@@ -46,19 +46,19 @@ export default async function AIAssistantPage() {
           <AmbientGlow className="bottom-[-6rem] -start-20 w-80 h-80 opacity-40 pulse-glow" />
           {/* Output area */}
           <div className="relative flex-1 p-6 flex flex-col justify-center items-center text-center space-y-4">
-            <div className="p-4 rounded-3xl flex items-center justify-center" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)', boxShadow: '0 0 32px var(--accent-glow2)' }}>
+            <div className="p-4 rounded-3xl flex items-center justify-center" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)', border: '1px solid var(--velvet-border-strong)', boxShadow: '0 0 32px var(--velvet-accent-glow2)' }}>
               <BrainCircuit className="w-8 h-8" />
             </div>
             <div className="space-y-1">
               <h3 className="section-title text-base">HealthOS Clinical Assistant Online</h3>
-              <p className="text-xs max-w-sm" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-xs max-w-sm" style={{ color: 'var(--velvet-text-muted)' }}>
                 Ask a question like: &quot;Summarize Patient Carter&apos;s latest hematology panel,&quot; or &quot;Outline potential drug interactions for metformin.&quot;
               </p>
             </div>
           </div>
 
           {/* Input field */}
-          <div className="relative p-4" style={{ borderTop: '1px solid var(--border)' }}>
+          <div className="relative p-4" style={{ borderTop: '1px solid var(--velvet-border)' }}>
             <div className="relative">
               <input
                 type="text"
@@ -66,7 +66,7 @@ export default async function AIAssistantPage() {
                 placeholder="AI Workspace is locked for build simulation. Assistant prompts require model configuration..."
                 className="w-full ps-4 pe-12 py-3 rounded-xl text-sm"
               />
-              <button className="absolute end-2 top-1/2 -translate-y-1/2 p-2 rounded-lg btn-secondary opacity-50 cursor-not-allowed" style={{ color: 'var(--text-muted)' }}>
+              <button className="absolute end-2 top-1/2 -translate-y-1/2 p-2 rounded-lg btn-secondary opacity-50 cursor-not-allowed" style={{ color: 'var(--velvet-text-muted)' }}>
                 <HeartHandshake className="w-4 h-4" />
               </button>
             </div>

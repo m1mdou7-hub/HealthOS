@@ -119,10 +119,10 @@ export default function WaitingQueue({
     <div id="waiting-queue" className="p-6 card-elevated rounded-2xl space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h3 className="text-sm font-bold font-mono flex items-center gap-2" style={{ color: 'var(--text)' }}>
-            <ListCollapse className="w-4 h-4" style={{ color: 'var(--warning)' }} /> Triage waiting & walk-in queue
+          <h3 className="text-sm font-bold font-mono flex items-center gap-2" style={{ color: 'var(--velvet-text)' }}>
+            <ListCollapse className="w-4 h-4" style={{ color: 'var(--velvet-warning)' }} /> Triage waiting & walk-in queue
           </h3>
-          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-xs mt-1" style={{ color: 'var(--velvet-text-muted)' }}>
             Prioritize physical check-ins. Use AI-assisted triage calculations to sort emergencies and VIPs.
           </p>
         </div>
@@ -131,7 +131,7 @@ export default function WaitingQueue({
           <button
             onClick={optimizeQueue}
             className="px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all"
-            style={{ background: 'color-mix(in srgb, var(--warning) 12%, transparent)', color: 'var(--warning)', border: '1px solid color-mix(in srgb, var(--warning) 25%, transparent)' }}
+            style={{ background: 'color-mix(in srgb, var(--velvet-warning) 12%, transparent)', color: 'var(--velvet-warning)', border: '1px solid color-mix(in srgb, var(--velvet-warning) 25%, transparent)' }}
           >
             <Sparkles className="w-3.5 h-3.5" /> Optimize Queue Order
           </button>
@@ -145,17 +145,17 @@ export default function WaitingQueue({
       </div>
 
       <div className="rounded-2xl overflow-hidden card-elevated">
-        <div className="grid grid-cols-12 p-3.5 text-2xs font-mono font-bold uppercase tracking-widest border-b" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)', background: 'var(--surface-2)' }}>
+        <div className="grid grid-cols-12 p-3.5 text-2xs font-mono font-bold uppercase tracking-widest border-b" style={{ color: 'var(--velvet-text-muted)', borderColor: 'var(--velvet-border)', background: 'var(--velvet-surface-2)' }}>
           <div className="col-span-1 text-center">Rank</div>
           <div className="col-span-3 text-start">Patient Chart</div>
           <div className="col-span-2 text-start">Category</div>
           <div className="col-span-2 text-start">Urgency</div>
           <div className="col-span-2 text-center">Wait Duration</div>
-          <div className="col-span-1 text-center font-bold" style={{ color: 'var(--warning)' }}>Score</div>
+          <div className="col-span-1 text-center font-bold" style={{ color: 'var(--velvet-warning)' }}>Score</div>
           <div className="col-span-1 text-center">Actions</div>
         </div>
 
-        <div className="divide-y" style={{ borderColor: 'var(--border)' }}>
+        <div className="divide-y" style={{ borderColor: 'var(--velvet-border)' }}>
           <AnimatePresence initial={false}>
             {queue.map((item, index) => {
               const priorityScore = calculatePriorityScore(item);
@@ -166,13 +166,13 @@ export default function WaitingQueue({
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   className="grid grid-cols-12 p-3.5 text-xs items-center hover:bg-zinc-900/20 text-start"
-                  style={{ color: 'var(--text-sub)' }}
+                  style={{ color: 'var(--velvet-text-sub)' }}
                 >
-                  <div className="col-span-1 text-center font-mono font-bold" style={{ color: 'var(--text-muted)' }}>
+                  <div className="col-span-1 text-center font-mono font-bold" style={{ color: 'var(--velvet-text-muted)' }}>
                     #{index + 1}
                   </div>
                   
-                  <div className="col-span-3 font-semibold" style={{ color: 'var(--text)' }}>
+                  <div className="col-span-3 font-semibold" style={{ color: 'var(--velvet-text)' }}>
                     {item.patientName}
                   </div>
 
@@ -186,11 +186,11 @@ export default function WaitingQueue({
                     <span className={getUrgencyBadge(item.urgency)}>{item.urgency}</span>
                   </div>
 
-                  <div className="col-span-2 text-center font-mono flex items-center justify-center gap-1" style={{ color: 'var(--text-muted)' }}>
-                    <Clock className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} /> {item.waitTime}m
+                  <div className="col-span-2 text-center font-mono flex items-center justify-center gap-1" style={{ color: 'var(--velvet-text-muted)' }}>
+                    <Clock className="w-3.5 h-3.5" style={{ color: 'var(--velvet-text-muted)' }} /> {item.waitTime}m
                   </div>
 
-                  <div className="col-span-1 text-center font-mono font-black text-sm" style={{ color: 'var(--warning)' }}>
+                  <div className="col-span-1 text-center font-mono font-black text-sm" style={{ color: 'var(--velvet-warning)' }}>
                     {priorityScore}
                   </div>
 
@@ -214,7 +214,7 @@ export default function WaitingQueue({
                     <button
                       onClick={() => handleRemove(item.id)}
                       className="p-1 rounded hover:opacity-80"
-                      style={{ color: 'var(--text-muted)' }}
+                      style={{ color: 'var(--velvet-text-muted)' }}
                       title="Complete / Remove"
                     >
                       <X className="w-3.5 h-3.5" />
@@ -225,7 +225,7 @@ export default function WaitingQueue({
             })}
           </AnimatePresence>
           {queue.length === 0 && (
-            <div className="p-8 text-center text-xs italic" style={{ color: 'var(--text-muted)' }}>
+            <div className="p-8 text-center text-xs italic" style={{ color: 'var(--velvet-text-muted)' }}>
               No patients checked in right now.
             </div>
           )}
@@ -242,8 +242,8 @@ export default function WaitingQueue({
               exit={{ scale: 0.95, opacity: 0 }}
               className="card-elevated rounded-2xl max-w-sm w-full p-6 text-start shadow-card"
             >
-              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--border)' }}>
-                <h3 className="text-sm font-bold font-mono" style={{ color: 'var(--text)' }}>In-Clinic Patient Check-in</h3>
+              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--velvet-border)' }}>
+                <h3 className="text-sm font-bold font-mono" style={{ color: 'var(--velvet-text)' }}>In-Clinic Patient Check-in</h3>
                 <button 
                   onClick={() => setShowAddForm(false)}
                   className="btn-ghost p-1 rounded"
@@ -252,15 +252,15 @@ export default function WaitingQueue({
                 </button>
               </div>
 
-              <div className="space-y-4 pt-4 text-xs" style={{ color: 'var(--text-sub)' }}>
+              <div className="space-y-4 pt-4 text-xs" style={{ color: 'var(--velvet-text-sub)' }}>
                 <div>
-                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient Name</label>
+                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--velvet-text-muted)' }}>Patient Name</label>
                   <input
                     type="text"
                     value={patientName}
                     onChange={(e) => setPatientName(e.target.value)}
                     className="w-full p-2.5 rounded-lg border"
-                    style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
+                    style={{ background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)', color: 'var(--velvet-text)' }}
                     placeholder="e.g. Clark Kent"
                     autoFocus
                   />
@@ -268,12 +268,12 @@ export default function WaitingQueue({
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Intake Type</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--velvet-text-muted)' }}>Intake Type</label>
                     <select
                       value={patientType}
                       onChange={(e) => setPatientType(e.target.value as any)}
                       className="w-full p-2 rounded-lg border"
-                      style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
+                      style={{ background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)', color: 'var(--velvet-text)' }}
                     >
                       <option value="Walk-in">Walk-in</option>
                       <option value="Emergency">Emergency</option>
@@ -282,12 +282,12 @@ export default function WaitingQueue({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Pain / Urgency</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--velvet-text-muted)' }}>Pain / Urgency</label>
                     <select
                       value={urgency}
                       onChange={(e) => setUrgency(e.target.value as any)}
                       className="w-full p-2 rounded-lg border"
-                      style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
+                      style={{ background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)', color: 'var(--velvet-text)' }}
                     >
                       <option value="Low">Low (No pain)</option>
                       <option value="Medium">Medium (Discomfort)</option>
@@ -298,12 +298,12 @@ export default function WaitingQueue({
                 </div>
 
                 <div>
-                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Preferred Operator</label>
+                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--velvet-text-muted)' }}>Preferred Operator</label>
                   <select
                     value={doctorId}
                     onChange={(e) => setDoctorId(e.target.value)}
                     className="w-full p-2 rounded-lg border font-mono"
-                    style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', color: 'var(--text)' }}
+                    style={{ background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)', color: 'var(--velvet-text)' }}
                   >
                     {MOCK_DOCTORS.map(d => (
                       <option key={d.id} value={d.id}>{d.name} ({d.specialty})</option>
@@ -312,7 +312,7 @@ export default function WaitingQueue({
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 mt-6 pt-3 border-t" style={{ borderColor: 'var(--border)' }}>
+              <div className="flex justify-end gap-2 mt-6 pt-3 border-t" style={{ borderColor: 'var(--velvet-border)' }}>
                 <button
                   type="button"
                   onClick={() => setShowAddForm(false)}

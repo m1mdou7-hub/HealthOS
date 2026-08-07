@@ -365,8 +365,8 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
                   />
                   <div className="p-6 card-gradient rounded-3xl text-start space-y-2">
                     <h3 className="eyebrow">{t('demographics')}</h3>
-                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('chiefComplaint')}: <strong style={{ color: 'var(--text)' }}>{activePatient.summary}</strong></p>
-                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('primaryInsurer')}: <strong style={{ color: 'var(--text)' }}>{activePatient.allergyStatus}</strong></p>
+                    <p className="text-xs" style={{ color: 'var(--velvet-text-muted)' }}>{t('chiefComplaint')}: <strong style={{ color: 'var(--velvet-text)' }}>{activePatient.summary}</strong></p>
+                    <p className="text-xs" style={{ color: 'var(--velvet-text-muted)' }}>{t('primaryInsurer')}: <strong style={{ color: 'var(--velvet-text)' }}>{activePatient.allergyStatus}</strong></p>
                   </div>
                 </div>
               )}

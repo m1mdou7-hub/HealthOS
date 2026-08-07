@@ -55,7 +55,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
   const [branchName, setBranchName] = useState('');
   const [timezone, setTimezone] = useState('riyadh');
   const [language, setLanguage] = useState('arabic');
-  const [seats, setSeats] = useState('4–12 seats');
+  const [seats, setSeats] = useState('4â€“12 seats');
   const [branches, setBranches] = useState('1 location');
   const [finished, setFinished] = useState(false);
 
@@ -150,7 +150,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
           className="card-gradient rounded-3xl overflow-hidden relative"
         >
           {/* Ambient glow */}
-          <div className="absolute -top-24 -end-24 w-72 h-72 rounded-full blur-[100px] pointer-events-none" style={{ background: 'var(--accent-glow2)' }} />
+          <div className="absolute -top-24 -end-24 w-72 h-72 rounded-full blur-[100px] pointer-events-none" style={{ background: 'var(--velvet-accent-glow2)' }} />
 
           {finished ? (
             <div className="relative p-8 sm:p-12 text-center space-y-5">
@@ -172,11 +172,11 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
             </div>
           ) : (
             <div className="relative p-6 sm:p-10">
-              {/* STEP 0 — PRACTICE TYPE */}
+              {/* STEP 0 â€” PRACTICE TYPE */}
               {step === 0 && (
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                       <Sparkles className="w-6 h-6" />
                     </div>
                     <div>
@@ -235,11 +235,11 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                 </div>
               )}
 
-              {/* STEP 1 — ORG DETAILS */}
+              {/* STEP 1 â€” ORG DETAILS */}
               {step === 1 && (
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                       <Building2 className="w-6 h-6" />
                     </div>
                     <div>
@@ -309,11 +309,11 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                 </div>
               )}
 
-              {/* STEP 2 — REVIEW */}
+              {/* STEP 2 â€” REVIEW */}
               {step === 2 && practice && (
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                       <ShieldCheck className="w-6 h-6" />
                     </div>
                     <div>
@@ -331,7 +331,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                         </div>
                         <div>
                           <h4 className="text-sm font-bold text-white">{practice.name}</h4>
-                          <p className="text-xs text-zinc-500">{practice.sizeLabel} · {practice.branchRange}</p>
+                          <p className="text-xs text-zinc-500">{practice.sizeLabel} آ· {practice.branchRange}</p>
                         </div>
                       </div>
                     </div>
@@ -339,7 +339,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                     <div className="p-4 card-elevated rounded-2xl space-y-2.5">
                       <span className="text-2xs font-bold text-zinc-500 uppercase tracking-widest">{t('orgName')}</span>
                       <h4 className="text-sm font-bold text-white truncate">{orgName.trim() || 'HealthOS Dental Group'}</h4>
-                      <p className="text-xs text-zinc-500 truncate">{branchName.trim() || 'Main Campus'} · {t(`timezones.${timezone}`)}</p>
+                      <p className="text-xs text-zinc-500 truncate">{branchName.trim() || 'Main Campus'} آ· {t(`timezones.${timezone}`)}</p>
                     </div>
                   </div>
 

@@ -105,7 +105,7 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
       {/* Right Column: Workflow Controls and Status Timeline (Col span 8) */}
       <div className="md:col-span-8">
         {!activeReferral ? (
-          <div className="p-8 card-elevated rounded-3xl text-center text-xs" style={{ color: 'var(--text-muted)' }}>
+          <div className="p-8 card-elevated rounded-3xl text-center text-xs" style={{ color: 'var(--velvet-text-muted)' }}>
             Select a referral letter from the inbox to process.
           </div>
         ) : (
@@ -128,7 +128,7 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
             </div>
 
             {/* Referral description mock copy */}
-            <div className="p-4 card-elevated rounded-2xl text-xs leading-relaxed font-sans" style={{ color: 'var(--text-sub)' }}>
+            <div className="p-4 card-elevated rounded-2xl text-xs leading-relaxed font-sans" style={{ color: 'var(--velvet-text-sub)' }}>
               <p className="font-bold text-white mb-2">CLINICAL DIRECTIVE & DIAGNOSIS OVERVIEW</p>
               <p>Referred for evaluation of localized bone volume deficiencies in the posterior maxilla. Recommend sinus floor elevation (osteotome prep) and bone graft augmentation before scheduling full arch zirconia bridge delivery.</p>
               <p className="mt-2 font-mono text-2xs text-zinc-500">Referring Physician: Specialist Diagnostics Unit | Authenticator: REFERRAL_OK_AUTH_9918</p>
@@ -192,7 +192,7 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
                   <div key={idx} className="relative text-xs">
                     <span className="absolute -left-[19px] top-1.5 w-2 h-2 rounded-full bg-zinc-800 border-2 border-zinc-950" />
                     <div className="flex items-center justify-between text-2xs font-mono text-zinc-500">
-                      <span>{item.date} • Action by {item.actor}</span>
+                      <span>{item.date} â€¢ Action by {item.actor}</span>
                       <span className="text-2xs px-1.5 py-0.2 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-bold uppercase">{item.action}</span>
                     </div>
                     <p className="text-zinc-300 font-medium mt-1 leading-normal">{item.note}</p>

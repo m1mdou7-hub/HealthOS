@@ -50,7 +50,7 @@ export default function AnalyticsPanel({ activePatient }: AnalyticsPanelProps) {
       </div>
 
       {/* HIPAA compliance statement */}
-      <div className="p-4 card-elevated rounded-2xl flex items-center gap-3 text-xs" style={{ color: 'var(--text-muted)' }}>
+      <div className="p-4 card-elevated rounded-2xl flex items-center gap-3 text-xs" style={{ color: 'var(--velvet-text-muted)' }}>
         <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
         <p className="leading-relaxed">
           EHR Diagnostic Analytics synchronized securely with HIPAA-compliant hospital clouds. Longitudinal statistics are compiled utilizing virtual PACS articulators and real-time intraoral scan registries.

@@ -179,37 +179,37 @@ export default function LaboratoryWorkspace() {
         case 'material':
           setAiOutputLog(
             `**AI STRENGTH & ESTHETIC DIAGNOSIS**\n` +
-            `• Case Context: ${activeCase.restorationType} restoration\n` +
-            `• Recommended Material: ${
+            `â€¢ Case Context: ${activeCase.restorationType} restoration\n` +
+            `â€¢ Recommended Material: ${
               activeCase.priority === 'Urgent' ? 'Lithium Disilicate Glass Ceramic (IPS e.max CAD)' : 'High-translucency Zirconia multi-layer (Katana HTML)'
             }\n` +
-            `• Critical Force Analysis: Posterior zones require monolithic strength; anterior veneers benefit from handcrafted incisal cut-backs.`
+            `â€¢ Critical Force Analysis: Posterior zones require monolithic strength; anterior veneers benefit from handcrafted incisal cut-backs.`
           );
           break;
         case 'shade':
           setAiOutputLog(
             `**AI SHADE SELECTION TRANSITION MATRIX**\n` +
-            `• Target Shade requested: ${activeCase.shade.vitaShade}\n` +
-            `• Custom Shade Blend: ${activeCase.shade.customShade || 'Standard glaze'}\n` +
-            `• Masking ratio calculation: Prep color values suggest high translucency block. Translucent glaze layer recommended to match halo effects.`
+            `â€¢ Target Shade requested: ${activeCase.shade.vitaShade}\n` +
+            `â€¢ Custom Shade Blend: ${activeCase.shade.customShade || 'Standard glaze'}\n` +
+            `â€¢ Masking ratio calculation: Prep color values suggest high translucency block. Translucent glaze layer recommended to match halo effects.`
           );
           break;
         case 'manufacturing':
           setAiOutputLog(
             `**AI MANUFACTURING ROUTING**\n` +
-            `• Recommended Method: 5-Axis Wet Diamond Milling\n` +
-            `• Sintering parameters: Rapid short-cycle sintering program at 1450°C. Duration: 3.5 hours.\n` +
-            `• alternative Routing: Formlabs castable sacrificial resin printing for ceramic pressing.`
+            `â€¢ Recommended Method: 5-Axis Wet Diamond Milling\n` +
+            `â€¢ Sintering parameters: Rapid short-cycle sintering program at 1450آ°C. Duration: 3.5 hours.\n` +
+            `â€¢ alternative Routing: Formlabs castable sacrificial resin printing for ceramic pressing.`
           );
           break;
         case 'time':
           setAiOutputLog(
             `**AI OPTIMAL PRODUCTION TIME ESTIMATION**\n` +
-            `• CAD Design: 35 minutes\n` +
-            `• Wet milling / Carving: 18 minutes\n` +
-            `• Sintering & Crystallization: 4 hours\n` +
-            `• Hand-finishing & Glaze bake: 45 minutes\n` +
-            `• Projected Delivery Window: Ready in approximately 5.5 hours.`
+            `â€¢ CAD Design: 35 minutes\n` +
+            `â€¢ Wet milling / Carving: 18 minutes\n` +
+            `â€¢ Sintering & Crystallization: 4 hours\n` +
+            `â€¢ Hand-finishing & Glaze bake: 45 minutes\n` +
+            `â€¢ Projected Delivery Window: Ready in approximately 5.5 hours.`
           );
           break;
         case 'files':
@@ -220,16 +220,16 @@ export default function LaboratoryWorkspace() {
 
           let msg = `**AI INTEGRITY SCAN OF DIGITAL RAW FILES**\n`;
           let clean = true;
-          if (!hasPrep) { msg += `❌ ALERT: Prep arch scan mesh not found.\n`; clean = false; }
-          if (!hasAntagonist) { msg += `❌ ALERT: Antagonist scan mesh not found.\n`; clean = false; }
-          if (!hasBite) { msg += `❌ ALERT: Buccal bite alignment scan not found.\n`; clean = false; }
+          if (!hasPrep) { msg += `â‌Œ ALERT: Prep arch scan mesh not found.\n`; clean = false; }
+          if (!hasAntagonist) { msg += `â‌Œ ALERT: Antagonist scan mesh not found.\n`; clean = false; }
+          if (!hasBite) { msg += `â‌Œ ALERT: Buccal bite alignment scan not found.\n`; clean = false; }
 
           if (clean) {
-            msg += `✓ All primary STL CAD/CAM files verified (Prep jaw, antagonist, and bite).\n` +
-                   `✓ DICOM skull volume aligned with 3D dental arches.\n` +
-                   `✓ Checksums verified. MD5 matches original clinical upload. No anomalies.`;
+            msg += `âœ“ All primary STL CAD/CAM files verified (Prep jaw, antagonist, and bite).\n` +
+                   `âœ“ DICOM skull volume aligned with 3D dental arches.\n` +
+                   `âœ“ Checksums verified. MD5 matches original clinical upload. No anomalies.`;
           } else {
-            msg += `• Awaiting digital delivery from clinic before milling toolpath computation can commence.`;
+            msg += `â€¢ Awaiting digital delivery from clinic before milling toolpath computation can commence.`;
           }
           setAiOutputLog(msg);
           break;
@@ -240,7 +240,7 @@ export default function LaboratoryWorkspace() {
             `  <clinician>${activeCase.doctorName}</clinician>\n` +
             `  <material>${activeCase.restorationType}</material>\n` +
             `  <instructions>${activeCase.internalNotes}</instructions>\n` +
-            `  <cement_gap>15μm</cement_gap>\n` +
+            `  <cement_gap>15خ¼m</cement_gap>\n` +
             `  <margin_offset>0.2mm</margin_offset>\n` +
             `</exocad_workorder>`
           );
@@ -281,7 +281,7 @@ export default function LaboratoryWorkspace() {
       {/* CAD/CAM HEADER BRAND STRIP */}
       <div className="bg-zinc-900/85 border-b border-zinc-900 px-6 py-3.5 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl border" style={{ background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)', color: 'var(--accent)' }}>
+          <div className="p-2 rounded-xl border" style={{ background: 'var(--velvet-accent-glow2)', borderColor: 'var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
             <Cpu className="w-5 h-5 animate-pulse" />
           </div>
           <div className="text-start">
@@ -292,7 +292,7 @@ export default function LaboratoryWorkspace() {
               </span>
             </div>
             <p className="text-2xs text-zinc-500 font-mono">
-              Synchronized Dental Lab Operating System • Connected to Exocad & 3Shape Servers
+              Synchronized Dental Lab Operating System â€¢ Connected to Exocad & 3Shape Servers
             </p>
           </div>
         </div>
@@ -509,7 +509,7 @@ export default function LaboratoryWorkspace() {
                           className={`p-4 card-elevated card-hover flex flex-col justify-between h-[175px] cursor-pointer transition-all text-start ${
                             selectedCaseId === c.id ? 'ring-2 ring-emerald-500/20' : ''
                           }`}
-                          style={selectedCaseId === c.id ? { borderColor: 'var(--success)' } : undefined}
+                          style={selectedCaseId === c.id ? { borderColor: 'var(--velvet-success)' } : undefined}
                         >
                           <div className="flex justify-between items-start">
                             <span className="text-2xs font-bold font-mono bg-zinc-950 border border-zinc-800 text-emerald-400 px-1.5 py-0.5 rounded-md">
@@ -623,7 +623,7 @@ export default function LaboratoryWorkspace() {
                       <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
                         {activeCase.doctorName}&apos;s Case Workstation
                       </span>
-                      <span>ROT: {cadRotation}° ELEV: {cadElevation}°</span>
+                      <span>ROT: {cadRotation}آ° ELEV: {cadElevation}آ°</span>
                     </div>
 
                     {/* Viewport mesh simulator */}
@@ -668,7 +668,7 @@ export default function LaboratoryWorkspace() {
                       {showMinimumThicknessCheck && (
                         <div className="absolute bottom-4 end-4 card-elevated p-3 space-y-1 font-mono text-2xs z-10 text-start">
                           <p className="font-bold text-zinc-400 uppercase">Caliper Telemetry:</p>
-                          <p className="text-white">Margin Width: <span className="text-emerald-400 font-bold">11.2 μm</span></p>
+                          <p className="text-white">Margin Width: <span className="text-emerald-400 font-bold">11.2 خ¼m</span></p>
                           <p className="text-white">Prep shoulder: <span className="text-emerald-400 font-bold">1.25 mm</span></p>
                           <p className="text-white">Restoration: <span className="text-emerald-400 font-bold">{measuredThickness}</span></p>
                         </div>
@@ -917,11 +917,11 @@ export default function LaboratoryWorkspace() {
                           </pre>
                         ) : (
                           <div className="flex flex-col items-center justify-center h-[140px] font-mono text-xs text-center p-6 space-y-3">
-                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', boxShadow: '0 0 0 8px var(--accent-glow2)' }}>
+                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)', boxShadow: '0 0 0 8px var(--velvet-accent-glow2)' }}>
                               <Sparkles className="w-6 h-6" />
                             </div>
-                            <p className="font-bold" style={{ color: 'var(--text)' }}>Awaiting AI Assistant Query</p>
-                            <p className="text-xs max-w-sm" style={{ color: 'var(--text-muted)' }}>Select any telemetry command above to run a clinical diagnostic evaluation of active case {activeCase.id}.</p>
+                            <p className="font-bold" style={{ color: 'var(--velvet-text)' }}>Awaiting AI Assistant Query</p>
+                            <p className="text-xs max-w-sm" style={{ color: 'var(--velvet-text-muted)' }}>Select any telemetry command above to run a clinical diagnostic evaluation of active case {activeCase.id}.</p>
                           </div>
                         )}
                       </div>

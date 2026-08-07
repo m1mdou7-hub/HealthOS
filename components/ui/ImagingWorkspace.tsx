@@ -171,7 +171,7 @@ const INITIAL_ANNOTATIONS: CBCTAnnotation[] = [
   { id: 'ANN-1', sliceNum: 45, label: 'Bone thickness at #11 extraction socket', type: 'Distance', value: '7.2 mm' },
   { id: 'ANN-2', sliceNum: 45, label: 'Interdental distance (#12 to #21)', type: 'Distance', value: '8.1 mm' },
   { id: 'ANN-3', sliceNum: 60, label: 'Cortical bone density profile', type: 'Density', value: '950 HU' },
-  { id: 'ANN-4', sliceNum: 30, label: 'Nasal floor proximity angle', type: 'Angle', value: '14.2°' }
+  { id: 'ANN-4', sliceNum: 30, label: 'Nasal floor proximity angle', type: 'Angle', value: '14.2آ°' }
 ];
 
 // --- VERSION LISTING FOR STL ---
@@ -326,7 +326,7 @@ export default function ImagingWorkspace() {
         sliceNum: activeSlice,
         label: `User Angle Measurement Slice #${activeSlice}`,
         type: 'Angle',
-        value: `${angleVal}°`
+        value: `${angleVal}آ°`
       };
       setCbctAnnotations([newAnn, ...cbctAnnotations]);
       setSelectedAnnotationId(newAnn.id);
@@ -349,35 +349,35 @@ export default function ImagingWorkspace() {
     if (type === 'findings') {
       setAiAnalysisLog(
         `**AI RADIOGRAPHIC FINDINGS Study ST-9021**\n` +
-        `• Maxillary Right Lateral Incisor Site (#11): Alveolar bone height of 11.5mm, cortical width 7.2mm.\n` +
-        `• Apical pathology analysis: Zero periapical radiolucency around teeth #12 and #21.\n` +
-        `• Pathology alert: Incipient enamel-dentin lesion verified on Distal #14. Recommended Class I composite.`
+        `â€¢ Maxillary Right Lateral Incisor Site (#11): Alveolar bone height of 11.5mm, cortical width 7.2mm.\n` +
+        `â€¢ Apical pathology analysis: Zero periapical radiolucency around teeth #12 and #21.\n` +
+        `â€¢ Pathology alert: Incipient enamel-dentin lesion verified on Distal #14. Recommended Class I composite.`
       );
     } else if (type === 'implant') {
       setAiAnalysisLog(
         `**AI IMPLANT PLANNING FEASIBILITY SUMMARY (#11 Zone)**\n` +
-        `• Primary Recommendation: NobelActive 4.3mm diameter x 11.5mm length titanium implant fixture.\n` +
-        `• Prosthetic outcome: Optimal 3.2mm screw access channel alignment with maximum bone anchorage.\n` +
-        `• Sinus Clearance: 6.4mm clear path to adjacent Maxillary Sinus floor.`
+        `â€¢ Primary Recommendation: NobelActive 4.3mm diameter x 11.5mm length titanium implant fixture.\n` +
+        `â€¢ Prosthetic outcome: Optimal 3.2mm screw access channel alignment with maximum bone anchorage.\n` +
+        `â€¢ Sinus Clearance: 6.4mm clear path to adjacent Maxillary Sinus floor.`
       );
     } else if (type === 'density') {
       setAiAnalysisLog(
         `**AI BONE DENSITY ANALYSIS (Hounsfield Profile)**\n` +
-        `• Average density in osteotomy zone #11: 890 HU (Type D2 bone - Excellent primary stability profile).\n` +
-        `• Cortical shell thickness: 1.8mm at crest, 2.1mm buccal aspect.`
+        `â€¢ Average density in osteotomy zone #11: 890 HU (Type D2 bone - Excellent primary stability profile).\n` +
+        `â€¢ Cortical shell thickness: 1.8mm at crest, 2.1mm buccal aspect.`
       );
     } else if (type === 'smile') {
       setAiAnalysisLog(
         `**AI DIGITAL SMILE PROPORTION REPORT**\n` +
-        `• Maxillary Central Incisor Proportion: 81% width-to-length ratio (Ideal standard: 80%).\n` +
-        `• Golden Ratio match score: 94.2% structural compliance.\n` +
-        `• Incisal curvature alignment: Follows lower lip margin with less than 0.5mm asymmetrical variance.`
+        `â€¢ Maxillary Central Incisor Proportion: 81% width-to-length ratio (Ideal standard: 80%).\n` +
+        `â€¢ Golden Ratio match score: 94.2% structural compliance.\n` +
+        `â€¢ Incisal curvature alignment: Follows lower lip margin with less than 0.5mm asymmetrical variance.`
       );
     } else if (type === 'margins') {
       setAiAnalysisLog(
         `**AI MARGIN STABILITY & PREPARATION RUNS**\n` +
-        `• Preparation boundary scan tooth #11: Sharpness index 98.2%.\n` +
-        `• No undercut zones or digital overlap anomalies detected. Seamless custom abutment mating verified.`
+        `â€¢ Preparation boundary scan tooth #11: Sharpness index 98.2%.\n` +
+        `â€¢ No undercut zones or digital overlap anomalies detected. Seamless custom abutment mating verified.`
       );
     }
   };
@@ -397,7 +397,7 @@ export default function ImagingWorkspace() {
       {/* PACS TITLE / META STRIP */}
       <div className="bg-zinc-900/80 border-b border-zinc-900 px-6 py-3 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
-          <div className="p-1.5 rounded-xl border" style={{ background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)' }}>
+          <div className="p-1.5 rounded-xl border" style={{ background: 'var(--velvet-accent-glow2)', borderColor: 'var(--velvet-border-strong)' }}>
             <Compass className="w-5 h-5 text-emerald-400 animate-spin-slow" />
           </div>
           <div>
@@ -405,7 +405,7 @@ export default function ImagingWorkspace() {
               <h2 className="text-xs font-black uppercase tracking-wider text-gradient">HealthOS Imaging Studio Pro</h2>
               <span className="bg-zinc-800 text-2xs font-mono font-bold text-zinc-400 px-1.5 py-0.5 rounded">V2.4.9-PACS</span>
             </div>
-            <p className="text-2xs text-zinc-500 font-mono">Amelia Vance • EHR-2026-9482 • HIPAA-Encrypted Client Session</p>
+            <p className="text-2xs text-zinc-500 font-mono">Amelia Vance â€¢ EHR-2026-9482 â€¢ HIPAA-Encrypted Client Session</p>
           </div>
         </div>
 
@@ -517,7 +517,7 @@ export default function ImagingWorkspace() {
                       }}
                       className={`text-xs ${study.fav ? 'text-amber-400' : 'text-zinc-600 hover:text-zinc-400'}`}
                     >
-                      ★
+                      âک…
                     </button>
                   </div>
                 </div>
@@ -527,7 +527,7 @@ export default function ImagingWorkspace() {
                     {study.title}
                   </h4>
                   <p className="text-2xs text-zinc-500 font-mono">
-                    Device: {study.device} • {study.fileSize}
+                    Device: {study.device} â€¢ {study.fileSize}
                   </p>
                 </div>
 
@@ -538,7 +538,7 @@ export default function ImagingWorkspace() {
             ))}
 
             {filteredStudies.length === 0 && (
-              <p className="text-center text-xs italic py-10 font-mono" style={{ color: 'var(--text-muted)' }}>No matching PACS studies found.</p>
+              <p className="text-center text-xs italic py-10 font-mono" style={{ color: 'var(--velvet-text-muted)' }}>No matching PACS studies found.</p>
             )}
           </div>
 
@@ -821,7 +821,7 @@ export default function ImagingWorkspace() {
 
                       <div className="text-2xs text-zinc-500 font-mono flex justify-between z-10">
                         <span>L/R Orientation</span>
-                        <span>90 kVp • 10.0 mA</span>
+                        <span>90 kVp â€¢ 10.0 mA</span>
                       </div>
                     </div>
 
@@ -952,7 +952,7 @@ export default function ImagingWorkspace() {
                                 className={`p-2 card-elevated text-xs font-mono cursor-pointer transition-all ${
                                   isSel ? 'ring-1 ring-emerald-500/30' : ''
                                 }`}
-                                style={isSel ? { borderColor: 'var(--success)' } : undefined}
+                                style={isSel ? { borderColor: 'var(--velvet-success)' } : undefined}
                               >
                                 <div className="flex justify-between font-bold text-2xs mb-0.5">
                                   <span className="text-zinc-400 truncate w-[130px]">{ann.label}</span>
@@ -994,7 +994,7 @@ export default function ImagingWorkspace() {
                       <span className="badge">
                         EXOCAD CAD/CAM VIEWPORT
                       </span>
-                      <span>MESH ORIENTATION X: {meshRotateX}° Y: {meshRotateY}°</span>
+                      <span>MESH ORIENTATION X: {meshRotateX}آ° Y: {meshRotateY}آ°</span>
                     </div>
 
                     {/* Layer selection tabs */}
@@ -1476,7 +1476,7 @@ export default function ImagingWorkspace() {
                             {aiAnalysisLog}
                           </div>
                         ) : (
-                          <p className="text-2xs italic font-mono text-center pt-8" style={{ color: 'var(--text-muted)' }}>Select a neural operation above to begin compilation.</p>
+                          <p className="text-2xs italic font-mono text-center pt-8" style={{ color: 'var(--velvet-text-muted)' }}>Select a neural operation above to begin compilation.</p>
                         )}
                       </div>
 
@@ -1525,7 +1525,7 @@ export default function ImagingWorkspace() {
                                   {study.type}
                                 </span>
                               </div>
-                              <span className="text-zinc-500 font-bold">{study.date} • {study.id}</span>
+                              <span className="text-zinc-500 font-bold">{study.date} â€¢ {study.id}</span>
                             </div>
 
                             <p className="text-xs text-zinc-400 font-mono italic">
@@ -1592,7 +1592,7 @@ export default function ImagingWorkspace() {
                       className={`p-3 card-elevated card-hover text-start space-y-1 transition-all cursor-pointer ${
                         exportFormat === form.val ? 'ring-1 ring-emerald-500/30' : ''
                       }`}
-                      style={exportFormat === form.val ? { borderColor: 'var(--success)' } : undefined}
+                      style={exportFormat === form.val ? { borderColor: 'var(--velvet-success)' } : undefined}
                     >
                       <span className="text-xs font-bold font-mono block text-white">{form.label}</span>
                       <span className="text-2xs text-zinc-500 font-mono block leading-tight">{form.desc}</span>

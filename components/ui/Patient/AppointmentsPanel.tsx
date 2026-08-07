@@ -151,10 +151,10 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
           <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading appointments...</div>
         ) : appointments.length === 0 ? (
           <div className="py-8 card-elevated rounded-3xl text-center">
-            <div className="mx-auto w-10 h-10 rounded-2xl flex items-center justify-center mb-3" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+            <div className="mx-auto w-10 h-10 rounded-2xl flex items-center justify-center mb-3" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)' }}>
               <CalendarIcon className="w-5 h-5" />
             </div>
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs" style={{ color: 'var(--velvet-text-muted)' }}>
               No active appointments registered. Use the toolbar to schedule a visit.
             </p>
           </div>
@@ -163,7 +163,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
             <div key={appt.id} className="p-4 card-elevated rounded-2xl flex flex-col sm:flex-row justify-between gap-4">
               <div className="space-y-1.5 text-start">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs font-mono font-bold text-zinc-500">{appt.date} • {appt.startTime} ({appt.duration} mins)</span>
+                  <span className="text-xs font-mono font-bold text-zinc-500">{appt.date} â€¢ {appt.startTime} ({appt.duration} mins)</span>
                   <span className={`badge ${
                     appt.status === 'Confirmed' ? 'badge-success' :
                     appt.status === 'In-Progress' ? 'badge-info' :

@@ -276,10 +276,10 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
           <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading financial records...</div>
         ) : invoices.length === 0 ? (
           <div className="py-8 card-elevated rounded-3xl text-center">
-            <div className="mx-auto w-10 h-10 rounded-2xl flex items-center justify-center mb-3" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+            <div className="mx-auto w-10 h-10 rounded-2xl flex items-center justify-center mb-3" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)' }}>
               <DollarSign className="w-5 h-5" />
             </div>
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs" style={{ color: 'var(--velvet-text-muted)' }}>
               {t('no_invoices_logged')}
             </p>
           </div>
@@ -296,7 +296,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                   <div className="flex flex-wrap justify-between items-start gap-2 border-b border-zinc-900/60 pb-3">
                     <div className="text-start">
                       <span className="text-2xs font-mono text-zinc-500">{inv.invoiceNumber}</span>
-                      <h4 className="text-xs font-bold text-white mt-0.5">{inv.clinicName} • Due {inv.dueDate}</h4>
+                      <h4 className="text-xs font-bold text-white mt-0.5">{inv.clinicName} â€¢ Due {inv.dueDate}</h4>
                     </div>
                     <div className="flex items-center gap-2">
                       <button
@@ -621,7 +621,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                     const amount = (outstandingBalance / installmentMonths).toFixed(2);
                     return (
                       <div key={idx} className="flex justify-between items-center p-2 rounded-lg bg-zinc-900/60 border border-zinc-900 text-xs font-mono">
-                        <span className="text-zinc-400">Installment #{idx + 1} • Due {due}</span>
+                        <span className="text-zinc-400">Installment #{idx + 1} â€¢ Due {due}</span>
                         <span className="text-white font-bold">${amount}</span>
                       </div>
                     );
@@ -652,7 +652,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                   <Building2 className="w-6 h-6 text-emerald-600" />
                   <h2 className="text-lg font-bold text-zinc-900">{selectedInvoiceForPrint.clinicName}</h2>
                 </div>
-                <p className="text-xs text-zinc-500 mt-1">HealthOS Official Dental & Medical Center • Tax ID: 300921893</p>
+                <p className="text-xs text-zinc-500 mt-1">HealthOS Official Dental & Medical Center â€¢ Tax ID: 300921893</p>
               </div>
               <div className="text-end">
                 <span className="px-3 py-1 bg-emerald-100 text-emerald-800 font-mono text-xs font-bold rounded-full">
@@ -667,7 +667,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               <div>
                 <span className="text-zinc-400 uppercase text-2xs font-bold block">Patient Details</span>
                 <span className="font-bold text-zinc-900 block text-sm">{activePatient.name}</span>
-                <span className="text-zinc-600 block">ID: {activePatient.id} • Tel: {activePatient.phone || '+966 50 123 4567'}</span>
+                <span className="text-zinc-600 block">ID: {activePatient.id} â€¢ Tel: {activePatient.phone || '+966 50 123 4567'}</span>
               </div>
               <div className="text-end">
                 <span className="text-zinc-400 uppercase text-2xs font-bold block">Attending Clinician & Date</span>

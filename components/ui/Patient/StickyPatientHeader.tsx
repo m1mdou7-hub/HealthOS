@@ -27,7 +27,7 @@ export default function StickyPatientHeader({
   return (
     <div
       className="sticky top-0 z-40 glass rounded-none border-0 border-b px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-3 header-shimmer"
-      style={{ borderBottom: '1px solid var(--border)' }}
+      style={{ borderBottom: '1px solid var(--velvet-border)' }}
     >
       {/* Left Back Arrow and Core Demographics */}
       <div className="flex items-center gap-3 shrink-0">
@@ -50,9 +50,9 @@ export default function StickyPatientHeader({
           </div>
           <div className="flex items-center gap-2 text-2xs text-zinc-500 mt-0.5">
             <span>{activePatient.age} Yrs</span>
-            <span>•</span>
+            <span>â€¢</span>
             <span>{activePatient.gender}</span>
-            <span>•</span>
+            <span>â€¢</span>
             <span>{activePatient.bloodGroup || 'O+'}</span>
           </div>
         </div>

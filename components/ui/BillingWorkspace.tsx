@@ -301,7 +301,7 @@ const INITIAL_CLAIMS: InsuranceClaim[] = [
     timeline: [
       { title: 'Claim Drafted', date: '2026-07-10 14:12', description: 'Generated from patient chart.' },
       { title: 'Claim Submitted', date: '2026-07-11 09:00', description: 'Transmitted via Clearinghouse API.' },
-      { title: 'Adjudication Completed', date: '2026-07-13 16:45', description: 'デルタデンタル Approved with zero reductions.' }
+      { title: 'Adjudication Completed', date: '2026-07-13 16:45', description: 'مƒ‡مƒ«م‚؟مƒ‡مƒ³م‚؟مƒ« Approved with zero reductions.' }
     ]
   },
   {
@@ -1066,12 +1066,12 @@ export default function BillingWorkspace({
         setAiReportText(
           `**HEALTHOS FINANCIAL DIAGNOSTIC**\n\n` +
           `**COLLECTIONS**\n` +
-          `• Total invoiced: **$${stats.totalInvoiced.toFixed(2)}**\n` +
-          `• Outstanding balance: **$${stats.outstandingBalance.toFixed(2)}**\n` +
-          `• Collection rate: **${collectionRate.toFixed(1)}%**\n\n` +
+          `â€¢ Total invoiced: **$${stats.totalInvoiced.toFixed(2)}**\n` +
+          `â€¢ Outstanding balance: **$${stats.outstandingBalance.toFixed(2)}**\n` +
+          `â€¢ Collection rate: **${collectionRate.toFixed(1)}%**\n\n` +
           `**FOLLOW-UP QUEUE**\n` +
-          `• Overdue invoices: **${overdueInvoices.length}**\n` +
-          `• Rejected insurance claims: **${rejectedClaims.length}**\n\n` +
+          `â€¢ Overdue invoices: **${overdueInvoices.length}**\n` +
+          `â€¢ Rejected insurance claims: **${rejectedClaims.length}**\n\n` +
           `This summary is calculated from the signed-in account's owner-isolated ledger.`
         );
         setAiAnalyzing(false);
@@ -1081,14 +1081,14 @@ export default function BillingWorkspace({
       setAiReportText(
         `**HEALTHOS FINANCIAL AI ENGINE - EXECUTIVE REPORT**\n\n` +
         `**1. REVENUE INSIGHTS & LEAKAGES:**\n` +
-        `• Average treatment plan acceptance stands at **78.4%**. However, implant procedure conversions show a 12% delay cycle due to out-of-pocket ticket size ($4,300+).\n` +
-        `• **Collection Rate Analysis**: Practice has a strong **96.8% collection rate**, primarily due to upfront co-pays and real-time eligibility checks.\n\n` +
+        `â€¢ Average treatment plan acceptance stands at **78.4%**. However, implant procedure conversions show a 12% delay cycle due to out-of-pocket ticket size ($4,300+).\n` +
+        `â€¢ **Collection Rate Analysis**: Practice has a strong **96.8% collection rate**, primarily due to upfront co-pays and real-time eligibility checks.\n\n` +
         `**2. PAYOR & INSURANCE CLAIMS METRICS:**\n` +
-        `• MetLife claims show a high return-to-provider (RTP) rate of 14% on procedure code **D4341 (Scaling & Planing)**. *Correction plan implemented*: Automating attachments of periodontal pocket depths and radiographic findings prior to EDI gateway transmission.\n` +
-        `• Cigna Dental adjudication is averaging **4.2 days**, down from 8.0, due to direct clearinghouse mapping.\n\n` +
+        `â€¢ MetLife claims show a high return-to-provider (RTP) rate of 14% on procedure code **D4341 (Scaling & Planing)**. *Correction plan implemented*: Automating attachments of periodontal pocket depths and radiographic findings prior to EDI gateway transmission.\n` +
+        `â€¢ Cigna Dental adjudication is averaging **4.2 days**, down from 8.0, due to direct clearinghouse mapping.\n\n` +
         `**3. RISK MITIGATION & ACTIONABLE PLAN:**\n` +
-        `• **Demo Patient (INV-DEMO-003)** holds an overdue balance. Suggesting an automated installment reminder.\n` +
-        `• **Recommend procedure pricing hike**: Zirconia Crown (D2740) currently sits 8% below local regional mean averages. Adjusting standard schedule by +$100 would generate an estimated **+$14,200.00** annually without patient churn.`
+        `â€¢ **Demo Patient (INV-DEMO-003)** holds an overdue balance. Suggesting an automated installment reminder.\n` +
+        `â€¢ **Recommend procedure pricing hike**: Zirconia Crown (D2740) currently sits 8% below local regional mean averages. Adjusting standard schedule by +$100 would generate an estimated **+$14,200.00** annually without patient churn.`
       );
       setAiAnalyzing(false);
     }, 1500);
@@ -1098,14 +1098,14 @@ export default function BillingWorkspace({
     <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans">
       {/* AMBIENT GLOW */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute -top-24 -start-24 w-72 h-72 rounded-full blur-[100px] float-y" style={{ background: 'var(--accent-glow2)' }} />
-        <div className="absolute bottom-0 -end-20 w-80 h-80 rounded-full blur-[100px] pulse-glow" style={{ background: 'var(--accent-glow2)' }} />
+        <div className="absolute -top-24 -start-24 w-72 h-72 rounded-full blur-[100px] float-y" style={{ background: 'var(--velvet-accent-glow2)' }} />
+        <div className="absolute bottom-0 -end-20 w-80 h-80 rounded-full blur-[100px] pulse-glow" style={{ background: 'var(--velvet-accent-glow2)' }} />
       </div>
 
       {/* HEADER BANNER */}
       <div className="card-gradient p-6 rounded-3xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative">
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-3xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+          <div className="p-3 rounded-3xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
             <CreditCard className="w-6 h-6" />
           </div>
           <div>
@@ -1116,7 +1116,7 @@ export default function BillingWorkspace({
               </span>
             </div>
             <p className="text-xs text-zinc-400 mt-1 font-sans">
-              {tBill('nodeId')} • {demoMode ? 'Demo gateways active' : 'Owner-isolated ledger active'}
+              {tBill('nodeId')} â€¢ {demoMode ? 'Demo gateways active' : 'Owner-isolated ledger active'}
             </p>
           </div>
         </div>
@@ -1177,7 +1177,7 @@ export default function BillingWorkspace({
       {/* TAB CONTENT PANELS */}
       <div className="space-y-6">
         {billingError && (
-          <div className="mb-4 flex items-center justify-between rounded-xl px-4 py-2 text-xs" style={{ background: 'color-mix(in srgb, var(--danger) 14%, transparent)', border: '1px solid color-mix(in srgb, var(--danger) 40%, transparent)', color: 'var(--danger)' }}>
+          <div className="mb-4 flex items-center justify-between rounded-xl px-4 py-2 text-xs" style={{ background: 'color-mix(in srgb, var(--velvet-error) 14%, transparent)', border: '1px solid color-mix(in srgb, var(--velvet-error) 40%, transparent)', color: 'var(--velvet-error)' }}>
             <span>{billingError}</span>
             <button
               type="button"
@@ -1198,11 +1198,11 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--border)' }}>
+                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="space-y-1">
                       <span className="eyebrow">Billing Operations</span>
                       <h3 className="section-title text-lg text-gradient">Billing & Revenue Operations</h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Consolidated overview of practice health, active insurance payouts, and payment collection loops.</p>
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Consolidated overview of practice health, active insurance payouts, and payment collection loops.</p>
                     </div>
                     <span className="badge badge-success text-xs font-mono px-3 py-1 rounded-xl">
                       Real-time API Synchronized
@@ -1300,7 +1300,7 @@ export default function BillingWorkspace({
                           onClick={() => { setActiveTab('Invoices') }}
                           className="w-full text-start p-2.5 bg-zinc-950 border border-zinc-850 hover:border-emerald-500 rounded-xl flex items-center gap-3 transition-all text-xs font-bold font-mono cursor-pointer hover:-translate-y-0.5"
                         >
-                          <div className="p-1.5 rounded-lg" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+                          <div className="p-1.5 rounded-lg" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)' }}>
                             <Plus className="w-4 h-4" />
                           </div>
                           <div>
@@ -1313,7 +1313,7 @@ export default function BillingWorkspace({
                           onClick={() => { setActiveTab('Payments') }}
                           className="w-full text-start p-2.5 bg-zinc-950 border border-zinc-850 hover:border-emerald-500 rounded-xl flex items-center gap-3 transition-all text-xs font-bold font-mono cursor-pointer hover:-translate-y-0.5"
                         >
-                          <div className="p-1.5 rounded-lg" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+                          <div className="p-1.5 rounded-lg" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)' }}>
                             <DollarSign className="w-4 h-4" />
                           </div>
                           <div>
@@ -1326,7 +1326,7 @@ export default function BillingWorkspace({
                           onClick={() => { setActiveTab('AIAssistant') }}
                           className="w-full text-start p-2.5 bg-zinc-950 border border-zinc-850 hover:border-emerald-500 rounded-xl flex items-center gap-3 transition-all text-xs font-bold font-mono cursor-pointer hover:-translate-y-0.5"
                         >
-                          <div className="p-1.5 rounded-lg" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+                          <div className="p-1.5 rounded-lg" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)' }}>
                             <Sparkles className="w-4 h-4" />
                           </div>
                           <div>
@@ -1356,11 +1356,11 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-4"
                 >
-                  <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--border)' }}>
+                  <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="space-y-1">
                       <span className="eyebrow">Ledger</span>
                       <h3 className="section-title text-lg text-gradient">Active Accounts Ledger</h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Manage and filter enterprise wide practice invoices and eligibility reports.</p>
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Manage and filter enterprise wide practice invoices and eligibility reports.</p>
                     </div>
                     <button
                       onClick={handleIssueInvoice}
@@ -1499,15 +1499,15 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-4"
                 >
-                  <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--border)' }}>
+                  <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xs font-mono font-bold px-2 py-1 rounded-lg" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                      <span className="text-2xs font-mono font-bold px-2 py-1 rounded-lg" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                         {selectedInvoice.invoiceNumber}
                       </span>
                       <div className="space-y-1">
                         <span className="eyebrow">Focus Workspace</span>
                         <h3 className="section-title text-lg text-gradient">Active Billing Workspace</h3>
-                        <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Detailed procedure code breakdown, eligibility logs, and copay calculations.</p>
+                        <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Detailed procedure code breakdown, eligibility logs, and copay calculations.</p>
                       </div>
                     </div>
 
@@ -1668,11 +1668,11 @@ export default function BillingWorkspace({
               {activeTab === 'InvoiceDetails' && !selectedInvoice && (
                 <WorkspaceTabPanel className="flex min-h-[320px] items-center justify-center">
                   <div className="text-center">
-                    <div className="mx-auto mb-3 w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+                    <div className="mx-auto mb-3 w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)' }}>
                       <FileText className="h-6 w-6" />
                     </div>
                     <h3 className="text-sm font-bold text-gradient">No invoice selected</h3>
-                    <p className="mt-1 text-xs" style={{ color: 'var(--text-muted)' }}>Create an invoice before opening the invoice workspace.</p>
+                    <p className="mt-1 text-xs" style={{ color: 'var(--velvet-text-muted)' }}>Create an invoice before opening the invoice workspace.</p>
                   </div>
                 </WorkspaceTabPanel>
               )}
@@ -1684,11 +1684,11 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--border)' }}>
+                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="space-y-1">
                       <span className="eyebrow">Cash Desk</span>
                       <h3 className="section-title text-lg text-gradient">Practice Cash Desk & Terminal Terminal</h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Process patient copayments and direct insurance disbursement checks.</p>
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Process patient copayments and direct insurance disbursement checks.</p>
                     </div>
                   </div>
 
@@ -1792,11 +1792,11 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--border)' }}>
+                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="space-y-1">
                       <span className="eyebrow">Claims</span>
                       <h3 className="section-title text-lg text-gradient">Insurance Claims Adjudication Portal</h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Track clearinghouse submissions, pre-authorization validations, and claim appeals.</p>
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Track clearinghouse submissions, pre-authorization validations, and claim appeals.</p>
                     </div>
                   </div>
 
@@ -1844,7 +1844,7 @@ export default function BillingWorkspace({
                                       setResubmitClaimId(claim.id);
                                     }}
                                     className="px-2 py-1 rounded text-2xs font-bold cursor-pointer"
-                                    style={{ background: 'color-mix(in srgb, var(--danger) 14%, transparent)', border: '1px solid color-mix(in srgb, var(--danger) 40%, transparent)', color: 'var(--danger)' }}
+                                    style={{ background: 'color-mix(in srgb, var(--velvet-error) 14%, transparent)', border: '1px solid color-mix(in srgb, var(--velvet-error) 40%, transparent)', color: 'var(--velvet-error)' }}
                                   >
                                     Appeal & Resubmit
                                   </button>
@@ -1903,11 +1903,11 @@ export default function BillingWorkspace({
                         </form>
                       ) : (
                         <div className="flex-1 flex flex-col justify-center items-center text-center p-4">
-                          <div className="w-12 h-12 rounded-full flex items-center justify-center mb-2" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+                          <div className="w-12 h-12 rounded-full flex items-center justify-center mb-2" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)' }}>
                             <ShieldCheck className="w-6 h-6" />
                           </div>
                           <h4 className="text-xs font-bold uppercase font-mono text-gradient">Appeals Workspace</h4>
-                          <p className="text-2xs leading-relaxed mt-1" style={{ color: 'var(--text-muted)' }}>Select an active claim with a "Rejected" status to open the electronic appeals and compliance resubmission engine.</p>
+                          <p className="text-2xs leading-relaxed mt-1" style={{ color: 'var(--velvet-text-muted)' }}>Select an active claim with a "Rejected" status to open the electronic appeals and compliance resubmission engine.</p>
                         </div>
                       )}
                     </div>
@@ -1922,11 +1922,11 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--border)' }}>
+                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="space-y-1">
                       <span className="eyebrow">Quotations</span>
                       <h3 className="section-title text-lg text-gradient">Prosthodontics Treatment Estimates</h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Build comprehensive visual dental cost breakdowns and convert approved quotes to active ledgers.</p>
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Build comprehensive visual dental cost breakdowns and convert approved quotes to active ledgers.</p>
                     </div>
                   </div>
 
@@ -1939,12 +1939,12 @@ export default function BillingWorkspace({
                             <div className="flex justify-between items-start mb-3">
                               <div>
                                 <div className="flex items-center gap-2">
-                                  <span className="text-2xs font-mono font-bold px-1.5 py-0.5 rounded-md" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                                  <span className="text-2xs font-mono font-bold px-1.5 py-0.5 rounded-md" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                                     {est.estimateNumber}
                                   </span>
                                   <h4 className="text-xs font-black text-white">{est.patientName}</h4>
                                 </div>
-                                <p className="text-2xs text-zinc-500 font-mono mt-1">Doctor: {est.doctorName} • Site: {est.clinicName}</p>
+                                <p className="text-2xs text-zinc-500 font-mono mt-1">Doctor: {est.doctorName} â€¢ Site: {est.clinicName}</p>
                               </div>
                               <span className={`text-2xs font-mono font-black px-2 py-0.5 rounded-full border ${
                                 est.approvalStatus === 'Approved' ? 'badge badge-success' :
@@ -1998,11 +1998,11 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--border)' }}>
+                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="space-y-1">
                       <span className="eyebrow">Analytics</span>
                       <h3 className="section-title text-lg text-gradient">Practice Revenue & Audit Reports</h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Interactive breakdown of revenue allocations by clinician, facility, and specific procedure codes.</p>
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Interactive breakdown of revenue allocations by clinician, facility, and specific procedure codes.</p>
                     </div>
                   </div>
 
@@ -2082,11 +2082,11 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--border)' }}>
+                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="space-y-1">
                       <span className="eyebrow">AI Co-Pilot</span>
                       <h3 className="section-title text-lg text-gradient">AI Co-Pilot Practice Auditor</h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Use deep generative models to audit clinical treatment codes and forecast insurance risk profiles.</p>
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Use deep generative models to audit clinical treatment codes and forecast insurance risk profiles.</p>
                     </div>
                   </div>
 
@@ -2137,11 +2137,11 @@ export default function BillingWorkspace({
                             </pre>
                           ) : (
                             <div className="flex flex-col justify-center items-center text-center p-12 font-mono h-[240px]">
-                              <div className="w-12 h-12 rounded-full flex items-center justify-center mb-2 animate-pulse" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
+                              <div className="w-12 h-12 rounded-full flex items-center justify-center mb-2 animate-pulse" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)' }}>
                                 <Sparkles className="w-6 h-6" />
                               </div>
-                              <p className="text-xs" style={{ color: 'var(--text)' }}>Ledger Diagnostic Idle.</p>
-                              <p className="text-2xs mt-1" style={{ color: 'var(--text-muted)' }}>Click the button on the left to invoke the generative analysis core on practice records.</p>
+                              <p className="text-xs" style={{ color: 'var(--velvet-text)' }}>Ledger Diagnostic Idle.</p>
+                              <p className="text-2xs mt-1" style={{ color: 'var(--velvet-text-muted)' }}>Click the button on the left to invoke the generative analysis core on practice records.</p>
                             </div>
                           )}
                         </div>
@@ -2158,18 +2158,18 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--border)' }}>
+                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="space-y-1">
                       <span className="eyebrow">Audit Log</span>
                       <h3 className="section-title text-lg text-gradient">Active PCI Ledger Timeline</h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Immutable audit timeline recording every transaction, submission, and refund processed in HealthOS.</p>
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Immutable audit timeline recording every transaction, submission, and refund processed in HealthOS.</p>
                     </div>
                   </div>
 
                   <div className="max-w-2xl mx-auto space-y-4">
                     {timelineEvents.map((evt) => (
                       <div key={evt.id} className="p-4 card-elevated rounded-3xl flex gap-4 text-xs">
-                        <div className="p-2 rounded-xl h-9 w-9 flex items-center justify-center shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                        <div className="p-2 rounded-xl h-9 w-9 flex items-center justify-center shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                           {evt.type === 'payment_received' ? (
                             <DollarSign className="w-4 h-4 text-emerald-400" />
                           ) : evt.type === 'claim_submitted' ? (
@@ -2205,11 +2205,11 @@ export default function BillingWorkspace({
                 <WorkspaceTabPanel
                   className="space-y-6"
                 >
-                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--border)' }}>
+                  <div className="border-b pb-3 flex justify-between items-center" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="space-y-1">
                       <span className="eyebrow">Configuration</span>
                       <h3 className="section-title text-lg text-gradient">Ledger & Invoicing Control Panel</h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Adjust tax compliance schedules, standard EDI gateway routes, and base currency formats.</p>
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Adjust tax compliance schedules, standard EDI gateway routes, and base currency formats.</p>
                     </div>
                   </div>
 
@@ -2226,8 +2226,8 @@ export default function BillingWorkspace({
                             className="w-full p-2 bg-zinc-950 border border-zinc-850 text-xs rounded-xl outline-none focus:border-emerald-500 text-zinc-300 font-mono"
                           >
                             <option value="USD ($)">United States Dollar (USD - $)</option>
-                            <option value="EUR (€)">European Euro (EUR - €)</option>
-                            <option value="GBP (£)">Great Britain Pound (GBP - £)</option>
+                            <option value="EUR (â‚¬)">European Euro (EUR - â‚¬)</option>
+                            <option value="GBP (آ£)">Great Britain Pound (GBP - آ£)</option>
                           </select>
                         </div>
 

@@ -57,6 +57,8 @@ export function applyThemeToDocument(theme: ThemeId, mode: Mode) {
   const root = document.documentElement;
   root.setAttribute('data-theme', theme);
   root.setAttribute('data-mode', mode);
+  root.setAttribute('data-velvet-theme', mode === 'light' ? 'white' : 'black');
+  root.setAttribute('data-velvet-mode', mode);
   root.classList.remove('theme-crimson', 'theme-earthy', 'theme-amethyst');
   localStorage.setItem(THEME_STORAGE_KEY, theme);
   localStorage.setItem(MODE_STORAGE_KEY, mode);

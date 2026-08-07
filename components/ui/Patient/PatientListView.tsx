@@ -170,7 +170,7 @@ export default function PatientListView({
                       width={32}
                       height={32}
                       className="w-8 h-8 rounded-2xl object-cover"
-                      style={{ border: '1px solid var(--border-strong)' }}
+                      style={{ border: '1px solid var(--velvet-border-strong)' }}
                       referrerPolicy="no-referrer"
                     />
                     {p.name}
@@ -230,7 +230,7 @@ export default function PatientListView({
                     width={40}
                     height={40}
                     className="w-10 h-10 rounded-2xl object-cover"
-                    style={{ border: '1px solid var(--border-strong)' }}
+                    style={{ border: '1px solid var(--velvet-border-strong)' }}
                     referrerPolicy="no-referrer"
                   />
                   <div>
@@ -254,7 +254,7 @@ export default function PatientListView({
                 <span>Last Visit: {p.lastVisit}</span>
                 <div className="flex gap-1" onClick={e => e.stopPropagation()}>
                   <button onClick={(e) => onEditPatient(p, e)} className="text-zinc-400 hover:text-white">Edit</button>
-                  <span>•</span>
+                  <span>â€¢</span>
                   <button onClick={(e) => onDeletePatient(p.id, e)} className="text-red-400 hover:text-red-300">Delete</button>
                 </div>
               </div>

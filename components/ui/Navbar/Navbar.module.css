@@ -1,24 +1,24 @@
 .root {
   @apply sticky top-0 z-40 transition-all duration-150 h-16 md:h-20;
-  background: var(--glass-fill);
+  background: var(--velvet-glass-fill);
   -webkit-backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--velvet-border);
 }
 
 .link {
   @apply inline-flex items-center leading-6 font-medium transition ease-in-out duration-75 cursor-pointer rounded-md p-1;
-  color: var(--text-sub);
+  color: var(--velvet-text-sub);
 }
 
 .link:hover {
-  color: var(--text);
+  color: var(--velvet-text);
 }
 
 .link:focus {
   @apply outline-none;
-  color: var(--text);
-  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+  color: var(--velvet-text);
+  box-shadow: 0 0 0 2px var(--velvet-bg), 0 0 0 4px var(--velvet-accent);
 }
 
 .logo {
