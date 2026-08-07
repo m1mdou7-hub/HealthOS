@@ -265,7 +265,7 @@ export default function CommunicationWorkspace() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-50 bg-zinc-950/90 backdrop-blur-xl text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-white/10"
+            className="fixed bottom-6 end-6 z-50 bg-zinc-950/90 backdrop-blur-xl text-white font-mono text-xs px-4 py-3 rounded-2xl shadow-pop flex items-center gap-2 border border-white/10"
           >
             <Check className="w-4 h-4 text-rose-400 shrink-0" />
             <span>{toastMsg}</span>
@@ -304,10 +304,10 @@ export default function CommunicationWorkspace() {
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-[10px] uppercase font-mono px-2 py-1 rounded bg-black/40 border border-white/[0.06] text-zinc-400">
+          <span className="text-2xs uppercase font-mono px-2 py-1 rounded bg-black/40 border border-white/[0.06] text-zinc-400">
             Channels: <strong className="text-white">{channels.length}</strong>
           </span>
-          <span className="text-[10px] uppercase font-mono px-2 py-1 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center gap-1">
+          <span className="text-2xs uppercase font-mono px-2 py-1 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
             Gateway Live
           </span>
@@ -323,22 +323,22 @@ export default function CommunicationWorkspace() {
             initial={{ opacity: 0, scale: 0.98, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97 }}
-            className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/80 backdrop-blur-2xl shadow-2xl"
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/80 backdrop-blur-2xl shadow-card"
           >
             {/* Background glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-rose-950/30 via-transparent to-black/50 pointer-events-none" />
-            <div className="absolute top-0 left-1/4 w-64 h-64 bg-rose-600/10 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute top-0 start-1/4 w-64 h-64 bg-rose-600/10 rounded-full blur-[80px] pointer-events-none" />
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-0">
 
               {/* Video / Avatar Area */}
-              <div className="lg:col-span-2 p-8 flex flex-col items-center justify-center min-h-[320px] border-r border-white/[0.06]">
+              <div className="lg:col-span-2 p-8 flex flex-col items-center justify-center min-h-[320px] border-e border-white/[0.06]">
                 <div className="relative mb-6">
                   {callType === 'video' && !isCameraOff ? (
                     <div className="w-40 h-40 rounded-3xl bg-zinc-900 border border-white/10 flex items-center justify-center overflow-hidden relative">
                       <div className="absolute inset-0 bg-gradient-to-br from-rose-900/30 to-zinc-900" />
                       <User className="w-16 h-16 text-zinc-600 relative z-10" />
-                      <div className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                      <div className="absolute bottom-2 end-2 w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
                     </div>
                   ) : (
                     <div className="w-40 h-40 rounded-full bg-zinc-900 border-2 border-rose-500/30 flex items-center justify-center relative">
@@ -388,7 +388,7 @@ export default function CommunicationWorkspace() {
 
                   <button
                     onClick={endCall}
-                    className="w-14 h-14 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center shadow-lg shadow-rose-600/30 transition-all"
+                    className="w-14 h-14 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center shadow-soft shadow-rose-600/30 transition-all"
                   >
                     <Phone className="w-5 h-5 rotate-[135deg]" />
                   </button>
@@ -406,12 +406,12 @@ export default function CommunicationWorkspace() {
                     rows={6}
                     className="w-full bg-white/[0.04] border border-white/[0.08] rounded-2xl p-3 text-xs text-zinc-200 resize-none outline-none focus:border-rose-500/40 font-sans leading-relaxed"
                   />
-                  <p className="text-[10px] text-zinc-600 font-mono mt-1">Auto-saved to EHR on call end</p>
+                  <p className="text-2xs text-zinc-600 font-mono mt-1">Auto-saved to EHR on call end</p>
                 </div>
 
                 {/* Patient Quick Info */}
                 <div className="p-4 bg-white/[0.03] border border-white/[0.06] rounded-2xl space-y-2">
-                  <h5 className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider font-mono">Patient Quick Info</h5>
+                  <h5 className="text-2xs font-bold text-zinc-500 uppercase tracking-wider font-mono">Patient Quick Info</h5>
                   <div className="space-y-1.5 text-xs">
                     <div className="flex justify-between"><span className="text-zinc-500">Channel</span><span className="text-zinc-200 font-mono">{activeChannel.channel}</span></div>
                     <div className="flex justify-between"><span className="text-zinc-500">Type</span><span className="text-zinc-200 font-mono capitalize">{activeChannel.type}</span></div>
@@ -439,7 +439,7 @@ export default function CommunicationWorkspace() {
               <div className="flex items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/[0.06]">
                 {['all', 'patient', 'team'].map(type => (
                   <button key={type} onClick={() => setFilterType(type as any)}
-                    className={`px-2 py-1 text-[9px] font-bold font-mono rounded-lg uppercase transition-all ${filterType === type ? 'bg-white/10 text-white' : 'text-zinc-500 hover:text-zinc-300'}`}>
+                    className={`px-2 py-1 text-2xs font-bold font-mono rounded-lg uppercase transition-all ${filterType === type ? 'bg-white/10 text-white' : 'text-zinc-500 hover:text-zinc-300'}`}>
                     {type}
                   </button>
                 ))}
@@ -447,12 +447,12 @@ export default function CommunicationWorkspace() {
             </div>
 
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-600" />
+              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-600" />
               <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search inbox..."
-                className="w-full bg-white/[0.04] border border-white/[0.06] pl-9 pr-3 py-2 text-xs rounded-xl outline-none text-white font-mono" />
+                className="w-full bg-white/[0.04] border border-white/[0.06] ps-9 pe-3 py-2 text-xs rounded-xl outline-none text-white font-mono" />
             </div>
 
-            <div className="space-y-1.5 overflow-y-auto flex-1 pr-1">
+            <div className="space-y-1.5 overflow-y-auto flex-1 pe-1">
               {filteredChannels.map(ch => {
                 const isSelected = ch.id === activeChannelId;
                 return (
@@ -464,7 +464,7 @@ export default function CommunicationWorkspace() {
                       <div className="w-9 h-9 rounded-full bg-white/[0.06] flex items-center justify-center text-zinc-300 border border-white/[0.08]">
                         {ch.type === 'team' ? <Share2 className="w-3.5 h-3.5 text-rose-400" /> : <User className="w-3.5 h-3.5" />}
                       </div>
-                      {ch.status === 'online' && <span className="absolute bottom-0 right-0 w-2 h-2 bg-rose-500 rounded-full border border-black" />}
+                      {ch.status === 'online' && <span className="absolute bottom-0 end-0 w-2 h-2 bg-rose-500 rounded-full border border-black" />}
                     </div>
                     <div className="flex-1 min-w-0 space-y-0.5">
                       <div className="flex items-center justify-between">
@@ -472,17 +472,17 @@ export default function CommunicationWorkspace() {
                           <h4 className="text-xs font-bold text-white truncate">{ch.name}</h4>
                           {ch.pinned && <Pin className="w-2.5 h-2.5 text-zinc-600 shrink-0" />}
                         </div>
-                        <span className="text-[9px] font-mono text-zinc-600 shrink-0">{ch.time}</span>
+                        <span className="text-2xs font-mono text-zinc-600 shrink-0">{ch.time}</span>
                       </div>
-                      <p className="text-[11px] text-zinc-500 truncate leading-snug">{ch.lastMsg}</p>
+                      <p className="text-xs text-zinc-500 truncate leading-snug">{ch.lastMsg}</p>
                       <div className="flex items-center justify-between pt-0.5">
-                        <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded font-mono border uppercase ${
+                        <span className={`text-2xs font-bold px-1.5 py-0.5 rounded font-mono border uppercase ${
                           ch.channel === 'WhatsApp' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' :
                           ch.channel === 'SMS' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
                           ch.channel === 'Email' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
                           'bg-white/[0.06] text-zinc-400 border-white/[0.06]'
                         }`}>{ch.channel}</span>
-                        {ch.unread > 0 && <span className="w-4 h-4 bg-rose-500 text-white rounded-full text-[9px] font-bold flex items-center justify-center">{ch.unread}</span>}
+                        {ch.unread > 0 && <span className="w-4 h-4 bg-rose-500 text-white rounded-full text-2xs font-bold flex items-center justify-center">{ch.unread}</span>}
                       </div>
                     </div>
                   </div>
@@ -503,7 +503,7 @@ export default function CommunicationWorkspace() {
                   <h4 className="text-sm font-bold text-white">{activeChannel.name}</h4>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                    <span className="text-[10px] font-mono text-zinc-500 uppercase">{activeChannel.channel} • Secure TLS</span>
+                    <span className="text-2xs font-mono text-zinc-500 uppercase">{activeChannel.channel} • Secure TLS</span>
                   </div>
                 </div>
               </div>
@@ -524,15 +524,15 @@ export default function CommunicationWorkspace() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto py-2 space-y-3 pr-1">
+            <div className="flex-1 overflow-y-auto py-2 space-y-3 pe-1">
               {messagesList.map((msg, i) => {
                 const isMe = msg.sender === 'doctor' || msg.sender === 'Dr. Ahmed';
                 return (
                   <div key={msg.id || i} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-[80%] rounded-2xl p-3 space-y-1 ${isMe ? 'bg-rose-500/10 border border-rose-500/20 text-white rounded-br-md' : 'bg-white/[0.04] border border-white/[0.06] text-zinc-100 rounded-bl-md'}`}>
-                      {!isMe && <p className="text-[9px] font-mono text-zinc-500 font-black uppercase">{msg.sender}</p>}
+                    <div className={`max-w-[80%] rounded-2xl p-3 space-y-1 ${isMe ? 'bg-rose-500/10 border border-rose-500/20 text-white rounded-be-md' : 'bg-white/[0.04] border border-white/[0.06] text-zinc-100 rounded-bs-md'}`}>
+                      {!isMe && <p className="text-2xs font-mono text-zinc-500 font-black uppercase">{msg.sender}</p>}
                       <p className="text-xs leading-relaxed">{msg.text}</p>
-                      <div className="flex items-center justify-end gap-1 text-[8px] text-zinc-600 font-mono">
+                      <div className="flex items-center justify-end gap-1 text-2xs text-zinc-600 font-mono">
                         <span>{msg.time}</span>
                         {isMe && <CheckCheck className="w-3 h-3 text-rose-400" />}
                       </div>
@@ -559,16 +559,16 @@ export default function CommunicationWorkspace() {
                         <div className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-bounce" style={{ animationDelay: '0ms' }} />
                         <div className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-bounce" style={{ animationDelay: '150ms' }} />
                         <div className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-bounce" style={{ animationDelay: '300ms' }} />
-                        <span className="text-[10px] text-zinc-500 font-mono ml-1">AI generating response...</span>
+                        <span className="text-2xs text-zinc-500 font-mono ms-1">AI generating response...</span>
                       </div>
                     ) : (
                       <div className="flex-1 space-y-2">
-                        <p className="text-[11px] text-zinc-200 leading-relaxed">{aiSuggestion}</p>
+                        <p className="text-xs text-zinc-200 leading-relaxed">{aiSuggestion}</p>
                         <div className="flex gap-2">
-                          <button onClick={() => { setInputText(aiSuggestion); setAiSuggestion(''); }} className="text-[10px] font-bold text-rose-400 hover:text-rose-300 font-mono flex items-center gap-1 cursor-pointer">
+                          <button onClick={() => { setInputText(aiSuggestion); setAiSuggestion(''); }} className="text-2xs font-bold text-rose-400 hover:text-rose-300 font-mono flex items-center gap-1 cursor-pointer">
                             <Copy className="w-3 h-3" /> Use this reply
                           </button>
-                          <button onClick={handleAiSuggest} className="text-[10px] text-zinc-500 hover:text-zinc-400 font-mono cursor-pointer">regenerate</button>
+                          <button onClick={handleAiSuggest} className="text-2xs text-zinc-500 hover:text-zinc-400 font-mono cursor-pointer">regenerate</button>
                         </div>
                       </div>
                     )}
@@ -613,7 +613,7 @@ export default function CommunicationWorkspace() {
                   <div className="flex flex-wrap gap-1">
                     {['All', 'Appointment', 'Post-Op', 'Lab Results', 'Payment', 'Custom'].map(cat => (
                       <button key={cat} onClick={() => setTemplateCategory(cat)}
-                        className={`text-[9px] font-bold font-mono px-2 py-0.5 rounded-full border transition-all cursor-pointer ${templateCategory === cat ? 'bg-rose-500/20 border-rose-500/30 text-rose-400' : 'bg-white/[0.04] border-white/[0.06] text-zinc-500'}`}>
+                        className={`text-2xs font-bold font-mono px-2 py-0.5 rounded-full border transition-all cursor-pointer ${templateCategory === cat ? 'bg-rose-500/20 border-rose-500/30 text-rose-400' : 'bg-white/[0.04] border-white/[0.06] text-zinc-500'}`}>
                         {cat}
                       </button>
                     ))}
@@ -621,9 +621,9 @@ export default function CommunicationWorkspace() {
                   <div className="space-y-1.5 max-h-48 overflow-y-auto">
                     {MESSAGE_TEMPLATES.filter(t => templateCategory === 'All' || t.category === templateCategory).map(t => (
                       <button key={t.id} onClick={() => applyTemplate(t)}
-                        className="w-full text-left p-2.5 bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] rounded-xl transition-all cursor-pointer group">
-                        <p className="text-[10px] font-bold text-zinc-200 group-hover:text-white">{t.title}</p>
-                        <p className="text-[9px] text-zinc-600 truncate mt-0.5">{t.body.substring(0, 60)}...</p>
+                        className="w-full text-start p-2.5 bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] rounded-xl transition-all cursor-pointer group">
+                        <p className="text-2xs font-bold text-zinc-200 group-hover:text-white">{t.title}</p>
+                        <p className="text-2xs text-zinc-600 truncate mt-0.5">{t.body.substring(0, 60)}...</p>
                       </button>
                     ))}
                   </div>
@@ -638,8 +638,8 @@ export default function CommunicationWorkspace() {
                 {SHARED_FILES.map(file => (
                   <div key={file.id} className="p-2.5 bg-white/[0.03] border border-white/[0.06] rounded-xl flex items-center justify-between">
                     <div className="min-w-0">
-                      <p className="text-white text-[10px] font-bold font-mono truncate">{file.name}</p>
-                      <p className="text-[9px] text-zinc-500 mt-0.5">{file.type} • {file.size}</p>
+                      <p className="text-white text-2xs font-bold font-mono truncate">{file.name}</p>
+                      <p className="text-2xs text-zinc-500 mt-0.5">{file.type} • {file.size}</p>
                     </div>
                     <button onClick={() => triggerToast(`Downloading ${file.name}`)} className="p-1.5 bg-white/[0.04] hover:bg-rose-500/10 border border-white/[0.06] rounded-lg text-zinc-500 hover:text-rose-400 transition-all cursor-pointer">
                       <Download className="w-3 h-3" />
@@ -654,7 +654,7 @@ export default function CommunicationWorkspace() {
               <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">Quick Macros</span>
               <div className="space-y-1.5">
                 {['Your surgical guide scan is approved.', 'We are awaiting your implant crown.', 'Please review your consent forms.', 'Your appointment is confirmed.'].map((macro, i) => (
-                  <button key={i} onClick={() => setInputText(macro)} className="w-full text-left p-2 bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] rounded-xl text-zinc-400 hover:text-zinc-200 text-[10px] transition-all cursor-pointer truncate block font-mono">
+                  <button key={i} onClick={() => setInputText(macro)} className="w-full text-start p-2 bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] rounded-xl text-zinc-400 hover:text-zinc-200 text-2xs transition-all cursor-pointer truncate block font-mono">
                     "{macro}"
                   </button>
                 ))}
@@ -681,7 +681,7 @@ export default function CommunicationWorkspace() {
                     </div>
                     <div>
                       <p className="text-xs font-bold text-white">{ch.name}</p>
-                      <p className="text-[10px] text-zinc-500 font-mono">{ch.channel}</p>
+                      <p className="text-2xs text-zinc-500 font-mono">{ch.channel}</p>
                     </div>
                   </div>
                   <div className="flex gap-1.5">
@@ -702,7 +702,7 @@ export default function CommunicationWorkspace() {
             <div className="flex justify-between items-center border-b border-white/[0.06] pb-3">
               <div>
                 <h3 className="text-sm font-bold text-white font-mono uppercase tracking-wider">Call & Consultation History</h3>
-                <p className="text-[11px] text-zinc-500 font-mono mt-0.5">Secure WebRTC session audit trail.</p>
+                <p className="text-xs text-zinc-500 font-mono mt-0.5">Secure WebRTC session audit trail.</p>
               </div>
               <button onClick={() => triggerToast('Histories refreshed.')} className="p-2 bg-white/[0.04] border border-white/[0.06] text-zinc-400 hover:text-white rounded-xl text-xs font-mono flex items-center gap-1.5 cursor-pointer">
                 <RefreshCw className="w-3 h-3" /> Sync
@@ -717,13 +717,13 @@ export default function CommunicationWorkspace() {
                     </div>
                     <div>
                       <h4 className="font-bold text-white text-sm">{call.name}</h4>
-                      <p className="text-[10px] text-zinc-500">{call.type} • {call.channel}</p>
+                      <p className="text-2xs text-zinc-500">{call.type} • {call.channel}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-6">
-                    <div><p className="text-[10px] text-zinc-600 uppercase">Duration</p><p className="text-zinc-200 font-bold">{call.duration}</p></div>
-                    <div><p className="text-[10px] text-zinc-600 uppercase">Date/Time</p><p className="text-zinc-300">{call.timestamp}</p></div>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${call.status === 'Completed' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-zinc-800 text-zinc-500'}`}>{call.status}</span>
+                    <div><p className="text-2xs text-zinc-600 uppercase">Duration</p><p className="text-zinc-200 font-bold">{call.duration}</p></div>
+                    <div><p className="text-2xs text-zinc-600 uppercase">Date/Time</p><p className="text-zinc-300">{call.timestamp}</p></div>
+                    <span className={`text-2xs px-2 py-0.5 rounded-full font-bold ${call.status === 'Completed' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-zinc-800 text-zinc-500'}`}>{call.status}</span>
                   </div>
                 </div>
               ))}
@@ -774,11 +774,11 @@ export default function CommunicationWorkspace() {
                 <div key={bc.id} className="p-3.5 bg-white/[0.03] border border-white/[0.06] rounded-2xl flex items-start justify-between">
                   <div className="space-y-1">
                     <h5 className="font-bold text-white">{bc.campaign}</h5>
-                    <p className="text-[10px] text-zinc-500">Target: {bc.target} • {bc.count} endpoints</p>
+                    <p className="text-2xs text-zinc-500">Target: {bc.target} • {bc.count} endpoints</p>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[10px] font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/20">{bc.status}</span>
-                    <p className="text-[10px] text-zinc-600 mt-1">{bc.date}</p>
+                  <div className="text-end">
+                    <span className="text-2xs font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/20">{bc.status}</span>
+                    <p className="text-2xs text-zinc-600 mt-1">{bc.date}</p>
                   </div>
                 </div>
               ))}
@@ -803,12 +803,12 @@ export default function CommunicationWorkspace() {
             ].map(m => (
               <div key={m.label} className="p-4 bg-black/40 backdrop-blur-xl border border-white/[0.06] rounded-2xl space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-zinc-500 uppercase font-mono tracking-wider">{m.label}</span>
+                  <span className="text-2xs text-zinc-500 uppercase font-mono tracking-wider">{m.label}</span>
                   <m.icon className="w-4 h-4 text-rose-400" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">{m.value}</p>
-                  <p className="text-[10px] text-rose-400 font-mono mt-0.5">{m.delta} this week</p>
+                  <p className="text-2xs text-rose-400 font-mono mt-0.5">{m.delta} this week</p>
                 </div>
               </div>
             ))}
@@ -826,7 +826,7 @@ export default function CommunicationWorkspace() {
                         <span className={`w-2 h-2 rounded-full ${ch.color}`} />
                         <span className="text-zinc-300 font-medium">{ch.name}</span>
                       </div>
-                      <div className="flex items-center gap-3 font-mono text-[10px]">
+                      <div className="flex items-center gap-3 font-mono text-2xs">
                         <span className="text-zinc-500">{ch.messages} msgs</span>
                         <span className="text-zinc-500">avg: {ch.avgTime}</span>
                         <span className="text-white font-bold">{ch.responseRate}%</span>
@@ -851,14 +851,14 @@ export default function CommunicationWorkspace() {
               <div className="flex items-end gap-2 h-36">
                 {DAILY_MESSAGES.map(d => (
                   <div key={d.day} className="flex-1 flex flex-col items-center gap-1">
-                    <span className="text-[9px] text-zinc-600 font-mono">{d.count}</span>
+                    <span className="text-2xs text-zinc-600 font-mono">{d.count}</span>
                     <motion.div
                       initial={{ height: 0 }}
                       animate={{ height: `${(d.count / maxMessages) * 100}%` }}
                       transition={{ duration: 0.6, delay: 0.1 }}
                       className="w-full rounded-t-xl bg-rose-500/40 border border-rose-500/20 hover:bg-rose-500/60 transition-colors cursor-default min-h-[4px]"
                     />
-                    <span className="text-[9px] text-zinc-600 font-mono">{d.day}</span>
+                    <span className="text-2xs text-zinc-600 font-mono">{d.day}</span>
                   </div>
                 ))}
               </div>
@@ -876,16 +876,16 @@ export default function CommunicationWorkspace() {
                     style={{ backgroundColor: `rgba(225,29,72,${h.intensity})`, border: '1px solid rgba(225,29,72,0.1)' }}
                     title={`${h.hour}:00 — ${Math.round(h.intensity * 100)}% activity`}
                   />
-                  {h.hour % 4 === 0 && <span className="text-[8px] text-zinc-600 font-mono">{h.hour}h</span>}
+                  {h.hour % 4 === 0 && <span className="text-2xs text-zinc-600 font-mono">{h.hour}h</span>}
                 </div>
               ))}
             </div>
             <div className="flex items-center gap-2 mt-2">
-              <span className="text-[9px] text-zinc-600 font-mono">Low</span>
+              <span className="text-2xs text-zinc-600 font-mono">Low</span>
               {[0.1, 0.3, 0.5, 0.7, 0.9].map(v => (
                 <div key={v} className="w-5 h-3 rounded" style={{ backgroundColor: `rgba(225,29,72,${v})` }} />
               ))}
-              <span className="text-[9px] text-zinc-600 font-mono">High</span>
+              <span className="text-2xs text-zinc-600 font-mono">High</span>
             </div>
           </div>
         </div>
@@ -919,7 +919,7 @@ export default function CommunicationWorkspace() {
                   <h4 className="text-sm font-bold text-white">Create New Automation Rule</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-zinc-500 uppercase tracking-wider text-[10px]">🔔 Trigger</label>
+                      <label className="text-zinc-500 uppercase tracking-wider text-2xs">🔔 Trigger</label>
                       <select className="w-full bg-white/[0.04] border border-white/[0.06] p-2.5 rounded-xl text-white outline-none">
                         <option>No patient reply</option>
                         <option>Appointment confirmed</option>
@@ -929,7 +929,7 @@ export default function CommunicationWorkspace() {
                       </select>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-zinc-500 uppercase tracking-wider text-[10px]">⏱ Condition</label>
+                      <label className="text-zinc-500 uppercase tracking-wider text-2xs">⏱ Condition</label>
                       <select className="w-full bg-white/[0.04] border border-white/[0.06] p-2.5 rounded-xl text-white outline-none">
                         <option>After 24 hours</option>
                         <option>Immediately</option>
@@ -938,7 +938,7 @@ export default function CommunicationWorkspace() {
                       </select>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-zinc-500 uppercase tracking-wider text-[10px]">⚡ Action</label>
+                      <label className="text-zinc-500 uppercase tracking-wider text-2xs">⚡ Action</label>
                       <select className="w-full bg-white/[0.04] border border-white/[0.06] p-2.5 rounded-xl text-white outline-none">
                         <option>Send SMS reminder</option>
                         <option>Send WhatsApp confirmation</option>
@@ -978,7 +978,7 @@ export default function CommunicationWorkspace() {
                         <ArrowRight className="w-3 h-3 text-zinc-600" />
                         <span className="px-2.5 py-1 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-xl font-bold">{rule.action}</span>
                       </div>
-                      <div className="flex items-center gap-3 mt-2 text-[10px] font-mono text-zinc-500">
+                      <div className="flex items-center gap-3 mt-2 text-2xs font-mono text-zinc-500">
                         <span className="flex items-center gap-1"><Globe className="w-3 h-3" />{rule.channel}</span>
                         <span className="flex items-center gap-1"><Activity className="w-3 h-3" />{rule.runs} runs</span>
                       </div>
@@ -989,14 +989,14 @@ export default function CommunicationWorkspace() {
                   <button onClick={() => toggleRule(rule.id)} className="cursor-pointer shrink-0 mt-0.5">
                     {rule.enabled ? (
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-rose-400">ON</span>
+                        <span className="text-2xs font-mono text-rose-400">ON</span>
                         <div className="w-10 h-5 rounded-full bg-rose-500/30 border border-rose-500/40 flex items-center justify-end px-0.5">
                           <div className="w-4 h-4 rounded-full bg-rose-400 shadow" />
                         </div>
                       </div>
                     ) : (
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-zinc-600">OFF</span>
+                        <span className="text-2xs font-mono text-zinc-600">OFF</span>
                         <div className="w-10 h-5 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-start px-0.5">
                           <div className="w-4 h-4 rounded-full bg-zinc-600 shadow" />
                         </div>
@@ -1021,12 +1021,12 @@ export default function CommunicationWorkspace() {
               <div key={ann.id} className="p-4 bg-white/[0.03] border border-white/[0.06] rounded-2xl space-y-2">
                 <div className="flex justify-between items-start">
                   <h4 className="text-sm font-bold text-white">{ann.title}</h4>
-                  <span className="text-[10px] text-zinc-500 shrink-0">{ann.date}</span>
+                  <span className="text-2xs text-zinc-500 shrink-0">{ann.date}</span>
                 </div>
                 <p className="text-xs text-zinc-400 font-sans leading-relaxed">{ann.content}</p>
                 <div className="flex items-center justify-between pt-1 border-t border-white/[0.04]">
-                  <span className="text-[10px] text-zinc-600">Published by: <span className="text-zinc-400 font-bold">{ann.author}</span></span>
-                  <button className="text-[10px] text-rose-400 hover:text-rose-300 cursor-pointer transition-colors">Mark read</button>
+                  <span className="text-2xs text-zinc-600">Published by: <span className="text-zinc-400 font-bold">{ann.author}</span></span>
+                  <button className="text-2xs text-rose-400 hover:text-rose-300 cursor-pointer transition-colors">Mark read</button>
                 </div>
               </div>
             ))}

@@ -16,13 +16,13 @@ export default function AnalyticsPanel({ activePatient }: AnalyticsPanelProps) {
   ];
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6 text-start">
       {/* Header */}
       <div className="p-4 card-gradient rounded-3xl">
         <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
           <Activity className="w-4 h-4 text-emerald-400" /> Patient Clinical Diagnostics Analytics
         </h3>
-        <p className="text-[11px] text-zinc-400 mt-0.5">Statistical metrics for bone grafting, periodontal index margins, and occlusal guidance values.</p>
+        <p className="text-xs text-zinc-400 mt-0.5">Statistical metrics for bone grafting, periodontal index margins, and occlusal guidance values.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -30,14 +30,14 @@ export default function AnalyticsPanel({ activePatient }: AnalyticsPanelProps) {
           <div key={idx} className="p-5 card-elevated rounded-2xl space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <span className="text-[10px] text-zinc-500 font-mono uppercase block">{m.label}</span>
+                <span className="text-2xs text-zinc-500 font-mono uppercase block">{m.label}</span>
                 <h4 className="text-sm font-bold text-white mt-1">{m.value}</h4>
               </div>
               <TrendingUp className="w-4 h-4 text-zinc-500" />
             </div>
 
             <div className="space-y-1">
-              <div className="flex justify-between text-[10px] font-mono text-zinc-500">
+              <div className="flex justify-between text-2xs font-mono text-zinc-500">
                 <span>Diagnostic Accuracy Index</span>
                 <span>{m.percent}%</span>
               </div>

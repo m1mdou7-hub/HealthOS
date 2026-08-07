@@ -79,7 +79,7 @@ export default function PWAProvider() {
     <>
       {/* ── Offline toast strip ─────────────────────────────────────── */}
       <div
-        className={`fixed top-0 left-0 right-0 z-[9999] flex items-center justify-center gap-2 text-xs font-semibold py-2 px-4 transition-all duration-500 ${
+        className={`fixed top-0 start-0 end-0 z-[9999] flex items-center justify-center gap-2 text-xs font-semibold py-2 px-4 transition-all duration-500 ${
           isOffline
             ? 'bg-orange-500/90 backdrop-blur text-black translate-y-0'
             : '-translate-y-full pointer-events-none'
@@ -93,8 +93,8 @@ export default function PWAProvider() {
 
       {/* ── Install App banner ─────────────────────────────────────── */}
       {showBanner && installable && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9990] w-[90vw] max-w-md">
-          <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 flex items-center gap-4 shadow-2xl shadow-black/60 backdrop-blur-xl">
+        <div className="fixed bottom-6 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 rtl:translate-x-1/2 z-[9990] w-[90vw] max-w-md">
+          <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 flex items-center gap-4 shadow-card shadow-black/60 backdrop-blur-xl">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
               <Download className="w-5 h-5 text-emerald-400" />
             </div>

@@ -145,11 +145,11 @@ export default function WaitingQueue({
       </div>
 
       <div className="rounded-2xl overflow-hidden card-elevated">
-        <div className="grid grid-cols-12 p-3.5 text-[10px] font-mono font-bold uppercase tracking-widest border-b" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)', background: 'var(--surface-2)' }}>
+        <div className="grid grid-cols-12 p-3.5 text-2xs font-mono font-bold uppercase tracking-widest border-b" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)', background: 'var(--surface-2)' }}>
           <div className="col-span-1 text-center">Rank</div>
-          <div className="col-span-3 text-left">Patient Chart</div>
-          <div className="col-span-2 text-left">Category</div>
-          <div className="col-span-2 text-left">Urgency</div>
+          <div className="col-span-3 text-start">Patient Chart</div>
+          <div className="col-span-2 text-start">Category</div>
+          <div className="col-span-2 text-start">Urgency</div>
           <div className="col-span-2 text-center">Wait Duration</div>
           <div className="col-span-1 text-center font-bold" style={{ color: 'var(--warning)' }}>Score</div>
           <div className="col-span-1 text-center">Actions</div>
@@ -165,7 +165,7 @@ export default function WaitingQueue({
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="grid grid-cols-12 p-3.5 text-xs items-center hover:bg-zinc-900/20 text-left"
+                  className="grid grid-cols-12 p-3.5 text-xs items-center hover:bg-zinc-900/20 text-start"
                   style={{ color: 'var(--text-sub)' }}
                 >
                   <div className="col-span-1 text-center font-mono font-bold" style={{ color: 'var(--text-muted)' }}>
@@ -177,12 +177,12 @@ export default function WaitingQueue({
                   </div>
 
                   <div className="col-span-2">
-                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border ${getTypeStyle(item.type)}`}>
+                    <span className={`px-2 py-0.5 rounded-full text-2xs font-mono font-bold border ${getTypeStyle(item.type)}`}>
                       {item.type}
                     </span>
                   </div>
 
-                  <div className="col-span-2 font-mono text-[11px]">
+                  <div className="col-span-2 font-mono text-xs">
                     <span className={getUrgencyBadge(item.urgency)}>{item.urgency}</span>
                   </div>
 
@@ -240,7 +240,7 @@ export default function WaitingQueue({
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="card-elevated rounded-2xl max-w-sm w-full p-6 text-left shadow-2xl"
+              className="card-elevated rounded-2xl max-w-sm w-full p-6 text-start shadow-card"
             >
               <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--border)' }}>
                 <h3 className="text-sm font-bold font-mono" style={{ color: 'var(--text)' }}>In-Clinic Patient Check-in</h3>
@@ -254,7 +254,7 @@ export default function WaitingQueue({
 
               <div className="space-y-4 pt-4 text-xs" style={{ color: 'var(--text-sub)' }}>
                 <div>
-                  <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient Name</label>
+                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient Name</label>
                   <input
                     type="text"
                     value={patientName}
@@ -268,7 +268,7 @@ export default function WaitingQueue({
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Intake Type</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Intake Type</label>
                     <select
                       value={patientType}
                       onChange={(e) => setPatientType(e.target.value as any)}
@@ -282,7 +282,7 @@ export default function WaitingQueue({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Pain / Urgency</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Pain / Urgency</label>
                     <select
                       value={urgency}
                       onChange={(e) => setUrgency(e.target.value as any)}
@@ -298,7 +298,7 @@ export default function WaitingQueue({
                 </div>
 
                 <div>
-                  <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Preferred Operator</label>
+                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Preferred Operator</label>
                   <select
                     value={doctorId}
                     onChange={(e) => setDoctorId(e.target.value)}

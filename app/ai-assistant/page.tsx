@@ -64,9 +64,9 @@ export default async function AIAssistantPage() {
                 type="text"
                 disabled
                 placeholder="AI Workspace is locked for build simulation. Assistant prompts require model configuration..."
-                className="w-full pl-4 pr-12 py-3 rounded-xl text-sm"
+                className="w-full ps-4 pe-12 py-3 rounded-xl text-sm"
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg btn-secondary opacity-50 cursor-not-allowed" style={{ color: 'var(--text-muted)' }}>
+              <button className="absolute end-2 top-1/2 -translate-y-1/2 p-2 rounded-lg btn-secondary opacity-50 cursor-not-allowed" style={{ color: 'var(--text-muted)' }}>
                 <HeartHandshake className="w-4 h-4" />
               </button>
             </div>

@@ -82,7 +82,7 @@ export default function RecallCenter({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="p-3 rounded-xl flex items-center gap-2 text-xs text-left"
+            className="p-3 rounded-xl flex items-center gap-2 text-xs text-start"
             style={{ background: 'color-mix(in srgb, var(--accent) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', color: 'var(--accent)' }}
           >
             <MessageSquare className="w-4 h-4 shrink-0" style={{ color: 'var(--accent)' }} />
@@ -103,7 +103,7 @@ export default function RecallCenter({
               className={`nav-item px-4 py-2 text-xs font-semibold flex items-center gap-2 ${isActive ? 'active font-bold' : ''}`}
             >
               {tab} Recalls
-              <span className={`px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold ${getTabBadgeColor(tab)}`}>
+              <span className={`px-1.5 py-0.5 rounded-md text-2xs font-mono font-bold ${getTabBadgeColor(tab)}`}>
                 {count}
               </span>
             </button>
@@ -113,24 +113,24 @@ export default function RecallCenter({
 
       {/* Recall Table */}
       <div className="rounded-xl overflow-hidden card-elevated">
-        <div className="grid grid-cols-12 p-3.5 text-[10px] font-mono font-bold uppercase tracking-widest border-b" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)', background: 'var(--surface-2)' }}>
-          <div className="col-span-3 text-left">Patient</div>
-          <div className="col-span-3 text-left">Recall Protocol</div>
-          <div className="col-span-2 text-left">Target Date</div>
-          <div className="col-span-2 text-left">Last Contact</div>
+        <div className="grid grid-cols-12 p-3.5 text-2xs font-mono font-bold uppercase tracking-widest border-b" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)', background: 'var(--surface-2)' }}>
+          <div className="col-span-3 text-start">Patient</div>
+          <div className="col-span-3 text-start">Recall Protocol</div>
+          <div className="col-span-2 text-start">Target Date</div>
+          <div className="col-span-2 text-start">Last Contact</div>
           <div className="col-span-2 text-center">Engagement Trigger</div>
         </div>
 
-        <div className="divide-y text-left" style={{ borderColor: 'var(--border)' }}>
+        <div className="divide-y text-start" style={{ borderColor: 'var(--border)' }}>
           {filteredRecalls.map(item => (
             <div key={item.id} className="grid grid-cols-12 p-3.5 text-xs items-center hover:bg-zinc-900/10" style={{ color: 'var(--text-sub)' }}>
               <div className="col-span-3 font-semibold" style={{ color: 'var(--text)' }}>
                 <p>{item.patientName}</p>
-                <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>{item.phone}</p>
+                <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>{item.phone}</p>
               </div>
 
               <div className="col-span-3">
-                <span className="px-2 py-0.5 rounded border font-mono text-[10px] font-semibold" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
+                <span className="px-2 py-0.5 rounded border font-mono text-2xs font-semibold" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
                   {item.type}
                 </span>
               </div>
@@ -139,7 +139,7 @@ export default function RecallCenter({
                 {item.dueDate}
               </div>
 
-              <div className="col-span-2 font-mono text-[11px]" style={{ color: 'var(--text-muted)' }}>
+              <div className="col-span-2 font-mono text-xs" style={{ color: 'var(--text-muted)' }}>
                 {item.lastContacted || 'Never contacted'}
               </div>
 

@@ -61,7 +61,7 @@ export default function ManufacturingWorkflowView({ activeCase, onUpdateCase }: 
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 text-left">
+    <div className="space-y-6 text-zinc-100 text-start">
       <div className="border-b border-zinc-900 pb-3 flex justify-between items-center">
         <div>
           <h3 className="text-base font-black text-white uppercase tracking-tight">Prosthesis Manufacturing Workflow</h3>
@@ -74,7 +74,7 @@ export default function ManufacturingWorkflowView({ activeCase, onUpdateCase }: 
 
       {/* Visual Pipeline Bar */}
       <div id="manufacturing-pipeline-bar" className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">
+        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">
           Sequential Restoration Pipeline (Click any stage to advance case)
         </span>
 
@@ -89,16 +89,16 @@ export default function ManufacturingWorkflowView({ activeCase, onUpdateCase }: 
                 key={idx}
                 id={`stage-btn-${stage.replace(/\s+/g, '-').toLowerCase()}`}
                 onClick={() => handleToggleStage(stage)}
-                className={`p-3 rounded-xl border text-left flex flex-col justify-between h-[85px] cursor-pointer transition-all ${
+                className={`p-3 rounded-xl border text-start flex flex-col justify-between h-[85px] cursor-pointer transition-all ${
                   isActive 
-                    ? 'border-emerald-400 bg-emerald-500/10 ring-1 ring-emerald-400/20 shadow-md' 
+                    ? 'border-emerald-400 bg-emerald-500/10 ring-1 ring-emerald-400/20 shadow-soft' 
                     : isCompleted
                     ? 'border-emerald-500/30 bg-emerald-500/[0.02]'
                     : 'border-zinc-900 bg-transparent hover:border-zinc-800'
                 }`}
               >
                 <div className="flex justify-between items-center w-full">
-                  <span className="text-[9px] font-mono font-bold text-zinc-500">
+                  <span className="text-2xs font-mono font-bold text-zinc-500">
                     STAGE {(idx + 1).toString().padStart(2, '0')}
                   </span>
                   {isCompleted ? (
@@ -109,10 +109,10 @@ export default function ManufacturingWorkflowView({ activeCase, onUpdateCase }: 
                 </div>
 
                 <div>
-                  <h5 className={`text-[11px] font-bold truncate ${isCompleted || isActive ? 'text-white' : 'text-zinc-500'}`}>
+                  <h5 className={`text-xs font-bold truncate ${isCompleted || isActive ? 'text-white' : 'text-zinc-500'}`}>
                     {stage}
                   </h5>
-                  <p className="text-[9px] font-mono text-zinc-500 truncate mt-0.5">
+                  <p className="text-2xs font-mono text-zinc-500 truncate mt-0.5">
                     {isCompleted ? 'Finished' : isActive ? 'Active' : 'Scheduled'}
                   </p>
                 </div>
@@ -127,10 +127,10 @@ export default function ManufacturingWorkflowView({ activeCase, onUpdateCase }: 
         {/* CNC Milling parameters */}
         <div className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-3">
           <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">
+            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono">
               CNC Mill & Spindle Telemetry
             </span>
-            <span className="text-[9px] font-mono text-emerald-400">ONLINE</span>
+            <span className="text-2xs font-mono text-emerald-400">ONLINE</span>
           </div>
 
           <div className="space-y-2 text-xs font-mono text-zinc-400">
@@ -152,10 +152,10 @@ export default function ManufacturingWorkflowView({ activeCase, onUpdateCase }: 
         {/* Oven/Sintering parameters */}
         <div className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-3">
           <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">
+            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono">
               Furnace & Pressing Telemetry
             </span>
-            <span className="text-[9px] font-mono text-purple-400">HOLD CYCLE</span>
+            <span className="text-2xs font-mono text-purple-400">HOLD CYCLE</span>
           </div>
 
           <div className="space-y-2 text-xs font-mono text-zinc-400">

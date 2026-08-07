@@ -117,7 +117,7 @@ export default function OperatoryManagement({
             Live telemetry of active patient chairs, cleaning turnarounds, and engineering maintenance routines.
           </p>
         </div>
-        <div className="flex items-center gap-2 text-[11px] font-mono" style={{ color: 'var(--text-muted)' }}>
+        <div className="flex items-center gap-2 text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
           <span className="h-2 w-2 rounded-full animate-pulse" style={{ background: 'var(--success)' }} /> Live Telemetry Linked
         </div>
       </div>
@@ -129,16 +129,16 @@ export default function OperatoryManagement({
             <motion.div
               key={chair.id}
               layoutId={`chair-${chair.id}`}
-              className="rounded-2xl border p-5 space-y-4 flex flex-col justify-between text-left card-hover"
+              className="rounded-2xl border p-5 space-y-4 flex flex-col justify-between text-start card-hover"
               style={{ borderColor: style.border, background: `linear-gradient(to bottom, ${style.banner}, var(--surface-solid) 40%, var(--surface-solid))` }}
             >
               {/* Header */}
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <h4 className="font-bold text-sm" style={{ color: 'var(--text)' }}>{chair.name}</h4>
-                  <span className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>ID: {chair.id}</span>
+                  <span className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>ID: {chair.id}</span>
                 </div>
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wide" style={{ background: style.bg, color: style.text }}>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-2xs font-mono font-bold uppercase tracking-wide" style={{ background: style.bg, color: style.text }}>
                   <span className={`w-1.5 h-1.5 rounded-full ${chair.status === 'Occupied' ? 'animate-pulse' : ''}`} style={{ background: style.dot }} />
                   {chair.status}
                 </span>
@@ -162,7 +162,7 @@ export default function OperatoryManagement({
                       </span>
                       <span className="font-black text-xs" style={{ color: 'var(--text)' }}>{chair.remainingTime} mins</span>
                     </div>
-                    <div className="flex justify-between text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+                    <div className="flex justify-between text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
                       <span>Est. Completion:</span>
                       <span>{chair.estimatedCompletion}</span>
                     </div>
@@ -171,30 +171,30 @@ export default function OperatoryManagement({
                     <div className="flex items-center gap-1.5 pt-1.5">
                       <button
                         onClick={() => handleAdjustTime(chair.id, -5)}
-                        className="btn-ghost px-2 py-1 rounded text-[10px] font-mono font-bold"
+                        className="btn-ghost px-2 py-1 rounded text-2xs font-mono font-bold"
                       >
                         -5m
                       </button>
                       <button
                         onClick={() => handleAdjustTime(chair.id, 5)}
-                        className="btn-ghost px-2 py-1 rounded text-[10px] font-mono font-bold"
+                        className="btn-ghost px-2 py-1 rounded text-2xs font-mono font-bold"
                       >
                         +5m
                       </button>
-                      <span className="text-[9px] font-mono italic" style={{ color: 'var(--text-muted)' }}>Modify timer</span>
+                      <span className="text-2xs font-mono italic" style={{ color: 'var(--text-muted)' }}>Modify timer</span>
                     </div>
                   </div>
                 ) : chair.status === 'Cleaning' ? (
                   <div className="py-4 text-center space-y-2">
                     <Sparkles className="w-7 h-7 mx-auto animate-spin" style={{ color: 'var(--info)', animationDuration: '4s' }} />
                     <p className="text-xs font-medium" style={{ color: 'var(--text-sub)' }}>Sterilization protocol initiated</p>
-                    <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>Average completion: 10 mins</p>
+                    <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Average completion: 10 mins</p>
                   </div>
                 ) : chair.status === 'Maintenance' ? (
                   <div className="py-4 text-center space-y-2">
                     <Wrench className="w-7 h-7 mx-auto animate-pulse" style={{ color: 'var(--warning)' }} />
                     <p className="text-xs font-medium" style={{ color: 'var(--text-sub)' }}>CAD/CAM & Milling Calibration</p>
-                    <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>Engineering block active until 1:30 PM</p>
+                    <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Engineering block active until 1:30 PM</p>
                   </div>
                 ) : (
                   <div className="py-5 text-center text-xs italic flex flex-col items-center justify-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
@@ -206,13 +206,13 @@ export default function OperatoryManagement({
 
               {/* Quick Status Changers */}
               <div className="pt-3 border-t flex items-center justify-between gap-1" style={{ borderColor: 'var(--border)' }}>
-                <span className="text-[9px] font-mono uppercase font-bold" style={{ color: 'var(--text-muted)' }}>Set Status:</span>
+                <span className="text-2xs font-mono uppercase font-bold" style={{ color: 'var(--text-muted)' }}>Set Status:</span>
                 <div className="flex gap-1.5">
                   {(['Available', 'Occupied', 'Cleaning', 'Maintenance'] as const).map(stat => (
                     <button
                       key={stat}
                       onClick={() => handleToggleStatus(chair.id, stat)}
-                      className={`px-2 py-1 rounded text-[9px] font-mono font-bold transition-all ${
+                      className={`px-2 py-1 rounded text-2xs font-mono font-bold transition-all ${
                         chair.status === stat 
                           ? 'btn-primary' 
                           : 'btn-ghost'

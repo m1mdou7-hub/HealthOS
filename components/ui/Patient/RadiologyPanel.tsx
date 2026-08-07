@@ -104,14 +104,14 @@ export default function RadiologyPanel({ supabase, activePatient, demoMode }: Ra
   };
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6 text-start">
       {/* Header action panel */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <Layers className="w-4 h-4 text-emerald-400 animate-pulse" /> {t('radio_lab_title')}
           </h3>
-          <p className="text-[11px] text-zinc-400 mt-0.5">{t('radio_lab_desc')}</p>
+          <p className="text-xs text-zinc-400 mt-0.5">{t('radio_lab_desc')}</p>
         </div>
         <button
           onClick={() => setShowAddStudyModal(true)}
@@ -134,13 +134,13 @@ export default function RadiologyPanel({ supabase, activePatient, demoMode }: Ra
             <div key={study.id} className="p-4 rounded-xl border border-zinc-900 bg-zinc-950/40 hover:bg-zinc-900/20 hover:border-zinc-800 transition-all flex flex-col justify-between h-40">
               <div>
                 <div className="flex justify-between items-center">
-                  <span className="text-[8px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-blue-400 uppercase font-semibold">
+                  <span className="text-2xs font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-blue-400 uppercase font-semibold">
                     {study.category} Study
                   </span>
-                  <span className="text-[9px] font-mono text-zinc-500">{study.date}</span>
+                  <span className="text-2xs font-mono text-zinc-500">{study.date}</span>
                 </div>
                 <h4 className="text-xs font-bold text-white mt-3 font-sans line-clamp-2">{study.name}</h4>
-                <p className="text-[10px] text-zinc-500 mt-1 font-mono">Status: DICOM Synced</p>
+                <p className="text-2xs text-zinc-500 mt-1 font-mono">Status: DICOM Synced</p>
               </div>
 
               <div className="flex justify-end gap-2 border-t border-zinc-900/60 pt-2 mt-4">
@@ -149,7 +149,7 @@ export default function RadiologyPanel({ supabase, activePatient, demoMode }: Ra
                     setSelectedStudy(study);
                     resetFilters();
                   }}
-                  className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 text-white text-[10px] font-semibold flex items-center gap-1 border border-zinc-800 transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 text-white text-2xs font-semibold flex items-center gap-1 border border-zinc-800 transition-colors"
                 >
                   <Eye className="w-3.5 h-3.5" /> {t('btn_launch_viewer')}
                 </button>
@@ -211,15 +211,15 @@ export default function RadiologyPanel({ supabase, activePatient, demoMode }: Ra
       {/* PACS Interactive Workstation Modal */}
       {selectedStudy && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-zinc-950 border border-zinc-900 rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col md:flex-row overflow-hidden shadow-2xl">
+          <div className="bg-zinc-950 border border-zinc-900 rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col md:flex-row overflow-hidden shadow-card">
             {/* Left Viewer (Col span 8) */}
-            <div className="flex-1 bg-black flex flex-col items-center justify-center relative p-6 border-b md:border-b-0 md:border-r border-zinc-900 select-none">
-              <div className="absolute top-4 left-4 z-10 flex gap-2">
-                <span className="text-[9px] font-mono bg-zinc-950/80 border border-zinc-900 px-2.5 py-1 rounded text-blue-400 uppercase font-bold tracking-wider">
+            <div className="flex-1 bg-black flex flex-col items-center justify-center relative p-6 border-b md:border-b-0 md:border-e border-zinc-900 select-none">
+              <div className="absolute top-4 start-4 z-10 flex gap-2">
+                <span className="text-2xs font-mono bg-zinc-950/80 border border-zinc-900 px-2.5 py-1 rounded text-blue-400 uppercase font-bold tracking-wider">
                   PACS Workstation • {selectedStudy.category} Mode
                 </span>
                 {measuredDistance !== null && (
-                  <span className="text-[9px] font-mono bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded text-emerald-400 font-bold">
+                  <span className="text-2xs font-mono bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded text-emerald-400 font-bold">
                     {t('pacs_measured_dist')} {measuredDistance} mm
                   </span>
                 )}
@@ -322,11 +322,11 @@ export default function RadiologyPanel({ supabase, activePatient, demoMode }: Ra
 
             {/* Right Controls Panel (Col span 4) */}
             <div className="w-full md:w-80 bg-zinc-950 p-6 flex flex-col justify-between space-y-6">
-              <div className="space-y-6 text-xs text-left">
+              <div className="space-y-6 text-xs text-start">
                 <div className="flex justify-between items-start border-b border-zinc-900 pb-3">
                   <div>
                     <h3 className="text-sm font-bold text-white leading-tight">{t('pacs_viewer_title')}</h3>
-                    <p className="text-[10px] text-zinc-500 mt-1">{t('pacs_viewer_desc')}</p>
+                    <p className="text-2xs text-zinc-500 mt-1">{t('pacs_viewer_desc')}</p>
                   </div>
                   <button
                     onClick={() => setSelectedStudy(null)}
@@ -384,7 +384,7 @@ export default function RadiologyPanel({ supabase, activePatient, demoMode }: Ra
 
                 {/* Clinical overlays */}
                 <div className="space-y-2 pt-3 border-t border-zinc-900/60">
-                  <span className="text-[9px] font-mono text-zinc-500 font-bold uppercase tracking-wider block mb-1">Anatomical Overlays</span>
+                  <span className="text-2xs font-mono text-zinc-500 font-bold uppercase tracking-wider block mb-1">Anatomical Overlays</span>
                   
                   <label className="flex items-center gap-2 cursor-pointer text-zinc-400 hover:text-white select-none">
                     <input
@@ -413,9 +413,9 @@ export default function RadiologyPanel({ supabase, activePatient, demoMode }: Ra
 
                 {/* Calibration warning info */}
                 <div className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl space-y-1">
-                  <span className="text-[8px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Calibration parameters</span>
-                  <p className="text-[10px] text-zinc-400 leading-normal font-mono">Pixel Scale: 1px = 0.28mm</p>
-                  <p className="text-[10px] text-zinc-500 leading-normal">{t('pacs_measure')}</p>
+                  <span className="text-2xs font-mono text-zinc-500 uppercase tracking-widest font-bold block">Calibration parameters</span>
+                  <p className="text-2xs text-zinc-400 leading-normal font-mono">Pixel Scale: 1px = 0.28mm</p>
+                  <p className="text-2xs text-zinc-500 leading-normal">{t('pacs_measure')}</p>
                 </div>
               </div>
 

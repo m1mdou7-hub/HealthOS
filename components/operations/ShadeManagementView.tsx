@@ -42,7 +42,7 @@ export default function ShadeManagementView({ activeCase, onUpdateCase }: ShadeM
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 text-left">
+    <div className="space-y-6 text-zinc-100 text-start">
       <div className="border-b border-zinc-900 pb-3 flex justify-between items-center">
         <div>
           <h3 className="text-base font-black text-white uppercase tracking-tight">Esthetic Shade Management</h3>
@@ -62,21 +62,21 @@ export default function ShadeManagementView({ activeCase, onUpdateCase }: ShadeM
         
         {/* Shade Selector Panel */}
         <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
+          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
             Shade Calibration Standard
           </span>
 
           <div className="space-y-4 text-xs font-mono">
             {/* VITA Classical standard */}
             <div className="space-y-2">
-              <label className="text-[10px] text-zinc-400 uppercase font-bold block">VITA Classical (A1-D4)</label>
+              <label className="text-2xs text-zinc-400 uppercase font-bold block">VITA Classical (A1-D4)</label>
               <div className="flex flex-wrap gap-1">
                 {VITA_CLASSICAL_SHADES.map(s => (
                   <button
                     key={s}
                     id={`shade-classical-${s}`}
                     onClick={() => setSelectedShade(s)}
-                    className={`px-2 py-1 rounded text-[10px] font-bold border transition-all ${
+                    className={`px-2 py-1 rounded text-2xs font-bold border transition-all ${
                       selectedShade === s 
                         ? 'bg-emerald-500 text-zinc-950 border-emerald-400' 
                         : 'bg-zinc-900 border-zinc-850 hover:border-zinc-750 text-zinc-400'
@@ -90,14 +90,14 @@ export default function ShadeManagementView({ activeCase, onUpdateCase }: ShadeM
 
             {/* VITA 3D-Master standard */}
             <div className="space-y-2 border-t border-zinc-900/60 pt-3">
-              <label className="text-[10px] text-zinc-400 uppercase font-bold block">VITA 3D-Master & Bleach</label>
+              <label className="text-2xs text-zinc-400 uppercase font-bold block">VITA 3D-Master & Bleach</label>
               <div className="flex flex-wrap gap-1">
                 {VITA_3D_MASTER_SHADES.map(s => (
                   <button
                     key={s}
                     id={`shade-3d-${s}`}
                     onClick={() => setSelectedShade(s)}
-                    className={`px-2 py-1 rounded text-[10px] font-bold border transition-all ${
+                    className={`px-2 py-1 rounded text-2xs font-bold border transition-all ${
                       selectedShade === s 
                         ? 'bg-emerald-500 text-zinc-950 border-emerald-400' 
                         : 'bg-zinc-900 border-zinc-850 hover:border-zinc-750 text-zinc-400'
@@ -111,7 +111,7 @@ export default function ShadeManagementView({ activeCase, onUpdateCase }: ShadeM
 
             {/* Custom formula/recipe */}
             <div className="space-y-1.5 border-t border-zinc-900/60 pt-3">
-              <label className="text-[10px] text-zinc-400 uppercase font-bold block">Custom Shade Recipe / Blending Formula</label>
+              <label className="text-2xs text-zinc-400 uppercase font-bold block">Custom Shade Recipe / Blending Formula</label>
               <input
                 type="text"
                 value={customShade}
@@ -124,7 +124,7 @@ export default function ShadeManagementView({ activeCase, onUpdateCase }: ShadeM
 
             {/* Shade Notes */}
             <div className="space-y-1.5">
-              <label className="text-[10px] text-zinc-400 uppercase font-bold block">Clinical Shade Notes</label>
+              <label className="text-2xs text-zinc-400 uppercase font-bold block">Clinical Shade Notes</label>
               <textarea
                 value={shadeNotes}
                 id="shade-notes-textarea"
@@ -141,7 +141,7 @@ export default function ShadeManagementView({ activeCase, onUpdateCase }: ShadeM
           
           {/* Clinical Photos List */}
           <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-3">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
+            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
               Clinical Shade Photos
             </span>
 
@@ -149,7 +149,7 @@ export default function ShadeManagementView({ activeCase, onUpdateCase }: ShadeM
               {activeCase.shade.photos.map((p, idx) => (
                 <div key={idx} className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl flex flex-col items-center justify-center text-center space-y-2">
                   <Camera className="w-6 h-6 text-emerald-400" />
-                  <span className="text-[10px] font-mono font-bold text-zinc-300 truncate max-w-full">
+                  <span className="text-2xs font-mono font-bold text-zinc-300 truncate max-w-full">
                     {p}
                   </span>
                 </div>
@@ -161,14 +161,14 @@ export default function ShadeManagementView({ activeCase, onUpdateCase }: ShadeM
                 className="border border-dashed border-zinc-800 hover:border-zinc-700 bg-transparent rounded-xl flex flex-col items-center justify-center p-3 text-zinc-500 hover:text-white transition-colors space-y-1"
               >
                 <Plus className="w-5 h-5" />
-                <span className="text-[10px] font-mono font-bold">Upload Photo</span>
+                <span className="text-2xs font-mono font-bold">Upload Photo</span>
               </button>
             </div>
           </div>
 
           {/* Shade Update History Log */}
           <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-3">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
+            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
               Shade Verification History
             </span>
 
@@ -177,9 +177,9 @@ export default function ShadeManagementView({ activeCase, onUpdateCase }: ShadeM
                 <div key={idx} className="p-2.5 bg-zinc-900/30 border border-zinc-900 rounded-xl flex justify-between items-start text-xs font-mono">
                   <div className="space-y-0.5">
                     <p className="font-bold text-emerald-400">Shade Match: {hist.shade}</p>
-                    <p className="text-[10px] text-zinc-400 italic">&ldquo;{hist.note}&rdquo;</p>
+                    <p className="text-2xs text-zinc-400 italic">&ldquo;{hist.note}&rdquo;</p>
                   </div>
-                  <div className="text-right text-[9px] text-zinc-500">
+                  <div className="text-end text-2xs text-zinc-500">
                     <p className="font-bold">{hist.date}</p>
                     <p>By {hist.updatedBy}</p>
                   </div>

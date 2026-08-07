@@ -363,7 +363,7 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
                     alertsCount={activePatient.medicalAlerts?.filter(a => a !== 'None').length || 0}
                     onNavigateTab={setWorkspaceTab}
                   />
-                  <div className="p-6 card-gradient rounded-3xl text-left space-y-2">
+                  <div className="p-6 card-gradient rounded-3xl text-start space-y-2">
                     <h3 className="eyebrow">{t('demographics')}</h3>
                     <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('chiefComplaint')}: <strong style={{ color: 'var(--text)' }}>{activePatient.summary}</strong></p>
                     <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('primaryInsurer')}: <strong style={{ color: 'var(--text)' }}>{activePatient.allergyStatus}</strong></p>
@@ -441,7 +441,7 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
             {/* Right Collapsible AI Sidebar */}
             <button
               onClick={() => setIsCopilotSidebarOpen(!isCopilotSidebarOpen)}
-              className="fixed bottom-6 right-20 z-45 magic-shimmer-btn rounded-full px-4 py-2.5 text-xs font-bold flex items-center gap-1.5 shadow-xl active:scale-95"
+              className="fixed bottom-6 end-20 z-45 magic-shimmer-btn rounded-full px-4 py-2.5 text-xs font-bold flex items-center gap-1.5 shadow-card active:scale-95"
             >
               <Sparkles className="w-4 h-4" /> AI Diagnostics
             </button>

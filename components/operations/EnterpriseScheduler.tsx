@@ -378,7 +378,7 @@ export default function EnterpriseScheduler({
             <span>{conflictWarning}</span>
             <button 
               onClick={() => setConflictWarning(null)}
-              className="ml-auto text-[10px] uppercase font-mono font-bold opacity-80 hover:opacity-100"
+              className="ms-auto text-2xs uppercase font-mono font-bold opacity-80 hover:opacity-100"
             >
               Dismiss
             </button>
@@ -394,7 +394,7 @@ export default function EnterpriseScheduler({
           <div className="min-w-[800px] rounded-xl overflow-hidden border card-elevated" style={{ borderColor: 'var(--border)' }}>
             {/* Table Header: Operatory Chairs */}
             <div className="grid grid-cols-6 border-b p-3 text-xs font-mono font-bold card-gradient" style={{ borderColor: 'var(--border)', color: 'var(--text-sub)' }}>
-              <div className="pl-2">Timeline Slot</div>
+              <div className="ps-2">Timeline Slot</div>
               {chairs.map(c => (
                 <div key={c} className="text-center">{c}</div>
               ))}
@@ -403,8 +403,8 @@ export default function EnterpriseScheduler({
             {/* Time Rows */}
             {['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'].map(hour => (
               <div key={hour} className="grid grid-cols-6 border-b min-h-[90px] last:border-0 hover:bg-zinc-900/10" style={{ borderColor: 'var(--border)' }}>
-                <div className="p-3 text-xs font-mono font-semibold border-r flex items-center" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
-                  <Clock className="w-3.5 h-3.5 mr-1.5" style={{ color: 'var(--text-sub)' }} /> {hour}
+                <div className="p-3 text-xs font-mono font-semibold border-e flex items-center" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
+                  <Clock className="w-3.5 h-3.5 me-1.5" style={{ color: 'var(--text-sub)' }} /> {hour}
                 </div>
                 
                 {chairs.map(chair => {
@@ -420,7 +420,7 @@ export default function EnterpriseScheduler({
                       key={chair}
                       onDragOver={handleDragOver}
                       onDrop={(e) => handleDrop(e, chair, hour)}
-                      className="p-2 border-r flex items-center justify-center relative min-h-[80px]"
+                      className="p-2 border-e flex items-center justify-center relative min-h-[80px]"
                       style={{ borderColor: 'var(--border)' }}
                     >
                       {matchingAppt ? (
@@ -428,21 +428,21 @@ export default function EnterpriseScheduler({
                           draggable
                           onDragStart={(e) => handleDragStart(e as any, matchingAppt.id)}
                           layoutId={`card-${matchingAppt.id}`}
-                          className={`w-full p-2.5 rounded-xl border flex flex-col text-left text-xs cursor-grab active:cursor-grabbing transition-all card-hover ${getCategoryStyles(matchingAppt.category)}`}
+                          className={`w-full p-2.5 rounded-xl border flex flex-col text-start text-xs cursor-grab active:cursor-grabbing transition-all card-hover ${getCategoryStyles(matchingAppt.category)}`}
                         >
                           <div className="flex items-center justify-between gap-1.5">
                             <span className="font-bold truncate" style={{ color: 'var(--text)' }}>{matchingAppt.patientName}</span>
-                            <span className={`text-[8px] px-1 py-0.5 rounded font-bold ${getStatusBadge(matchingAppt.status)}`}>
+                            <span className={`text-2xs px-1 py-0.5 rounded font-bold ${getStatusBadge(matchingAppt.status)}`}>
                               {matchingAppt.status}
                             </span>
                           </div>
                           
-                          <p className="text-[10px] font-mono mt-1 truncate" style={{ color: 'var(--text-sub)' }}>{matchingAppt.procedure}</p>
-                          <p className="text-[9px] mt-0.5 flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
+                          <p className="text-2xs font-mono mt-1 truncate" style={{ color: 'var(--text-sub)' }}>{matchingAppt.procedure}</p>
+                          <p className="text-2xs mt-0.5 flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
                             <User className="w-2.5 h-2.5" /> {matchingAppt.doctorName}
                           </p>
 
-                          <div className="mt-2 pt-2 border-t flex items-center justify-between text-[9px] font-mono" style={{ borderColor: 'var(--border)' }}>
+                          <div className="mt-2 pt-2 border-t flex items-center justify-between text-2xs font-mono" style={{ borderColor: 'var(--border)' }}>
                             <span style={{ color: 'var(--text-sub)' }}>{matchingAppt.duration}m Duration</span>
                             <div className="flex items-center gap-1 shrink-0">
                               <button
@@ -478,7 +478,7 @@ export default function EnterpriseScheduler({
                             setFormDate(currentDateStr);
                             setIsCreateModalOpen(true);
                           }}
-                          className="w-full h-full rounded text-[10px] font-mono opacity-0 hover:opacity-100 transition-all border border-dashed"
+                          className="w-full h-full rounded text-2xs font-mono opacity-0 hover:opacity-100 transition-all border border-dashed"
                           style={{ borderColor: 'var(--border)', color: 'var(--accent)' }}
                         >
                           + Book Slot
@@ -508,8 +508,8 @@ export default function EnterpriseScheduler({
 
             return (
               <div key={idx} className={`p-3 card-elevated rounded-2xl min-h-[350px] flex flex-col space-y-3 ${isToday ? 'card-gradient' : ''}`}>
-                <div className="border-b pb-2 flex flex-col text-left" style={{ borderColor: 'var(--border)' }}>
-                  <span className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+                <div className="border-b pb-2 flex flex-col text-start" style={{ borderColor: 'var(--border)' }}>
+                  <span className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
                     {weekDay.toLocaleDateString('en-US', { weekday: 'short' })}
                   </span>
                   <span className={`text-sm font-bold font-mono ${isToday ? '' : ''}`} style={{ color: isToday ? 'var(--accent)' : 'var(--text-sub)' }}>
@@ -517,23 +517,23 @@ export default function EnterpriseScheduler({
                   </span>
                 </div>
 
-                <div className="flex-1 space-y-2 overflow-y-auto max-h-[350px] scrollbar-none text-left">
+                <div className="flex-1 space-y-2 overflow-y-auto max-h-[350px] scrollbar-none text-start">
                   {dailyAppts.length > 0 ? (
                     dailyAppts.map(appt => (
                       <div 
                         key={appt.id} 
-                        className={`p-2 rounded-xl border text-[11px] leading-snug space-y-1 card-hover ${getCategoryStyles(appt.category)}`}
+                        className={`p-2 rounded-xl border text-xs leading-snug space-y-1 card-hover ${getCategoryStyles(appt.category)}`}
                       >
                         <div className="flex justify-between items-center font-bold" style={{ color: 'var(--text)' }}>
                           <span className="truncate max-w-[70%]">{appt.patientName}</span>
-                          <span className="text-[8px] font-mono" style={{ color: 'var(--text-muted)' }}>{appt.startTime}</span>
+                          <span className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>{appt.startTime}</span>
                         </div>
-                        <p className="text-[10px] truncate" style={{ color: 'var(--text-sub)' }}>{appt.procedure}</p>
-                        <p className="text-[9px] truncate" style={{ color: 'var(--text-muted)' }}>{appt.chair}</p>
+                        <p className="text-2xs truncate" style={{ color: 'var(--text-sub)' }}>{appt.procedure}</p>
+                        <p className="text-2xs truncate" style={{ color: 'var(--text-muted)' }}>{appt.chair}</p>
                       </div>
                     ))
                   ) : (
-                    <div className="h-full flex items-center justify-center text-[10px] italic" style={{ color: 'var(--text-muted)' }}>
+                    <div className="h-full flex items-center justify-center text-2xs italic" style={{ color: 'var(--text-muted)' }}>
                       No visits
                     </div>
                   )}
@@ -548,7 +548,7 @@ export default function EnterpriseScheduler({
       {selectedView === 'month' && (
         <div className="grid grid-cols-7 gap-1 rounded-xl overflow-hidden card-elevated">
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(w => (
-            <div key={w} className="p-2 text-center text-[10px] font-mono font-bold border-b" style={{ borderColor: 'var(--border)', color: 'var(--text-sub)', background: 'var(--surface-2)' }}>
+            <div key={w} className="p-2 text-center text-2xs font-mono font-bold border-b" style={{ borderColor: 'var(--border)', color: 'var(--text-sub)', background: 'var(--surface-2)' }}>
               {w}
             </div>
           ))}
@@ -565,25 +565,25 @@ export default function EnterpriseScheduler({
             return (
               <div 
                 key={idx} 
-                className={`p-1.5 min-h-[75px] border-b border-r flex flex-col justify-between text-left ${
+                className={`p-1.5 min-h-[75px] border-b border-e flex flex-col justify-between text-start ${
                   isCurrentMonth ? '' : 'opacity-50'
                 }`}
                 style={{ borderColor: 'var(--border)' }}
               >
-                <span className="text-[10px] font-mono font-bold" style={{ color: 'var(--text-muted)' }}>
+                <span className="text-2xs font-mono font-bold" style={{ color: 'var(--text-muted)' }}>
                   {cellDate.getDate()}
                 </span>
                 <div className="mt-1 space-y-1">
                   {cellAppts.slice(0, 2).map(appt => (
                     <div 
                       key={appt.id} 
-                      className={`px-1 py-0.5 rounded text-[8px] font-mono truncate border ${getCategoryStyles(appt.category)}`}
+                      className={`px-1 py-0.5 rounded text-2xs font-mono truncate border ${getCategoryStyles(appt.category)}`}
                     >
                       {appt.startTime} {appt.patientName.split(' ')[0]}
                     </div>
                   ))}
                   {cellAppts.length > 2 && (
-                    <span className="text-[8px] font-mono pl-1" style={{ color: 'var(--accent)' }}>
+                    <span className="text-2xs font-mono ps-1" style={{ color: 'var(--accent)' }}>
                       +{cellAppts.length - 2} more
                     </span>
                   )}
@@ -604,7 +604,7 @@ export default function EnterpriseScheduler({
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="card-elevated rounded-2xl max-w-md w-full p-6 text-left shadow-2xl"
+              className="card-elevated rounded-2xl max-w-md w-full p-6 text-start shadow-card"
             >
               <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--border)' }}>
                 <h3 className="text-sm font-bold font-mono" style={{ color: 'var(--text)' }}>Quick Edit Appointment</h3>
@@ -619,7 +619,7 @@ export default function EnterpriseScheduler({
               <div className="space-y-4 pt-4 text-xs" style={{ color: 'var(--text-sub)' }}>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient</label>
                     <input 
                       type="text" 
                       value={editingAppt.patientName}
@@ -629,7 +629,7 @@ export default function EnterpriseScheduler({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Doctor</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Doctor</label>
                     <select
                       value={editingAppt.doctorId}
                       onChange={(e) => {
@@ -648,7 +648,7 @@ export default function EnterpriseScheduler({
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Procedure</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Procedure</label>
                     <input 
                       type="text" 
                       value={editingAppt.procedure}
@@ -658,7 +658,7 @@ export default function EnterpriseScheduler({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Chair</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Chair</label>
                     <select
                       value={editingAppt.chair}
                       onChange={(e) => setEditingAppt({ ...editingAppt, chair: e.target.value })}
@@ -674,7 +674,7 @@ export default function EnterpriseScheduler({
 
                 <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Date</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Date</label>
                     <input 
                       type="date" 
                       value={editingAppt.date}
@@ -684,7 +684,7 @@ export default function EnterpriseScheduler({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Start Time</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Start Time</label>
                     <select
                       value={editingAppt.startTime}
                       onChange={(e) => setEditingAppt({ ...editingAppt, startTime: e.target.value })}
@@ -697,7 +697,7 @@ export default function EnterpriseScheduler({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Duration (m)</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Duration (m)</label>
                     <input 
                       type="number" 
                       value={editingAppt.duration}
@@ -709,14 +709,14 @@ export default function EnterpriseScheduler({
                 </div>
 
                 <div>
-                  <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Status</label>
+                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Status</label>
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {(['Confirmed', 'Pending', 'In-Progress', 'Completed', 'Cancelled'] as const).map(s => (
                       <button
                         key={s}
                         type="button"
                         onClick={() => setEditingAppt({ ...editingAppt, status: s })}
-                        className={`px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all ${
+                        className={`px-3 py-1.5 rounded-lg text-2xs font-mono font-bold transition-all ${
                           editingAppt.status === s 
                             ? 'btn-primary' 
                             : 'btn-ghost'
@@ -758,7 +758,7 @@ export default function EnterpriseScheduler({
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="card-elevated rounded-2xl max-w-md w-full p-6 text-left shadow-2xl"
+              className="card-elevated rounded-2xl max-w-md w-full p-6 text-start shadow-card"
             >
               <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--border)' }}>
                 <h3 className="text-sm font-bold font-mono" style={{ color: 'var(--text)' }}>Create New Appointment</h3>
@@ -773,7 +773,7 @@ export default function EnterpriseScheduler({
               <div className="space-y-4 pt-4 text-xs" style={{ color: 'var(--text-sub)' }}>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient</label>
                     <select
                       value={formPatientId}
                       onChange={(e) => setFormPatientId(e.target.value)}
@@ -786,7 +786,7 @@ export default function EnterpriseScheduler({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Doctor</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Doctor</label>
                     <select
                       value={formDoctorId}
                       onChange={(e) => setFormDoctorId(e.target.value)}
@@ -802,7 +802,7 @@ export default function EnterpriseScheduler({
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Procedure</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Procedure</label>
                     <input 
                       type="text" 
                       value={formProcedure}
@@ -812,7 +812,7 @@ export default function EnterpriseScheduler({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Chair</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Chair</label>
                     <select
                       value={formChair}
                       onChange={(e) => setFormChair(e.target.value)}
@@ -828,7 +828,7 @@ export default function EnterpriseScheduler({
 
                 <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Date</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Date</label>
                     <input 
                       type="date" 
                       value={formDate}
@@ -838,7 +838,7 @@ export default function EnterpriseScheduler({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Time</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Time</label>
                     <select
                       value={formTime}
                       onChange={(e) => setFormTime(e.target.value)}
@@ -851,7 +851,7 @@ export default function EnterpriseScheduler({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Duration (m)</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Duration (m)</label>
                     <input 
                       type="number" 
                       value={formDuration}
@@ -864,7 +864,7 @@ export default function EnterpriseScheduler({
 
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Category</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Category</label>
                     <select
                       value={formCategory}
                       onChange={(e) => setFormCategory(e.target.value as any)}
@@ -884,7 +884,7 @@ export default function EnterpriseScheduler({
                       onChange={(e) => setFormIsRecurring(e.target.checked)}
                       className="rounded border" style={{ background: 'var(--surface-2)', borderColor: 'var(--border)', accentColor: 'var(--accent)' }}
                     />
-                    <label htmlFor="recurring-check" className="text-[11px] select-none" style={{ color: 'var(--text-sub)' }}>Recurring Weekly (3 wks)</label>
+                    <label htmlFor="recurring-check" className="text-xs select-none" style={{ color: 'var(--text-sub)' }}>Recurring Weekly (3 wks)</label>
                   </div>
                 </div>
               </div>

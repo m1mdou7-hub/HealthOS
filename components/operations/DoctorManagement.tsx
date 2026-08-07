@@ -87,13 +87,13 @@ export default function DoctorManagement({
         {doctors.map((doctor) => (
           <div
             key={doctor.id}
-            className="p-5 card-elevated card-hover rounded-2xl text-left space-y-4 transition-all flex flex-col justify-between"
+            className="p-5 card-elevated card-hover rounded-2xl text-start space-y-4 transition-all flex flex-col justify-between"
           >
             {/* Header */}
             <div className="space-y-1">
               <div className="flex items-start justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>{doctor.id}</span>
-                <span className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase ${getStatusBadge(doctor.status)}`}>
+                <span className="text-2xs font-mono uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>{doctor.id}</span>
+                <span className={`px-2 py-0.5 rounded text-2xs font-mono font-bold uppercase ${getStatusBadge(doctor.status)}`}>
                   {doctor.status}
                 </span>
               </div>
@@ -113,20 +113,20 @@ export default function DoctorManagement({
                   {doctor.breaks.map(b => `${b.start}-${b.end}`).join(', ')}
                 </span>
               </div>
-              <div className="pt-1.5 border-t flex items-center gap-1 text-[9px] font-mono uppercase font-bold" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
+              <div className="pt-1.5 border-t flex items-center gap-1 text-2xs font-mono uppercase font-bold" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
                 <ShieldAlert className="w-3 h-3" style={{ color: 'var(--success)' }} /> Conflict Protection: Active
               </div>
             </div>
 
             {/* Status Change Controls */}
             <div className="space-y-1.5">
-              <span className="text-[9px] font-mono uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Quick Status Switch:</span>
+              <span className="text-2xs font-mono uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Quick Status Switch:</span>
               <div className="grid grid-cols-4 gap-1">
                 {(['Active', 'Break', 'On Leave', 'Vacation'] as const).map((st) => (
                   <button
                     key={st}
                     onClick={() => handleStatusChange(doctor.id, st)}
-                    className={`py-1 rounded text-[8px] font-mono font-black transition-all ${
+                    className={`py-1 rounded text-2xs font-mono font-black transition-all ${
                       doctor.status === st 
                         ? 'btn-primary' 
                         : 'btn-ghost'
@@ -149,7 +149,7 @@ export default function DoctorManagement({
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="card-elevated rounded-2xl max-w-sm w-full p-6 text-left shadow-2xl"
+              className="card-elevated rounded-2xl max-w-sm w-full p-6 text-start shadow-card"
             >
               <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--border)' }}>
                 <h3 className="text-sm font-bold font-mono" style={{ color: 'var(--text)' }}>Leave & Vacation Dispatch</h3>
@@ -163,7 +163,7 @@ export default function DoctorManagement({
 
               <div className="space-y-4 pt-4 text-xs" style={{ color: 'var(--text-sub)' }}>
                 <div>
-                  <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Select Clinician</label>
+                  <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Select Clinician</label>
                   <select
                     value={selectedDoctor?.id || ''}
                     onChange={(e) => setSelectedDoctor(doctors.find(d => d.id === e.target.value) || null)}
@@ -178,7 +178,7 @@ export default function DoctorManagement({
 
                 <div className="grid grid-cols-1 gap-3">
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Planned Start Date</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Planned Start Date</label>
                     <input 
                       type="date"
                       value={leaveDate}
@@ -188,7 +188,7 @@ export default function DoctorManagement({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Leave Description / Reason</label>
+                    <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Leave Description / Reason</label>
                     <input 
                       type="text"
                       value={leaveReason}

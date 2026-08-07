@@ -389,12 +389,12 @@ export default function PermissionTemplateManager({
     return (
       <div className="flex flex-wrap gap-1 mt-1.5">
         {all.slice(0, 3).map((tag) => (
-          <span key={tag} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
+          <span key={tag} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
             {tag}
           </span>
         ))}
         {all.length > 3 && (
-          <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500">
+          <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500">
             +{all.length - 3}
           </span>
         )}
@@ -436,7 +436,7 @@ export default function PermissionTemplateManager({
           </button>
         </div>
         {matrixStatus && (
-          <span className="text-[11px] font-bold px-3 py-1.5 rounded-xl border bg-emerald-500/10 border-emerald-500/30 text-emerald-300 flex items-center gap-2">
+          <span className="text-xs font-bold px-3 py-1.5 rounded-xl border bg-emerald-500/10 border-emerald-500/30 text-emerald-300 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4" /> {tDir(matrixStatus)}
           </span>
         )}
@@ -445,15 +445,15 @@ export default function PermissionTemplateManager({
       {/* Stats strip */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
         <div className="p-3 card-elevated rounded-2xl">
-          <p className="text-[9px] font-mono text-zinc-500 uppercase">{t('activeTemplates')}</p>
+          <p className="text-2xs font-mono text-zinc-500 uppercase">{t('activeTemplates')}</p>
           <p className="text-xl font-black text-white">{activeCount}</p>
         </div>
         <div className="p-3 card-elevated rounded-2xl">
-          <p className="text-[9px] font-mono text-zinc-500 uppercase">{t('archivedTemplates')}</p>
+          <p className="text-2xs font-mono text-zinc-500 uppercase">{t('archivedTemplates')}</p>
           <p className="text-xl font-black text-white">{archivedCount}</p>
         </div>
         <div className="p-3 card-elevated rounded-2xl col-span-2">
-          <p className="text-[9px] font-mono text-zinc-500 uppercase flex items-center gap-1.5">
+          <p className="text-2xs font-mono text-zinc-500 uppercase flex items-center gap-1.5">
             <Crown className="w-3 h-3 text-amber-400" /> {t('defaultTemplate')}
           </p>
           <p className="text-sm font-black text-amber-300 truncate">{defaultTemplate?.name ?? t('none')}</p>
@@ -465,12 +465,12 @@ export default function PermissionTemplateManager({
         <div className="p-3.5 card-elevated rounded-3xl space-y-3 flex flex-col h-[560px] overflow-hidden">
           <div className="space-y-2 shrink-0">
             <div className="relative">
-              <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500" />
+              <Search className="w-3.5 h-3.5 absolute start-2.5 top-1/2 -translate-y-1/2 text-zinc-500" />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('searchPlaceholder')}
-                className="w-full pl-8 pr-3 py-1.5 rounded-xl text-xs text-white outline-none bg-zinc-950 border border-zinc-800 focus:border-purple-500/50"
+                className="w-full ps-8 pe-3 py-1.5 rounded-xl text-xs text-white outline-none bg-zinc-950 border border-zinc-800 focus:border-purple-500/50"
               />
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -480,7 +480,7 @@ export default function PermissionTemplateManager({
                   <button
                     key={cat.id}
                     onClick={() => setCategoryFilter(cat.id)}
-                    className={`px-2 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
+                    className={`px-2 py-1 rounded-lg text-2xs font-bold border transition-all cursor-pointer ${
                       categoryFilter === cat.id
                         ? 'bg-purple-500/15 text-purple-300 border-purple-500/40'
                         : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700'
@@ -490,7 +490,7 @@ export default function PermissionTemplateManager({
                   </button>
                 ))}
             </div>
-            <label className="flex items-center gap-2 text-[10px] font-mono text-zinc-500 cursor-pointer">
+            <label className="flex items-center gap-2 text-2xs font-mono text-zinc-500 cursor-pointer">
               <input
                 type="checkbox"
                 checked={showArchived}
@@ -501,7 +501,7 @@ export default function PermissionTemplateManager({
             </label>
           </div>
 
-          <div className="flex-1 overflow-y-auto pr-1 space-y-1">
+          <div className="flex-1 overflow-y-auto pe-1 space-y-1">
             {filteredTemplates.length === 0 && (
               <p className="text-center text-xs text-zinc-600 py-8">{t('noTemplates')}</p>
             )}
@@ -521,32 +521,32 @@ export default function PermissionTemplateManager({
                   <div className="flex items-center gap-2 justify-between">
                     <div className="flex items-center gap-2 min-w-0">
                       <Icon className={`w-3.5 h-3.5 shrink-0 ${tpl.archived ? 'text-zinc-600' : 'text-zinc-300'}`} />
-                      <span className={`text-[11px] font-bold truncate ${tpl.archived ? 'text-zinc-500 line-through' : 'text-white'}`}>
+                      <span className={`text-xs font-bold truncate ${tpl.archived ? 'text-zinc-500 line-through' : 'text-white'}`}>
                         {tpl.name}
                       </span>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
                       {tpl.isDefault && !tpl.archived && (
-                        <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-0.5">
+                        <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-0.5">
                           <Crown className="w-2.5 h-2.5" /> {t('defaultBadge')}
                         </span>
                       )}
                       {tpl.archived && (
-                        <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-500 border border-zinc-800">
+                        <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-500 border border-zinc-800">
                           {t('archivedBadge')}
                         </span>
                       )}
-                      <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-500 border border-zinc-800">
+                      <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-500 border border-zinc-800">
                         v{tpl.version ?? 1}
                       </span>
                     </div>
                   </div>
-                  <p className="text-[9px] text-zinc-500 truncate mt-0.5">{tpl.description || '—'}</p>
+                  <p className="text-2xs text-zinc-500 truncate mt-0.5">{tpl.description || '—'}</p>
                   <div className="flex items-center justify-between mt-1">
-                    <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded border ${CATEGORY_STYLES[tpl.category ?? 'general']}`}>
+                    <span className={`text-2xs font-mono px-1.5 py-0.5 rounded border ${CATEGORY_STYLES[tpl.category ?? 'general']}`}>
                       {t(`categories.${tpl.category ?? 'general'}`)}
                     </span>
-                    <span className="text-[8px] font-mono text-zinc-600">
+                    <span className="text-2xs font-mono text-zinc-600">
                       {tDir(`scopes.${tpl.scope}`)}
                     </span>
                   </div>
@@ -572,24 +572,24 @@ export default function PermissionTemplateManager({
                       <h3 className="text-sm font-black text-white uppercase tracking-tight flex items-center gap-2">
                         {selectedTemplate.name}
                         {selectedTemplate.isDefault && !selectedTemplate.archived && (
-                          <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-0.5">
+                          <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-0.5">
                             <Crown className="w-2.5 h-2.5" /> {t('defaultBadge')}
                           </span>
                         )}
                       </h3>
-                      <p className="text-[11px] text-zinc-500 mt-0.5 truncate">{selectedTemplate.description || '—'}</p>
+                      <p className="text-xs text-zinc-500 mt-0.5 truncate">{selectedTemplate.description || '—'}</p>
                       <div className="flex flex-wrap items-center gap-2 mt-1.5">
-                        <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ${CATEGORY_STYLES[selectedTemplate.category ?? 'general']}`}>
+                        <span className={`text-2xs font-mono px-1.5 py-0.5 rounded border ${CATEGORY_STYLES[selectedTemplate.category ?? 'general']}`}>
                           {t(`categories.${selectedTemplate.category ?? 'general'}`)}
                         </span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-400">
+                        <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-400">
                           v{selectedTemplate.version ?? 1}
                         </span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-400">
+                        <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-400">
                           {countTemplatePermissions(selectedTemplate)} {t('grantedCellCount')}
                         </span>
                         {selectedTemplate.updatedAt && (
-                          <span className="text-[9px] font-mono text-zinc-600">
+                          <span className="text-2xs font-mono text-zinc-600">
                             {t('updatedAt')}: {new Date(selectedTemplate.updatedAt).toLocaleDateString()}
                           </span>
                         )}
@@ -598,18 +598,18 @@ export default function PermissionTemplateManager({
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-1.5 shrink-0">
-                    <button onClick={openEdit} disabled={!selectedActive} className="btn-secondary px-2.5 py-1.5 text-[11px] font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-40">
+                    <button onClick={openEdit} disabled={!selectedActive} className="btn-secondary px-2.5 py-1.5 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-40">
                       <Pencil className="w-3.5 h-3.5" /> {t('editTemplate')}
                     </button>
-                    <button onClick={handleDuplicate} className="btn-secondary px-2.5 py-1.5 text-[11px] font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer">
+                    <button onClick={handleDuplicate} className="btn-secondary px-2.5 py-1.5 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer">
                       <Copy className="w-3.5 h-3.5" /> {t('duplicateTemplate')}
                     </button>
                     {selectedTemplate.archived ? (
-                      <button onClick={handleRestore} className="btn-secondary px-2.5 py-1.5 text-[11px] font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer">
+                      <button onClick={handleRestore} className="btn-secondary px-2.5 py-1.5 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer">
                         <RotateCcw className="w-3.5 h-3.5" /> {t('restoreTemplate')}
                       </button>
                     ) : (
-                      <button onClick={handleArchive} className="btn-secondary px-2.5 py-1.5 text-[11px] font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer text-rose-300">
+                      <button onClick={handleArchive} className="btn-secondary px-2.5 py-1.5 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer text-rose-300">
                         <Archive className="w-3.5 h-3.5" /> {t('archiveTemplate')}
                       </button>
                     )}
@@ -621,37 +621,37 @@ export default function PermissionTemplateManager({
                   <button
                     onClick={() => { setCloneSourceId(''); setCloneOpen(true); }}
                     disabled={!selectedActive}
-                    className="btn-secondary px-2.5 py-1.5 text-[11px] font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-40"
+                    className="btn-secondary px-2.5 py-1.5 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-40"
                   >
                     <Copy className="w-3.5 h-3.5" /> {t('cloneFromTemplate')}
                   </button>
                   <button
                     onClick={() => setPreviewOpen(true)}
-                    className="btn-secondary px-2.5 py-1.5 text-[11px] font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer"
+                    className="btn-secondary px-2.5 py-1.5 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer"
                   >
                     <Eye className="w-3.5 h-3.5" /> {t('previewTemplate')}
                   </button>
                   <button
                     onClick={() => { setAssignSelected(new Set()); setAssignOpen(true); }}
                     disabled={!selectedActive}
-                    className="btn-secondary px-2.5 py-1.5 text-[11px] font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-40"
+                    className="btn-secondary px-2.5 py-1.5 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-40"
                   >
                     <Users className="w-3.5 h-3.5" /> {t('assignTemplate')}
                   </button>
                   <button
                     onClick={handleSetDefault}
                     disabled={!selectedActive || selectedTemplate.isDefault}
-                    className="btn-secondary px-2.5 py-1.5 text-[11px] font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-40 text-amber-300"
+                    className="btn-secondary px-2.5 py-1.5 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-40 text-amber-300"
                   >
                     <Star className="w-3.5 h-3.5" /> {t('setDefault')}
                   </button>
                   <button
                     onClick={() => setHistoryOpen(true)}
-                    className="btn-secondary px-2.5 py-1.5 text-[11px] font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer"
+                    className="btn-secondary px-2.5 py-1.5 text-xs font-bold rounded-xl inline-flex items-center gap-1.5 cursor-pointer"
                   >
                     <History className="w-3.5 h-3.5" /> {t('versionHistory')}
                   </button>
-                  <span className="ml-auto text-[9px] font-mono text-zinc-600">
+                  <span className="ms-auto text-2xs font-mono text-zinc-600">
                     {selectedTemplate.history?.length ?? 0} {t('revisionsCount')}
                   </span>
                 </div>
@@ -659,7 +659,7 @@ export default function PermissionTemplateManager({
 
               {/* Access scope selector */}
               <div className="p-4 card-elevated rounded-3xl space-y-2">
-                <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">{tDir('accessScope')}</span>
+                <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">{tDir('accessScope')}</span>
                 <div className="flex flex-wrap gap-1.5">
                   {ACCESS_SCOPES.map((s) => {
                     const active = selectedScope === s.type;
@@ -667,7 +667,7 @@ export default function PermissionTemplateManager({
                       <button
                         key={s.type}
                         onClick={() => handleScopeChange(s.type)}
-                        className={`px-2.5 py-1.5 rounded-xl text-[10px] font-bold font-mono border transition-all cursor-pointer ${
+                        className={`px-2.5 py-1.5 rounded-xl text-2xs font-bold font-mono border transition-all cursor-pointer ${
                           active ? 'bg-purple-500/10 border-purple-500/40 text-purple-200' : 'bg-zinc-950 border-zinc-900 text-zinc-400 hover:border-zinc-700'
                         }`}
                       >
@@ -684,15 +684,15 @@ export default function PermissionTemplateManager({
                   <span className="text-xs font-black text-white font-mono uppercase">
                     {tDir('module')} × {tDir('action')}: <span className="text-purple-400">{selectedTemplate.name}</span>
                   </span>
-                  <span className="text-[9px] font-mono text-zinc-500 bg-zinc-950 px-2 py-0.5 border border-zinc-800 rounded">
+                  <span className="text-2xs font-mono text-zinc-500 bg-zinc-950 px-2 py-0.5 border border-zinc-800 rounded">
                     HIPAA Scope Enforcement
                   </span>
                 </div>
                 <div className="flex-1 overflow-auto scrollbar-thin rounded-xl max-h-[340px]">
                   <table className="w-full border-collapse text-xs font-mono">
                     <thead>
-                      <tr className="bg-zinc-950 text-zinc-500 text-[9px] uppercase font-bold border-b border-zinc-900 sticky top-0">
-                        <th className="p-2 text-left w-40">{tDir('module')}</th>
+                      <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold border-b border-zinc-900 sticky top-0">
+                        <th className="p-2 text-start w-40">{tDir('module')}</th>
                         {PERMISSION_ACTIONS.map((a) => (
                           <th key={a} className="p-2 text-center">{tDir(`actions.${a}`)}</th>
                         ))}
@@ -701,7 +701,7 @@ export default function PermissionTemplateManager({
                     <tbody className="divide-y divide-zinc-900/60 text-zinc-300">
                       {PERMISSION_MODULES.map((mod) => (
                         <tr key={mod.id} className="hover:bg-zinc-900/20">
-                          <td className="p-2 text-[11px] font-bold text-white">{mod.name}</td>
+                          <td className="p-2 text-xs font-bold text-white">{mod.name}</td>
                           {PERMISSION_ACTIONS.map((a) => {
                             const checked = hasPermission(selectedTemplate.modulePermissions, mod.id, a);
                             return (
@@ -724,7 +724,7 @@ export default function PermissionTemplateManager({
                     </tbody>
                   </table>
                 </div>
-                <div className="pt-2 mt-2 border-t border-zinc-900 flex items-center justify-between font-mono text-[9px] text-zinc-500 shrink-0">
+                <div className="pt-2 mt-2 border-t border-zinc-900 flex items-center justify-between font-mono text-2xs text-zinc-500 shrink-0">
                   <span>LAST AUDITED: {new Date().toLocaleDateString()}</span>
                   <span className="text-purple-400 font-bold">MUTABLE ON-THE-FLY · {tDir('customOverride')}</span>
                 </div>
@@ -751,7 +751,7 @@ export default function PermissionTemplateManager({
             </div>
 
             <div className="space-y-1">
-              <label className="text-[10px] text-zinc-400 font-bold uppercase">{t('templateName')}</label>
+              <label className="text-2xs text-zinc-400 font-bold uppercase">{t('templateName')}</label>
               <input
                 value={form.name}
                 onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
@@ -759,7 +759,7 @@ export default function PermissionTemplateManager({
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] text-zinc-400 font-bold uppercase">{t('templateDescription')}</label>
+              <label className="text-2xs text-zinc-400 font-bold uppercase">{t('templateDescription')}</label>
               <textarea
                 value={form.description}
                 onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
@@ -770,7 +770,7 @@ export default function PermissionTemplateManager({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
-                <label className="text-[10px] text-zinc-400 font-bold uppercase">{t('category')}</label>
+                <label className="text-2xs text-zinc-400 font-bold uppercase">{t('category')}</label>
                 <select
                   value={form.category}
                   onChange={(e) => setForm((p) => ({ ...p, category: e.target.value as PermissionTemplateCategory }))}
@@ -782,7 +782,7 @@ export default function PermissionTemplateManager({
                 </select>
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('accessScope')}</label>
+                <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('accessScope')}</label>
                 <select
                   value={form.scope}
                   onChange={(e) => setForm((p) => ({ ...p, scope: e.target.value as AccessScopeType }))}
@@ -797,7 +797,7 @@ export default function PermissionTemplateManager({
 
             {form.category === 'department' && (
               <div className="space-y-1.5">
-                <label className="text-[10px] text-zinc-400 font-bold uppercase flex items-center gap-1.5">
+                <label className="text-2xs text-zinc-400 font-bold uppercase flex items-center gap-1.5">
                   <Building2 className="w-3 h-3 text-sky-400" /> {t('departmentTags')}
                 </label>
                 <div className="flex flex-wrap gap-1.5">
@@ -810,7 +810,7 @@ export default function PermissionTemplateManager({
                           ...p,
                           departmentIds: active ? p.departmentIds.filter((x) => x !== d.id) : [...p.departmentIds, d.id]
                         }))}
-                        className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
+                        className={`px-2.5 py-1 rounded-lg text-2xs font-bold border transition-all cursor-pointer ${
                           active ? 'bg-sky-500/15 text-sky-300 border-sky-500/40' : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700'
                         }`}
                       >
@@ -824,7 +824,7 @@ export default function PermissionTemplateManager({
 
             {form.category === 'practice' && (
               <div className="space-y-1.5">
-                <label className="text-[10px] text-zinc-400 font-bold uppercase flex items-center gap-1.5">
+                <label className="text-2xs text-zinc-400 font-bold uppercase flex items-center gap-1.5">
                   <Sparkles className="w-3 h-3 text-violet-400" /> {t('practiceTypeTags')}
                 </label>
                 <div className="flex flex-wrap gap-1.5">
@@ -837,7 +837,7 @@ export default function PermissionTemplateManager({
                           ...p,
                           practiceTypeIds: active ? p.practiceTypeIds.filter((x) => x !== pt.id) : [...p.practiceTypeIds, pt.id]
                         }))}
-                        className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
+                        className={`px-2.5 py-1 rounded-lg text-2xs font-bold border transition-all cursor-pointer ${
                           active ? 'bg-violet-500/15 text-violet-300 border-violet-500/40' : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700'
                         }`}
                       >
@@ -851,7 +851,7 @@ export default function PermissionTemplateManager({
 
             {form.category === 'responsibility' && (
               <div className="space-y-1.5">
-                <label className="text-[10px] text-zinc-400 font-bold uppercase flex items-center gap-1.5">
+                <label className="text-2xs text-zinc-400 font-bold uppercase flex items-center gap-1.5">
                   <UserCheck className="w-3 h-3 text-emerald-400" /> {t('responsibilityTags')}
                 </label>
                 <div className="flex flex-wrap gap-1.5">
@@ -864,7 +864,7 @@ export default function PermissionTemplateManager({
                           ...p,
                           responsibilityIds: active ? p.responsibilityIds.filter((x) => x !== r.id) : [...p.responsibilityIds, r.id]
                         }))}
-                        className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
+                        className={`px-2.5 py-1 rounded-lg text-2xs font-bold border transition-all cursor-pointer ${
                           active ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40' : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700'
                         }`}
                       >
@@ -899,7 +899,7 @@ export default function PermissionTemplateManager({
               {t('cloneFromHint')} <span className="text-purple-300 font-bold">{selectedTemplate.name}</span>.
             </p>
             <div className="space-y-1">
-              <label className="text-[10px] text-zinc-400 font-bold uppercase">{t('sourceTemplate')}</label>
+              <label className="text-2xs text-zinc-400 font-bold uppercase">{t('sourceTemplate')}</label>
               <select
                 value={cloneSourceId}
                 onChange={(e) => setCloneSourceId(e.target.value)}
@@ -933,7 +933,7 @@ export default function PermissionTemplateManager({
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="flex flex-wrap gap-2 text-[10px] font-mono">
+            <div className="flex flex-wrap gap-2 text-2xs font-mono">
               <span className={`px-2 py-1 rounded-lg border ${CATEGORY_STYLES[selectedTemplate.category ?? 'general']}`}>
                 {t(`categories.${selectedTemplate.category ?? 'general'}`)}
               </span>
@@ -948,8 +948,8 @@ export default function PermissionTemplateManager({
             <div className="overflow-auto scrollbar-thin rounded-xl max-h-[520px] border border-zinc-900">
               <table className="w-full border-collapse text-xs font-mono">
                 <thead>
-                  <tr className="bg-zinc-950 text-zinc-500 text-[9px] uppercase font-bold border-b border-zinc-900 sticky top-0">
-                    <th className="p-2 text-left w-40">{tDir('module')}</th>
+                  <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold border-b border-zinc-900 sticky top-0">
+                    <th className="p-2 text-start w-40">{tDir('module')}</th>
                     {PERMISSION_ACTIONS.map((a) => (
                       <th key={a} className="p-2 text-center">{tDir(`actions.${a}`)}</th>
                     ))}
@@ -958,7 +958,7 @@ export default function PermissionTemplateManager({
                 <tbody className="divide-y divide-zinc-900/60 text-zinc-300">
                   {PERMISSION_MODULES.map((mod) => (
                     <tr key={mod.id} className="hover:bg-zinc-900/20">
-                      <td className="p-2 text-[11px] font-bold text-white">{mod.name}</td>
+                      <td className="p-2 text-xs font-bold text-white">{mod.name}</td>
                       {PERMISSION_ACTIONS.map((a) => {
                         const checked = hasPermission(selectedTemplate.modulePermissions, mod.id, a);
                         return (
@@ -993,13 +993,13 @@ export default function PermissionTemplateManager({
               </button>
             </div>
             <div className="flex items-center gap-2 flex-wrap">
-              <button onClick={selectAllVisible} className="btn-secondary px-3 py-1.5 text-[11px] font-bold rounded-xl cursor-pointer">
-                <Check className="w-3.5 h-3.5 inline mr-1" /> {t('selectAll')}
+              <button onClick={selectAllVisible} className="btn-secondary px-3 py-1.5 text-xs font-bold rounded-xl cursor-pointer">
+                <Check className="w-3.5 h-3.5 inline me-1" /> {t('selectAll')}
               </button>
-              <button onClick={clearAssignSelection} className="btn-secondary px-3 py-1.5 text-[11px] font-bold rounded-xl cursor-pointer">
+              <button onClick={clearAssignSelection} className="btn-secondary px-3 py-1.5 text-xs font-bold rounded-xl cursor-pointer">
                 {t('clearSelection')}
               </button>
-              <span className="text-[10px] font-mono text-zinc-500 ml-auto">{assignSelected.size}/{users.length} {t('usersSelected')}</span>
+              <span className="text-2xs font-mono text-zinc-500 ms-auto">{assignSelected.size}/{users.length} {t('usersSelected')}</span>
             </div>
             <div className="border border-zinc-900 rounded-2xl divide-y divide-zinc-900/60 max-h-[320px] overflow-y-auto">
               {users.length === 0 && (
@@ -1016,8 +1016,8 @@ export default function PermissionTemplateManager({
                       className="accent-purple-500"
                     />
                     <span className="text-xs font-bold text-white">{u.name}</span>
-                    <span className="text-[10px] font-mono text-zinc-500">{u.role}</span>
-                    <span className="ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500">
+                    <span className="text-2xs font-mono text-zinc-500">{u.role}</span>
+                    <span className="ms-auto text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500">
                       {u.permissionTemplateId
                         ? templates.find((x) => x.id === u.permissionTemplateId)?.name ?? u.permissionTemplateId
                         : '—'}
@@ -1071,7 +1071,7 @@ export default function PermissionTemplateManager({
 
             {templateA && templateB && (
               <>
-                <div className="flex items-center justify-between text-[11px] font-mono">
+                <div className="flex items-center justify-between text-xs font-mono">
                   <span className="text-purple-300 font-bold">A · {templateA.name}</span>
                   <span className="text-zinc-500">{diffCount}/{PERMISSION_MODULES.length} {t('modulesDiffer')}</span>
                   <span className="text-sky-300 font-bold">B · {templateB.name}</span>
@@ -1079,8 +1079,8 @@ export default function PermissionTemplateManager({
                 <div className="overflow-auto scrollbar-thin rounded-xl max-h-[380px] border border-zinc-900">
                   <table className="w-full border-collapse text-xs font-mono">
                     <thead>
-                      <tr className="bg-zinc-950 text-zinc-500 text-[9px] uppercase font-bold border-b border-zinc-900 sticky top-0">
-                        <th className="p-2 text-left w-40">{tDir('module')}</th>
+                      <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold border-b border-zinc-900 sticky top-0">
+                        <th className="p-2 text-start w-40">{tDir('module')}</th>
                         <th className="p-2">{t('onlyInA')}</th>
                         <th className="p-2">{t('onlyInB')}</th>
                         <th className="p-2">{t('inBoth')}</th>
@@ -1091,11 +1091,11 @@ export default function PermissionTemplateManager({
                         const changed = d.onlyInA.length > 0 || d.onlyInB.length > 0;
                         return (
                           <tr key={d.module} className={`${changed ? 'bg-purple-500/[0.04]' : 'opacity-50'} hover:bg-zinc-900/20`}>
-                            <td className="p-2 text-[11px] font-bold text-white">{d.moduleName}</td>
+                            <td className="p-2 text-xs font-bold text-white">{d.moduleName}</td>
                             <td className="p-2">
                               <div className="flex flex-wrap gap-1">
                                 {d.onlyInA.map((a) => (
-                                  <span key={a} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                                  <span key={a} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">
                                     {a}
                                   </span>
                                 ))}
@@ -1104,7 +1104,7 @@ export default function PermissionTemplateManager({
                             <td className="p-2">
                               <div className="flex flex-wrap gap-1">
                                 {d.onlyInB.map((a) => (
-                                  <span key={a} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">
+                                  <span key={a} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">
                                     {a}
                                   </span>
                                 ))}
@@ -1113,7 +1113,7 @@ export default function PermissionTemplateManager({
                             <td className="p-2">
                               <div className="flex flex-wrap gap-1">
                                 {d.inBoth.map((a) => (
-                                  <span key={a} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-500 border border-zinc-800">
+                                  <span key={a} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-500 border border-zinc-800">
                                     {a}
                                   </span>
                                 ))}
@@ -1143,23 +1143,23 @@ export default function PermissionTemplateManager({
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="text-[10px] font-mono text-zinc-500">
+            <div className="text-2xs font-mono text-zinc-500">
               {t('currentVersion')}: <span className="text-amber-300 font-bold">v{selectedTemplate.version ?? 1}</span>
             </div>
             <div className="space-y-2">
               {(selectedTemplate.history ?? []).slice().reverse().map((h, i) => (
                 <div key={i} className="p-3 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold text-white">{t(`historyActions.${h.action}`) ?? h.action}</span>
-                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-500 border border-zinc-800">
+                    <span className="text-xs font-bold text-white">{t(`historyActions.${h.action}`) ?? h.action}</span>
+                    <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-500 border border-zinc-800">
                       v{h.version}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-[9px] font-mono text-zinc-500">
+                  <div className="flex items-center justify-between text-2xs font-mono text-zinc-500">
                     <span>{h.actor}</span>
                     <span>{new Date(h.timestamp).toLocaleString()}</span>
                   </div>
-                  {h.note && <p className="text-[10px] text-zinc-400">{h.note}</p>}
+                  {h.note && <p className="text-2xs text-zinc-400">{h.note}</p>}
                 </div>
               ))}
               {!selectedTemplate.history?.length && (

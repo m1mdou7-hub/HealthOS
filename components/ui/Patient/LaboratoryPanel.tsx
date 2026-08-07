@@ -76,15 +76,15 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
       <div className="flex flex-wrap justify-between items-start gap-3">
         <div className="flex-1 min-w-[200px]">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-[9px] font-mono text-zinc-500 uppercase">{c.id} · {c.createdDate}</span>
-            <span className={`px-2 py-0.5 rounded text-[8px] uppercase font-mono font-bold border ${
+            <span className="text-2xs font-mono text-zinc-500 uppercase">{c.id} · {c.createdDate}</span>
+            <span className={`px-2 py-0.5 rounded text-2xs uppercase font-mono font-bold border ${
               c.priority === 'Urgent'
                 ? 'bg-red-500/10 text-red-400 border-red-500/20'
                 : 'bg-zinc-900 text-zinc-400 border-zinc-800'
             }`}>
               {t('lab_priority')}: {c.priority}
             </span>
-            <span className="text-[9px] font-mono text-zinc-500">{t('lab_clinician')}: {c.clinician}</span>
+            <span className="text-2xs font-mono text-zinc-500">{t('lab_clinician')}: {c.clinician}</span>
           </div>
           <h3 className="text-sm font-bold text-white">{c.name}</h3>
         </div>
@@ -92,8 +92,8 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
         {/* Countdown badge */}
         <div className="flex items-center gap-3 shrink-0">
           {countdown && (
-            <div className={`text-right ${countdown.overdue ? 'text-red-400' : 'text-emerald-400'}`}>
-              <span className="text-[8px] font-mono uppercase block">
+            <div className={`text-end ${countdown.overdue ? 'text-red-400' : 'text-emerald-400'}`}>
+              <span className="text-2xs font-mono uppercase block">
                 {countdown.overdue ? t('lab_overdue') : t('lab_countdown')}
               </span>
               <span className="text-lg font-black font-mono leading-tight">
@@ -114,7 +114,7 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
 
       {/* Stage Kanban Pipeline tracker */}
       <div className="space-y-2">
-        <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">{t('lab_stages_track')}</span>
+        <span className="text-2xs font-mono text-zinc-500 uppercase tracking-widest font-bold block">{t('lab_stages_track')}</span>
         <div className="flex items-center gap-0">
           {STAGES.map((stage, idx) => {
             const isCompleted = idx < stageIndex;
@@ -133,7 +133,7 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
                     isCompleted ? 'bg-zinc-400 border-zinc-400' :
                     'bg-zinc-800 border-zinc-700'
                   }`} />
-                  <span className={`text-[8px] font-mono font-bold whitespace-nowrap ${
+                  <span className={`text-2xs font-mono font-bold whitespace-nowrap ${
                     isActive ? 'text-emerald-400' : isCompleted ? 'text-zinc-400' : 'text-zinc-600'
                   }`}>{stageKey[stage]}</span>
                 </div>
@@ -148,7 +148,7 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
 
       {/* Progress bar */}
       <div className="space-y-1.5">
-        <div className="flex justify-between text-[10px] font-mono text-zinc-500">
+        <div className="flex justify-between text-2xs font-mono text-zinc-500">
           <span>{t('lab_progress')}</span>
           <span className={progress === 100 ? 'text-emerald-400 font-bold' : ''}>{progress}%</span>
         </div>
@@ -164,7 +164,7 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
 
       {/* Shade Picker */}
       <div className="space-y-2 pt-1 border-t border-zinc-900/60">
-        <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">{t('lab_shade_picker')}</span>
+        <span className="text-2xs font-mono text-zinc-500 uppercase tracking-widest font-bold block">{t('lab_shade_picker')}</span>
         <div className="flex gap-1.5 flex-wrap">
           {SHADE_PALETTE.map((shade) => (
             <button
@@ -179,21 +179,21 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
               style={{ backgroundColor: shade.hex }}
             >
               {selectedShade === shade.code && (
-                <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[8px] font-mono text-emerald-400 whitespace-nowrap font-bold">
+                <span className="absolute -bottom-5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 rtl:translate-x-1/2 text-2xs font-mono text-emerald-400 whitespace-nowrap font-bold">
                   {shade.code}
                 </span>
               )}
             </button>
           ))}
         </div>
-        <div className="mt-1 text-[10px] font-mono text-zinc-400">
+        <div className="mt-1 text-2xs font-mono text-zinc-400">
           {t('lab_shade')}: <span className="text-white font-bold">{SHADE_PALETTE.find(s => s.code === selectedShade)?.label}</span>
         </div>
       </div>
 
       {/* Notes */}
       {c.notes && (
-        <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900/60 text-[11px] text-zinc-400 leading-normal">
+        <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900/60 text-xs text-zinc-400 leading-normal">
           <span className="font-bold text-zinc-300 block mb-1">{t('lab_instructions')}:</span>
           {c.notes}
         </div>
@@ -230,14 +230,14 @@ export default function LaboratoryPanel({
   }).length;
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6 text-start">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <FlaskConical className="w-4 h-4 text-emerald-400" /> {t('lab_title')}
           </h3>
-          <p className="text-[11px] text-zinc-400 mt-0.5">{t('lab_desc')}</p>
+          <p className="text-xs text-zinc-400 mt-0.5">{t('lab_desc')}</p>
         </div>
         <button
           onClick={onAddCase}
@@ -259,7 +259,7 @@ export default function LaboratoryPanel({
             <div key={stat.label} className="bg-zinc-950/40 border border-zinc-900 rounded-xl p-3 flex flex-col items-center gap-1 text-center">
               {stat.icon}
               <span className={`text-xl font-black font-mono ${stat.color}`}>{stat.value}</span>
-              <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-wide">{stat.label}</span>
+              <span className="text-2xs text-zinc-500 font-mono uppercase tracking-wide">{stat.label}</span>
             </div>
           ))}
         </div>
@@ -299,13 +299,13 @@ export default function LaboratoryPanel({
                 <div className="flex items-center gap-2">
                   <Box className="w-4 h-4 text-emerald-400" />
                   <div>
-                    <h5 className="text-[11px] font-bold text-zinc-200 truncate max-w-[180px]">{stl.name}</h5>
-                    <span className="text-[9px] font-mono text-zinc-500">{stl.date}</span>
+                    <h5 className="text-xs font-bold text-zinc-200 truncate max-w-[180px]">{stl.name}</h5>
+                    <span className="text-2xs font-mono text-zinc-500">{stl.date}</span>
                   </div>
                 </div>
                 <button
                   onClick={() => alert(`Launching CAD/CAM exocad interactive viewport for design file: ${stl.name}`)}
-                  className="px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] text-zinc-300 rounded flex items-center gap-1 font-mono uppercase transition-colors"
+                  className="px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-2xs text-zinc-300 rounded flex items-center gap-1 font-mono uppercase transition-colors"
                 >
                   <Eye className="w-3.5 h-3.5" /> View
                 </button>

@@ -105,12 +105,12 @@ export default function TreatmentSessionManager({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Log Session Form */}
-        <div className="lg:col-span-7 card-elevated p-5 rounded-2xl space-y-4 text-left">
+        <div className="lg:col-span-7 card-elevated p-5 rounded-2xl space-y-4 text-start">
           <h4 className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>Active Clinical Entry</h4>
           
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient</label>
+              <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Patient</label>
               <select
                 value={patientId}
                 onChange={(e) => setPatientId(e.target.value)}
@@ -123,7 +123,7 @@ export default function TreatmentSessionManager({
               </select>
             </div>
             <div>
-              <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Lead Dentist</label>
+              <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Lead Dentist</label>
               <select
                 value={doctorId}
                 onChange={(e) => setDoctorId(e.target.value)}
@@ -139,7 +139,7 @@ export default function TreatmentSessionManager({
 
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Procedure</label>
+              <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Procedure</label>
               <input 
                 type="text"
                 value={procedure}
@@ -149,7 +149,7 @@ export default function TreatmentSessionManager({
               />
             </div>
             <div>
-              <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Chair Location</label>
+              <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Chair Location</label>
               <select
                 value={chair}
                 onChange={(e) => setChair(e.target.value)}
@@ -162,7 +162,7 @@ export default function TreatmentSessionManager({
               </select>
             </div>
             <div>
-              <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Clinical Assistant</label>
+              <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Clinical Assistant</label>
               <input 
                 type="text"
                 value={assistant}
@@ -175,7 +175,7 @@ export default function TreatmentSessionManager({
 
           {/* Materials checklist */}
           <div>
-            <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Materials Utilized</label>
+            <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Materials Utilized</label>
             <div className="grid grid-cols-2 gap-2 max-h-[120px] overflow-y-auto p-2.5 rounded-xl border" style={{ background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
               {AVAILABLE_MATERIALS.map(m => {
                 const checked = selectedMaterials.includes(m);
@@ -184,7 +184,7 @@ export default function TreatmentSessionManager({
                     key={m}
                     type="button"
                     onClick={() => handleToggleMaterial(m)}
-                    className={`flex items-center gap-2 p-1.5 rounded text-[10px] font-mono font-bold transition-all ${
+                    className={`flex items-center gap-2 p-1.5 rounded text-2xs font-mono font-bold transition-all ${
                       checked 
                         ? 'btn-primary' 
                         : 'btn-ghost'
@@ -199,7 +199,7 @@ export default function TreatmentSessionManager({
           </div>
 
           <div>
-            <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Clinical Notes</label>
+            <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Clinical Notes</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -211,7 +211,7 @@ export default function TreatmentSessionManager({
 
           <div className="grid grid-cols-2 gap-3 items-center">
             <div>
-              <label className="block text-[10px] uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Outcome Status</label>
+              <label className="block text-2xs uppercase font-mono mb-1 font-bold" style={{ color: 'var(--text-muted)' }}>Outcome Status</label>
               <input
                 type="text"
                 value={outcome}
@@ -244,7 +244,7 @@ export default function TreatmentSessionManager({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="p-2.5 font-mono text-[10px] uppercase font-bold rounded-lg border text-center animate-pulse"
+                className="p-2.5 font-mono text-2xs uppercase font-bold rounded-lg border text-center animate-pulse"
                 style={{ background: 'color-mix(in srgb, var(--accent) 15%, transparent)', color: 'var(--accent)', borderColor: 'color-mix(in srgb, var(--accent) 25%, transparent)' }}
               >
                 {syncStatus}
@@ -254,30 +254,30 @@ export default function TreatmentSessionManager({
         </div>
 
         {/* Sync Timeline Output */}
-        <div className="lg:col-span-5 card-elevated p-5 rounded-2xl space-y-4 text-left flex flex-col justify-between">
+        <div className="lg:col-span-5 card-elevated p-5 rounded-2xl space-y-4 text-start flex flex-col justify-between">
           <div>
             <h4 className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>Clinical Sync Log (EHR Feed)</h4>
-            <div className="space-y-4 max-h-[360px] overflow-y-auto pr-1 mt-3 divide-y" style={{ borderColor: 'var(--border)' }}>
+            <div className="space-y-4 max-h-[360px] overflow-y-auto pe-1 mt-3 divide-y" style={{ borderColor: 'var(--border)' }}>
               {sessions.map((sess) => (
                 <div key={sess.id} className="pt-3 first:pt-0 space-y-1.5">
                   <div className="flex justify-between items-start">
                     <div>
                       <p className="font-bold text-xs" style={{ color: 'var(--text)' }}>{sess.patientName}</p>
-                      <p className="text-[10px] font-mono font-bold" style={{ color: 'var(--accent)' }}>{sess.procedure}</p>
+                      <p className="text-2xs font-mono font-bold" style={{ color: 'var(--accent)' }}>{sess.procedure}</p>
                     </div>
-                    <span className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>{sess.timestamp}</span>
+                    <span className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>{sess.timestamp}</span>
                   </div>
-                  <p className="text-[11px] leading-relaxed font-mono p-2 rounded border" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
+                  <p className="text-xs leading-relaxed font-mono p-2 rounded border" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
                     {sess.clinicalNotes}
                   </p>
                   <div className="flex flex-wrap gap-1">
                     {sess.materials.map(m => (
-                      <span key={m} className="px-1.5 py-0.5 rounded border text-[9px] font-mono" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
+                      <span key={m} className="px-1.5 py-0.5 rounded border text-2xs font-mono" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
                         {m.split(' ')[0]}
                       </span>
                     ))}
                   </div>
-                  <div className="text-[10px] flex items-center gap-1" style={{ color: 'var(--success)' }}>
+                  <div className="text-2xs flex items-center gap-1" style={{ color: 'var(--success)' }}>
                     <CheckCircle className="w-3 h-3 shrink-0" style={{ color: 'var(--success)' }} /> Outcome: {sess.outcome}
                   </div>
                 </div>
@@ -290,7 +290,7 @@ export default function TreatmentSessionManager({
             </div>
           </div>
 
-          <div className="p-3 rounded-xl border text-[10px] font-mono flex items-center gap-2" style={{ background: 'color-mix(in srgb, var(--success) 10%, transparent)', borderColor: 'color-mix(in srgb, var(--success) 25%, transparent)', color: 'var(--success)' }}>
+          <div className="p-3 rounded-xl border text-2xs font-mono flex items-center gap-2" style={{ background: 'color-mix(in srgb, var(--success) 10%, transparent)', borderColor: 'color-mix(in srgb, var(--success) 25%, transparent)', color: 'var(--success)' }}>
             <ShieldAlert className="w-3.5 h-3.5 shrink-0" style={{ color: 'var(--success)' }} />
             <span>HIPAA Ledger Locked. All modifications append secure audit hashes.</span>
           </div>

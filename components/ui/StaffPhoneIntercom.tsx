@@ -291,7 +291,7 @@ export default function StaffPhoneIntercom() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="absolute right-0 top-12 w-96 z-[9999] bg-[#09090e] border border-rose-500/20 rounded-3xl shadow-2xl shadow-black/90 overflow-hidden text-right"
+              className="absolute start-0 top-12 w-96 z-[9999] bg-[#09090e] border border-rose-500/20 rounded-3xl shadow-card shadow-black/90 overflow-hidden text-start"
               dir="rtl"
             >
               {/* Header */}
@@ -300,9 +300,9 @@ export default function StaffPhoneIntercom() {
                   <div className="w-8 h-8 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 shrink-0">
                     <PhoneCall className="w-4 h-4" />
                   </div>
-                  <div className="min-w-0 text-right">
+                  <div className="min-w-0 text-start">
                     <h3 className="text-xs font-bold text-white truncate">الهاتف الداخلي واللاسلكي</h3>
-                    <p className="text-[10px] text-zinc-500 font-mono truncate">Internal VoIP & Audio Alerts</p>
+                    <p className="text-2xs text-zinc-500 font-mono truncate">Internal VoIP & Audio Alerts</p>
                   </div>
                 </div>
                 <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-lg text-zinc-500 hover:text-white cursor-pointer shrink-0">
@@ -314,7 +314,7 @@ export default function StaffPhoneIntercom() {
               <div className="flex border-b border-white/[0.06] bg-zinc-950/60 p-1 gap-1">
                 <button
                   onClick={() => setActiveTab('phone')}
-                  className={`flex-1 py-1.5 text-[11px] font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activeTab === 'phone' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'text-zinc-400 hover:text-white'
                   }`}
                 >
@@ -323,7 +323,7 @@ export default function StaffPhoneIntercom() {
                 </button>
                 <button
                   onClick={() => setActiveTab('chimes')}
-                  className={`flex-1 py-1.5 text-[11px] font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activeTab === 'chimes' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'text-zinc-400 hover:text-white'
                   }`}
                 >
@@ -332,7 +332,7 @@ export default function StaffPhoneIntercom() {
                 </button>
                 <button
                   onClick={() => setActiveTab('intercom')}
-                  className={`flex-1 py-1.5 text-[11px] font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activeTab === 'intercom' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'text-zinc-400 hover:text-white'
                   }`}
                 >
@@ -343,7 +343,7 @@ export default function StaffPhoneIntercom() {
 
               {/* Toast Feedback Banner */}
               {feedback && (
-                <div className="mx-3 mt-3 px-3 py-2 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-200 text-[10px] font-medium flex items-center gap-2 animate-fadeIn">
+                <div className="mx-3 mt-3 px-3 py-2 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-200 text-2xs font-medium flex items-center gap-2 animate-fadeIn">
                   <Sparkles className="w-3 h-3 text-rose-400 shrink-0" />
                   <span>{feedback}</span>
                 </div>
@@ -353,7 +353,7 @@ export default function StaffPhoneIntercom() {
               {activeTab === 'phone' && (
                 <div className="p-3 space-y-3">
                   {/* Extension Directory List */}
-                  <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
+                  <div className="space-y-1.5 max-h-56 overflow-y-auto ps-1">
                     {STAFF_EXTENSIONS.map((staff) => {
                       const Icon = staff.icon;
                       const isTargetActive = activeCall?.ext.ext === staff.ext;
@@ -374,11 +374,11 @@ export default function StaffPhoneIntercom() {
                             <div className="min-w-0">
                               <div className="flex items-center gap-2">
                                 <span className="text-xs font-bold text-white truncate">{staff.name}</span>
-                                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/[0.06] text-zinc-400 border border-white/[0.08]">
+                                <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-white/[0.06] text-zinc-400 border border-white/[0.08]">
                                   Ext {staff.ext}
                                 </span>
                               </div>
-                              <span className="text-[10px] text-zinc-500 block">{staff.role}</span>
+                              <span className="text-2xs text-zinc-500 block">{staff.role}</span>
                             </div>
                           </div>
 
@@ -414,16 +414,16 @@ export default function StaffPhoneIntercom() {
               {/* Tab 2: Sound Effects Preview & Trigger Console */}
               {activeTab === 'chimes' && (
                 <div className="p-3 space-y-2.5">
-                  <p className="text-[10px] text-zinc-500 font-mono mb-2">نغمات طبية متباينة الصوت لسهولة التمييز الفوري:</p>
+                  <p className="text-2xs text-zinc-500 font-mono mb-2">نغمات طبية متباينة الصوت لسهولة التمييز الفوري:</p>
 
                   {/* 🟢 1. Next Patient Present & Ready Chime */}
                   <div className="p-3 rounded-2xl bg-white/[0.03] border border-emerald-500/20 flex items-center justify-between">
-                    <div className="min-w-0 pr-2">
+                    <div className="min-w-0 ps-2">
                       <p className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
                         اقتراب الموعد + المريض متواجد 🟢
                       </p>
-                      <p className="text-[10px] text-zinc-400 mt-0.5">🔔 جرس كريستالي صاعد مرتفع النبرة (C6-C7)</p>
+                      <p className="text-2xs text-zinc-400 mt-0.5">🔔 جرس كريستالي صاعد مرتفع النبرة (C6-C7)</p>
                     </div>
                     <button
                       onClick={() => playNextPatientPresentChime()}
@@ -436,12 +436,12 @@ export default function StaffPhoneIntercom() {
 
                   {/* 🟡 2. Next Patient Absent Warning Chime */}
                   <div className="p-3 rounded-2xl bg-white/[0.03] border border-amber-500/20 flex items-center justify-between">
-                    <div className="min-w-0 pr-2">
+                    <div className="min-w-0 ps-2">
                       <p className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />
                         اقتراب الموعد + المريض غير موجود 🟡
                       </p>
-                      <p className="text-[10px] text-zinc-400 mt-0.5">🪵 صوت خشبي منخفض جداً ومزدوج (D4-A3)</p>
+                      <p className="text-2xs text-zinc-400 mt-0.5">🪵 صوت خشبي منخفض جداً ومزدوج (D4-A3)</p>
                     </div>
                     <button
                       onClick={() => playNextPatientAbsentChime()}
@@ -454,12 +454,12 @@ export default function StaffPhoneIntercom() {
 
                   {/* 🔵 3. New Patient Booking Chime */}
                   <div className="p-3 rounded-2xl bg-white/[0.03] border border-cyan-500/20 flex items-center justify-between">
-                    <div className="min-w-0 pr-2">
+                    <div className="min-w-0 ps-2">
                       <p className="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
                         تسجيل موعد مريض جديد 🔵
                       </p>
-                      <p className="text-[10px] text-zinc-400 mt-0.5">🎵 نغمة رقمية ثلاثية متوازنة (G5-G6)</p>
+                      <p className="text-2xs text-zinc-400 mt-0.5">🎵 نغمة رقمية ثلاثية متوازنة (G5-G6)</p>
                     </div>
                     <button
                       onClick={() => playNewPatientChime()}
@@ -472,12 +472,12 @@ export default function StaffPhoneIntercom() {
 
                   {/* 🔴 4. Doctor Pager Chime */}
                   <div className="p-3 rounded-2xl bg-white/[0.03] border border-rose-500/20 flex items-center justify-between">
-                    <div className="min-w-0 pr-2">
+                    <div className="min-w-0 ps-2">
                       <p className="text-xs font-bold text-rose-400 flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse shrink-0" />
                         نداء الاستقبال الفوري (Pager) 🔴
                       </p>
-                      <p className="text-[10px] text-zinc-400 mt-0.5">🚨 بيجر طبي حاد مرتفع التنبيه (F#6 Pulse)</p>
+                      <p className="text-2xs text-zinc-400 mt-0.5">🚨 بيجر طبي حاد مرتفع التنبيه (F#6 Pulse)</p>
                     </div>
                     <button
                       onClick={() => playDoctorPagerChime()}
@@ -494,7 +494,7 @@ export default function StaffPhoneIntercom() {
               {activeTab === 'intercom' && (
                 <div className="p-4 space-y-4 text-center">
                   <div>
-                    <label className="text-[10px] font-bold text-zinc-400 block mb-1">وجهة البث اللاسلكي:</label>
+                    <label className="text-2xs font-bold text-zinc-400 block mb-1">وجهة البث اللاسلكي:</label>
                     <select
                       value={pttTarget}
                       onChange={(e) => setPttTarget(e.target.value)}
@@ -514,7 +514,7 @@ export default function StaffPhoneIntercom() {
                       onMouseUp={handlePttEnd}
                       onTouchStart={handlePttStart}
                       onTouchEnd={handlePttEnd}
-                      className={`w-28 h-28 mx-auto rounded-full border-2 flex flex-col items-center justify-center transition-all cursor-pointer select-none shadow-2xl ${
+                      className={`w-28 h-28 mx-auto rounded-full border-2 flex flex-col items-center justify-center transition-all cursor-pointer select-none shadow-card ${
                         isPttTalking
                           ? 'bg-rose-600 border-rose-300 text-white scale-105 shadow-rose-500/50'
                           : 'bg-rose-500/20 border-rose-500/40 text-rose-300 hover:bg-rose-500/30'
@@ -522,17 +522,17 @@ export default function StaffPhoneIntercom() {
                     >
                       <Radio className={`w-8 h-8 mb-1 ${isPttTalking ? 'animate-bounce' : ''}`} />
                       <span className="text-xs font-bold">{isPttTalking ? 'جاري البث...' : 'اضغط للتحدث'}</span>
-                      <span className="text-[9px] opacity-75">Hold to Speak</span>
+                      <span className="text-2xs opacity-75">Hold to Speak</span>
                     </button>
                   </div>
 
                   {/* PTT History Log */}
                   {pttLog.length > 0 && (
-                    <div className="text-left border-t border-white/[0.06] pt-3">
-                      <p className="text-[10px] font-bold text-zinc-500 font-mono mb-1">سجل النداءات الأخيرة:</p>
+                    <div className="text-end border-t border-white/[0.06] pt-3">
+                      <p className="text-2xs font-bold text-zinc-500 font-mono mb-1">سجل النداءات الأخيرة:</p>
                       <div className="space-y-1 max-h-24 overflow-y-auto">
                         {pttLog.map((log, i) => (
-                          <div key={i} className="text-[10px] font-mono text-zinc-400 flex justify-between bg-white/[0.02] p-1.5 rounded-lg border border-white/[0.04]">
+                          <div key={i} className="text-2xs font-mono text-zinc-400 flex justify-between bg-white/[0.02] p-1.5 rounded-lg border border-white/[0.04]">
                             <span>{log.sender} → {log.target}</span>
                             <span className="text-zinc-600">{log.time}</span>
                           </div>
@@ -554,7 +554,7 @@ export default function StaffPhoneIntercom() {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed bottom-6 left-6 z-[99999] w-80 bg-zinc-950 border-2 border-amber-500/60 rounded-3xl p-5 shadow-2xl shadow-amber-500/20 text-center"
+            className="fixed bottom-6 start-6 z-[99999] w-80 bg-zinc-950 border-2 border-amber-500/60 rounded-3xl p-5 shadow-card shadow-amber-500/20 text-center"
           >
             <div className="w-14 h-14 mx-auto rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 mb-3 animate-bounce">
               <PhoneIncoming className="w-7 h-7" />
@@ -562,14 +562,14 @@ export default function StaffPhoneIntercom() {
 
             <h4 className="text-sm font-bold text-white mb-0.5">مكالمة هاتفية داخلية واردة</h4>
             <p className="text-xs text-amber-300 font-semibold mb-1">{incomingCall.name}</p>
-            <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono text-[10px] mb-4">
+            <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono text-2xs mb-4">
               Ext {incomingCall.ext} · {incomingCall.role}
             </span>
 
             <div className="flex gap-3">
               <button
                 onClick={answerCall}
-                className="flex-1 py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/20 cursor-pointer transition-all"
+                className="flex-1 py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs flex items-center justify-center gap-1.5 shadow-soft shadow-emerald-500/20 cursor-pointer transition-all"
               >
                 <Phone className="w-4 h-4" />
                 <span>رد على المكالمة</span>
@@ -593,7 +593,7 @@ export default function StaffPhoneIntercom() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-6 right-6 z-[99999] bg-zinc-950 border border-rose-500/40 rounded-3xl p-4 shadow-2xl flex items-center gap-4 min-w-[320px]"
+            className="fixed bottom-6 end-6 z-[99999] bg-zinc-950 border border-rose-500/40 rounded-3xl p-4 shadow-card flex items-center gap-4 min-w-[320px]"
           >
             <div className="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shrink-0">
               <PhoneCall className="w-5 h-5 animate-pulse" />
@@ -604,7 +604,7 @@ export default function StaffPhoneIntercom() {
                 <span className="text-xs font-bold text-white truncate">{activeCall.ext.name}</span>
                 <span className="text-xs font-mono font-bold text-rose-400">{formatTime(activeCall.duration)}</span>
               </div>
-              <span className="text-[10px] text-zinc-500 font-mono">Ext {activeCall.ext.ext} · مكالمة جارية</span>
+              <span className="text-2xs text-zinc-500 font-mono">Ext {activeCall.ext.ext} · مكالمة جارية</span>
             </div>
 
             <div className="flex items-center gap-1.5 shrink-0">
@@ -622,7 +622,7 @@ export default function StaffPhoneIntercom() {
               {/* End Call */}
               <button
                 onClick={endCall}
-                className="p-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white transition-all cursor-pointer shadow-lg shadow-rose-600/30"
+                className="p-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white transition-all cursor-pointer shadow-soft shadow-rose-600/30"
                 title="إنهاء المكالمة"
               >
                 <PhoneOff className="w-4 h-4" />

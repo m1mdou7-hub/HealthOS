@@ -104,7 +104,7 @@ export function StatCard({
     >
       <div className="flex items-start justify-between gap-3">
         <span
-          className="text-[10px] font-bold uppercase tracking-[0.18em]"
+          className="text-2xs font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--text-muted)' }}
         >
           {label}
@@ -123,12 +123,12 @@ export function StatCard({
         )}
       </div>
       <div>
-        <div className="font-display font-extrabold text-[2rem] leading-none tracking-tight">
+        <div className="font-display font-extrabold text-3xl leading-none tracking-tight">
           {value}
         </div>
         {delta && (
           <div
-            className="mt-1.5 text-[11px] font-semibold flex items-center gap-1.5"
+            className="mt-1.5 text-xs font-semibold flex items-center gap-1.5"
             style={{ color: delta.positive ? 'var(--accent)' : 'var(--text-muted)' }}
           >
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -166,7 +166,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border',
+        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border',
         className
       )}
       style={colors[tone]}
@@ -183,7 +183,7 @@ export function Badge({
 export function Kbd({ children }: { children: React.ReactNode }) {
   return (
     <kbd
-      className="px-1.5 py-0.5 text-[10px] font-mono rounded-md border"
+      className="px-1.5 py-0.5 text-2xs font-mono rounded-md border"
       style={{
         background: 'var(--surface-2)',
         borderColor: 'var(--border)',

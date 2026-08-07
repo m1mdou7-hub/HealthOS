@@ -57,9 +57,9 @@ export default function DashboardIntelligence({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         
         {/* KPI 1 */}
-        <div className="p-5 rounded-2xl card-elevated card-hover text-left space-y-3">
+        <div className="p-5 rounded-2xl card-elevated card-hover text-start space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
               Today's Treatment Schedule
             </span>
             <div className="p-2 rounded-xl" style={{ background: 'color-mix(in srgb, var(--accent) 12%, transparent)', color: 'var(--accent)' }}>
@@ -70,16 +70,16 @@ export default function DashboardIntelligence({
             <h3 className="text-2xl font-black font-mono" style={{ color: 'var(--text)' }}>
               {totalVisitsToday} Visits
             </h3>
-            <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
               {completedVisits} completed • {totalVisitsToday - completedVisits} pending
             </p>
           </div>
         </div>
 
         {/* KPI 2 */}
-        <div className="p-5 rounded-2xl card-elevated card-hover text-left space-y-3">
+        <div className="p-5 rounded-2xl card-elevated card-hover text-start space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
               Chair Occupancy Rate
             </span>
             <div className="p-2 rounded-xl" style={{ background: 'color-mix(in srgb, var(--success) 12%, transparent)', color: 'var(--success)' }}>
@@ -90,16 +90,16 @@ export default function DashboardIntelligence({
             <h3 className="text-2xl font-black font-mono" style={{ color: 'var(--text)' }}>
               {chairOccupancyPercent}%
             </h3>
-            <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
               {chairs.filter(c => c.status === 'Occupied').length} of {chairs.length} seats engaged
             </p>
           </div>
         </div>
 
         {/* KPI 3 */}
-        <div className="p-5 rounded-2xl card-elevated card-hover text-left space-y-3">
+        <div className="p-5 rounded-2xl card-elevated card-hover text-start space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
               Patients In Triage Queue
             </span>
             <div className="p-2 rounded-xl" style={{ background: 'color-mix(in srgb, var(--warning) 12%, transparent)', color: 'var(--warning)' }}>
@@ -110,16 +110,16 @@ export default function DashboardIntelligence({
             <h3 className="text-2xl font-black font-mono" style={{ color: 'var(--text)' }}>
               {queue.length} Checked In
             </h3>
-            <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
               Avg. wait duration: {queue.length > 0 ? Math.round(queue.reduce((sum, q) => sum + q.waitTime, 0) / queue.length) : 0} mins
             </p>
           </div>
         </div>
 
         {/* KPI 4 */}
-        <div className="p-5 rounded-2xl card-elevated card-hover text-left space-y-3">
+        <div className="p-5 rounded-2xl card-elevated card-hover text-start space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
               Recall Backlog Status
             </span>
             <div className="p-2 rounded-xl" style={{ background: 'color-mix(in srgb, var(--info) 12%, transparent)', color: 'var(--info)' }}>
@@ -130,7 +130,7 @@ export default function DashboardIntelligence({
             <h3 className="text-2xl font-black font-mono" style={{ color: 'var(--text)' }}>
               {overdueRecallsCount} Overdue
             </h3>
-            <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
               Re-engagement campaign launched
             </p>
           </div>
@@ -145,7 +145,7 @@ export default function DashboardIntelligence({
         <div className="lg:col-span-7 space-y-6">
           
           {/* Active Operatory Procedures */}
-          <div className="p-5 rounded-2xl card-elevated text-left space-y-4">
+          <div className="p-5 rounded-2xl card-elevated text-start space-y-4">
             <h4 className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
               Live Operatory Procedures
             </h4>
@@ -154,9 +154,9 @@ export default function DashboardIntelligence({
                 <div key={idx} className="p-3.5 rounded-xl card-hover flex items-center justify-between" style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
                   <div className="space-y-0.5">
                     <p className="font-bold text-xs" style={{ color: 'var(--text)' }}>{proc.currentPatient}</p>
-                    <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>Chair: {proc.name} • Dr: {proc.currentDoctor}</p>
+                    <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Chair: {proc.name} • Dr: {proc.currentDoctor}</p>
                   </div>
-                  <div className="text-right flex items-center gap-2">
+                  <div className="text-end flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 animate-pulse" style={{ color: 'var(--accent)' }} />
                     <span className="text-xs font-mono font-bold" style={{ color: 'var(--text-sub)' }}>
                       ~{proc.remainingTime} mins remaining
@@ -173,7 +173,7 @@ export default function DashboardIntelligence({
           </div>
 
           {/* Clinician On-Call Availability */}
-          <div className="p-5 rounded-2xl card-elevated text-left space-y-4">
+          <div className="p-5 rounded-2xl card-elevated text-start space-y-4">
             <h4 className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
               On-Call Clinicians
             </h4>
@@ -182,7 +182,7 @@ export default function DashboardIntelligence({
                 <div key={idx} className="p-3.5 rounded-xl card-hover flex items-center justify-between" style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
                   <div>
                     <p className="font-bold text-xs" style={{ color: 'var(--text)' }}>{doc.name}</p>
-                    <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>{doc.specialty}</p>
+                    <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>{doc.specialty}</p>
                   </div>
                   <span className={`h-2.5 w-2.5 rounded-full ${
                     doc.status === 'Active' ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
@@ -198,12 +198,12 @@ export default function DashboardIntelligence({
         <div className="lg:col-span-5 space-y-6">
           
           {/* Lab Workload */}
-          <div className="p-5 rounded-2xl card-elevated text-left space-y-4">
+          <div className="p-5 rounded-2xl card-elevated text-start space-y-4">
             <div className="flex justify-between items-center">
               <h4 className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
                 CAD/CAM Lab Workload
               </h4>
-              <span className="badge badge-success text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+              <span className="badge badge-success text-2xs font-mono font-bold px-2 py-0.5 rounded-full">
                 Active System Sync
               </span>
             </div>
@@ -229,12 +229,12 @@ export default function DashboardIntelligence({
           </div>
 
           {/* Delayed & High-Priority Lab Cases Tracker */}
-          <div className="p-5 rounded-2xl card-elevated text-left space-y-4">
+          <div className="p-5 rounded-2xl card-elevated text-start space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: 'var(--text-sub)' }}>
                 Delayed / Delayed Risk Lab Cases
               </h4>
-              <span className="badge badge-danger text-[10px] font-mono font-bold px-2 py-0.5 rounded-full animate-pulse">
+              <span className="badge badge-danger text-2xs font-mono font-bold px-2 py-0.5 rounded-full animate-pulse">
                 2 ALERTS
               </span>
             </div>
@@ -247,14 +247,14 @@ export default function DashboardIntelligence({
                 <div key={idx} className="p-3 rounded-xl flex flex-col justify-between space-y-2 text-xs" style={{ background: 'var(--surface-2)', border: '1px solid color-mix(in srgb, var(--danger) 30%, transparent)' }}>
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="font-bold" style={{ color: 'var(--text)' }}>{c.patient} <span className="font-mono text-[10px]" style={{ color: 'var(--text-muted)' }}>({c.id})</span></p>
-                      <p className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--danger)' }}>{c.reason}</p>
+                      <p className="font-bold" style={{ color: 'var(--text)' }}>{c.patient} <span className="font-mono text-2xs" style={{ color: 'var(--text-muted)' }}>({c.id})</span></p>
+                      <p className="text-2xs font-mono mt-0.5" style={{ color: 'var(--danger)' }}>{c.reason}</p>
                     </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: 'color-mix(in srgb, var(--danger) 15%, transparent)', color: 'var(--danger)', border: '1px solid color-mix(in srgb, var(--danger) 25%, transparent)' }}>
+                    <span className="text-2xs font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: 'color-mix(in srgb, var(--danger) 15%, transparent)', color: 'var(--danger)', border: '1px solid color-mix(in srgb, var(--danger) 25%, transparent)' }}>
                       {c.priority}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center text-[10px] font-mono pt-1 border-t" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)' }}>
+                  <div className="flex justify-between items-center text-2xs font-mono pt-1 border-t" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)' }}>
                     <span>Blockage Segment: {c.stage}</span>
                     <span style={{ color: 'var(--warning)' }}>Milling Hold</span>
                   </div>
@@ -264,7 +264,7 @@ export default function DashboardIntelligence({
           </div>
 
           {/* Clinical Alerts and Contraindications */}
-          <div className="p-5 rounded-2xl text-left space-y-4" style={{ background: 'color-mix(in srgb, var(--danger) 3%, transparent)', border: '1px solid color-mix(in srgb, var(--danger) 12%, transparent)' }}>
+          <div className="p-5 rounded-2xl text-start space-y-4" style={{ background: 'color-mix(in srgb, var(--danger) 3%, transparent)', border: '1px solid color-mix(in srgb, var(--danger) 12%, transparent)' }}>
             <div className="flex items-center gap-1.5 border-b pb-2" style={{ borderColor: 'color-mix(in srgb, var(--danger) 18%, transparent)' }}>
               <ShieldAlert className="w-4 h-4" style={{ color: 'var(--danger)' }} />
               <h4 className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: 'var(--danger)' }}>
@@ -282,7 +282,7 @@ export default function DashboardIntelligence({
                   <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--danger)' }} />
                   <div>
                     <p className="font-bold" style={{ color: 'var(--text)' }}>{al.patient}</p>
-                    <p className="text-[11px]" style={{ color: 'var(--text-sub)' }}>{al.alert}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-sub)' }}>{al.alert}</p>
                   </div>
                 </div>
               ))}

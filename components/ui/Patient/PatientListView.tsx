@@ -77,7 +77,7 @@ export default function PatientListView({
   );
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6 text-start">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 card-gradient rounded-3xl">
         <div>
@@ -100,13 +100,13 @@ export default function PatientListView({
       {/* Toolbar filter */}
       <div className="flex flex-col md:flex-row justify-between items-center p-4 card-elevated rounded-3xl gap-4">
         <div className="relative w-full max-w-sm">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+          <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search patient name, ID, or phone..."
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-zinc-950/60 border border-zinc-850 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-emerald-500/40"
+            className="w-full ps-9 pe-4 py-2 rounded-xl bg-zinc-950/60 border border-zinc-850 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-emerald-500/40"
           />
         </div>
         <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
@@ -115,7 +115,7 @@ export default function PatientListView({
               <button
                 key={status}
                 onClick={() => setStatusFilter(status as any)}
-                className={`px-3 py-1.5 rounded-lg text-[10px] font-semibold transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-2xs font-semibold transition-all ${
                   statusFilter === status ? 'bg-[#0d0d16] text-gold-400 border border-gold-500' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
@@ -143,8 +143,8 @@ export default function PatientListView({
       {/* Grid or Table List */}
       {viewMode === 'table' ? (
         <div className="overflow-x-auto rounded-3xl card-elevated">
-          <table className="w-full text-xs text-left text-zinc-300">
-            <thead className="bg-zinc-900/40 text-[10px] font-mono uppercase tracking-wider text-zinc-500 border-b border-zinc-900">
+          <table className="w-full text-xs text-start text-zinc-300">
+            <thead className="bg-zinc-900/40 text-2xs font-mono uppercase tracking-wider text-zinc-500 border-b border-zinc-900">
               <tr>
                 <th className="px-6 py-4 cursor-pointer" onClick={() => handleSort('id')}>ID <ArrowUpDown className="w-3 h-3 inline" /></th>
                 <th className="px-6 py-4 cursor-pointer" onClick={() => handleSort('name')}>Name <ArrowUpDown className="w-3 h-3 inline" /></th>
@@ -152,7 +152,7 @@ export default function PatientListView({
                 <th className="px-6 py-4">Contact Info</th>
                 <th className="px-6 py-4 cursor-pointer" onClick={() => handleSort('lastVisit')}>Last Visit <ArrowUpDown className="w-3 h-3 inline" /></th>
                 <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4 text-right">Actions</th>
+                <th className="px-6 py-4 text-end">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-900">
@@ -178,7 +178,7 @@ export default function PatientListView({
                   <td className="px-6 py-4">{p.age} Yrs / {p.gender}</td>
                   <td className="px-6 py-4">
                     <p className="font-mono text-zinc-400">{p.phone}</p>
-                    <p className="text-[10px] text-zinc-500">{p.email}</p>
+                    <p className="text-2xs text-zinc-500">{p.email}</p>
                   </td>
                   <td className="px-6 py-4 font-mono">{p.lastVisit}</td>
                   <td className="px-6 py-4">
@@ -188,7 +188,7 @@ export default function PatientListView({
                       {p.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right flex justify-end gap-1.5" onClick={e => e.stopPropagation()}>
+                  <td className="px-6 py-4 text-end flex justify-end gap-1.5" onClick={e => e.stopPropagation()}>
                     <button
                       onClick={(e) => onEditPatient(p, e)}
                       className="btn-ghost p-1.5 rounded-lg"
@@ -235,7 +235,7 @@ export default function PatientListView({
                   />
                   <div>
                     <h3 className="text-xs font-bold text-white leading-normal">{p.name}</h3>
-                    <span className="text-[9px] font-mono text-zinc-500">{p.id}</span>
+                    <span className="text-2xs font-mono text-zinc-500">{p.id}</span>
                   </div>
                 </div>
                 <span className={`badge ${
@@ -245,12 +245,12 @@ export default function PatientListView({
                 </span>
               </div>
 
-              <div className="space-y-1.5 text-[11px] text-zinc-400 font-sans my-4">
+              <div className="space-y-1.5 text-xs text-zinc-400 font-sans my-4">
                 <p className="flex items-center gap-1.5 font-mono"><Phone className="w-3 h-3 text-zinc-500" /> {p.phone}</p>
                 <p className="flex items-center gap-1.5"><Mail className="w-3 h-3 text-zinc-500 truncate" /> {p.email}</p>
               </div>
 
-              <div className="flex items-center justify-between border-t border-zinc-900/60 pt-2 text-[10px] text-zinc-500 font-mono">
+              <div className="flex items-center justify-between border-t border-zinc-900/60 pt-2 text-2xs text-zinc-500 font-mono">
                 <span>Last Visit: {p.lastVisit}</span>
                 <div className="flex gap-1" onClick={e => e.stopPropagation()}>
                   <button onClick={(e) => onEditPatient(p, e)} className="text-zinc-400 hover:text-white">Edit</button>
@@ -271,14 +271,14 @@ export default function PatientListView({
             <button
               onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
-              className="btn-secondary px-3 py-1.5 rounded-lg text-[10px] disabled:opacity-40"
+              className="btn-secondary px-3 py-1.5 rounded-lg text-2xs disabled:opacity-40"
             >
               Previous
             </button>
             <button
               onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
               disabled={currentPage === totalPages}
-              className="btn-secondary px-3 py-1.5 rounded-lg text-[10px] disabled:opacity-40"
+              className="btn-secondary px-3 py-1.5 rounded-lg text-2xs disabled:opacity-40"
             >
               Next
             </button>

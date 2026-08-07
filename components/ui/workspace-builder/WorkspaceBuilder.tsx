@@ -108,7 +108,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{t('selectUser')}:</span>
+            <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{t('selectUser')}:</span>
             <select
               value={selectedUserId}
               onChange={(e) => setSelectedUserId(e.target.value)}
@@ -123,13 +123,13 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
           {/* Layout switcher */}
           {config && (
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{t('layouts')}:</span>
+              <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{t('layouts')}:</span>
               {config.layouts.map((l) => (
                 <button
                   key={l.id}
                   type="button"
                   onClick={() => { const next = setActiveLayout(config, l.id); persist(next); }}
-                  className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg text-2xs font-bold border transition-all cursor-pointer ${
                     l.id === config.activeLayoutId
                       ? 'bg-purple-500/15 text-purple-300 border-purple-500/40'
                       : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700'
@@ -139,7 +139,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
                   <button
                     type="button"
                     onClick={(e) => { e.stopPropagation(); const next = deleteLayout(config, l.id); persist(next); }}
-                    className="ml-1.5 text-zinc-500 hover:text-rose-400"
+                    className="ms-1.5 text-zinc-500 hover:text-rose-400"
                   >
                     <X className="w-3 h-3 inline" />
                   </button>
@@ -151,7 +151,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
           <button
             type="button"
             onClick={() => { setNewLayoutName(''); setNewLayoutOpen(true); }}
-            className="btn-secondary px-3 py-1.5 text-[11px] font-bold rounded-xl flex items-center gap-1.5 cursor-pointer"
+            className="btn-secondary px-3 py-1.5 text-xs font-bold rounded-xl flex items-center gap-1.5 cursor-pointer"
           >
             <ListPlus className="w-3.5 h-3.5" />
             {t('newLayout')}
@@ -159,7 +159,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
         </div>
 
         {status && (
-          <span className="text-[11px] font-bold px-3 py-1.5 rounded-xl border bg-emerald-500/10 border-emerald-500/30 text-emerald-300">
+          <span className="text-xs font-bold px-3 py-1.5 rounded-xl border bg-emerald-500/10 border-emerald-500/30 text-emerald-300">
             {t(status)}
           </span>
         )}
@@ -171,7 +171,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
           <div className="card-elevated rounded-3xl w-full max-w-sm p-6 space-y-4">
             <h4 className="text-sm font-black text-white uppercase tracking-tight font-mono">{t('newLayout')}</h4>
             <div className="space-y-1">
-              <label className="text-[10px] text-zinc-400 font-bold uppercase">{t('newLayoutName')}</label>
+              <label className="text-2xs text-zinc-400 font-bold uppercase">{t('newLayoutName')}</label>
               <input
                 value={newLayoutName}
                 onChange={(e) => setNewLayoutName(e.target.value)}
@@ -208,16 +208,16 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-purple-400" /> {t('widgetCatalog')}
             </h4>
-            <p className="text-[11px] text-zinc-500 mt-0.5">{t('widgetCatalogSub')}</p>
+            <p className="text-xs text-zinc-500 mt-0.5">{t('widgetCatalogSub')}</p>
           </div>
-          <div className="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+          <div className="space-y-2 max-h-[380px] overflow-y-auto pe-1">
             {catalogWidgets.map((w: WidgetDefinition) => {
               const inUse = usedWidgetIds.has(w.id);
               return (
                 <div key={w.id} className="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/80">
                   <div className="min-w-0">
-                    <p className="text-[11px] font-bold text-zinc-200 truncate">{w.name}</p>
-                    <p className="text-[10px] text-zinc-500 truncate">{w.description}</p>
+                    <p className="text-xs font-bold text-zinc-200 truncate">{w.name}</p>
+                    <p className="text-2xs text-zinc-500 truncate">{w.description}</p>
                   </div>
                   <button
                     type="button"
@@ -228,7 +228,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
                       persist(next);
                       show('widgetAdded');
                     }}
-                    className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer shrink-0 ${
+                    className={`px-2.5 py-1 rounded-lg text-2xs font-bold border transition-all cursor-pointer shrink-0 ${
                       inUse
                         ? 'bg-zinc-900 text-zinc-600 border-zinc-800 cursor-not-allowed'
                         : 'bg-purple-500/15 text-purple-300 border-purple-500/40 hover:bg-purple-500/25'
@@ -250,7 +250,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
                 <LayoutGrid className="w-4 h-4 text-amber-400" /> {t('layoutWidgets')}
               </h4>
               {activeLayout && (
-                <span className="text-[10px] font-mono text-zinc-500 mt-0.5 block">
+                <span className="text-2xs font-mono text-zinc-500 mt-0.5 block">
                   {t('activeLayout')}: <span className="text-amber-300 font-bold">{activeLayout.name}</span>
                 </span>
               )}
@@ -259,7 +259,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
               <button
                 type="button"
                 onClick={() => persist(config)}
-                className="btn-primary px-3 py-1.5 text-[11px] font-bold rounded-xl flex items-center gap-1.5 cursor-pointer"
+                className="btn-primary px-3 py-1.5 text-xs font-bold rounded-xl flex items-center gap-1.5 cursor-pointer"
               >
                 <Save className="w-3.5 h-3.5" />
                 {t('layoutSaved')}
@@ -267,7 +267,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
             )}
           </div>
 
-          <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+          <div className="space-y-2 max-h-[300px] overflow-y-auto pe-1">
             {activeLayout && activeLayout.widgets.length > 0 ? (
               [...activeLayout.widgets].sort((a, b) => a.order - b.order).map((w) => {
                 const def = getWidgetById(w.widgetId);
@@ -285,8 +285,8 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
                       >
                         <Star className={`w-3.5 h-3.5 ${w.favorite ? 'fill-amber-400' : ''}`} />
                       </button>
-                      <span className="text-[11px] font-bold text-zinc-200 truncate">{def?.name ?? w.widgetId}</span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500 uppercase">
+                      <span className="text-xs font-bold text-zinc-200 truncate">{def?.name ?? w.widgetId}</span>
+                      <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-500 uppercase">
                         {t(`sizes.${w.size}`)}
                       </span>
                     </div>
@@ -298,7 +298,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
                           const next = setWidgetSize(config, activeLayout.id, w.instanceId, e.target.value as WidgetSize);
                           persist(next);
                         }}
-                        className="rounded-lg text-[10px] font-mono text-zinc-300 p-1 outline-none bg-zinc-900 border border-zinc-800"
+                        className="rounded-lg text-2xs font-mono text-zinc-300 p-1 outline-none bg-zinc-900 border border-zinc-800"
                       >
                         <option value="small">{t('sizes.small')}</option>
                         <option value="medium">{t('sizes.medium')}</option>
@@ -351,13 +351,13 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <div>
-                <h5 className="text-[11px] font-black text-white uppercase tracking-tight">{t('shortcuts')}</h5>
-                <p className="text-[10px] text-zinc-500">{t('shortcutsSub')}</p>
+                <h5 className="text-xs font-black text-white uppercase tracking-tight">{t('shortcuts')}</h5>
+                <p className="text-2xs text-zinc-500">{t('shortcutsSub')}</p>
               </div>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {activeLayout?.shortcuts.map((s) => (
-                <span key={s} className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300">
+                <span key={s} className="inline-flex items-center gap-1 text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300">
                   {s}
                   <button
                     type="button"
@@ -382,7 +382,7 @@ export default function WorkspaceBuilder({ users, widgetsForUser }: WorkspaceBui
                     }
                   }}
                   placeholder="+ shortcut"
-                  className="w-28 px-2 py-1 rounded-lg text-[10px] font-mono text-white outline-none bg-zinc-950 border border-zinc-800 focus:border-purple-500/50"
+                  className="w-28 px-2 py-1 rounded-lg text-2xs font-mono text-white outline-none bg-zinc-950 border border-zinc-800 focus:border-purple-500/50"
                 />
                 <button
                   type="button"

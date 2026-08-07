@@ -220,7 +220,7 @@ export default function NotificationsWorkspace() {
           >
             <span>{viewUnreadOnly ? 'Showing Unread Only' : 'Show Unread Only'}</span>
             {unreadCount > 0 && (
-              <span className="w-4 h-4 rounded-full bg-emerald-500 text-zinc-950 flex items-center justify-center text-[9px] font-bold">
+              <span className="w-4 h-4 rounded-full bg-emerald-500 text-zinc-950 flex items-center justify-center text-2xs font-bold">
                 {unreadCount}
               </span>
             )}
@@ -242,10 +242,10 @@ export default function NotificationsWorkspace() {
         <div className="lg:col-span-8 bg-zinc-900/20 border border-zinc-900 rounded-3xl p-5 space-y-4 flex flex-col justify-start min-h-[500px]">
           <div className="flex items-center justify-between border-b border-zinc-900 pb-3">
             <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Live Gateway Logs</h3>
-            <span className="text-[10px] font-mono text-zinc-500">{filteredNotifications.length} matches</span>
+            <span className="text-2xs font-mono text-zinc-500">{filteredNotifications.length} matches</span>
           </div>
 
-          <div className="space-y-2.5 overflow-y-auto max-h-[550px] pr-1">
+          <div className="space-y-2.5 overflow-y-auto max-h-[550px] pe-1">
             {filteredNotifications.length === 0 ? (
               <div className="py-16 text-center font-mono text-zinc-500 text-xs">
                 <Bell className="w-8 h-8 mx-auto mb-2 stroke-1 text-zinc-600" />
@@ -269,15 +269,15 @@ export default function NotificationsWorkspace() {
                     key={notif.id}
                     className={`p-4 rounded-3xl border transition-all flex items-start justify-between gap-4 relative ${
                       notif.unread 
-                        ? 'bg-zinc-900 border-zinc-800 shadow-lg' 
+                        ? 'bg-zinc-900 border-zinc-800 shadow-soft' 
                         : 'bg-zinc-950/20 border-transparent hover:bg-zinc-900/30'
                     }`}
                   >
                     {notif.unread && (
-                      <span className="absolute top-4 left-4 w-2 h-2 bg-emerald-500 rounded-full" />
+                      <span className="absolute top-4 start-4 w-2 h-2 bg-emerald-500 rounded-full" />
                     )}
 
-                    <div className={`flex gap-4 ${notif.unread ? 'pl-4' : ''}`}>
+                    <div className={`flex gap-4 ${notif.unread ? 'ps-4' : ''}`}>
                       <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${colorClass}`}>
                         <Icon className="w-4 h-4" />
                       </div>
@@ -285,13 +285,13 @@ export default function NotificationsWorkspace() {
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <h4 className="text-xs font-bold text-white leading-snug">{notif.title}</h4>
-                          <span className="text-[8px] font-mono text-zinc-500 uppercase bg-zinc-950 px-1.5 py-0.5 rounded">
+                          <span className="text-2xs font-mono text-zinc-500 uppercase bg-zinc-950 px-1.5 py-0.5 rounded">
                             {notif.category}
                           </span>
                         </div>
 
-                        <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">{notif.desc}</p>
-                        <span className="text-[9px] font-mono text-zinc-500 block">{notif.time}</span>
+                        <p className="text-xs text-zinc-400 leading-relaxed font-sans">{notif.desc}</p>
+                        <span className="text-2xs font-mono text-zinc-500 block">{notif.time}</span>
                       </div>
                     </div>
 
@@ -328,7 +328,7 @@ export default function NotificationsWorkspace() {
               <span className="text-xs font-bold text-white uppercase tracking-wider block">Alert Dispatch Tuning</span>
             </div>
 
-            <p className="text-[11px] text-zinc-400 font-sans leading-relaxed">
+            <p className="text-xs text-zinc-400 font-sans leading-relaxed">
               Configure real-time trigger rules to route high-value notifications via external notification APIs.
             </p>
 
@@ -336,7 +336,7 @@ export default function NotificationsWorkspace() {
               
               {/* Category block: AI Insights */}
               <div className="space-y-2">
-                <span className="text-[10px] text-purple-400 uppercase font-bold block">AI Diagnostic Alerts</span>
+                <span className="text-2xs text-purple-400 uppercase font-bold block">AI Diagnostic Alerts</span>
                 <div className="space-y-1.5">
                   {[
                     { label: 'Secure Email (SES)', key: 'emailAi' },
@@ -346,7 +346,7 @@ export default function NotificationsWorkspace() {
                     <button
                       key={pref.key}
                       onClick={() => handleTogglePreference(pref.key as any)}
-                      className="w-full text-left p-2.5 bg-zinc-950 border border-zinc-850 hover:border-zinc-800 rounded-xl flex items-center justify-between"
+                      className="w-full text-start p-2.5 bg-zinc-950 border border-zinc-850 hover:border-zinc-800 rounded-xl flex items-center justify-between"
                     >
                       <span className="text-zinc-300 font-sans">{pref.label}</span>
                       <span className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
@@ -361,7 +361,7 @@ export default function NotificationsWorkspace() {
 
               {/* Category block: System Logs */}
               <div className="space-y-2">
-                <span className="text-[10px] text-amber-400 uppercase font-bold block">System telemetry Logs</span>
+                <span className="text-2xs text-amber-400 uppercase font-bold block">System telemetry Logs</span>
                 <div className="space-y-1.5">
                   {[
                     { label: 'Secure Email (SES)', key: 'emailSystem' },
@@ -371,7 +371,7 @@ export default function NotificationsWorkspace() {
                     <button
                       key={pref.key}
                       onClick={() => handleTogglePreference(pref.key as any)}
-                      className="w-full text-left p-2.5 bg-zinc-950 border border-zinc-850 hover:border-zinc-800 rounded-xl flex items-center justify-between"
+                      className="w-full text-start p-2.5 bg-zinc-950 border border-zinc-850 hover:border-zinc-800 rounded-xl flex items-center justify-between"
                     >
                       <span className="text-zinc-300 font-sans">{pref.label}</span>
                       <span className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
@@ -386,7 +386,7 @@ export default function NotificationsWorkspace() {
 
               {/* Category block: Patient Updates */}
               <div className="space-y-2">
-                <span className="text-[10px] text-pink-400 uppercase font-bold block">Patient Actions</span>
+                <span className="text-2xs text-pink-400 uppercase font-bold block">Patient Actions</span>
                 <div className="space-y-1.5">
                   {[
                     { label: 'Secure Email (SES)', key: 'emailPatient' },
@@ -396,7 +396,7 @@ export default function NotificationsWorkspace() {
                     <button
                       key={pref.key}
                       onClick={() => handleTogglePreference(pref.key as any)}
-                      className="w-full text-left p-2.5 bg-zinc-950 border border-zinc-850 hover:border-zinc-800 rounded-xl flex items-center justify-between"
+                      className="w-full text-start p-2.5 bg-zinc-950 border border-zinc-850 hover:border-zinc-800 rounded-xl flex items-center justify-between"
                     >
                       <span className="text-zinc-300 font-sans">{pref.label}</span>
                       <span className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${

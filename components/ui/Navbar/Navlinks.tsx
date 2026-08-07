@@ -26,7 +26,7 @@ export default function Navlinks({ user }: NavlinksProps) {
           <Logo />
           <span className="font-display">HealthOS</span>
         </Link>
-        <nav className="ml-6 space-x-2 hidden md:block">
+        <nav className="ms-6 space-s-2 hidden md:block">
           <Link href="/" className={s.link}>
             {tNav('workspacePlatform')}
           </Link>

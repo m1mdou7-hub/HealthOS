@@ -74,7 +74,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} HealthOS, Inc. All rights reserved.
           </span>
         </div>
-        <div className="flex items-center gap-1.5 font-mono text-[10px]">
+        <div className="flex items-center gap-1.5 font-mono text-2xs">
           <span>STATUS:</span>
           <span className="text-emerald-400">SECURE NODE</span>
         </div>

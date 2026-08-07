@@ -51,7 +51,7 @@ export function CopilotSidebar({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 h-full w-full max-w-[380px] card-elevated border-l z-50 shadow-2xl flex flex-col text-left rounded-none"
+            className="fixed top-0 end-0 h-full w-full max-w-[380px] card-elevated border-s z-50 shadow-pop flex flex-col text-start rounded-none"
             style={{ borderLeft: '1px solid var(--border-strong)' }}
           >
             {/* Sidebar Header */}
@@ -62,7 +62,7 @@ export function CopilotSidebar({
                 </div>
                 <div>
                   <h4 className="text-xs font-bold font-mono" style={{ color: 'var(--text)' }}>Clinical AI Copilot</h4>
-                  <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Decision-Support Engine</p>
+                  <p className="text-2xs" style={{ color: 'var(--text-muted)' }}>Decision-Support Engine</p>
                 </div>
               </div>
               <button
@@ -74,7 +74,7 @@ export function CopilotSidebar({
             </div>
 
             {/* Patient summary badge */}
-            <div className="p-3 flex items-center justify-between text-[10px] font-mono" style={{ background: 'var(--accent-glow2)', borderBottom: '1px solid var(--border-strong)' }}>
+            <div className="p-3 flex items-center justify-between text-2xs font-mono" style={{ background: 'var(--accent-glow2)', borderBottom: '1px solid var(--border-strong)' }}>
               <span style={{ color: 'var(--text-muted)' }}>Active Record:</span>
               <span className="badge badge-success font-bold">{activePatientName}</span>
             </div>
@@ -86,14 +86,14 @@ export function CopilotSidebar({
                   key={i}
                   className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                 >
-                  <span className="text-[9px] font-mono mb-1" style={{ color: 'var(--text-muted)' }}>
+                  <span className="text-2xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>
                     {msg.role === 'user' ? 'Dentist' : 'Copilot'}
                   </span>
                   <div
-                    className={`p-3 rounded-3xl max-w-[90%] text-xs leading-relaxed whitespace-pre-wrap shadow-lg ${
+                    className={`p-3 rounded-3xl max-w-[90%] text-xs leading-relaxed whitespace-pre-wrap shadow-soft ${
                       msg.role === 'user'
-                        ? 'btn-primary rounded-tr-none font-sans'
-                        : 'card-elevated rounded-tl-none font-mono'
+                        ? 'btn-primary rounded-te-none font-sans'
+                        : 'card-elevated rounded-ts-none font-mono'
                     }`}
                     style={msg.role === 'user' ? {} : { color: 'var(--text-sub)' }}
                   >
@@ -104,8 +104,8 @@ export function CopilotSidebar({
 
               {loading && (
                 <div className="flex flex-col items-start">
-                  <span className="text-[9px] font-mono mb-1" style={{ color: 'var(--text-muted)' }}>Copilot</span>
-                  <div className="p-3 rounded-3xl card-elevated rounded-tl-none text-xs flex items-center gap-2 font-mono animate-pulse" style={{ color: 'var(--accent)' }}>
+                  <span className="text-2xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>Copilot</span>
+                  <div className="p-3 rounded-3xl card-elevated rounded-ts-none text-xs flex items-center gap-2 font-mono animate-pulse" style={{ color: 'var(--accent)' }}>
                     <span className="h-1.5 w-1.5 rounded-full animate-bounce" style={{ background: 'var(--accent)' }} />
                     <span className="h-1.5 w-1.5 rounded-full animate-bounce [animation-delay:0.2s]" style={{ background: 'var(--accent)' }} />
                     <span className="h-1.5 w-1.5 rounded-full animate-bounce [animation-delay:0.4s]" style={{ background: 'var(--accent)' }} />
@@ -119,19 +119,19 @@ export function CopilotSidebar({
             <div className="p-2 flex flex-wrap gap-1.5" style={{ borderTop: '1px solid var(--border)', background: 'var(--surface-2)' }}>
               <button
                 onClick={() => onInputChange("Are there any medical alerts, allergic indicators, or contraindications I should be aware of?")}
-                className="btn-secondary px-2 py-1 text-[9px]"
+                className="btn-secondary px-2 py-1 text-2xs"
               >
                 Review Medical Alerts
               </button>
               <button
                 onClick={() => onInputChange("Review medications and list contraindications for local anesthetics.")}
-                className="btn-secondary px-2 py-1 text-[9px]"
+                className="btn-secondary px-2 py-1 text-2xs"
               >
                 Anesthetic Risks
               </button>
               <button
                 onClick={() => onInputChange("Review the existing clinical notes history and summarize patient progression.")}
-                className="btn-secondary px-2 py-1 text-[9px]"
+                className="btn-secondary px-2 py-1 text-2xs"
               >
                 Case Progress
               </button>
@@ -151,12 +151,12 @@ export function CopilotSidebar({
                     }
                   }}
                   placeholder="Ask clinical questions about patient..."
-                  className="w-full pl-3 pr-10 py-2.5 rounded-xl text-xs"
+                  className="w-full ps-3 pe-10 py-2.5 rounded-xl text-xs"
                 />
                 <button
                   disabled={loading || !input.trim()}
                   onClick={handleSend}
-                  className="absolute right-2 p-1.5 rounded-lg btn-primary disabled:opacity-40 text-white transition-all active:scale-95"
+                  className="absolute end-2 p-1.5 rounded-lg btn-primary disabled:opacity-40 text-white transition-all active:scale-95"
                 >
                   <Send className="w-3.5 h-3.5" />
                 </button>

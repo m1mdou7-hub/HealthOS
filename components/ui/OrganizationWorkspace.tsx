@@ -869,7 +869,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                   className="p-5 card-gradient rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">معرف المنظمة</span>
+                    <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">معرف المنظمة</span>
                     <Building2 className="w-4 h-4 text-rose-400" />
                   </div>
                   <div>
@@ -890,7 +890,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                   className="p-5 card-elevated rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">العيادات والفروع</span>
+                    <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">العيادات والفروع</span>
                     <Globe className="w-4 h-4 text-rose-400" />
                   </div>
                   <div>
@@ -911,7 +911,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                   className="p-5 card-elevated rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">تراخيص المستخدِمين</span>
+                    <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">تراخيص المستخدِمين</span>
                     <span className="badge font-mono text-xs">28 ترخيص متاح</span>
                   </div>
                   <div>
@@ -932,7 +932,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                   className="p-5 card-elevated rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">التخزين السحابي الآمن</span>
+                    <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">التخزين السحابي الآمن</span>
                     <span className="badge badge-info font-mono text-xs">24%</span>
                   </div>
                   <div>
@@ -993,40 +993,40 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       
                       <button 
                         onClick={() => { setActiveTab('Users') }}
-                        className="w-full text-left p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
+                        className="w-full text-start p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
                       >
                         <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Plus className="w-5 h-5" />
                         </div>
                         <div>
                           <p className="text-white text-xs font-bold font-sans group-hover:text-gold-400 transition-colors">{tOrg('overview_stats.provisionUser')}</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.provisionUserSub')}</p>
+                          <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.provisionUserSub')}</p>
                         </div>
                       </button>
 
                       <button 
                         onClick={() => { setActiveTab('Permissions') }}
-                        className="w-full text-left p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
+                        className="w-full text-start p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
                       >
                         <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Sliders className="w-5 h-5" />
                         </div>
                         <div>
                           <p className="text-white text-xs font-bold font-sans group-hover:text-gold-400 transition-colors">{tOrg('overview_stats.auditMatrix')}</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.auditMatrixSub')}</p>
+                          <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.auditMatrixSub')}</p>
                         </div>
                       </button>
 
                       <button 
                         onClick={() => { setActiveTab('Security') }}
-                        className="w-full text-left p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
+                        className="w-full text-start p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
                       >
                         <div className="p-2 bg-rose-500/10 text-rose-400 rounded-xl group-hover:bg-rose-500 group-hover:text-zinc-950 transition-colors">
                           <Lock className="w-5 h-5" />
                         </div>
                         <div>
                           <p className="text-white text-xs font-bold font-sans group-hover:text-gold-400 transition-colors">{tOrg('overview_stats.triggerScan')}</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.triggerScanSub')}</p>
+                          <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.triggerScanSub')}</p>
                         </div>
                       </button>
 
@@ -1039,12 +1039,12 @@ const tBuilder = useTranslations('WorkspaceBuilder');
               {/* Active Operator & Bottom Telemetry Bar */}
               <div className="p-4 card-elevated rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-sans card-luxury">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-md">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-soft">
                     CA
                   </div>
                   <div>
                     <h5 className="font-bold text-white">Dr. C. Avery</h5>
-                    <p className="text-[11px] text-zinc-400 font-sans">{tOrg('overview_stats.roleLabel')}</p>
+                    <p className="text-xs text-zinc-400 font-sans">{tOrg('overview_stats.roleLabel')}</p>
                   </div>
                 </div>
 
@@ -1097,10 +1097,10 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                     {showAddClinicForm && (
                       <div className="p-4 card-elevated rounded-3xl space-y-3 animate-fade-in card-luxury">
-                        <span className="text-[10px] font-mono font-bold text-gold-400 uppercase tracking-widest block">{tOrg('clinics.registerProfile')}</span>
+                        <span className="text-2xs font-mono font-bold text-gold-400 uppercase tracking-widest block">{tOrg('clinics.registerProfile')}</span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.clinicNameLabel')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tOrg('clinics.clinicNameLabel')}</label>
                             <input
                               type="text"
                               value={clinicNameInput}
@@ -1110,7 +1110,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.locationLabel')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tOrg('clinics.locationLabel')}</label>
                             <input
                               type="text"
                               value={clinicLocInput}
@@ -1120,7 +1120,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.timezoneLabel')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tOrg('clinics.timezoneLabel')}</label>
                             <select
                               value={clinicTimezoneInput}
                               onChange={(e) => setClinicTimezoneInput(e.target.value)}
@@ -1133,7 +1133,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.hoursLabel')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tOrg('clinics.hoursLabel')}</label>
                             <input
                               type="text"
                               value={clinicHoursInput}
@@ -1168,17 +1168,17 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     {/* Filter & Search Bar */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="relative">
-                        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                        <Search className="absolute start-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                         <input
                           type="text"
                           value={clinicSearch}
                           onChange={(e) => setClinicSearch(e.target.value)}
                           placeholder={tOrg('clinics.searchPlaceholder')}
-                          className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl outline-none focus:border-gold-500 text-white font-mono placeholder:text-zinc-600"
+                          className="w-full ps-8 pe-3 py-1.5 text-xs rounded-xl outline-none focus:border-gold-500 text-white font-mono placeholder:text-zinc-600"
                         />
                       </div>
                       <div className="flex items-center gap-2 justify-end">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold">Status:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold">Status:</span>
                         <select
                           value={clinicStatusFilter}
                           onChange={(e) => setClinicStatusFilter(e.target.value)}
@@ -1193,18 +1193,18 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     </div>
 
                     {/* Clinic Grid with visual rooms layout */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[380px] overflow-y-auto pr-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[380px] overflow-y-auto pe-1">
                       {filteredClinics.map((c) => (
                         <div key={c.id} className="p-4 card-elevated rounded-3xl card-hover flex flex-col justify-between h-[180px] space-y-3">
                           <div className="flex justify-between items-start">
                             <div>
                               <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-mono font-bold bg-zinc-950 border border-zinc-800 text-emerald-400 px-1.5 py-0.5 rounded-md">
+                                <span className="text-2xs font-mono font-bold bg-zinc-950 border border-zinc-800 text-emerald-400 px-1.5 py-0.5 rounded-md">
                                   {c.id}
                                 </span>
                                 <h4 className="text-xs font-black text-white">{c.name}</h4>
                               </div>
-                              <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{c.location}</p>
+                              <p className="text-2xs text-zinc-500 font-mono mt-0.5">{c.location}</p>
                             </div>
                             <span className={`badge ${
                               c.status === 'Active' ? 'badge-success' :
@@ -1217,11 +1217,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                           {/* Visual room layout mapping */}
                           <div className="bg-zinc-950 p-2.5 rounded-xl border border-zinc-900">
-                            <span className="text-[8px] font-mono text-zinc-500 uppercase tracking-widest block mb-1.5">Live Operatory Room Matrix</span>
+                            <span className="text-2xs font-mono text-zinc-500 uppercase tracking-widest block mb-1.5">Live Operatory Room Matrix</span>
                             <div className="flex gap-1.5">
                               {Array.from({ length: c.rooms }).map((_, i) => (
                                 <div key={i} className="flex-1 text-center">
-                                  <div className={`h-4 rounded border ${i % 3 === 0 ? 'bg-rose-500/15 border-rose-500/30 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'} text-[8px] font-mono flex items-center justify-center font-bold`}>
+                                  <div className={`h-4 rounded border ${i % 3 === 0 ? 'bg-rose-500/15 border-rose-500/30 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'} text-2xs font-mono flex items-center justify-center font-bold`}>
                                     R{i + 1}
                                   </div>
                                 </div>
@@ -1229,7 +1229,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </div>
                           </div>
 
-                          <div className="flex justify-between items-center pt-1 border-t border-zinc-900 text-[10px] font-mono text-zinc-400">
+                          <div className="flex justify-between items-center pt-1 border-t border-zinc-900 text-2xs font-mono text-zinc-400">
                             <span>Manager: <strong className="text-zinc-200">{c.manager}</strong></span>
                             <span>Drs: <strong className="text-white">{c.doctors}</strong> | Pts: <strong className="text-white">{c.patients}</strong></span>
                           </div>
@@ -1265,13 +1265,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Left form */}
                       <div className="p-4 card-elevated rounded-3xl space-y-3 h-[380px] flex flex-col justify-between">
                         <div className="space-y-2">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Provisions Custom Unit</span>
-                          <p className="text-[10px] text-zinc-400 font-mono leading-relaxed">Instantly add a new specialty clinic segment to the EHR platform.</p>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Provisions Custom Unit</span>
+                          <p className="text-2xs text-zinc-400 font-mono leading-relaxed">Instantly add a new specialty clinic segment to the EHR platform.</p>
                         </div>
 
                         <form onSubmit={handleAddDepartment} className="space-y-3 flex-1 justify-center mt-3">
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Department Name</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Department Name</label>
                             <input
                               type="text"
                               value={newDepartmentName}
@@ -1282,7 +1282,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Chief Director</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Chief Director</label>
                             <select
                               value={newDepartmentHead}
                               onChange={(e) => setNewDepartmentHead(e.target.value)}
@@ -1296,7 +1296,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Assigned Suites</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Assigned Suites</label>
                             <input
                               type="text"
                               value={newDepartmentRooms}
@@ -1317,16 +1317,16 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                       {/* Right list */}
                       <div className="lg:col-span-2 p-4 card-elevated rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Registered Speciality Directory</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Registered Speciality Directory</span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                           {departments.map((dept, idx) => (
                             <div key={idx} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-1 relative group">
-                              <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400 absolute top-2.5 right-2.5">
+                              <span className="text-2xs font-mono font-black px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400 absolute top-2.5 end-2.5">
                                 {dept.code}
                               </span>
                               <h4 className="text-xs font-black text-white">{dept.name}</h4>
-                              <p className="text-[10px] text-zinc-400 font-mono">Head: <span className="text-zinc-300 font-bold">{dept.head}</span></p>
-                              <p className="text-[9px] text-zinc-500 font-mono">Operational Rooms: {dept.rooms} • Staff count: {dept.staffCount}</p>
+                              <p className="text-2xs text-zinc-400 font-mono">Head: <span className="text-zinc-300 font-bold">{dept.head}</span></p>
+                              <p className="text-2xs text-zinc-500 font-mono">Operational Rooms: {dept.rooms} • Staff count: {dept.staffCount}</p>
                             </div>
                           ))}
                         </div>
@@ -1337,28 +1337,28 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     <div className="p-4 card-elevated rounded-3xl space-y-3">
                       <div className="border-b border-zinc-900 pb-2">
                         <h4 className="text-xs font-black text-white uppercase tracking-tight">{tDir('headerTitle')} — {tDir('department')} Catalog</h4>
-                        <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{tDir('headerSubtitle')}</p>
+                        <p className="text-2xs text-zinc-500 font-mono mt-0.5">{tDir('headerSubtitle')}</p>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5 max-h-[380px] overflow-y-auto pr-1">
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5 max-h-[380px] overflow-y-auto pe-1">
                         {DEPARTMENTS.map((dept) => {
                           const deptSpecialties = getSpecialtiesByDepartment(dept.id);
                           return (
                             <div key={dept.id} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-2">
                               <div className="flex items-center justify-between">
-                                <h5 className="text-[11px] font-black text-white">{dept.name}</h5>
-                                <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-purple-400">
+                                <h5 className="text-xs font-black text-white">{dept.name}</h5>
+                                <span className="text-2xs font-mono font-black px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-purple-400">
                                   {dept.code}
                                 </span>
                               </div>
                               <div className="flex flex-wrap gap-1">
                                 {deptSpecialties.length > 0 ? (
                                   deptSpecialties.map((s) => (
-                                    <span key={s.id} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900/80 border border-zinc-800 text-zinc-400">
+                                    <span key={s.id} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900/80 border border-zinc-800 text-zinc-400">
                                       {s.name}
                                     </span>
                                   ))
                                 ) : (
-                                  <span className="text-[9px] font-mono text-zinc-600">General department • no fixed specialties</span>
+                                  <span className="text-2xs font-mono text-zinc-600">General department • no fixed specialties</span>
                                 )}
                               </div>
                             </div>
@@ -1418,18 +1418,18 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     {/* Filter controls */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                       <div className="relative">
-                        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                        <Search className="absolute start-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                         <input
                           type="text"
                           value={userSearch}
                           onChange={(e) => setUserSearch(e.target.value)}
                           placeholder="Search users by name, email..."
-                          className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
+                          className="w-full ps-8 pe-3 py-1.5 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
                         />
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">Role:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">Role:</span>
                         <select
                           value={userRoleFilter}
                           onChange={(e) => setUserRoleFilter(e.target.value)}
@@ -1447,7 +1447,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">Status:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">Status:</span>
                         <select
                           value={userStatusFilter}
                           onChange={(e) => setUserStatusFilter(e.target.value)}
@@ -1461,7 +1461,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('department')}:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('department')}:</span>
                         <select
                           value={userDepartmentFilter}
                           onChange={(e) => setUserDepartmentFilter(e.target.value)}
@@ -1475,7 +1475,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </div>
 
                         <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tTemplate('responsibilities')}:</span>
+                          <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{tTemplate('responsibilities')}:</span>
                           <select
                             value={userResponsibilityFilter}
                             onChange={(e) => setUserResponsibilityFilter(e.target.value)}
@@ -1489,7 +1489,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                         </div>
 
                         <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentType')}:</span>
+                          <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentType')}:</span>
                         <select
                           value={userEmploymentTypeFilter}
                           onChange={(e) => setUserEmploymentTypeFilter(e.target.value)}
@@ -1503,7 +1503,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentStatus')}:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentStatus')}:</span>
                         <select
                           value={userEmploymentStatusFilter}
                           onChange={(e) => setUserEmploymentStatusFilter(e.target.value)}
@@ -1519,9 +1519,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                     {/* Large tabular layout */}
                     <div className="overflow-x-auto rounded-2xl max-h-[340px] overflow-y-auto">
-                      <table className="w-full text-left border-collapse text-xs font-mono">
+                      <table className="w-full text-start border-collapse text-xs font-mono">
                         <thead>
-                          <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
+                          <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold border-b border-zinc-900">
                             <th className="p-3">Staff Member</th>
                             <th className="p-3">Role</th>
                             <th className="p-3">Facility Node</th>
@@ -1540,12 +1540,12 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <tr key={u.id} className="hover:bg-zinc-900/20">
                               <td className="p-3">
                                 <div className="flex items-center gap-2">
-                                  <div className={`w-7 h-7 rounded-lg bg-gradient-to-tr ${u.avatarColor} flex items-center justify-center text-[10px] font-black text-white uppercase`}>
+                                  <div className={`w-7 h-7 rounded-lg bg-gradient-to-tr ${u.avatarColor} flex items-center justify-center text-2xs font-black text-white uppercase`}>
                                     {u.name.split(' ').map(n=>n[0]).join('')}
                                   </div>
                                   <div>
-                                    <p className="font-bold text-white text-[11px]">{u.name}</p>
-                                    <span className="text-[9px] text-zinc-500">{u.email}</span>
+                                    <p className="font-bold text-white text-xs">{u.name}</p>
+                                    <span className="text-2xs text-zinc-500">{u.email}</span>
                                   </div>
                                 </div>
                               </td>
@@ -1559,7 +1559,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                     u.responsibilities.map((r) => {
                                       const resp = RESPONSIBILITIES.find(x => x.id === r);
                                       return (
-                                        <span key={r} className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                        <span key={r} className="text-2xs font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
                                           {resp?.name ?? r}
                                         </span>
                                       );
@@ -1570,8 +1570,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 </div>
                               </td>
                               <td className="p-3 space-y-1">
-                                <span className="text-[10px] text-zinc-300 block">{u.employmentType ?? '—'}</span>
-                                <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold ${
+                                <span className="text-2xs text-zinc-300 block">{u.employmentType ?? '—'}</span>
+                                <span className={`text-2xs px-1.5 py-0.5 rounded font-bold ${
                                   u.employmentStatus === 'Active' ? 'bg-emerald-500/15 text-emerald-400' :
                                   u.employmentStatus === 'Vacation' || u.employmentStatus === 'On Leave' ? 'bg-amber-500/15 text-amber-400' :
                                   u.employmentStatus === 'Suspended' ? 'bg-rose-500/15 text-rose-400' :
@@ -1582,7 +1582,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                               </td>
                               <td className="p-3">
                                 {u.workspace ? (
-                                  <span className="bg-purple-500/15 text-purple-300 border border-purple-500/30 text-[10px] px-2 py-0.5 rounded-lg font-bold">
+                                  <span className="bg-purple-500/15 text-purple-300 border border-purple-500/30 text-2xs px-2 py-0.5 rounded-lg font-bold">
                                     {getWorkspaceById(u.workspace)?.name ?? u.workspace}
                                   </span>
                                 ) : (
@@ -1603,7 +1603,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 <div className="flex items-center gap-2.5">
                                   <button 
                                     onClick={() => openSeatEditor(u)}
-                                    className="text-purple-400 hover:text-purple-300 font-bold text-[10px] transition-colors"
+                                    className="text-purple-400 hover:text-purple-300 font-bold text-2xs transition-colors"
                                   >
                                     EDIT
                                   </button>
@@ -1611,13 +1611,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                     onClick={() => {
                                       setUsers(users.filter(item => item.id !== u.id));
                                     }}
-                                    className="text-rose-400 hover:text-rose-300 font-bold text-[10px] transition-colors"
+                                    className="text-rose-400 hover:text-rose-300 font-bold text-2xs transition-colors"
                                   >
                                     SUSPEND
                                   </button>
                                   <button
                                     onClick={() => cloneUser(u)}
-                                    className="text-cyan-400 hover:text-cyan-300 font-bold text-[10px] transition-colors"
+                                    className="text-cyan-400 hover:text-cyan-300 font-bold text-2xs transition-colors"
                                   >
                                     CLONE
                                   </button>
@@ -1651,7 +1651,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('department')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('department')}</label>
                             <select
                               value={seatForm.departmentId}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, departmentId: e.target.value as DepartmentId }))}
@@ -1663,7 +1663,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('specialty')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('specialty')}</label>
                             <select
                               value={seatForm.specialtyId}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, specialtyId: e.target.value }))}
@@ -1676,7 +1676,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('jobTitle')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('jobTitle')}</label>
                             <input
                               type="text"
                               value={seatForm.jobTitle}
@@ -1685,7 +1685,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('employmentType')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('employmentType')}</label>
                             <select
                               value={seatForm.employmentType}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, employmentType: e.target.value as EmploymentType }))}
@@ -1697,7 +1697,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('employmentStatus')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('employmentStatus')}</label>
                             <select
                               value={seatForm.employmentStatus}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, employmentStatus: e.target.value as EmploymentStatus }))}
@@ -1709,7 +1709,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('permissionTemplate')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('permissionTemplate')}</label>
                             <select
                               value={seatForm.permissionTemplateId}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, permissionTemplateId: e.target.value }))}
@@ -1721,7 +1721,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('accessScope')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('accessScope')}</label>
                             <select
                               value={seatForm.accessScope}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, accessScope: e.target.value as AccessScopeType }))}
@@ -1733,7 +1733,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('workspace')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('workspace')}</label>
                             <select
                               value={seatForm.workspace}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, workspace: e.target.value as WorkspaceId }))}
@@ -1748,8 +1748,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tTemplate('responsibilities')}</label>
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tTemplate('responsibilities')}</label>
+                            <span className="text-2xs font-mono px-2 py-0.5 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                               {tTemplate('n_selected', { count: seatForm.responsibilities.length })}
                             </span>
                           </div>
@@ -1761,7 +1761,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                   key={r.id}
                                   type="button"
                                   onClick={() => toggleSeatResponsibility(r.id)}
-                                  className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
+                                  className={`px-2.5 py-1 rounded-lg text-2xs font-bold border transition-all cursor-pointer ${
                                     active
                                       ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
                                       : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -1843,18 +1843,18 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pr-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pe-1">
                       {teams.map((t) => (
                         <div key={t.id} className="p-4 card-elevated rounded-3xl flex flex-col justify-between h-[180px] space-y-3">
                           <div className="flex justify-between items-start">
                             <div>
                               <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-mono font-bold bg-zinc-950 border border-zinc-800 text-purple-400 px-1.5 py-0.5 rounded-md">
+                                <span className="text-2xs font-mono font-bold bg-zinc-950 border border-zinc-800 text-purple-400 px-1.5 py-0.5 rounded-md">
                                   {t.id}
                                 </span>
                                 <h4 className="text-xs font-black text-white">{t.name}</h4>
                               </div>
-                              <p className="text-[9px] text-zinc-500 font-mono mt-0.5">Focus: {t.type} operations</p>
+                              <p className="text-2xs text-zinc-500 font-mono mt-0.5">Focus: {t.type} operations</p>
                             </div>
                             <span className={`badge ${
                               t.status === 'On Duty' ? 'badge-success' :
@@ -1865,7 +1865,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </span>
                           </div>
 
-                          <div className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-1.5 font-mono text-[10px]">
+                          <div className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-1.5 font-mono text-2xs">
                             <div className="flex justify-between text-zinc-400">
                               <span>Staff Roster:</span>
                               <span className="text-white font-bold">{t.members.join(', ')}</span>
@@ -1876,7 +1876,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </div>
                           </div>
 
-                          <div className="flex justify-between items-center text-[10px] font-mono text-zinc-400">
+                          <div className="flex justify-between items-center text-2xs font-mono text-zinc-400">
                             <span>Availability rate: <strong className="text-emerald-400">{t.availability}</strong></span>
                             <button 
                               onClick={() => {
@@ -1914,9 +1914,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                     {/* Table-based Audit Log */}
                     <div className="overflow-x-auto rounded-2xl max-h-[380px] overflow-y-auto">
-                      <table className="w-full text-left border-collapse text-xs font-mono">
+                      <table className="w-full text-start border-collapse text-xs font-mono">
                         <thead>
-                          <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
+                          <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold border-b border-zinc-900">
                             <th className="p-3">Audit Timestamp</th>
                             <th className="p-3">Operator</th>
                             <th className="p-3">Submodule Scope</th>
@@ -1932,11 +1932,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                               <td className="p-3 font-bold text-zinc-200">
                                 <div className="flex flex-col">
                                   <span>{log.actor}</span>
-                                  <span className="text-[9px] text-zinc-500">{log.role}</span>
+                                  <span className="text-2xs text-zinc-500">{log.role}</span>
                                 </div>
                               </td>
                               <td className="p-3">
-                                <span className="bg-zinc-900 border border-zinc-800 text-[10px] px-2 py-0.5 rounded text-zinc-400">
+                                <span className="bg-zinc-900 border border-zinc-800 text-2xs px-2 py-0.5 rounded text-zinc-400">
                                   {log.module}
                                 </span>
                               </td>
@@ -1984,13 +1984,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Left publish form */}
                       <div className="p-4 card-elevated rounded-3xl space-y-3 h-[380px] flex flex-col justify-between font-sans">
                         <div className="space-y-1">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block">{tOrg('notices.draftTitle')}</span>
-                          <p className="text-[10px] text-zinc-400 font-sans">{tOrg('notices.draftDesc')}</p>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-400 font-sans block">{tOrg('notices.draftTitle')}</span>
+                          <p className="text-2xs text-zinc-400 font-sans">{tOrg('notices.draftDesc')}</p>
                         </div>
 
                         <form onSubmit={handleAddAnnouncement} className="space-y-3 flex-1 justify-center mt-3">
                           <div className="space-y-1">
-                            <label className="text-[10px] font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.titleLabel')}</label>
+                            <label className="text-2xs font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.titleLabel')}</label>
                             <input
                               type="text"
                               value={newAnnouncementTitle}
@@ -2001,7 +2001,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.typeLabel')}</label>
+                            <label className="text-2xs font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.typeLabel')}</label>
                             <select
                               value={newAnnouncementType}
                               onChange={(e: any) => setNewAnnouncementType(e.target.value)}
@@ -2014,7 +2014,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.bodyLabel')}</label>
+                            <label className="text-2xs font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.bodyLabel')}</label>
                             <textarea
                               value={newAnnouncementContent}
                               onChange={(e) => setNewAnnouncementContent(e.target.value)}
@@ -2035,11 +2035,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                       {/* Right active announcements list */}
                       <div className="lg:col-span-2 p-4 card-elevated rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-3 font-sans">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block mb-2">{tOrg('notices.boardTitle')}</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-400 font-sans block mb-2">{tOrg('notices.boardTitle')}</span>
                         <div className="space-y-2.5">
                           {announcements.map((item) => (
                             <div key={item.id} className="p-4.5 bg-zinc-950 border border-zinc-900 rounded-xl space-y-2 relative group font-sans">
-                              <span className={`badge absolute top-3 right-3 ${
+                              <span className={`badge absolute top-3 end-3 ${
                                 item.type === 'Critical' ? 'badge-danger' :
                                 item.type === 'Maintenance' ? 'badge-warning' :
                                 'badge-success'
@@ -2052,8 +2052,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 <Bell className="w-4.5 h-4.5 mt-0.5 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
                                 <div className="space-y-1">
                                   <h4 className="text-xs font-bold text-white font-sans">{item.title}</h4>
-                                  <p className="text-[11px] text-zinc-300 leading-relaxed font-sans">{item.content}</p>
-                                  <p className="text-[9px] text-zinc-500 font-sans pt-1">
+                                  <p className="text-xs text-zinc-300 leading-relaxed font-sans">{item.content}</p>
+                                  <p className="text-2xs text-zinc-500 font-sans pt-1">
                                     {item.date} • {item.author}
                                   </p>
                                 </div>
@@ -2101,11 +2101,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Security Parameters Panel */}
                       <div className="p-4 card-elevated rounded-3xl h-[380px] flex flex-col justify-between space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Credential policies</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Credential policies</span>
                         
                         <div className="space-y-4 flex-1 mt-2">
                           <div className="space-y-1.5">
-                            <div className="flex justify-between items-center text-[10px] font-mono text-zinc-400">
+                            <div className="flex justify-between items-center text-2xs font-mono text-zinc-400">
                               <span>Min Password Length:</span>
                               <span className="text-white font-bold">{passwordMinLength} characters</span>
                             </div>
@@ -2120,7 +2120,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1.5">
-                            <div className="flex justify-between items-center text-[10px] font-mono text-zinc-400">
+                            <div className="flex justify-between items-center text-2xs font-mono text-zinc-400">
                               <span>Auto-Logout Timeout:</span>
                               <span className="text-white font-bold">{sessionTimeout} minutes</span>
                             </div>
@@ -2140,8 +2140,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <div className="flex items-center gap-2">
                               <Fingerprint className="w-5 h-5 text-emerald-400" />
                               <div>
-                                <h5 className="text-[11px] font-bold text-white">Enforce 2FA Authenticator</h5>
-                                <p className="text-[8px] text-zinc-500 font-mono">Requires secure auth code on log</p>
+                                <h5 className="text-xs font-bold text-white">Enforce 2FA Authenticator</h5>
+                                <p className="text-2xs text-zinc-500 font-mono">Requires secure auth code on log</p>
                               </div>
                             </div>
                             <button
@@ -2164,8 +2164,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                               </div>
                             </div>
                             <div>
-                              <p className="text-[10px] font-black text-white font-mono">Clinician Token Key</p>
-                              <p className="text-[8px] text-zinc-500 font-mono">Scan code to register new authenticator device</p>
+                              <p className="text-2xs font-black text-white font-mono">Clinician Token Key</p>
+                              <p className="text-2xs text-zinc-500 font-mono">Scan code to register new authenticator device</p>
                             </div>
                           </div>
                         )}
@@ -2175,8 +2175,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       <div className="md:col-span-2 p-4 card-elevated rounded-3xl h-[380px] space-y-4 flex flex-col justify-between">
                         <div>
                           <div className="flex justify-between items-center border-b border-zinc-900 pb-2 mb-3">
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Active Operator Device Nodes</span>
-                            <span className="text-[9px] font-mono text-emerald-400">Total verified devices: 4</span>
+                            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono">Active Operator Device Nodes</span>
+                            <span className="text-2xs font-mono text-emerald-400">Total verified devices: 4</span>
                           </div>
 
                           <div className="space-y-2">
@@ -2188,15 +2188,15 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             ].map((item, idx) => {
                               const DevIcon = item.icon;
                               return (
-                                <div key={idx} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-[10px]">
+                                <div key={idx} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-2xs">
                                   <div className="flex items-center gap-2.5">
                                     <DevIcon className="w-4 h-4 text-zinc-500" />
                                     <div>
                                       <p className="font-bold text-white">{item.device}</p>
-                                      <p className="text-[9px] text-zinc-500">{item.location} • {item.ip}</p>
+                                      <p className="text-2xs text-zinc-500">{item.location} • {item.ip}</p>
                                     </div>
                                   </div>
-                                  <span className="text-[9px] text-emerald-400">{item.lastActive}</span>
+                                  <span className="text-2xs text-emerald-400">{item.lastActive}</span>
                                 </div>
                               );
                             })}
@@ -2208,8 +2208,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           <div className="flex items-center gap-2 font-mono">
                             <ShieldCheck className="w-5 h-5 text-emerald-400" />
                             <div>
-                              <p className="text-[11px] text-white font-bold">HIPAA Security rating</p>
-                              <p className="text-[9px] text-zinc-500">Perfect compliance posture</p>
+                              <p className="text-xs text-white font-bold">HIPAA Security rating</p>
+                              <p className="text-2xs text-zinc-500">Perfect compliance posture</p>
                             </div>
                           </div>
                           <span className="text-2xl font-black text-emerald-400 font-mono">{securityScore}%</span>
@@ -2241,11 +2241,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Left form params */}
                       <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[380px] flex flex-col justify-between space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Tenant Localization Settings</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Tenant Localization Settings</span>
                         
                         <div className="space-y-3 flex-1 mt-2">
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Workspace Branding Name</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Workspace Branding Name</label>
                             <input
                               type="text"
                               value={workspaceName}
@@ -2256,7 +2256,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Timezone Scope</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Timezone Scope</label>
                             <select
                               value={workspaceTimezone}
                               onChange={(e) => setWorkspaceTimezone(e.target.value)}
@@ -2270,7 +2270,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Primary Language</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Primary Language</label>
                             <select
                               value={primaryLanguage}
                               onChange={(e) => setPrimaryLanguage(e.target.value)}
@@ -2284,13 +2284,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                           {/* Branding Color palette simulator */}
                           <div className="space-y-1.5">
-                            <span className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Workspace UI Accent color</span>
+                            <span className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Workspace UI Accent color</span>
                             <div className="flex gap-2">
                               {['emerald', 'cyan', 'indigo', 'rose', 'amber'].map((color) => (
                                 <button
                                   key={color}
                                   onClick={() => setBrandColor(color)}
-                                  className={`p-1.5 rounded-lg border text-[10px] font-bold font-mono transition-all cursor-pointer ${
+                                  className={`p-1.5 rounded-lg border text-2xs font-bold font-mono transition-all cursor-pointer ${
                                     brandColor === color 
                                       ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400 font-black' 
                                       : 'bg-zinc-950 border-zinc-900 text-zinc-500'
@@ -2303,7 +2303,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
                         </div>
 
-                        <div className="p-2.5 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-[9px] text-zinc-500">
+                        <div className="p-2.5 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-2xs text-zinc-500">
                           <span>CHANGES RE-WRITE GLOBAL CACHE DIRECTLY</span>
                         </div>
                       </div>
@@ -2311,11 +2311,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Right preview card */}
                       <div className="p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] flex flex-col justify-between">
                         <div className="space-y-4">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Custom Client Branding Preview</span>
-                          <p className="text-[10px] text-zinc-400 font-mono">This preview reflects how patient-facing letters and portals render.</p>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Custom Client Branding Preview</span>
+                          <p className="text-2xs text-zinc-400 font-mono">This preview reflects how patient-facing letters and portals render.</p>
 
                           {/* Preview visual card */}
-                          <div className="p-5 rounded-3xl bg-zinc-950 border border-zinc-900 space-y-4 shadow-xl">
+                          <div className="p-5 rounded-3xl bg-zinc-950 border border-zinc-900 space-y-4 shadow-card">
                             <div className="flex justify-between items-start">
                               <div className="flex items-center gap-2">
                                 <div className={`w-8 h-8 rounded-lg ${
@@ -2329,14 +2329,14 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 </div>
                                 <div>
                                   <h4 className="text-xs font-black text-white">{workspaceName.substring(0, 24)}...</h4>
-                                  <p className="text-[9px] text-zinc-500 font-mono">Dynamic localization: {workspaceTimezone}</p>
+                                  <p className="text-2xs text-zinc-500 font-mono">Dynamic localization: {workspaceTimezone}</p>
                                 </div>
                               </div>
                             </div>
 
                             <div className="space-y-1 border-t border-zinc-900 pt-3">
-                              <p className="text-[11px] text-zinc-300">Dear Patient,</p>
-                              <p className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                              <p className="text-xs text-zinc-300">Dear Patient,</p>
+                              <p className="text-2xs text-zinc-500 font-mono leading-relaxed">
                                 This treatment schedule is dynamically calculated in <span className="text-emerald-400 font-bold">{primaryLanguage}</span> based on multi-clinic timezone standards.
                               </p>
                             </div>
@@ -2409,7 +2409,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Left: SLA Health Telemetry */}
                       <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[380px] space-y-3">
                         <div>
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Cryptographic Cluster Checksum</span>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Cryptographic Cluster Checksum</span>
                           
                           <div className="space-y-2.5 font-mono text-xs mt-3">
                             <div className="flex justify-between items-center bg-zinc-950 p-2 rounded-xl border border-zinc-900">
@@ -2432,8 +2432,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                         </div>
 
                         <div className="space-y-3">
-                          <div className="bg-zinc-950 p-3 rounded-xl border border-zinc-900 text-[10px] font-mono text-zinc-400 space-y-1">
-                            <p className="font-bold text-white uppercase tracking-wider text-[8px] text-zinc-500">Telemetry Scan Data</p>
+                          <div className="bg-zinc-950 p-3 rounded-xl border border-zinc-900 text-2xs font-mono text-zinc-400 space-y-1">
+                            <p className="font-bold text-white uppercase tracking-wider text-2xs text-zinc-500">Telemetry Scan Data</p>
                             <p>API Gateway Cluster: <span className="text-white">Active (99.99%)</span></p>
                             <p>Database Latency: <span className="text-emerald-400">11ms</span></p>
                           </div>
@@ -2455,27 +2455,27 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Right: Backups Archive list */}
                       <div className="lg:col-span-2 p-4 bg-zinc-900/30 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[380px]">
                         <div className="space-y-2 flex-1 overflow-hidden flex flex-col">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-1">Cryptographically Authenticated Backups List</span>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-1">Cryptographically Authenticated Backups List</span>
                           
-                          <div className="flex-1 overflow-y-auto space-y-2.5 pr-1 scrollbar-thin">
+                          <div className="flex-1 overflow-y-auto space-y-2.5 pe-1 scrollbar-thin">
                             {backups.map((bkp) => (
                               <div key={bkp.id} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-xs">
                                 <div className="space-y-1">
                                   <div className="flex items-center gap-2">
                                     <span className="text-xs font-bold text-white">{bkp.id}</span>
-                                    <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded border ${
+                                    <span className={`text-2xs font-extrabold px-1.5 py-0.5 rounded border ${
                                       bkp.type === 'Manual' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                                     }`}>
                                       {bkp.type.toUpperCase()}
                                     </span>
                                   </div>
-                                  <p className="text-[10px] text-zinc-500 font-semibold">Created: {bkp.timestamp} | Size: {bkp.size}</p>
-                                  <p className="text-[9px] text-zinc-650 truncate max-w-xs">{bkp.checksum}</p>
+                                  <p className="text-2xs text-zinc-500 font-semibold">Created: {bkp.timestamp} | Size: {bkp.size}</p>
+                                  <p className="text-2xs text-zinc-650 truncate max-w-xs">{bkp.checksum}</p>
                                 </div>
 
                                 <div className="flex items-center gap-2">
                                   {bkp.status === 'Restored' ? (
-                                    <span className="text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-2 py-1 rounded-lg">
+                                    <span className="text-2xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-2 py-1 rounded-lg">
                                       Active State
                                     </span>
                                   ) : (
@@ -2486,7 +2486,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                         setDrStatusMessage(`Successfully restored all clinical databases and tenant state to backup archive: ${bkp.id}`);
                                         setTimeout(() => setDrStatusMessage(null), 6000);
                                       }}
-                                      className="px-3 py-1 bg-zinc-900 border border-zinc-800 hover:border-blue-500/50 hover:bg-zinc-850 text-blue-400 hover:text-white rounded-lg text-[10px] font-bold transition-all cursor-pointer"
+                                      className="px-3 py-1 bg-zinc-900 border border-zinc-800 hover:border-blue-500/50 hover:bg-zinc-850 text-blue-400 hover:text-white rounded-lg text-2xs font-bold transition-all cursor-pointer"
                                     >
                                       Restore
                                     </button>
@@ -2522,15 +2522,15 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {WORKSPACES.map((w) => (
                         <div key={w.id} className="p-3 card-elevated rounded-2xl space-y-1.5">
                           <div className="flex items-center justify-between">
-                            <h5 className="text-[11px] font-black text-white">{w.name}</h5>
-                            <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-purple-500/10 border border-purple-500/30 text-purple-400 uppercase">
+                            <h5 className="text-xs font-black text-white">{w.name}</h5>
+                            <span className="text-2xs font-mono font-black px-1.5 py-0.5 rounded bg-purple-500/10 border border-purple-500/30 text-purple-400 uppercase">
                               {w.id}
                             </span>
                           </div>
-                          <p className="text-[8px] font-mono text-zinc-500">Primary module: <span className="text-zinc-300">{w.primaryModule}</span></p>
+                          <p className="text-2xs font-mono text-zinc-500">Primary module: <span className="text-zinc-300">{w.primaryModule}</span></p>
                           <div className="flex flex-wrap gap-1">
                             {w.departments.map((d) => (
-                              <span key={d} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
+                              <span key={d} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
                                 {getDepartmentName(d)}
                               </span>
                             ))}
@@ -2542,13 +2542,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     <div className="p-4 card-elevated rounded-3xl space-y-3">
                       <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
                         <span className="text-xs font-black text-white uppercase tracking-tight font-mono">{tDir('allWorkspaces')}</span>
-                        <span className="text-[9px] font-mono text-purple-400">{tDir('derivedFrom')}: {tTemplate('responsibilities')} + {tDir('department')} + {tDir('permissionMatrix')}</span>
+                        <span className="text-2xs font-mono text-purple-400">{tDir('derivedFrom')}: {tTemplate('responsibilities')} + {tDir('department')} + {tDir('permissionMatrix')}</span>
                       </div>
 
                       {/* Adaptive engine status */}
                       <div className="flex items-center gap-2 flex-wrap">
                         {orgProfile && (
-                          <span className={`text-[10px] font-mono px-2 py-1 rounded-lg border font-bold ${
+                          <span className={`text-2xs font-mono px-2 py-1 rounded-lg border font-bold ${
                             isConsolidatedPractice(orgProfile.practiceTypeId)
                               ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
                               : 'bg-purple-500/10 border-purple-500/30 text-purple-300'
@@ -2559,16 +2559,16 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </span>
                         )}
                         {orgProfile && (
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tOnboard(`practiceTypes.${orgProfile.practiceTypeId}`)}
                           </span>
                         )}
                       </div>
 
                       <div className="overflow-x-auto rounded-xl max-h-[320px] overflow-y-auto">
-                        <table className="w-full text-left border-collapse text-xs font-mono">
+                        <table className="w-full text-start border-collapse text-xs font-mono">
                           <thead>
-                            <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
+                            <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold border-b border-zinc-900">
                               <th className="p-3">Staff Member</th>
                               <th className="p-3">{tDir('department')}</th>
                               <th className="p-3">{tTemplate('responsibilities')}</th>
@@ -2583,13 +2583,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 <tr key={u.id} className="hover:bg-zinc-900/20">
                                   <td className="p-3">
                                     <div className="flex items-center gap-2">
-                                      <div className={`w-6 h-6 rounded-lg bg-gradient-to-tr ${u.avatarColor} flex items-center justify-center text-[9px] font-black text-white uppercase`}>
+                                      <div className={`w-6 h-6 rounded-lg bg-gradient-to-tr ${u.avatarColor} flex items-center justify-center text-2xs font-black text-white uppercase`}>
                                         {u.name.split(' ').map(n=>n[0]).join('')}
                                       </div>
                                       <div>
-                                        <span className="font-bold text-white text-[11px]">{u.name}</span>
+                                        <span className="font-bold text-white text-xs">{u.name}</span>
                                         {adaptive.consolidated && (
-                                          <span className="block text-[8px] font-mono text-amber-400/80 uppercase">Unified surface</span>
+                                          <span className="block text-2xs font-mono text-amber-400/80 uppercase">Unified surface</span>
                                         )}
                                       </div>
                                     </div>
@@ -2600,7 +2600,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                       {(u.responsibilities ?? []).slice(0, 3).map((r) => {
                                         const resp = RESPONSIBILITIES.find(x => x.id === r);
                                         return (
-                                          <span key={r} className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                          <span key={r} className="text-2xs font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
                                             {resp?.name ?? r}
                                           </span>
                                         );
@@ -2611,7 +2611,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                   <td className="p-3">
                                     <div className="flex flex-wrap gap-1">
                                       {adaptive.workspaces.map((wid) => (
-                                        <span key={wid} className={`text-[9px] font-bold px-2 py-0.5 rounded-lg border ${
+                                        <span key={wid} className={`text-2xs font-bold px-2 py-0.5 rounded-lg border ${
                                           adaptive.consolidated
                                             ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
                                             : 'bg-purple-500/15 text-purple-300 border-purple-500/30'
@@ -2654,10 +2654,10 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     </div>
                     {orgProfile && (
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
+                        <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
                           {tTemplate('practiceType')}: <span className="text-violet-300 font-bold">{tOnboard(`practiceTypes.${orgProfile.practiceTypeId}`)}</span>
                         </span>
-                        <span className={`text-[10px] font-mono px-2 py-1 rounded-lg border ${
+                        <span className={`text-2xs font-mono px-2 py-1 rounded-lg border ${
                           practiceTemplate?.source === 'custom'
                             ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
                             : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
@@ -2689,9 +2689,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <Building2 className="w-4 h-4 text-sky-400" /> {tTemplate('departments')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('departmentsSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('departmentsSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.departments.length })}
                           </span>
                         </div>
@@ -2703,7 +2703,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 key={d.id}
                                 type="button"
                                 onClick={() => toggleTemplateItem('departments', d.id)}
-                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                                   active
                                     ? 'bg-sky-500/15 text-sky-300 border-sky-500/40'
                                     : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -2723,9 +2723,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <Grid className="w-4 h-4 text-purple-400" /> {tTemplate('workspaces')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('workspacesSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('workspacesSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.workspaces.length })}
                           </span>
                         </div>
@@ -2737,7 +2737,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 key={w.id}
                                 type="button"
                                 onClick={() => toggleTemplateItem('workspaces', w.id)}
-                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                                   active
                                     ? 'bg-purple-500/15 text-purple-300 border-purple-500/40'
                                     : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -2757,9 +2757,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <UserCheck className="w-4 h-4 text-emerald-400" /> {tTemplate('responsibilities')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('responsibilitiesSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('responsibilitiesSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.responsibilities.length })}
                           </span>
                         </div>
@@ -2771,7 +2771,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 key={r.id}
                                 type="button"
                                 onClick={() => toggleTemplateItem('responsibilities', r.id)}
-                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                                   active
                                     ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
                                     : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -2791,9 +2791,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <Layers className="w-4 h-4 text-amber-400" /> {tTemplate('navigation')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('navigationSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('navigationSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.navigation.length })}
                           </span>
                         </div>
@@ -2803,7 +2803,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                               key={k}
                               type="button"
                               onClick={() => toggleTemplateItem('navigation', k)}
-                              className="px-3 py-1.5 rounded-xl text-[11px] font-bold border border-amber-500/40 bg-amber-500/15 text-amber-300 transition-all cursor-pointer hover:bg-amber-500/25"
+                              className="px-3 py-1.5 rounded-xl text-xs font-bold border border-amber-500/40 bg-amber-500/15 text-amber-300 transition-all cursor-pointer hover:bg-amber-500/25"
                             >
                               {k}
                             </button>
@@ -2818,9 +2818,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <ShieldCheck className="w-4 h-4 text-rose-400" /> {tTemplate('permissionTemplates')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('permissionTemplatesSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('permissionTemplatesSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.permissionTemplateIds.length })}
                           </span>
                         </div>
@@ -2832,7 +2832,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 key={tmpl.id}
                                 type="button"
                                 onClick={() => toggleTemplateItem('permissionTemplateIds', tmpl.id)}
-                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                                   active
                                     ? 'bg-rose-500/15 text-rose-300 border-rose-500/40'
                                     : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -2866,7 +2866,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </button>
                         </div>
                         {practiceTemplateStatus && (
-                          <span className={`text-[11px] font-bold px-3 py-1.5 rounded-xl border ${
+                          <span className={`text-xs font-bold px-3 py-1.5 rounded-xl border ${
                             practiceTemplateStatus === 'saved'
                               ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
                               : 'bg-amber-500/10 border-amber-500/30 text-amber-300'
@@ -2898,10 +2898,10 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     </div>
                     {orgProfile && (
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
+                        <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
                           {tTemplate('practiceType')}: <span className="text-cyan-300 font-bold">{tOnboard('practiceTypes.' + orgProfile.practiceTypeId)}</span>
                         </span>
-                        <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-cyan-500/10 border-cyan-500/30 text-cyan-300">
+                        <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-cyan-500/10 border-cyan-500/30 text-cyan-300">
                           PERSONAL LAYOUTS
                         </span>
                       </div>

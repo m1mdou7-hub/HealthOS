@@ -187,7 +187,7 @@ export default function AnalyticsWorkspace() {
       
       {/* Toast Notification */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 text-white font-mono text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-3 animate-slide-in"
+        <div className="fixed bottom-6 end-6 z-50 text-white font-mono text-xs px-4 py-3 rounded-3xl shadow-pop flex items-center gap-3 animate-slide-in"
           style={{ background: 'var(--gradient)', boxShadow: 'var(--shadow-pop)', border: '1px solid var(--border-strong)' }}>
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{toastMessage}</span>
@@ -228,7 +228,7 @@ export default function AnalyticsWorkspace() {
               <button
                 key={t}
                 onClick={() => setTimeframe(t as any)}
-                className={`px-3 py-1 rounded-lg text-[10px] font-black capitalize transition-all cursor-pointer ${
+                className={`px-3 py-1 rounded-lg text-2xs font-black capitalize transition-all cursor-pointer ${
                   timeframe === t ? 'btn-primary' : 'text-zinc-500 hover:text-white'
                 }`}
               >
@@ -250,31 +250,31 @@ export default function AnalyticsWorkspace() {
       {/* KPI HIGHLIGHT CARDS (Global Values based on timeframe) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
         <div className="p-4 card-elevated card-hover flex flex-col justify-between h-[105px]">
-          <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>YTD Capitalized Yield</span>
+          <span className="text-2xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>YTD Capitalized Yield</span>
           <span className="text-xl font-black font-mono" style={{ color: 'var(--text)' }}>${stats.totalRev.toLocaleString()}</span>
-          <span className="text-[9px] font-bold flex items-center gap-1" style={{ color: 'var(--success)' }}>
+          <span className="text-2xs font-bold flex items-center gap-1" style={{ color: 'var(--success)' }}>
             <TrendingUp className="w-3 h-3" /> +14.8% vs last fiscal period
           </span>
         </div>
 
         <div className="p-4 card-elevated card-hover flex flex-col justify-between h-[105px]">
-          <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Claims Realization Rate</span>
+          <span className="text-2xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Claims Realization Rate</span>
           <span className="text-xl font-black font-mono" style={{ color: 'var(--text)' }}>94.8%</span>
-          <span className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>Avg Claim: ${(stats.avgClaims).toLocaleString(undefined, {maximumFractionDigits: 0})} / mo</span>
+          <span className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Avg Claim: ${(stats.avgClaims).toLocaleString(undefined, {maximumFractionDigits: 0})} / mo</span>
         </div>
 
         <div className="p-4 card-elevated card-hover flex flex-col justify-between h-[105px]">
-          <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Case Completion Index</span>
+          <span className="text-2xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Case Completion Index</span>
           <span className="text-xl font-black font-mono" style={{ color: 'var(--text)' }}>{(stats.avgCompletion).toFixed(1)}%</span>
-          <span className="text-[9px] font-bold flex items-center gap-1" style={{ color: 'var(--info)' }}>
+          <span className="text-2xs font-bold flex items-center gap-1" style={{ color: 'var(--info)' }}>
             Optimal patient clinical retention
           </span>
         </div>
 
         <div className="p-4 card-elevated card-hover flex flex-col justify-between h-[105px]">
-          <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Patient Intake Growth</span>
+          <span className="text-2xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Patient Intake Growth</span>
           <span className="text-xl font-black font-mono" style={{ color: 'var(--success)' }}>+{stats.totalGrowth}</span>
-          <span className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>Registered outpatient referrals</span>
+          <span className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Registered outpatient referrals</span>
         </div>
       </div>
 
@@ -295,7 +295,7 @@ export default function AnalyticsWorkspace() {
                     </div>
                     <span className="text-xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-sub)' }}>HealthOS Business Intelligence Insights</span>
                   </div>
-                  <span className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>Auto-generated 5m ago</span>
+                  <span className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Auto-generated 5m ago</span>
                 </div>
 
                 <div className="space-y-3">
@@ -310,9 +310,9 @@ export default function AnalyticsWorkspace() {
                       <div className="flex-1">
                         <div className="flex justify-between items-baseline">
                           <h4 className="text-xs font-bold" style={{ color: 'var(--text)' }}>{ins.title}</h4>
-                          <span className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>{ins.category}</span>
+                          <span className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>{ins.category}</span>
                         </div>
-                        <p className="text-[11px] mt-0.5 font-sans leading-relaxed" style={{ color: 'var(--text-muted)' }}>{ins.desc}</p>
+                        <p className="text-xs mt-0.5 font-sans leading-relaxed" style={{ color: 'var(--text-muted)' }}>{ins.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -324,7 +324,7 @@ export default function AnalyticsWorkspace() {
                 <div className="flex justify-between items-center">
                   <div>
                     <h4 className="text-xs font-bold uppercase tracking-wider font-mono" style={{ color: 'var(--text)' }}>YTD Operational Cost vs Collection Efficiency</h4>
-                    <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>Tracking clinical overhead relative to realized revenue collections.</p>
+                    <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Tracking clinical overhead relative to realized revenue collections.</p>
                   </div>
                 </div>
                 <div className="h-60 w-full">
@@ -345,14 +345,14 @@ export default function AnalyticsWorkspace() {
             {/* Side summary details */}
             <div className="space-y-4">
               <div className="p-5 card-gradient rounded-3xl space-y-4">
-                <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Clinician Yield Rankings</span>
+                <span className="text-2xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Clinician Yield Rankings</span>
                 <div className="space-y-3">
                   {MOCK_DOCTORS.map(doc => (
                     <div key={doc.id} className="p-3 card-elevated rounded-2xl space-y-2">
                       <div className="flex justify-between items-center">
                         <div>
                           <p className="text-xs font-bold" style={{ color: 'var(--text)' }}>{doc.name}</p>
-                          <p className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>{doc.specialty}</p>
+                          <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>{doc.specialty}</p>
                         </div>
                         <span className="font-mono text-xs font-black" style={{ color: 'var(--success)' }}>${doc.revenue.toLocaleString()}</span>
                       </div>
@@ -362,7 +362,7 @@ export default function AnalyticsWorkspace() {
                           style={{ width: `${doc.completionRate}%`, backgroundColor: doc.color, boxShadow: `0 0 8px ${doc.color}` }}
                         />
                       </div>
-                      <div className="flex justify-between items-center text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>
+                      <div className="flex justify-between items-center text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
                         <span>{doc.appointments} consultations</span>
                         <span>{doc.completionRate}% completions</span>
                       </div>
@@ -380,7 +380,7 @@ export default function AnalyticsWorkspace() {
             <div className="lg:col-span-2 p-5 card-elevated rounded-3xl space-y-4">
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider font-mono" style={{ color: 'var(--text)' }}>Revenue Streaming & Claims Realization Flow</h4>
-                <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>Comparison of submitted insurance claims versus actual patient collections.</p>
+                <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Comparison of submitted insurance claims versus actual patient collections.</p>
               </div>
               <div className="h-64 w-full">
                 <ResponsiveContainer width="100%" height="100%">
@@ -407,7 +407,7 @@ export default function AnalyticsWorkspace() {
             </div>
 
             <div className="p-5 card-gradient rounded-3xl space-y-4">
-              <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Collection Aging Bucket</span>
+              <span className="text-2xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Collection Aging Bucket</span>
               <div className="space-y-4 text-xs font-mono">
                 {[
                   { label: 'Current (0-30 Days)', value: '$148,200', percent: 74, color: 'var(--success)' },
@@ -416,7 +416,7 @@ export default function AnalyticsWorkspace() {
                   { label: 'Critical (90+ Days)', value: '$6,800', percent: 4, color: 'var(--danger)' }
                 ].map((bucket, i) => (
                   <div key={i} className="space-y-1">
-                    <div className="flex justify-between items-center text-[11px]">
+                    <div className="flex justify-between items-center text-xs">
                       <span className="font-bold" style={{ color: 'var(--text-sub)' }}>{bucket.label}</span>
                       <span className="font-extrabold" style={{ color: 'var(--text)' }}>{bucket.value} ({bucket.percent}%)</span>
                     </div>
@@ -436,7 +436,7 @@ export default function AnalyticsWorkspace() {
             <div className="lg:col-span-2 p-5 card-elevated rounded-3xl space-y-4">
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider font-mono" style={{ color: 'var(--text)' }}>Case Completion Indices & Outpatient Traffic</h4>
-                <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>Comparing outpatient referral volume against final medical case clearances.</p>
+                <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Comparing outpatient referral volume against final medical case clearances.</p>
               </div>
               <div className="h-64 w-full">
                 <ResponsiveContainer width="100%" height="100%">
@@ -453,7 +453,7 @@ export default function AnalyticsWorkspace() {
             </div>
 
             <div className="p-5 card-gradient rounded-3xl space-y-4">
-              <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Departmental Resource Weight</span>
+              <span className="text-2xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Departmental Resource Weight</span>
               <div className="flex justify-center py-2">
                 <div className="h-40 w-40 relative flex items-center justify-center">
                   <ResponsiveContainer width="100%" height="100%">
@@ -475,7 +475,7 @@ export default function AnalyticsWorkspace() {
                   </ResponsiveContainer>
                   <div className="absolute text-center">
                     <span className="text-base font-black font-mono" style={{ color: 'var(--text)' }}>$130K</span>
-                    <span className="text-[8px] uppercase block" style={{ color: 'var(--text-muted)' }}>Total cost</span>
+                    <span className="text-2xs uppercase block" style={{ color: 'var(--text-muted)' }}>Total cost</span>
                   </div>
                 </div>
               </div>
@@ -500,13 +500,13 @@ export default function AnalyticsWorkspace() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 p-5 card-elevated rounded-3xl space-y-4">
               <span className="text-xs font-bold uppercase tracking-wider font-mono block" style={{ color: 'var(--text)' }}>Top Materials Consumed by Volume</span>
-              <table className="w-full text-left text-xs font-mono">
+              <table className="w-full text-start text-xs font-mono">
                 <thead>
                   <tr style={{ borderBottom: '1px solid var(--border)' }}>
                     <th className="py-2.5 px-3">Material Name</th>
                     <th className="py-2.5 px-3">Category</th>
-                    <th className="py-2.5 px-3 text-right">Units Drawn</th>
-                    <th className="py-2.5 px-3 text-right">MVT Trend</th>
+                    <th className="py-2.5 px-3 text-end">Units Drawn</th>
+                    <th className="py-2.5 px-3 text-end">MVT Trend</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -514,8 +514,8 @@ export default function AnalyticsWorkspace() {
                     <tr key={i} style={{ borderBottom: '1px solid var(--border)' }}>
                       <td className="py-3 px-3 font-semibold" style={{ color: 'var(--text)' }}>{mat.name}</td>
                       <td className="py-3 px-3" style={{ color: 'var(--text-sub)' }}>{mat.category}</td>
-                      <td className="py-3 px-3 text-right font-mono font-bold" style={{ color: 'var(--text-sub)' }}>{mat.count.toLocaleString()}</td>
-                      <td className={`py-3 px-3 text-right font-black ${
+                      <td className="py-3 px-3 text-end font-mono font-bold" style={{ color: 'var(--text-sub)' }}>{mat.count.toLocaleString()}</td>
+                      <td className={`py-3 px-3 text-end font-black ${
                         mat.trend.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'
                       }`}>
                         {mat.trend}
@@ -527,21 +527,21 @@ export default function AnalyticsWorkspace() {
             </div>
 
             <div className="p-5 card-gradient rounded-3xl space-y-4">
-              <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Reagent Expiry Risk Summary</span>
-              <div className="space-y-3 font-mono text-[11px]">
+              <span className="text-2xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Reagent Expiry Risk Summary</span>
+              <div className="space-y-3 font-mono text-xs">
                 <div className="p-3 card-elevated rounded-2xl space-y-1" style={{ borderColor: 'color-mix(in srgb, var(--danger) 35%, transparent)' }}>
                   <div className="flex justify-between items-center font-bold" style={{ color: 'var(--danger)' }}>
                     <span>Critical Expiry Risk</span>
                     <span>14 Days</span>
                   </div>
-                  <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>SARS-CoV-2 PCR Test Reagents value: $20,250.00. Suggest instant hub-transfer.</p>
+                  <p className="text-2xs" style={{ color: 'var(--text-muted)' }}>SARS-CoV-2 PCR Test Reagents value: $20,250.00. Suggest instant hub-transfer.</p>
                 </div>
                 <div className="p-3 card-elevated rounded-2xl space-y-1">
                   <div className="flex justify-between items-center font-bold" style={{ color: 'var(--text-sub)' }}>
                     <span>Safe Window</span>
                     <span>30+ Days</span>
                   </div>
-                  <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>No other biochemical or prosthetic materials display shelf-life warning indices.</p>
+                  <p className="text-2xs" style={{ color: 'var(--text-muted)' }}>No other biochemical or prosthetic materials display shelf-life warning indices.</p>
                 </div>
               </div>
             </div>
@@ -612,7 +612,7 @@ export default function AnalyticsWorkspace() {
 
                 <div className="space-y-2">
                   <label className="block" style={{ color: 'var(--text-muted)' }}>Target Data Columns</label>
-                  <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                  <div className="grid grid-cols-2 gap-1.5 text-2xs">
                     {['Revenue', 'Patient Growth', 'Case Completion', 'Overhead Expenses', 'Lab Cost', 'Supplier Scores'].map(col => {
                       const has = selectedColumns.includes(col);
                       return (
@@ -623,7 +623,7 @@ export default function AnalyticsWorkspace() {
                             if (has) setSelectedColumns(selectedColumns.filter(c => c !== col));
                             else setSelectedColumns([...selectedColumns, col]);
                           }}
-                          className={`p-1.5 border text-left rounded-lg transition-all ${
+                          className={`p-1.5 border text-start rounded-lg transition-all ${
                             has ? 'btn-primary' : 'btn-ghost'
                           }`}
                         >
@@ -648,13 +648,13 @@ export default function AnalyticsWorkspace() {
               <div className="flex justify-between items-center">
                 <span className="text-xs font-bold uppercase tracking-wider font-mono" style={{ color: 'var(--text)' }}>Active Saved Reports & Schedule</span>
                 <div className="relative w-48">
-                  <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+                  <Search className="absolute start-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
                   <input 
                     type="text" 
                     value={searchReportText}
                     onChange={(e) => setSearchReportText(e.target.value)}
                     placeholder="Search reports..."
-                    className="w-full pl-7 pr-2 py-1 text-[11px] rounded-lg"
+                    className="w-full ps-7 pe-2 py-1 text-xs rounded-lg"
                   />
                 </div>
               </div>
@@ -667,8 +667,8 @@ export default function AnalyticsWorkspace() {
                         <FileText className="w-4 h-4" />
                       </div>
                       <div>
-                        <h5 className="font-bold text-[13px]" style={{ color: 'var(--text)' }}>{rep.title}</h5>
-                        <p className="text-[10px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                        <h5 className="font-bold text-sm" style={{ color: 'var(--text)' }}>{rep.title}</h5>
+                        <p className="text-2xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
                           Owner: <span style={{ color: 'var(--text-sub)' }}>{rep.createdBy}</span> • Frequency: <span className="font-bold" style={{ color: 'var(--accent)' }}>{rep.frequency}</span>
                         </p>
                       </div>

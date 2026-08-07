@@ -28,7 +28,7 @@ export default function FloatingQuickActions({ onActionTrigger }: FloatingQuickA
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
       {/* Action Buttons list */}
       <AnimatePresence>
         {isOpen && (
@@ -46,10 +46,10 @@ export default function FloatingQuickActions({ onActionTrigger }: FloatingQuickA
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 15, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="flex flex-col gap-2 z-40 bg-zinc-950/95 border border-zinc-900 p-3 rounded-3xl shadow-2xl w-56 text-left"
+              className="flex flex-col gap-2 z-40 bg-zinc-950/95 border border-zinc-900 p-3 rounded-3xl shadow-card w-56 text-start"
             >
               <div className="px-2.5 pb-2 border-b border-zinc-900">
-                <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold">Quick Patient Intake</span>
+                <span className="text-2xs font-mono text-zinc-500 uppercase tracking-widest font-bold">Quick Patient Intake</span>
               </div>
               <div className="flex flex-col max-h-[380px] overflow-y-auto scrollbar-none gap-0.5">
                 {actions.map((act) => {
@@ -58,7 +58,7 @@ export default function FloatingQuickActions({ onActionTrigger }: FloatingQuickA
                     <button
                       key={act.type}
                       onClick={() => handleActionClick(act.type)}
-                      className="w-full text-left px-2 py-2.5 rounded-xl hover:bg-zinc-900/80 transition-all flex items-center gap-3 text-xs text-zinc-300 hover:text-white"
+                      className="w-full text-start px-2 py-2.5 rounded-xl hover:bg-zinc-900/80 transition-all flex items-center gap-3 text-xs text-zinc-300 hover:text-white"
                     >
                       <div className={`p-1.5 rounded-lg border ${act.color} shrink-0`}>
                         <Icon className="w-3.5 h-3.5" />
@@ -76,7 +76,7 @@ export default function FloatingQuickActions({ onActionTrigger }: FloatingQuickA
       {/* Primary Toggle FAB */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-12 h-12 rounded-full flex items-center justify-center border transition-all shadow-xl active:scale-95 z-40 ${
+        className={`w-12 h-12 rounded-full flex items-center justify-center border transition-all shadow-card active:scale-95 z-40 ${
           isOpen
             ? "bg-zinc-900 border-zinc-800 text-white"
             : "bg-emerald-500 border-emerald-400 text-black hover:bg-emerald-400 shadow-emerald-500/10"

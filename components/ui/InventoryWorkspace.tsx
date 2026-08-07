@@ -905,11 +905,11 @@ export default function InventoryWorkspace({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="section-title text-xs font-black uppercase tracking-wider">HealthOS Procurement & SCM</h2>
-              <span className="badge text-[9px] font-mono px-2 py-0.5 rounded-full">
+              <span className="badge text-2xs font-mono px-2 py-0.5 rounded-full">
                 ERP CORE
               </span>
             </div>
-            <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
               SCM Node ID: <span className="font-bold" style={{ color: 'var(--text)' }}>INV-9902-S8</span> • Real-time GS1 barcode integration
             </p>
           </div>
@@ -917,13 +917,13 @@ export default function InventoryWorkspace({
 
         {/* TOP STATUS BAR ROW */}
         <div className="hidden lg:flex items-center gap-4 glass px-4 py-2 rounded-2xl">
-          <div className="flex items-center gap-1.5 font-mono text-[10px]">
+          <div className="flex items-center gap-1.5 font-mono text-2xs">
             <ThermometerSnowflake className="w-3.5 h-3.5" style={{ color: 'var(--info)' }} />
             <span className="font-bold" style={{ color: 'var(--text-sub)' }}>Cold Vault:</span>
             <span className="font-extrabold" style={{ color: 'var(--success)' }}>-18.4°C (Optimal)</span>
           </div>
           <div className="h-4 w-[1px]" style={{ background: 'var(--border)' }} />
-          <div className="flex items-center gap-1.5 font-mono text-[10px]">
+          <div className="flex items-center gap-1.5 font-mono text-2xs">
             <Shield className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
             <span className="font-bold" style={{ color: 'var(--text-sub)' }}>FDA Compliance:</span>
             <span className="font-extrabold" style={{ color: 'var(--text)' }}>Validated (2026)</span>
@@ -931,7 +931,7 @@ export default function InventoryWorkspace({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="badge flex items-center gap-1.5 text-[10px] font-mono px-3 py-1.5">
+          <span className="badge flex items-center gap-1.5 text-2xs font-mono px-3 py-1.5">
             <Sliders className="w-3.5 h-3.5" /> GS1-Active
           </span>
         </div>
@@ -943,8 +943,8 @@ export default function InventoryWorkspace({
         {/* MODULE LEFT NAVIGATION */}
         <div className="w-60 flex flex-col shrink-0 overflow-hidden select-none" style={{ background: 'var(--surface-solid)', borderRight: '1px solid var(--border)' }}>
           <div className="p-4 shrink-0" style={{ borderBottom: '1px solid var(--border)' }}>
-            <span className="eyebrow text-[9px] block mb-1">ERP Modules</span>
-            <p className="text-[10px] font-mono leading-relaxed" style={{ color: 'var(--text-sub)' }}>Enterprise Supply Chain Console:</p>
+            <span className="eyebrow text-2xs block mb-1">ERP Modules</span>
+            <p className="text-2xs font-mono leading-relaxed" style={{ color: 'var(--text-sub)' }}>Enterprise Supply Chain Console:</p>
           </div>
 
           <div className="flex-1 overflow-y-auto p-2.5 space-y-1 scrollbar-none">
@@ -966,14 +966,14 @@ export default function InventoryWorkspace({
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id as any)}
-                  className={`nav-item w-full text-left text-xs font-bold font-mono justify-between ${isActive ? 'active' : ''}`}
+                  className={`nav-item w-full text-start text-xs font-bold font-mono justify-between ${isActive ? 'active' : ''}`}
                 >
                   <div className="flex items-center gap-2">
                     <Icon className="w-4 h-4 shrink-0" />
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="badge text-[8px] font-mono px-1.5 py-0.5 rounded-md">
+                    <span className="badge text-2xs font-mono px-1.5 py-0.5 rounded-md">
                       {item.badge}
                     </span>
                   )}
@@ -983,14 +983,14 @@ export default function InventoryWorkspace({
           </div>
 
           <div className="p-3 shrink-0 space-y-2" style={{ background: 'var(--bg-2)', borderTop: '1px solid var(--border)' }}>
-            <span className="eyebrow text-[9px] block">SCM Controller</span>
+            <span className="eyebrow text-2xs block">SCM Controller</span>
             <div className="card-elevated flex items-center gap-2.5 p-2 rounded-xl">
-              <div className="bg-gold-gradient w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black uppercase shadow-md" style={{ color: 'var(--bg)' }}>
+              <div className="bg-gold-gradient w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black uppercase shadow-soft" style={{ color: 'var(--bg)' }}>
                 SC
               </div>
               <div className="min-w-0 flex-1">
-                <h5 className="text-[11px] font-bold truncate" style={{ color: 'var(--text)' }}>Supply Control</h5>
-                <p className="text-[9px] font-mono truncate" style={{ color: 'var(--text-muted)' }}>Role: Procurement Director</p>
+                <h5 className="text-xs font-bold truncate" style={{ color: 'var(--text)' }}>Supply Control</h5>
+                <p className="text-2xs font-mono truncate" style={{ color: 'var(--text-muted)' }}>Role: Procurement Director</p>
               </div>
             </div>
           </div>
@@ -1027,42 +1027,42 @@ export default function InventoryWorkspace({
                   {/* High Quality Bento Cards */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     <div className="card-gradient card-luxury p-4 flex flex-col justify-between h-[105px] card-hover">
-                      <span className="eyebrow text-[9px]">Total Inventory Value</span>
+                      <span className="eyebrow text-2xs">Total Inventory Value</span>
                       <div className="flex items-baseline gap-1">
                         <span className="text-gradient text-xl font-black font-mono">${stats.totalVal.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
                       </div>
-                      <p className="text-[9px] font-semibold flex items-center gap-1" style={{ color: 'var(--success)' }}>
+                      <p className="text-2xs font-semibold flex items-center gap-1" style={{ color: 'var(--success)' }}>
                         <TrendingUp className="w-3 h-3" /> +4.2% vs last quarter
                       </p>
                     </div>
 
                     <div className="card-elevated p-4 flex flex-col justify-between h-[105px] card-hover">
-                      <span className="eyebrow text-[9px]">Stock Warnings</span>
+                      <span className="eyebrow text-2xs">Stock Warnings</span>
                       <div className="flex items-baseline gap-2">
                         <span className="text-xl font-black font-mono" style={{ color: 'var(--text)' }}>{stats.lowStockCount} Low</span>
                         <span className="text-xs font-black font-mono" style={{ color: 'var(--danger)' }}>/ {stats.outOfStockCount} Out</span>
                       </div>
-                      <p className="text-[9px] font-mono flex items-center gap-1" style={{ color: 'var(--text-sub)' }}>
+                      <p className="text-2xs font-mono flex items-center gap-1" style={{ color: 'var(--text-sub)' }}>
                         <AlertTriangle className="w-3 h-3" style={{ color: 'var(--warning)' }} /> {stats.expiringSoonCount} Expiring within 30 days
                       </p>
                     </div>
 
                     <div className="card-elevated p-4 flex flex-col justify-between h-[105px] card-hover">
-                      <span className="eyebrow text-[9px]">Purchase Orders</span>
+                      <span className="eyebrow text-2xs">Purchase Orders</span>
                       <div className="flex items-baseline gap-2">
                         <span className="text-xl font-black font-mono" style={{ color: 'var(--text)' }}>{stats.pendingPoCount} Pending</span>
                       </div>
-                      <p className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>
+                      <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
                         Awaiting financial approval workflow
                       </p>
                     </div>
 
                     <div className="card-elevated p-4 flex flex-col justify-between h-[105px] card-hover">
-                      <span className="eyebrow text-[9px]">Suppliers Directory</span>
+                      <span className="eyebrow text-2xs">Suppliers Directory</span>
                       <div className="flex items-baseline gap-1">
                         <span className="text-xl font-black font-mono" style={{ color: 'var(--text)' }}>{stats.totalSuppliersCount} Connected</span>
                       </div>
-                      <p className="text-[9px] font-semibold" style={{ color: 'var(--success)' }}>
+                      <p className="text-2xs font-semibold" style={{ color: 'var(--success)' }}>
                         91.2% Average Performance
                       </p>
                     </div>
@@ -1073,8 +1073,8 @@ export default function InventoryWorkspace({
                     {/* Recharts Area Chart */}
                     <div className="card-elevated p-4 col-span-2 flex flex-col justify-between h-[280px]">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="eyebrow text-[10px] font-mono">Total Capitalized Stock Value (YTD)</span>
-                        <div className="flex gap-4 text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+                        <span className="eyebrow text-2xs font-mono">Total Capitalized Stock Value (YTD)</span>
+                        <div className="flex gap-4 text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded" style={{ background: 'var(--info)' }} /> Pharma</span>
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded" style={{ background: 'var(--accent)' }} /> Consumables</span>
                         </div>
@@ -1106,47 +1106,47 @@ export default function InventoryWorkspace({
                     {/* Quick actions panel */}
                     <div className="card-gradient p-4 flex flex-col justify-between h-[280px]">
                       <div>
-                        <span className="eyebrow text-[10px] font-mono block mb-3">Quick Logistics Dispatches</span>
-                        <p className="text-[10px] font-mono leading-relaxed mb-4" style={{ color: 'var(--text-sub)' }}>Direct dispatch links for immediate procurement operations.</p>
+                        <span className="eyebrow text-2xs font-mono block mb-3">Quick Logistics Dispatches</span>
+                        <p className="text-2xs font-mono leading-relaxed mb-4" style={{ color: 'var(--text-sub)' }}>Direct dispatch links for immediate procurement operations.</p>
                       </div>
 
                       <div className="space-y-2">
                         <button 
                           onClick={() => { setActiveTab('Procurement') }}
-                          className="btn-ghost w-full justify-start text-left p-2.5 rounded-xl flex items-center gap-3 text-xs font-bold font-mono cursor-pointer"
+                          className="btn-ghost w-full justify-start text-start p-2.5 rounded-xl flex items-center gap-3 text-xs font-bold font-mono cursor-pointer"
                         >
                           <div className="p-1.5 rounded-lg" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
                             <Plus className="w-4 h-4" />
                           </div>
                           <div>
-                            <p className="text-[11px]" style={{ color: 'var(--text)' }}>Draft Purchase Order</p>
-                            <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>Initiate bulk replenishment</p>
+                            <p className="text-xs" style={{ color: 'var(--text)' }}>Draft Purchase Order</p>
+                            <p className="text-2xs" style={{ color: 'var(--text-muted)' }}>Initiate bulk replenishment</p>
                           </div>
                         </button>
 
                         <button 
                           onClick={() => { setActiveTab('StockMovements') }}
-                          className="btn-ghost w-full justify-start text-left p-2.5 rounded-xl flex items-center gap-3 text-xs font-bold font-mono cursor-pointer"
+                          className="btn-ghost w-full justify-start text-start p-2.5 rounded-xl flex items-center gap-3 text-xs font-bold font-mono cursor-pointer"
                         >
                           <div className="p-1.5 rounded-lg" style={{ background: 'var(--accent-glow2)', color: 'var(--info)' }}>
                             <History className="w-4 h-4" />
                           </div>
                           <div>
-                            <p className="text-[11px]" style={{ color: 'var(--text)' }}>Log Stock Movement</p>
-                            <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>Record clinical consumption</p>
+                            <p className="text-xs" style={{ color: 'var(--text)' }}>Log Stock Movement</p>
+                            <p className="text-2xs" style={{ color: 'var(--text-muted)' }}>Record clinical consumption</p>
                           </div>
                         </button>
 
                         <button 
                           onClick={() => { setActiveTab('AIAssistant') }}
-                          className="btn-ghost w-full justify-start text-left p-2.5 rounded-xl flex items-center gap-3 text-xs font-bold font-mono cursor-pointer"
+                          className="btn-ghost w-full justify-start text-start p-2.5 rounded-xl flex items-center gap-3 text-xs font-bold font-mono cursor-pointer"
                         >
                           <div className="p-1.5 rounded-lg" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
                             <Sparkles className="w-4 h-4" />
                           </div>
                           <div>
-                            <p className="text-[11px]" style={{ color: 'var(--text)' }}>AI Demand Forecast</p>
-                            <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>Run clinical usage analytics</p>
+                            <p className="text-xs" style={{ color: 'var(--text)' }}>AI Demand Forecast</p>
+                            <p className="text-2xs" style={{ color: 'var(--text-muted)' }}>Run clinical usage analytics</p>
                           </div>
                         </button>
                       </div>
@@ -1183,13 +1183,13 @@ export default function InventoryWorkspace({
                           <span className="font-mono" style={{ color: 'var(--text-sub)' }}>{bulkCheckedIds.length} checked</span>
                           <button 
                             onClick={handleBulkReorder}
-                            className="btn-primary font-mono px-2 py-1 rounded text-[10px] font-bold cursor-pointer"
+                            className="btn-primary font-mono px-2 py-1 rounded text-2xs font-bold cursor-pointer"
                           >
                             Bulk Reorder
                           </button>
                           <button 
                             onClick={handleBulkDisposal}
-                            className="btn-ghost font-mono px-2 py-1 rounded text-[10px] font-bold cursor-pointer"
+                            className="btn-ghost font-mono px-2 py-1 rounded text-2xs font-bold cursor-pointer"
                             style={{ color: 'var(--danger)' }}
                           >
                             Bulk Discard
@@ -1266,8 +1266,8 @@ export default function InventoryWorkspace({
 
                   {/* Large Product Table */}
                   <div className="card-elevated overflow-hidden rounded-3xl">
-                    <table className="w-full text-left text-xs font-mono">
-                      <thead className="text-[10px]">
+                    <table className="w-full text-start text-xs font-mono">
+                      <thead className="text-2xs">
                         <tr>
                           <th className="py-3 px-4 w-8">
                             <input 
@@ -1283,9 +1283,9 @@ export default function InventoryWorkspace({
                           <th className="py-3 px-4">SKU / Brand</th>
                           <th className="py-3 px-4">Description</th>
                           <th className="py-3 px-4">Category</th>
-                          <th className="py-3 px-4 text-right">Physical Stock</th>
-                          <th className="py-3 px-4 text-right">Unit Value</th>
-                          <th className="py-3 px-4 text-right">Total Capital</th>
+                          <th className="py-3 px-4 text-end">Physical Stock</th>
+                          <th className="py-3 px-4 text-end">Unit Value</th>
+                          <th className="py-3 px-4 text-end">Total Capital</th>
                           <th className="py-3 px-4 text-center">Status</th>
                           <th className="py-3 px-4 text-center">Action</th>
                         </tr>
@@ -1309,27 +1309,27 @@ export default function InventoryWorkspace({
                               </td>
                               <td className="py-2.5 px-4">
                                 <p className="text-white font-bold">{p.brand}</p>
-                                <p className="text-[10px] text-zinc-500">{p.sku}</p>
+                                <p className="text-2xs text-zinc-500">{p.sku}</p>
                               </td>
                               <td className="py-2.5 px-4 max-w-[200px] truncate text-zinc-400">
                                 {p.name}
                               </td>
-                              <td className="py-2.5 px-4 text-[10px]">
-                                <span className="badge px-2 py-0.5 rounded-md text-[10px]">
+                              <td className="py-2.5 px-4 text-2xs">
+                                <span className="badge px-2 py-0.5 rounded-md text-2xs">
                                   {p.category}
                                 </span>
                               </td>
-                              <td className="py-2.5 px-4 text-right font-bold text-white">
-                                {p.stockQuantity.toLocaleString()} <span className="text-[9px] text-zinc-500">{p.unitOfMeasure}</span>
+                              <td className="py-2.5 px-4 text-end font-bold text-white">
+                                {p.stockQuantity.toLocaleString()} <span className="text-2xs text-zinc-500">{p.unitOfMeasure}</span>
                               </td>
-                              <td className="py-2.5 px-4 text-right text-zinc-400">
+                              <td className="py-2.5 px-4 text-end text-zinc-400">
                                 ${p.valuePerUnit.toFixed(2)}
                               </td>
-                              <td className="py-2.5 px-4 text-right text-emerald-400 font-bold">
+                              <td className="py-2.5 px-4 text-end text-emerald-400 font-bold">
                                 ${totalVal.toLocaleString(undefined, {minimumFractionDigits: 2})}
                               </td>
                               <td className="py-2.5 px-4 text-center">
-                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
+                                <span className={`text-2xs font-bold px-2 py-0.5 rounded-full ${
                                   p.status === 'In Stock' ? 'badge-success' :
                                   p.status === 'Low Stock' ? 'badge-warning' :
                                   p.status === 'Expiring Soon' ? 'badge-info' :
@@ -1389,7 +1389,7 @@ export default function InventoryWorkspace({
                     <div className="lg:col-span-2 space-y-4">
                       <div className="card-elevated p-6 space-y-4">
                         <div>
-                          <span className="badge text-[10px] font-mono font-black px-2.5 py-1 rounded-full">
+                          <span className="badge text-2xs font-mono font-black px-2.5 py-1 rounded-full">
                             {selectedProduct.category}
                           </span>
                           <h3 className="section-title text-xl font-bold mt-2">{selectedProduct.name}</h3>
@@ -1398,38 +1398,38 @@ export default function InventoryWorkspace({
 
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
                           <div>
-                            <span className="text-[9px] font-mono block" style={{ color: 'var(--text-muted)' }}>Brand</span>
+                            <span className="text-2xs font-mono block" style={{ color: 'var(--text-muted)' }}>Brand</span>
                             <span className="text-xs font-bold font-mono" style={{ color: 'var(--text)' }}>{selectedProduct.brand}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] font-mono block" style={{ color: 'var(--text-muted)' }}>Manufacturer</span>
+                            <span className="text-2xs font-mono block" style={{ color: 'var(--text-muted)' }}>Manufacturer</span>
                             <span className="text-xs font-bold font-mono" style={{ color: 'var(--text)' }}>{selectedProduct.manufacturer}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] font-mono block" style={{ color: 'var(--text-muted)' }}>Preferred Supplier</span>
+                            <span className="text-2xs font-mono block" style={{ color: 'var(--text-muted)' }}>Preferred Supplier</span>
                             <span className="text-xs font-bold font-mono" style={{ color: 'var(--text)' }}>{selectedProduct.supplierName}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] font-mono block" style={{ color: 'var(--text-muted)' }}>Storage Location</span>
+                            <span className="text-2xs font-mono block" style={{ color: 'var(--text-muted)' }}>Storage Location</span>
                             <span className="text-xs font-bold font-mono" style={{ color: 'var(--text)' }}>{selectedProduct.storageLocation}</span>
                           </div>
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 font-mono" style={{ borderTop: '1px solid var(--border)' }}>
                           <div>
-                            <span className="text-[9px] block" style={{ color: 'var(--text-muted)' }}>Batch Number</span>
+                            <span className="text-2xs block" style={{ color: 'var(--text-muted)' }}>Batch Number</span>
                             <span className="text-xs font-bold" style={{ color: 'var(--text-sub)' }}>{selectedProduct.batchNumber}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] block" style={{ color: 'var(--text-muted)' }}>Lot Number</span>
+                            <span className="text-2xs block" style={{ color: 'var(--text-muted)' }}>Lot Number</span>
                             <span className="text-xs font-bold" style={{ color: 'var(--text-sub)' }}>{selectedProduct.lotNumber}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] block" style={{ color: 'var(--text-muted)' }}>Barcode (EAN-13)</span>
+                            <span className="text-2xs block" style={{ color: 'var(--text-muted)' }}>Barcode (EAN-13)</span>
                             <span className="text-xs font-bold" style={{ color: 'var(--text-sub)' }}>{selectedProduct.barcode}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] block" style={{ color: 'var(--text-muted)' }}>Expiration Date</span>
+                            <span className="text-2xs block" style={{ color: 'var(--text-muted)' }}>Expiration Date</span>
                             <span className="text-xs font-bold" style={{ color: 'var(--warning)' }}>{selectedProduct.expiryDate}</span>
                           </div>
                         </div>
@@ -1441,12 +1441,12 @@ export default function InventoryWorkspace({
                           <History className="w-4 h-4" /> Stock Movement History
                         </h4>
                         <div className="overflow-x-auto">
-                          <table className="w-full text-left text-xs font-mono">
+                          <table className="w-full text-start text-xs font-mono">
                             <thead>
-                              <tr className="text-[10px]">
+                              <tr className="text-2xs">
                                 <th className="pb-2">Timestamp</th>
                                 <th className="pb-2">Type</th>
-                                <th className="pb-2 text-right">Quantity</th>
+                                <th className="pb-2 text-end">Quantity</th>
                                 <th className="pb-2">Custodian</th>
                                 <th className="pb-2">Reference Case/Doc</th>
                               </tr>
@@ -1456,7 +1456,7 @@ export default function InventoryWorkspace({
                                 <tr key={idx}>
                                   <td className="py-2" style={{ color: 'var(--text-sub)' }}>{m.timestamp}</td>
                                   <td className="py-2">
-                                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
+                                    <span className={`text-2xs font-bold px-1.5 py-0.5 rounded ${
                                       m.type === 'Inbound' ? 'badge-success' :
                                       m.type === 'Outbound' ? 'badge-warning' :
                                       m.type === 'Transfer' ? 'badge-info' :
@@ -1465,14 +1465,14 @@ export default function InventoryWorkspace({
                                       {m.type}
                                     </span>
                                   </td>
-                                  <td className="py-2 text-right font-bold" style={{ color: 'var(--text)' }}>{m.quantity > 0 ? `+${m.quantity}` : m.quantity}</td>
+                                  <td className="py-2 text-end font-bold" style={{ color: 'var(--text)' }}>{m.quantity > 0 ? `+${m.quantity}` : m.quantity}</td>
                                   <td className="py-2" style={{ color: 'var(--text-sub)' }}>{m.authorizedBy}</td>
                                   <td className="py-2" style={{ color: 'var(--text-muted)' }}>{m.referenceDoc}</td>
                                 </tr>
                               ))}
                               {movements.filter(m => m.sku === selectedProduct.sku).length === 0 && (
                                 <tr>
-                                  <td colSpan={5} className="py-4 text-center font-mono text-[10px]" style={{ color: 'var(--text-muted)' }}>
+                                  <td colSpan={5} className="py-4 text-center font-mono text-2xs" style={{ color: 'var(--text-muted)' }}>
                                     No ledgered transaction history found for this SKU.
                                   </td>
                                 </tr>
@@ -1487,7 +1487,7 @@ export default function InventoryWorkspace({
                     <div className="space-y-4">
                       {/* Live Stock Level Indicators */}
                       <div className="card-elevated p-5 space-y-4">
-                        <span className="eyebrow text-[10px] font-mono block">Real-time Level Indicator</span>
+                        <span className="eyebrow text-2xs font-mono block">Real-time Level Indicator</span>
                         
                         <div className="space-y-1">
                           <div className="flex justify-between text-xs font-mono">
@@ -1513,7 +1513,7 @@ export default function InventoryWorkspace({
 
                       {/* Attachments Section */}
                       <div className="card-elevated p-5 space-y-3">
-                        <span className="eyebrow text-[10px] font-mono block">Certificates & Specifications</span>
+                        <span className="eyebrow text-2xs font-mono block">Certificates & Specifications</span>
                         {selectedProduct.attachments.map((file, i) => (
                           <div key={i} className="flex items-center justify-between p-2 rounded-xl font-mono text-xs" style={{ background: 'var(--glass-fill)', border: '1px solid var(--border)' }}>
                             <div className="flex items-center gap-2 min-w-0">
@@ -1524,7 +1524,7 @@ export default function InventoryWorkspace({
                           </div>
                         ))}
                         {selectedProduct.attachments.length === 0 && (
-                          <p className="text-[10px] text-center font-mono py-2" style={{ color: 'var(--text-muted)' }}>No FDA COA attached.</p>
+                          <p className="text-2xs text-center font-mono py-2" style={{ color: 'var(--text-muted)' }}>No FDA COA attached.</p>
                         )}
                         <button className="btn-ghost w-full py-1.5 rounded-xl text-xs font-mono font-bold border border-dashed" style={{ borderColor: 'var(--border-strong)', color: 'var(--text-muted)' }}>
                           + Attach FDA COA Document
@@ -1551,14 +1551,14 @@ export default function InventoryWorkspace({
                     </div>
 
                     <div className="card-elevated overflow-hidden rounded-3xl">
-                      <table className="w-full text-left text-xs font-mono">
-                        <thead className="text-[10px]">
+                      <table className="w-full text-start text-xs font-mono">
+                        <thead className="text-2xs">
                           <tr>
                             <th className="py-3 px-4">PO Number</th>
                             <th className="py-3 px-4">Supplier</th>
                             <th className="py-3 px-4">Order Date</th>
-                            <th className="py-3 px-4 text-right">Items</th>
-                            <th className="py-3 px-4 text-right">Total Cost</th>
+                            <th className="py-3 px-4 text-end">Items</th>
+                            <th className="py-3 px-4 text-end">Total Cost</th>
                             <th className="py-3 px-4 text-center">Status</th>
                             <th className="py-3 px-4 text-center">Action</th>
                           </tr>
@@ -1569,10 +1569,10 @@ export default function InventoryWorkspace({
                               <td className="py-2.5 px-4 font-bold" style={{ color: 'var(--text)' }}>{po.poNumber}</td>
                               <td className="py-2.5 px-4" style={{ color: 'var(--text-sub)' }}>{po.supplierName}</td>
                               <td className="py-2.5 px-4" style={{ color: 'var(--text-sub)' }}>{po.orderDate}</td>
-                              <td className="py-2.5 px-4 text-right">{po.itemsCount}</td>
-                              <td className="py-2.5 px-4 text-right font-bold" style={{ color: 'var(--success)' }}>${po.totalCost.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                              <td className="py-2.5 px-4 text-end">{po.itemsCount}</td>
+                              <td className="py-2.5 px-4 text-end font-bold" style={{ color: 'var(--success)' }}>${po.totalCost.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
                               <td className="py-2.5 px-4 text-center">
-                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
+                                <span className={`text-2xs font-bold px-2 py-0.5 rounded-full ${
                                   po.status === 'Received' ? 'badge-success' :
                                   po.status === 'Approved' ? 'badge-info' :
                                   po.status === 'Pending Approval' ? 'badge-warning' :
@@ -1586,12 +1586,12 @@ export default function InventoryWorkspace({
                                   <button 
                                     onClick={() => handleApprovePO(po)}
                                     disabled={inventoryBusy}
-                                    className="btn-primary font-mono text-[9px] font-bold px-2 py-1 rounded cursor-pointer"
+                                    className="btn-primary font-mono text-2xs font-bold px-2 py-1 rounded cursor-pointer"
                                   >
                                     Approve
                                   </button>
                                 ) : (
-                                  <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>-</span>
+                                  <span className="text-2xs" style={{ color: 'var(--text-muted)' }}>-</span>
                                 )}
                               </td>
                             </tr>
@@ -1605,22 +1605,22 @@ export default function InventoryWorkspace({
                       <h4 className="eyebrow text-xs font-bold flex items-center gap-2">
                         <Sliders className="w-4 h-4" /> Procurement Quote Matrix (Bid Analysis)
                       </h4>
-                      <p className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>Comparing multiple clinical bidders for Disposable Syringe bulk orders:</p>
+                      <p className="text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>Comparing multiple clinical bidders for Disposable Syringe bulk orders:</p>
                       
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
-                        <div className="card-elevated p-3 rounded-xl font-mono text-[11px] space-y-1">
+                        <div className="card-elevated p-3 rounded-xl font-mono text-xs space-y-1">
                           <p className="font-bold" style={{ color: 'var(--text)' }}>Global MedSurg (Winner)</p>
                           <p style={{ color: 'var(--text-sub)' }}>Unit Bid: <span className="font-bold" style={{ color: 'var(--success)' }}>$0.08</span></p>
                           <p style={{ color: 'var(--text-muted)' }}>Lead Time: <span style={{ color: 'var(--text)' }}>3 Days</span></p>
                           <p style={{ color: 'var(--text-muted)' }}>Contract Rate: Locked</p>
                         </div>
-                        <div className="card-elevated p-3 rounded-xl font-mono text-[11px] space-y-1 opacity-60">
+                        <div className="card-elevated p-3 rounded-xl font-mono text-xs space-y-1 opacity-60">
                           <p className="font-bold" style={{ color: 'var(--text)' }}>PharmaLink Distributions</p>
                           <p style={{ color: 'var(--text-sub)' }}>Unit Bid: $0.10</p>
                           <p style={{ color: 'var(--text-muted)' }}>Lead Time: 5 Days</p>
                           <p style={{ color: 'var(--text-muted)' }}>Contract Rate: Open</p>
                         </div>
-                        <div className="card-elevated p-3 rounded-xl font-mono text-[11px] space-y-1 opacity-60">
+                        <div className="card-elevated p-3 rounded-xl font-mono text-xs space-y-1 opacity-60">
                           <p className="font-bold" style={{ color: 'var(--text)' }}>SafeMed Global</p>
                           <p style={{ color: 'var(--text-sub)' }}>Unit Bid: $0.11</p>
                           <p style={{ color: 'var(--text-muted)' }}>Lead Time: 7 Days</p>
@@ -1633,7 +1633,7 @@ export default function InventoryWorkspace({
                   {/* PO Draft Form */}
                   <div className="space-y-4">
                     <form onSubmit={handleCreatePO} className="card-elevated p-5 space-y-4">
-                      <span className="eyebrow text-[10px] font-mono block">Draft PO Replenishment</span>
+                      <span className="eyebrow text-2xs font-mono block">Draft PO Replenishment</span>
 
                       <div className="space-y-1.5 font-mono text-xs">
                         <label style={{ color: 'var(--text-sub)' }}>Preferred Supplier</label>
@@ -1679,7 +1679,7 @@ export default function InventoryWorkspace({
                           type="text"
                           value={poTotalCost}
                           onChange={(e) => setPoTotalCost(e.target.value)}
-                          className="w-full rounded-xl p-2 outline-none text-right font-bold"
+                          className="w-full rounded-xl p-2 outline-none text-end font-bold"
                           style={{ color: 'var(--success) !important' }}
                         />
                       </div>
@@ -1716,15 +1716,15 @@ export default function InventoryWorkspace({
                         <div>
                           <div className="flex justify-between items-start">
                             <h4 className="section-title text-sm font-bold leading-tight">{s.name}</h4>
-                            <span className={`text-[9px] font-black px-1.5 py-0.5 rounded ${
+                            <span className={`text-2xs font-black px-1.5 py-0.5 rounded ${
                               s.performanceScore >= 90 ? 'badge-success' : 'badge-warning'
                             }`}>{s.performanceScore}% Score</span>
                           </div>
-                          <p className="text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>{s.contactName} • {s.phone}</p>
-                          <p className="text-[10px] mt-2 truncate" style={{ color: 'var(--text-sub)' }}>{s.email}</p>
+                          <p className="text-2xs mt-1" style={{ color: 'var(--text-muted)' }}>{s.contactName} • {s.phone}</p>
+                          <p className="text-2xs mt-2 truncate" style={{ color: 'var(--text-sub)' }}>{s.email}</p>
                         </div>
 
-                        <div className="space-y-1 pt-3 text-[11px]" style={{ borderTop: '1px solid var(--border)' }}>
+                        <div className="space-y-1 pt-3 text-xs" style={{ borderTop: '1px solid var(--border)' }}>
                           <div className="flex justify-between">
                             <span style={{ color: 'var(--text-muted)' }}>Lead Time:</span>
                             <span className="font-bold" style={{ color: 'var(--text-sub)' }}>{s.leadTimeDays} Days</span>
@@ -1742,8 +1742,8 @@ export default function InventoryWorkspace({
                   <div className="card-elevated p-5 space-y-3">
                     <h4 className="eyebrow text-xs font-bold">Supplier Performance & SLA Contracts</h4>
                     <div className="overflow-hidden rounded-xl">
-                      <table className="w-full text-left text-xs font-mono">
-                        <thead className="text-[10px]">
+                      <table className="w-full text-start text-xs font-mono">
+                        <thead className="text-2xs">
                           <tr>
                             <th className="p-2 px-3">Supplier Name</th>
                             <th className="p-2 px-3">Active Contracts</th>
@@ -1788,13 +1788,13 @@ export default function InventoryWorkspace({
                     </div>
 
                     <div className="card-elevated overflow-hidden rounded-3xl">
-                      <table className="w-full text-left text-xs font-mono">
-                        <thead className="text-[10px]">
+                      <table className="w-full text-start text-xs font-mono">
+                        <thead className="text-2xs">
                           <tr>
                             <th className="py-3 px-4">Timestamp</th>
                             <th className="py-3 px-4">SKU / Product</th>
                             <th className="py-3 px-4">Type</th>
-                            <th className="py-3 px-4 text-right">Quantity</th>
+                            <th className="py-3 px-4 text-end">Quantity</th>
                             <th className="py-3 px-4">From → To</th>
                             <th className="py-3 px-4">Authorized By</th>
                           </tr>
@@ -1802,13 +1802,13 @@ export default function InventoryWorkspace({
                         <tbody>
                           {movements.map(m => (
                             <tr key={m.id}>
-                              <td className="py-2.5 px-4 text-[10px]" style={{ color: 'var(--text-sub)' }}>{m.timestamp}</td>
+                              <td className="py-2.5 px-4 text-2xs" style={{ color: 'var(--text-sub)' }}>{m.timestamp}</td>
                               <td className="py-2.5 px-4">
                                 <p className="font-bold" style={{ color: 'var(--text)' }}>{m.productName}</p>
-                                <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>{m.sku}</p>
+                                <p className="text-2xs" style={{ color: 'var(--text-muted)' }}>{m.sku}</p>
                               </td>
                               <td className="py-2.5 px-4">
-                                <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${
+                                <span className={`text-2xs font-black px-2 py-0.5 rounded-full ${
                                   m.type === 'Inbound' ? 'badge-success' :
                                   m.type === 'Outbound' ? 'badge-danger' :
                                   m.type === 'Transfer' ? 'badge-info' :
@@ -1817,13 +1817,13 @@ export default function InventoryWorkspace({
                                   {m.type}
                                 </span>
                               </td>
-                              <td className="py-2.5 px-4 text-right font-bold" style={{ color: 'var(--text)' }}>
+                              <td className="py-2.5 px-4 text-end font-bold" style={{ color: 'var(--text)' }}>
                                 {m.quantity > 0 ? `+${m.quantity}` : m.quantity}
                               </td>
                               <td className="py-2.5 px-4 max-w-[120px] truncate" style={{ color: 'var(--text-sub)' }}>
                                 {m.fromLocation} → {m.toLocation}
                               </td>
-                              <td className="py-2.5 px-4 text-[10px]" style={{ color: 'var(--text-sub)' }}>{m.authorizedBy}</td>
+                              <td className="py-2.5 px-4 text-2xs" style={{ color: 'var(--text-sub)' }}>{m.authorizedBy}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -1834,7 +1834,7 @@ export default function InventoryWorkspace({
                   {/* Manual Stock Dispatch Form */}
                   <div>
                     <form onSubmit={handleCreateMovement} className="card-elevated p-5 space-y-4 font-mono text-xs">
-                      <span className="eyebrow text-[10px] block">Dispatch Manual Stock</span>
+                      <span className="eyebrow text-2xs block">Dispatch Manual Stock</span>
 
                       <div className="space-y-1.5">
                         <label style={{ color: 'var(--text-sub)' }}>Select Registered SKU</label>
@@ -1870,7 +1870,7 @@ export default function InventoryWorkspace({
                             type="number"
                             value={moveQty}
                             onChange={(e) => setMoveQty(e.target.value)}
-                            className="w-full rounded-xl p-2 outline-none text-right font-bold"
+                            className="w-full rounded-xl p-2 outline-none text-end font-bold"
                           />
                         </div>
                       </div>
@@ -1926,18 +1926,18 @@ export default function InventoryWorkspace({
                       <div key={w.id} className="card-elevated card-hover p-5 flex flex-col justify-between h-[175px] font-mono">
                         <div>
                           <div className="flex justify-between items-center">
-                            <span className="eyebrow text-[9px] font-black uppercase">{w.type}</span>
-                            <span className="text-[10px] font-bold" style={{ color: 'var(--text-muted)' }}>Occupancy: {w.occupancyPercent}%</span>
+                            <span className="eyebrow text-2xs font-black uppercase">{w.type}</span>
+                            <span className="text-2xs font-bold" style={{ color: 'var(--text-muted)' }}>Occupancy: {w.occupancyPercent}%</span>
                           </div>
                           <h4 className="section-title text-sm font-bold mt-1 leading-tight">{w.name}</h4>
-                          <p className="text-[10px] mt-1 truncate" style={{ color: 'var(--text-muted)' }}>{w.address}</p>
+                          <p className="text-2xs mt-1 truncate" style={{ color: 'var(--text-muted)' }}>{w.address}</p>
                         </div>
 
                         <div className="pt-3 space-y-2" style={{ borderTop: '1px solid var(--border)' }}>
                           <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'var(--surface-2)' }}>
                             <div className="h-full" style={{ width: `${w.occupancyPercent}%`, background: 'var(--accent)' }} />
                           </div>
-                          <div className="flex justify-between text-[10px]" style={{ color: 'var(--text-muted)' }}>
+                          <div className="flex justify-between text-2xs" style={{ color: 'var(--text-muted)' }}>
                             <span>Shelves: {w.shelvesCount} sectors</span>
                             <span>Safe Range Checked</span>
                           </div>
@@ -1949,30 +1949,30 @@ export default function InventoryWorkspace({
                   {/* Cold Chain Storage Telemetry Panel */}
                   <div className="card-elevated p-5 grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
                     <div className="space-y-1">
-                      <span className="eyebrow text-[10px] block">Main Cold Vault</span>
+                      <span className="eyebrow text-2xs block">Main Cold Vault</span>
                       <div className="flex items-baseline gap-2">
                         <span className="text-2xl font-black" style={{ color: 'var(--text)' }}>-18.4°C</span>
                         <span className="text-xs font-bold" style={{ color: 'var(--success)' }}>Stable</span>
                       </div>
-                      <p className="text-[10px] leading-relaxed" style={{ color: 'var(--text-sub)' }}>Storage: Covid Reagents, Vaccines, RNA active chains.</p>
+                      <p className="text-2xs leading-relaxed" style={{ color: 'var(--text-sub)' }}>Storage: Covid Reagents, Vaccines, RNA active chains.</p>
                     </div>
 
                     <div className="space-y-1">
-                      <span className="eyebrow text-[10px] block">Lab Depot Temperature</span>
+                      <span className="eyebrow text-2xs block">Lab Depot Temperature</span>
                       <div className="flex items-baseline gap-2">
                         <span className="text-2xl font-black" style={{ color: 'var(--text)' }}>4.2°C</span>
                         <span className="text-xs font-bold" style={{ color: 'var(--success)' }}>Stable</span>
                       </div>
-                      <p className="text-[10px] leading-relaxed" style={{ color: 'var(--text-sub)' }}>Storage: Normal insulin vials, enzyme buffers.</p>
+                      <p className="text-2xs leading-relaxed" style={{ color: 'var(--text-sub)' }}>Storage: Normal insulin vials, enzyme buffers.</p>
                     </div>
 
                     <div className="space-y-1">
-                      <span className="eyebrow text-[10px] block">Humidity Sensor Node #4</span>
+                      <span className="eyebrow text-2xs block">Humidity Sensor Node #4</span>
                       <div className="flex items-baseline gap-2">
                         <span className="text-2xl font-black" style={{ color: 'var(--text)' }}>38% rH</span>
                         <span className="text-xs font-bold" style={{ color: 'var(--success)' }}>Optimal</span>
                       </div>
-                      <p className="text-[10px] leading-relaxed" style={{ color: 'var(--text-sub)' }}>Dry conditions preserved to prevent capsule degradation.</p>
+                      <p className="text-2xs leading-relaxed" style={{ color: 'var(--text-sub)' }}>Dry conditions preserved to prevent capsule degradation.</p>
                     </div>
                   </div>
                 </WorkspaceTabPanel>
@@ -2012,7 +2012,7 @@ export default function InventoryWorkspace({
                     {/* Forecast Summary Indicators */}
                     <div className="space-y-4">
                       <div className="card-elevated p-5 space-y-4 font-mono">
-                        <span className="eyebrow text-[10px] block">Automatic Reorder Suggestion</span>
+                        <span className="eyebrow text-2xs block">Automatic Reorder Suggestion</span>
                         <div className="card-elevated p-3 rounded-xl space-y-1 text-xs">
                           <p className="font-bold" style={{ color: 'var(--text)' }}>SKU: PP-N95-FLT-M01</p>
                           <p style={{ color: 'var(--text-sub)' }}>Reorder Quantity: <span className="font-bold" style={{ color: 'var(--accent)' }}>2,000 Units</span></p>
@@ -2022,7 +2022,7 @@ export default function InventoryWorkspace({
                       </div>
 
                       <div className="card-elevated p-5 space-y-4 font-mono">
-                        <span className="eyebrow text-[10px] block">Expiry Risk Warnings</span>
+                        <span className="eyebrow text-2xs block">Expiry Risk Warnings</span>
                         <div className="p-3 rounded-xl text-xs space-y-1" style={{ background: 'color-mix(in srgb, var(--danger) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)' }}>
                           <p className="font-bold flex items-center gap-1.5" style={{ color: 'var(--danger)' }}>
                             <AlertTriangle className="w-3.5 h-3.5" /> High Expiry Risk
@@ -2037,7 +2037,7 @@ export default function InventoryWorkspace({
                     {/* Interactive Report View */}
                     <div className="lg:col-span-2 p-6 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[420px]">
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">AI SCM Optimization Report</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-3">AI SCM Optimization Report</span>
                         {aiReport ? (
                           <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-850 overflow-y-auto max-h-[300px] text-xs font-mono text-zinc-300 whitespace-pre-line leading-relaxed scrollbar-thin">
                             {aiReport}
@@ -2046,12 +2046,12 @@ export default function InventoryWorkspace({
                           <div className="flex flex-col items-center justify-center h-[260px] border border-dashed border-zinc-800 rounded-xl text-center p-4">
                             <Sparkles className="w-8 h-8 text-zinc-700 animate-pulse mb-2" />
                             <h4 className="text-zinc-400 text-xs font-bold font-mono">Replenishment Engine Standby</h4>
-                            <p className="text-zinc-550 text-[10px] font-mono mt-1 max-w-xs">Click "Predict Demand & Optimize" to process GS1 logs, consumption data, and supplier lead times.</p>
+                            <p className="text-zinc-550 text-2xs font-mono mt-1 max-w-xs">Click "Predict Demand & Optimize" to process GS1 logs, consumption data, and supplier lead times.</p>
                           </div>
                         )}
                       </div>
 
-                      <div className="pt-4 border-t border-zinc-850 flex justify-between items-center text-[10px] font-mono">
+                      <div className="pt-4 border-t border-zinc-850 flex justify-between items-center text-2xs font-mono">
                         <span className="text-zinc-550">Engine: HealthOS GPT-SCM-V2</span>
                         <span className="text-emerald-400">Optimizations processed 100% locally</span>
                       </div>
@@ -2075,7 +2075,7 @@ export default function InventoryWorkspace({
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Consumption by Department Pie */}
                     <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[280px] flex flex-col justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Consumption by Department (YTD)</span>
+                      <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Consumption by Department (YTD)</span>
                       <div className="flex-1 w-full min-h-[160px]">
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
@@ -2096,7 +2096,7 @@ export default function InventoryWorkspace({
                           </PieChart>
                         </ResponsiveContainer>
                       </div>
-                      <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center text-[9px] font-mono">
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center text-2xs font-mono">
                         {departmentConsumptionData.map((entry, index) => (
                           <span key={index} className="flex items-center gap-1">
                             <span className="w-1.5 h-1.5 rounded" style={{ backgroundColor: entry.color }} /> {entry.name}
@@ -2107,7 +2107,7 @@ export default function InventoryWorkspace({
 
                     {/* Top Used Materials Bar Chart */}
                     <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[280px] flex flex-col justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Top Material Consumption Logs</span>
+                      <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Top Material Consumption Logs</span>
                       <div className="flex-1 w-full min-h-[180px]">
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart data={materialsUsageData}>
@@ -2124,14 +2124,14 @@ export default function InventoryWorkspace({
                     {/* Waste & Discard Analysis Card */}
                     <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[280px] flex flex-col justify-between font-mono">
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block mb-3">Waste & Shrinkage Report</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 block mb-3">Waste & Shrinkage Report</span>
                         <div className="space-y-3 text-xs pt-1">
                           <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl space-y-1">
                             <div className="flex justify-between font-bold">
                               <span className="text-white">Cold Chain Incidents:</span>
                               <span className="text-red-400">0.4%</span>
                             </div>
-                            <p className="text-[10px] text-zinc-500">Primarily due to temporary sub-vault maintenance.</p>
+                            <p className="text-2xs text-zinc-500">Primarily due to temporary sub-vault maintenance.</p>
                           </div>
 
                           <div className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl space-y-1">
@@ -2139,12 +2139,12 @@ export default function InventoryWorkspace({
                               <span className="text-white">Expiry Write-offs:</span>
                               <span className="text-emerald-400">1.2%</span>
                             </div>
-                            <p className="text-[10px] text-zinc-500">Outstanding clinical efficiency (GS1 warnings active).</p>
+                            <p className="text-2xs text-zinc-500">Outstanding clinical efficiency (GS1 warnings active).</p>
                           </div>
                         </div>
                       </div>
 
-                      <div className="text-[9px] text-zinc-550">
+                      <div className="text-2xs text-zinc-550">
                         Calculated across 4 depots monthly.
                       </div>
                     </div>
@@ -2167,7 +2167,7 @@ export default function InventoryWorkspace({
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Measurement Units & Categories */}
                     <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono text-xs">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Measurement Units & Expiry Rules</span>
+                      <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 block">Measurement Units & Expiry Rules</span>
                       
                       <div className="space-y-2">
                         <div className="flex justify-between items-center p-2 bg-zinc-950 rounded-xl border border-zinc-850">
@@ -2194,7 +2194,7 @@ export default function InventoryWorkspace({
 
                     {/* SCM Approval Workflow */}
                     <div className="p-5 bg-zinc-900/40 border border-zinc-850 rounded-3xl space-y-4 font-mono text-xs">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block">Purchase Order Workflows</span>
+                      <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 block">Purchase Order Workflows</span>
                       
                       <div className="space-y-3">
                         <label className="flex items-center gap-3 p-3 bg-zinc-950 border border-zinc-850 rounded-xl cursor-pointer">
@@ -2206,7 +2206,7 @@ export default function InventoryWorkspace({
                           />
                           <div>
                             <p className="text-white font-bold">Require Clinical Director Approval</p>
-                            <p className="text-[10px] text-zinc-500">Require double sign-off for PO values exceeding $5,000.</p>
+                            <p className="text-2xs text-zinc-500">Require double sign-off for PO values exceeding $5,000.</p>
                           </div>
                         </label>
                       </div>

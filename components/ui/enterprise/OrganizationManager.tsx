@@ -439,12 +439,12 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
             <Plus className="w-3.5 h-3.5" /> {t('addBranch')}
           </button>
           {statusMsg && (
-            <span className="text-[11px] font-bold px-3 py-1.5 rounded-xl border bg-emerald-500/10 border-emerald-500/30 text-emerald-300 flex items-center gap-2">
+            <span className="text-xs font-bold px-3 py-1.5 rounded-xl border bg-emerald-500/10 border-emerald-500/30 text-emerald-300 flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4" /> {statusMsg}
             </span>
           )}
         </div>
-        <span className="text-[10px] font-mono text-zinc-500 bg-zinc-950/60 border border-zinc-800 px-2 py-1 rounded-lg">
+        <span className="text-2xs font-mono text-zinc-500 bg-zinc-950/60 border border-zinc-800 px-2 py-1 rounded-lg">
           {t('hierarchy')}: {t('platform')} › {t('organization')} › {t('branch')} › {t('department')} › {t('room')} › {t('chair')} › {t('equipment')}
         </span>
       </div>
@@ -466,7 +466,7 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2 shrink-0 text-[10px] font-mono">
+        <div className="flex flex-wrap items-center gap-2 shrink-0 text-2xs font-mono">
           <span className="px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400 flex items-center gap-1.5">
             <Globe className="w-3 h-3" /> {structure.organization.language.toUpperCase()}
           </span>
@@ -497,7 +497,7 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
             >
               <Icon className="w-3.5 h-3.5" /> {s.label}
               {s.count > 0 && (
-                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{s.count}</span>
+                <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{s.count}</span>
               )}
             </button>
           );
@@ -507,12 +507,12 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
       {/* Global search + filters */}
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-8 gap-2">
         <div className="relative md:col-span-2 lg:col-span-3">
-          <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500" />
+          <Search className="w-3.5 h-3.5 absolute start-2.5 top-1/2 -translate-y-1/2 text-zinc-500" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t('searchPlaceholder')}
-            className="w-full pl-8 pr-3 py-2 rounded-xl text-xs text-white outline-none bg-zinc-950 border border-zinc-800 focus:border-purple-500/50"
+            className="w-full ps-8 pe-3 py-2 rounded-xl text-xs text-white outline-none bg-zinc-950 border border-zinc-800 focus:border-purple-500/50"
           />
         </div>
         {filterSelect(t('filterByBranch'), branchFilter, setBranchFilter as (v: string) => void, branchOptions)}
@@ -529,24 +529,24 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
           {/* Org summary strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
             <div className="p-3 card-elevated rounded-2xl">
-              <p className="text-[9px] font-mono text-zinc-500 uppercase flex items-center gap-1.5"><Building2 className="w-3 h-3 text-emerald-400" /> {t('summaryBranches')}</p>
+              <p className="text-2xs font-mono text-zinc-500 uppercase flex items-center gap-1.5"><Building2 className="w-3 h-3 text-emerald-400" /> {t('summaryBranches')}</p>
               <p className="text-xl font-black text-white">{summary.branchCount}</p>
-              <p className="text-[9px] font-mono text-zinc-500">{summary.activeBranches} {t('summaryActiveBranches')}</p>
+              <p className="text-2xs font-mono text-zinc-500">{summary.activeBranches} {t('summaryActiveBranches')}</p>
             </div>
             <div className="p-3 card-elevated rounded-2xl">
-              <p className="text-[9px] font-mono text-zinc-500 uppercase flex items-center gap-1.5"><DoorOpen className="w-3 h-3 text-sky-400" /> {t('summaryRooms')}</p>
+              <p className="text-2xs font-mono text-zinc-500 uppercase flex items-center gap-1.5"><DoorOpen className="w-3 h-3 text-sky-400" /> {t('summaryRooms')}</p>
               <p className="text-xl font-black text-white">{summary.roomCount}</p>
-              <p className="text-[9px] font-mono text-zinc-500">{summary.operationalRooms} {t('summaryOperationalRooms')}</p>
+              <p className="text-2xs font-mono text-zinc-500">{summary.operationalRooms} {t('summaryOperationalRooms')}</p>
             </div>
             <div className="p-3 card-elevated rounded-2xl">
-              <p className="text-[9px] font-mono text-zinc-500 uppercase flex items-center gap-1.5"><Armchair className="w-3 h-3 text-purple-400" /> {t('summaryChairs')}</p>
+              <p className="text-2xs font-mono text-zinc-500 uppercase flex items-center gap-1.5"><Armchair className="w-3 h-3 text-purple-400" /> {t('summaryChairs')}</p>
               <p className="text-xl font-black text-white">{summary.chairCount}</p>
-              <p className="text-[9px] font-mono text-zinc-500">{summary.availableChairs} {t('summaryAvailableChairs')}</p>
+              <p className="text-2xs font-mono text-zinc-500">{summary.availableChairs} {t('summaryAvailableChairs')}</p>
             </div>
             <div className="p-3 card-elevated rounded-2xl">
-              <p className="text-[9px] font-mono text-zinc-500 uppercase flex items-center gap-1.5"><Wrench className="w-3 h-3 text-amber-400" /> {t('summaryEquipment')}</p>
+              <p className="text-2xs font-mono text-zinc-500 uppercase flex items-center gap-1.5"><Wrench className="w-3 h-3 text-amber-400" /> {t('summaryEquipment')}</p>
               <p className="text-xl font-black text-white">{summary.equipmentCount}</p>
-              <p className="text-[9px] font-mono text-zinc-500">{summary.operationalEquipment} {t('summaryOperationalEquipment')}</p>
+              <p className="text-2xs font-mono text-zinc-500">{summary.operationalEquipment} {t('summaryOperationalEquipment')}</p>
             </div>
           </div>
 
@@ -565,7 +565,7 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                 <div className="flex justify-between"><span className="text-zinc-500">{t('workingDaysLabel')}</span><span className="font-bold text-zinc-200">{structure.organization.workingDays.map((d) => t(`days.${d}`)).join(', ')}</span></div>
                 <div className="flex justify-between"><span className="text-zinc-500">{t('workingHoursLabel')}</span><span className="font-bold text-zinc-200">{structure.organization.workingHours.open} – {structure.organization.workingHours.close}</span></div>
               </div>
-              <div className="pt-3 border-t border-zinc-900 space-y-2 text-[10px] font-mono text-zinc-500">
+              <div className="pt-3 border-t border-zinc-900 space-y-2 text-2xs font-mono text-zinc-500">
                 <div className="flex items-center gap-1.5"><Phone className="w-3 h-3" /> {structure.organization.contact.phone}</div>
                 <div className="flex items-center gap-1.5"><Mail className="w-3 h-3" /> {structure.organization.contact.email}</div>
                 <div className="flex items-center gap-1.5"><MapPin className="w-3 h-3" /> {structure.organization.contact.address}</div>
@@ -593,35 +593,35 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
               {selectedBranchSummary ? (
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 flex-wrap">
-                    <span className={`text-[10px] font-mono px-2 py-1 rounded-lg border ${STATUS_STYLES[selectedBranchSummary.branch.status] ?? ''}`}>{selectedBranchSummary.branch.status}</span>
-                    <span className="text-[10px] font-mono text-zinc-500">{selectedBranchSummary.branch.address}</span>
-                    <span className="text-[10px] font-mono text-zinc-500">{selectedBranchSummary.branch.workingHours}</span>
+                    <span className={`text-2xs font-mono px-2 py-1 rounded-lg border ${STATUS_STYLES[selectedBranchSummary.branch.status] ?? ''}`}>{selectedBranchSummary.branch.status}</span>
+                    <span className="text-2xs font-mono text-zinc-500">{selectedBranchSummary.branch.address}</span>
+                    <span className="text-2xs font-mono text-zinc-500">{selectedBranchSummary.branch.workingHours}</span>
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
                     <div className="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800">
-                      <p className="text-[9px] font-mono text-zinc-500">{t('summaryRooms')}</p>
+                      <p className="text-2xs font-mono text-zinc-500">{t('summaryRooms')}</p>
                       <p className="text-lg font-black text-white">{selectedBranchSummary.roomCount}</p>
                     </div>
                     <div className="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800">
-                      <p className="text-[9px] font-mono text-zinc-500">{t('summaryChairs')}</p>
+                      <p className="text-2xs font-mono text-zinc-500">{t('summaryChairs')}</p>
                       <p className="text-lg font-black text-white">{selectedBranchSummary.chairCount}</p>
                     </div>
                     <div className="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800">
-                      <p className="text-[9px] font-mono text-zinc-500">{t('summaryEquipment')}</p>
+                      <p className="text-2xs font-mono text-zinc-500">{t('summaryEquipment')}</p>
                       <p className="text-lg font-black text-white">{selectedBranchSummary.equipmentCount}</p>
                     </div>
                     <div className="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800">
-                      <p className="text-[9px] font-mono text-zinc-500">{t('fieldAssignedStaff')}</p>
+                      <p className="text-2xs font-mono text-zinc-500">{t('fieldAssignedStaff')}</p>
                       <p className="text-lg font-black text-white">{selectedBranchSummary.assignedStaffCount}</p>
                     </div>
                     <div className="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800">
-                      <p className="text-[9px] font-mono text-zinc-500">{t('summaryOperationalRooms')}</p>
+                      <p className="text-2xs font-mono text-zinc-500">{t('summaryOperationalRooms')}</p>
                       <p className="text-lg font-black text-white">{selectedBranchSummary.operationalRooms}</p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {selectedBranchSummary.branch.departments.map((d) => (
-                      <span key={d} className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
+                      <span key={d} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
                         {DEPARTMENTS.find((x) => x.id === d)?.name ?? d}
                       </span>
                     ))}
@@ -636,43 +636,43 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
           {/* Distribution summaries */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 card-elevated rounded-3xl">
-              <h4 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono mb-3">{t('chartsRoomsByType')}</h4>
+              <h4 className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono mb-3">{t('chartsRoomsByType')}</h4>
               <div className="space-y-1.5">
                 {ROOM_TYPES.map((rt) => (
                   <div key={rt.id} className="flex items-center gap-2">
-                    <span className="text-[10px] text-zinc-400 w-28 truncate">{t(`roomTypes.${rt.id}`)}</span>
+                    <span className="text-2xs text-zinc-400 w-28 truncate">{t(`roomTypes.${rt.id}`)}</span>
                     <div className="flex-1 h-2 rounded bg-zinc-900 overflow-hidden">
                       <div className="h-full bg-sky-500/70 rounded" style={{ width: `${Math.min(100, ((summary.roomsByType[rt.id] ?? 0) / Math.max(1, summary.roomCount)) * 100)}%` }} />
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-500 w-6 text-right">{summary.roomsByType[rt.id] ?? 0}</span>
+                    <span className="text-2xs font-mono text-zinc-500 w-6 text-end">{summary.roomsByType[rt.id] ?? 0}</span>
                   </div>
                 ))}
               </div>
             </div>
             <div className="p-4 card-elevated rounded-3xl">
-              <h4 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono mb-3">{t('chartsChairsByStatus')}</h4>
+              <h4 className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono mb-3">{t('chartsChairsByStatus')}</h4>
               <div className="space-y-1.5">
                 {(['Available', 'Occupied', 'Cleaning', 'Maintenance'] as ChairStatus[]).map((s) => (
                   <div key={s} className="flex items-center gap-2">
-                    <span className="text-[10px] text-zinc-400 w-28 truncate">{s}</span>
+                    <span className="text-2xs text-zinc-400 w-28 truncate">{s}</span>
                     <div className="flex-1 h-2 rounded bg-zinc-900 overflow-hidden">
                       <div className="h-full bg-purple-500/70 rounded" style={{ width: `${Math.min(100, ((summary.chairsByStatus[s] ?? 0) / Math.max(1, summary.chairCount)) * 100)}%` }} />
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-500 w-6 text-right">{summary.chairsByStatus[s] ?? 0}</span>
+                    <span className="text-2xs font-mono text-zinc-500 w-6 text-end">{summary.chairsByStatus[s] ?? 0}</span>
                   </div>
                 ))}
               </div>
             </div>
             <div className="p-4 card-elevated rounded-3xl">
-              <h4 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono mb-3">{t('chartsEquipmentByCategory')}</h4>
+              <h4 className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono mb-3">{t('chartsEquipmentByCategory')}</h4>
               <div className="space-y-1.5">
                 {EQUIPMENT_CATEGORIES.map((c) => (
                   <div key={c.id} className="flex items-center gap-2">
-                    <span className="text-[10px] text-zinc-400 w-28 truncate">{t(`equipmentCategories.${c.id}`)}</span>
+                    <span className="text-2xs text-zinc-400 w-28 truncate">{t(`equipmentCategories.${c.id}`)}</span>
                     <div className="flex-1 h-2 rounded bg-zinc-900 overflow-hidden">
                       <div className="h-full bg-amber-500/70 rounded" style={{ width: `${Math.min(100, ((summary.equipmentByCategory[c.id] ?? 0) / Math.max(1, summary.equipmentCount)) * 100)}%` }} />
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-500 w-6 text-right">{summary.equipmentByCategory[c.id] ?? 0}</span>
+                    <span className="text-2xs font-mono text-zinc-500 w-6 text-end">{summary.equipmentByCategory[c.id] ?? 0}</span>
                   </div>
                 ))}
               </div>
@@ -699,35 +699,35 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                       <Building2 className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[11px] font-bold text-white truncate">{b.name}</p>
-                      <p className="text-[9px] font-mono text-zinc-500">{b.code}</p>
+                      <p className="text-xs font-bold text-white truncate">{b.name}</p>
+                      <p className="text-2xs font-mono text-zinc-500">{b.code}</p>
                     </div>
                   </div>
-                  <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded border ${STATUS_STYLES[b.status] ?? ''}`}>{b.status}</span>
+                  <span className={`text-2xs font-mono px-1.5 py-0.5 rounded border ${STATUS_STYLES[b.status] ?? ''}`}>{b.status}</span>
                 </div>
-                <div className="text-[10px] font-mono text-zinc-500 space-y-1">
+                <div className="text-2xs font-mono text-zinc-500 space-y-1">
                   <p className="flex items-center gap-1.5"><MapPin className="w-3 h-3" /> {b.address || '—'}</p>
                   <p className="flex items-center gap-1.5"><Phone className="w-3 h-3" /> {b.phone || '—'}</p>
                   <p className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {b.workingHours || '—'}</p>
                   <p className="flex items-center gap-1.5"><Users className="w-3 h-3" /> {b.manager || '—'}</p>
                 </div>
-                <div className="flex items-center gap-1.5 text-[9px] font-mono">
+                <div className="flex items-center gap-1.5 text-2xs font-mono">
                   <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{roomCount} {t('rooms')}</span>
                   <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{chairCount} {t('chairs')}</span>
                   <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{eqCount} {t('equipmentCount')}</span>
                   <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{b.assignedStaff.length} {t('fieldAssignedStaff')}</span>
                 </div>
                 <div className="flex items-center gap-1.5 pt-1">
-                  <button onClick={() => openEditBranch(b)} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
+                  <button onClick={() => openEditBranch(b)} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
                     <Pencil className="w-3 h-3" /> {t('editBranch')}
                   </button>
-                  <button onClick={() => { setStaffAssignBranchId(b.id); setStaffAssignSelection(new Set(b.assignedStaff)); }} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
+                  <button onClick={() => { setStaffAssignBranchId(b.id); setStaffAssignSelection(new Set(b.assignedStaff)); }} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
                     <Users className="w-3 h-3" /> {t('assignStaff')}
                   </button>
-                  <button onClick={() => { setSelectedBranchId(b.id); setActiveTab('departments'); }} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
+                  <button onClick={() => { setSelectedBranchId(b.id); setActiveTab('departments'); }} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
                     <Layers className="w-3 h-3" /> {t('assignDepartments')}
                   </button>
-                  <button onClick={() => handleDeleteBranch(b)} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer text-rose-300">
+                  <button onClick={() => handleDeleteBranch(b)} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer text-rose-300">
                     <Trash2 className="w-3 h-3" /> {t('deleteBranch')}
                   </button>
                 </div>
@@ -754,8 +754,8 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                       <Layers className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[11px] font-bold text-white truncate">{d.name}</p>
-                      <p className="text-[9px] font-mono text-zinc-500">{d.code}</p>
+                      <p className="text-xs font-bold text-white truncate">{d.name}</p>
+                      <p className="text-2xs font-mono text-zinc-500">{d.code}</p>
                     </div>
                   </div>
                   {branch && (
@@ -766,13 +766,13 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                         onAudit(`Assigned department [${d.id}] to branch [${branch.id}] = ${!isInSelected}.`);
                         flash('department assignment updated');
                       }}
-                      className={`px-2 py-1 rounded-lg text-[9px] font-bold border transition-all cursor-pointer ${isInSelected ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40' : 'bg-zinc-950 text-zinc-500 border-zinc-800 hover:border-zinc-700'}`}
+                      className={`px-2 py-1 rounded-lg text-2xs font-bold border transition-all cursor-pointer ${isInSelected ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40' : 'bg-zinc-950 text-zinc-500 border-zinc-800 hover:border-zinc-700'}`}
                     >
                       {isInSelected ? 'ASSIGNED' : 'ASSIGN'}
                     </button>
                   )}
                 </div>
-                <div className="text-[9px] font-mono text-zinc-500 space-y-1">
+                <div className="text-2xs font-mono text-zinc-500 space-y-1">
                   <p>{t('summaryBranches')}: {assignedToBranches.length > 0 ? assignedToBranches.map((b) => b.name).join(', ') : '—'}</p>
                   <p>{t('rooms')}: {rooms.length} • {t('chairs')}: {chairs.length}</p>
                 </div>
@@ -806,13 +806,13 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                         <DoorOpen className="w-4 h-4" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-[11px] font-bold text-white truncate">{r.name}</p>
-                        <p className="text-[9px] font-mono text-zinc-500">{r.number} • {t('fieldFloor')} {r.floor}</p>
+                        <p className="text-xs font-bold text-white truncate">{r.name}</p>
+                        <p className="text-2xs font-mono text-zinc-500">{r.number} • {t('fieldFloor')} {r.floor}</p>
                       </div>
                     </div>
-                    <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded border ${STATUS_STYLES[r.status] ?? ''}`}>{r.status}</span>
+                    <span className={`text-2xs font-mono px-1.5 py-0.5 rounded border ${STATUS_STYLES[r.status] ?? ''}`}>{r.status}</span>
                   </div>
-                  <div className="text-[9px] font-mono text-zinc-500 space-y-1">
+                  <div className="text-2xs font-mono text-zinc-500 space-y-1">
                     <p>{t('fieldAssignedDepartments')}: {DEPARTMENTS.find((x) => x.id === r.departmentId)?.name ?? r.departmentId}</p>
                     <p>{t('branch')}: {branch?.name ?? r.branchId}</p>
                     <p className="flex items-center gap-1.5 flex-wrap">
@@ -824,18 +824,18 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                       )) : '—'}
                     </p>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[9px] font-mono">
+                  <div className="flex items-center gap-1.5 text-2xs font-mono">
                     <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{chairs.length} {t('chairs')}</span>
                     <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{eq.length} {t('equipmentCount')}</span>
                   </div>
                   <div className="flex items-center gap-1.5 pt-1 flex-wrap">
-                    <button onClick={() => openEditRoom(r)} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
+                    <button onClick={() => openEditRoom(r)} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
                       <Pencil className="w-3 h-3" /> {t('editRoom')}
                     </button>
-                    <button onClick={() => setRoomDoctorAssignee({ roomId: r.id, doctorId: '', active: true })} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
+                    <button onClick={() => setRoomDoctorAssignee({ roomId: r.id, doctorId: '', active: true })} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
                       <Users className="w-3 h-3" /> {t('assignDoctor')}
                     </button>
-                    <button onClick={() => handleDeleteRoom(r)} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer text-rose-300">
+                    <button onClick={() => handleDeleteRoom(r)} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer text-rose-300">
                       <Trash2 className="w-3 h-3" /> {t('deleteRoom')}
                     </button>
                   </div>
@@ -869,23 +869,23 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                         <Armchair className="w-4 h-4" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-[11px] font-bold text-white truncate">{c.number}</p>
-                        <p className="text-[9px] font-mono text-zinc-500">{c.id}</p>
+                        <p className="text-xs font-bold text-white truncate">{c.number}</p>
+                        <p className="text-2xs font-mono text-zinc-500">{c.id}</p>
                       </div>
                     </div>
-                    <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded border ${STATUS_STYLES[c.status] ?? ''}`}>{c.status}</span>
+                    <span className={`text-2xs font-mono px-1.5 py-0.5 rounded border ${STATUS_STYLES[c.status] ?? ''}`}>{c.status}</span>
                   </div>
-                  <div className="text-[9px] font-mono text-zinc-500 space-y-1">
+                  <div className="text-2xs font-mono text-zinc-500 space-y-1">
                     <p>{t('room')}: {room?.name ?? c.roomId}</p>
                     <p>{t('branch')}: {branch?.name ?? c.branchId}</p>
                     <p>{t('department')}: {DEPARTMENTS.find((x) => x.id === c.departmentId)?.name ?? c.departmentId}</p>
                     <p>{t('fieldManager')}: {users.find((u) => u.id === c.doctorId)?.name ?? '—'}</p>
                   </div>
                   <div className="flex items-center gap-1.5 pt-1">
-                    <button onClick={() => openEditChair(c)} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
+                    <button onClick={() => openEditChair(c)} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
                       <Pencil className="w-3 h-3" /> {t('editChair')}
                     </button>
-                    <button onClick={() => handleDeleteChair(c)} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer text-rose-300">
+                    <button onClick={() => handleDeleteChair(c)} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer text-rose-300">
                       <Trash2 className="w-3 h-3" /> {t('deleteChair')}
                     </button>
                   </div>
@@ -919,26 +919,26 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                         <Wrench className="w-4 h-4" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-[11px] font-bold text-white truncate">{e.name}</p>
-                        <p className="text-[9px] font-mono text-zinc-500">{e.category} • {e.serialNumber}</p>
+                        <p className="text-xs font-bold text-white truncate">{e.name}</p>
+                        <p className="text-2xs font-mono text-zinc-500">{e.category} • {e.serialNumber}</p>
                       </div>
                     </div>
-                    <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded border ${STATUS_STYLES[e.status] ?? ''}`}>{e.status}</span>
+                    <span className={`text-2xs font-mono px-1.5 py-0.5 rounded border ${STATUS_STYLES[e.status] ?? ''}`}>{e.status}</span>
                   </div>
-                  <div className="text-[9px] font-mono text-zinc-500 space-y-1">
+                  <div className="text-2xs font-mono text-zinc-500 space-y-1">
                     <p>{e.manufacturer} • {e.model}</p>
                     <p>{t('branch')}: {branch?.name ?? e.branchId}</p>
                     <p>{t('room')}: {room?.name ?? (e.roomId || '—')}</p>
                     <p>{t('fieldMaintenance')}: {e.maintenanceSchedule} • {t('fieldWarranty')}: {e.warranty}</p>
                   </div>
                   <div className="flex items-center gap-1.5 pt-1 flex-wrap">
-                    <button onClick={() => openEditEquipment(e)} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
+                    <button onClick={() => openEditEquipment(e)} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
                       <Pencil className="w-3 h-3" /> {t('editEquipment')}
                     </button>
-                    <button onClick={() => setEquipRoomAssignee({ equipmentId: e.id, roomId: e.roomId })} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
+                    <button onClick={() => setEquipRoomAssignee({ equipmentId: e.id, roomId: e.roomId })} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer">
                       <DoorOpen className="w-3 h-3" /> {t('fieldAssignedRooms')}
                     </button>
-                    <button onClick={() => handleDeleteEquipment(e)} className="btn-secondary px-2 py-1 text-[10px] font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer text-rose-300">
+                    <button onClick={() => handleDeleteEquipment(e)} className="btn-secondary px-2 py-1 text-2xs font-bold rounded-lg inline-flex items-center gap-1 cursor-pointer text-rose-300">
                       <Trash2 className="w-3 h-3" /> {t('deleteEquipment')}
                     </button>
                   </div>
@@ -1117,7 +1117,7 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
       {/* ---------- STAFF ASSIGN MODAL ---------- */}
       {staffAssignBranchId && (
         <Modal title={t('assignStaff')} onClose={() => setStaffAssignBranchId(null)}>
-          <p className="text-[10px] font-mono text-zinc-500">{staffAssignSelection.size} {t('fieldAssignedStaff')}</p>
+          <p className="text-2xs font-mono text-zinc-500">{staffAssignSelection.size} {t('fieldAssignedStaff')}</p>
           <div className="border border-zinc-900 rounded-2xl divide-y divide-zinc-900/60 max-h-[300px] overflow-y-auto">
             {staffOptions.length === 0 && <p className="p-6 text-center text-xs text-zinc-600">{t('emptyState')}</p>}
             {staffOptions.map((u) => (
@@ -1129,7 +1129,7 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                   className="accent-purple-500"
                 />
                 <span className="text-xs font-bold text-white">{u.name}</span>
-                <span className="text-[10px] font-mono text-zinc-500 ml-auto">{u.role}</span>
+                <span className="text-2xs font-mono text-zinc-500 ms-auto">{u.role}</span>
               </label>
             ))}
           </div>
@@ -1157,7 +1157,7 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-xl border text-xs transition-all cursor-pointer ${active ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40' : 'bg-zinc-950 text-zinc-400 border-zinc-800 hover:border-zinc-700'}`}
                 >
                   <span className="font-bold">{u.name}</span>
-                  <span className="text-[10px] font-mono">{active ? 'ASSIGNED' : 'ASSIGN'}</span>
+                  <span className="text-2xs font-mono">{active ? 'ASSIGNED' : 'ASSIGN'}</span>
                 </button>
               );
             })}
@@ -1185,7 +1185,7 @@ export default function OrganizationManager({ users, onAudit }: OrgManagerProps)
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-xl border text-xs transition-all cursor-pointer ${active ? 'bg-cyan-500/15 text-cyan-300 border-cyan-500/40' : 'bg-zinc-950 text-zinc-400 border-zinc-800 hover:border-zinc-700'}`}
                 >
                   <span className="font-bold">{r.name}</span>
-                  <span className="text-[10px] font-mono">{active ? 'ASSIGNED' : 'ASSIGN'}</span>
+                  <span className="text-2xs font-mono">{active ? 'ASSIGNED' : 'ASSIGN'}</span>
                 </button>
               );
             })}
@@ -1205,7 +1205,7 @@ const inputCls =
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1">
-      <label className="text-[10px] text-zinc-400 font-bold uppercase">{label}</label>
+      <label className="text-2xs text-zinc-400 font-bold uppercase">{label}</label>
       {children}
     </div>
   );

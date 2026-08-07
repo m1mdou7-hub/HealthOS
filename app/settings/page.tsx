@@ -39,13 +39,13 @@ export default async function SettingsPage() {
 
   return (
     <DashboardShell user={user}>
-      <div className="space-y-6 animate-fade-in max-w-7xl font-sans">
+      <div className="space-y-6 animate-fade-in max-w-7xl">
         {/* Title */}
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl font-sans">
+          <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl">
             {tSet('headerTitle')}
           </h2>
-          <p className="mt-1 text-zinc-400 text-sm font-sans">
+          <p className="mt-1 text-zinc-400 text-sm">
             {tSet('headerSubtitle')}
           </p>
         </div>

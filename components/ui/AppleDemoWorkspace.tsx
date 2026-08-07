@@ -348,13 +348,13 @@ export default function AppleDemoWorkspace() {
       <FramerMotionShowcase />
 
       {/* Premium Minimalist Header (Emil Style: Pitch Black, White border, Muted typography) */}
-      <div className="relative p-8 rounded-3xl border border-zinc-800/80 bg-black shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="relative p-8 rounded-3xl border border-zinc-800/80 bg-black shadow-card flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2 max-w-xl">
           <div className="flex items-center gap-2">
             <span className="p-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[9px] font-mono tracking-widest text-zinc-400 uppercase font-bold">
+            <span className="text-2xs font-mono tracking-widest text-zinc-400 uppercase font-bold">
               PHYSICS EXPERIMENT
             </span>
           </div>
@@ -368,13 +368,13 @@ export default function AppleDemoWorkspace() {
 
         {/* Global Control Tweak Panel (Minimalist black layout) */}
         <div className="p-5 rounded-3xl bg-zinc-950 border border-zinc-850 text-xs text-zinc-300 w-full md:w-80 space-y-4">
-          <div className="font-bold text-white flex items-center justify-between font-mono text-[10px] tracking-wider">
+          <div className="font-bold text-white flex items-center justify-between font-mono text-2xs tracking-wider">
             <span>SPRING COEFFICIENTS</span>
             <Sliders className="w-3.5 h-3.5 text-zinc-300" />
           </div>
           
           <div className="space-y-2">
-            <div className="flex justify-between text-[11px] font-mono">
+            <div className="flex justify-between text-xs font-mono">
               <span>{t('damping')}:</span>
               <span className="text-white font-bold">{damping.toFixed(2)}</span>
             </div>
@@ -387,7 +387,7 @@ export default function AppleDemoWorkspace() {
               onChange={(e) => setDamping(parseFloat(e.target.value))}
               className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-white"
             />
-            <div className="flex justify-between text-[8px] font-mono text-zinc-500">
+            <div className="flex justify-between text-2xs font-mono text-zinc-500">
               <span>Bouncy (0.5)</span>
               <span>Critical (1.0)</span>
               <span>Over (2.0)</span>
@@ -395,7 +395,7 @@ export default function AppleDemoWorkspace() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between text-[11px] font-mono">
+            <div className="flex justify-between text-xs font-mono">
               <span>{t('response')} (s):</span>
               <span className="text-white font-bold">{response.toFixed(2)}s</span>
             </div>
@@ -408,7 +408,7 @@ export default function AppleDemoWorkspace() {
               onChange={(e) => setResponse(parseFloat(e.target.value))}
               className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-white"
             />
-            <div className="flex justify-between text-[8px] font-mono text-zinc-500">
+            <div className="flex justify-between text-2xs font-mono text-zinc-500">
               <span>Snappy (0.2s)</span>
               <span>Smooth (0.6s)</span>
               <span>Slow (1.5s)</span>
@@ -421,13 +421,13 @@ export default function AppleDemoWorkspace() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         {/* 1. Direct Manipulation Zone */}
-        <div className="p-6 rounded-3xl border border-zinc-800/80 bg-black shadow-xl flex flex-col justify-between min-h-[420px]">
+        <div className="p-6 rounded-3xl border border-zinc-800/80 bg-black shadow-card flex flex-col justify-between min-h-[420px]">
           <div className="space-y-1.5 mb-4">
             <h2 className="text-base font-bold text-white flex items-center gap-2 tracking-tight">
               <Hand className="w-4 h-4 text-zinc-300" />
               {t('directTitle')}
             </h2>
-            <p className="text-[11px] text-zinc-400 leading-relaxed max-w-md">
+            <p className="text-xs text-zinc-400 leading-relaxed max-w-md">
               {t('directDesc')}
             </p>
           </div>
@@ -450,9 +450,9 @@ export default function AppleDemoWorkspace() {
                 transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
                 touchAction: 'none'
               }}
-              className={`absolute left-0 top-0 w-32 h-32 rounded-3xl border flex flex-col items-center justify-center p-3 select-none cursor-grab active:cursor-grabbing transition-shadow duration-300 ${
+              className={`absolute start-0 top-0 w-32 h-32 rounded-3xl border flex flex-col items-center justify-center p-3 select-none cursor-grab active:cursor-grabbing transition-shadow duration-300 ${
                 isDragging 
-                  ? "bg-zinc-900 border-zinc-200 text-white shadow-xl scale-[1.01]" 
+                  ? "bg-zinc-900 border-zinc-200 text-white shadow-card scale-[1.01]" 
                   : momentumActive
                   ? "bg-zinc-950 border-zinc-700 text-white"
                   : "bg-black border-zinc-800 text-zinc-300 hover:border-zinc-700"
@@ -461,22 +461,22 @@ export default function AppleDemoWorkspace() {
               <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 mb-1.5 pointer-events-none">
                 <Move className="w-4 h-4 text-white" />
               </div>
-              <span className="text-[9px] font-bold font-mono tracking-wider text-center pointer-events-none uppercase">
+              <span className="text-2xs font-bold font-mono tracking-wider text-center pointer-events-none uppercase">
                 {isDragging ? "DRAGGING" : momentumActive ? "SPRINGING" : "GRAB ME"}
               </span>
-              <span className="text-[8px] font-mono text-zinc-500 mt-1 pointer-events-none">
+              <span className="text-2xs font-mono text-zinc-500 mt-1 pointer-events-none">
                 x: {Math.round(position.x)} y: {Math.round(position.y)}
               </span>
             </div>
           </div>
 
           <div className="mt-4 flex justify-between items-center text-xs">
-            <span className="text-[9px] font-mono text-zinc-500">
+            <span className="text-2xs font-mono text-zinc-500">
               * Active velocity blended on pointer release
             </span>
             <button 
               onClick={handleReset}
-              className="px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-300 active:scale-95 transition-all flex items-center gap-1.5 font-mono text-[10px]"
+              className="px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-300 active:scale-95 transition-all flex items-center gap-1.5 font-mono text-2xs"
             >
               <RefreshCw className="w-3 h-3" />
               {t('reset')}
@@ -485,13 +485,13 @@ export default function AppleDemoWorkspace() {
         </div>
 
         {/* 2. Sliders and Control Center Tactility */}
-        <div className="p-6 rounded-3xl border border-zinc-800/80 bg-black shadow-xl flex flex-col justify-between min-h-[420px]">
+        <div className="p-6 rounded-3xl border border-zinc-800/80 bg-black shadow-card flex flex-col justify-between min-h-[420px]">
           <div className="space-y-1.5 mb-4">
             <h2 className="text-base font-bold text-white flex items-center gap-2 tracking-tight">
               <Sliders className="w-4 h-4 text-zinc-300" />
               {t('controlTitle')}
             </h2>
-            <p className="text-[11px] text-zinc-400 leading-relaxed max-w-md">
+            <p className="text-xs text-zinc-400 leading-relaxed max-w-md">
               {t('controlDesc')}
             </p>
           </div>
@@ -503,7 +503,7 @@ export default function AppleDemoWorkspace() {
             <div className="h-full flex flex-col items-center justify-center space-y-3">
               <div 
                 className={`relative w-16 h-36 rounded-3xl bg-zinc-900 border border-zinc-800 overflow-hidden transition-all duration-200 cursor-row-resize ${
-                  sliderActive === 'brightness' ? 'ring-1 ring-white/20 scale-x-[1.06] shadow-lg' : ''
+                  sliderActive === 'brightness' ? 'ring-1 ring-white/20 scale-x-[1.06] shadow-soft' : ''
                 }`}
                 onPointerDown={(e) => {
                   setSliderActive('brightness');
@@ -525,7 +525,7 @@ export default function AppleDemoWorkspace() {
               >
                 {/* Fill state (Pure White) */}
                 <motion.div 
-                  className="absolute bottom-0 left-0 right-0 bg-white"
+                  className="absolute bottom-0 start-0 end-0 bg-white"
                   animate={{ height: `${brightnessVal}%` }}
                   transition={{ type: "spring", stiffness: 280, damping: 25 }}
                 />
@@ -533,17 +533,17 @@ export default function AppleDemoWorkspace() {
                 {/* Inside Icon */}
                 <div className="absolute inset-x-0 bottom-4 flex flex-col items-center justify-center mix-blend-difference text-white select-none pointer-events-none">
                   <Sun className="w-4 h-4 text-black" />
-                  <span className="text-[9px] font-bold font-mono mt-1 text-black">{brightnessVal}%</span>
+                  <span className="text-2xs font-bold font-mono mt-1 text-black">{brightnessVal}%</span>
                 </div>
               </div>
-              <span className="text-[10px] font-bold text-zinc-500 font-mono tracking-wider">BRIGHTNESS</span>
+              <span className="text-2xs font-bold text-zinc-500 font-mono tracking-wider">BRIGHTNESS</span>
             </div>
 
             {/* Volume Slider */}
             <div className="h-full flex flex-col items-center justify-center space-y-3">
               <div 
                 className={`relative w-16 h-36 rounded-3xl bg-zinc-900 border border-zinc-800 overflow-hidden transition-all duration-200 cursor-row-resize ${
-                  sliderActive === 'volume' ? 'ring-1 ring-white/20 scale-x-[1.06] shadow-lg' : ''
+                  sliderActive === 'volume' ? 'ring-1 ring-white/20 scale-x-[1.06] shadow-soft' : ''
                 }`}
                 onPointerDown={(e) => {
                   setSliderActive('volume');
@@ -565,7 +565,7 @@ export default function AppleDemoWorkspace() {
               >
                 {/* Fill state (Pure White) */}
                 <motion.div 
-                  className="absolute bottom-0 left-0 right-0 bg-zinc-200"
+                  className="absolute bottom-0 start-0 end-0 bg-zinc-200"
                   animate={{ height: `${volumeVal}%` }}
                   transition={{ type: "spring", stiffness: 280, damping: 25 }}
                 />
@@ -573,17 +573,17 @@ export default function AppleDemoWorkspace() {
                 {/* Inside Icon */}
                 <div className="absolute inset-x-0 bottom-4 flex flex-col items-center justify-center mix-blend-difference text-white select-none pointer-events-none">
                   <Volume2 className="w-4 h-4 text-black" />
-                  <span className="text-[9px] font-bold font-mono mt-1 text-black">{volumeVal}%</span>
+                  <span className="text-2xs font-bold font-mono mt-1 text-black">{volumeVal}%</span>
                 </div>
               </div>
-              <span className="text-[10px] font-bold text-zinc-500 font-mono tracking-wider">VOLUME</span>
+              <span className="text-2xs font-bold text-zinc-500 font-mono tracking-wider">VOLUME</span>
             </div>
 
           </div>
 
           {/* Tactile Response Grid (Active scale down instant) */}
           <div className="mt-4 flex items-center justify-between border-t border-zinc-900 pt-4">
-            <span className="text-[9px] font-mono text-zinc-500">
+            <span className="text-2xs font-mono text-zinc-500">
               * Widget scale swells on drag to widen cushion
             </span>
             <div className="flex gap-2">
@@ -592,7 +592,7 @@ export default function AppleDemoWorkspace() {
                 onPointerUp={() => setButtonPressed(null)}
                 onPointerLeave={() => setButtonPressed(null)}
                 style={{ transform: buttonPressed === 'btn1' ? 'scale(0.94)' : 'scale(1)' }}
-                className="w-8 h-8 rounded-lg border border-zinc-800 bg-zinc-950 flex items-center justify-center text-zinc-400 hover:text-white transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-mono text-[9px] font-bold"
+                className="w-8 h-8 rounded-lg border border-zinc-800 bg-zinc-950 flex items-center justify-center text-zinc-400 hover:text-white transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-mono text-2xs font-bold"
               >
                 I
               </button>
@@ -601,7 +601,7 @@ export default function AppleDemoWorkspace() {
                 onPointerUp={() => setButtonPressed(null)}
                 onPointerLeave={() => setButtonPressed(null)}
                 style={{ transform: buttonPressed === 'btn2' ? 'scale(0.94)' : 'scale(1)' }}
-                className="w-8 h-8 rounded-lg border border-zinc-800 bg-zinc-950 flex items-center justify-center text-zinc-400 hover:text-white transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-mono text-[9px] font-bold"
+                className="w-8 h-8 rounded-lg border border-zinc-800 bg-zinc-950 flex items-center justify-center text-zinc-400 hover:text-white transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-mono text-2xs font-bold"
               >
                 II
               </button>
@@ -614,13 +614,13 @@ export default function AppleDemoWorkspace() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         {/* 3. Fluid Bottom Sheet Trigger */}
-        <div className="p-6 rounded-3xl border border-zinc-800/80 bg-black shadow-xl flex flex-col justify-between min-h-[380px]">
+        <div className="p-6 rounded-3xl border border-zinc-800/80 bg-black shadow-card flex flex-col justify-between min-h-[380px]">
           <div className="space-y-1.5 mb-4">
             <h2 className="text-base font-bold text-white flex items-center gap-2 tracking-tight">
               <Layers className="w-4 h-4 text-zinc-300" />
               {t('sheetTitle')}
             </h2>
-            <p className="text-[11px] text-zinc-400 leading-relaxed max-w-md">
+            <p className="text-xs text-zinc-400 leading-relaxed max-w-md">
               {t('sheetDesc')}
             </p>
           </div>
@@ -635,19 +635,19 @@ export default function AppleDemoWorkspace() {
             </button>
           </div>
 
-          <div className="mt-4 text-[9px] font-mono text-zinc-500 text-center">
+          <div className="mt-4 text-2xs font-mono text-zinc-500 text-center">
             * Drag sheet downward to dismiss (damping: 0.8, response: 0.3s)
           </div>
         </div>
 
         {/* 4. Independent X and Y Springs Zone */}
-        <div className="p-6 rounded-3xl border border-zinc-800/80 bg-black shadow-xl flex flex-col justify-between min-h-[380px]">
+        <div className="p-6 rounded-3xl border border-zinc-800/80 bg-black shadow-card flex flex-col justify-between min-h-[380px]">
           <div className="space-y-1.5 mb-4">
             <h2 className="text-base font-bold text-white flex items-center gap-2 tracking-tight">
               <Activity className="w-4 h-4 text-zinc-300" />
               {t('springTitle')}
             </h2>
-            <p className="text-[11px] text-zinc-400 leading-relaxed max-w-md">
+            <p className="text-xs text-zinc-400 leading-relaxed max-w-md">
               {t('springDesc')}
             </p>
           </div>
@@ -669,7 +669,7 @@ export default function AppleDemoWorkspace() {
             {/* Dot A: X and Y solved independently (Apple style - Pure White) */}
             <div 
               style={{ left: indepPos.x, top: indepPos.y }}
-              className="absolute w-8 h-8 rounded-full bg-white border border-zinc-300 flex items-center justify-center shadow-lg text-black text-[9px] font-black pointer-events-none select-none"
+              className="absolute w-8 h-8 rounded-full bg-white border border-zinc-300 flex items-center justify-center shadow-soft text-black text-2xs font-black pointer-events-none select-none"
             >
               XY
             </div>
@@ -677,13 +677,13 @@ export default function AppleDemoWorkspace() {
             {/* Dot B: Unified diagonal path solver (desynced - Muted outline) */}
             <div 
               style={{ left: linkedPos.x, top: linkedPos.y }}
-              className="absolute w-8 h-8 rounded-full border border-dashed border-zinc-500 bg-transparent flex items-center justify-center text-zinc-400 text-[9px] font-bold pointer-events-none select-none opacity-60"
+              className="absolute w-8 h-8 rounded-full border border-dashed border-zinc-500 bg-transparent flex items-center justify-center text-zinc-400 text-2xs font-bold pointer-events-none select-none opacity-60"
             >
               DI
             </div>
 
             {/* Legend inside playground */}
-            <div className="absolute bottom-3 left-3 bg-black/95 border border-zinc-800 p-2 rounded-xl text-[9px] font-mono space-y-1 select-none pointer-events-none">
+            <div className="absolute bottom-3 start-3 bg-black/95 border border-zinc-800 p-2 rounded-xl text-2xs font-mono space-y-1 select-none pointer-events-none">
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-white" />
                 <span className="text-zinc-200">Independent X/Y Spring (Fluid)</span>
@@ -695,7 +695,7 @@ export default function AppleDemoWorkspace() {
             </div>
           </div>
 
-          <div className="mt-4 text-[9px] font-mono text-zinc-500 text-center">
+          <div className="mt-4 text-2xs font-mono text-zinc-500 text-center">
             * Click inside the dark canvas above to change target coordinate.
           </div>
         </div>
@@ -729,7 +729,7 @@ export default function AppleDemoWorkspace() {
                   setIsSheetOpen(false);
                 }
               }}
-              className="fixed inset-x-0 bottom-0 max-h-[85vh] bg-black border-t border-zinc-800 rounded-t-[28px] p-8 z-50 text-left pointer-events-auto shadow-2xl flex flex-col"
+              className="fixed inset-x-0 bottom-0 max-h-[85vh] bg-black border-t border-zinc-800 rounded-t-[28px] p-8 z-50 text-start pointer-events-auto shadow-pop flex flex-col"
             >
               {/* Drag Handle Bar */}
               <div className="w-10 h-1 bg-zinc-800 rounded-full mx-auto mb-6 shrink-0 cursor-row-resize" />
@@ -740,7 +740,7 @@ export default function AppleDemoWorkspace() {
                   <h3 className="text-lg font-bold text-white tracking-tight font-sans">
                     Apple Fluid bottom-sheet
                   </h3>
-                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-wider">
+                  <p className="text-2xs text-zinc-500 font-mono uppercase tracking-wider">
                     VELOCITY-AWARE DISMISSAL
                   </p>
                 </div>
@@ -756,7 +756,7 @@ export default function AppleDemoWorkspace() {
               <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-zinc-800 py-2 space-y-6 text-sm text-zinc-300 leading-relaxed font-sans">
                 
                 <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-900 space-y-2">
-                  <span className="text-[9px] font-bold tracking-widest text-zinc-400 font-mono uppercase block">WHAT MAKES THIS FLUID?</span>
+                  <span className="text-2xs font-bold tracking-widest text-zinc-400 font-mono uppercase block">WHAT MAKES THIS FLUID?</span>
                   <p className="text-xs leading-relaxed text-zinc-400">
                     Traditional modal sheets open with fixed linear timers and prevent drag interactions. This sheet tracks your vertical finger movement in 1:1 real-time. If you swipe up or down, it calculates the release speed and hands it off directly to the spring solver.
                   </p>
@@ -764,19 +764,19 @@ export default function AppleDemoWorkspace() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl border border-zinc-900 bg-zinc-950">
-                    <span className="text-[9px] font-bold tracking-widest text-zinc-500 font-mono block mb-1">DAMPING RATIO</span>
+                    <span className="text-2xs font-bold tracking-widest text-zinc-500 font-mono block mb-1">DAMPING RATIO</span>
                     <span className="text-xl font-bold text-white font-mono">0.80</span>
-                    <p className="text-[9px] text-zinc-500 mt-1">Allows a slight natural overshoot and settle bounce on swipe lockouts.</p>
+                    <p className="text-2xs text-zinc-500 mt-1">Allows a slight natural overshoot and settle bounce on swipe lockouts.</p>
                   </div>
                   <div className="p-4 rounded-xl border border-zinc-900 bg-zinc-950">
-                    <span className="text-[9px] font-bold tracking-widest text-zinc-500 font-mono block mb-1">RESPONSE SPEED</span>
+                    <span className="text-2xs font-bold tracking-widest text-zinc-500 font-mono block mb-1">RESPONSE SPEED</span>
                     <span className="text-xl font-bold text-white font-mono">0.30s</span>
-                    <p className="text-[9px] text-zinc-500 mt-1">Instantly follows coordinates, preventing sensory visual delay.</p>
+                    <p className="text-2xs text-zinc-500 mt-1">Instantly follows coordinates, preventing sensory visual delay.</p>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[9px] font-bold tracking-widest text-zinc-500 font-mono uppercase block">DEMONSTRATION DETAILS</span>
+                  <span className="text-2xs font-bold tracking-widest text-zinc-500 font-mono uppercase block">DEMONSTRATION DETAILS</span>
                   <ul className="list-disc list-inside space-y-1 text-xs text-zinc-450">
                     <li>Try dragging the sheet down quickly (flick) - it dismisses instantly due to speed threshold.</li>
                     <li>Try dragging slowly and letting go above 150px - it snaps back open with a damping bounce.</li>

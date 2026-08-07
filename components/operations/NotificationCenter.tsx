@@ -67,7 +67,7 @@ export default function NotificationCenter({
               <Bell className="w-4 h-4" style={{ color: 'var(--accent)' }} /> Clinic Dispatch Notification Hub
             </h3>
             {unreadCount > 0 && (
-              <span className="badge badge-danger font-mono font-black text-[10px] px-2 py-0.5 rounded-full animate-bounce">
+              <span className="badge badge-danger font-mono font-black text-2xs px-2 py-0.5 rounded-full animate-bounce">
                 {unreadCount} Unread
               </span>
             )}
@@ -89,7 +89,7 @@ export default function NotificationCenter({
       <div className="flex flex-wrap items-center gap-3 p-3 rounded-xl card-gradient">
         <div className="flex items-center gap-1.5">
           <Filter className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
-          <span className="text-[10px] font-mono uppercase font-bold" style={{ color: 'var(--text-muted)' }}>Filters:</span>
+          <span className="text-2xs font-mono uppercase font-bold" style={{ color: 'var(--text-muted)' }}>Filters:</span>
         </div>
 
         {/* Category Filter */}
@@ -123,7 +123,7 @@ export default function NotificationCenter({
       </div>
 
       {/* Notification Stream */}
-      <div className="space-y-3 max-h-[450px] overflow-y-auto scrollbar-none pr-1">
+      <div className="space-y-3 max-h-[450px] overflow-y-auto scrollbar-none pe-1">
         <AnimatePresence initial={false}>
           {filteredNotifications.map((notif) => (
             <motion.div
@@ -131,7 +131,7 @@ export default function NotificationCenter({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, x: -50 }}
-              className={`p-4 rounded-xl border text-left flex items-start gap-3.5 transition-all card-hover ${
+              className={`p-4 rounded-xl border text-start flex items-start gap-3.5 transition-all card-hover ${
                 notif.unread 
                   ? 'card-gradient' 
                   : 'card-elevated'
@@ -145,14 +145,14 @@ export default function NotificationCenter({
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-xs" style={{ color: 'var(--text)' }}>{notif.title}</span>
-                    <span className={`text-[8px] px-1.5 py-0.5 rounded font-mono border font-bold ${getPriorityBadge(notif.priority)}`}>
+                    <span className={`text-2xs px-1.5 py-0.5 rounded font-mono border font-bold ${getPriorityBadge(notif.priority)}`}>
                       {notif.priority}
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{notif.time}</span>
+                  <span className="text-2xs font-mono whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{notif.time}</span>
                 </div>
                 <p className="text-xs leading-relaxed" style={{ color: 'var(--text-sub)' }}>{notif.desc}</p>
-                <div className="pt-1.5 flex items-center gap-2 text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+                <div className="pt-1.5 flex items-center gap-2 text-2xs font-mono" style={{ color: 'var(--text-muted)' }}>
                   <span>Category: {notif.category}</span>
                 </div>
               </div>

@@ -264,7 +264,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
     <div className="flex flex-col h-screen overflow-hidden" style={{ background: 'var(--bg)' }}>
       {isDevBypass && (
         <div id="dev-mode-banner" className="bg-amber-500 text-black text-xs font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 border-b border-amber-600 select-none shrink-0 z-50">
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-black text-amber-400 font-bold uppercase tracking-wider text-[9px] leading-none">
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-black text-amber-400 font-bold uppercase tracking-wider text-2xs leading-none">
             DEV MODE
           </span>
           <span>Bypassing Supabase authentication for local development. Production authentication remains active and untouched.</span>
@@ -275,7 +275,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       <div className="hidden lg:block w-[72px] shrink-0" />
 
       {/* Sidebar for Desktop */}
-      <aside className="hidden lg:flex lg:flex-col absolute start-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-e transition-all duration-300 ease-in-out group shadow-xl group-hover:[&>nav]:opacity-100">
+      <aside className="hidden lg:flex lg:flex-col absolute start-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-e transition-all duration-300 ease-in-out group shadow-card group-hover:[&>nav]:opacity-100">
         {/* Brand Header */}
         <div className="flex items-center h-16 px-[20px] border-b gap-3 overflow-hidden shrink-0" style={{ borderColor: 'var(--border)' }}>
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl shrink-0">
@@ -298,7 +298,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           <span className="font-semibold text-lg tracking-tight opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-display">
             <span className="text-gradient">HealthOS</span>
           </span>
-          <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap"
+          <span className="text-2xs uppercase font-mono px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap"
             style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)' }}>
             PRO
           </span>
@@ -353,7 +353,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                 <p className="text-xs font-medium truncate" style={{ color: 'var(--text)' }}>
                   {user?.email || 'Medical Operator'}
                 </p>
-                <p className="text-[10px] truncate font-mono" style={{ color: 'var(--text-muted)' }}>Operator Console</p>
+                <p className="text-2xs truncate font-mono" style={{ color: 'var(--text-muted)' }}>Operator Console</p>
               </div>
             </div>
             <form onSubmit={(e) => handleRequest(e, SignOut, router)} className="opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shrink-0">
@@ -460,7 +460,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   </div>
                   <div className="min-w-0">
                     <p className="text-xs font-medium truncate" style={{ color: 'var(--text)' }}>{user?.email}</p>
-                    <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Workspace Operator</p>
+                    <p className="text-2xs" style={{ color: 'var(--text-muted)' }}>Workspace Operator</p>
                   </div>
                 </div>
                 <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
@@ -517,7 +517,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             >
               <Search className="w-4 h-4" />
               <span>{tCommon('searchOrRunCommand')}</span>
-              <span className="ms-4 px-1.5 py-0.5 text-[9px] rounded font-mono"
+              <span className="ms-4 px-1.5 py-0.5 text-2xs rounded font-mono"
                 style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
                 ⌘K
               </span>
@@ -579,7 +579,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   title={consolidated ? `Consolidated workspace: ${ws.name}` : `Primary Workspace: ${ws.name}`}
                 >
                   <Grid className="w-3.5 h-3.5 shrink-0" style={{ color: consolidated ? '#fbbf24' : 'var(--accent)' }} />
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono" style={{ color: consolidated ? '#fbbf24' : 'var(--text-muted)' }}>
+                  <span className="text-2xs font-bold uppercase tracking-wider font-mono" style={{ color: consolidated ? '#fbbf24' : 'var(--text-muted)' }}>
                     {ws.name}{consolidated ? ' · Unified' : ''}
                   </span>
                 </div>
@@ -601,9 +601,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             <div className="hidden xl:flex items-center gap-2 border-e pe-3 me-1 shrink-0" style={{ borderColor: 'var(--border)' }}>
               <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
-                {tCommon('systemStatus')}: <span className="uupm-badge-glass text-[10px] uppercase">{tCommon('secure')}</span>
+                {tCommon('systemStatus')}: <span className="uupm-badge-glass text-2xs uppercase">{tCommon('secure')}</span>
               </span>
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50" />
+              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-soft shadow-emerald-500/50" />
             </div>
           </div>
         </header>
@@ -621,7 +621,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   className="min-h-[70vh] flex items-center justify-center p-4"
                 >
                   <div className="w-full max-w-xl card-elevated p-8 text-center space-y-6 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'var(--gradient)' }} />
+                    <div className="absolute top-0 start-0 end-0 h-[2px]" style={{ background: 'var(--gradient)' }} />
                     
                     <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center animate-pulse"
                       style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
@@ -637,9 +637,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-3xl text-left space-y-2"
+                    <div className="p-4 rounded-3xl text-start space-y-2"
                       style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
-                      <span className="text-[10px] font-bold font-mono block uppercase tracking-wider" style={{ color: 'var(--accent)' }}>
+                      <span className="text-2xs font-bold font-mono block uppercase tracking-wider" style={{ color: 'var(--accent)' }}>
                         Access Denied Policy ID: HealthOS-RBAC-0441
                       </span>
                       <p className="text-xs leading-relaxed font-sans" style={{ color: 'var(--text-sub)' }}>
@@ -717,7 +717,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Command Feedback status banner if triggered */}
             {commandFeedback && (
-              <div className="px-4 py-2 text-[10px] font-bold font-mono flex items-center gap-2 animate-pulse"
+              <div className="px-4 py-2 text-2xs font-bold font-mono flex items-center gap-2 animate-pulse"
                 style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', borderBottom: '1px solid var(--border-strong)' }}>
                 <Sparkle className="w-4 h-4 shrink-0" />
                 <span>{commandFeedback}</span>
@@ -726,7 +726,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Commands list grouped by category */}
             <div className="flex-1 overflow-y-auto p-2 space-y-3 max-h-[380px]">
-              <div className="px-3 py-1 text-[10px] font-bold uppercase" style={{ color: 'var(--text-muted)' }}>
+              <div className="px-3 py-1 text-2xs font-bold uppercase" style={{ color: 'var(--text-muted)' }}>
                 {commandQuery ? 'Search matches' : 'Authorized commands & shortcut routines'}
               </div>
 
@@ -749,7 +749,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                       onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded border font-mono"
+                        <span className="text-2xs uppercase font-bold px-2 py-0.5 rounded border font-mono"
                           style={{ color: 'var(--accent)', background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)' }}>
                           {cmd.category}
                         </span>
@@ -763,7 +763,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             </div>
 
             {/* Footer hints */}
-            <div className="p-3 border-t text-[10px] flex items-center justify-between"
+            <div className="p-3 border-t text-2xs flex items-center justify-between"
               style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
               <span>Use <kbd className="px-1 py-0.5 rounded" style={{ background: 'var(--surface-2)' }}>↑↓</kbd> to select and <kbd className="px-1 py-0.5 rounded" style={{ background: 'var(--surface-2)' }}>Enter</kbd> to execute</span>
               <span>ESC to dismiss</span>
@@ -783,14 +783,14 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             exit={{ opacity: 0, scale: 0.95, y: 16 }}
             transition={{ duration: 0.3, ease: EASE }}
             onSubmit={handleQuickInviteSubmit}
-            className="card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans text-right" dir="rtl"
+            className="card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans text-start" dir="rtl"
           >
             <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--border)' }}>
               <div>
                 <h3 className="text-sm font-bold flex items-center gap-2 font-display">
                   <UserPlus className="w-4 h-4" style={{ color: 'var(--accent)' }} /> دعوة / إضافة موظف جديد لـ HealthOS
                 </h3>
-                <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>يمكن للموظف استخدام البريد وكلمة المرور للدخول المباشر دون كود تفعيل.</p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>يمكن للموظف استخدام البريد وكلمة المرور للدخول المباشر دون كود تفعيل.</p>
               </div>
               <button type="button" onClick={() => setShowQuickInviteModal(false)} className="p-1" style={{ color: 'var(--text-muted)' }}>
                 <X className="w-4 h-4" />

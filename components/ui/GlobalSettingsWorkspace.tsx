@@ -205,7 +205,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
       
       {/* Success Toast */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 text-white font-sans text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 animate-slide-in"
+        <div className="fixed bottom-6 end-6 z-50 text-white font-sans text-xs px-4 py-3 rounded-3xl shadow-pop flex items-center gap-2 animate-slide-in"
           style={{ background: 'var(--success)', border: '1px solid var(--border)' }}>
           <CheckCircle2 className="w-5 h-5 shrink-0 text-white" />
           <span>{toastMsg}</span>
@@ -275,8 +275,8 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                       </div>
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] px-2 py-0.5 rounded-md border font-mono font-bold" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>{dep.code}</span>
-                          <h5 className="font-semibold text-[15px]" style={{ color: 'var(--text)' }}>{dep.name}</h5>
+                          <span className="text-2xs px-2 py-0.5 rounded-md border font-mono font-bold" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>{dep.code}</span>
+                          <h5 className="font-semibold text-base" style={{ color: 'var(--text)' }}>{dep.name}</h5>
                         </div>
                         <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                           {tSet('org.head')}: <span className="font-medium" style={{ color: 'var(--text-sub)' }}>{dep.head}</span> • {tSet('org.staffSize')}: <span className="font-bold" style={{ color: 'var(--text-sub)' }}>{dep.activeStaff}</span>
@@ -333,7 +333,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                 <button
                   type="button"
                   onClick={() => setShowInviteModal(true)}
-                  className="btn-primary font-bold text-sm rounded-xl flex items-center gap-1.5 shadow-md cursor-pointer px-4 py-2.5"
+                  className="btn-primary font-bold text-sm rounded-xl flex items-center gap-1.5 shadow-soft cursor-pointer px-4 py-2.5"
                 >
                   <Plus className="w-4 h-4" /> {tSet('org.inviteBtn')}
                 </button>
@@ -348,13 +348,13 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                       </div>
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <p className="font-bold text-[15px]" style={{ color: 'var(--text)' }}>{member.name}</p>
-                          <span className="text-[10px] px-2 py-0.5 rounded font-semibold uppercase" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', border: '1px solid var(--border)' }}>{member.role}</span>
+                          <p className="font-bold text-base" style={{ color: 'var(--text)' }}>{member.name}</p>
+                          <span className="text-2xs px-2 py-0.5 rounded font-semibold uppercase" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', border: '1px solid var(--border)' }}>{member.role}</span>
                         </div>
                         <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{member.email}</p>
                       </div>
                     </div>
-                    <span className={`text-[10px] px-2.5 py-0.5 rounded font-bold uppercase border ${
+                    <span className={`text-2xs px-2.5 py-0.5 rounded font-bold uppercase border ${
                       member.status === 'Active' ? 'badge-success' : 'badge-warning'
                     }`}>
                       {member.status}
@@ -420,7 +420,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                   setShowInviteModal(false);
                 }
               }}
-              className="relative card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-sm font-sans shadow-2xl z-10 select-none touch-none"
+              className="relative card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-sm font-sans shadow-card z-10 select-none touch-none"
             >
               {/* Drag Handle for mobile sheet aesthetics */}
               <div className="mx-auto w-12 h-1 rounded-full mb-1 cursor-grab active:cursor-grabbing shrink-0" style={{ background: 'var(--text-muted)' }} />
@@ -683,7 +683,7 @@ export default function GlobalSettingsWorkspace({ personalForms }: GlobalSetting
                     <div key={t.id} className="p-4 card-elevated card-hover rounded-3xl space-y-2">
                       <div className="flex justify-between items-center text-sm">
                         <span className="font-bold" style={{ color: 'var(--text)' }}>{t.name}</span>
-                        <span className="text-[10px] px-2.5 py-0.5 rounded-md font-semibold" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', border: '1px solid var(--border)' }}>{t.channel}</span>
+                        <span className="text-2xs px-2.5 py-0.5 rounded-md font-semibold" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', border: '1px solid var(--border)' }}>{t.channel}</span>
                       </div>
                       <p className="text-xs md:text-sm p-3 rounded-xl border leading-relaxed font-sans" style={{ color: 'var(--text-sub)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}>{t.body}</p>
                     </div>

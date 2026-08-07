@@ -22,7 +22,7 @@ export default function PatientDetailsModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <form onSubmit={onSubmit} className="card-elevated p-6 rounded-3xl w-full max-w-xl space-y-4 text-xs text-left max-h-[90vh] overflow-y-auto scrollbar-thin">
+      <form onSubmit={onSubmit} className="card-elevated p-6 rounded-3xl w-full max-w-xl space-y-4 text-xs text-start max-h-[90vh] overflow-y-auto scrollbar-thin">
         <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">
           {editingPatient ? 'Modify Clinical Patient Record' : 'Register New Patient Profile'}
         </h3>

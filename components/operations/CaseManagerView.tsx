@@ -51,7 +51,7 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
   };
 
   return (
-    <div className="space-y-6 text-left" style={{ color: 'var(--text)' }}>
+    <div className="space-y-6 text-start" style={{ color: 'var(--text)' }}>
       <div className="flex justify-between items-center pb-3" style={{ borderBottom: '1px solid var(--border)' }}>
         <div>
           <div className="flex items-center gap-2">
@@ -76,34 +76,34 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
         
         {/* Core Case Attributes */}
         <div className="p-5 card-gradient rounded-2xl space-y-4 md:col-span-2">
-          <span className="text-[10px] font-bold uppercase tracking-widest font-mono block pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
+          <span className="text-2xs font-bold uppercase tracking-widest font-mono block pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
             Prescription Parameters
           </span>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
             <div className="p-3 card-elevated rounded-xl space-y-1">
-              <span className="text-[10px] uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><User className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Patient</span>
+              <span className="text-2xs uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><User className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Patient</span>
               <p className="text-sm font-bold" style={{ color: 'var(--text)' }}>{activeCase.patientName}</p>
             </div>
 
             <div className="p-3 card-elevated rounded-xl space-y-1">
-              <span className="text-[10px] uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><User className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Clinician</span>
+              <span className="text-2xs uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><User className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Clinician</span>
               <p className="text-sm font-semibold" style={{ color: 'var(--text-sub)' }}>Dr. {activeCase.doctorName}</p>
             </div>
 
             <div className="p-3 card-elevated rounded-xl space-y-1">
-              <span className="text-[10px] uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><Home className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Fulfillment Lab</span>
+              <span className="text-2xs uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><Home className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Fulfillment Lab</span>
               <p className="text-sm" style={{ color: 'var(--text-sub)' }}>{activeCase.laboratoryName}</p>
             </div>
 
             <div className="p-3 card-elevated rounded-xl space-y-1">
-              <span className="text-[10px] uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><Clipboard className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Restoration & Format</span>
+              <span className="text-2xs uppercase font-bold flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><Clipboard className="w-3 h-3" style={{ color: 'var(--accent)' }} /> Restoration & Format</span>
               <p className="text-sm" style={{ color: 'var(--text-sub)' }}>{activeCase.restorationType} ({activeCase.caseType})</p>
             </div>
           </div>
 
           <div className="space-y-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest font-mono block" style={{ color: 'var(--text-muted)' }}>
+            <span className="text-2xs font-bold uppercase tracking-widest font-mono block" style={{ color: 'var(--text-muted)' }}>
               Internal Technical Notes
             </span>
             <textarea
@@ -118,13 +118,13 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
 
         {/* Manufacturing status controls */}
         <div className="p-5 card-elevated rounded-2xl space-y-4">
-          <span className="text-[10px] font-bold uppercase tracking-widest font-mono block pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
+          <span className="text-2xs font-bold uppercase tracking-widest font-mono block pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
             Workflow Configuration
           </span>
 
           <div className="space-y-4 font-mono text-xs">
             <div className="space-y-1.5">
-              <label className="text-[10px] uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Manufacturing Status</label>
+              <label className="text-2xs uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Manufacturing Status</label>
               <select
                 value={status}
                 id="case-status-select"
@@ -147,7 +147,7 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Manufacturing Priority</label>
+              <label className="text-2xs uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Manufacturing Priority</label>
               <select
                 value={priority}
                 id="case-priority-select"
@@ -162,7 +162,7 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Delivery Target Date</label>
+              <label className="text-2xs uppercase font-bold block" style={{ color: 'var(--text-muted)' }}>Delivery Target Date</label>
               <input
                 type="date"
                 value={dueDate}
@@ -173,7 +173,7 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
             </div>
           </div>
 
-          <div className="pt-3 font-mono text-[10px]" style={{ borderTop: '1px solid var(--border)', color: 'var(--text-muted)' }}>
+          <div className="pt-3 font-mono text-2xs" style={{ borderTop: '1px solid var(--border)', color: 'var(--text-muted)' }}>
             <span className="block font-bold">PACS Audit Trail:</span>
             <p className="mt-1">Case record loaded on local node. Encryption layer enabled (AES-256).</p>
           </div>
@@ -183,11 +183,11 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
 
       {/* Case Timeline Section */}
       <div className="p-5 card-gradient rounded-2xl space-y-4">
-        <span className="text-[10px] font-bold uppercase tracking-widest font-mono block pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
+        <span className="text-2xs font-bold uppercase tracking-widest font-mono block pb-2" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}>
           Milestone Timeline Log
         </span>
 
-        <div className="relative font-mono text-xs space-y-4 ml-4 pl-6" style={{ borderLeft: '1px solid var(--border-strong)' }}>
+        <div className="relative font-mono text-xs space-y-4 ms-4 ps-6" style={{ borderLeft: '1px solid var(--border-strong)' }}>
           {activeCase.timeline.map((item, idx) => {
             const isActive = item.stage === status;
             return (
@@ -209,10 +209,10 @@ export default function CaseManagerView({ activeCase, onUpdateCase }: CaseManage
                     >
                       {item.stage}
                     </h5>
-                    {item.note && <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>{item.note}</p>}
+                    {item.note && <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{item.note}</p>}
                   </div>
                   {item.timestamp && (
-                    <span className="text-[9px] font-bold px-2 py-0.5 rounded kbd" style={{ color: 'var(--text-muted)' }}>
+                    <span className="text-2xs font-bold px-2 py-0.5 rounded kbd" style={{ color: 'var(--text-muted)' }}>
                       {item.timestamp}
                     </span>
                   )}

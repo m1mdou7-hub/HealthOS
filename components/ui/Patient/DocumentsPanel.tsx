@@ -86,14 +86,14 @@ export default function DocumentsPanel({ supabase, activePatient, demoMode }: Do
     : documents.filter(d => d.type === selectedFilter);
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6 text-start">
       {/* Header and actions */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <HardDrive className="w-4 h-4 text-emerald-400" /> Patient Document Center
           </h3>
-          <p className="text-[11px] text-zinc-400 mt-0.5">Manage informed consents, STL files, referrals, and clinical photo archives.</p>
+          <p className="text-xs text-zinc-400 mt-0.5">Manage informed consents, STL files, referrals, and clinical photo archives.</p>
         </div>
         <button
           onClick={() => {
@@ -114,7 +114,7 @@ export default function DocumentsPanel({ supabase, activePatient, demoMode }: Do
             <button
               key={cat}
               onClick={() => setSelectedFilter(cat)}
-              className={`px-3 py-1.5 rounded-lg text-[10px] font-semibold transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-lg text-2xs font-semibold transition-all flex items-center gap-1.5 ${
                 selectedFilter === cat
                   ? "bg-zinc-800 text-white border border-zinc-700 shadow"
                   : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-transparent"
@@ -138,17 +138,17 @@ export default function DocumentsPanel({ supabase, activePatient, demoMode }: Do
               <div key={doc.id} className="p-4 rounded-xl border border-zinc-900 bg-zinc-950/40 hover:bg-zinc-900/20 hover:border-zinc-800 transition-all flex flex-col justify-between h-36">
                 <div>
                   <div className="flex justify-between items-start">
-                    <span className="text-[8px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 uppercase font-semibold">
+                    <span className="text-2xs font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 uppercase font-semibold">
                       {doc.type}
                     </span>
-                    <span className="text-[9px] font-mono text-zinc-500">{doc.date}</span>
+                    <span className="text-2xs font-mono text-zinc-500">{doc.date}</span>
                   </div>
                   <h4 className="text-xs font-bold text-white mt-2.5 break-all line-clamp-2">{doc.name}</h4>
                 </div>
 
-                <div className="flex items-center justify-between border-t border-zinc-900/60 pt-2 mt-4 text-[11px] font-mono">
+                <div className="flex items-center justify-between border-t border-zinc-900/60 pt-2 mt-4 text-xs font-mono">
                   {doc.status ? (
-                    <span className={`text-[9px] px-1.5 py-0.5 rounded border uppercase ${
+                    <span className={`text-2xs px-1.5 py-0.5 rounded border uppercase ${
                       doc.status === 'Accepted' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
                       doc.status === 'Rejected' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
                       'bg-zinc-900 text-zinc-400 border-zinc-800'

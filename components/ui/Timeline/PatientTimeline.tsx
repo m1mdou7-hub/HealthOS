@@ -257,9 +257,9 @@ export function PatientTimeline({
       initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -5 }}
-      className="space-y-6 text-left"
+      className="space-y-6 text-start"
     >
-      <div className="p-6 rounded-3xl border border-zinc-900 bg-gradient-to-b from-zinc-900/40 to-zinc-950/40 backdrop-blur-md shadow-2xl space-y-6">
+      <div className="p-6 rounded-3xl border border-zinc-900 bg-gradient-to-b from-zinc-900/40 to-zinc-950/40 backdrop-blur-md shadow-card space-y-6">
         
         {/* Toolbar */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-900 pb-4 gap-4">
@@ -269,7 +269,7 @@ export function PatientTimeline({
             </h3>
             <p className="text-xs text-zinc-400 mt-1">Timeline virtualization showing all structured EHR files, invoices, and clinical logs.</p>
           </div>
-          <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-800 px-3 py-1 rounded text-zinc-400 shrink-0">
+          <span className="text-2xs font-mono bg-zinc-900 border border-zinc-800 px-3 py-1 rounded text-zinc-400 shrink-0">
             Total Records: {filteredEvents.length}
           </span>
         </div>
@@ -277,8 +277,8 @@ export function PatientTimeline({
         {/* Interactive Clinical Pathway Roadmap */}
         <div className="p-4 rounded-xl border border-zinc-900 bg-zinc-950/30 space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-bold">Active Clinical Pathway Roadmap</span>
-            <span className="text-[9px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Phase 3: Surgical Loading</span>
+            <span className="text-2xs font-mono text-zinc-500 uppercase tracking-widest font-bold">Active Clinical Pathway Roadmap</span>
+            <span className="text-2xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Phase 3: Surgical Loading</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3 pt-2">
@@ -298,28 +298,28 @@ export function PatientTimeline({
                     setCategoryFilter(node.filter);
                     setSearchQuery('');
                   }}
-                  className={`p-3 rounded-xl border text-left transition-all ${
+                  className={`p-3 rounded-xl border text-start transition-all ${
                     node.status === 'completed'
                       ? 'border-emerald-500/20 bg-emerald-500/[0.02] text-zinc-300 hover:bg-emerald-500/[0.05]'
                       : node.status === 'active'
-                        ? 'border-purple-500/40 bg-purple-500/[0.04] text-white shadow-md shadow-purple-500/5'
+                        ? 'border-purple-500/40 bg-purple-500/[0.04] text-white shadow-soft shadow-purple-500/5'
                         : node.status === 'pending'
                           ? 'border-amber-500/20 bg-amber-500/[0.01] text-zinc-450 hover:bg-amber-500/[0.03]'
                           : 'border-zinc-900 bg-zinc-950/20 text-zinc-500'
                   } ${isActive ? 'ring-1 ring-emerald-400 border-transparent bg-zinc-900/40' : ''}`}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-[9px] font-mono text-zinc-500 font-semibold">Step 0{node.step}</span>
+                    <span className="text-2xs font-mono text-zinc-500 font-semibold">Step 0{node.step}</span>
                     <span className={`w-1.5 h-1.5 rounded-full ${
-                      node.status === 'completed' ? 'bg-emerald-500 shadow-sm shadow-emerald-500' :
+                      node.status === 'completed' ? 'bg-emerald-500 shadow-soft shadow-emerald-500' :
                       node.status === 'active' ? 'bg-purple-500 animate-ping' :
                       node.status === 'pending' ? 'bg-amber-500' :
                       'bg-zinc-800'
                     }`} />
                   </div>
                   <h4 className="font-bold text-xs mt-1 text-white leading-tight">{node.title}</h4>
-                  <p className="text-[9px] text-zinc-400 mt-1 leading-relaxed font-sans">{node.desc}</p>
-                  <span className="text-[8px] font-mono text-zinc-500 block mt-2">{node.date}</span>
+                  <p className="text-2xs text-zinc-400 mt-1 leading-relaxed font-sans">{node.desc}</p>
+                  <span className="text-2xs font-mono text-zinc-500 block mt-2">{node.date}</span>
                 </button>
               );
             })}
@@ -329,13 +329,13 @@ export function PatientTimeline({
         {/* Filter bar and search */}
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="relative w-full max-w-sm">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search chronological timeline..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-zinc-950/60 border border-zinc-850 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-emerald-500/40"
+              className="w-full ps-9 pe-4 py-2 rounded-xl bg-zinc-950/60 border border-zinc-850 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-emerald-500/40"
             />
           </div>
           <div className="flex flex-wrap gap-1 bg-zinc-950/50 p-1.5 rounded-xl border border-zinc-900 w-full md:w-auto overflow-x-auto scrollbar-none">
@@ -343,7 +343,7 @@ export function PatientTimeline({
               <button
                 key={cat}
                 onClick={() => setCategoryFilter(cat)}
-                className={`px-3 py-1 text-[10px] font-bold rounded-lg transition-all ${
+                className={`px-3 py-1 text-2xs font-bold rounded-lg transition-all ${
                   categoryFilter === cat ? 'bg-zinc-800 text-white border border-zinc-700' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
@@ -354,7 +354,7 @@ export function PatientTimeline({
         </div>
 
         {/* Virtualized scroll feed */}
-        <div className="relative pl-6 sm:pl-8 py-2 before:absolute before:left-[11px] sm:before:left-[19px] before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-emerald-500/50 before:via-zinc-800 before:to-transparent">
+        <div className="relative ps-6 sm:ps-8 py-2 before:absolute before:left-[11px] sm:before:left-[19px] before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-emerald-500/50 before:via-zinc-800 before:to-transparent">
           {paginatedEvents.length === 0 ? (
             <div className="text-zinc-500 text-xs text-center py-12">No timeline events found.</div>
           ) : (
@@ -368,10 +368,10 @@ export function PatientTimeline({
                     key={`${item.id}-${idx}`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="relative text-left group"
+                    className="relative text-start group"
                   >
                     {/* Circle Node */}
-                    <div className={`absolute -left-[30px] sm:-left-[38px] top-4 w-4 h-4 rounded-full border-2 border-zinc-950 flex items-center justify-center z-10 shadow-md ${colorClasses.split(' ')[1]} ring-2 ring-zinc-950`}>
+                    <div className={`absolute -left-[30px] sm:-left-[38px] top-4 w-4 h-4 rounded-full border-2 border-zinc-950 flex items-center justify-center z-10 shadow-soft ${colorClasses.split(' ')[1]} ring-2 ring-zinc-950`}>
                       <div className={`w-1.5 h-1.5 rounded-full ${colorClasses.split(' ')[0].replace('text-', 'bg-')}`} />
                     </div>
 
@@ -383,11 +383,11 @@ export function PatientTimeline({
                         </div>
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className={`px-2 py-0.2 rounded text-[8px] font-mono border uppercase font-bold ${colorClasses}`}>
+                            <span className={`px-2 py-0.2 rounded text-2xs font-mono border uppercase font-bold ${colorClasses}`}>
                               {item.category}
                             </span>
-                            <span className="text-[9px] font-mono text-zinc-500">{item.date} @ {item.time}</span>
-                            <span className="text-[9px] font-mono text-zinc-400 font-semibold">• Dr. {item.author}</span>
+                            <span className="text-2xs font-mono text-zinc-500">{item.date} @ {item.time}</span>
+                            <span className="text-2xs font-mono text-zinc-400 font-semibold">• Dr. {item.author}</span>
                           </div>
                           <p className="text-xs text-white mt-1.5 leading-normal">{item.description}</p>
                         </div>
@@ -398,7 +398,7 @@ export function PatientTimeline({
                         <div className="self-end sm:self-center">
                           <button
                             onClick={() => onActionExecute(item.category, item.id)}
-                            className="px-3 py-1 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] text-zinc-400 hover:text-white"
+                            className="px-3 py-1 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-2xs text-zinc-400 hover:text-white"
                           >
                             Track Action
                           </button>

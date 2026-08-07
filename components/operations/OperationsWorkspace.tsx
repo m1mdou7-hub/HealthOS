@@ -93,7 +93,7 @@ export default function OperationsWorkspace({
     <div className="space-y-6 max-w-[1600px] mx-auto pb-12 animate-fade-in" style={{ color: 'var(--text)' }}>
       
       {/* Platform Title Banner */}
-      <div className="p-6 card-gradient flex flex-col md:flex-row md:items-center justify-between gap-6 text-left relative overflow-hidden">
+      <div className="p-6 card-gradient flex flex-col md:flex-row md:items-center justify-between gap-6 text-start relative overflow-hidden">
         <div className="relative space-y-1.5">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="badge badge-success uppercase tracking-widest animate-pulse">

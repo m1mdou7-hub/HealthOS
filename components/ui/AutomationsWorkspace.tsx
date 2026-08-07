@@ -182,7 +182,7 @@ export default function AutomationsWorkspace() {
       
       {/* Toast Alert */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 end-6 z-50 bg-emerald-600 text-white font-mono text-xs px-4 py-3 rounded-3xl shadow-pop flex items-center gap-2 border border-emerald-500 animate-slide-in">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -215,13 +215,13 @@ export default function AutomationsWorkspace() {
         {/* Global Search flow */}
         {tab === 'workflows' && (
           <div className="relative w-full lg:w-72">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search workflows..."
-              className="w-full bg-zinc-950 border border-zinc-850 pl-10 pr-4 py-2 text-xs rounded-xl outline-none focus:border-blue-500 text-white transition-all font-mono"
+              className="w-full bg-zinc-950 border border-zinc-850 ps-10 pe-4 py-2 text-xs rounded-xl outline-none focus:border-blue-500 text-white transition-all font-mono"
             />
           </div>
         )}
@@ -254,7 +254,7 @@ export default function AutomationsWorkspace() {
 
                     <button
                       onClick={() => handleToggleActive(flow.id)}
-                      className={`text-[10px] font-mono px-2 py-1 rounded-md border font-black transition-all cursor-pointer ${
+                      className={`text-2xs font-mono px-2 py-1 rounded-md border font-black transition-all cursor-pointer ${
                         flow.active 
                           ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-zinc-850 hover:text-zinc-500' 
                           : 'bg-zinc-900 text-zinc-500 border-zinc-800 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/20'
@@ -265,7 +265,7 @@ export default function AutomationsWorkspace() {
                   </div>
 
                   {/* Flow blocks diagram mockup */}
-                  <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-850 flex items-center justify-between font-mono text-[10px]">
+                  <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-850 flex items-center justify-between font-mono text-2xs">
                     <div className="flex items-center gap-2 text-blue-400">
                       <Cpu className="w-3.5 h-3.5 shrink-0" />
                       <span>{flow.trigger}</span>
@@ -282,7 +282,7 @@ export default function AutomationsWorkspace() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono">
+                  <div className="flex justify-between items-center text-2xs text-zinc-500 font-mono">
                     <span>Runs Logged: <strong className="text-zinc-300">{flow.runsCount} executions</strong></span>
                     <span>Last fired: {flow.lastTriggered}</span>
                   </div>
@@ -298,13 +298,13 @@ export default function AutomationsWorkspace() {
             <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4">
               <span className="text-xs font-bold text-white uppercase tracking-wider font-mono block">Workflow Visual Path Preview</span>
               
-              <div className="space-y-4 font-mono text-[11px] relative py-2">
-                <div className="absolute left-7 top-6 bottom-6 w-0.5 bg-zinc-800" />
+              <div className="space-y-4 font-mono text-xs relative py-2">
+                <div className="absolute start-7 top-6 bottom-6 w-0.5 bg-zinc-800" />
                 
                 <div className="flex items-center gap-3 relative z-10">
                   <div className="w-8 h-8 rounded-full bg-blue-950 border border-blue-800 flex items-center justify-center text-blue-400 text-xs font-bold">1</div>
                   <div className="p-2.5 bg-zinc-950 border border-zinc-850 rounded-xl flex-1">
-                    <p className="text-[9px] text-zinc-500">TRIGGER EVENT</p>
+                    <p className="text-2xs text-zinc-500">TRIGGER EVENT</p>
                     <p className="text-white font-bold">{selectedTrigger}</p>
                   </div>
                 </div>
@@ -312,7 +312,7 @@ export default function AutomationsWorkspace() {
                 <div className="flex items-center gap-3 relative z-10">
                   <div className="w-8 h-8 rounded-full bg-purple-950 border border-purple-800 flex items-center justify-center text-purple-400 text-xs font-bold">2</div>
                   <div className="p-2.5 bg-zinc-950 border border-zinc-850 rounded-xl flex-1">
-                    <p className="text-[9px] text-zinc-500">LOGICAL FILTER</p>
+                    <p className="text-2xs text-zinc-500">LOGICAL FILTER</p>
                     <p className="text-white font-bold">{selectedCondition}</p>
                   </div>
                 </div>
@@ -320,7 +320,7 @@ export default function AutomationsWorkspace() {
                 <div className="flex items-center gap-3 relative z-10">
                   <div className="w-8 h-8 rounded-full bg-emerald-950 border border-emerald-800 flex items-center justify-center text-emerald-400 text-xs font-bold">3</div>
                   <div className="p-2.5 bg-zinc-950 border border-zinc-850 rounded-xl flex-1">
-                    <p className="text-[9px] text-zinc-500">IMMEDIATE ACTION</p>
+                    <p className="text-2xs text-zinc-500">IMMEDIATE ACTION</p>
                     <p className="text-white font-bold">{selectedAction}</p>
                   </div>
                 </div>
@@ -398,7 +398,7 @@ export default function AutomationsWorkspace() {
                 setLogs(EXECUTION_LOGS_MOCK);
                 triggerToast('Execution histories completely synchronized.');
               }}
-              className="p-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-850 text-zinc-400 hover:text-white rounded-xl transition-all font-mono text-[10px] flex items-center gap-1.5 cursor-pointer"
+              className="p-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-850 text-zinc-400 hover:text-white rounded-xl transition-all font-mono text-2xs flex items-center gap-1.5 cursor-pointer"
             >
               <RefreshCw className="w-3 h-3" /> Sync History
             </button>
@@ -411,18 +411,18 @@ export default function AutomationsWorkspace() {
                 <div key={log.id} className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl flex items-start justify-between">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${
+                      <span className={`text-2xs font-black px-1.5 py-0.5 rounded ${
                         isSucc ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'
                       }`}>
                         {log.status}
                       </span>
                       <h5 className="font-bold text-white">{log.name}</h5>
-                      <span className="text-[10px] text-zinc-500">Job: {log.id}</span>
+                      <span className="text-2xs text-zinc-500">Job: {log.id}</span>
                     </div>
-                    <p className="text-[11px] text-zinc-400 font-sans leading-relaxed">{log.details}</p>
+                    <p className="text-xs text-zinc-400 font-sans leading-relaxed">{log.details}</p>
                   </div>
 
-                  <span className="text-[10px] text-zinc-500 shrink-0">{log.timestamp}</span>
+                  <span className="text-2xs text-zinc-500 shrink-0">{log.timestamp}</span>
                 </div>
               );
             })}

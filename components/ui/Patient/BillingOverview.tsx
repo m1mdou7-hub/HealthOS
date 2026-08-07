@@ -177,19 +177,19 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
   };
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6 text-start">
       {/* Overview stats cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-4 card-elevated rounded-2xl">
-          <span className="text-[10px] text-zinc-500 font-mono uppercase block">{t('total_fees_invoiced')}</span>
+          <span className="text-2xs text-zinc-500 font-mono uppercase block">{t('total_fees_invoiced')}</span>
           <span className="text-base font-bold text-white font-mono block mt-1">${totalInvoiced.toLocaleString()}</span>
         </div>
         <div className="p-4 card-elevated rounded-2xl">
-          <span className="text-[10px] text-zinc-500 font-mono uppercase block">{t('amount_paid_settled')}</span>
+          <span className="text-2xs text-zinc-500 font-mono uppercase block">{t('amount_paid_settled')}</span>
           <span className="text-base font-bold text-emerald-400 font-mono block mt-1">${totalPaid.toLocaleString()}</span>
         </div>
         <div className="p-4 rounded-xl border border-white/5 bg-[#0d0d16]/40 shadow-gold-glow card-luxury relative">
-          <span className="text-[10px] text-zinc-500 font-mono uppercase block">{t('outstanding')}</span>
+          <span className="text-2xs text-zinc-500 font-mono uppercase block">{t('outstanding')}</span>
           <span className={`text-base font-bold font-mono block mt-1 ${outstandingBalance > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
             ${outstandingBalance.toLocaleString()}
           </span>
@@ -202,7 +202,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <DollarSign className="w-4 h-4 text-gold-400" /> {t('patient_ledger_title')}
           </h3>
-          <p className="text-[11px] text-zinc-400 mt-0.5">{t('patient_ledger_desc')}</p>
+          <p className="text-xs text-zinc-400 mt-0.5">{t('patient_ledger_desc')}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {outstandingBalance > 0 && (
@@ -294,8 +294,8 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               return (
                 <div key={inv.id} className="p-5 card-elevated rounded-3xl space-y-4">
                   <div className="flex flex-wrap justify-between items-start gap-2 border-b border-zinc-900/60 pb-3">
-                    <div className="text-left">
-                      <span className="text-[9px] font-mono text-zinc-500">{inv.invoiceNumber}</span>
+                    <div className="text-start">
+                      <span className="text-2xs font-mono text-zinc-500">{inv.invoiceNumber}</span>
                       <h4 className="text-xs font-bold text-white mt-0.5">{inv.clinicName} • Due {inv.dueDate}</h4>
                     </div>
                     <div className="flex items-center gap-2">
@@ -304,7 +304,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                           setSelectedInvoiceForPrint(inv);
                           setShowPrintModal(true);
                         }}
-                        className="btn-ghost px-2.5 py-1 rounded-lg text-[10px]"
+                        className="btn-ghost px-2.5 py-1 rounded-lg text-2xs"
                       >
                         <Printer className="w-3 h-3 text-emerald-400" /> {t('btn_print_invoice')}
                       </button>
@@ -319,19 +319,19 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                   </div>
 
                   {/* Procedures Table */}
-                  <div className="space-y-1.5 text-[11px] font-mono">
-                    <div className="grid grid-cols-12 text-[9px] text-zinc-500 font-bold uppercase border-b border-zinc-900/40 pb-1">
+                  <div className="space-y-1.5 text-xs font-mono">
+                    <div className="grid grid-cols-12 text-2xs text-zinc-500 font-bold uppercase border-b border-zinc-900/40 pb-1">
                       <span className="col-span-6">{t('th_item_desc')}</span>
-                      <span className="col-span-2 text-right">{t('th_fee')}</span>
-                      <span className="col-span-2 text-right">{t('th_ins_co')}</span>
-                      <span className="col-span-2 text-right">{t('th_copay')}</span>
+                      <span className="col-span-2 text-end">{t('th_fee')}</span>
+                      <span className="col-span-2 text-end">{t('th_ins_co')}</span>
+                      <span className="col-span-2 text-end">{t('th_copay')}</span>
                     </div>
                     {(inv.treatmentItems || []).map((item, idx) => (
                       <div key={idx} className="grid grid-cols-12 text-zinc-300 py-0.5 border-b border-zinc-900/20">
                         <span className="col-span-6 font-sans text-xs text-white truncate">{item.name}</span>
-                        <span className="col-span-2 text-right">${item.fee.toLocaleString()}</span>
-                        <span className="col-span-2 text-right text-purple-400">${item.insurance.toLocaleString()}</span>
-                        <span className="col-span-2 text-right text-amber-400">${item.copay.toLocaleString()}</span>
+                        <span className="col-span-2 text-end">${item.fee.toLocaleString()}</span>
+                        <span className="col-span-2 text-end text-purple-400">${item.insurance.toLocaleString()}</span>
+                        <span className="col-span-2 text-end text-amber-400">${item.copay.toLocaleString()}</span>
                       </div>
                     ))}
                   </div>
@@ -539,12 +539,12 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                   className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
                 />
               </div>
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 text-[11px] space-y-1">
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold">{t('claim_status_preauth')}</span>
-                  <span className="px-2 py-0.5 rounded bg-blue-500/20 font-bold text-[9px] font-mono text-blue-300 uppercase">Pre-Authorized (Approved)</span>
+                  <span className="px-2 py-0.5 rounded bg-blue-500/20 font-bold text-2xs font-mono text-blue-300 uppercase">Pre-Authorized (Approved)</span>
                 </div>
-                <p className="text-[10px] text-blue-300/80">Electronic CDT procedure code clearance automatically verified via HealthOS Portal EDI Gateway.</p>
+                <p className="text-2xs text-blue-300/80">Electronic CDT procedure code clearance automatically verified via HealthOS Portal EDI Gateway.</p>
               </div>
             </div>
             <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
@@ -582,11 +582,11 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
             <div className="space-y-4">
               <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 flex justify-between items-center">
                 <div>
-                  <span className="text-[10px] uppercase font-mono text-purple-400 block">{t('outstanding')}</span>
+                  <span className="text-2xs uppercase font-mono text-purple-400 block">{t('outstanding')}</span>
                   <span className="text-lg font-bold font-mono text-white">${outstandingBalance.toLocaleString()}</span>
                 </div>
-                <div className="text-right">
-                  <span className="text-[10px] uppercase font-mono text-purple-400 block">{t('installment_calc_monthly_val')}</span>
+                <div className="text-end">
+                  <span className="text-2xs uppercase font-mono text-purple-400 block">{t('installment_calc_monthly_val')}</span>
                   <span className="text-lg font-bold font-mono text-purple-300">
                     ${(outstandingBalance / installmentMonths).toFixed(2)}/mo
                   </span>
@@ -614,13 +614,13 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
 
               {/* Installments Schedule Breakdown */}
               <div className="space-y-1.5 border-t border-zinc-900 pt-3">
-                <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold block">Payment Schedule Breakdown</span>
-                <div className="space-y-1 max-h-36 overflow-y-auto pr-1">
+                <span className="text-2xs font-mono text-zinc-500 uppercase font-bold block">Payment Schedule Breakdown</span>
+                <div className="space-y-1 max-h-36 overflow-y-auto pe-1">
                   {Array.from({ length: installmentMonths }).map((_, idx) => {
                     const due = new Date(Date.now() + (idx + 1) * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
                     const amount = (outstandingBalance / installmentMonths).toFixed(2);
                     return (
-                      <div key={idx} className="flex justify-between items-center p-2 rounded-lg bg-zinc-900/60 border border-zinc-900 text-[11px] font-mono">
+                      <div key={idx} className="flex justify-between items-center p-2 rounded-lg bg-zinc-900/60 border border-zinc-900 text-xs font-mono">
                         <span className="text-zinc-400">Installment #{idx + 1} • Due {due}</span>
                         <span className="text-white font-bold">${amount}</span>
                       </div>
@@ -645,7 +645,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       {/* Printable Invoice / Official Receipt Modal */}
       {showPrintModal && selectedInvoiceForPrint && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white text-zinc-950 p-8 rounded-3xl w-full max-w-2xl space-y-6 shadow-2xl relative">
+          <div className="bg-white text-zinc-950 p-8 rounded-3xl w-full max-w-2xl space-y-6 shadow-card relative">
             <div className="flex justify-between items-start border-b border-zinc-200 pb-4">
               <div>
                 <div className="flex items-center gap-2">
@@ -654,7 +654,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                 </div>
                 <p className="text-xs text-zinc-500 mt-1">HealthOS Official Dental & Medical Center • Tax ID: 300921893</p>
               </div>
-              <div className="text-right">
+              <div className="text-end">
                 <span className="px-3 py-1 bg-emerald-100 text-emerald-800 font-mono text-xs font-bold rounded-full">
                   OFFICIAL RECEIPT
                 </span>
@@ -665,12 +665,12 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
             {/* Meta information */}
             <div className="grid grid-cols-2 gap-4 text-xs border-b border-zinc-200 pb-4">
               <div>
-                <span className="text-zinc-400 uppercase text-[9px] font-bold block">Patient Details</span>
+                <span className="text-zinc-400 uppercase text-2xs font-bold block">Patient Details</span>
                 <span className="font-bold text-zinc-900 block text-sm">{activePatient.name}</span>
                 <span className="text-zinc-600 block">ID: {activePatient.id} • Tel: {activePatient.phone || '+966 50 123 4567'}</span>
               </div>
-              <div className="text-right">
-                <span className="text-zinc-400 uppercase text-[9px] font-bold block">Attending Clinician & Date</span>
+              <div className="text-end">
+                <span className="text-zinc-400 uppercase text-2xs font-bold block">Attending Clinician & Date</span>
                 <span className="font-bold text-zinc-900 block text-sm">{activePatient.primaryDoctor || 'Dr. Ahmed'}</span>
                 <span className="text-zinc-600 block">Issue Date: {selectedInvoiceForPrint.issueDate}</span>
               </div>
@@ -678,22 +678,22 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
 
             {/* Line items table */}
             <div className="space-y-2">
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full text-start text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-zinc-300 text-zinc-500 text-[10px] uppercase font-bold">
+                  <tr className="border-b border-zinc-300 text-zinc-500 text-2xs uppercase font-bold">
                     <th className="py-2">Procedure Description</th>
-                    <th className="py-2 text-right">Fee</th>
-                    <th className="py-2 text-right">Insurer Share</th>
-                    <th className="py-2 text-right">Patient Co-Pay</th>
+                    <th className="py-2 text-end">Fee</th>
+                    <th className="py-2 text-end">Insurer Share</th>
+                    <th className="py-2 text-end">Patient Co-Pay</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-200 font-mono">
                   {(selectedInvoiceForPrint.treatmentItems || []).map((item, i) => (
                     <tr key={i}>
                       <td className="py-2 font-sans text-zinc-900 font-medium">{item.name}</td>
-                      <td className="py-2 text-right text-zinc-700">${item.fee.toLocaleString()}</td>
-                      <td className="py-2 text-right text-purple-600">${item.insurance.toLocaleString()}</td>
-                      <td className="py-2 text-right font-bold text-zinc-900">${item.copay.toLocaleString()}</td>
+                      <td className="py-2 text-end text-zinc-700">${item.fee.toLocaleString()}</td>
+                      <td className="py-2 text-end text-purple-600">${item.insurance.toLocaleString()}</td>
+                      <td className="py-2 text-end font-bold text-zinc-900">${item.copay.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -704,12 +704,12 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
             <div className="flex justify-between items-center border-t border-zinc-300 pt-4">
               <div className="flex items-center gap-3 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
                 <QrCode className="w-10 h-10 text-zinc-800" />
-                <div className="text-[10px] text-zinc-600">
+                <div className="text-2xs text-zinc-600">
                   <span className="font-bold text-zinc-900 block">{t('official_receipt_qr')}</span>
                   <span>Scan to verify authenticity & ZATCA e-invoicing compliance</span>
                 </div>
               </div>
-              <div className="text-right space-y-1 font-mono text-xs">
+              <div className="text-end space-y-1 font-mono text-xs">
                 <div className="flex justify-between gap-6 text-zinc-600">
                   <span>Total Invoiced:</span>
                   <span>${(selectedInvoiceForPrint.treatmentItems || []).reduce((s, i) => s + i.fee, 0).toLocaleString()}</span>
@@ -733,7 +733,7 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-emerald-600/20"
+                className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-soft shadow-emerald-600/20"
               >
                 <Printer className="w-4 h-4" /> Print Receipt PDF
               </button>

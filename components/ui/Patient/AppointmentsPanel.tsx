@@ -118,14 +118,14 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
   };
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6 text-start">
       {/* Header toolbar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 card-gradient rounded-3xl gap-3">
         <div>
           <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
             <CalendarIcon className="w-4 h-4 text-emerald-400" /> Patient Appointment Desk
           </h3>
-          <p className="text-[11px] text-zinc-400 mt-0.5">Reschedule visits, record intake completions, and adjust chair assignments.</p>
+          <p className="text-xs text-zinc-400 mt-0.5">Reschedule visits, record intake completions, and adjust chair assignments.</p>
         </div>
         <button
           onClick={() => {
@@ -161,7 +161,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
         ) : (
           appointments.map((appt) => (
             <div key={appt.id} className="p-4 card-elevated rounded-2xl flex flex-col sm:flex-row justify-between gap-4">
-              <div className="space-y-1.5 text-left">
+              <div className="space-y-1.5 text-start">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-xs font-mono font-bold text-zinc-500">{appt.date} • {appt.startTime} ({appt.duration} mins)</span>
                   <span className={`badge ${
@@ -172,10 +172,10 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                   }`}>
                     {appt.status}
                   </span>
-                  <span className="text-[9px] font-mono text-zinc-500">{appt.chair}</span>
+                  <span className="text-2xs font-mono text-zinc-500">{appt.chair}</span>
                 </div>
                 <h4 className="text-sm font-bold text-white">{appt.procedure}</h4>
-                <p className="text-[11px] text-zinc-400 flex items-center gap-1"><User className="w-3.5 h-3.5 text-zinc-500" /> Assigned: {appt.doctorName}</p>
+                <p className="text-xs text-zinc-400 flex items-center gap-1"><User className="w-3.5 h-3.5 text-zinc-500" /> Assigned: {appt.doctorName}</p>
               </div>
 
               {/* Action buttons */}
@@ -184,7 +184,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                   {appt.status === 'Pending' && (
                     <button
                       onClick={() => handleAction(appt.id, 'Confirm')}
-                      className="btn-primary px-2.5 py-1.5 rounded-lg text-[10px]"
+                      className="btn-primary px-2.5 py-1.5 rounded-lg text-2xs"
                     >
                       Confirm
                     </button>
@@ -192,7 +192,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                   {appt.status === 'Confirmed' && (
                     <button
                       onClick={() => handleAction(appt.id, 'Check In')}
-                      className="btn-secondary px-2.5 py-1.5 rounded-lg text-[10px]"
+                      className="btn-secondary px-2.5 py-1.5 rounded-lg text-2xs"
                     >
                       Check In
                     </button>
@@ -200,7 +200,7 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                   {appt.status === 'In-Progress' && (
                     <button
                       onClick={() => handleAction(appt.id, 'Complete')}
-                      className="btn-primary px-2.5 py-1.5 rounded-lg text-[10px]"
+                      className="btn-primary px-2.5 py-1.5 rounded-lg text-2xs"
                     >
                       Complete
                     </button>
@@ -215,13 +215,13 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                         doctorName: appt.doctorName
                       });
                     }}
-                    className="btn-secondary px-2.5 py-1.5 rounded-lg text-[10px]"
+                    className="btn-secondary px-2.5 py-1.5 rounded-lg text-2xs"
                   >
                     Reschedule
                   </button>
                   <button
                     onClick={() => handleAction(appt.id, 'No Show')}
-                    className="btn-secondary px-2.5 py-1.5 rounded-lg text-[10px] text-amber-400"
+                    className="btn-secondary px-2.5 py-1.5 rounded-lg text-2xs text-amber-400"
                   >
                     No Show
                   </button>

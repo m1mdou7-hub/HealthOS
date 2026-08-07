@@ -114,7 +114,7 @@ export default function PlatformWorkspace() {
         ].map((stat, idx) => (
           <div key={idx} className="p-4 rounded-3xl bg-zinc-900/40 border border-zinc-900 flex items-center justify-between gap-4">
             <div className="space-y-1">
-              <span className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider block">{stat.label}</span>
+              <span className="text-2xs font-semibold text-zinc-400 uppercase tracking-wider block">{stat.label}</span>
               <span className="text-xl font-bold text-white font-mono">{stat.value}</span>
             </div>
             <div className={`p-2.5 rounded-xl ${stat.bg} ${stat.color}`}>
@@ -164,8 +164,8 @@ export default function PlatformWorkspace() {
           })}
         </div>
 
-        <div className="flex items-center gap-3 font-mono text-[10px] text-zinc-500 uppercase bg-zinc-950 px-2 py-1.5 rounded-xl border border-zinc-850">
-          Cluster Version: <strong className="text-white ml-1">v2.10.4-LTS</strong>
+        <div className="flex items-center gap-3 font-mono text-2xs text-zinc-500 uppercase bg-zinc-950 px-2 py-1.5 rounded-xl border border-zinc-850">
+          Cluster Version: <strong className="text-white ms-1">v2.10.4-LTS</strong>
         </div>
       </div>
 
@@ -179,22 +179,22 @@ export default function PlatformWorkspace() {
               Provisioned Tenant Organizations
             </span>
 
-            <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
+            <div className="space-y-3 max-h-[500px] overflow-y-auto pe-1">
               {tenants.map(tenant => (
                 <div key={tenant.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <h4 className="font-bold text-white text-sm">{tenant.name}</h4>
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-zinc-500">
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-2xs text-zinc-500">
                       <span>Plan: <strong className="text-zinc-300">{tenant.plan}</strong></span>
                       <span>Licenses: <strong className="text-zinc-300">{tenant.licenses}</strong></span>
                       <span>Storage: <strong className="text-zinc-300">{tenant.storage}</strong></span>
                       <span>Zone: <strong className="text-zinc-300">{tenant.region}</strong></span>
                     </div>
-                    <p className="text-[10px] text-zinc-500 mt-0.5">Contact Partner: {tenant.mainContact}</p>
+                    <p className="text-2xs text-zinc-500 mt-0.5">Contact Partner: {tenant.mainContact}</p>
                   </div>
 
                   <div className="flex items-center gap-3 shrink-0">
-                    <span className={`text-[10px] px-2 py-0.5 rounded font-black ${
+                    <span className={`text-2xs px-2 py-0.5 rounded font-black ${
                       tenant.health === 'Healthy' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
                     }`}>
                       {tenant.health}
@@ -275,7 +275,7 @@ export default function PlatformWorkspace() {
           <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
             <div>
               <h3 className="text-sm font-bold text-white uppercase tracking-wider">Multi-Tenant Global Feature Flags</h3>
-              <p className="text-[10px] text-zinc-500">Instantly activate modular components across the database clusters.</p>
+              <p className="text-2xs text-zinc-500">Instantly activate modular components across the database clusters.</p>
             </div>
             <button 
               onClick={() => triggerToast('Feature flags synced with cluster core.')}
@@ -293,14 +293,14 @@ export default function PlatformWorkspace() {
                 className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between gap-4 cursor-pointer hover:border-zinc-800 transition-colors"
               >
                 <div className="space-y-1">
-                  <span className="text-[9px] text-purple-400 font-bold uppercase block">{flag.tag}</span>
+                  <span className="text-2xs text-purple-400 font-bold uppercase block">{flag.tag}</span>
                   <h5 className="text-xs font-bold text-zinc-300 font-sans">{flag.name}</h5>
                 </div>
 
                 <div className={`w-10 h-6 rounded-full p-0.5 transition-all flex items-center ${
                   flag.enabled ? 'bg-emerald-500 justify-end' : 'bg-zinc-800 justify-start'
                 }`}>
-                  <span className="w-5 h-5 rounded-full bg-zinc-950 shadow-md" />
+                  <span className="w-5 h-5 rounded-full bg-zinc-950 shadow-soft" />
                 </div>
               </div>
             ))}
@@ -323,7 +323,7 @@ export default function PlatformWorkspace() {
               <div key={idx} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col justify-between space-y-4">
                 <div className="space-y-1">
                   <h4 className="font-bold text-white text-xs">{maint.title}</h4>
-                  <p className="text-[11px] text-zinc-500 font-sans leading-relaxed">{maint.desc}</p>
+                  <p className="text-xs text-zinc-500 font-sans leading-relaxed">{maint.desc}</p>
                 </div>
 
                 <button 

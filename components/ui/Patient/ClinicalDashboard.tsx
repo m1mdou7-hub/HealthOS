@@ -120,11 +120,11 @@ export default function ClinicalDashboard({
             <div
               key={idx}
               onClick={() => onNavigateTab(card.tab)}
-              className="p-5 card-gradient card-hover rounded-3xl cursor-pointer text-left flex flex-col justify-between h-36 relative group overflow-hidden"
+              className="p-5 card-gradient card-hover rounded-3xl cursor-pointer text-start flex flex-col justify-between h-36 relative group overflow-hidden"
             >
 
               <div className="flex justify-between items-start">
-                <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold tracking-wider">{card.title}</span>
+                <span className="text-2xs font-mono text-zinc-500 uppercase font-bold tracking-wider">{card.title}</span>
                 <div className={`p-2 rounded-xl border ${card.iconColor} shrink-0`}>
                   <Icon className="w-4 h-4" />
                 </div>
@@ -133,7 +133,7 @@ export default function ClinicalDashboard({
                 <h3 className="text-sm font-bold text-white tracking-tight leading-none group-hover:text-emerald-400 transition-colors">
                   {card.value}
                 </h3>
-                <p className="text-[11px] text-zinc-400 truncate leading-normal">
+                <p className="text-xs text-zinc-400 truncate leading-normal">
                   {card.subtext}
                 </p>
               </div>
@@ -150,7 +150,7 @@ export default function ClinicalDashboard({
               <ShieldAlert className="w-4 h-4 text-rose-500 animate-pulse" />
               Real-time AI Clinical Decision Support (CDS) Alerts
             </h4>
-            <p className="text-[11px] text-zinc-500 mt-0.5">Automated diagnostic guardrails scanning active allergy status and medical history context.</p>
+            <p className="text-xs text-zinc-500 mt-0.5">Automated diagnostic guardrails scanning active allergy status and medical history context.</p>
           </div>
           <span className="badge badge-danger">
             Active Guardrails: 2 Warnings
@@ -159,16 +159,16 @@ export default function ClinicalDashboard({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Warning 1: Allergy */}
-          <div className="p-4 card-elevated rounded-2xl flex gap-3 text-xs text-left border-rose-500/20">
+          <div className="p-4 card-elevated rounded-2xl flex gap-3 text-xs text-start border-rose-500/20">
             <div className="p-2 h-fit rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 shrink-0">
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div className="space-y-1">
               <h5 className="font-bold text-rose-400">Contraindication Warning: Penicillin Allergy</h5>
-              <p className="text-[11px] text-zinc-400 leading-relaxed">
+              <p className="text-xs text-zinc-400 leading-relaxed">
                 Patient Arthur Pendragon has a recorded Penicillin allergy. Avoid prescribing Amoxicillin, Augmentin, or Penicillin V for dental infections.
               </p>
-              <div className="flex flex-wrap gap-2 items-center text-[10px] text-zinc-500 pt-1">
+              <div className="flex flex-wrap gap-2 items-center text-2xs text-zinc-500 pt-1">
                 <span>Suggested Alternative:</span>
                 <strong className="text-emerald-400 font-mono">Clindamycin 300mg</strong>
                 <span>or</span>
@@ -178,16 +178,16 @@ export default function ClinicalDashboard({
           </div>
 
           {/* Warning 2: Epinephrine */}
-          <div className="p-4 card-elevated rounded-2xl flex gap-3 text-xs text-left border-amber-500/20">
+          <div className="p-4 card-elevated rounded-2xl flex gap-3 text-xs text-start border-amber-500/20">
             <div className="p-2 h-fit rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div className="space-y-1">
               <h5 className="font-bold text-amber-400">Epinephrine Precaution: Cardiovascular Alert</h5>
-              <p className="text-[11px] text-zinc-400 leading-relaxed">
+              <p className="text-xs text-zinc-400 leading-relaxed">
                 Patient medical history flags hypertension risk. Limit epinephrine administration to a maximum of 2 cartridges (1:100,000).
               </p>
-              <div className="flex flex-wrap gap-2 items-center text-[10px] text-zinc-500 pt-1">
+              <div className="flex flex-wrap gap-2 items-center text-2xs text-zinc-500 pt-1">
                 <span>Consider Plain Anesthetic:</span>
                 <strong className="text-amber-450 font-mono">Mepivacaine 3% Plain</strong>
               </div>
