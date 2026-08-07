@@ -20,21 +20,21 @@ export const THEMES: {
 }[] = [
   {
     id: 'purple',
-    name: 'بنفسجي فاخر',
-    enName: 'Luxury Purple',
-    subtitle: 'Amethyst · Graphite · Orchid',
-    previewGradient: 'from-[#9B71B2] via-[#3A1C36] to-[#0b0710]',
-    accentHex: '#9B71B2',
-    bgHex: '#FBF1FF'
+    name: 'فاخر داكن',
+    enName: 'Velvet Gold',
+    subtitle: 'Onyx · Gold · Graphite',
+    previewGradient: 'from-[#c9a84c] via-[#2d2d42] to-[#0a0a0f]',
+    accentHex: '#c9a84c',
+    bgHex: '#0a0a0f'
   },
   {
     id: 'earth',
-    name: 'إيرث فاخر',
-    enName: 'Luxury Earth',
-    subtitle: 'Chestnut · Morning Blue · Almond',
-    previewGradient: 'from-[#8A9992] via-[#55443A] to-[#4D2308]',
-    accentHex: '#8A9992',
-    bgHex: '#CFD0CD'
+    name: 'فاخر فاتح',
+    enName: 'Velvet Pearl',
+    subtitle: 'Gold · Pearl · Ivory',
+    previewGradient: 'from-[#b8943a] via-[#e9e9f2] to-[#fafaff]',
+    accentHex: '#b8943a',
+    bgHex: '#fafaff'
   }
 ];
 

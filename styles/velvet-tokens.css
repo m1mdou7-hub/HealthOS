@@ -65,7 +65,7 @@
      ═══════════════════════════════════════ */
   --velvet-text:         var(--velvet-100);
   --velvet-text-sub:     var(--velvet-200);
-  --velvet-text-muted:   var(--velvet-400);
+  --velvet-text-muted:   var(--velvet-300);
   --velvet-text-faint:   var(--velvet-500);
   --velvet-text-inverse: var(--velvet-950);
 
