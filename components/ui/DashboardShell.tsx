@@ -61,6 +61,7 @@ import StaffPhoneIntercom from '@/components/ui/StaffPhoneIntercom';
 import ThemeSelector from '@/components/ui/ThemeSelector';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EASE } from '@/components/ui/design-system/motion';
+import { Badge, Button, Kbd } from '@/components/ui/design-system';
 
 interface DashboardShellProps {
   user: any;
@@ -263,8 +264,10 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
     <LicenseGate>
     <div className="flex flex-col h-screen overflow-hidden" style={{ background: 'var(--velvet-bg)' }}>
       {isDevBypass && (
-        <div id="dev-mode-banner" className="bg-amber-500 text-black text-xs font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 border-b border-amber-600 select-none shrink-0 z-50">
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-black text-amber-400 font-bold uppercase tracking-wider text-2xs leading-none">
+        <div id="dev-mode-banner" className="text-xs font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 border-b select-none shrink-0 z-50"
+          style={{ background: 'var(--velvet-warning)', color: 'var(--velvet-text-inverse)', borderColor: 'var(--velvet-warning-border)' }}>
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider text-2xs leading-none"
+            style={{ background: 'var(--velvet-950)', color: 'var(--velvet-warning)' }}>
             DEV MODE
           </span>
           <span>Bypassing Supabase authentication for local development. Production authentication remains active and untouched.</span>
@@ -363,7 +366,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                 title="Sign out"
                 className="p-1.5 rounded-lg transition-colors"
                 style={{ color: 'var(--velvet-text-muted)' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#f87171')}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--velvet-error)')}
                 onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--velvet-text-muted)')}
               >
                 <LogOut className="w-4 h-4" />
@@ -382,7 +385,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0"
+            style={{ background: 'var(--velvet-bg)', opacity: 0.6, backdropFilter: 'blur(8px)' }}
             onClick={() => setMobileMenuOpen(false)}
           />
 
@@ -575,11 +579,11 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               if (!ws) return null;
               return (
                 <div className="hidden lg:flex items-center gap-1.5 rounded-2xl px-3 py-1.5 shrink-0"
-                  style={{ background: consolidated ? 'rgba(245,158,11,0.10)' : 'var(--velvet-glass-fill)', border: consolidated ? '1px solid rgba(245,158,11,0.35)' : '1px solid var(--velvet-border)' }}
+                  style={{ background: consolidated ? 'var(--velvet-warning-bg)' : 'var(--velvet-glass-fill)', border: consolidated ? '1px solid var(--velvet-warning-border)' : '1px solid var(--velvet-border)' }}
                   title={consolidated ? `Consolidated workspace: ${ws.name}` : `Primary Workspace: ${ws.name}`}
                 >
-                  <Grid className="w-3.5 h-3.5 shrink-0" style={{ color: consolidated ? '#fbbf24' : 'var(--velvet-accent)' }} />
-                  <span className="text-2xs font-bold uppercase tracking-wider font-mono" style={{ color: consolidated ? '#fbbf24' : 'var(--velvet-text-muted)' }}>
+                  <Grid className="w-3.5 h-3.5 shrink-0" style={{ color: consolidated ? 'var(--velvet-warning)' : 'var(--velvet-accent)' }} />
+                  <span className="text-2xs font-bold uppercase tracking-wider font-mono" style={{ color: consolidated ? 'var(--velvet-warning)' : 'var(--velvet-text-muted)' }}>
                     {ws.name}{consolidated ? ' آ· Unified' : ''}
                   </span>
                 </div>
@@ -588,22 +592,24 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Quick Invite Staff Button for Admins */}
             {(activeRole === 'Super Admin' || activeRole === 'Clinic Owner') && (
-              <button
+              <Button
                 type="button"
+                variant="primary"
+                size="sm"
                 onClick={() => setShowQuickInviteModal(true)}
-                className="magic-shimmer-btn px-3 py-1.5 text-white font-bold text-xs rounded-2xl flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 shrink-0"
+                className="cursor-pointer active:scale-95 shrink-0"
                 title="ط¥ط¶ط§ظپط© ظˆطھط­ط¯ظٹط¯ طµظ„ط§ط­ظٹط§طھ ظ…ظˆط¸ظپ ط¬ط¯ظٹط¯"
               >
-                <UserPlus className="w-3.5 h-3.5" style={{ color: 'var(--velvet-accent)' }} />
+                <UserPlus className="w-3.5 h-3.5" />
                 <span className="hidden lg:inline">+ ط¯ط¹ظˆط© ظ…ظˆط¸ظپ</span>
-              </button>
+              </Button>
             )}
 
             <div className="hidden xl:flex items-center gap-2 border-e pe-3 me-1 shrink-0" style={{ borderColor: 'var(--velvet-border)' }}>
               <span className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>
-                {tCommon('systemStatus')}: <span className="uupm-badge-glass text-2xs uppercase">{tCommon('secure')}</span>
+                {tCommon('systemStatus')}: <Badge tone="success" className="uppercase">{tCommon('secure')}</Badge>
               </span>
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-soft shadow-emerald-500/50" />
+              <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: 'var(--velvet-success)' }} />
             </div>
           </div>
         </header>
@@ -651,7 +657,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                       <button
                         onClick={() => setActiveRole('Super Admin')}
                         className="w-full sm:w-auto px-5 py-2.5 text-xs font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer"
-                        style={{ background: 'var(--velvet-gradient-primary)', color: '#fff' }}
+                        style={{ background: 'var(--velvet-gradient-primary)', color: 'var(--velvet-text-inverse)' }}
                       >
                         <UserCheck className="w-4 h-4" />
                         <span>Impersonate Super Admin</span>
@@ -684,7 +690,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setCommandMenuOpen(false)}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm cursor-default"
+            className="fixed inset-0"
+            style={{ background: 'var(--velvet-bg)', opacity: 0.6, backdropFilter: 'blur(8px)' }}
           />
 
           {/* Modal Container */}
@@ -765,7 +772,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             {/* Footer hints */}
             <div className="p-3 border-t text-2xs flex items-center justify-between"
               style={{ borderColor: 'var(--velvet-border)', color: 'var(--velvet-text-muted)' }}>
-              <span>Use <kbd className="px-1 py-0.5 rounded" style={{ background: 'var(--velvet-surface-2)' }}>â†‘â†“</kbd> to select and <kbd className="px-1 py-0.5 rounded" style={{ background: 'var(--velvet-surface-2)' }}>Enter</kbd> to execute</span>
+              <span>Use <Kbd>â†‘â†“</Kbd> to select and <Kbd>Enter</Kbd> to execute</span>
               <span>ESC to dismiss</span>
             </div>
           </motion.div>
@@ -776,7 +783,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       {/* Quick Invite Staff Modal */}
       <AnimatePresence>
       {showQuickInviteModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0" style={{ background: 'var(--velvet-bg)', opacity: 0.6, backdropFilter: 'blur(8px)' }} />
           <motion.form
             initial={{ opacity: 0, scale: 0.95, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -863,7 +871,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <button
                 type="submit"
                 className="px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 cursor-pointer"
-                style={{ background: 'var(--velvet-gradient-primary)', color: '#fff' }}
+                style={{ background: 'var(--velvet-gradient-primary)', color: 'var(--velvet-text-inverse)' }}
               >
                 ط¥ط±ط³ط§ظ„ ط§ظ„ط¯ط¹ظˆط© ظˆط§ط¹طھظ…ط§ط¯ ط§ظ„ط­ط³ط§ط¨
               </button>
