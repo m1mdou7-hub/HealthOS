@@ -21,7 +21,7 @@ export default function FramerMotionShowcase() {
       {/* Header Badge */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 shadow-lg shadow-rose-500/10">
+          <div className="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 shadow-soft shadow-rose-500/10">
             <Zap className="w-5 h-5 animate-pulse" />
           </div>
           <div>
@@ -32,7 +32,7 @@ export default function FramerMotionShowcase() {
           </div>
         </div>
 
-        <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+        <span className="text-2xs font-mono px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
           INSTALLED & READY 🟢
         </span>
       </div>
@@ -52,7 +52,7 @@ export default function FramerMotionShowcase() {
               {isActive && (
                 <motion.div
                   layoutId="activeTabBadge"
-                  className="absolute inset-0 bg-rose-600 rounded-xl shadow-lg shadow-rose-600/30"
+                  className="absolute inset-0 bg-rose-600 rounded-xl shadow-soft shadow-rose-600/30"
                   transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                 />
               )}
@@ -82,7 +82,7 @@ export default function FramerMotionShowcase() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setCount(count + 1)}
-                  className="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-rose-600/30 cursor-pointer"
+                  className="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-soft shadow-rose-600/30 cursor-pointer"
                 >
                   اضغط للتكبير الفيزيائي ({count})
                 </motion.button>
@@ -98,7 +98,7 @@ export default function FramerMotionShowcase() {
                     borderRadius: ["20%", "50%", "20%"]
                   }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-12 h-12 bg-gradient-to-br from-rose-500 to-indigo-600 shadow-xl"
+                  className="w-12 h-12 bg-gradient-to-br from-rose-500 to-indigo-600 shadow-card"
                 />
               </div>
             )}
@@ -109,7 +109,7 @@ export default function FramerMotionShowcase() {
                   drag
                   dragConstraints={{ left: -100, right: 100, top: -40, bottom: 40 }}
                   whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
-                  className="p-4 bg-zinc-950 border border-rose-500/40 rounded-2xl cursor-grab shadow-2xl inline-block select-none"
+                  className="p-4 bg-zinc-950 border border-rose-500/40 rounded-2xl cursor-grab shadow-card inline-block select-none"
                 >
                   <div className="flex items-center gap-2 text-xs font-bold text-rose-300">
                     <Move className="w-4 h-4" />

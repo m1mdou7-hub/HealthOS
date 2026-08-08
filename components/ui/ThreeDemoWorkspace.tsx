@@ -160,17 +160,17 @@ export default function ThreeDemoWorkspace() {
   return (
     <div className="min-h-screen text-white space-y-6 pb-12 font-sans select-none" dir="rtl">
       {/* ── Top Header & Mode Switcher ── */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-6 rounded-3xl bg-zinc-950/80 border border-white/10 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
-        <div className="absolute -left-10 -top-10 w-48 h-48 bg-rose-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="flex flex-col md:flex-row items-end md:items-center justify-between gap-4 p-6 rounded-3xl bg-zinc-950/80 border border-white/10 backdrop-blur-2xl shadow-card relative overflow-hidden">
+        <div className="absolute -end-10 -top-10 w-48 h-48 bg-rose-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shadow-xl shadow-rose-500/10">
+          <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shadow-card shadow-rose-500/10">
             <Box className="w-6 h-6 animate-pulse" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-bold text-white tracking-tight">معمل المؤثرات والأبعاد الثلاثية (3D Experience)</h2>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+              <span className="text-2xs font-mono px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
                 LOCAL DEMO
               </span>
             </div>
@@ -183,7 +183,7 @@ export default function ThreeDemoWorkspace() {
           <button
             onClick={() => setActive3dTab('cards')}
             className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
-              active3dTab === 'cards' ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30' : 'text-zinc-400 hover:text-white'
+              active3dTab === 'cards' ? 'bg-rose-500 text-white shadow-soft shadow-rose-500/30' : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Layers className="w-4 h-4" />
@@ -192,7 +192,7 @@ export default function ThreeDemoWorkspace() {
           <button
             onClick={() => setActive3dTab('hologram')}
             className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
-              active3dTab === 'hologram' ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30' : 'text-zinc-400 hover:text-white'
+              active3dTab === 'hologram' ? 'bg-rose-500 text-white shadow-soft shadow-rose-500/30' : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Cpu className="w-4 h-4" />
@@ -201,7 +201,7 @@ export default function ThreeDemoWorkspace() {
           <button
             onClick={() => setActive3dTab('parallax')}
             className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
-              active3dTab === 'parallax' ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30' : 'text-zinc-400 hover:text-white'
+              active3dTab === 'parallax' ? 'bg-rose-500 text-white shadow-soft shadow-rose-500/30' : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Compass className="w-4 h-4" />
@@ -245,7 +245,7 @@ export default function ThreeDemoWorkspace() {
               onMouseLeave={handleMouseLeave}
             >
               <div
-                className="relative rounded-3xl p-6 bg-zinc-950/90 border border-rose-500/30 transition-transform duration-100 ease-out shadow-2xl overflow-hidden"
+                className="relative rounded-3xl p-6 bg-zinc-950/90 border border-rose-500/30 transition-transform duration-100 ease-out shadow-card overflow-hidden"
                 style={{
                   transform: `perspective(1000px) rotateX(${tiltDegrees.x}deg) rotateY(${tiltDegrees.y}deg) translateZ(${depthScale}px)`,
                   transformStyle: 'preserve-3d'
@@ -260,7 +260,7 @@ export default function ThreeDemoWorkspace() {
                 />
 
                 <div style={{ transform: 'translateZ(40px)' }} className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shadow-card">
                     <Sparkles className="w-6 h-6" />
                   </div>
                   <div>
@@ -282,7 +282,7 @@ export default function ThreeDemoWorkspace() {
               onMouseLeave={handleMouseLeave}
             >
               <div
-                className="relative rounded-3xl p-6 bg-zinc-950/90 border border-cyan-500/30 transition-transform duration-100 ease-out shadow-2xl overflow-hidden"
+                className="relative rounded-3xl p-6 bg-zinc-950/90 border border-cyan-500/30 transition-transform duration-100 ease-out shadow-card overflow-hidden"
                 style={{
                   transform: `perspective(1000px) rotateX(${tiltDegrees.x * 0.8}deg) rotateY(${tiltDegrees.y * 0.8}deg) translateZ(${depthScale}px)`,
                   transformStyle: 'preserve-3d'
@@ -296,7 +296,7 @@ export default function ThreeDemoWorkspace() {
                 />
 
                 <div style={{ transform: 'translateZ(40px)' }} className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-card">
                     <Activity className="w-6 h-6" />
                   </div>
                   <div>
@@ -318,7 +318,7 @@ export default function ThreeDemoWorkspace() {
               onMouseLeave={handleMouseLeave}
             >
               <div
-                className="relative rounded-3xl p-6 bg-zinc-950/90 border border-amber-500/30 transition-transform duration-100 ease-out shadow-2xl overflow-hidden"
+                className="relative rounded-3xl p-6 bg-zinc-950/90 border border-amber-500/30 transition-transform duration-100 ease-out shadow-card overflow-hidden"
                 style={{
                   transform: `perspective(1000px) rotateX(${tiltDegrees.x * 1.1}deg) rotateY(${tiltDegrees.y * 1.1}deg) translateZ(${depthScale}px)`,
                   transformStyle: 'preserve-3d'
@@ -332,7 +332,7 @@ export default function ThreeDemoWorkspace() {
                 />
 
                 <div style={{ transform: 'translateZ(40px)' }} className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-card">
                     <Zap className="w-6 h-6" />
                   </div>
                   <div>
@@ -360,9 +360,9 @@ export default function ThreeDemoWorkspace() {
           className="grid grid-cols-1 lg:grid-cols-3 gap-6"
         >
           {/* Canvas Viewport Container */}
-          <div className="lg:col-span-2 p-6 rounded-3xl bg-zinc-950 border border-rose-500/30 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden min-h-[380px]">
-            <div className="absolute top-4 left-4 z-10 flex gap-2">
-              <span className="px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-mono flex items-center gap-1">
+          <div className="lg:col-span-2 p-6 rounded-3xl bg-zinc-950 border border-rose-500/30 shadow-card flex flex-col items-center justify-center relative overflow-hidden min-h-[380px]">
+            <div className="absolute top-4 end-4 z-10 flex gap-2">
+              <span className="px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-2xs font-mono flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse" />
                 WebGL 3D Engine
               </span>
@@ -390,7 +390,7 @@ export default function ThreeDemoWorkspace() {
             <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08]">
               <div>
                 <p className="text-xs font-bold text-white">الدوران التلقائي (3D Orbit)</p>
-                <p className="text-[10px] text-zinc-500">تدوير المجسم 360 درجة في الفضاء</p>
+                <p className="text-2xs text-zinc-500">تدوير المجسم 360 درجة في الفضاء</p>
               </div>
               <button
                 onClick={() => setHologramRotation(p => !p)}
@@ -406,7 +406,7 @@ export default function ThreeDemoWorkspace() {
             <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08]">
               <div>
                 <p className="text-xs font-bold text-white">شبكة الـ Wireframe 3D</p>
-                <p className="text-[10px] text-zinc-500">إظهار خطوط الربط والعمق بين النقاط</p>
+                <p className="text-2xs text-zinc-500">إظهار خطوط الربط والعمق بين النقاط</p>
               </div>
               <button
                 onClick={() => setWireframeMode(p => !p)}
@@ -423,7 +423,7 @@ export default function ThreeDemoWorkspace() {
                 <CheckCircle2 className="w-4 h-4 text-rose-400" />
                 جودة أداء سريعة وخفيفة جداً
               </p>
-              <p className="text-[11px] text-zinc-400">يعمل مباشرة داخل المتصفح بدون تحميل أي مكتبات ثقيلة أو إرهاق كرت الشاشة.</p>
+              <p className="text-xs text-zinc-400">يعمل مباشرة داخل المتصفح بدون تحميل أي مكتبات ثقيلة أو إرهاق كرت الشاشة.</p>
             </div>
           </div>
         </motion.div>
@@ -463,7 +463,7 @@ export default function ThreeDemoWorkspace() {
 
             {/* Layer 2 - Middle Floating Grid Card (Z: 40px) */}
             <div
-              className="w-full max-w-xl p-6 rounded-3xl bg-zinc-900/90 border border-rose-500/30 backdrop-blur-xl shadow-2xl space-y-4 transition-all duration-300 relative z-10"
+              className="w-full max-w-xl p-6 rounded-3xl bg-zinc-900/90 border border-rose-500/30 backdrop-blur-xl shadow-card space-y-4 transition-all duration-300 relative z-10"
               style={{ transform: `translateZ(${depthScale}px)` }}
             >
               <div className="flex items-center justify-between">
@@ -471,7 +471,7 @@ export default function ThreeDemoWorkspace() {
                   <div className="w-3 h-3 rounded-full bg-rose-500 animate-ping" />
                   <h3 className="text-sm font-bold text-white">طبقة الـ 3D Parallax floating</h3>
                 </div>
-                <span className="text-[10px] font-mono text-rose-400">Z-DEPTH: +{depthScale}px</span>
+                <span className="text-2xs font-mono text-rose-400">Z-DEPTH: +{depthScale}px</span>
               </div>
               <p className="text-xs text-zinc-300">
                 هذه البطاقة تطفو بارتفاع {depthScale}px فوق خلفية التطبيق لتعطي إحساس بالعمق الثلاثي الأبعاد الشبيه بواجهات أبل ورونديزاين.
@@ -482,7 +482,7 @@ export default function ThreeDemoWorkspace() {
                 className="pt-3 border-t border-white/[0.08] flex gap-3 transition-transform duration-300"
                 style={{ transform: `translateZ(${depthScale * 1.5}px)` }}
               >
-                <button className="flex-1 py-2.5 rounded-2xl bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs shadow-lg shadow-rose-500/30 cursor-pointer">
+                <button className="flex-1 py-2.5 rounded-2xl bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs shadow-soft shadow-rose-500/30 cursor-pointer">
                   تفعيل المؤثرات عبر كافة الصفحات
                 </button>
                 <button className="px-4 py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/10 text-zinc-300 font-bold text-xs border border-white/10 cursor-pointer">

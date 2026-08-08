@@ -4,15 +4,35 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { Clipboard, Plus, Eye, Edit3, Trash2, ChevronDown, ChevronUp, Clock } from 'lucide-react';
+import { Clipboard, Plus, Edit3, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { clinicalService, TreatmentPlan, TreatmentItem } from '../../../utils/services/clinicalService';
 import { Patient } from '../PatientWorkspace';
+import { Button, Card, Badge, Input, Textarea, Select, Modal, Progress, Skeleton, EmptyState } from '@/components/ui/design-system';
 
 interface TreatmentPlansPanelProps {
   supabase: SupabaseClient;
   activePatient: Patient;
   demoMode: boolean;
 }
+
+const PRIORITY_OPTIONS = [
+  { value: 'Urgent', label: 'Urgent' },
+  { value: 'High', label: 'High' },
+  { value: 'Standard', label: 'Standard' },
+  { value: 'Low', label: 'Low' },
+];
+
+const priorityTone = (p: TreatmentPlan['priority']) => {
+  if (p === 'Urgent') return 'error' as const;
+  if (p === 'High') return 'warning' as const;
+  return 'default' as const;
+};
+
+const itemStatusTone = (s: TreatmentItem['status']) => {
+  if (s === 'Completed') return 'success' as const;
+  if (s === 'In Progress') return 'accent' as const;
+  return 'default' as const;
+};
 
 export default function TreatmentPlansPanel({ supabase, activePatient, demoMode }: TreatmentPlansPanelProps) {
   const queryClient = useQueryClient();
@@ -144,77 +164,86 @@ export default function TreatmentPlansPanel({ supabase, activePatient, demoMode 
   };
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6 text-start">
       {/* Header action panel */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
-        <div>
-          <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
-            <Clipboard className="w-4 h-4 text-emerald-400" /> {t('tx_coordinator')}
-          </h3>
-          <p className="text-[11px] text-zinc-400 mt-0.5">{t('tx_coordinator_desc')}</p>
+      <Card variant="elevated" hover={false} className="p-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div>
+            <h3 className="text-sm font-bold text-[var(--velvet-text)] flex items-center gap-1.5 font-mono">
+              <Clipboard className="w-4 h-4 text-[var(--velvet-success)]" /> {t('tx_coordinator')}
+            </h3>
+            <p className="text-xs text-[var(--velvet-text-muted)] mt-0.5">{t('tx_coordinator_desc')}</p>
+          </div>
+          <Button
+            size="sm"
+            onClick={() => {
+              setEditingPlan(null);
+              setPlanForm({
+                title: '',
+                description: '',
+                estimatedCost: 12000,
+                remainingBalance: 8000,
+                priority: 'Standard',
+                treatingDoctor: activePatient.primaryDoctor || 'Dr. Ahmed',
+                itemsText: '11 | Crown Preparation D6058 | Pending | 1950 | Dr. Ahmed\n21 | Crown Preparation D6058 | Pending | 1950 | Dr. Ahmed'
+              });
+              setShowPlanModal(true);
+            }}
+            className="self-stretch sm:self-auto"
+          >
+            <Plus className="w-3.5 h-3.5" /> {t('btn_add_plan')}
+          </Button>
         </div>
-        <button
-          onClick={() => {
-            setEditingPlan(null);
-            setPlanForm({
-              title: '',
-              description: '',
-              estimatedCost: 12000,
-              remainingBalance: 8000,
-              priority: 'Standard',
-              treatingDoctor: activePatient.primaryDoctor || 'Dr. Ahmed',
-              itemsText: '11 | Crown Preparation D6058 | Pending | 1950 | Dr. Ahmed\n21 | Crown Preparation D6058 | Pending | 1950 | Dr. Ahmed'
-            });
-            setShowPlanModal(true);
-          }}
-          className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold flex items-center gap-1 self-stretch sm:self-auto justify-center"
-        >
-          <Plus className="w-3.5 h-3.5" /> {t('btn_add_plan')}
-        </button>
-      </div>
+      </Card>
 
       {/* Plan courses */}
       <div className="space-y-4">
         {isLoading ? (
-          <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading treatment plans...</div>
-        ) : plans.length === 0 ? (
-          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-3xl bg-zinc-950/20">
-            {t('no_plans_logged')}
+          <div className="space-y-4">
+            {Array.from({ length: 2 }).map((_, idx) => (
+              <Skeleton key={idx} variant="card" />
+            ))}
           </div>
+        ) : plans.length === 0 ? (
+          <Card variant="elevated" hover={false} className="rounded-3xl">
+            <EmptyState
+              icon={<Clipboard className="w-6 h-6" />}
+              title={t('no_plans_logged')}
+            />
+          </Card>
         ) : (
           plans.map((plan) => {
             const isExpanded = !!expandedPlans[plan.id];
 
             return (
-              <div key={plan.id} className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
+              <Card key={plan.id} variant="elevated" hover={false} className="p-5 space-y-4">
                 {/* Header card info */}
                 <div className="flex flex-wrap justify-between items-start gap-4">
-                  <div className="text-left flex-1 min-w-[200px]">
+                  <div className="text-start flex-1 min-w-[200px]">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[9px] font-mono text-zinc-500 uppercase">{plan.id} • Created {plan.createdDate}</span>
-                      <span className={`px-2 py-0.5 rounded text-[8px] uppercase font-mono font-bold border ${
-                        plan.priority === 'Urgent' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                        plan.priority === 'High' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                        'bg-zinc-900 text-zinc-400 border-zinc-800'
-                      }`}>
+                      <span className="text-2xs font-mono text-[var(--velvet-text-muted)] uppercase">{plan.id} • Created {plan.createdDate}</span>
+                      <Badge tone={priorityTone(plan.priority)} className="text-2xs uppercase font-mono font-bold px-2 py-0.5 rounded">
                         {plan.priority} Priority
-                      </span>
-                      <span className="text-[9px] font-mono text-zinc-400">Dr. {plan.treatingDoctor}</span>
+                      </Badge>
+                      <span className="text-2xs font-mono text-[var(--velvet-text-muted)]">Dr. {plan.treatingDoctor}</span>
                     </div>
-                    <h3 className="text-sm font-bold text-white mt-1">{plan.title}</h3>
-                    <p className="text-xs text-zinc-400 mt-1">{plan.description}</p>
+                    <h3 className="text-sm font-bold text-[var(--velvet-text)] mt-1">{plan.title}</h3>
+                    <p className="text-xs text-[var(--velvet-text-muted)] mt-1">{plan.description}</p>
                   </div>
-                  <div className="text-right flex items-start gap-4 shrink-0 font-mono text-xs">
+                  <div className="text-end flex items-start gap-4 shrink-0 font-mono text-xs">
                     <div>
-                      <span className="text-[9px] text-zinc-500 block uppercase">{t('est_total_cost')}</span>
-                      <span className="text-white font-bold">${plan.estimatedCost.toLocaleString()}</span>
+                      <span className="text-2xs text-[var(--velvet-text-muted)] block uppercase">{t('est_total_cost')}</span>
+                      <span className="text-[var(--velvet-text)] font-bold">${plan.estimatedCost.toLocaleString()}</span>
                     </div>
                     <div>
-                      <span className="text-[9px] text-zinc-500 block uppercase">{t('remaining_balance')}</span>
-                      <span className="text-amber-400 font-bold">${plan.remainingBalance.toLocaleString()}</span>
+                      <span className="text-2xs text-[var(--velvet-text-muted)] block uppercase">{t('remaining_balance')}</span>
+                      <span className="text-[var(--velvet-warning)] font-bold">${plan.remainingBalance.toLocaleString()}</span>
                     </div>
                     <div className="flex gap-1.5 self-center">
-                      <button
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="px-2"
                         onClick={() => {
                           setEditingPlan(plan);
                           setPlanForm({
@@ -228,50 +257,52 @@ export default function TreatmentPlansPanel({ supabase, activePatient, demoMode 
                           });
                           setShowPlanModal(true);
                         }}
-                        className="text-zinc-400 hover:text-white"
                       >
                         {t('btn_edit_plan')}
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="px-2 text-[var(--velvet-error)] hover:text-[var(--velvet-error)]"
                         onClick={() => handleDeletePlan(plan.id)}
-                        className="text-red-400 hover:text-red-300"
                       >
                         {t('btn_delete_plan')}
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
 
                 {/* Progress bar */}
                 <div className="space-y-1">
-                  <div className="flex justify-between text-[10px] font-mono text-zinc-500">
+                  <div className="flex justify-between text-2xs font-mono text-[var(--velvet-text-muted)]">
                     <span>{t('milestones')}</span>
                     <span>{plan.progress}%</span>
                   </div>
-                  <div className="w-full bg-zinc-900 h-1.5 rounded-full overflow-hidden border border-zinc-950">
-                    <div className="bg-emerald-500 h-full transition-all duration-300" style={{ width: `${plan.progress}%` }} />
-                  </div>
+                  <Progress value={plan.progress} size="sm" tone="success" />
                 </div>
 
                 {/* Expand Toggle */}
-                <button
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  fullWidth
                   onClick={() => toggleExpand(plan.id)}
-                  className="w-full text-center py-1 bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-900/60 rounded-xl text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors flex items-center justify-center gap-1 font-mono uppercase"
+                  className="py-1 rounded-xl text-2xs text-[var(--velvet-text-muted)] hover:text-[var(--velvet-text)] font-mono uppercase"
                 >
                   {isExpanded ? (
                     <>{t('hide_proc')} <ChevronUp className="w-3.5 h-3.5" /></>
                   ) : (
                     <>{t('expand_proc')} <ChevronDown className="w-3.5 h-3.5" /></>
                   )}
-                </button>
+                </Button>
 
                 {/* Procedures list details */}
                 {isExpanded && (
-                  <div className="space-y-2 border-t border-zinc-900/40 pt-3">
-                    <span className="text-[9px] font-mono text-zinc-500 font-bold uppercase block">{t('proc_tooth_map')}</span>
-                    <div className="overflow-x-auto rounded-xl border border-zinc-900 bg-zinc-950/40">
-                      <table className="w-full text-left text-[11px] font-mono text-zinc-300">
-                        <thead className="bg-zinc-900/20 text-[9px] uppercase tracking-wider text-zinc-500 border-b border-zinc-900">
+                  <div className="space-y-2 border-t pt-3" style={{ borderColor: 'var(--velvet-border)' }}>
+                    <span className="text-2xs font-mono text-[var(--velvet-text-muted)] font-bold uppercase block">{t('proc_tooth_map')}</span>
+                    <div className="overflow-x-auto rounded-xl border border-[var(--velvet-border)] bg-[var(--velvet-surface-1)]">
+                      <table className="w-full text-start text-xs font-mono text-[var(--velvet-text-sub)]">
+                        <thead className="bg-[var(--velvet-surface-2)] text-2xs uppercase tracking-wider text-[var(--velvet-text-muted)] border-b border-[var(--velvet-border)]">
                           <tr>
                             <th className="px-4 py-2">{t('th_tooth')}</th>
                             <th className="px-4 py-2">{t('th_proc')}</th>
@@ -280,21 +311,17 @@ export default function TreatmentPlansPanel({ supabase, activePatient, demoMode 
                             <th className="px-4 py-2">{t('th_status')}</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-900/40">
+                        <tbody className="divide-y divide-[var(--velvet-border)]">
                           {plan.items.map((item, index) => (
-                            <tr key={index} className="hover:bg-zinc-900/10">
-                              <td className="px-4 py-2 text-white font-bold">{item.toothNumber}</td>
-                              <td className="px-4 py-2 font-sans text-zinc-200">{item.procedure}</td>
+                            <tr key={index} className="hover:bg-[var(--velvet-surface-2)]">
+                              <td className="px-4 py-2 text-[var(--velvet-text)] font-bold">{item.toothNumber}</td>
+                              <td className="px-4 py-2 font-sans text-[var(--velvet-text)]">{item.procedure}</td>
                               <td className="px-4 py-2">Dr. {item.assignedDoctor}</td>
                               <td className="px-4 py-2">${item.estimatedCost.toLocaleString()}</td>
                               <td className="px-4 py-2">
-                                <span className={`px-1.5 py-0.2 rounded text-[9px] border font-bold uppercase ${
-                                  item.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                  item.status === 'In Progress' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                                  'bg-zinc-900 text-zinc-500 border-zinc-800'
-                                }`}>
+                                <Badge tone={itemStatusTone(item.status)} className="text-2xs uppercase font-bold px-1.5 py-0.5 rounded">
                                   {translateStatus(item.status)}
-                                </span>
+                                </Badge>
                               </td>
                             </tr>
                           ))}
@@ -303,91 +330,76 @@ export default function TreatmentPlansPanel({ supabase, activePatient, demoMode 
                     </div>
                   </div>
                 )}
-              </div>
+              </Card>
             );
           })
         )}
       </div>
 
       {/* Plan Modal */}
-      {showPlanModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleSavePlan} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-lg space-y-4 text-xs">
-            <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">
-              {editingPlan ? t('btn_edit_plan') : t('btn_add_plan')}
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="space-y-1 sm:col-span-2">
-                <label className="text-zinc-400 font-semibold">{t('label_plan_title')}</label>
-                <input
-                  type="text"
-                  value={planForm.title}
-                  onChange={(e) => setPlanForm({ ...planForm, title: e.target.value })}
-                  placeholder="e.g. Posterior Lower Arch Dental Implants"
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                  required
-                />
-              </div>
-              <div className="space-y-1 sm:col-span-2">
-                <label className="text-zinc-400 font-semibold">{t('label_plan_desc')}</label>
-                <textarea
-                  value={planForm.description}
-                  onChange={(e) => setPlanForm({ ...planForm, description: e.target.value })}
-                  rows={2}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400 font-semibold">{t('label_est_cost')}</label>
-                <input
-                  type="number"
-                  value={planForm.estimatedCost}
-                  onChange={(e) => setPlanForm({ ...planForm, estimatedCost: Number(e.target.value) })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400 font-semibold">{t('label_plan_priority')}</label>
-                <select
-                  value={planForm.priority}
-                  onChange={(e) => setPlanForm({ ...planForm, priority: e.target.value as any })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                >
-                  <option value="Urgent">Urgent</option>
-                  <option value="High">High</option>
-                  <option value="Standard">Standard</option>
-                  <option value="Low">Low</option>
-                </select>
-              </div>
-              <div className="sm:col-span-2 space-y-1">
-                <label className="text-zinc-400 font-semibold">{t('label_procedures_format')}</label>
-                <textarea
-                  value={planForm.itemsText}
-                  onChange={(e) => setPlanForm({ ...planForm, itemsText: e.target.value })}
-                  rows={4}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                />
-              </div>
+      <Modal
+        open={showPlanModal}
+        onOpenChange={setShowPlanModal}
+        title={editingPlan ? t('btn_edit_plan') : t('btn_add_plan')}
+        size="lg"
+      >
+        <form onSubmit={handleSavePlan} className="space-y-4 text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="sm:col-span-2">
+              <Input
+                label={t('label_plan_title')}
+                type="text"
+                value={planForm.title}
+                onChange={(e) => setPlanForm({ ...planForm, title: e.target.value })}
+                placeholder="e.g. Posterior Lower Arch Dental Implants"
+                required
+              />
             </div>
-            <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
-              <button
-                type="button"
-                onClick={() => setShowPlanModal(false)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 text-zinc-400"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={savePlansMutation.isPending}
-                className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold"
-              >
-                {t('btn_save_plan')}
-              </button>
+            <div className="sm:col-span-2">
+              <Textarea
+                label={t('label_plan_desc')}
+                value={planForm.description}
+                onChange={(e) => setPlanForm({ ...planForm, description: e.target.value })}
+                rows={2}
+              />
             </div>
-          </form>
-        </div>
-      )}
+            <div>
+              <Input
+                label={t('label_est_cost')}
+                type="number"
+                value={planForm.estimatedCost}
+                onChange={(e) => setPlanForm({ ...planForm, estimatedCost: Number(e.target.value) })}
+                className="font-mono"
+              />
+            </div>
+            <div>
+              <Select
+                label={t('label_plan_priority')}
+                options={PRIORITY_OPTIONS}
+                value={planForm.priority}
+                onChange={(e) => setPlanForm({ ...planForm, priority: e.target.value as any })}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <Textarea
+                label={t('label_procedures_format')}
+                value={planForm.itemsText}
+                onChange={(e) => setPlanForm({ ...planForm, itemsText: e.target.value })}
+                rows={4}
+                className="font-mono"
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-2 border-t pt-3" style={{ borderColor: 'var(--velvet-border)' }}>
+            <Button variant="secondary" type="button" onClick={() => setShowPlanModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" loading={savePlansMutation.isPending}>
+              {t('btn_save_plan')}
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

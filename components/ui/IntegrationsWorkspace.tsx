@@ -358,23 +358,23 @@ export default function IntegrationsWorkspace() {
 
       {/* Toast Alert */}
       {showToast && (
-        <div className="fixed bottom-6 left-6 z-[99999] bg-rose-600 text-white font-bold text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-rose-400 animate-bounce">
+        <div className="fixed bottom-6 end-6 z-[99999] bg-rose-600 text-white font-bold text-xs px-4 py-3 rounded-2xl shadow-card flex items-center gap-2 border border-rose-400 animate-bounce">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{toastMsg}</span>
         </div>
       )}
 
       {/* ── Header Bar & Live Metrics ── */}
-      <div className="p-6 rounded-3xl bg-zinc-950/80 border border-white/10 backdrop-blur-2xl shadow-2xl space-y-4">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+      <div className="p-6 rounded-3xl bg-zinc-950/80 border border-white/10 backdrop-blur-2xl shadow-card space-y-4">
+        <div className="flex flex-col lg:flex-row items-end lg:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 shadow-xl shadow-rose-500/10">
+            <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 shadow-card shadow-rose-500/10">
               <Blocks className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-lg font-bold text-white tracking-tight">مركز التكاملات والربط البرمجي (API Gateway)</h2>
-                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1 font-bold">
+                <span className="text-2xs font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1 font-bold">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   GATEWAY ACTIVE
                 </span>
@@ -385,7 +385,7 @@ export default function IntegrationsWorkspace() {
 
           <button
             onClick={() => setShowAddModal(true)}
-            className="px-4 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-2xl flex items-center gap-2 shadow-lg shadow-rose-600/30 cursor-pointer transition-all shrink-0"
+            className="px-4 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-2xl flex items-center gap-2 shadow-soft shadow-rose-600/30 cursor-pointer transition-all shrink-0"
           >
             <Plus className="w-4 h-4" />
             <span>+ إضافة ربط مخصص (Custom Webhook)</span>
@@ -395,25 +395,25 @@ export default function IntegrationsWorkspace() {
         {/* ── Live Health Metrics Cards ── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-white/[0.08]">
           <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-            <span className="text-[10px] font-mono text-zinc-400 block mb-1">معدل الاستجابة (Avg Latency)</span>
+            <span className="text-2xs font-mono text-zinc-400 block mb-1">معدل الاستجابة (Avg Latency)</span>
             <div className="flex items-center gap-2">
               <Activity className="w-4 h-4 text-emerald-400" />
               <span className="text-sm font-bold text-white font-mono">38 ms</span>
-              <span className="text-[9px] font-mono text-emerald-400">FASTER</span>
+              <span className="text-2xs font-mono text-emerald-400">FASTER</span>
             </div>
           </div>
 
           <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-            <span className="text-[10px] font-mono text-zinc-400 block mb-1">نسبة الاستقرار والخدمة (Uptime)</span>
+            <span className="text-2xs font-mono text-zinc-400 block mb-1">نسبة الاستقرار والخدمة (Uptime)</span>
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span className="text-sm font-bold text-white font-mono">99.98%</span>
-              <span className="text-[9px] font-mono text-emerald-400">OPTIMAL</span>
+              <span className="text-2xs font-mono text-emerald-400">OPTIMAL</span>
             </div>
           </div>
 
           <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-            <span className="text-[10px] font-mono text-zinc-400 block mb-1">طلبات اليوم (API Calls Today)</span>
+            <span className="text-2xs font-mono text-zinc-400 block mb-1">طلبات اليوم (API Calls Today)</span>
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-amber-400" />
               <span className="text-sm font-bold text-white font-mono">24,810</span>
@@ -421,11 +421,11 @@ export default function IntegrationsWorkspace() {
           </div>
 
           <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-            <span className="text-[10px] font-mono text-zinc-400 block mb-1">الأنظمة المربوطة (Active Systems)</span>
+            <span className="text-2xs font-mono text-zinc-400 block mb-1">الأنظمة المربوطة (Active Systems)</span>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-rose-400" />
               <span className="text-sm font-bold text-white font-mono">9 / 10</span>
-              <span className="text-[9px] font-mono text-rose-400">CONNECTED</span>
+              <span className="text-2xs font-mono text-rose-400">CONNECTED</span>
             </div>
           </div>
         </div>
@@ -441,7 +441,7 @@ export default function IntegrationsWorkspace() {
                 key={cat}
                 onClick={() => setSelectedCat(cat)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  isSel ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'text-zinc-400 hover:text-white'
+                  isSel ? 'bg-rose-500 text-white shadow-soft shadow-rose-500/20' : 'text-zinc-400 hover:text-white'
                 }`}
               >
                 {cat}
@@ -451,13 +451,13 @@ export default function IntegrationsWorkspace() {
         </div>
 
         <div className="relative w-full lg:w-80">
-          <Search className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+          <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
           <input
             type="text"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="ابحث عن نظام أو خدمة ربط..."
-            className="w-full bg-zinc-900 border border-white/10 pr-10 pl-4 py-2 text-xs rounded-xl outline-none focus:border-rose-500 text-white transition-all"
+            className="w-full bg-zinc-900 border border-white/10 ps-10 pe-4 py-2 text-xs rounded-xl outline-none focus:border-rose-500 text-white transition-all"
           />
         </div>
       </div>
@@ -470,24 +470,24 @@ export default function IntegrationsWorkspace() {
             <div
               key={item.id}
               className={`p-5 rounded-3xl border transition-all flex flex-col justify-between min-h-[240px] relative overflow-hidden group ${
-                isConn ? 'bg-zinc-950/90 border-white/10 hover:border-rose-500/40 shadow-xl' : 'bg-zinc-950/30 border-white/[0.04] opacity-60 hover:opacity-80'
+                isConn ? 'bg-zinc-950/90 border-white/10 hover:border-rose-500/40 shadow-card' : 'bg-zinc-950/30 border-white/[0.04] opacity-60 hover:opacity-80'
               }`}
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${item.logoColor} flex items-center justify-center text-white font-mono font-black text-xs uppercase shadow-lg shrink-0`}>
+                    <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${item.logoColor} flex items-center justify-center text-white font-mono font-black text-xs uppercase shadow-soft shrink-0`}>
                       {item.name.substring(0, 2)}
                     </div>
                     <div className="min-w-0">
                       <h4 className="text-xs font-bold text-white truncate">{item.name}</h4>
-                      <span className="text-[9px] font-mono text-zinc-500 font-bold block">{item.category}</span>
+                      <span className="text-2xs font-mono text-zinc-500 font-bold block">{item.category}</span>
                     </div>
                   </div>
 
                   <button
                     onClick={() => handleToggleStatus(item.id)}
-                    className={`text-[10px] font-bold px-2.5 py-1 rounded-xl border transition-all cursor-pointer ${
+                    className={`text-2xs font-bold px-2.5 py-1 rounded-xl border transition-all cursor-pointer ${
                       isConn
                         ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-rose-500/10 hover:text-rose-400 hover:border-rose-500/30'
                         : 'bg-white/[0.04] text-zinc-500 border-white/[0.08] hover:bg-rose-500/20 hover:text-rose-300'
@@ -497,17 +497,17 @@ export default function IntegrationsWorkspace() {
                   </button>
                 </div>
 
-                <p className="text-[11px] text-zinc-400 leading-relaxed font-sans min-h-[48px]">{item.description}</p>
+                <p className="text-xs text-zinc-400 leading-relaxed font-sans min-h-[48px]">{item.description}</p>
               </div>
 
               <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between mt-4">
                 <div className="flex items-center gap-2">
                   <Radio className={`w-3 h-3 ${isConn ? 'text-emerald-400 animate-pulse' : 'text-zinc-600'}`} />
-                  <span className="text-[9px] font-mono text-zinc-500 truncate max-w-[170px]">{item.syncLogs}</span>
+                  <span className="text-2xs font-mono text-zinc-500 truncate max-w-[170px]">{item.syncLogs}</span>
                 </div>
 
                 <div className="flex items-center gap-1">
-                  {isConn && <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{item.latencyMs}ms</span>}
+                  {isConn && <span className="text-2xs font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{item.latencyMs}ms</span>}
                   <button
                     onClick={() => {
                       setConfiguringItem(item);
@@ -533,10 +533,10 @@ export default function IntegrationsWorkspace() {
             <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
             <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">سجل طلبات الـ Webhooks الحية (Incoming API Stream)</span>
           </div>
-          <span className="text-[10px] text-zinc-500 font-mono">اضغط على أي طلب لمعاينة كود الـ JSON 🔍</span>
+          <span className="text-2xs text-zinc-500 font-mono">اضغط على أي طلب لمعاينة كود الـ JSON 🔍</span>
         </div>
 
-        <div className="space-y-2 font-mono text-[11px]">
+        <div className="space-y-2 font-mono text-xs">
           {samplePayloads.map(pay => (
             <div
               key={pay.id}
@@ -544,21 +544,21 @@ export default function IntegrationsWorkspace() {
               className="p-3 bg-zinc-900/60 hover:bg-zinc-900 border border-white/[0.08] rounded-2xl flex items-center justify-between cursor-pointer transition-all group"
             >
               <div className="flex items-center gap-3">
-                <span className="text-[9px] font-black px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">{pay.method}</span>
+                <span className="text-2xs font-black px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">{pay.method}</span>
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-white font-bold">{pay.endpoint}</span>
-                    <span className="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">{pay.status}</span>
-                    <span className="text-[10px] font-bold text-rose-300">({pay.service})</span>
+                    <span className="text-2xs font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">{pay.status}</span>
+                    <span className="text-2xs font-bold text-rose-300">({pay.service})</span>
                   </div>
-                  <p className="text-[10px] text-zinc-400 font-sans mt-0.5">{pay.desc}</p>
+                  <p className="text-2xs text-zinc-400 font-sans mt-0.5">{pay.desc}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="text-right text-[10px] text-zinc-500">
+                <div className="text-start text-2xs text-zinc-500">
                   <span>{pay.size}</span>
-                  <span className="block text-[9px] text-emerald-400">{pay.duration}</span>
+                  <span className="block text-2xs text-emerald-400">{pay.duration}</span>
                 </div>
                 <Code className="w-4 h-4 text-zinc-600 group-hover:text-rose-400 transition-colors" />
               </div>
@@ -570,7 +570,7 @@ export default function IntegrationsWorkspace() {
       {/* ── Modal 1: Add Custom Webhook Integration ── */}
       {showAddModal && (
         <div className="fixed inset-0 z-[99999] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-zinc-950 rounded-3xl border border-rose-500/30 p-6 space-y-4 shadow-2xl">
+          <div className="w-full max-w-lg bg-zinc-950 rounded-3xl border border-rose-500/30 p-6 space-y-4 shadow-card">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
                 <Plus className="w-5 h-5 text-rose-400" />
@@ -646,7 +646,7 @@ export default function IntegrationsWorkspace() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold cursor-pointer shadow-lg shadow-rose-600/30"
+                  className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold cursor-pointer shadow-soft shadow-rose-600/30"
                 >
                   حفظ وتفعيل التغذية
                 </button>
@@ -659,7 +659,7 @@ export default function IntegrationsWorkspace() {
       {/* ── Modal 2: Webhook JSON Payload Inspector ── */}
       {selectedPayload && (
         <div className="fixed inset-0 z-[99999] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-xl bg-zinc-950 rounded-3xl border border-white/10 p-6 space-y-4 shadow-2xl">
+          <div className="w-full max-w-xl bg-zinc-950 rounded-3xl border border-white/10 p-6 space-y-4 shadow-card">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
                 <FileCode className="w-5 h-5 text-emerald-400" />
@@ -677,13 +677,13 @@ export default function IntegrationsWorkspace() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] text-zinc-500 block">HTTP Request Payload (Raw JSON):</label>
-                <pre className="p-4 rounded-2xl bg-zinc-900 text-emerald-300 text-[11px] overflow-x-auto max-h-64 border border-white/10">
+                <label className="text-2xs text-zinc-500 block">HTTP Request Payload (Raw JSON):</label>
+                <pre className="p-4 rounded-2xl bg-zinc-900 text-emerald-300 text-xs overflow-x-auto max-h-64 border border-white/10">
                   {selectedPayload.json}
                 </pre>
               </div>
 
-              <div className="flex justify-end pt-2">
+              <div className="flex justify-start pt-2">
                 <button
                   onClick={() => setSelectedPayload(null)}
                   className="px-5 py-2 rounded-xl bg-rose-500 text-white font-bold cursor-pointer"
@@ -699,7 +699,7 @@ export default function IntegrationsWorkspace() {
       {/* ── Modal 3: Integration Settings Modal ── */}
       {configuringItem && (
         <div className="fixed inset-0 z-[99999] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-zinc-950 rounded-3xl border border-white/10 p-6 space-y-4 shadow-2xl">
+          <div className="w-full max-w-lg bg-zinc-950 rounded-3xl border border-white/10 p-6 space-y-4 shadow-card">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
                 <Settings2 className="w-5 h-5 text-rose-400" />
@@ -733,7 +733,7 @@ export default function IntegrationsWorkspace() {
                 />
               </div>
 
-              <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-200 text-[11px] leading-relaxed flex items-center gap-2 font-sans">
+              <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-200 text-xs leading-relaxed flex items-center gap-2 font-sans">
                 <Lock className="w-4 h-4 text-rose-400 shrink-0" />
                 <span>جميع المفاتيح تشفّر تلقائياً بأعلى المعايير (AES-256) قبل تخزينها في قاعدة البيانات.</span>
               </div>
@@ -748,7 +748,7 @@ export default function IntegrationsWorkspace() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-xl bg-rose-600 text-white font-bold cursor-pointer shadow-lg shadow-rose-600/30"
+                  className="flex-1 py-2.5 rounded-xl bg-rose-600 text-white font-bold cursor-pointer shadow-soft shadow-rose-600/30"
                 >
                   حفظ واختبار الاتصال
                 </button>

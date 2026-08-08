@@ -5,6 +5,7 @@ import { Calendar, Clipboard, DollarSign, FlaskConical, Layers, FileText, Activi
 import { useTranslations } from 'next-intl';
 import { Appointment, TreatmentPlan } from '../../../utils/services/clinicalService';
 import { Patient } from '../PatientWorkspace';
+import { Card, Badge } from '@/components/ui/design-system';
 
 interface ClinicalDashboardProps {
   activePatient: Patient;
@@ -17,6 +18,17 @@ interface ClinicalDashboardProps {
   alertsCount: number;
   onNavigateTab: (tab: string) => void;
 }
+
+type IconTone = 'info' | 'warning' | 'success' | 'accent' | 'error' | 'neutral';
+
+const iconToneClasses: Record<IconTone, string> = {
+  info: 'text-[var(--velvet-info)] bg-[var(--velvet-info-bg)] border-[var(--velvet-info-border)]',
+  warning: 'text-[var(--velvet-warning)] bg-[var(--velvet-warning-bg)] border-[var(--velvet-warning-border)]',
+  success: 'text-[var(--velvet-success)] bg-[var(--velvet-success-bg)] border-[var(--velvet-success-border)]',
+  accent: 'text-[var(--velvet-accent)] bg-[var(--velvet-accent-glow2)] border-[var(--velvet-border-strong)]',
+  error: 'text-[var(--velvet-error)] bg-[var(--velvet-error-bg)] border-[var(--velvet-error-border)]',
+  neutral: 'text-[var(--velvet-text-muted)] bg-[var(--velvet-surface-2)] border-[var(--velvet-border)]',
+};
 
 export default function ClinicalDashboard({
   activePatient,
@@ -50,7 +62,7 @@ export default function ClinicalDashboard({
       value: upcomingText,
       subtext: upcomingAppt ? upcomingAppt.procedure : t('card_appt_intake'),
       icon: Calendar,
-      iconColor: "text-purple-400 bg-purple-500/10 border-purple-500/20",
+      iconTone: 'info' as IconTone,
       tab: "appointments"
     },
     {
@@ -58,7 +70,7 @@ export default function ClinicalDashboard({
       value: t('card_tx_procedures', { count: pendingTxCount }),
       subtext: activePlan ? activePlan.title : t('card_tx_none'),
       icon: Clipboard,
-      iconColor: "text-amber-400 bg-amber-500/10 border-amber-500/20",
+      iconTone: 'warning' as IconTone,
       tab: "treatment"
     },
     {
@@ -66,7 +78,7 @@ export default function ClinicalDashboard({
       value: `$${outstandingBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
       subtext: outstandingBalance > 0 ? t('card_billing_sub') : t('card_billing_settled'),
       icon: DollarSign,
-      iconColor: outstandingBalance > 0 ? "text-amber-500 bg-amber-500/10 border-amber-500/20" : "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+      iconTone: (outstandingBalance > 0 ? 'warning' : 'success') as IconTone,
       tab: "billing"
     },
     {
@@ -74,7 +86,7 @@ export default function ClinicalDashboard({
       value: t('card_lab_cases', { count: labOrdersCount }),
       subtext: t('card_lab_sub'),
       icon: FlaskConical,
-      iconColor: "text-pink-400 bg-pink-500/10 border-pink-500/20",
+      iconTone: 'error' as IconTone,
       tab: "laboratory"
     },
     {
@@ -82,7 +94,7 @@ export default function ClinicalDashboard({
       value: t('card_radio_studies', { count: radiologyReportsCount }),
       subtext: t('card_radio_sub'),
       icon: Layers,
-      iconColor: "text-blue-400 bg-blue-500/10 border-blue-500/20",
+      iconTone: 'info' as IconTone,
       tab: "radiology"
     },
     {
@@ -90,7 +102,7 @@ export default function ClinicalDashboard({
       value: t('card_soap_notes', { count: clinicalNotesCount }),
       subtext: t('card_soap_sub'),
       icon: FileText,
-      iconColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+      iconTone: 'success' as IconTone,
       tab: "clinical"
     },
     {
@@ -98,7 +110,7 @@ export default function ClinicalDashboard({
       value: t('card_progress_complete', { percent: progressPercent }),
       subtext: activePlan ? t('card_progress_sub') : t('card_progress_baseline'),
       icon: Activity,
-      iconColor: "text-teal-400 bg-teal-500/10 border-teal-500/20",
+      iconTone: 'success' as IconTone,
       tab: "treatment"
     },
     {
@@ -106,7 +118,7 @@ export default function ClinicalDashboard({
       value: t('card_alerts_active', { count: alertsCount }),
       subtext: activePatient.allergyStatus === 'No Known Allergies' ? t('card_alerts_none') : activePatient.allergyStatus,
       icon: ShieldAlert,
-      iconColor: alertsCount > 0 ? "text-red-400 bg-red-500/10 border-red-500/20 animate-pulse" : "text-zinc-500 bg-zinc-900 border-zinc-800",
+      iconTone: (alertsCount > 0 ? 'error' : 'neutral') as IconTone,
       tab: "overview"
     }
   ];
@@ -117,84 +129,88 @@ export default function ClinicalDashboard({
         {dashboardCards.map((card, idx) => {
           const Icon = card.icon;
           return (
-            <div
+            <Card
               key={idx}
+              variant="gradient"
+              hover
               onClick={() => onNavigateTab(card.tab)}
-              className="p-5 card-gradient card-hover rounded-3xl cursor-pointer text-left flex flex-col justify-between h-36 relative group overflow-hidden"
+              className="p-5 rounded-3xl cursor-pointer text-start flex flex-col justify-between h-36 relative group overflow-hidden"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onNavigateTab(card.tab); }}
             >
-
               <div className="flex justify-between items-start">
-                <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold tracking-wider">{card.title}</span>
-                <div className={`p-2 rounded-xl border ${card.iconColor} shrink-0`}>
+                <span className="text-2xs font-mono text-[var(--velvet-text-muted)] uppercase font-bold tracking-wider">{card.title}</span>
+                <div className={`p-2 rounded-xl border ${iconToneClasses[card.iconTone]} shrink-0`}>
                   <Icon className="w-4 h-4" />
                 </div>
               </div>
               <div className="space-y-1 mt-2">
-                <h3 className="text-sm font-bold text-white tracking-tight leading-none group-hover:text-emerald-400 transition-colors">
+                <h3 className="text-sm font-bold text-[var(--velvet-text)] tracking-tight leading-none group-hover:text-[var(--velvet-success)] transition-colors">
                   {card.value}
                 </h3>
-                <p className="text-[11px] text-zinc-400 truncate leading-normal">
+                <p className="text-xs text-[var(--velvet-text-muted)] truncate leading-normal">
                   {card.subtext}
                 </p>
               </div>
-            </div>
+            </Card>
           );
         })}
       </div>
 
       {/* Real-time AI Clinical Decision Support alerts panel */}
-      <div className="p-5 card-elevated rounded-3xl space-y-4">
-        <div className="flex justify-between items-center border-b border-zinc-900/60 pb-3">
+      <Card variant="elevated" hover={false} className="p-5 rounded-3xl space-y-4">
+        <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--velvet-border)' }}>
           <div>
-            <h4 className="text-xs font-bold text-white flex items-center gap-1.5 font-mono">
-              <ShieldAlert className="w-4 h-4 text-rose-500 animate-pulse" />
+            <h4 className="text-xs font-bold text-[var(--velvet-text)] flex items-center gap-1.5 font-mono">
+              <ShieldAlert className="w-4 h-4 text-[var(--velvet-error)] animate-pulse" />
               Real-time AI Clinical Decision Support (CDS) Alerts
             </h4>
-            <p className="text-[11px] text-zinc-500 mt-0.5">Automated diagnostic guardrails scanning active allergy status and medical history context.</p>
+            <p className="text-xs text-[var(--velvet-text-muted)] mt-0.5">Automated diagnostic guardrails scanning active allergy status and medical history context.</p>
           </div>
-          <span className="badge badge-danger">
+          <Badge tone="error">
             Active Guardrails: 2 Warnings
-          </span>
+          </Badge>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Warning 1: Allergy */}
-          <div className="p-4 card-elevated rounded-2xl flex gap-3 text-xs text-left border-rose-500/20">
-            <div className="p-2 h-fit rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 shrink-0">
+          <Card variant="elevated" hover={false} className="p-4 rounded-2xl flex gap-3 text-xs text-start border-[var(--velvet-error-border)]">
+            <div className="p-2 h-fit rounded-lg bg-[var(--velvet-error-bg)] border border-[var(--velvet-error-border)] text-[var(--velvet-error)] shrink-0">
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div className="space-y-1">
-              <h5 className="font-bold text-rose-400">Contraindication Warning: Penicillin Allergy</h5>
-              <p className="text-[11px] text-zinc-400 leading-relaxed">
+              <h5 className="font-bold text-[var(--velvet-error)]">Contraindication Warning: Penicillin Allergy</h5>
+              <p className="text-xs text-[var(--velvet-text-muted)] leading-relaxed">
                 Patient Arthur Pendragon has a recorded Penicillin allergy. Avoid prescribing Amoxicillin, Augmentin, or Penicillin V for dental infections.
               </p>
-              <div className="flex flex-wrap gap-2 items-center text-[10px] text-zinc-500 pt-1">
+              <div className="flex flex-wrap gap-2 items-center text-2xs text-[var(--velvet-text-muted)] pt-1">
                 <span>Suggested Alternative:</span>
-                <strong className="text-emerald-400 font-mono">Clindamycin 300mg</strong>
+                <strong className="text-[var(--velvet-success)] font-mono">Clindamycin 300mg</strong>
                 <span>or</span>
-                <strong className="text-emerald-400 font-mono">Azithromycin 500mg</strong>
+                <strong className="text-[var(--velvet-success)] font-mono">Azithromycin 500mg</strong>
               </div>
             </div>
-          </div>
+          </Card>
 
           {/* Warning 2: Epinephrine */}
-          <div className="p-4 card-elevated rounded-2xl flex gap-3 text-xs text-left border-amber-500/20">
-            <div className="p-2 h-fit rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
+          <Card variant="elevated" hover={false} className="p-4 rounded-2xl flex gap-3 text-xs text-start border-[var(--velvet-warning-border)]">
+            <div className="p-2 h-fit rounded-lg bg-[var(--velvet-warning-bg)] border border-[var(--velvet-warning-border)] text-[var(--velvet-warning)] shrink-0">
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div className="space-y-1">
-              <h5 className="font-bold text-amber-400">Epinephrine Precaution: Cardiovascular Alert</h5>
-              <p className="text-[11px] text-zinc-400 leading-relaxed">
+              <h5 className="font-bold text-[var(--velvet-warning)]">Epinephrine Precaution: Cardiovascular Alert</h5>
+              <p className="text-xs text-[var(--velvet-text-muted)] leading-relaxed">
                 Patient medical history flags hypertension risk. Limit epinephrine administration to a maximum of 2 cartridges (1:100,000).
               </p>
-              <div className="flex flex-wrap gap-2 items-center text-[10px] text-zinc-500 pt-1">
+              <div className="flex flex-wrap gap-2 items-center text-2xs text-[var(--velvet-text-muted)] pt-1">
                 <span>Consider Plain Anesthetic:</span>
-                <strong className="text-amber-450 font-mono">Mepivacaine 3% Plain</strong>
+                <strong className="text-[var(--velvet-warning)] font-mono">Mepivacaine 3% Plain</strong>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

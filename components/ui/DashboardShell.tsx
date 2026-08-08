@@ -40,7 +40,8 @@ import {
   UserPlus,
   Grid
 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { getDirection } from '@/i18n/config';
 import { handleRequest } from '@/utils/auth-helpers/client';
 import { SignOut } from '@/utils/auth-helpers/server';
 import { 
@@ -60,6 +61,7 @@ import StaffPhoneIntercom from '@/components/ui/StaffPhoneIntercom';
 import ThemeSelector from '@/components/ui/ThemeSelector';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EASE } from '@/components/ui/design-system/motion';
+import { Badge, Button, Kbd } from '@/components/ui/design-system';
 
 interface DashboardShellProps {
   user: any;
@@ -153,6 +155,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
   const tCommon = useTranslations('Common');
   const tAccess = useTranslations('Access');
   const tRoles = useTranslations('Roles');
+  const locale = useLocale();
+  const isRtl = getDirection(locale) === 'rtl';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState('');
@@ -179,9 +183,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       });
       setShowQuickInviteModal(false);
       setQuickInviteForm({ name: '', email: '', role: 'clinician', tempPassword: 'doctor123' });
-      triggerFeedback(`تمت إضافة ودعوة الموظف "${newMember.name}" بنجاح!`);
+      triggerFeedback(`طھظ…طھ ط¥ط¶ط§ظپط© ظˆط¯ط¹ظˆط© ط§ظ„ظ…ظˆط¸ظپ "${newMember.name}" ط¨ظ†ط¬ط§ط­!`);
     } catch (err: any) {
-      alert(err.message || 'تعذر إضافة الموظف.');
+      alert(err.message || 'طھط¹ط°ط± ط¥ط¶ط§ظپط© ط§ظ„ظ…ظˆط¸ظپ.');
     }
   };
 
@@ -258,10 +262,12 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
   return (
     <LicenseGate>
-    <div className="flex flex-col h-screen overflow-hidden" style={{ background: 'var(--bg)' }}>
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: 'var(--velvet-bg)' }}>
       {isDevBypass && (
-        <div id="dev-mode-banner" className="bg-amber-500 text-black text-xs font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 border-b border-amber-600 select-none shrink-0 z-50">
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-black text-amber-400 font-bold uppercase tracking-wider text-[9px] leading-none">
+        <div id="dev-mode-banner" className="text-xs font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 border-b select-none shrink-0 z-50"
+          style={{ background: 'var(--velvet-warning)', color: 'var(--velvet-text-inverse)', borderColor: 'var(--velvet-warning-border)' }}>
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider text-2xs leading-none"
+            style={{ background: 'var(--velvet-950)', color: 'var(--velvet-warning)' }}>
             DEV MODE
           </span>
           <span>Bypassing Supabase authentication for local development. Production authentication remains active and untouched.</span>
@@ -272,11 +278,11 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       <div className="hidden lg:block w-[72px] shrink-0" />
 
       {/* Sidebar for Desktop */}
-      <aside className="hidden lg:flex lg:flex-col absolute left-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-r transition-all duration-300 ease-in-out group shadow-xl group-hover:[&>nav]:opacity-100">
+      <aside className="hidden lg:flex lg:flex-col absolute start-0 top-0 bottom-0 w-[72px] hover:w-64 z-50 border-e transition-all duration-300 ease-in-out group group-hover:[&>nav]:opacity-100" style={{ boxShadow: 'var(--velvet-shadow-card)' }}>
         {/* Brand Header */}
-        <div className="flex items-center h-16 px-[20px] border-b gap-3 overflow-hidden shrink-0" style={{ borderColor: 'var(--border)' }}>
+        <div className="flex items-center h-16 px-[20px] border-b gap-3 overflow-hidden shrink-0" style={{ borderColor: 'var(--velvet-border)' }}>
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl shrink-0">
-            <div className="absolute inset-0 rounded-xl" style={{ background: 'var(--gradient)', opacity: 0.9 }} />
+            <div className="absolute inset-0 rounded-xl" style={{ background: 'var(--velvet-gradient-primary)', opacity: 0.9 }} />
             <svg
               className="relative z-10"
               width="16"
@@ -295,8 +301,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           <span className="font-semibold text-lg tracking-tight opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-display">
             <span className="text-gradient">HealthOS</span>
           </span>
-          <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap"
-            style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', border: '1px solid var(--border-strong)' }}>
+          <span className="text-2xs uppercase font-mono px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap"
+            style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)', border: '1px solid var(--velvet-border-strong)' }}>
             PRO
           </span>
         </div>
@@ -310,27 +316,28 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <Link
                 key={tNav(item.labelKey)}
                 href={item.href}
+                aria-current={isActive ? 'page' : undefined}
                 className="group/nav relative flex items-center px-2.5 py-2.5 text-sm font-medium rounded-2xl transition-all duration-150 overflow-hidden"
                 style={{
-                  background: isActive ? 'var(--accent-glow2)' : 'transparent',
-                  color: isActive ? 'var(--accent)' : 'var(--text-muted)'
+                  background: isActive ? 'var(--velvet-accent-glow2)' : 'transparent',
+                  color: isActive ? 'var(--velvet-accent)' : 'var(--velvet-text-muted)'
                 }}
               >
                 {isActive && (
                   <motion.span
                     layoutId="nav-active"
                     className="absolute inset-0 rounded-2xl"
-                    style={{ background: 'var(--accent-glow2)', boxShadow: 'inset 0 0 0 1px var(--border-strong)' }}
+                    style={{ background: 'var(--velvet-accent-glow2)', boxShadow: 'inset 0 0 0 1px var(--velvet-border-strong)' }}
                     transition={{ type: 'spring', stiffness: 320, damping: 30 }}
                   />
                 )}
                 <Icon
                   className={`relative z-10 w-5 h-5 shrink-0 transition-transform duration-150 group-hover/nav:scale-105`}
-                  style={{ color: isActive ? 'var(--accent)' : undefined }}
+                  style={{ color: isActive ? 'var(--velvet-accent)' : undefined }}
                 />
-                <span className="relative z-10 ml-3 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">{tNav(item.labelKey)}</span>
+                <span className="relative z-10 ms-3 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">{tNav(item.labelKey)}</span>
                 {isActive && (
-                  <span className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full" style={{ background: 'var(--accent)' }} />
+                  <span className="absolute start-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full" style={{ background: 'var(--velvet-accent)' }} />
                 )}
               </Link>
             );
@@ -338,18 +345,18 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
         </nav>
 
         {/* Bottom User Area */}
-        <div className="p-3.5 border-t overflow-hidden shrink-0" style={{ borderColor: 'var(--border)' }}>
+        <div className="p-3.5 border-t overflow-hidden shrink-0" style={{ borderColor: 'var(--velvet-border)' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center min-w-0 gap-3">
               <div className="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
-                style={{ background: 'var(--surface-2)', color: 'var(--text-sub)', border: '1px solid var(--border)' }}>
+                style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-sub)', border: '1px solid var(--velvet-border)' }}>
                 <User className="w-4 h-4" />
               </div>
               <div className="min-w-0 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
-                <p className="text-xs font-medium truncate" style={{ color: 'var(--text)' }}>
+                <p className="text-xs font-medium truncate" style={{ color: 'var(--velvet-text)' }}>
                   {user?.email || 'Medical Operator'}
                 </p>
-                <p className="text-[10px] truncate font-mono" style={{ color: 'var(--text-muted)' }}>Operator Console</p>
+                <p className="text-2xs truncate font-mono" style={{ color: 'var(--velvet-text-muted)' }}>Operator Console</p>
               </div>
             </div>
             <form onSubmit={(e) => handleRequest(e, SignOut, router)} className="opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shrink-0">
@@ -358,9 +365,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                 type="submit"
                 title="Sign out"
                 className="p-1.5 rounded-lg transition-colors"
-                style={{ color: 'var(--text-muted)' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#f87171')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                style={{ color: 'var(--velvet-text-muted)' }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--velvet-error)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--velvet-text-muted)')}
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -378,33 +385,34 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0"
+            style={{ background: 'var(--velvet-bg)', opacity: 0.6, backdropFilter: 'blur(8px)' }}
             onClick={() => setMobileMenuOpen(false)}
           />
 
           <motion.div
-            initial={{ x: -300 }}
+            initial={{ x: isRtl ? 300 : -300 }}
             animate={{ x: 0 }}
-            exit={{ x: -300 }}
+            exit={{ x: isRtl ? 300 : -300 }}
             transition={{ type: 'spring', stiffness: 320, damping: 32 }}
-            className="relative flex flex-col w-full max-w-xs flex-1 border-r"
-            style={{ background: 'var(--surface-solid)', borderColor: 'var(--border)' }}
+            className="relative flex flex-col w-full max-w-xs flex-1 border-e"
+            style={{ background: 'var(--velvet-surface-solid)', borderColor: 'var(--velvet-border)' }}
           >
             {/* Close button */}
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-4 end-4">
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center w-8 h-8 rounded-lg"
-                style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}
+                style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-muted)' }}
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Brand Header */}
-            <div className="flex items-center h-16 px-6 border-b gap-3" style={{ borderColor: 'var(--border)' }}>
+            <div className="flex items-center h-16 px-6 border-b gap-3" style={{ borderColor: 'var(--velvet-border)' }}>
               <div className="relative flex items-center justify-center w-8 h-8 rounded-lg">
-                <div className="absolute inset-0 rounded-lg" style={{ background: 'var(--gradient)' }} />
+                <div className="absolute inset-0 rounded-lg" style={{ background: 'var(--velvet-gradient-primary)' }} />
                 <svg
                   className="relative z-10"
                   width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3"
@@ -429,16 +437,17 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                     key={tNav(item.labelKey)}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-150 ${
-                      isActive ? 'border-l-2' : ''
+                      isActive ? 'border-s-2' : ''
                     }`}
                     style={{
-                      background: isActive ? 'var(--accent-glow2)' : 'transparent',
-                      color: isActive ? 'var(--accent)' : 'var(--text-sub)',
-                      borderColor: 'var(--accent)'
+                      background: isActive ? 'var(--velvet-accent-glow2)' : 'transparent',
+                      color: isActive ? 'var(--velvet-accent)' : 'var(--velvet-text-sub)',
+                      borderColor: 'var(--velvet-accent)'
                     }}
                   >
-                    <Icon className="w-5 h-5 mr-3" />
+                    <Icon className="w-5 h-5 me-3" />
                     {tNav(item.labelKey)}
                   </Link>
                 );
@@ -446,16 +455,16 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             </nav>
 
             {/* Bottom User Area */}
-            <div className="p-4 border-t" style={{ borderColor: 'var(--border)', background: 'var(--surface-2)' }}>
+            <div className="p-4 border-t" style={{ borderColor: 'var(--velvet-border)', background: 'var(--velvet-surface-2)' }}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center min-w-0 gap-3">
                   <div className="flex items-center justify-center w-8 h-8 rounded-full"
-                    style={{ background: 'var(--surface-2)', color: 'var(--text-sub)' }}>
+                    style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-sub)' }}>
                     <User className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-medium truncate" style={{ color: 'var(--text)' }}>{user?.email}</p>
-                    <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Workspace Operator</p>
+                    <p className="text-xs font-medium truncate" style={{ color: 'var(--velvet-text)' }}>{user?.email}</p>
+                    <p className="text-2xs" style={{ color: 'var(--velvet-text-muted)' }}>Workspace Operator</p>
                   </div>
                 </div>
                 <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
@@ -463,7 +472,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   <button
                     type="submit"
                     className="p-1.5 rounded-lg"
-                    style={{ color: 'var(--text-muted)' }}
+                    style={{ color: 'var(--velvet-text-muted)' }}
                   >
                     <LogOut className="w-4 h-4" />
                   </button>
@@ -479,42 +488,42 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden relative">
         {/* Ambient glowing backdrop elements */}
         <div className="absolute top-[-10%] left-[20%] w-[350px] h-[350px] rounded-full blur-[100px] pointer-events-none z-0 float-y"
-          style={{ background: 'var(--accent-glow2)' }} />
+          style={{ background: 'var(--velvet-accent-glow2)' }} />
         <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none z-0 pulse-glow"
-          style={{ background: 'var(--accent-glow2)' }} />
+          style={{ background: 'var(--velvet-accent-glow2)' }} />
 
         {/* Top bar */}
-        <header className="flex items-center justify-between h-16 px-6 border-b relative z-40 header-shimmer"
-          style={{ borderColor: 'var(--border)' }}>
+        <header className="flex items-center justify-between h-16 px-6 border-b relative z-40 velvet-header-shimmer"
+          style={{ borderColor: 'var(--velvet-border)' }}>
           <div className="flex items-center">
             {/* Mobile toggle */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="p-1.5 mr-4 rounded-lg lg:hidden focus:outline-none"
-              style={{ color: 'var(--text-muted)' }}
+              className="p-1.5 me-4 rounded-lg lg:hidden focus:outline-none"
+              style={{ color: 'var(--velvet-text-muted)' }}
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-lg font-semibold tracking-tight mr-6 font-display text-gradient">{pageTitle}</h1>
+            <h1 className="text-lg font-semibold tracking-tight me-6 font-display text-gradient">{pageTitle}</h1>
             
             {/* Command Palette Launcher Button */}
             <button
               onClick={() => setCommandMenuOpen(true)}
               className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-mono transition-all cursor-pointer select-none"
               style={{
-                background: 'var(--glass-fill)',
-                border: '1px solid var(--border)',
-                color: 'var(--text-muted)',
+                background: 'var(--velvet-glass-fill)',
+                border: '1px solid var(--velvet-border)',
+                color: 'var(--velvet-text-muted)',
                 backdropFilter: 'blur(12px)'
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent)')}
-              onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--velvet-accent)')}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--velvet-border)')}
             >
               <Search className="w-4 h-4" />
               <span>{tCommon('searchOrRunCommand')}</span>
-              <span className="ml-4 px-1.5 py-0.5 text-[9px] rounded font-mono"
-                style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
-                ⌘K
+              <span className="ms-4 px-1.5 py-0.5 text-2xs rounded font-mono"
+                style={{ background: 'var(--velvet-surface-2)', border: '1px solid var(--velvet-border)' }}>
+                âŒکK
               </span>
             </button>
           </div>
@@ -526,7 +535,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             {/* Voice System Widget */}
             <VoiceSystem />
 
-            {/* Theme Selector (2 themes × light/dark) */}
+            {/* Theme Selector (2 themes أ— light/dark) */}
             <ThemeSelector />
 
             {/* Language Switcher */}
@@ -534,8 +543,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Active Role Selector Dropdown */}
             <div className="relative flex items-center gap-1.5 rounded-2xl px-3 py-1.5 transition-colors shrink-0"
-              style={{ background: 'var(--glass-fill)', border: '1px solid var(--border)' }}>
-              <UserCheck className="w-3.5 h-3.5 shrink-0" style={{ color: 'var(--accent)' }} />
+              style={{ background: 'var(--velvet-glass-fill)', border: '1px solid var(--velvet-border)' }}>
+              <UserCheck className="w-3.5 h-3.5 shrink-0" style={{ color: 'var(--velvet-accent)' }} />
               <select
                 value={activeRole}
                 onChange={(e) => {
@@ -543,7 +552,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   setActiveRole(targetRole);
                 }}
                 className="bg-transparent border-none text-xs font-bold outline-none cursor-pointer font-sans"
-                style={{ color: 'var(--text)' }}
+                style={{ color: 'var(--velvet-text)' }}
               >
                 {[
                   'Super Admin',
@@ -555,7 +564,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   'Laboratory Technician',
                   'Read-only Auditor'
                 ].map((roleKey) => (
-                  <option key={roleKey} value={roleKey} style={{ background: 'var(--surface-solid)', color: 'var(--text)' }}>
+                  <option key={roleKey} value={roleKey} style={{ background: 'var(--velvet-surface-solid)', color: 'var(--velvet-text)' }}>
                     {tRoles(roleKey)}
                   </option>
                 ))}
@@ -570,12 +579,12 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               if (!ws) return null;
               return (
                 <div className="hidden lg:flex items-center gap-1.5 rounded-2xl px-3 py-1.5 shrink-0"
-                  style={{ background: consolidated ? 'rgba(245,158,11,0.10)' : 'var(--glass-fill)', border: consolidated ? '1px solid rgba(245,158,11,0.35)' : '1px solid var(--border)' }}
+                  style={{ background: consolidated ? 'var(--velvet-warning-bg)' : 'var(--velvet-glass-fill)', border: consolidated ? '1px solid var(--velvet-warning-border)' : '1px solid var(--velvet-border)' }}
                   title={consolidated ? `Consolidated workspace: ${ws.name}` : `Primary Workspace: ${ws.name}`}
                 >
-                  <Grid className="w-3.5 h-3.5 shrink-0" style={{ color: consolidated ? '#fbbf24' : 'var(--accent)' }} />
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono" style={{ color: consolidated ? '#fbbf24' : 'var(--text-muted)' }}>
-                    {ws.name}{consolidated ? ' · Unified' : ''}
+                  <Grid className="w-3.5 h-3.5 shrink-0" style={{ color: consolidated ? 'var(--velvet-warning)' : 'var(--velvet-accent)' }} />
+                  <span className="text-2xs font-bold uppercase tracking-wider font-mono" style={{ color: consolidated ? 'var(--velvet-warning)' : 'var(--velvet-text-muted)' }}>
+                    {ws.name}{consolidated ? ' آ· Unified' : ''}
                   </span>
                 </div>
               );
@@ -583,22 +592,24 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Quick Invite Staff Button for Admins */}
             {(activeRole === 'Super Admin' || activeRole === 'Clinic Owner') && (
-              <button
+              <Button
                 type="button"
+                variant="primary"
+                size="sm"
                 onClick={() => setShowQuickInviteModal(true)}
-                className="magic-shimmer-btn px-3 py-1.5 text-white font-bold text-xs rounded-2xl flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 shrink-0"
-                title="إضافة وتحديد صلاحيات موظف جديد"
+                className="cursor-pointer active:scale-95 shrink-0"
+                title="ط¥ط¶ط§ظپط© ظˆطھط­ط¯ظٹط¯ طµظ„ط§ط­ظٹط§طھ ظ…ظˆط¸ظپ ط¬ط¯ظٹط¯"
               >
-                <UserPlus className="w-3.5 h-3.5" style={{ color: 'var(--accent)' }} />
-                <span className="hidden lg:inline">+ دعوة موظف</span>
-              </button>
+                <UserPlus className="w-3.5 h-3.5" />
+                <span className="hidden lg:inline">+ ط¯ط¹ظˆط© ظ…ظˆط¸ظپ</span>
+              </Button>
             )}
 
-            <div className="hidden xl:flex items-center gap-2 border-r pr-3 mr-1 shrink-0" style={{ borderColor: 'var(--border)' }}>
-              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
-                {tCommon('systemStatus')}: <span className="uupm-badge-glass text-[10px] uppercase">{tCommon('secure')}</span>
+            <div className="hidden xl:flex items-center gap-2 border-e pe-3 me-1 shrink-0" style={{ borderColor: 'var(--velvet-border)' }}>
+              <span className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>
+                {tCommon('systemStatus')}: <Badge tone="success" className="uppercase">{tCommon('secure')}</Badge>
               </span>
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50" />
+              <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: 'var(--velvet-success)' }} />
             </div>
           </div>
         </header>
@@ -615,11 +626,11 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                   transition={{ duration: 0.5, ease: EASE }}
                   className="min-h-[70vh] flex items-center justify-center p-4"
                 >
-                  <div className="w-full max-w-xl card-elevated p-8 text-center space-y-6 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'var(--gradient)' }} />
+                  <div className="w-full max-w-xl velvet-card p-8 text-center space-y-6 relative overflow-hidden">
+                    <div className="absolute top-0 start-0 end-0 h-[2px]" style={{ background: 'var(--velvet-gradient-primary)' }} />
                     
                     <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center animate-pulse"
-                      style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                      style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                       <ShieldAlert className="w-8 h-8" />
                     </div>
 
@@ -627,17 +638,17 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                       <h3 className="text-xl font-bold tracking-tight font-display">
                         <span className="text-gradient">{tAccess('clearanceRequired')}</span>
                       </h3>
-                      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }} dir="ltr">
-                        {tAccess('pathway')}: {pathname.toUpperCase()} • {tAccess('privilegeLevel')}: {activeRole.toUpperCase()}
+                      <p className="text-xs font-mono" style={{ color: 'var(--velvet-text-muted)' }} dir="ltr">
+                        {tAccess('pathway')}: {pathname.toUpperCase()} â€¢ {tAccess('privilegeLevel')}: {activeRole.toUpperCase()}
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-3xl text-left space-y-2"
-                      style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
-                      <span className="text-[10px] font-bold font-mono block uppercase tracking-wider" style={{ color: 'var(--accent)' }}>
+                    <div className="p-4 rounded-3xl text-start space-y-2"
+                      style={{ background: 'var(--velvet-surface-2)', border: '1px solid var(--velvet-border)' }}>
+                      <span className="text-2xs font-bold font-mono block uppercase tracking-wider" style={{ color: 'var(--velvet-accent)' }}>
                         Access Denied Policy ID: HealthOS-RBAC-0441
                       </span>
-                      <p className="text-xs leading-relaxed font-sans" style={{ color: 'var(--text-sub)' }}>
+                      <p className="text-xs leading-relaxed font-sans" style={{ color: 'var(--velvet-text-sub)' }}>
                         {access.reason || "Your active seat role subscription does not possess the permissions necessary to view this module."}
                       </p>
                     </div>
@@ -646,7 +657,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                       <button
                         onClick={() => setActiveRole('Super Admin')}
                         className="w-full sm:w-auto px-5 py-2.5 text-xs font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer"
-                        style={{ background: 'var(--gradient)', color: '#fff' }}
+                        style={{ background: 'var(--velvet-gradient-primary)', color: 'var(--velvet-text-inverse)' }}
                       >
                         <UserCheck className="w-4 h-4" />
                         <span>Impersonate Super Admin</span>
@@ -654,7 +665,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                       <button
                         onClick={() => router.push('/')}
                         className="w-full sm:w-auto px-5 py-2.5 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 cursor-pointer"
-                        style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text-sub)' }}
+                        style={{ background: 'var(--velvet-surface-2)', border: '1px solid var(--velvet-border)', color: 'var(--velvet-text-sub)' }}
                       >
                         <Lock className="w-4 h-4" />
                         <span>Return to Main Terminal</span>
@@ -679,7 +690,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setCommandMenuOpen(false)}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm cursor-default"
+            className="fixed inset-0"
+            style={{ background: 'var(--velvet-bg)', opacity: 0.6, backdropFilter: 'blur(8px)' }}
           />
 
           {/* Modal Container */}
@@ -688,11 +700,11 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ duration: 0.28, ease: EASE }}
-            className="relative w-full max-w-2xl card-elevated rounded-3xl flex flex-col overflow-hidden font-mono text-xs max-h-[70vh]"
+            className="relative w-full max-w-2xl velvet-card rounded-3xl flex flex-col overflow-hidden font-mono text-xs max-h-[70vh]"
           >
             {/* Header Input Search */}
-            <div className="p-4 border-b flex items-center gap-3" style={{ borderColor: 'var(--border)' }}>
-              <Command className="w-5 h-5 shrink-0" style={{ color: 'var(--accent)' }} />
+            <div className="p-4 border-b flex items-center gap-3" style={{ borderColor: 'var(--velvet-border)' }}>
+              <Command className="w-5 h-5 shrink-0" style={{ color: 'var(--velvet-accent)' }} />
               <input
                 type="text"
                 autoFocus
@@ -704,7 +716,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               <button 
                 onClick={() => setCommandMenuOpen(false)}
                 className="p-1 rounded transition-colors"
-                style={{ color: 'var(--text-muted)' }}
+                style={{ color: 'var(--velvet-text-muted)' }}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -712,8 +724,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Command Feedback status banner if triggered */}
             {commandFeedback && (
-              <div className="px-4 py-2 text-[10px] font-bold font-mono flex items-center gap-2 animate-pulse"
-                style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', borderBottom: '1px solid var(--border-strong)' }}>
+              <div className="px-4 py-2 text-2xs font-bold font-mono flex items-center gap-2 animate-pulse"
+                style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)', borderBottom: '1px solid var(--velvet-border-strong)' }}>
                 <Sparkle className="w-4 h-4 shrink-0" />
                 <span>{commandFeedback}</span>
               </div>
@@ -721,13 +733,13 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
 
             {/* Commands list grouped by category */}
             <div className="flex-1 overflow-y-auto p-2 space-y-3 max-h-[380px]">
-              <div className="px-3 py-1 text-[10px] font-bold uppercase" style={{ color: 'var(--text-muted)' }}>
+              <div className="px-3 py-1 text-2xs font-bold uppercase" style={{ color: 'var(--velvet-text-muted)' }}>
                 {commandQuery ? 'Search matches' : 'Authorized commands & shortcut routines'}
               </div>
 
               <div className="space-y-1">
                 {filteredCommands.length === 0 ? (
-                  <div className="py-8 text-center" style={{ color: 'var(--text-muted)' }}>No telemetry procedures matched query.</div>
+                  <div className="py-8 text-center" style={{ color: 'var(--velvet-text-muted)' }}>No telemetry procedures matched query.</div>
                 ) : (
                   filteredCommands.map((cmd, idx) => (
                     <div
@@ -739,18 +751,18 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
                         }
                       }}
                       className="px-3 py-2.5 rounded-xl flex items-center justify-between gap-4 cursor-pointer transition-colors group"
-                      style={{ color: 'var(--text-sub)' }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--surface-2)')}
+                      style={{ color: 'var(--velvet-text-sub)' }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--velvet-surface-2)')}
                       onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded border font-mono"
-                          style={{ color: 'var(--accent)', background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)' }}>
+                        <span className="text-2xs uppercase font-bold px-2 py-0.5 rounded border font-mono"
+                          style={{ color: 'var(--velvet-accent)', background: 'var(--velvet-accent-glow2)', borderColor: 'var(--velvet-border-strong)' }}>
                           {cmd.category}
                         </span>
                         <span className="font-sans transition-colors">{cmd.name}</span>
                       </div>
-                      <ArrowRight className="w-3.5 h-3.5 transition-all group-hover:translate-x-0.5" style={{ color: 'var(--text-muted)' }} />
+                      <ArrowRight className={`w-3.5 h-3.5 transition-all ${isRtl ? '-scale-x-100 group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5'}`} style={{ color: 'var(--velvet-text-muted)' }} />
                     </div>
                   ))
                 )}
@@ -758,9 +770,9 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
             </div>
 
             {/* Footer hints */}
-            <div className="p-3 border-t text-[10px] flex items-center justify-between"
-              style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
-              <span>Use <kbd className="px-1 py-0.5 rounded" style={{ background: 'var(--surface-2)' }}>↑↓</kbd> to select and <kbd className="px-1 py-0.5 rounded" style={{ background: 'var(--surface-2)' }}>Enter</kbd> to execute</span>
+            <div className="p-3 border-t text-2xs flex items-center justify-between"
+              style={{ borderColor: 'var(--velvet-border)', color: 'var(--velvet-text-muted)' }}>
+              <span>Use <Kbd>â†‘â†“</Kbd> to select and <Kbd>Enter</Kbd> to execute</span>
               <span>ESC to dismiss</span>
             </div>
           </motion.div>
@@ -771,43 +783,44 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       {/* Quick Invite Staff Modal */}
       <AnimatePresence>
       {showQuickInviteModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0" style={{ background: 'var(--velvet-bg)', opacity: 0.6, backdropFilter: 'blur(8px)' }} />
           <motion.form
             initial={{ opacity: 0, scale: 0.95, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 16 }}
             transition={{ duration: 0.3, ease: EASE }}
             onSubmit={handleQuickInviteSubmit}
-            className="card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans text-right" dir="rtl"
+            className="velvet-card p-6 rounded-3xl w-full max-w-md space-y-4 text-xs font-sans text-start" dir="rtl"
           >
-            <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--border)' }}>
+            <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--velvet-border)' }}>
               <div>
                 <h3 className="text-sm font-bold flex items-center gap-2 font-display">
-                  <UserPlus className="w-4 h-4" style={{ color: 'var(--accent)' }} /> دعوة / إضافة موظف جديد لـ HealthOS
+                  <UserPlus className="w-4 h-4" style={{ color: 'var(--velvet-accent)' }} /> ط¯ط¹ظˆط© / ط¥ط¶ط§ظپط© ظ…ظˆط¸ظپ ط¬ط¯ظٹط¯ ظ„ظ€ HealthOS
                 </h3>
-                <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>يمكن للموظف استخدام البريد وكلمة المرور للدخول المباشر دون كود تفعيل.</p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--velvet-text-muted)' }}>ظٹظ…ظƒظ† ظ„ظ„ظ…ظˆط¸ظپ ط§ط³طھط®ط¯ط§ظ… ط§ظ„ط¨ط±ظٹط¯ ظˆظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ظ„ظ„ط¯ط®ظˆظ„ ط§ظ„ظ…ط¨ط§ط´ط± ط¯ظˆظ† ظƒظˆط¯ طھظپط¹ظٹظ„.</p>
               </div>
-              <button type="button" onClick={() => setShowQuickInviteModal(false)} className="p-1" style={{ color: 'var(--text-muted)' }}>
+              <button type="button" onClick={() => setShowQuickInviteModal(false)} className="p-1" style={{ color: 'var(--velvet-text-muted)' }}>
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="space-y-3">
               <div className="space-y-1">
-                <label className="font-semibold block" style={{ color: 'var(--text-sub)' }}>اسم الموظف الكامل</label>
+                <label className="font-semibold block" style={{ color: 'var(--velvet-text-sub)' }}>ط§ط³ظ… ط§ظ„ظ…ظˆط¸ظپ ط§ظ„ظƒط§ظ…ظ„</label>
                 <input
                   type="text"
                   required
                   autoFocus
                   value={quickInviteForm.name}
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, name: e.target.value })}
-                  placeholder="د. محمد السعيد"
+                  placeholder="ط¯. ظ…ط­ظ…ط¯ ط§ظ„ط³ط¹ظٹط¯"
                   className="w-full px-3.5 py-2.5 rounded-xl border outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold block" style={{ color: 'var(--text-sub)' }}>البريد الإلكتروني للموظف</label>
+                <label className="font-semibold block" style={{ color: 'var(--velvet-text-sub)' }}>ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ظ„ظ„ظ…ظˆط¸ظپ</label>
                 <input
                   type="email"
                   required
@@ -820,22 +833,22 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold block" style={{ color: 'var(--text-sub)' }}>الدور والصلاحية (Role / RBAC)</label>
+                <label className="font-semibold block" style={{ color: 'var(--velvet-text-sub)' }}>ط§ظ„ط¯ظˆط± ظˆط§ظ„طµظ„ط§ط­ظٹط© (Role / RBAC)</label>
                 <select
                   value={quickInviteForm.role}
                   onChange={(e) => setQuickInviteForm({ ...quickInviteForm, role: e.target.value as StaffRole })}
                   className="w-full px-3.5 py-2.5 rounded-xl border font-mono outline-none"
                 >
-                  <option value="clinician">🩺 طبيب معالج (Clinician - EHR Access)</option>
-                  <option value="receptionist">📋 مسؤول استقبال (Receptionist - Scheduling)</option>
-                  <option value="lab_tech">🧪 فني مختبر (Lab Tech - CAD/CAM & STL)</option>
-                  <option value="admin">👑 مدير نظام (Clinic Admin)</option>
-                  <option value="auditor">🛡️ مراجع سلامة (HIPAA Auditor)</option>
+                  <option value="clinician">ًں©؛ ط·ط¨ظٹط¨ ظ…ط¹ط§ظ„ط¬ (Clinician - EHR Access)</option>
+                  <option value="receptionist">ًں“‹ ظ…ط³ط¤ظˆظ„ ط§ط³طھظ‚ط¨ط§ظ„ (Receptionist - Scheduling)</option>
+                  <option value="lab_tech">ًں§ھ ظپظ†ظٹ ظ…ط®طھط¨ط± (Lab Tech - CAD/CAM & STL)</option>
+                  <option value="admin">ًں‘‘ ظ…ط¯ظٹط± ظ†ط¸ط§ظ… (Clinic Admin)</option>
+                  <option value="auditor">ًں›،ï¸ڈ ظ…ط±ط§ط¬ط¹ ط³ظ„ط§ظ…ط© (HIPAA Auditor)</option>
                 </select>
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold block" style={{ color: 'var(--text-sub)' }}>كلمة المرور المبدئية للموظف</label>
+                <label className="font-semibold block" style={{ color: 'var(--velvet-text-sub)' }}>ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط§ظ„ظ…ط¨ط¯ط¦ظٹط© ظ„ظ„ظ…ظˆط¸ظپ</label>
                 <input
                   type="text"
                   required
@@ -846,21 +859,21 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
+            <div className="flex justify-end gap-2 border-t pt-3" style={{ borderColor: 'var(--velvet-border)' }}>
               <button
                 type="button"
                 onClick={() => setShowQuickInviteModal(false)}
                 className="px-4 py-2 rounded-xl font-semibold text-xs cursor-pointer"
-                style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}
+                style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-muted)' }}
               >
-                إلغاء
+                ط¥ظ„ط؛ط§ط،
               </button>
               <button
                 type="submit"
                 className="px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 cursor-pointer"
-                style={{ background: 'var(--gradient)', color: '#fff' }}
+                style={{ background: 'var(--velvet-gradient-primary)', color: 'var(--velvet-text-inverse)' }}
               >
-                إرسال الدعوة واعتماد الحساب
+                ط¥ط±ط³ط§ظ„ ط§ظ„ط¯ط¹ظˆط© ظˆط§ط¹طھظ…ط§ط¯ ط§ظ„ط­ط³ط§ط¨
               </button>
             </div>
           </motion.form>

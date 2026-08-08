@@ -9,13 +9,13 @@ interface Props {
 
 export default function Card({ title, description, footer, children }: Props) {
   return (
-    <div className="w-full max-w-3xl m-auto my-8 card-elevated overflow-hidden rounded-3xl">
+    <div className="w-full max-w-3xl m-auto my-8 velvet-card overflow-hidden rounded-3xl">
       <div className="px-6 py-5">
-        <h3 className="mb-1 text-2xl font-semibold font-display tracking-tight" style={{ color: 'var(--text)' }}>
+        <h3 className="mb-1 text-2xl font-semibold font-display tracking-tight" style={{ color: 'var(--velvet-text)' }}>
           {title}
         </h3>
         {description && (
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--velvet-text-muted)' }}>
             {description}
           </p>
         )}
@@ -24,7 +24,7 @@ export default function Card({ title, description, footer, children }: Props) {
       {footer && (
         <div
           className="p-4 border-t rounded-b-3xl"
-          style={{ borderColor: 'var(--border)', background: 'var(--surface-2)', color: 'var(--text-muted)' }}
+          style={{ borderColor: 'var(--velvet-border)', background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-muted)' }}
         >
           {footer}
         </div>

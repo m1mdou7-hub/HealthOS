@@ -43,16 +43,16 @@ export function ToothSelector({
   };
 
   const getToothColor = (status: ToothStatus, isActive: boolean) => {
-    if (isActive) return 'border-emerald-500 bg-emerald-500/10 text-emerald-400 shadow-md shadow-emerald-500/20';
+    if (isActive) return 'border-emerald-500 bg-emerald-500/10 text-emerald-400 shadow-soft shadow-emerald-500/20';
     switch (status) {
       case 'decayed':
-        return 'border-rose-500/60 bg-rose-500/10 text-rose-400 shadow-sm shadow-rose-500/10';
+        return 'border-rose-500/60 bg-rose-500/10 text-rose-400 shadow-soft shadow-rose-500/10';
       case 'filled':
-        return 'border-purple-500/60 bg-purple-500/10 text-purple-400 shadow-sm shadow-purple-500/10';
+        return 'border-purple-500/60 bg-purple-500/10 text-purple-400 shadow-soft shadow-purple-500/10';
       case 'crown':
-        return 'border-amber-500/60 bg-amber-500/10 text-amber-300 shadow-sm shadow-amber-500/10';
+        return 'border-amber-500/60 bg-amber-500/10 text-amber-300 shadow-soft shadow-amber-500/10';
       case 'implant':
-        return 'border-cyan-500/60 bg-cyan-500/10 text-cyan-400 shadow-md shadow-cyan-500/15';
+        return 'border-cyan-500/60 bg-cyan-500/10 text-cyan-400 shadow-soft shadow-cyan-500/15';
       case 'missing':
         return 'border-dashed border-zinc-800 bg-zinc-950/40 text-zinc-600 opacity-40';
       default:
@@ -104,7 +104,7 @@ export function ToothSelector({
             <Smile className="w-4 h-4 text-emerald-400 animate-pulse" /> 
             {t('clinical_chart_title', { defaultValue: 'Interactive Restorative Dental Chart' })}
           </h3>
-          <p className="text-[11px] text-zinc-500 mt-0.5">
+          <p className="text-xs text-zinc-500 mt-0.5">
             {t('clinical_chart_desc', { defaultValue: 'Select any tooth to update status, link procedures, or view medical conditions.' })}
           </p>
         </div>
@@ -114,7 +114,7 @@ export function ToothSelector({
       <div className="space-y-6 py-4 overflow-x-auto scrollbar-none">
         {/* Upper Arch (1 - 16) */}
         <div className="flex flex-col items-center space-y-1 min-w-[640px]">
-          <span className="text-[8px] font-mono text-zinc-600 uppercase tracking-widest font-semibold">Upper Arch (Maxillary)</span>
+          <span className="text-2xs font-mono text-zinc-600 uppercase tracking-widest font-semibold">Upper Arch (Maxillary)</span>
           <div className="flex gap-2">
             {upperArch.map(num => {
               const status = teethStatuses[num] || 'sound';
@@ -125,9 +125,9 @@ export function ToothSelector({
                   onClick={() => handleToothClick(num)}
                   className={`w-9 h-16 rounded-xl border flex flex-col justify-between items-center p-1 transition-all ${getToothColor(status, isActive)}`}
                 >
-                  <span className="text-[9px] font-mono font-bold block">{num}</span>
+                  <span className="text-2xs font-mono font-bold block">{num}</span>
                   {renderToothSVG(status, true)}
-                  <span className="text-[7px] font-mono scale-[0.9] block text-zinc-500 truncate max-w-[32px]">
+                  <span className="text-2xs font-mono scale-[0.9] block text-zinc-500 truncate max-w-[32px]">
                     {getToothLabel(status)}
                   </span>
                 </button>
@@ -148,30 +148,30 @@ export function ToothSelector({
                   onClick={() => handleToothClick(num)}
                   className={`w-9 h-16 rounded-xl border flex flex-col justify-between items-center p-1 transition-all ${getToothColor(status, isActive)}`}
                 >
-                  <span className="text-[7px] font-mono scale-[0.9] block text-zinc-500 truncate max-w-[32px]">
+                  <span className="text-2xs font-mono scale-[0.9] block text-zinc-500 truncate max-w-[32px]">
                     {getToothLabel(status)}
                   </span>
                   {renderToothSVG(status, false)}
-                  <span className="text-[9px] font-mono font-bold block">{num}</span>
+                  <span className="text-2xs font-mono font-bold block">{num}</span>
                 </button>
               );
             })}
           </div>
-          <span className="text-[8px] font-mono text-zinc-600 uppercase tracking-widest font-semibold mt-1">Lower Arch (Mandibular)</span>
+          <span className="text-2xs font-mono text-zinc-600 uppercase tracking-widest font-semibold mt-1">Lower Arch (Mandibular)</span>
         </div>
       </div>
 
       {/* Floating Interactive Controller Panel */}
       {showStatusMenu && activeTooth !== null && (
         <div className="p-4 rounded-xl border border-zinc-850 bg-zinc-950/60 backdrop-blur-md grid grid-cols-1 md:grid-cols-2 gap-4 items-center animate-in fade-in slide-in-from-bottom-2 duration-300">
-          <div className="text-left">
-            <span className="text-[10px] font-mono text-zinc-500 block uppercase">Selected Anatomical Location</span>
+          <div className="text-start">
+            <span className="text-2xs font-mono text-zinc-500 block uppercase">Selected Anatomical Location</span>
             <h4 className="text-xs font-bold text-white mt-0.5">
               Tooth #{activeTooth} • {activeTooth <= 16 ? 'Upper Maxillary Arch' : 'Lower Mandibular Arch'}
             </h4>
             <div className="flex gap-2 items-center mt-1.5">
-              <span className="text-[10px] text-zinc-400">Current Status:</span>
-              <span className="text-[10px] font-bold text-emerald-400 font-mono capitalize">
+              <span className="text-2xs text-zinc-400">Current Status:</span>
+              <span className="text-2xs font-bold text-emerald-400 font-mono capitalize">
                 {getToothLabel(teethStatuses[activeTooth] || 'sound')}
               </span>
             </div>
@@ -179,37 +179,37 @@ export function ToothSelector({
           <div className="flex flex-wrap gap-1.5 justify-end">
             <button
               onClick={() => updateStatus('sound')}
-              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-[10px] text-zinc-300 flex items-center gap-1 border border-zinc-800"
+              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-2xs text-zinc-300 flex items-center gap-1 border border-zinc-800"
             >
               <Shield className="w-3 h-3 text-emerald-400" /> Sound
             </button>
             <button
               onClick={() => updateStatus('decayed')}
-              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-[10px] text-zinc-300 flex items-center gap-1 border border-zinc-800"
+              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-2xs text-zinc-300 flex items-center gap-1 border border-zinc-800"
             >
               <Flame className="w-3 h-3 text-rose-400" /> Caries
             </button>
             <button
               onClick={() => updateStatus('filled')}
-              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-[10px] text-zinc-300 flex items-center gap-1 border border-zinc-800"
+              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-2xs text-zinc-300 flex items-center gap-1 border border-zinc-800"
             >
               <Hammer className="w-3 h-3 text-purple-400" /> Restored
             </button>
             <button
               onClick={() => updateStatus('crown')}
-              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-[10px] text-zinc-300 flex items-center gap-1 border border-zinc-800"
+              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-2xs text-zinc-300 flex items-center gap-1 border border-zinc-800"
             >
               <Compass className="w-3 h-3 text-amber-400" /> Crown
             </button>
             <button
               onClick={() => updateStatus('implant')}
-              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-[10px] text-zinc-300 flex items-center gap-1 border border-zinc-800"
+              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-2xs text-zinc-300 flex items-center gap-1 border border-zinc-800"
             >
               <Anchor className="w-3 h-3 text-cyan-400" /> Implant
             </button>
             <button
               onClick={() => updateStatus('missing')}
-              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-[10px] text-zinc-300 flex items-center gap-1 border border-zinc-800"
+              className="px-2 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-2xs text-zinc-300 flex items-center gap-1 border border-zinc-800"
             >
               <Ban className="w-3 h-3 text-zinc-500" /> Missing
             </button>

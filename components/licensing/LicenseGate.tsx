@@ -180,7 +180,7 @@ export default function LicenseGate({
       dir="rtl"
       className="flex min-h-screen items-center justify-center bg-zinc-950 px-5 py-10 text-zinc-100"
     >
-      <section className="w-full max-w-lg overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/80 shadow-2xl shadow-black/40">
+      <section className="w-full max-w-lg overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/80 shadow-card shadow-black/40">
         <div className="border-b border-zinc-800 bg-gradient-to-l from-emerald-500/10 to-transparent px-7 py-6">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500 text-zinc-950">
@@ -194,7 +194,7 @@ export default function LicenseGate({
                 <LockKeyhole className="h-6 w-6" />
               )}
             </div>
-            <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold text-emerald-400">
+            <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
               HealthOS Security & Auth
             </span>
           </div>
@@ -226,7 +226,7 @@ export default function LicenseGate({
                 onClick={() => setAuthMode('staff')}
                 className={`py-2 rounded-xl transition-all ${
                   authMode === 'staff'
-                    ? 'bg-emerald-500 text-zinc-950 font-bold shadow-md shadow-emerald-500/20'
+                    ? 'bg-emerald-500 text-zinc-950 font-bold shadow-soft shadow-emerald-500/20'
                     : 'text-zinc-400 hover:text-white'
                 }`}
               >
@@ -237,7 +237,7 @@ export default function LicenseGate({
                 onClick={() => setAuthMode('admin_key')}
                 className={`py-2 rounded-xl transition-all ${
                   authMode === 'admin_key'
-                    ? 'bg-emerald-500 text-zinc-950 font-bold shadow-md shadow-emerald-500/20'
+                    ? 'bg-emerald-500 text-zinc-950 font-bold shadow-soft shadow-emerald-500/20'
                     : 'text-zinc-400 hover:text-white'
                 }`}
               >
@@ -292,33 +292,33 @@ export default function LicenseGate({
 
               {/* Quick Demo Staff Login Buttons */}
               <div className="pt-2 border-t border-zinc-800 space-y-2">
-                <span className="text-[11px] text-zinc-500 block font-semibold">تجرية سريعة بحسابات الموظفين المجهزة:</span>
-                <div className="grid grid-cols-2 gap-1.5 font-mono text-[10px]">
+                <span className="text-xs text-zinc-500 block font-semibold">تجرية سريعة بحسابات الموظفين المجهزة:</span>
+                <div className="grid grid-cols-2 gap-1.5 font-mono text-2xs">
                   <button
                     type="button"
                     onClick={() => fillQuickStaff('doctor@healthos.io', 'doctor123')}
-                    className="p-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-emerald-400 text-right truncate"
+                    className="p-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-emerald-400 text-start truncate"
                   >
                     🩺 طبيب: doctor@healthos.io
                   </button>
                   <button
                     type="button"
                     onClick={() => fillQuickStaff('admin@healthos.io', 'admin123')}
-                    className="p-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-purple-400 text-right truncate"
+                    className="p-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-purple-400 text-start truncate"
                   >
                     👑 مدير: admin@healthos.io
                   </button>
                   <button
                     type="button"
                     onClick={() => fillQuickStaff('reception@healthos.io', 'reception123')}
-                    className="p-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-blue-400 text-right truncate"
+                    className="p-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-blue-400 text-start truncate"
                   >
                     📋 استقبال: reception@healthos.io
                   </button>
                   <button
                     type="button"
                     onClick={() => fillQuickStaff('lab@healthos.io', 'lab123')}
-                    className="p-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-amber-400 text-right truncate"
+                    className="p-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-amber-400 text-start truncate"
                   >
                     🧪 مختبر: lab@healthos.io
                   </button>
@@ -342,7 +342,7 @@ export default function LicenseGate({
                   dir="ltr"
                   className="w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-mono text-sm uppercase tracking-wider text-white placeholder:text-zinc-600 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                 />
-                <span className="mt-1.5 block text-[11px] text-zinc-500">
+                <span className="mt-1.5 block text-xs text-zinc-500">
                   للتجربة المباشرة استخدم المفتاح: <code className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-emerald-400">NX-HOS-DEMO</code> أو <code className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-emerald-400">HEALTHOS-2026</code>
                 </span>
               </label>

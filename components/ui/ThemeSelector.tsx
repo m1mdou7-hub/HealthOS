@@ -20,21 +20,21 @@ export const THEMES: {
 }[] = [
   {
     id: 'purple',
-    name: 'بنفسجي فاخر',
-    enName: 'Luxury Purple',
-    subtitle: 'Amethyst · Graphite · Orchid',
-    previewGradient: 'from-[#9B71B2] via-[#3A1C36] to-[#0b0710]',
-    accentHex: '#9B71B2',
-    bgHex: '#FBF1FF'
+    name: 'فاخر داكن',
+    enName: 'Velvet Gold',
+    subtitle: 'Onyx · Gold · Graphite',
+    previewGradient: 'from-[#c9a84c] via-[#2d2d42] to-[#0a0a0f]',
+    accentHex: '#c9a84c',
+    bgHex: '#0a0a0f'
   },
   {
     id: 'earth',
-    name: 'إيرث فاخر',
-    enName: 'Luxury Earth',
-    subtitle: 'Chestnut · Morning Blue · Almond',
-    previewGradient: 'from-[#8A9992] via-[#55443A] to-[#4D2308]',
-    accentHex: '#8A9992',
-    bgHex: '#CFD0CD'
+    name: 'فاخر فاتح',
+    enName: 'Velvet Pearl',
+    subtitle: 'Gold · Pearl · Ivory',
+    previewGradient: 'from-[#b8943a] via-[#e9e9f2] to-[#fafaff]',
+    accentHex: '#b8943a',
+    bgHex: '#fafaff'
   }
 ];
 
@@ -57,6 +57,8 @@ export function applyThemeToDocument(theme: ThemeId, mode: Mode) {
   const root = document.documentElement;
   root.setAttribute('data-theme', theme);
   root.setAttribute('data-mode', mode);
+  root.setAttribute('data-velvet-theme', mode === 'light' ? 'white' : 'black');
+  root.setAttribute('data-velvet-mode', mode);
   root.classList.remove('theme-crimson', 'theme-earthy', 'theme-amethyst');
   localStorage.setItem(THEME_STORAGE_KEY, theme);
   localStorage.setItem(MODE_STORAGE_KEY, mode);
@@ -96,12 +98,12 @@ export default function ThemeSelector() {
       {/* Header Button Launcher */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-3 py-1.5 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/10 flex items-center gap-2 text-xs font-bold text-white transition-all shadow-md cursor-pointer hover:border-white/20 active:scale-95"
+        className="px-3 py-1.5 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/10 flex items-center gap-2 text-xs font-bold text-white transition-all shadow-soft cursor-pointer hover:border-white/20 active:scale-95"
         title="تغيير الثيم والمظهر"
         aria-label="Theme selector"
       >
         <Palette className="w-3.5 h-3.5 text-white" />
-        <span className="hidden sm:inline text-[11px]">{currentThemeObj.enName}</span>
+        <span className="hidden sm:inline text-xs">{currentThemeObj.enName}</span>
         <span
           className="w-2.5 h-2.5 rounded-full border border-white/20"
           style={{ backgroundColor: currentThemeObj.accentHex }}
@@ -127,13 +129,13 @@ export default function ThemeSelector() {
         <>
           <div className="fixed inset-0 z-[99990]" onClick={() => setIsOpen(false)} />
 
-          <div className="absolute left-0 mt-2 w-80 z-[99999] bg-zinc-950/95 border border-white/15 rounded-3xl p-3 shadow-2xl backdrop-blur-2xl space-y-2 animate-scale-in">
+          <div className="absolute end-0 mt-2 w-80 z-[99999] bg-zinc-950/95 border border-white/15 rounded-3xl p-3 shadow-card backdrop-blur-2xl space-y-2 animate-scale-in">
             <div className="flex items-center justify-between px-2 py-1.5 border-b border-white/10">
               <div className="flex items-center gap-1.5 text-xs font-bold text-white">
                 <Sparkles className="w-4 h-4 text-amber-400" />
                 <span>اختر الثيم والمظهر</span>
               </div>
-              <span className="text-[9px] font-mono text-zinc-500">2 ثيمات × 2 أوضاع</span>
+              <span className="text-2xs font-mono text-zinc-500">2 ثيمات × 2 أوضاع</span>
             </div>
 
             {/* Mode segmented control */}
@@ -145,7 +147,7 @@ export default function ThemeSelector() {
                     setMode(m);
                     applyThemeToDocument(currentTheme, m);
                   }}
-                  className={`flex-1 py-1.5 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`flex-1 py-1.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     mode === m
                       ? 'bg-white/10 text-white border border-white/20 shadow'
                       : 'text-zinc-400 hover:text-white'
@@ -164,9 +166,9 @@ export default function ThemeSelector() {
                   <button
                     key={t.id}
                     onClick={() => handleSelectTheme(t.id)}
-                    className={`w-full p-2.5 rounded-2xl border text-right transition-all flex items-center justify-between cursor-pointer ${
+                    className={`w-full p-2.5 rounded-2xl border text-start transition-all flex items-center justify-between cursor-pointer ${
                       isSelected
-                        ? 'bg-white/10 border-white/30 shadow-lg'
+                        ? 'bg-white/10 border-white/30 shadow-soft'
                         : 'bg-zinc-900/50 border-white/[0.04] hover:bg-zinc-900 hover:border-white/10'
                     }`}
                   >
@@ -179,9 +181,9 @@ export default function ThemeSelector() {
                       <div>
                         <div className="text-xs font-bold text-white flex items-center gap-1.5">
                           <span>{t.name}</span>
-                          <span className="text-[9px] font-mono text-zinc-500">{t.enName}</span>
+                          <span className="text-2xs font-mono text-zinc-500">{t.enName}</span>
                         </div>
-                        <span className="text-[9px] text-zinc-400 font-mono block">{t.subtitle}</span>
+                        <span className="text-2xs text-zinc-400 font-mono block">{t.subtitle}</span>
                       </div>
                     </div>
                   </button>
@@ -190,7 +192,7 @@ export default function ThemeSelector() {
             </div>
 
             <div className="pt-1.5 border-t border-white/10 text-center">
-              <span className="text-[9px] text-zinc-500 font-mono">
+              <span className="text-2xs text-zinc-500 font-mono">
                 تُحفظ التفضيلات تلقائياً · ثيم فوري عبر CSS Variables
               </span>
             </div>

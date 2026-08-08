@@ -45,7 +45,8 @@ import {
   MoreVertical
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { getDirection } from '@/i18n/config';
 import {
   getClinics,
   addClinicLocation,
@@ -169,58 +170,58 @@ interface CustomAnnouncement {
 
 // --- CORE REALISTIC MOCK DATA ---
 const INITIAL_CLINICS: ClinicHub[] = [
-  { id: 'C-01', name: 'مجمع هيلث أو إس الرئيسي للأسنان', location: 'طريق الملك فهد، الرياض', manager: 'د. كاترين أفيري', doctors: 12, patients: 1420, rooms: 8, hours: '08:00 - 20:00', status: 'Active' },
-  { id: 'C-02', name: 'مركز الرعاية الطارئة بالشمال', location: 'طريق الأمير سلطان، جدة', manager: 'ماركوس ستيرلينغ', doctors: 6, patients: 850, rooms: 4, hours: 'عمليات 24/7', status: 'Active' },
-  { id: 'C-03', name: 'مركز طب أسنان الأطفال والغرب', location: 'شارع الملك عبد الله، الخبر', manager: 'سيلينا كاين', doctors: 4, patients: 512, rooms: 3, hours: '09:00 - 17:00', status: 'Active' },
-  { id: 'C-04', name: 'مركز الجراحة والاستعاضة الشرقية', location: 'طريق الكورنيش، الدمام', manager: 'لوسيوس فوكس', doctors: 8, patients: 940, rooms: 6, hours: '07:00 - 19:00', status: 'Maintenance' },
+  { id: 'C-01', name: 'ظ…ط¬ظ…ط¹ ظ‡ظٹظ„ط« ط£ظˆ ط¥ط³ ط§ظ„ط±ط¦ظٹط³ظٹ ظ„ظ„ط£ط³ظ†ط§ظ†', location: 'ط·ط±ظٹظ‚ ط§ظ„ظ…ظ„ظƒ ظپظ‡ط¯طŒ ط§ظ„ط±ظٹط§ط¶', manager: 'ط¯. ظƒط§طھط±ظٹظ† ط£ظپظٹط±ظٹ', doctors: 12, patients: 1420, rooms: 8, hours: '08:00 - 20:00', status: 'Active' },
+  { id: 'C-02', name: 'ظ…ط±ظƒط² ط§ظ„ط±ط¹ط§ظٹط© ط§ظ„ط·ط§ط±ط¦ط© ط¨ط§ظ„ط´ظ…ط§ظ„', location: 'ط·ط±ظٹظ‚ ط§ظ„ط£ظ…ظٹط± ط³ظ„ط·ط§ظ†طŒ ط¬ط¯ط©', manager: 'ظ…ط§ط±ظƒظˆط³ ط³طھظٹط±ظ„ظٹظ†ط؛', doctors: 6, patients: 850, rooms: 4, hours: 'ط¹ظ…ظ„ظٹط§طھ 24/7', status: 'Active' },
+  { id: 'C-03', name: 'ظ…ط±ظƒط² ط·ط¨ ط£ط³ظ†ط§ظ† ط§ظ„ط£ط·ظپط§ظ„ ظˆط§ظ„ط؛ط±ط¨', location: 'ط´ط§ط±ط¹ ط§ظ„ظ…ظ„ظƒ ط¹ط¨ط¯ ط§ظ„ظ„ظ‡طŒ ط§ظ„ط®ط¨ط±', manager: 'ط³ظٹظ„ظٹظ†ط§ ظƒط§ظٹظ†', doctors: 4, patients: 512, rooms: 3, hours: '09:00 - 17:00', status: 'Active' },
+  { id: 'C-04', name: 'ظ…ط±ظƒط² ط§ظ„ط¬ط±ط§ط­ط© ظˆط§ظ„ط§ط³طھط¹ط§ط¶ط© ط§ظ„ط´ط±ظ‚ظٹط©', location: 'ط·ط±ظٹظ‚ ط§ظ„ظƒظˆط±ظ†ظٹط´طŒ ط§ظ„ط¯ظ…ط§ظ…', manager: 'ظ„ظˆط³ظٹظˆط³ ظپظˆظƒط³', doctors: 8, patients: 940, rooms: 6, hours: '07:00 - 19:00', status: 'Maintenance' },
 ];
 
 const INITIAL_USERS: OrgUser[] = [
-  { id: 'U-101', name: 'د. كاترين أفيري', role: 'Owner', email: 'catherine.avery@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Active', avatarColor: 'from-emerald-500 to-teal-600', phone: '+966 50 102 3920', departmentId: 'administration', jobTitle: 'Clinical Director', responsibilities: ['owner', 'clinical', 'administration', 'finance', 'analytics', 'quality'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'owner', accessScope: 'organization', workspace: 'administration' },
-  { id: 'U-102', name: 'د. بروس واين', role: 'Doctor', email: 'b.wayne@healthos-group.com', clinic: 'مركز الجراحة والاستعاضة الشرقية', status: 'Active', avatarColor: 'from-slate-700 to-zinc-900', phone: '+966 55 902 1244', departmentId: 'dentistry', specialtyId: 'oral-surgery', jobTitle: 'Oral & Maxillofacial Surgeon', responsibilities: ['clinical', 'imaging', 'owner'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'doctor', accessScope: 'department', workspace: 'doctor' },
-  { id: 'U-103', name: 'ماركوس ستيرلينغ', role: 'Lab Technician', email: 'm.sterling@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Active', avatarColor: 'from-amber-500 to-rose-600', phone: '+966 54 482 1922', departmentId: 'laboratory', specialtyId: 'lab-manager', jobTitle: 'Digital Lab Technician', responsibilities: ['laboratory', 'imaging', 'inventory'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'lab-technician', accessScope: 'department', workspace: 'laboratory' },
-  { id: 'U-104', name: 'لوسيوس فوكس', role: 'Administrator', email: 'l.fox@healthos-group.com', clinic: 'مركز الجراحة والاستعاضة الشرقية', status: 'Active', avatarColor: 'from-blue-600 to-indigo-700', phone: '+966 56 302 8854', departmentId: 'administration', jobTitle: 'Systems Administrator', responsibilities: ['administration', 'it', 'finance'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'admin', accessScope: 'organization', workspace: 'administration' },
-  { id: 'U-105', name: 'سيلينا كاين', role: 'Manager', email: 's.kyle@healthos-group.com', clinic: 'مركز طب أسنان الأطفال والغرب', status: 'Active', avatarColor: 'from-purple-600 to-fuchsia-700', phone: '+966 50 120 4493', departmentId: 'front-desk', jobTitle: 'Practice Manager', responsibilities: ['reception', 'administration', 'finance', 'hr', 'marketing'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'manager', accessScope: 'branch', workspace: 'reception' },
-  { id: 'U-106', name: 'آنيا تشالوترا', role: 'Assistant', email: 'a.chalotra@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Active', avatarColor: 'from-pink-500 to-rose-600', phone: '+966 53 882 9411', departmentId: 'dentistry', jobTitle: 'Clinical Assistant', responsibilities: ['clinical', 'reception'], employmentType: 'Part Time', employmentStatus: 'Active', permissionTemplateId: 'assistant', accessScope: 'department', workspace: 'doctor' },
-  { id: 'U-107', name: 'د. إلينا روستوفا', role: 'Doctor', email: 'e.rostova@healthos-group.com', clinic: 'مركز طب أسنان الأطفال والغرب', status: 'Active', avatarColor: 'from-red-500 to-orange-600', phone: '+966 50 441 2902', departmentId: 'dentistry', specialtyId: 'orthodontics', jobTitle: 'Orthodontist', responsibilities: ['clinical'], employmentType: 'Consultant', employmentStatus: 'Active', permissionTemplateId: 'doctor', accessScope: 'department', workspace: 'doctor' },
-  { id: 'U-108', name: 'باميلا إيسلي', role: 'Receptionist', email: 'p.isley@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Pending', avatarColor: 'from-green-500 to-emerald-600', phone: '+966 55 773 1945', departmentId: 'front-desk', specialtyId: 'receptionist', jobTitle: 'Receptionist', responsibilities: ['reception', 'marketing'], employmentType: 'Part Time', employmentStatus: 'Active', permissionTemplateId: 'receptionist', accessScope: 'branch', workspace: 'reception' },
-  { id: 'U-109', name: 'د. روبرت كارتر', role: 'Doctor', email: 'r.carter@healthos-group.com', clinic: 'مركز الرعاية الطارئة بالشمال', status: 'Active', avatarColor: 'from-cyan-500 to-blue-600', phone: '+966 50 832 4410', departmentId: 'dentistry', specialtyId: 'general-dentistry', jobTitle: 'General Dentist', responsibilities: ['clinical'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'doctor', accessScope: 'department', workspace: 'doctor' },
-  { id: 'U-110', name: 'هارلي كوين', role: 'Assistant', email: 'h.quinn@healthos-group.com', clinic: 'مجمع هيلث أو إس الرئيسي للأسنان', status: 'Inactive', avatarColor: 'from-rose-500 to-red-700', phone: '+966 54 293 1110', departmentId: 'front-desk', jobTitle: 'Front Desk Assistant', responsibilities: ['reception'], employmentType: 'Intern', employmentStatus: 'Vacation', permissionTemplateId: 'receptionist', accessScope: 'branch', workspace: 'reception' },
+  { id: 'U-101', name: 'ط¯. ظƒط§طھط±ظٹظ† ط£ظپظٹط±ظٹ', role: 'Owner', email: 'catherine.avery@healthos-group.com', clinic: 'ظ…ط¬ظ…ط¹ ظ‡ظٹظ„ط« ط£ظˆ ط¥ط³ ط§ظ„ط±ط¦ظٹط³ظٹ ظ„ظ„ط£ط³ظ†ط§ظ†', status: 'Active', avatarColor: 'from-emerald-500 to-teal-600', phone: '+966 50 102 3920', departmentId: 'administration', jobTitle: 'Clinical Director', responsibilities: ['owner', 'clinical', 'administration', 'finance', 'analytics', 'quality'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'owner', accessScope: 'organization', workspace: 'administration' },
+  { id: 'U-102', name: 'ط¯. ط¨ط±ظˆط³ ظˆط§ظٹظ†', role: 'Doctor', email: 'b.wayne@healthos-group.com', clinic: 'ظ…ط±ظƒط² ط§ظ„ط¬ط±ط§ط­ط© ظˆط§ظ„ط§ط³طھط¹ط§ط¶ط© ط§ظ„ط´ط±ظ‚ظٹط©', status: 'Active', avatarColor: 'from-slate-700 to-zinc-900', phone: '+966 55 902 1244', departmentId: 'dentistry', specialtyId: 'oral-surgery', jobTitle: 'Oral & Maxillofacial Surgeon', responsibilities: ['clinical', 'imaging', 'owner'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'doctor', accessScope: 'department', workspace: 'doctor' },
+  { id: 'U-103', name: 'ظ…ط§ط±ظƒظˆط³ ط³طھظٹط±ظ„ظٹظ†ط؛', role: 'Lab Technician', email: 'm.sterling@healthos-group.com', clinic: 'ظ…ط¬ظ…ط¹ ظ‡ظٹظ„ط« ط£ظˆ ط¥ط³ ط§ظ„ط±ط¦ظٹط³ظٹ ظ„ظ„ط£ط³ظ†ط§ظ†', status: 'Active', avatarColor: 'from-amber-500 to-rose-600', phone: '+966 54 482 1922', departmentId: 'laboratory', specialtyId: 'lab-manager', jobTitle: 'Digital Lab Technician', responsibilities: ['laboratory', 'imaging', 'inventory'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'lab-technician', accessScope: 'department', workspace: 'laboratory' },
+  { id: 'U-104', name: 'ظ„ظˆط³ظٹظˆط³ ظپظˆظƒط³', role: 'Administrator', email: 'l.fox@healthos-group.com', clinic: 'ظ…ط±ظƒط² ط§ظ„ط¬ط±ط§ط­ط© ظˆط§ظ„ط§ط³طھط¹ط§ط¶ط© ط§ظ„ط´ط±ظ‚ظٹط©', status: 'Active', avatarColor: 'from-blue-600 to-indigo-700', phone: '+966 56 302 8854', departmentId: 'administration', jobTitle: 'Systems Administrator', responsibilities: ['administration', 'it', 'finance'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'admin', accessScope: 'organization', workspace: 'administration' },
+  { id: 'U-105', name: 'ط³ظٹظ„ظٹظ†ط§ ظƒط§ظٹظ†', role: 'Manager', email: 's.kyle@healthos-group.com', clinic: 'ظ…ط±ظƒط² ط·ط¨ ط£ط³ظ†ط§ظ† ط§ظ„ط£ط·ظپط§ظ„ ظˆط§ظ„ط؛ط±ط¨', status: 'Active', avatarColor: 'from-purple-600 to-fuchsia-700', phone: '+966 50 120 4493', departmentId: 'front-desk', jobTitle: 'Practice Manager', responsibilities: ['reception', 'administration', 'finance', 'hr', 'marketing'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'manager', accessScope: 'branch', workspace: 'reception' },
+  { id: 'U-106', name: 'ط¢ظ†ظٹط§ طھط´ط§ظ„ظˆطھط±ط§', role: 'Assistant', email: 'a.chalotra@healthos-group.com', clinic: 'ظ…ط±ظƒط² ط§ظ„ط±ط¹ط§ظٹط© ط§ظ„ط·ط§ط±ط¦ط© ط¨ط§ظ„ط´ظ…ط§ظ„', status: 'Active', avatarColor: 'from-pink-500 to-rose-600', phone: '+966 53 882 9411', departmentId: 'dentistry', jobTitle: 'Clinical Assistant', responsibilities: ['clinical', 'reception'], employmentType: 'Part Time', employmentStatus: 'Active', permissionTemplateId: 'assistant', accessScope: 'department', workspace: 'doctor' },
+  { id: 'U-107', name: 'ط¯. ط¥ظ„ظٹظ†ط§ ط±ظˆط³طھظˆظپط§', role: 'Doctor', email: 'e.rostova@healthos-group.com', clinic: 'ظ…ط±ظƒط² ط·ط¨ ط£ط³ظ†ط§ظ† ط§ظ„ط£ط·ظپط§ظ„ ظˆط§ظ„ط؛ط±ط¨', status: 'Active', avatarColor: 'from-red-500 to-orange-600', phone: '+966 50 441 2902', departmentId: 'dentistry', specialtyId: 'orthodontics', jobTitle: 'Orthodontist', responsibilities: ['clinical'], employmentType: 'Consultant', employmentStatus: 'Active', permissionTemplateId: 'doctor', accessScope: 'department', workspace: 'doctor' },
+  { id: 'U-108', name: 'ط¨ط§ظ…ظٹظ„ط§ ط¥ظٹط³ظ„ظٹ', role: 'Receptionist', email: 'p.isley@healthos-group.com', clinic: 'ظ…ط±ظƒط² ط§ظ„ط±ط¹ط§ظٹط© ط§ظ„ط·ط§ط±ط¦ط© ط¨ط§ظ„ط´ظ…ط§ظ„', status: 'Pending', avatarColor: 'from-green-500 to-emerald-600', phone: '+966 55 773 1945', departmentId: 'front-desk', specialtyId: 'receptionist', jobTitle: 'Receptionist', responsibilities: ['reception', 'marketing'], employmentType: 'Part Time', employmentStatus: 'Active', permissionTemplateId: 'receptionist', accessScope: 'branch', workspace: 'reception' },
+  { id: 'U-109', name: 'ط¯. ط±ظˆط¨ط±طھ ظƒط§ط±طھط±', role: 'Doctor', email: 'r.carter@healthos-group.com', clinic: 'ظ…ط±ظƒط² ط§ظ„ط±ط¹ط§ظٹط© ط§ظ„ط·ط§ط±ط¦ط© ط¨ط§ظ„ط´ظ…ط§ظ„', status: 'Active', avatarColor: 'from-cyan-500 to-blue-600', phone: '+966 50 832 4410', departmentId: 'dentistry', specialtyId: 'general-dentistry', jobTitle: 'General Dentist', responsibilities: ['clinical'], employmentType: 'Full Time', employmentStatus: 'Active', permissionTemplateId: 'doctor', accessScope: 'department', workspace: 'doctor' },
+  { id: 'U-110', name: 'ظ‡ط§ط±ظ„ظٹ ظƒظˆظٹظ†', role: 'Assistant', email: 'h.quinn@healthos-group.com', clinic: 'ظ…ط¬ظ…ط¹ ظ‡ظٹظ„ط« ط£ظˆ ط¥ط³ ط§ظ„ط±ط¦ظٹط³ظٹ ظ„ظ„ط£ط³ظ†ط§ظ†', status: 'Inactive', avatarColor: 'from-rose-500 to-red-700', phone: '+966 54 293 1110', departmentId: 'front-desk', jobTitle: 'Front Desk Assistant', responsibilities: ['reception'], employmentType: 'Intern', employmentStatus: 'Vacation', permissionTemplateId: 'receptionist', accessScope: 'branch', workspace: 'reception' },
 ];
 
 const INITIAL_DEPARTMENTS = [
-  { name: 'طب الأسنان العام', head: 'د. روبرت كارتر', staffCount: 14, rooms: 'أ1 - أ4', code: 'GEN-DENT' },
-  { name: 'الاستعاضة والتركيبات', head: 'د. كاترين أفيري', staffCount: 8, rooms: 'ب1 - ب3', code: 'PROSTH' },
-  { name: 'زراعة الأسنان', head: 'د. بروس واين', staffCount: 6, rooms: 'ج1 - ج2', code: 'IMPL' },
-  { name: 'تقويم الأسنان', head: 'د. إلينا روستوفا', staffCount: 5, rooms: 'د1 - د2', code: 'ORTHO' },
-  { name: 'علاج العصب والجذور', head: 'د. كاترين أفيري', staffCount: 4, rooms: 'هـ1', code: 'ENDO' },
-  { name: 'علاج اللثة والمحيط السني', head: 'د. فيكتور فريز', staffCount: 4, rooms: 'هـ2', code: 'PERIO' },
-  { name: 'جراحة الفم والفكين', head: 'د. بروس واين', staffCount: 7, rooms: 'جراحة-01', code: 'ORAL-SURG' },
-  { name: 'العناية وصحة الأسنان', head: 'سيلينا كاين', staffCount: 12, rooms: 'ص1 - ص6', code: 'HYG' },
+  { name: 'ط·ط¨ ط§ظ„ط£ط³ظ†ط§ظ† ط§ظ„ط¹ط§ظ…', head: 'ط¯. ط±ظˆط¨ط±طھ ظƒط§ط±طھط±', staffCount: 14, rooms: 'ط£1 - ط£4', code: 'GEN-DENT' },
+  { name: 'ط§ظ„ط§ط³طھط¹ط§ط¶ط© ظˆط§ظ„طھط±ظƒظٹط¨ط§طھ', head: 'ط¯. ظƒط§طھط±ظٹظ† ط£ظپظٹط±ظٹ', staffCount: 8, rooms: 'ط¨1 - ط¨3', code: 'PROSTH' },
+  { name: 'ط²ط±ط§ط¹ط© ط§ظ„ط£ط³ظ†ط§ظ†', head: 'ط¯. ط¨ط±ظˆط³ ظˆط§ظٹظ†', staffCount: 6, rooms: 'ط¬1 - ط¬2', code: 'IMPL' },
+  { name: 'طھظ‚ظˆظٹظ… ط§ظ„ط£ط³ظ†ط§ظ†', head: 'ط¯. ط¥ظ„ظٹظ†ط§ ط±ظˆط³طھظˆظپط§', staffCount: 5, rooms: 'ط¯1 - ط¯2', code: 'ORTHO' },
+  { name: 'ط¹ظ„ط§ط¬ ط§ظ„ط¹طµط¨ ظˆط§ظ„ط¬ط°ظˆط±', head: 'ط¯. ظƒط§طھط±ظٹظ† ط£ظپظٹط±ظٹ', staffCount: 4, rooms: 'ظ‡ظ€1', code: 'ENDO' },
+  { name: 'ط¹ظ„ط§ط¬ ط§ظ„ظ„ط«ط© ظˆط§ظ„ظ…ط­ظٹط· ط§ظ„ط³ظ†ظٹ', head: 'ط¯. ظپظٹظƒطھظˆط± ظپط±ظٹط²', staffCount: 4, rooms: 'ظ‡ظ€2', code: 'PERIO' },
+  { name: 'ط¬ط±ط§ط­ط© ط§ظ„ظپظ… ظˆط§ظ„ظپظƒظٹظ†', head: 'ط¯. ط¨ط±ظˆط³ ظˆط§ظٹظ†', staffCount: 7, rooms: 'ط¬ط±ط§ط­ط©-01', code: 'ORAL-SURG' },
+  { name: 'ط§ظ„ط¹ظ†ط§ظٹط© ظˆطµط­ط© ط§ظ„ط£ط³ظ†ط§ظ†', head: 'ط³ظٹظ„ظٹظ†ط§ ظƒط§ظٹظ†', staffCount: 12, rooms: 'طµ1 - طµ6', code: 'HYG' },
 ];
 
 const INITIAL_TEAMS: TeamUnit[] = [
-  { id: 'T-01', name: 'فريق التجميل السني والابتسامة', type: 'Clinical', members: ['د. كاترين أفيري', 'آنيا تشالوترا', 'د. إلينا روستوفا'], assignedRooms: ['أ1', 'أ2', 'ب1'], availability: '95% أيام الأسبوع', status: 'On Duty' },
-  { id: 'T-02', name: 'فريق الترميم وجراحة الفم المعقدة', type: 'Clinical', members: ['د. بروس واين', 'لوسيوس فوكس', 'آنيا تشالوترا'], assignedRooms: ['جراحة-01', 'ج1'], availability: '88% مناوبات حية', status: 'On Call' },
-  { id: 'T-03', name: 'مختبر الدقة والتصنيع CAD/CAM', type: 'Lab', members: ['ماركوس ستيرلينغ', 'آنيا تشالوترا'], assignedRooms: ['غرفة الخرط 1', 'مختبر 3D'], availability: '100% الساعات الأساسية', status: 'On Duty' },
-  { id: 'T-04', name: 'مكتب تنسيق واستقبال المرضى', type: 'Administrative', members: ['سيلينا كاين', 'باميلا إيسلي'], assignedRooms: ['الاستقبال الرئيسي', 'المكتب الغربي'], availability: '92% مستمر', status: 'On Duty' },
+  { id: 'T-01', name: 'ظپط±ظٹظ‚ ط§ظ„طھط¬ظ…ظٹظ„ ط§ظ„ط³ظ†ظٹ ظˆط§ظ„ط§ط¨طھط³ط§ظ…ط©', type: 'Clinical', members: ['ط¯. ظƒط§طھط±ظٹظ† ط£ظپظٹط±ظٹ', 'ط¢ظ†ظٹط§ طھط´ط§ظ„ظˆطھط±ط§', 'ط¯. ط¥ظ„ظٹظ†ط§ ط±ظˆط³طھظˆظپط§'], assignedRooms: ['ط£1', 'ط£2', 'ط¨1'], availability: '95% ط£ظٹط§ظ… ط§ظ„ط£ط³ط¨ظˆط¹', status: 'On Duty' },
+  { id: 'T-02', name: 'ظپط±ظٹظ‚ ط§ظ„طھط±ظ…ظٹظ… ظˆط¬ط±ط§ط­ط© ط§ظ„ظپظ… ط§ظ„ظ…ط¹ظ‚ط¯ط©', type: 'Clinical', members: ['ط¯. ط¨ط±ظˆط³ ظˆط§ظٹظ†', 'ظ„ظˆط³ظٹظˆط³ ظپظˆظƒط³', 'ط¢ظ†ظٹط§ طھط´ط§ظ„ظˆطھط±ط§'], assignedRooms: ['ط¬ط±ط§ط­ط©-01', 'ط¬1'], availability: '88% ظ…ظ†ط§ظˆط¨ط§طھ ط­ظٹط©', status: 'On Call' },
+  { id: 'T-03', name: 'ظ…ط®طھط¨ط± ط§ظ„ط¯ظ‚ط© ظˆط§ظ„طھطµظ†ظٹط¹ CAD/CAM', type: 'Lab', members: ['ظ…ط§ط±ظƒظˆط³ ط³طھظٹط±ظ„ظٹظ†ط؛', 'ط¢ظ†ظٹط§ طھط´ط§ظ„ظˆطھط±ط§'], assignedRooms: ['ط؛ط±ظپط© ط§ظ„ط®ط±ط· 1', 'ظ…ط®طھط¨ط± 3D'], availability: '100% ط§ظ„ط³ط§ط¹ط§طھ ط§ظ„ط£ط³ط§ط³ظٹط©', status: 'On Duty' },
+  { id: 'T-04', name: 'ظ…ظƒطھط¨ طھظ†ط³ظٹظ‚ ظˆط§ط³طھظ‚ط¨ط§ظ„ ط§ظ„ظ…ط±ط¶ظ‰', type: 'Administrative', members: ['ط³ظٹظ„ظٹظ†ط§ ظƒط§ظٹظ†', 'ط¨ط§ظ…ظٹظ„ط§ ط¥ظٹط³ظ„ظٹ'], assignedRooms: ['ط§ظ„ط§ط³طھظ‚ط¨ط§ظ„ ط§ظ„ط±ط¦ظٹط³ظٹ', 'ط§ظ„ظ…ظƒطھط¨ ط§ظ„ط؛ط±ط¨ظٹ'], availability: '92% ظ…ط³طھظ…ط±', status: 'On Duty' },
 ];
 
 const INITIAL_AUDITS: AuditLog[] = [
-  { id: 'LOG-449', timestamp: '2026-07-17 05:45:12', actor: 'د. كاترين أفيري', role: 'مالك المنظمة', action: 'تعديل خطة العلاج السريرية #8829', module: 'Patient Records', status: 'Success', ipAddress: '192.168.1.14' },
-  { id: 'LOG-448', timestamp: '2026-07-17 05:33:02', actor: 'آنيا تشالوترا', role: 'مساعد طبيب', action: 'استعراض أشعة CBCT مقطعية للفك العلوي DICOM', module: 'Imaging', status: 'Success', ipAddress: '192.168.1.84' },
-  { id: 'LOG-447', timestamp: '2026-07-17 05:12:44', actor: 'ماركوس ستيرلينغ', role: 'فني مختبر', action: 'تحميل خطوط حدود الحواف Exocad v3.2', module: 'Laboratory', status: 'Success', ipAddress: '10.0.4.15' },
-  { id: 'LOG-446', timestamp: '2026-07-17 04:59:10', actor: 'عميل غير معروف', role: 'REST API خارجي', action: 'محاولة وصول غير مصرحة لسجلات السريرية', module: 'Auth', status: 'Denied', ipAddress: '185.122.9.44' },
-  { id: 'LOG-445', timestamp: '2026-07-17 04:22:15', actor: 'لوسيوس فوكس', role: 'مدير النظام', action: 'تحديث مصفوفة أمان وصلاحيات HIPAA', module: 'System Admin', status: 'Success', ipAddress: '192.168.1.2' },
-  { id: 'LOG-444', timestamp: '2026-07-17 03:50:00', actor: 'محرك التشخيص الذكي', role: 'ذكاء اصطناعي', action: 'توليد توصية لتركيبة زيركونيا متعددة الطبقات', module: 'AI Core', status: 'Success', ipAddress: 'المضيف المحلي' },
-  { id: 'LOG-443', timestamp: '2026-07-17 03:10:22', actor: 'باميلا إيسلي', role: 'مسؤول الاستقبال', action: 'إعادة جدولة الموعد الطبي #10492', module: 'Appointments', status: 'Success', ipAddress: '192.168.2.19' },
-  { id: 'LOG-442', timestamp: '2026-07-17 02:44:11', actor: 'هارلي كوين', role: 'مساعد طبيب', action: 'محاولة تصدير قاعدة بيانات المرضى', module: 'Patient Records', status: 'Warn', ipAddress: '192.168.1.92' },
+  { id: 'LOG-449', timestamp: '2026-07-17 05:45:12', actor: 'ط¯. ظƒط§طھط±ظٹظ† ط£ظپظٹط±ظٹ', role: 'ظ…ط§ظ„ظƒ ط§ظ„ظ…ظ†ط¸ظ…ط©', action: 'طھط¹ط¯ظٹظ„ ط®ط·ط© ط§ظ„ط¹ظ„ط§ط¬ ط§ظ„ط³ط±ظٹط±ظٹط© #8829', module: 'Patient Records', status: 'Success', ipAddress: '192.168.1.14' },
+  { id: 'LOG-448', timestamp: '2026-07-17 05:33:02', actor: 'ط¢ظ†ظٹط§ طھط´ط§ظ„ظˆطھط±ط§', role: 'ظ…ط³ط§ط¹ط¯ ط·ط¨ظٹط¨', action: 'ط§ط³طھط¹ط±ط§ط¶ ط£ط´ط¹ط© CBCT ظ…ظ‚ط·ط¹ظٹط© ظ„ظ„ظپظƒ ط§ظ„ط¹ظ„ظˆظٹ DICOM', module: 'Imaging', status: 'Success', ipAddress: '192.168.1.84' },
+  { id: 'LOG-447', timestamp: '2026-07-17 05:12:44', actor: 'ظ…ط§ط±ظƒظˆط³ ط³طھظٹط±ظ„ظٹظ†ط؛', role: 'ظپظ†ظٹ ظ…ط®طھط¨ط±', action: 'طھط­ظ…ظٹظ„ ط®ط·ظˆط· ط­ط¯ظˆط¯ ط§ظ„ط­ظˆط§ظپ Exocad v3.2', module: 'Laboratory', status: 'Success', ipAddress: '10.0.4.15' },
+  { id: 'LOG-446', timestamp: '2026-07-17 04:59:10', actor: 'ط¹ظ…ظٹظ„ ط؛ظٹط± ظ…ط¹ط±ظˆظپ', role: 'REST API ط®ط§ط±ط¬ظٹ', action: 'ظ…ط­ط§ظˆظ„ط© ظˆطµظˆظ„ ط؛ظٹط± ظ…طµط±ط­ط© ظ„ط³ط¬ظ„ط§طھ ط§ظ„ط³ط±ظٹط±ظٹط©', module: 'Auth', status: 'Denied', ipAddress: '185.122.9.44' },
+  { id: 'LOG-445', timestamp: '2026-07-17 04:22:15', actor: 'ظ„ظˆط³ظٹظˆط³ ظپظˆظƒط³', role: 'ظ…ط¯ظٹط± ط§ظ„ظ†ط¸ط§ظ…', action: 'طھط­ط¯ظٹط« ظ…طµظپظˆظپط© ط£ظ…ط§ظ† ظˆطµظ„ط§ط­ظٹط§طھ HIPAA', module: 'System Admin', status: 'Success', ipAddress: '192.168.1.2' },
+  { id: 'LOG-444', timestamp: '2026-07-17 03:50:00', actor: 'ظ…ط­ط±ظƒ ط§ظ„طھط´ط®ظٹطµ ط§ظ„ط°ظƒظٹ', role: 'ط°ظƒط§ط، ط§طµط·ظ†ط§ط¹ظٹ', action: 'طھظˆظ„ظٹط¯ طھظˆطµظٹط© ظ„طھط±ظƒظٹط¨ط© ط²ظٹط±ظƒظˆظ†ظٹط§ ظ…طھط¹ط¯ط¯ط© ط§ظ„ط·ط¨ظ‚ط§طھ', module: 'AI Core', status: 'Success', ipAddress: 'ط§ظ„ظ…ط¶ظٹظپ ط§ظ„ظ…ط­ظ„ظٹ' },
+  { id: 'LOG-443', timestamp: '2026-07-17 03:10:22', actor: 'ط¨ط§ظ…ظٹظ„ط§ ط¥ظٹط³ظ„ظٹ', role: 'ظ…ط³ط¤ظˆظ„ ط§ظ„ط§ط³طھظ‚ط¨ط§ظ„', action: 'ط¥ط¹ط§ط¯ط© ط¬ط¯ظˆظ„ط© ط§ظ„ظ…ظˆط¹ط¯ ط§ظ„ط·ط¨ظٹ #10492', module: 'Appointments', status: 'Success', ipAddress: '192.168.2.19' },
+  { id: 'LOG-442', timestamp: '2026-07-17 02:44:11', actor: 'ظ‡ط§ط±ظ„ظٹ ظƒظˆظٹظ†', role: 'ظ…ط³ط§ط¹ط¯ ط·ط¨ظٹط¨', action: 'ظ…ط­ط§ظˆظ„ط© طھطµط¯ظٹط± ظ‚ط§ط¹ط¯ط© ط¨ظٹط§ظ†ط§طھ ط§ظ„ظ…ط±ط¶ظ‰', module: 'Patient Records', status: 'Warn', ipAddress: '192.168.1.92' },
 ];
 
 const INITIAL_ANNOUNCEMENTS: CustomAnnouncement[] = [
-  { id: 'A-01', title: 'تدقيق الأمان والامتثال السنوي لمعايير HIPAA', content: 'تدقيق خارجي نشط للامتثال السريري. يرجى التأكد من قفل جميع أجهزة الكمبيوتر تلقائياً بعد 3 دقائق من عدم النشاط.', type: 'Critical', date: '2026-07-16', author: 'لوسيوس فوكس (مسؤول الامتثال)', active: true },
-  { id: 'A-02', title: 'صيانة وتحسين خوادم تصاوير الأشعة PACS', content: 'إعادة بناء كشافات قاعدة البيانات وضغط تخزين أجهزة الأشعة المقطعية. يتوقع تأخير طفيف عند استيراد ملفات STL.', type: 'Maintenance', date: '2026-07-15', author: 'فريق العمليات السحابية', active: true },
-  { id: 'A-03', title: 'ورشة عمل تدريبية لعدسات الأسنان وقشور E.max', content: 'ستقود د. كاترين أفيري ورشة عمل تخصصية متقدمة في تصميم وتحضير عدسات السيراميك الفائقة الرقة يوم الأربعاء القادم.', type: 'Announcement', date: '2026-07-14', author: 'د. كاترين أفيري', active: true },
+  { id: 'A-01', title: 'طھط¯ظ‚ظٹظ‚ ط§ظ„ط£ظ…ط§ظ† ظˆط§ظ„ط§ظ…طھط«ط§ظ„ ط§ظ„ط³ظ†ظˆظٹ ظ„ظ…ط¹ط§ظٹظٹط± HIPAA', content: 'طھط¯ظ‚ظٹظ‚ ط®ط§ط±ط¬ظٹ ظ†ط´ط· ظ„ظ„ط§ظ…طھط«ط§ظ„ ط§ظ„ط³ط±ظٹط±ظٹ. ظٹط±ط¬ظ‰ ط§ظ„طھط£ظƒط¯ ظ…ظ† ظ‚ظپظ„ ط¬ظ…ظٹط¹ ط£ط¬ظ‡ط²ط© ط§ظ„ظƒظ…ط¨ظٹظˆطھط± طھظ„ظ‚ط§ط¦ظٹط§ظ‹ ط¨ط¹ط¯ 3 ط¯ظ‚ط§ط¦ظ‚ ظ…ظ† ط¹ط¯ظ… ط§ظ„ظ†ط´ط§ط·.', type: 'Critical', date: '2026-07-16', author: 'ظ„ظˆط³ظٹظˆط³ ظپظˆظƒط³ (ظ…ط³ط¤ظˆظ„ ط§ظ„ط§ظ…طھط«ط§ظ„)', active: true },
+  { id: 'A-02', title: 'طµظٹط§ظ†ط© ظˆطھط­ط³ظٹظ† ط®ظˆط§ط¯ظ… طھطµط§ظˆظٹط± ط§ظ„ط£ط´ط¹ط© PACS', content: 'ط¥ط¹ط§ط¯ط© ط¨ظ†ط§ط، ظƒط´ط§ظپط§طھ ظ‚ط§ط¹ط¯ط© ط§ظ„ط¨ظٹط§ظ†ط§طھ ظˆط¶ط؛ط· طھط®ط²ظٹظ† ط£ط¬ظ‡ط²ط© ط§ظ„ط£ط´ط¹ط© ط§ظ„ظ…ظ‚ط·ط¹ظٹط©. ظٹطھظˆظ‚ط¹ طھط£ط®ظٹط± ط·ظپظٹظپ ط¹ظ†ط¯ ط§ط³طھظٹط±ط§ط¯ ظ…ظ„ظپط§طھ STL.', type: 'Maintenance', date: '2026-07-15', author: 'ظپط±ظٹظ‚ ط§ظ„ط¹ظ…ظ„ظٹط§طھ ط§ظ„ط³ط­ط§ط¨ظٹط©', active: true },
+  { id: 'A-03', title: 'ظˆط±ط´ط© ط¹ظ…ظ„ طھط¯ط±ظٹط¨ظٹط© ظ„ط¹ط¯ط³ط§طھ ط§ظ„ط£ط³ظ†ط§ظ† ظˆظ‚ط´ظˆط± E.max', content: 'ط³طھظ‚ظˆط¯ ط¯. ظƒط§طھط±ظٹظ† ط£ظپظٹط±ظٹ ظˆط±ط´ط© ط¹ظ…ظ„ طھط®طµطµظٹط© ظ…طھظ‚ط¯ظ…ط© ظپظٹ طھطµظ…ظٹظ… ظˆطھط­ط¶ظٹط± ط¹ط¯ط³ط§طھ ط§ظ„ط³ظٹط±ط§ظ…ظٹظƒ ط§ظ„ظپط§ط¦ظ‚ط© ط§ظ„ط±ظ‚ط© ظٹظˆظ… ط§ظ„ط£ط±ط¨ط¹ط§ط، ط§ظ„ظ‚ط§ط¯ظ….', type: 'Announcement', date: '2026-07-14', author: 'ط¯. ظƒط§طھط±ظٹظ† ط£ظپظٹط±ظٹ', active: true },
 ];
 
 // --- CHARTS & TREND DATA ---
@@ -253,12 +254,30 @@ const ROLE_TEMPLATE_MAP: Record<OrgUser['role'], string> = {
 };
 
 function getDepartmentName(id?: DepartmentId): string {
-  return DEPARTMENTS.find((d) => d.id === id)?.name ?? '—';
+  return DEPARTMENTS.find((d) => d.id === id)?.name ?? 'â€”';
 }
 
 function getSpecialtyName(id?: string): string {
-  return SPECIALTIES.find((s) => s.id === id)?.name ?? '—';
+  return SPECIALTIES.find((s) => s.id === id)?.name ?? 'â€”';
 }
+
+const WORKSPACE_TAB_LABELS: Record<string, string> = {
+  Overview: '1. ظ†ط¸ط±ط© ط¹ط§ظ…ط©',
+  Clinics: '2. ط§ظ„ط¹ظٹط§ط¯ط§طھ ظˆط§ظ„ظ…ط±ط§ظƒط²',
+  Departments: '3. ط§ظ„ط£ظ‚ط³ط§ظ… ط§ظ„طھط®طµطµظٹط©',
+  Users: '1. ط§ظ„ظ…ظˆط¸ظپظˆظ† ظˆط§ظ„ط·ط§ظ‚ظ…',
+  Permissions: '2. ط§ظ„طµظ„ط§ط­ظٹط§طھ ظˆط§ظ„طھط­ظƒظ…',
+  Teams: '3. ظپط±ظ‚ ط§ظ„ط¹ظ…ظ„ ظˆط§ظ„ظˆط±ط¯ظٹط©',
+  Audits: '1. ط³ط¬ظ„ ط§ظ„طھط¯ظ‚ظٹظ‚ ظˆط§ظ„ط£ظ†ط´ط·ط©',
+  Security: '2. ظ…ط±ظƒط² ط£ظ…ط§ظ† ط§ظ„ظ†ط¸ط§ظ…',
+  Notifications: '1. ط§ظ„طھظ†ط¨ظٹظ‡ط§طھ ط§ظ„ط¹ط§ظ…ط©',
+  Settings: '2. ط§ظ„ظ‡ظˆظٹط© ظˆط§ظ„ط¹ظ„ط§ظ…ط©',
+  Backup: '3. ط§ظ„ظ†ط³ط® ظˆط§ظ„ط§ط³طھط¹ط§ط¯ط©',
+  Workspaces: '1. ظ…ط³ط§ط­ط§طھ ط§ظ„ط¹ظ…ظ„',
+  PracticeSetup: '2. ط¥ط¹ط¯ط§ط¯ ط§ظ„ظ…ظ…ط§ط±ط³ط©',
+  WorkspaceBuilder: '3. ظ…ظ†ط´ط¦ ظ…ط³ط§ط­ط§طھ ط§ظ„ط¹ظ…ظ„',
+  OrganizationManager: '4. ط¥ط¯ط§ط±ط© ط§ظ„ظ…ط¤ط³ط³ط©'
+};
 
 export default function OrganizationWorkspace() {
   const tOrg = useTranslations('OrganizationWorkspace');
@@ -266,6 +285,8 @@ export default function OrganizationWorkspace() {
   const tOnboard = useTranslations('Onboarding');
   const tTemplate = useTranslations('PracticeTemplate');
 const tBuilder = useTranslations('WorkspaceBuilder');
+  const locale = useLocale() as 'ar' | 'en';
+  const isRtl = getDirection(locale) === 'rtl';
   // Navigation Tabs matching 11 requested areas (including SLA backups)
   const [activeTab, setActiveTab] = useState<
     'Overview' | 'Clinics' | 'Departments' | 'Users' | 'Permissions' | 'Teams' | 'Audits' | 'Notifications' | 'Security' | 'Settings' | 'Backup' | 'Workspaces' | 'PracticeSetup' | 'WorkspaceBuilder' | 'OrganizationManager'
@@ -654,6 +675,81 @@ const tBuilder = useTranslations('WorkspaceBuilder');
     setTimeout(() => setPracticeTemplateStatus(null), 2500);
   };
 
+  type NavItem = {
+    id: string;
+    icon: React.ComponentType<{ className?: string }>;
+    badge: string;
+  };
+
+  type NavGroup = {
+    id: string;
+    label: Record<string, string>;
+    items: NavItem[];
+  };
+
+  const navGroups = useMemo(
+    (): NavGroup[] => [
+      {
+        id: 'organization',
+        label: { ar: 'ط§ظ„ظ…ظ†ط¸ظ…ط©', en: 'Organization' },
+        items: [
+          { id: 'Overview', icon: Layers, badge: 'ظ…ظˆط­ط¯' },
+          { id: 'Clinics', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} ظ†ط´ط·` },
+          { id: 'Departments', icon: Sliders, badge: `${departments.length} ط£ظ‚ط³ط§ظ…` }
+        ]
+      },
+      {
+        id: 'people',
+        label: { ar: 'ط§ظ„ظ…ظˆط¸ظپظˆظ† ظˆط§ظ„ظˆطµظˆظ„', en: 'People & Access' },
+        items: [
+          { id: 'Users', icon: Users, badge: `${activeUsersCount} ظ…ظˆط¸ظپ` },
+          { id: 'Permissions', icon: ShieldCheck, badge: 'ظ…طµظپظˆظپط©' },
+          { id: 'Teams', icon: UserCheck, badge: `${teams.length} ظپط±ظ‚` }
+        ]
+      },
+      {
+        id: 'security',
+        label: { ar: 'ط§ظ„ط£ظ…ط§ظ† ظˆط§ظ„طھط¯ظ‚ظٹظ‚', en: 'Security & Audit' },
+        items: [
+          { id: 'Audits', icon: History, badge: 'ط³ط¬ظ„ ط§ظ„ط£ظ†ط´ط·ط©' },
+          { id: 'Security', icon: Lock, badge: `${securityScore}/100` }
+        ]
+      },
+      {
+        id: 'operations',
+        label: { ar: 'ط§ظ„ط¹ظ…ظ„ظٹط§طھ ظˆط§ظ„ظ†ط¸ط§ظ…', en: 'Operations & System' },
+        items: [
+          { id: 'Notifications', icon: Bell, badge: `${announcements.length} طھظ†ط¨ظٹظ‡ط§طھ` },
+          { id: 'Settings', icon: Settings2, badge: 'ط¥ط¹ط¯ط§ط¯ط§طھ' },
+          { id: 'Backup', icon: Database, badge: `${backups.length} ط§ظ„ط£ط±ط´ظٹظپ` }
+        ]
+      },
+      {
+        id: 'platform',
+        label: { ar: 'ط§ظ„ظ…ظ†طµط© ظˆظ…ط³ط§ط­ط§طھ ط§ظ„ط¹ظ…ظ„', en: 'Platform & Workspaces' },
+        items: [
+          { id: 'Workspaces', icon: Grid, badge: `${WORKSPACES.length} ظ…ط³ط§ط­ط§طھ` },
+          { id: 'PracticeSetup', icon: Sparkles, badge: 'طھظƒظٹظٹظپ' },
+          { id: 'WorkspaceBuilder', icon: LayoutGrid, badge: 'ظ…ظ†ط´ط¦' },
+          { id: 'OrganizationManager', icon: Building2, badge: 'ط¥ط¯ط§ط±ط©' }
+        ]
+      }
+    ],
+    [activeClinicsCount, totalClinics, departments, activeUsersCount, teams, announcements, securityScore, backups]
+  );
+
+  const handleTablistKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const order = navGroups.flatMap((g) => g.items.map((i) => i.id));
+    const currentIdx = order.indexOf(activeTab);
+    const delta = isRtl ? (e.key === 'ArrowLeft' ? 1 : -1) : (e.key === 'ArrowRight' ? 1 : -1);
+    const nextIdx = (currentIdx + delta + order.length) % order.length;
+    const nextId = order[nextIdx];
+    document.getElementById(`org-tab-${nextId}`)?.focus();
+    setActiveTab(nextId as any);
+  };
+
   return (
     <>
     <div className="space-y-6 text-zinc-100 animate-fade-in relative font-sans">
@@ -661,7 +757,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
       {/* HEADER BANNER */}
       <div className="card-gradient p-6 rounded-3xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative">
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-3xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+          <div className="p-3 rounded-3xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
             <Building2 className="w-6 h-6" />
           </div>
           <div>
@@ -674,8 +770,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                 {brandColor.toUpperCase()} {tOrg('multiClinic')}
               </span>
               {orgProfile && (
-                <span className="badge badge-adaptive text-xs font-semibold px-3 py-0.5 rounded-full" style={{ background: 'rgba(168,85,247,0.14)', borderColor: 'rgba(168,85,247,0.4)', color: '#d8b4fe' }}>
-                  <Sparkles className="w-3 h-3 inline-block mr-1" />
+                <span className="badge text-xs font-semibold px-3 py-0.5 rounded-full">
+                  <Sparkles className="w-3 h-3 inline-block me-1" />
                   {tOnboard(`practiceTypes.${orgProfile.practiceTypeId}`)}                </span>
               )}
             </div>
@@ -697,71 +793,63 @@ const tBuilder = useTranslations('WorkspaceBuilder');
         </div>
       </div>
 
-      {/* 12 SUBMODULES HORIZONTAL NAV TABS (Clean Scrollable Bar) */}
-      <div className="card-elevated p-2 flex items-center gap-2 overflow-x-auto scrollbar-none">
-        {[
-          { id: 'Overview', key: 'Overview', icon: Layers, badge: 'موحد' },
-          { id: 'Clinics', key: 'Clinics', icon: Building2, badge: `${activeClinicsCount}/${totalClinics} نشط` },
-          { id: 'Departments', key: 'Departments', icon: Sliders, badge: `${departments.length} أقسام` },
-          { id: 'Users', key: 'Users', icon: Users, badge: `${activeUsersCount} موظف` },
-          { id: 'Permissions', key: 'Permissions', icon: ShieldCheck, badge: 'مصفوفة' },
-          { id: 'Teams', key: 'Teams', icon: UserCheck, badge: `${teams.length} فرق` },
-          { id: 'Audits', key: 'Audits', icon: History, badge: 'سجل الأنشطة' },
-          { id: 'Notifications', key: 'Notifications', icon: Bell, badge: `${announcements.length} تنبيهات`, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
-          { id: 'Security', key: 'Security', icon: Lock, badge: `${securityScore}/100`, badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
-          { id: 'Settings', key: 'Settings', icon: Settings2, badge: 'إعدادات' },
-          { id: 'Backup', key: 'Backup', icon: Database, badge: `${backups.length} الأرشيف`, badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
-          { id: 'Workspaces', key: 'Workspaces', icon: Grid, badge: `${WORKSPACES.length} مساحات`, badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
-          { id: 'PracticeSetup', key: 'PracticeSetup', icon: Sparkles, badge: 'تكييف', badgeColor: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
-          { id: 'WorkspaceBuilder', key: 'WorkspaceBuilder', icon: LayoutGrid, badge: 'منشئ', badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' },
-          { id: 'OrganizationManager', key: 'OrganizationManager', icon: Building2, badge: 'إدارة', badgeColor: 'bg-lime-500/20 text-lime-300 border-lime-500/30' }
-        ].map(item => {
-          const Icon = item.icon;
-          const isActive = activeTab === item.id;
-          const labelsMap: Record<string, string> = {
-            Overview: '1. نظرة عامة',
-            Clinics: '2. العيادات والمراكز',
-            Departments: '3. الأقسام التخصصية',
-            Users: '4. الموظفون والطاقم',
-            Permissions: '5. الصلاحيات والتحكم',
-            Teams: '6. فرق العمل والوردية',
-            Audits: '7. سجل التدقيق والأنشطة',
-            Notifications: '8. التنبيهات العامة',
-            Security: '9. مركز أمان النظام',
-            Settings: '10. الهوية والعلامة',
-            Backup: '11. النسخ والاستعادة',
-            Workspaces: '12. مساحات العمل',
-            PracticeSetup: '13. إعداد الممارسة',
-            WorkspaceBuilder: '14. منشئ مساحات العمل',
-            OrganizationManager: '15. إدارة المؤسسة'
-          };
-          const labelText = labelsMap[item.key] || item.key;
-          return (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id as any)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all flex items-center gap-2 cursor-pointer border font-sans ${
-                isActive 
-                  ? 'nav-item active font-extrabold scale-[1.02]'
-                  : 'nav-item bg-zinc-950/60 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
-              }`}
-            >
-              <Icon className="w-3.5 h-3.5 shrink-0" />
-              <span>{labelText}</span>
-              {item.badge && (
-                <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold border ${
-                  item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-900 text-zinc-400 border-zinc-800')
-                }`}>
-                  {item.badge}
-                </span>
+      {/* 15 SUBMODULES HORIZONTAL NAV TABS â€” Grouped IA (Constitution آ§31.3) */}
+      <div
+        className="card-elevated p-2 overflow-x-auto scrollbar-none"
+        role="tablist"
+        aria-label={tOrg('adminConsole')}
+        onKeyDown={handleTablistKeyDown}
+      >
+        <div className="flex items-center gap-1.5">
+          {navGroups.map((group, groupIdx) => (
+            <div key={group.id} className="flex items-center gap-1.5 shrink-0">
+              {groupIdx > 0 && (
+                <div className="mx-1.5 h-5 w-px shrink-0" style={{ background: 'var(--velvet-border)' }} />
               )}
-            </button>
-          );
-        })}
+              <span
+                className="text-xs font-sans font-semibold select-none shrink-0"
+                style={{ color: 'var(--velvet-text-sub)' }}
+              >
+                {group.label[locale]}
+              </span>
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    id={`org-tab-${item.id}`}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={isActive ? 'org-tabpanel' : undefined}
+                    tabIndex={isActive ? 0 : -1}
+                    onClick={() => setActiveTab(item.id as any)}
+                    className={`nav-item shrink-0 ${isActive ? 'active' : ''}`}
+                  >
+                    <Icon className="w-3.5 h-3.5 shrink-0" />
+                    <span>{WORKSPACE_TAB_LABELS[item.id]}</span>
+                    {item.badge && (
+                      <span
+                        className="shrink-0 rounded-full px-2 py-0.5 text-xs font-sans font-bold border"
+                        style={{
+                          background: 'var(--velvet-surface-2)',
+                          color: 'var(--velvet-text-sub)',
+                          borderColor: 'var(--velvet-border)'
+                        }}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* TAB CONTENT PANELS */}
-      <div className="space-y-6">
+      <div className="space-y-6" role="tabpanel" id="org-tabpanel" aria-label={tOrg('adminConsole')}>
         <AnimatePresence mode="wait">
           
           {/* ==================================================
@@ -781,14 +869,14 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                   className="p-5 card-gradient rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">معرف المنظمة</span>
+                    <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">ظ…ط¹ط±ظپ ط§ظ„ظ…ظ†ط¸ظ…ط©</span>
                     <Building2 className="w-4 h-4 text-rose-400" />
                   </div>
                   <div>
                     <h4 className="text-base font-bold text-white font-mono tracking-tight">ORG-8820-X92</h4>
                     <p className="text-xs text-zinc-400 mt-0.5 truncate font-sans">{workspaceName}</p>
                   </div>
-                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--surface-3)' }}>
+                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--velvet-surface-3)' }}>
                     <div className="h-full bg-rose-500 rounded-full w-full" />
                   </div>
                 </motion.div>
@@ -802,14 +890,14 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                   className="p-5 card-elevated rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">العيادات والفروع</span>
+                    <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">ط§ظ„ط¹ظٹط§ط¯ط§طھ ظˆط§ظ„ظپط±ظˆط¹</span>
                     <Globe className="w-4 h-4 text-rose-400" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-white tracking-tight">{totalClinics} عيادات ومراكز نَشِطة</h4>
-                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">إجمالي العيادات النشطة: 21 غرف علاج</p>
+                    <h4 className="text-xl font-bold text-white tracking-tight">{totalClinics} ط¹ظٹط§ط¯ط§طھ ظˆظ…ط±ط§ظƒط² ظ†ظژط´ظگط·ط©</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">ط¥ط¬ظ…ط§ظ„ظٹ ط§ظ„ط¹ظٹط§ط¯ط§طھ ط§ظ„ظ†ط´ط·ط©: 21 ط؛ط±ظپ ط¹ظ„ط§ط¬</p>
                   </div>
-                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--surface-3)' }}>
+                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--velvet-surface-3)' }}>
                     <div className="h-full bg-rose-500 rounded-full w-4/5" />
                   </div>
                 </motion.div>
@@ -823,14 +911,14 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                   className="p-5 card-elevated rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">تراخيص المستخدِمين</span>
-                    <span className="badge font-mono text-xs">28 ترخيص متاح</span>
+                    <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">طھط±ط§ط®ظٹطµ ط§ظ„ظ…ط³طھط®ط¯ظگظ…ظٹظ†</span>
+                    <span className="badge font-mono text-xs">28 طھط±ط®ظٹطµ ظ…طھط§ط­</span>
                   </div>
                   <div>
                     <h4 className="text-xl font-bold text-white font-mono tracking-tight">122 / 150</h4>
-                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">سعة الاشتراك الكلية للمجموعة</p>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">ط³ط¹ط© ط§ظ„ط§ط´طھط±ط§ظƒ ط§ظ„ظƒظ„ظٹط© ظ„ظ„ظ…ط¬ظ…ظˆط¹ط©</p>
                   </div>
-                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--surface-3)' }}>
+                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--velvet-surface-3)' }}>
                     <div className="h-full bg-rose-500 rounded-full w-[81.3%]" />
                   </div>
                 </motion.div>
@@ -844,14 +932,14 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                   className="p-5 card-elevated rounded-3xl flex flex-col justify-between space-y-3 transition-all select-none"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">التخزين السحابي الآمن</span>
+                    <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">ط§ظ„طھط®ط²ظٹظ† ط§ظ„ط³ط­ط§ط¨ظٹ ط§ظ„ط¢ظ…ظ†</span>
                     <span className="badge badge-info font-mono text-xs">24%</span>
                   </div>
                   <div>
                     <h4 className="text-xl font-bold text-white font-mono tracking-tight">1.2 / 5.0 TB</h4>
-                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">تخزين فحص الأشعة وملفات STL بشكل أساسي</p>
+                    <p className="text-xs text-zinc-400 mt-0.5 font-sans">طھط®ط²ظٹظ† ظپط­طµ ط§ظ„ط£ط´ط¹ط© ظˆظ…ظ„ظپط§طھ STL ط¨ط´ظƒظ„ ط£ط³ط§ط³ظٹ</p>
                   </div>
-                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--surface-3)' }}>
+                  <div className="w-full h-1.5 rounded-full overflow-hidden border border-white/10" style={{ background: 'var(--velvet-surface-3)' }}>
                     <div className="h-full bg-cyan-400 rounded-full w-[24%]" />
                   </div>
                 </motion.div>
@@ -905,40 +993,40 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       
                       <button 
                         onClick={() => { setActiveTab('Users') }}
-                        className="w-full text-left p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
+                        className="w-full text-start p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
                       >
                         <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Plus className="w-5 h-5" />
                         </div>
                         <div>
                           <p className="text-white text-xs font-bold font-sans group-hover:text-gold-400 transition-colors">{tOrg('overview_stats.provisionUser')}</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.provisionUserSub')}</p>
+                          <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.provisionUserSub')}</p>
                         </div>
                       </button>
 
                       <button 
                         onClick={() => { setActiveTab('Permissions') }}
-                        className="w-full text-left p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
+                        className="w-full text-start p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
                       >
                         <div className="p-2 bg-gold-500/10 text-gold-400 rounded-xl group-hover:bg-gold-500 group-hover:text-zinc-950 transition-colors">
                           <Sliders className="w-5 h-5" />
                         </div>
                         <div>
                           <p className="text-white text-xs font-bold font-sans group-hover:text-gold-400 transition-colors">{tOrg('overview_stats.auditMatrix')}</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.auditMatrixSub')}</p>
+                          <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.auditMatrixSub')}</p>
                         </div>
                       </button>
 
                       <button 
                         onClick={() => { setActiveTab('Security') }}
-                        className="w-full text-left p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
+                        className="w-full text-start p-3.5 card-elevated rounded-3xl flex items-center gap-3.5 transition-all cursor-pointer group card-hover"
                       >
                         <div className="p-2 bg-rose-500/10 text-rose-400 rounded-xl group-hover:bg-rose-500 group-hover:text-zinc-950 transition-colors">
                           <Lock className="w-5 h-5" />
                         </div>
                         <div>
                           <p className="text-white text-xs font-bold font-sans group-hover:text-gold-400 transition-colors">{tOrg('overview_stats.triggerScan')}</p>
-                          <p className="text-[11px] text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.triggerScanSub')}</p>
+                          <p className="text-xs text-zinc-400 mt-0.5 font-sans">{tOrg('overview_stats.triggerScanSub')}</p>
                         </div>
                       </button>
 
@@ -951,12 +1039,12 @@ const tBuilder = useTranslations('WorkspaceBuilder');
               {/* Active Operator & Bottom Telemetry Bar */}
               <div className="p-4 card-elevated rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-sans card-luxury">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-md">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white uppercase shadow-soft">
                     CA
                   </div>
                   <div>
                     <h5 className="font-bold text-white">Dr. C. Avery</h5>
-                    <p className="text-[11px] text-zinc-400 font-sans">{tOrg('overview_stats.roleLabel')}</p>
+                    <p className="text-xs text-zinc-400 font-sans">{tOrg('overview_stats.roleLabel')}</p>
                   </div>
                 </div>
 
@@ -1009,10 +1097,10 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                     {showAddClinicForm && (
                       <div className="p-4 card-elevated rounded-3xl space-y-3 animate-fade-in card-luxury">
-                        <span className="text-[10px] font-mono font-bold text-gold-400 uppercase tracking-widest block">{tOrg('clinics.registerProfile')}</span>
+                        <span className="text-2xs font-mono font-bold text-gold-400 uppercase tracking-widest block">{tOrg('clinics.registerProfile')}</span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.clinicNameLabel')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tOrg('clinics.clinicNameLabel')}</label>
                             <input
                               type="text"
                               value={clinicNameInput}
@@ -1022,7 +1110,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.locationLabel')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tOrg('clinics.locationLabel')}</label>
                             <input
                               type="text"
                               value={clinicLocInput}
@@ -1032,7 +1120,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.timezoneLabel')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tOrg('clinics.timezoneLabel')}</label>
                             <select
                               value={clinicTimezoneInput}
                               onChange={(e) => setClinicTimezoneInput(e.target.value)}
@@ -1045,7 +1133,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tOrg('clinics.hoursLabel')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tOrg('clinics.hoursLabel')}</label>
                             <input
                               type="text"
                               value={clinicHoursInput}
@@ -1080,17 +1168,17 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     {/* Filter & Search Bar */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="relative">
-                        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                        <Search className="absolute start-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                         <input
                           type="text"
                           value={clinicSearch}
                           onChange={(e) => setClinicSearch(e.target.value)}
                           placeholder={tOrg('clinics.searchPlaceholder')}
-                          className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl outline-none focus:border-gold-500 text-white font-mono placeholder:text-zinc-600"
+                          className="w-full ps-8 pe-3 py-1.5 text-xs rounded-xl outline-none focus:border-gold-500 text-white font-mono placeholder:text-zinc-600"
                         />
                       </div>
                       <div className="flex items-center gap-2 justify-end">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold">Status:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold">Status:</span>
                         <select
                           value={clinicStatusFilter}
                           onChange={(e) => setClinicStatusFilter(e.target.value)}
@@ -1105,18 +1193,18 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     </div>
 
                     {/* Clinic Grid with visual rooms layout */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[380px] overflow-y-auto pr-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[380px] overflow-y-auto pe-1">
                       {filteredClinics.map((c) => (
                         <div key={c.id} className="p-4 card-elevated rounded-3xl card-hover flex flex-col justify-between h-[180px] space-y-3">
                           <div className="flex justify-between items-start">
                             <div>
                               <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-mono font-bold bg-zinc-950 border border-zinc-800 text-emerald-400 px-1.5 py-0.5 rounded-md">
+                                <span className="text-2xs font-mono font-bold bg-zinc-950 border border-zinc-800 text-emerald-400 px-1.5 py-0.5 rounded-md">
                                   {c.id}
                                 </span>
                                 <h4 className="text-xs font-black text-white">{c.name}</h4>
                               </div>
-                              <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{c.location}</p>
+                              <p className="text-2xs text-zinc-500 font-mono mt-0.5">{c.location}</p>
                             </div>
                             <span className={`badge ${
                               c.status === 'Active' ? 'badge-success' :
@@ -1129,11 +1217,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                           {/* Visual room layout mapping */}
                           <div className="bg-zinc-950 p-2.5 rounded-xl border border-zinc-900">
-                            <span className="text-[8px] font-mono text-zinc-500 uppercase tracking-widest block mb-1.5">Live Operatory Room Matrix</span>
+                            <span className="text-2xs font-mono text-zinc-500 uppercase tracking-widest block mb-1.5">Live Operatory Room Matrix</span>
                             <div className="flex gap-1.5">
                               {Array.from({ length: c.rooms }).map((_, i) => (
                                 <div key={i} className="flex-1 text-center">
-                                  <div className={`h-4 rounded border ${i % 3 === 0 ? 'bg-rose-500/15 border-rose-500/30 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'} text-[8px] font-mono flex items-center justify-center font-bold`}>
+                                  <div className={`h-4 rounded border ${i % 3 === 0 ? 'bg-rose-500/15 border-rose-500/30 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'} text-2xs font-mono flex items-center justify-center font-bold`}>
                                     R{i + 1}
                                   </div>
                                 </div>
@@ -1141,7 +1229,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </div>
                           </div>
 
-                          <div className="flex justify-between items-center pt-1 border-t border-zinc-900 text-[10px] font-mono text-zinc-400">
+                          <div className="flex justify-between items-center pt-1 border-t border-zinc-900 text-2xs font-mono text-zinc-400">
                             <span>Manager: <strong className="text-zinc-200">{c.manager}</strong></span>
                             <span>Drs: <strong className="text-white">{c.doctors}</strong> | Pts: <strong className="text-white">{c.patients}</strong></span>
                           </div>
@@ -1177,13 +1265,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Left form */}
                       <div className="p-4 card-elevated rounded-3xl space-y-3 h-[380px] flex flex-col justify-between">
                         <div className="space-y-2">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Provisions Custom Unit</span>
-                          <p className="text-[10px] text-zinc-400 font-mono leading-relaxed">Instantly add a new specialty clinic segment to the EHR platform.</p>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Provisions Custom Unit</span>
+                          <p className="text-2xs text-zinc-400 font-mono leading-relaxed">Instantly add a new specialty clinic segment to the EHR platform.</p>
                         </div>
 
                         <form onSubmit={handleAddDepartment} className="space-y-3 flex-1 justify-center mt-3">
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Department Name</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Department Name</label>
                             <input
                               type="text"
                               value={newDepartmentName}
@@ -1194,7 +1282,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Chief Director</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Chief Director</label>
                             <select
                               value={newDepartmentHead}
                               onChange={(e) => setNewDepartmentHead(e.target.value)}
@@ -1208,7 +1296,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Assigned Suites</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Assigned Suites</label>
                             <input
                               type="text"
                               value={newDepartmentRooms}
@@ -1229,16 +1317,16 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                       {/* Right list */}
                       <div className="lg:col-span-2 p-4 card-elevated rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Registered Speciality Directory</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Registered Speciality Directory</span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                           {departments.map((dept, idx) => (
                             <div key={idx} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-1 relative group">
-                              <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400 absolute top-2.5 right-2.5">
+                              <span className="text-2xs font-mono font-black px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400 absolute top-2.5 end-2.5">
                                 {dept.code}
                               </span>
                               <h4 className="text-xs font-black text-white">{dept.name}</h4>
-                              <p className="text-[10px] text-zinc-400 font-mono">Head: <span className="text-zinc-300 font-bold">{dept.head}</span></p>
-                              <p className="text-[9px] text-zinc-500 font-mono">Operational Rooms: {dept.rooms} • Staff count: {dept.staffCount}</p>
+                              <p className="text-2xs text-zinc-400 font-mono">Head: <span className="text-zinc-300 font-bold">{dept.head}</span></p>
+                              <p className="text-2xs text-zinc-500 font-mono">Operational Rooms: {dept.rooms} â€¢ Staff count: {dept.staffCount}</p>
                             </div>
                           ))}
                         </div>
@@ -1248,29 +1336,29 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     {/* Enterprise Department Catalog with specialty chips */}
                     <div className="p-4 card-elevated rounded-3xl space-y-3">
                       <div className="border-b border-zinc-900 pb-2">
-                        <h4 className="text-xs font-black text-white uppercase tracking-tight">{tDir('headerTitle')} — {tDir('department')} Catalog</h4>
-                        <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{tDir('headerSubtitle')}</p>
+                        <h4 className="text-xs font-black text-white uppercase tracking-tight">{tDir('headerTitle')} â€” {tDir('department')} Catalog</h4>
+                        <p className="text-2xs text-zinc-500 font-mono mt-0.5">{tDir('headerSubtitle')}</p>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5 max-h-[380px] overflow-y-auto pr-1">
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5 max-h-[380px] overflow-y-auto pe-1">
                         {DEPARTMENTS.map((dept) => {
                           const deptSpecialties = getSpecialtiesByDepartment(dept.id);
                           return (
                             <div key={dept.id} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-2">
                               <div className="flex items-center justify-between">
-                                <h5 className="text-[11px] font-black text-white">{dept.name}</h5>
-                                <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-purple-400">
+                                <h5 className="text-xs font-black text-white">{dept.name}</h5>
+                                <span className="text-2xs font-mono font-black px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-purple-400">
                                   {dept.code}
                                 </span>
                               </div>
                               <div className="flex flex-wrap gap-1">
                                 {deptSpecialties.length > 0 ? (
                                   deptSpecialties.map((s) => (
-                                    <span key={s.id} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900/80 border border-zinc-800 text-zinc-400">
+                                    <span key={s.id} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900/80 border border-zinc-800 text-zinc-400">
                                       {s.name}
                                     </span>
                                   ))
                                 ) : (
-                                  <span className="text-[9px] font-mono text-zinc-600">General department • no fixed specialties</span>
+                                  <span className="text-2xs font-mono text-zinc-600">General department â€¢ no fixed specialties</span>
                                 )}
                               </div>
                             </div>
@@ -1281,7 +1369,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                   </div>
 
                   <div className="p-3 card-elevated rounded-2xl flex justify-between items-center text-xs font-mono text-zinc-500">
-                    <span>DEPARTMENT TOTAL: {departments.length} UNITS CONFIGURATION • {DEPARTMENTS.length} CATALOG</span>
+                    <span>DEPARTMENT TOTAL: {departments.length} UNITS CONFIGURATION â€¢ {DEPARTMENTS.length} CATALOG</span>
                     <span>RESTRICTED EXPORT: TRUE</span>
                   </div>
                 </WorkspaceTabPanel>
@@ -1330,18 +1418,18 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     {/* Filter controls */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                       <div className="relative">
-                        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                        <Search className="absolute start-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                         <input
                           type="text"
                           value={userSearch}
                           onChange={(e) => setUserSearch(e.target.value)}
                           placeholder="Search users by name, email..."
-                          className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
+                          className="w-full ps-8 pe-3 py-1.5 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-600"
                         />
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">Role:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">Role:</span>
                         <select
                           value={userRoleFilter}
                           onChange={(e) => setUserRoleFilter(e.target.value)}
@@ -1359,7 +1447,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">Status:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">Status:</span>
                         <select
                           value={userStatusFilter}
                           onChange={(e) => setUserStatusFilter(e.target.value)}
@@ -1373,7 +1461,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('department')}:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('department')}:</span>
                         <select
                           value={userDepartmentFilter}
                           onChange={(e) => setUserDepartmentFilter(e.target.value)}
@@ -1387,7 +1475,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </div>
 
                         <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tTemplate('responsibilities')}:</span>
+                          <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{tTemplate('responsibilities')}:</span>
                           <select
                             value={userResponsibilityFilter}
                             onChange={(e) => setUserResponsibilityFilter(e.target.value)}
@@ -1401,7 +1489,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                         </div>
 
                         <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentType')}:</span>
+                          <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentType')}:</span>
                         <select
                           value={userEmploymentTypeFilter}
                           onChange={(e) => setUserEmploymentTypeFilter(e.target.value)}
@@ -1415,7 +1503,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentStatus')}:</span>
+                        <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">{tDir('employmentStatus')}:</span>
                         <select
                           value={userEmploymentStatusFilter}
                           onChange={(e) => setUserEmploymentStatusFilter(e.target.value)}
@@ -1431,9 +1519,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                     {/* Large tabular layout */}
                     <div className="overflow-x-auto rounded-2xl max-h-[340px] overflow-y-auto">
-                      <table className="w-full text-left border-collapse text-xs font-mono">
+                      <table className="w-full text-start border-collapse text-xs font-mono">
                         <thead>
-                          <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
+                          <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold border-b border-zinc-900">
                             <th className="p-3">Staff Member</th>
                             <th className="p-3">Role</th>
                             <th className="p-3">Facility Node</th>
@@ -1452,12 +1540,12 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <tr key={u.id} className="hover:bg-zinc-900/20">
                               <td className="p-3">
                                 <div className="flex items-center gap-2">
-                                  <div className={`w-7 h-7 rounded-lg bg-gradient-to-tr ${u.avatarColor} flex items-center justify-center text-[10px] font-black text-white uppercase`}>
+                                  <div className={`w-7 h-7 rounded-lg bg-gradient-to-tr ${u.avatarColor} flex items-center justify-center text-2xs font-black text-white uppercase`}>
                                     {u.name.split(' ').map(n=>n[0]).join('')}
                                   </div>
                                   <div>
-                                    <p className="font-bold text-white text-[11px]">{u.name}</p>
-                                    <span className="text-[9px] text-zinc-500">{u.email}</span>
+                                    <p className="font-bold text-white text-xs">{u.name}</p>
+                                    <span className="text-2xs text-zinc-500">{u.email}</span>
                                   </div>
                                 </div>
                               </td>
@@ -1471,34 +1559,34 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                     u.responsibilities.map((r) => {
                                       const resp = RESPONSIBILITIES.find(x => x.id === r);
                                       return (
-                                        <span key={r} className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                        <span key={r} className="text-2xs font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
                                           {resp?.name ?? r}
                                         </span>
                                       );
                                     })
                                   ) : (
-                                    <span className="text-zinc-600">—</span>
+                                    <span className="text-zinc-600">â€”</span>
                                   )}
                                 </div>
                               </td>
                               <td className="p-3 space-y-1">
-                                <span className="text-[10px] text-zinc-300 block">{u.employmentType ?? '—'}</span>
-                                <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold ${
+                                <span className="text-2xs text-zinc-300 block">{u.employmentType ?? 'â€”'}</span>
+                                <span className={`text-2xs px-1.5 py-0.5 rounded font-bold ${
                                   u.employmentStatus === 'Active' ? 'bg-emerald-500/15 text-emerald-400' :
                                   u.employmentStatus === 'Vacation' || u.employmentStatus === 'On Leave' ? 'bg-amber-500/15 text-amber-400' :
                                   u.employmentStatus === 'Suspended' ? 'bg-rose-500/15 text-rose-400' :
                                   'bg-zinc-900 text-zinc-400'
                                 }`}>
-                                  {u.employmentStatus ?? '—'}
+                                  {u.employmentStatus ?? 'â€”'}
                                 </span>
                               </td>
                               <td className="p-3">
                                 {u.workspace ? (
-                                  <span className="bg-purple-500/15 text-purple-300 border border-purple-500/30 text-[10px] px-2 py-0.5 rounded-lg font-bold">
+                                  <span className="bg-purple-500/15 text-purple-300 border border-purple-500/30 text-2xs px-2 py-0.5 rounded-lg font-bold">
                                     {getWorkspaceById(u.workspace)?.name ?? u.workspace}
                                   </span>
                                 ) : (
-                                  <span className="text-zinc-600">—</span>
+                                  <span className="text-zinc-600">â€”</span>
                                 )}
                               </td>
                               <td className="p-3 font-bold text-emerald-400">{u.id}</td>
@@ -1515,7 +1603,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 <div className="flex items-center gap-2.5">
                                   <button 
                                     onClick={() => openSeatEditor(u)}
-                                    className="text-purple-400 hover:text-purple-300 font-bold text-[10px] transition-colors"
+                                    className="text-purple-400 hover:text-purple-300 font-bold text-2xs transition-colors"
                                   >
                                     EDIT
                                   </button>
@@ -1523,13 +1611,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                     onClick={() => {
                                       setUsers(users.filter(item => item.id !== u.id));
                                     }}
-                                    className="text-rose-400 hover:text-rose-300 font-bold text-[10px] transition-colors"
+                                    className="text-rose-400 hover:text-rose-300 font-bold text-2xs transition-colors"
                                   >
                                     SUSPEND
                                   </button>
                                   <button
                                     onClick={() => cloneUser(u)}
-                                    className="text-cyan-400 hover:text-cyan-300 font-bold text-[10px] transition-colors"
+                                    className="text-cyan-400 hover:text-cyan-300 font-bold text-2xs transition-colors"
                                   >
                                     CLONE
                                   </button>
@@ -1554,7 +1642,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                         <div className="flex justify-between items-start">
                           <div>
                             <h4 className="text-sm font-black text-white uppercase tracking-tight font-mono">{tDir('editSeatTitle')}</h4>
-                            <p className="text-xs text-zinc-400 mt-0.5 font-mono">{editingUser.name} • {editingUser.email}</p>
+                            <p className="text-xs text-zinc-400 mt-0.5 font-mono">{editingUser.name} â€¢ {editingUser.email}</p>
                           </div>
                           <button onClick={() => setEditingUser(null)} className="p-1.5 rounded-lg hover:bg-zinc-900 text-zinc-400">
                             <X className="w-4 h-4" />
@@ -1563,7 +1651,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('department')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('department')}</label>
                             <select
                               value={seatForm.departmentId}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, departmentId: e.target.value as DepartmentId }))}
@@ -1575,20 +1663,20 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('specialty')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('specialty')}</label>
                             <select
                               value={seatForm.specialtyId}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, specialtyId: e.target.value }))}
                               className="w-full p-2 rounded-xl text-zinc-200 text-xs outline-none focus:border-gold-500"
                             >
-                              <option value="">—</option>
+                              <option value="">â€”</option>
                               {getSpecialtiesByDepartment(seatForm.departmentId).map((s) => (
                                 <option key={s.id} value={s.id}>{s.name}</option>
                               ))}
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('jobTitle')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('jobTitle')}</label>
                             <input
                               type="text"
                               value={seatForm.jobTitle}
@@ -1597,7 +1685,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('employmentType')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('employmentType')}</label>
                             <select
                               value={seatForm.employmentType}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, employmentType: e.target.value as EmploymentType }))}
@@ -1609,7 +1697,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('employmentStatus')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('employmentStatus')}</label>
                             <select
                               value={seatForm.employmentStatus}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, employmentStatus: e.target.value as EmploymentStatus }))}
@@ -1621,7 +1709,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('permissionTemplate')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('permissionTemplate')}</label>
                             <select
                               value={seatForm.permissionTemplateId}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, permissionTemplateId: e.target.value }))}
@@ -1633,7 +1721,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('accessScope')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('accessScope')}</label>
                             <select
                               value={seatForm.accessScope}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, accessScope: e.target.value as AccessScopeType }))}
@@ -1645,7 +1733,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </select>
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tDir('workspace')}</label>
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tDir('workspace')}</label>
                             <select
                               value={seatForm.workspace}
                               onChange={(e) => setSeatForm(prev => ({ ...prev, workspace: e.target.value as WorkspaceId }))}
@@ -1660,8 +1748,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <label className="text-[10px] text-zinc-400 font-bold uppercase">{tTemplate('responsibilities')}</label>
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                            <label className="text-2xs text-zinc-400 font-bold uppercase">{tTemplate('responsibilities')}</label>
+                            <span className="text-2xs font-mono px-2 py-0.5 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                               {tTemplate('n_selected', { count: seatForm.responsibilities.length })}
                             </span>
                           </div>
@@ -1673,7 +1761,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                   key={r.id}
                                   type="button"
                                   onClick={() => toggleSeatResponsibility(r.id)}
-                                  className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
+                                  className={`px-2.5 py-1 rounded-lg text-2xs font-bold border transition-all cursor-pointer ${
                                     active
                                       ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
                                       : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -1755,18 +1843,18 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pr-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pe-1">
                       {teams.map((t) => (
                         <div key={t.id} className="p-4 card-elevated rounded-3xl flex flex-col justify-between h-[180px] space-y-3">
                           <div className="flex justify-between items-start">
                             <div>
                               <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-mono font-bold bg-zinc-950 border border-zinc-800 text-purple-400 px-1.5 py-0.5 rounded-md">
+                                <span className="text-2xs font-mono font-bold bg-zinc-950 border border-zinc-800 text-purple-400 px-1.5 py-0.5 rounded-md">
                                   {t.id}
                                 </span>
                                 <h4 className="text-xs font-black text-white">{t.name}</h4>
                               </div>
-                              <p className="text-[9px] text-zinc-500 font-mono mt-0.5">Focus: {t.type} operations</p>
+                              <p className="text-2xs text-zinc-500 font-mono mt-0.5">Focus: {t.type} operations</p>
                             </div>
                             <span className={`badge ${
                               t.status === 'On Duty' ? 'badge-success' :
@@ -1777,7 +1865,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </span>
                           </div>
 
-                          <div className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-1.5 font-mono text-[10px]">
+                          <div className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-1.5 font-mono text-2xs">
                             <div className="flex justify-between text-zinc-400">
                               <span>Staff Roster:</span>
                               <span className="text-white font-bold">{t.members.join(', ')}</span>
@@ -1788,7 +1876,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             </div>
                           </div>
 
-                          <div className="flex justify-between items-center text-[10px] font-mono text-zinc-400">
+                          <div className="flex justify-between items-center text-2xs font-mono text-zinc-400">
                             <span>Availability rate: <strong className="text-emerald-400">{t.availability}</strong></span>
                             <button 
                               onClick={() => {
@@ -1826,9 +1914,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                     {/* Table-based Audit Log */}
                     <div className="overflow-x-auto rounded-2xl max-h-[380px] overflow-y-auto">
-                      <table className="w-full text-left border-collapse text-xs font-mono">
+                      <table className="w-full text-start border-collapse text-xs font-mono">
                         <thead>
-                          <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
+                          <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold border-b border-zinc-900">
                             <th className="p-3">Audit Timestamp</th>
                             <th className="p-3">Operator</th>
                             <th className="p-3">Submodule Scope</th>
@@ -1844,11 +1932,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                               <td className="p-3 font-bold text-zinc-200">
                                 <div className="flex flex-col">
                                   <span>{log.actor}</span>
-                                  <span className="text-[9px] text-zinc-500">{log.role}</span>
+                                  <span className="text-2xs text-zinc-500">{log.role}</span>
                                 </div>
                               </td>
                               <td className="p-3">
-                                <span className="bg-zinc-900 border border-zinc-800 text-[10px] px-2 py-0.5 rounded text-zinc-400">
+                                <span className="bg-zinc-900 border border-zinc-800 text-2xs px-2 py-0.5 rounded text-zinc-400">
                                   {log.module}
                                 </span>
                               </td>
@@ -1896,13 +1984,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Left publish form */}
                       <div className="p-4 card-elevated rounded-3xl space-y-3 h-[380px] flex flex-col justify-between font-sans">
                         <div className="space-y-1">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block">{tOrg('notices.draftTitle')}</span>
-                          <p className="text-[10px] text-zinc-400 font-sans">{tOrg('notices.draftDesc')}</p>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-400 font-sans block">{tOrg('notices.draftTitle')}</span>
+                          <p className="text-2xs text-zinc-400 font-sans">{tOrg('notices.draftDesc')}</p>
                         </div>
 
                         <form onSubmit={handleAddAnnouncement} className="space-y-3 flex-1 justify-center mt-3">
                           <div className="space-y-1">
-                            <label className="text-[10px] font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.titleLabel')}</label>
+                            <label className="text-2xs font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.titleLabel')}</label>
                             <input
                               type="text"
                               value={newAnnouncementTitle}
@@ -1913,7 +2001,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.typeLabel')}</label>
+                            <label className="text-2xs font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.typeLabel')}</label>
                             <select
                               value={newAnnouncementType}
                               onChange={(e: any) => setNewAnnouncementType(e.target.value)}
@@ -1926,7 +2014,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.bodyLabel')}</label>
+                            <label className="text-2xs font-sans text-zinc-400 font-bold uppercase block">{tOrg('notices.bodyLabel')}</label>
                             <textarea
                               value={newAnnouncementContent}
                               onChange={(e) => setNewAnnouncementContent(e.target.value)}
@@ -1947,11 +2035,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                       {/* Right active announcements list */}
                       <div className="lg:col-span-2 p-4 card-elevated rounded-3xl h-[380px] overflow-y-auto scrollbar-thin space-y-3 font-sans">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 font-sans block mb-2">{tOrg('notices.boardTitle')}</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-400 font-sans block mb-2">{tOrg('notices.boardTitle')}</span>
                         <div className="space-y-2.5">
                           {announcements.map((item) => (
                             <div key={item.id} className="p-4.5 bg-zinc-950 border border-zinc-900 rounded-xl space-y-2 relative group font-sans">
-                              <span className={`badge absolute top-3 right-3 ${
+                              <span className={`badge absolute top-3 end-3 ${
                                 item.type === 'Critical' ? 'badge-danger' :
                                 item.type === 'Maintenance' ? 'badge-warning' :
                                 'badge-success'
@@ -1964,9 +2052,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 <Bell className="w-4.5 h-4.5 mt-0.5 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
                                 <div className="space-y-1">
                                   <h4 className="text-xs font-bold text-white font-sans">{item.title}</h4>
-                                  <p className="text-[11px] text-zinc-300 leading-relaxed font-sans">{item.content}</p>
-                                  <p className="text-[9px] text-zinc-500 font-sans pt-1">
-                                    {item.date} • {item.author}
+                                  <p className="text-xs text-zinc-300 leading-relaxed font-sans">{item.content}</p>
+                                  <p className="text-2xs text-zinc-500 font-sans pt-1">
+                                    {item.date} â€¢ {item.author}
                                   </p>
                                 </div>
                               </div>
@@ -2013,11 +2101,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Security Parameters Panel */}
                       <div className="p-4 card-elevated rounded-3xl h-[380px] flex flex-col justify-between space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Credential policies</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Credential policies</span>
                         
                         <div className="space-y-4 flex-1 mt-2">
                           <div className="space-y-1.5">
-                            <div className="flex justify-between items-center text-[10px] font-mono text-zinc-400">
+                            <div className="flex justify-between items-center text-2xs font-mono text-zinc-400">
                               <span>Min Password Length:</span>
                               <span className="text-white font-bold">{passwordMinLength} characters</span>
                             </div>
@@ -2032,7 +2120,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1.5">
-                            <div className="flex justify-between items-center text-[10px] font-mono text-zinc-400">
+                            <div className="flex justify-between items-center text-2xs font-mono text-zinc-400">
                               <span>Auto-Logout Timeout:</span>
                               <span className="text-white font-bold">{sessionTimeout} minutes</span>
                             </div>
@@ -2052,8 +2140,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <div className="flex items-center gap-2">
                               <Fingerprint className="w-5 h-5 text-emerald-400" />
                               <div>
-                                <h5 className="text-[11px] font-bold text-white">Enforce 2FA Authenticator</h5>
-                                <p className="text-[8px] text-zinc-500 font-mono">Requires secure auth code on log</p>
+                                <h5 className="text-xs font-bold text-white">Enforce 2FA Authenticator</h5>
+                                <p className="text-2xs text-zinc-500 font-mono">Requires secure auth code on log</p>
                               </div>
                             </div>
                             <button
@@ -2076,8 +2164,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                               </div>
                             </div>
                             <div>
-                              <p className="text-[10px] font-black text-white font-mono">Clinician Token Key</p>
-                              <p className="text-[8px] text-zinc-500 font-mono">Scan code to register new authenticator device</p>
+                              <p className="text-2xs font-black text-white font-mono">Clinician Token Key</p>
+                              <p className="text-2xs text-zinc-500 font-mono">Scan code to register new authenticator device</p>
                             </div>
                           </div>
                         )}
@@ -2087,8 +2175,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       <div className="md:col-span-2 p-4 card-elevated rounded-3xl h-[380px] space-y-4 flex flex-col justify-between">
                         <div>
                           <div className="flex justify-between items-center border-b border-zinc-900 pb-2 mb-3">
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono">Active Operator Device Nodes</span>
-                            <span className="text-[9px] font-mono text-emerald-400">Total verified devices: 4</span>
+                            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono">Active Operator Device Nodes</span>
+                            <span className="text-2xs font-mono text-emerald-400">Total verified devices: 4</span>
                           </div>
 
                           <div className="space-y-2">
@@ -2100,15 +2188,15 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             ].map((item, idx) => {
                               const DevIcon = item.icon;
                               return (
-                                <div key={idx} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-[10px]">
+                                <div key={idx} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-2xs">
                                   <div className="flex items-center gap-2.5">
                                     <DevIcon className="w-4 h-4 text-zinc-500" />
                                     <div>
                                       <p className="font-bold text-white">{item.device}</p>
-                                      <p className="text-[9px] text-zinc-500">{item.location} • {item.ip}</p>
+                                      <p className="text-2xs text-zinc-500">{item.location} â€¢ {item.ip}</p>
                                     </div>
                                   </div>
-                                  <span className="text-[9px] text-emerald-400">{item.lastActive}</span>
+                                  <span className="text-2xs text-emerald-400">{item.lastActive}</span>
                                 </div>
                               );
                             })}
@@ -2120,8 +2208,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           <div className="flex items-center gap-2 font-mono">
                             <ShieldCheck className="w-5 h-5 text-emerald-400" />
                             <div>
-                              <p className="text-[11px] text-white font-bold">HIPAA Security rating</p>
-                              <p className="text-[9px] text-zinc-500">Perfect compliance posture</p>
+                              <p className="text-xs text-white font-bold">HIPAA Security rating</p>
+                              <p className="text-2xs text-zinc-500">Perfect compliance posture</p>
                             </div>
                           </div>
                           <span className="text-2xl font-black text-emerald-400 font-mono">{securityScore}%</span>
@@ -2153,11 +2241,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Left form params */}
                       <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl h-[380px] flex flex-col justify-between space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Tenant Localization Settings</span>
+                        <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Tenant Localization Settings</span>
                         
                         <div className="space-y-3 flex-1 mt-2">
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Workspace Branding Name</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Workspace Branding Name</label>
                             <input
                               type="text"
                               value={workspaceName}
@@ -2168,7 +2256,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Timezone Scope</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Timezone Scope</label>
                             <select
                               value={workspaceTimezone}
                               onChange={(e) => setWorkspaceTimezone(e.target.value)}
@@ -2182,7 +2270,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
 
                           <div className="space-y-1">
-                            <label className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Primary Language</label>
+                            <label className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Primary Language</label>
                             <select
                               value={primaryLanguage}
                               onChange={(e) => setPrimaryLanguage(e.target.value)}
@@ -2196,13 +2284,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
 
                           {/* Branding Color palette simulator */}
                           <div className="space-y-1.5">
-                            <span className="text-[10px] font-mono text-zinc-400 font-bold uppercase block">Workspace UI Accent color</span>
+                            <span className="text-2xs font-mono text-zinc-400 font-bold uppercase block">Workspace UI Accent color</span>
                             <div className="flex gap-2">
                               {['emerald', 'cyan', 'indigo', 'rose', 'amber'].map((color) => (
                                 <button
                                   key={color}
                                   onClick={() => setBrandColor(color)}
-                                  className={`p-1.5 rounded-lg border text-[10px] font-bold font-mono transition-all cursor-pointer ${
+                                  className={`p-1.5 rounded-lg border text-2xs font-bold font-mono transition-all cursor-pointer ${
                                     brandColor === color 
                                       ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400 font-black' 
                                       : 'bg-zinc-950 border-zinc-900 text-zinc-500'
@@ -2215,7 +2303,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </div>
                         </div>
 
-                        <div className="p-2.5 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-[9px] text-zinc-500">
+                        <div className="p-2.5 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-2xs text-zinc-500">
                           <span>CHANGES RE-WRITE GLOBAL CACHE DIRECTLY</span>
                         </div>
                       </div>
@@ -2223,11 +2311,11 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Right preview card */}
                       <div className="p-4 bg-zinc-900/10 border border-zinc-850 rounded-3xl h-[380px] flex flex-col justify-between">
                         <div className="space-y-4">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Custom Client Branding Preview</span>
-                          <p className="text-[10px] text-zinc-400 font-mono">This preview reflects how patient-facing letters and portals render.</p>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Custom Client Branding Preview</span>
+                          <p className="text-2xs text-zinc-400 font-mono">This preview reflects how patient-facing letters and portals render.</p>
 
                           {/* Preview visual card */}
-                          <div className="p-5 rounded-3xl bg-zinc-950 border border-zinc-900 space-y-4 shadow-xl">
+                          <div className="p-5 rounded-3xl bg-zinc-950 border border-zinc-900 space-y-4 shadow-card">
                             <div className="flex justify-between items-start">
                               <div className="flex items-center gap-2">
                                 <div className={`w-8 h-8 rounded-lg ${
@@ -2241,14 +2329,14 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 </div>
                                 <div>
                                   <h4 className="text-xs font-black text-white">{workspaceName.substring(0, 24)}...</h4>
-                                  <p className="text-[9px] text-zinc-500 font-mono">Dynamic localization: {workspaceTimezone}</p>
+                                  <p className="text-2xs text-zinc-500 font-mono">Dynamic localization: {workspaceTimezone}</p>
                                 </div>
                               </div>
                             </div>
 
                             <div className="space-y-1 border-t border-zinc-900 pt-3">
-                              <p className="text-[11px] text-zinc-300">Dear Patient,</p>
-                              <p className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                              <p className="text-xs text-zinc-300">Dear Patient,</p>
+                              <p className="text-2xs text-zinc-500 font-mono leading-relaxed">
                                 This treatment schedule is dynamically calculated in <span className="text-emerald-400 font-bold">{primaryLanguage}</span> based on multi-clinic timezone standards.
                               </p>
                             </div>
@@ -2321,7 +2409,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Left: SLA Health Telemetry */}
                       <div className="p-4 bg-zinc-900/40 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[380px] space-y-3">
                         <div>
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Cryptographic Cluster Checksum</span>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-2">Cryptographic Cluster Checksum</span>
                           
                           <div className="space-y-2.5 font-mono text-xs mt-3">
                             <div className="flex justify-between items-center bg-zinc-950 p-2 rounded-xl border border-zinc-900">
@@ -2344,8 +2432,8 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                         </div>
 
                         <div className="space-y-3">
-                          <div className="bg-zinc-950 p-3 rounded-xl border border-zinc-900 text-[10px] font-mono text-zinc-400 space-y-1">
-                            <p className="font-bold text-white uppercase tracking-wider text-[8px] text-zinc-500">Telemetry Scan Data</p>
+                          <div className="bg-zinc-950 p-3 rounded-xl border border-zinc-900 text-2xs font-mono text-zinc-400 space-y-1">
+                            <p className="font-bold text-white uppercase tracking-wider text-2xs text-zinc-500">Telemetry Scan Data</p>
                             <p>API Gateway Cluster: <span className="text-white">Active (99.99%)</span></p>
                             <p>Database Latency: <span className="text-emerald-400">11ms</span></p>
                           </div>
@@ -2367,27 +2455,27 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {/* Right: Backups Archive list */}
                       <div className="lg:col-span-2 p-4 bg-zinc-900/30 border border-zinc-850 rounded-3xl flex flex-col justify-between h-[380px]">
                         <div className="space-y-2 flex-1 overflow-hidden flex flex-col">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-1">Cryptographically Authenticated Backups List</span>
+                          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block mb-1">Cryptographically Authenticated Backups List</span>
                           
-                          <div className="flex-1 overflow-y-auto space-y-2.5 pr-1 scrollbar-thin">
+                          <div className="flex-1 overflow-y-auto space-y-2.5 pe-1 scrollbar-thin">
                             {backups.map((bkp) => (
                               <div key={bkp.id} className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center justify-between font-mono text-xs">
                                 <div className="space-y-1">
                                   <div className="flex items-center gap-2">
                                     <span className="text-xs font-bold text-white">{bkp.id}</span>
-                                    <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded border ${
+                                    <span className={`text-2xs font-extrabold px-1.5 py-0.5 rounded border ${
                                       bkp.type === 'Manual' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                                     }`}>
                                       {bkp.type.toUpperCase()}
                                     </span>
                                   </div>
-                                  <p className="text-[10px] text-zinc-500 font-semibold">Created: {bkp.timestamp} | Size: {bkp.size}</p>
-                                  <p className="text-[9px] text-zinc-650 truncate max-w-xs">{bkp.checksum}</p>
+                                  <p className="text-2xs text-zinc-500 font-semibold">Created: {bkp.timestamp} | Size: {bkp.size}</p>
+                                  <p className="text-2xs text-zinc-650 truncate max-w-xs">{bkp.checksum}</p>
                                 </div>
 
                                 <div className="flex items-center gap-2">
                                   {bkp.status === 'Restored' ? (
-                                    <span className="text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-2 py-1 rounded-lg">
+                                    <span className="text-2xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-2 py-1 rounded-lg">
                                       Active State
                                     </span>
                                   ) : (
@@ -2398,7 +2486,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                         setDrStatusMessage(`Successfully restored all clinical databases and tenant state to backup archive: ${bkp.id}`);
                                         setTimeout(() => setDrStatusMessage(null), 6000);
                                       }}
-                                      className="px-3 py-1 bg-zinc-900 border border-zinc-800 hover:border-blue-500/50 hover:bg-zinc-850 text-blue-400 hover:text-white rounded-lg text-[10px] font-bold transition-all cursor-pointer"
+                                      className="px-3 py-1 bg-zinc-900 border border-zinc-800 hover:border-blue-500/50 hover:bg-zinc-850 text-blue-400 hover:text-white rounded-lg text-2xs font-bold transition-all cursor-pointer"
                                     >
                                       Restore
                                     </button>
@@ -2434,15 +2522,15 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                       {WORKSPACES.map((w) => (
                         <div key={w.id} className="p-3 card-elevated rounded-2xl space-y-1.5">
                           <div className="flex items-center justify-between">
-                            <h5 className="text-[11px] font-black text-white">{w.name}</h5>
-                            <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-purple-500/10 border border-purple-500/30 text-purple-400 uppercase">
+                            <h5 className="text-xs font-black text-white">{w.name}</h5>
+                            <span className="text-2xs font-mono font-black px-1.5 py-0.5 rounded bg-purple-500/10 border border-purple-500/30 text-purple-400 uppercase">
                               {w.id}
                             </span>
                           </div>
-                          <p className="text-[8px] font-mono text-zinc-500">Primary module: <span className="text-zinc-300">{w.primaryModule}</span></p>
+                          <p className="text-2xs font-mono text-zinc-500">Primary module: <span className="text-zinc-300">{w.primaryModule}</span></p>
                           <div className="flex flex-wrap gap-1">
                             {w.departments.map((d) => (
-                              <span key={d} className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
+                              <span key={d} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
                                 {getDepartmentName(d)}
                               </span>
                             ))}
@@ -2454,33 +2542,33 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     <div className="p-4 card-elevated rounded-3xl space-y-3">
                       <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
                         <span className="text-xs font-black text-white uppercase tracking-tight font-mono">{tDir('allWorkspaces')}</span>
-                        <span className="text-[9px] font-mono text-purple-400">{tDir('derivedFrom')}: {tTemplate('responsibilities')} + {tDir('department')} + {tDir('permissionMatrix')}</span>
+                        <span className="text-2xs font-mono text-purple-400">{tDir('derivedFrom')}: {tTemplate('responsibilities')} + {tDir('department')} + {tDir('permissionMatrix')}</span>
                       </div>
 
                       {/* Adaptive engine status */}
                       <div className="flex items-center gap-2 flex-wrap">
                         {orgProfile && (
-                          <span className={`text-[10px] font-mono px-2 py-1 rounded-lg border font-bold ${
+                          <span className={`text-2xs font-mono px-2 py-1 rounded-lg border font-bold ${
                             isConsolidatedPractice(orgProfile.practiceTypeId)
                               ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
                               : 'bg-purple-500/10 border-purple-500/30 text-purple-300'
                           }`}>
                             {isConsolidatedPractice(orgProfile.practiceTypeId)
-                              ? 'UNIFIED SURFACE — CONSOLIDATED'
+                              ? 'UNIFIED SURFACE â€” CONSOLIDATED'
                               : 'SEPARATED BY DEPARTMENT'}
                           </span>
                         )}
                         {orgProfile && (
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tOnboard(`practiceTypes.${orgProfile.practiceTypeId}`)}
                           </span>
                         )}
                       </div>
 
                       <div className="overflow-x-auto rounded-xl max-h-[320px] overflow-y-auto">
-                        <table className="w-full text-left border-collapse text-xs font-mono">
+                        <table className="w-full text-start border-collapse text-xs font-mono">
                           <thead>
-                            <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold border-b border-zinc-900">
+                            <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold border-b border-zinc-900">
                               <th className="p-3">Staff Member</th>
                               <th className="p-3">{tDir('department')}</th>
                               <th className="p-3">{tTemplate('responsibilities')}</th>
@@ -2495,13 +2583,13 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 <tr key={u.id} className="hover:bg-zinc-900/20">
                                   <td className="p-3">
                                     <div className="flex items-center gap-2">
-                                      <div className={`w-6 h-6 rounded-lg bg-gradient-to-tr ${u.avatarColor} flex items-center justify-center text-[9px] font-black text-white uppercase`}>
+                                      <div className={`w-6 h-6 rounded-lg bg-gradient-to-tr ${u.avatarColor} flex items-center justify-center text-2xs font-black text-white uppercase`}>
                                         {u.name.split(' ').map(n=>n[0]).join('')}
                                       </div>
                                       <div>
-                                        <span className="font-bold text-white text-[11px]">{u.name}</span>
+                                        <span className="font-bold text-white text-xs">{u.name}</span>
                                         {adaptive.consolidated && (
-                                          <span className="block text-[8px] font-mono text-amber-400/80 uppercase">Unified surface</span>
+                                          <span className="block text-2xs font-mono text-amber-400/80 uppercase">Unified surface</span>
                                         )}
                                       </div>
                                     </div>
@@ -2512,18 +2600,18 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                       {(u.responsibilities ?? []).slice(0, 3).map((r) => {
                                         const resp = RESPONSIBILITIES.find(x => x.id === r);
                                         return (
-                                          <span key={r} className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                          <span key={r} className="text-2xs font-bold px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
                                             {resp?.name ?? r}
                                           </span>
                                         );
                                       })}
                                     </div>
                                   </td>
-                                  <td className="p-3 text-zinc-400">{templates.find(t => t.id === (u.permissionTemplateId ?? ROLE_TEMPLATE_MAP[u.role]))?.name ?? '—'}</td>
+                                  <td className="p-3 text-zinc-400">{templates.find(t => t.id === (u.permissionTemplateId ?? ROLE_TEMPLATE_MAP[u.role]))?.name ?? 'â€”'}</td>
                                   <td className="p-3">
                                     <div className="flex flex-wrap gap-1">
                                       {adaptive.workspaces.map((wid) => (
-                                        <span key={wid} className={`text-[9px] font-bold px-2 py-0.5 rounded-lg border ${
+                                        <span key={wid} className={`text-2xs font-bold px-2 py-0.5 rounded-lg border ${
                                           adaptive.consolidated
                                             ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
                                             : 'bg-purple-500/15 text-purple-300 border-purple-500/30'
@@ -2556,7 +2644,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                 <WorkspaceTabPanel className="space-y-4">
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-4 card-gradient rounded-3xl">
                     <div className="flex items-center gap-4">
-                      <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                      <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                         <Sparkles className="w-5 h-5" />
                       </div>
                       <div>
@@ -2566,10 +2654,10 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     </div>
                     {orgProfile && (
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
+                        <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
                           {tTemplate('practiceType')}: <span className="text-violet-300 font-bold">{tOnboard(`practiceTypes.${orgProfile.practiceTypeId}`)}</span>
                         </span>
-                        <span className={`text-[10px] font-mono px-2 py-1 rounded-lg border ${
+                        <span className={`text-2xs font-mono px-2 py-1 rounded-lg border ${
                           practiceTemplate?.source === 'custom'
                             ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
                             : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
@@ -2601,9 +2689,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <Building2 className="w-4 h-4 text-sky-400" /> {tTemplate('departments')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('departmentsSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('departmentsSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.departments.length })}
                           </span>
                         </div>
@@ -2615,7 +2703,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 key={d.id}
                                 type="button"
                                 onClick={() => toggleTemplateItem('departments', d.id)}
-                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                                   active
                                     ? 'bg-sky-500/15 text-sky-300 border-sky-500/40'
                                     : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -2635,9 +2723,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <Grid className="w-4 h-4 text-purple-400" /> {tTemplate('workspaces')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('workspacesSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('workspacesSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.workspaces.length })}
                           </span>
                         </div>
@@ -2649,7 +2737,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 key={w.id}
                                 type="button"
                                 onClick={() => toggleTemplateItem('workspaces', w.id)}
-                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                                   active
                                     ? 'bg-purple-500/15 text-purple-300 border-purple-500/40'
                                     : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -2669,9 +2757,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <UserCheck className="w-4 h-4 text-emerald-400" /> {tTemplate('responsibilities')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('responsibilitiesSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('responsibilitiesSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.responsibilities.length })}
                           </span>
                         </div>
@@ -2683,7 +2771,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 key={r.id}
                                 type="button"
                                 onClick={() => toggleTemplateItem('responsibilities', r.id)}
-                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                                   active
                                     ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
                                     : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -2703,9 +2791,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <Layers className="w-4 h-4 text-amber-400" /> {tTemplate('navigation')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('navigationSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('navigationSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.navigation.length })}
                           </span>
                         </div>
@@ -2715,7 +2803,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                               key={k}
                               type="button"
                               onClick={() => toggleTemplateItem('navigation', k)}
-                              className="px-3 py-1.5 rounded-xl text-[11px] font-bold border border-amber-500/40 bg-amber-500/15 text-amber-300 transition-all cursor-pointer hover:bg-amber-500/25"
+                              className="px-3 py-1.5 rounded-xl text-xs font-bold border border-amber-500/40 bg-amber-500/15 text-amber-300 transition-all cursor-pointer hover:bg-amber-500/25"
                             >
                               {k}
                             </button>
@@ -2730,9 +2818,9 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                             <h4 className="text-xs font-black text-white uppercase tracking-tight flex items-center gap-2">
                               <ShieldCheck className="w-4 h-4 text-rose-400" /> {tTemplate('permissionTemplates')}
                             </h4>
-                            <p className="text-[11px] text-zinc-500 mt-0.5">{tTemplate('permissionTemplatesSub')}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{tTemplate('permissionTemplatesSub')}</p>
                           </div>
-                          <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
+                          <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400">
                             {tTemplate('n_selected', { count: practiceTemplate.permissionTemplateIds.length })}
                           </span>
                         </div>
@@ -2744,7 +2832,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                                 key={tmpl.id}
                                 type="button"
                                 onClick={() => toggleTemplateItem('permissionTemplateIds', tmpl.id)}
-                                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                                   active
                                     ? 'bg-rose-500/15 text-rose-300 border-rose-500/40'
                                     : 'bg-zinc-950/60 text-zinc-500 border-zinc-800 hover:border-zinc-700 hover:text-zinc-300'
@@ -2778,7 +2866,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                           </button>
                         </div>
                         {practiceTemplateStatus && (
-                          <span className={`text-[11px] font-bold px-3 py-1.5 rounded-xl border ${
+                          <span className={`text-xs font-bold px-3 py-1.5 rounded-xl border ${
                             practiceTemplateStatus === 'saved'
                               ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
                               : 'bg-amber-500/10 border-amber-500/30 text-amber-300'
@@ -2800,7 +2888,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                 <WorkspaceTabPanel className="space-y-4">
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-4 card-gradient rounded-3xl">
                     <div className="flex items-center gap-4">
-                      <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                      <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                         <LayoutGrid className="w-5 h-5" />
                       </div>
                       <div>
@@ -2810,10 +2898,10 @@ const tBuilder = useTranslations('WorkspaceBuilder');
                     </div>
                     {orgProfile && (
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
+                        <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-zinc-950/60 border border-zinc-800 text-zinc-400">
                           {tTemplate('practiceType')}: <span className="text-cyan-300 font-bold">{tOnboard('practiceTypes.' + orgProfile.practiceTypeId)}</span>
                         </span>
-                        <span className="text-[10px] font-mono px-2 py-1 rounded-lg bg-cyan-500/10 border-cyan-500/30 text-cyan-300">
+                        <span className="text-2xs font-mono px-2 py-1 rounded-lg bg-cyan-500/10 border-cyan-500/30 text-cyan-300">
                           PERSONAL LAYOUTS
                         </span>
                       </div>
@@ -2845,7 +2933,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
               )}
 
               {/* ==================================================
-                  ORGANIZATION MANAGER — Org → Branch → Department → Room → Chair → Equipment
+                  ORGANIZATION MANAGER â€” Org â†’ Branch â†’ Department â†’ Room â†’ Chair â†’ Equipment
                   ================================================== */}
               {activeTab === 'OrganizationManager' && (
                 <WorkspaceTabPanel className="space-y-4">
@@ -2859,7 +2947,7 @@ const tBuilder = useTranslations('WorkspaceBuilder');
           </div>
         </div>
 
-        {/* FIRST-RUN ADAPTIVE SETUP WIZARD — only when a new organization has no profile yet */}
+        {/* FIRST-RUN ADAPTIVE SETUP WIZARD â€” only when a new organization has no profile yet */}
         <AnimatePresence>
           {showSetupWizard && (
             <FirstRunSetupWizard

@@ -1,0 +1,1026 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   VELVET DESIGN SYSTEM — HealthOS
+   Complete design token foundation for velvet-themed luxury clinical OS
+   ──────────────────────────────────────────────────────────────────────────────
+   This file contains ONLY design tokens — no components, no layouts, no styles.
+   Import this file to access all velvet design tokens via CSS custom properties.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   THEME SELECTION
+   Apply via: <html data-velvet-theme="black" data-velvet-mode="dark">
+   Or:       <html data-velvet-theme="white" data-velvet-mode="light">
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   VELVET BLACK THEME — Deep, rich, clinical night
+   ────────────────────────────────────────────────────────────────────────────── */
+:root,
+[data-velvet-theme='black'][data-velvet-mode='dark'] {
+  color-scheme: dark;
+
+  /* ═══════════════════════════════════════
+     CORE VELVET PALETTE — Black Theme
+     ═══════════════════════════════════════ */
+  --velvet-950:   #030305;   /* Deepest velvet — near black with blue undertone */
+  --velvet-900:   #0a0a0f;   /* Primary background */
+  --velvet-850:   #11111a;   /* Elevated surface */
+  --velvet-800:   #1a1a26;   /* Card surface */
+  --velvet-750:   #222233;   /* Hover surface */
+  --velvet-700:   #2d2d42;   /* Active/pressed surface */
+  --velvet-600:   #3a3a55;   /* Border/subtle */
+  --velvet-500:   #4e4e73;   /* Muted text */
+  --velvet-400:   #6b6b94;   /* Subtle text */
+  --velvet-300:   #8f8fc4;   /* Secondary text */
+  --velvet-200:   #b8b8e0;   /* Primary text */
+  --velvet-100:   #e0e0f0;   /* Highlight text */
+  --velvet-50:    #f0f0f8;   /* Brightest text */
+
+  /* ═══════════════════════════════════════
+     BRAND ACCENT — Velvet Gold (signature)
+     ═══════════════════════════════════════ */
+  --velvet-gold-500:  #c9a84c;   /* Primary brand gold */
+  --velvet-gold-400:  #d4b862;   /* Lighter gold */
+  --velvet-gold-300:  #e0c880;   /* Gold highlight */
+  --velvet-gold-200:  #ebd9a8;   /* Pale gold */
+  --velvet-gold-100:  #f5ead4;   /* Whisper gold */
+  --velvet-gold-glow:  rgba(201, 168, 76, 0.35);
+  --velvet-gold-glow2: rgba(201, 168, 76, 0.12);
+
+  /* ═══════════════════════════════════════
+     SEMANTIC SURFACES — Black Theme
+     ═══════════════════════════════════════ */
+  --velvet-bg:           var(--velvet-900);
+  --velvet-bg-elevated:  var(--velvet-850);
+  --velvet-bg-card:      var(--velvet-800);
+  --velvet-bg-hover:     var(--velvet-750);
+  --velvet-bg-active:    var(--velvet-700);
+  --velvet-surface:      var(--velvet-800);
+  --velvet-surface-2:    var(--velvet-750);
+  --velvet-surface-3:    var(--velvet-700);
+  --velvet-surface-solid: var(--velvet-850);
+
+  /* ═══════════════════════════════════════
+     TEXT HIERARCHY — Black Theme
+     ═══════════════════════════════════════ */
+  --velvet-text:         var(--velvet-100);
+  --velvet-text-sub:     var(--velvet-200);
+  --velvet-text-muted:   var(--velvet-300);
+  --velvet-text-faint:   var(--velvet-500);
+  --velvet-text-inverse: var(--velvet-950);
+
+  /* ═══════════════════════════════════════
+     ACCENT SYSTEM — Black Theme
+     ═══════════════════════════════════════ */
+  --velvet-accent:        var(--velvet-gold-500);
+  --velvet-accent-hover:  var(--velvet-gold-400);
+  --velvet-accent-active: var(--velvet-gold-300);
+  --velvet-accent-dim:    var(--velvet-gold-500);
+  --velvet-accent-glow:   var(--velvet-gold-glow);
+  --velvet-accent-glow2:  var(--velvet-gold-glow2);
+
+  /* ═══════════════════════════════════════
+     STATUS COLORS — Black Theme (velvet-tinted)
+     ═══════════════════════════════════════ */
+  --velvet-success:       #4ade80;  /* Emerald */
+  --velvet-success-bg:    rgba(74, 222, 128, 0.12);
+  --velvet-success-border: rgba(74, 222, 128, 0.3);
+  --velvet-success-glow:  rgba(74, 222, 128, 0.25);
+
+  --velvet-warning:       #fbbf24;  /* Amber */
+  --velvet-warning-bg:    rgba(251, 191, 36, 0.12);
+  --velvet-warning-border: rgba(251, 191, 36, 0.3);
+  --velvet-warning-glow:  rgba(251, 191, 36, 0.25);
+
+  --velvet-error:         #f87171;  /* Rose */
+  --velvet-error-bg:      rgba(248, 113, 113, 0.12);
+  --velvet-error-border:  rgba(248, 113, 113, 0.3);
+  --velvet-error-glow:    rgba(248, 113, 113, 0.25);
+
+  --velvet-info:          #60a5fa;  /* Sky */
+  --velvet-info-bg:       rgba(96, 165, 250, 0.12);
+  --velvet-info-border:   rgba(96, 165, 250, 0.3);
+  --velvet-info-glow:     rgba(96, 165, 250, 0.25);
+
+  --velvet-neutral:       #9ca3af;  /* Stone */
+  --velvet-neutral-bg:    rgba(156, 163, 175, 0.12);
+  --velvet-neutral-border: rgba(156, 163, 175, 0.3);
+
+  /* ═══════════════════════════════════════
+     GRADIENTS — Black Theme
+     ═══════════════════════════════════════ */
+  --velvet-gradient-primary: linear-gradient(135deg, var(--velvet-gold-500) 0%, var(--velvet-gold-300) 50%, var(--velvet-200) 100%);
+  --velvet-gradient-soft:    linear-gradient(160deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 50%, transparent 100%);
+  --velvet-gradient-glow:    linear-gradient(135deg, var(--velvet-gold-500) 0%, var(--velvet-800) 100%);
+  --velvet-mesh:             radial-gradient(1200px 700px at 80% -10%, rgba(201,168,76,0.18) 0%, transparent 55%),
+                             radial-gradient(900px 600px at 0% 100%, rgba(26,26,38,0.6) 0%, transparent 60%),
+                             linear-gradient(180deg, var(--velvet-900) 0%, var(--velvet-950) 100%);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   VELVET WHITE THEME — Luminous, clean, clinical day
+   ────────────────────────────────────────────────────────────────────────────── */
+[data-velvet-theme='white'][data-velvet-mode='light'] {
+  color-scheme: light;
+
+  /* ═══════════════════════════════════════
+     CORE VELVET PALETTE — White Theme
+     ═══════════════════════════════════════ */
+  --velvet-50:    #fafaff;    /* Brightest — pure white with velvet warmth */
+  --velvet-100:   #f0f0f8;     /* Subtle warmth */
+  --velvet-200:   #e0e0f0;     /* Light surface */
+  --velvet-300:   #c8c8e0;     /* Elevated surface */
+  --velvet-400:   #a8a8cc;     /* Card surface */
+  --velvet-500:   #8888b3;     /* Hover surface */
+  --velvet-600:   #6d6d99;     /* Active surface */
+  --velvet-700:   #555580;     /* Border/subtle */
+  --velvet-800:   #404066;     /* Muted text */
+  --velvet-850:   #303052;     /* Secondary text */
+  --velvet-900:   #22223d;     /* Primary text */
+  --velvet-950:   #18182e;     /* Deepest text */
+
+  /* ═══════════════════════════════════════
+     BRAND ACCENT — Velvet Gold (signature)
+     ═══════════════════════════════════════ */
+  --velvet-gold-500:  #b8943a;   /* Primary brand gold (darker for light mode) */
+  --velvet-gold-400:  #c9a84c;   /* Standard gold */
+  --velvet-gold-300:  #d4b862;   /* Lighter gold */
+  --velvet-gold-200:  #e0c880;   /* Pale gold */
+  --velvet-gold-100:  #ebd9a8;   /* Whisper gold */
+  --velvet-gold-glow:  rgba(184, 148, 58, 0.3);
+  --velvet-gold-glow2: rgba(184, 148, 58, 0.1);
+
+  /* ═══════════════════════════════════════
+     SEMANTIC SURFACES — White Theme
+     ═══════════════════════════════════════ */
+  --velvet-bg:           var(--velvet-50);
+  --velvet-bg-elevated:  var(--velvet-100);
+  --velvet-bg-card:      var(--velvet-200);
+  --velvet-bg-hover:     var(--velvet-300);
+  --velvet-bg-active:    var(--velvet-400);
+  --velvet-surface:      var(--velvet-200);
+  --velvet-surface-2:    var(--velvet-300);
+  --velvet-surface-3:    var(--velvet-400);
+  --velvet-surface-solid: var(--velvet-100);
+
+  /* ═══════════════════════════════════════
+     TEXT HIERARCHY — White Theme
+     ═══════════════════════════════════════ */
+  --velvet-text:         var(--velvet-950);
+  --velvet-text-sub:     var(--velvet-900);
+  --velvet-text-muted:   var(--velvet-700);
+  --velvet-text-faint:   var(--velvet-800);
+  --velvet-text-inverse: var(--velvet-50);
+
+  /* ═══════════════════════════════════════
+     ACCENT SYSTEM — White Theme
+     ═══════════════════════════════════════ */
+  --velvet-accent:        var(--velvet-gold-500);
+  --velvet-accent-hover:  var(--velvet-gold-400);
+  --velvet-accent-active: var(--velvet-gold-600);
+  --velvet-accent-dim:    var(--velvet-gold-500);
+  --velvet-accent-glow:   var(--velvet-gold-glow);
+  --velvet-accent-glow2:  var(--velvet-gold-glow2);
+
+  /* ═══════════════════════════════════════
+     STATUS COLORS — White Theme (velvet-tinted)
+     ═══════════════════════════════════════ */
+  --velvet-success:        #16a34a;   /* Darker emerald for light mode */
+  --velvet-success-bg:     rgba(22, 163, 74, 0.1);
+  --velvet-success-border: rgba(22, 163, 74, 0.25);
+  --velvet-success-glow:   rgba(22, 163, 74, 0.2);
+
+  --velvet-warning:        #ca8a04;   /* Darker amber */
+  --velvet-warning-bg:     rgba(202, 138, 4, 0.1);
+  --velvet-warning-border: rgba(202, 138, 4, 0.25);
+  --velvet-warning-glow:   rgba(202, 138, 4, 0.2);
+
+  --velvet-error:          #dc2626;   /* Darker rose */
+  --velvet-error-bg:       rgba(220, 38, 38, 0.1);
+  --velvet-error-border:   rgba(220, 38, 38, 0.25);
+  --velvet-error-glow:     rgba(220, 38, 38, 0.2);
+
+  --velvet-info:           #2563eb;   /* Darker sky */
+  --velvet-info-bg:        rgba(37, 99, 235, 0.1);
+  --velvet-info-border:    rgba(37, 99, 235, 0.25);
+  --velvet-info-glow:      rgba(37, 99, 235, 0.2);
+
+  --velvet-neutral:        #6b7280;   /* Stone */
+  --velvet-neutral-bg:     rgba(107, 114, 128, 0.1);
+  --velvet-neutral-border: rgba(107, 114, 128, 0.25);
+
+  /* ═══════════════════════════════════════
+     GRADIENTS — White Theme
+     ═══════════════════════════════════════ */
+  --velvet-gradient-primary: linear-gradient(135deg, var(--velvet-gold-500) 0%, var(--velvet-gold-400) 50%, var(--velvet-gold-300) 100%);
+  --velvet-gradient-soft:    linear-gradient(160deg, rgba(184,148,58,0.12) 0%, rgba(184,148,58,0.04) 50%, transparent 100%);
+  --velvet-gradient-glow:    linear-gradient(135deg, var(--velvet-gold-500) 0%, var(--velvet-200) 100%);
+  --velvet-mesh:             radial-gradient(1200px 700px at 80% -10%, rgba(184,148,58,0.12) 0%, transparent 55%),
+                             radial-gradient(900px 600px at 0% 100%, rgba(240,240,248,0.6) 0%, transparent 60%),
+                             linear-gradient(180deg, var(--velvet-50) 0%, var(--velvet-100) 100%);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════════
+   GLASS TOKENS — Frosted, translucent surfaces with depth
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   Glass Fill — Base translucent surface
+   ────────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Light glass — subtle, for cards and panels */
+  --velvet-glass-fill:          rgba(255, 255, 255, 0.04);
+  --velvet-glass-fill-hover:    rgba(255, 255, 255, 0.07);
+  --velvet-glass-fill-active:   rgba(255, 255, 255, 0.1);
+  --velvet-glass-fill-strong:   rgba(255, 255, 255, 0.12);
+
+  /* Dark glass — deeper, for modals and chrome */
+  --velvet-glass-fill-heavy:    rgba(255, 255, 255, 0.06);
+  --velvet-glass-fill-heavy-hover: rgba(255, 255, 255, 0.1);
+  --velvet-glass-fill-heavy-active: rgba(255, 255, 255, 0.14);
+
+  /* Accent-tinted glass — for highlights */
+  --velvet-glass-fill-accent:   rgba(201, 168, 76, 0.08);
+  --velvet-glass-fill-accent-hover: rgba(201, 168, 76, 0.14);
+}
+
+/* White theme overrides */
+[data-velvet-theme='white'][data-velvet-mode='light'] {
+  --velvet-glass-fill:           rgba(24, 24, 46, 0.05);
+  --velvet-glass-fill-hover:     rgba(24, 24, 46, 0.09);
+  --velvet-glass-fill-active:    rgba(24, 24, 46, 0.13);
+  --velvet-glass-fill-strong:    rgba(24, 24, 46, 0.16);
+  --velvet-glass-fill-heavy:     rgba(24, 24, 46, 0.08);
+  --velvet-glass-fill-heavy-hover: rgba(24, 24, 46, 0.12);
+  --velvet-glass-fill-heavy-active: rgba(24, 24, 46, 0.16);
+  --velvet-glass-fill-accent:    rgba(184, 148, 58, 0.07);
+  --velvet-glass-fill-accent-hover: rgba(184, 148, 58, 0.12);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   Glass Border — Hairline borders for glass surfaces
+   ────────────────────────────────────────────────────────────────────────────── */
+:root {
+  --velvet-glass-border:           rgba(255, 255, 255, 0.08);
+  --velvet-glass-border-strong:    rgba(255, 255, 255, 0.16);
+  --velvet-glass-border-accent:    rgba(201, 168, 76, 0.3);
+  --velvet-glass-border-accent-strong: rgba(201, 168, 76, 0.5);
+}
+
+/* White theme overrides */
+[data-velvet-theme='white'][data-velvet-mode='light'] {
+  --velvet-glass-border:           rgba(24, 24, 46, 0.06);
+  --velvet-glass-border-strong:    rgba(24, 24, 46, 0.12);
+  --velvet-glass-border-accent:    rgba(184, 148, 58, 0.25);
+  --velvet-glass-border-accent-strong: rgba(184, 148, 58, 0.4);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   Glass Highlights — Top-edge glints and corner blooms
+   ────────────────────────────────────────────────────────────────────────────── */
+:root {
+  --velvet-glass-glint: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+  --velvet-glass-glint-strong: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  --velvet-glass-glint-accent: linear-gradient(90deg, transparent 0%, var(--velvet-accent-glow) 50%, transparent 100%);
+  --velvet-glass-bloom: radial-gradient(ellipse at top right, var(--velvet-accent-glow2) 0%, transparent 70%);
+  --velvet-glass-bloom-accent: radial-gradient(ellipse at top right, var(--velvet-accent-glow) 0%, transparent 60%);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SHADOW TOKENS — Layered depth with velvet warmth
+   ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ───── Base Shadows ───── */
+  --velvet-shadow-xs:   0 1px 2px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.02);
+  --velvet-shadow-sm:   0 2px 4px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255,255,255,0.03);
+  --velvet-shadow-md:   0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.04);
+  --velvet-shadow-lg:   0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255,255,255,0.05);
+  --velvet-shadow-xl:   0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.06);
+  --velvet-shadow-2xl:  0 32px 96px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255,255,255,0.08);
+
+  /* ───── Inset Shadows ───── */
+  --velvet-shadow-inset:     inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.2);
+  --velvet-shadow-inset-lg:  inset 0 2px 4px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2);
+
+  /* ───── Glow Shadows ───── */
+  --velvet-shadow-glow:      0 0 24px var(--velvet-accent-glow), 0 0 0 1px var(--velvet-glass-border-accent);
+  --velvet-shadow-glow-lg:   0 0 48px var(--velvet-accent-glow), 0 0 0 1px var(--velvet-glass-border-accent-strong);
+  --velvet-shadow-glow-subtle: 0 0 12px var(--velvet-accent-glow2);
+
+  /* ───── Colored Glows ───── */
+  --velvet-shadow-success:   0 0 24px var(--velvet-success-glow);
+  --velvet-shadow-warning:   0 0 24px var(--velvet-warning-glow);
+  --velvet-shadow-error:     0 0 24px var(--velvet-error-glow);
+  --velvet-shadow-info:      0 0 24px var(--velvet-info-glow);
+
+  /* ───── Card Shadows (composed) ───── */
+  --velvet-shadow-card:      var(--velvet-shadow-md), var(--velvet-shadow-inset);
+  --velvet-shadow-card-hover: var(--velvet-shadow-lg), var(--velvet-shadow-inset);
+  --velvet-shadow-pop:       var(--velvet-shadow-xl), var(--velvet-shadow-inset-lg);
+}
+
+/* White theme adjustments */
+[data-velvet-theme='white'][data-velvet-mode='light'] {
+  --velvet-shadow-xs:   0 1px 2px rgba(24,24,46,0.08), 0 0 0 1px rgba(24,24,46,0.04);
+  --velvet-shadow-sm:   0 2px 4px rgba(24,24,46,0.1), 0 0 0 1px rgba(24,24,46,0.06);
+  --velvet-shadow-md:   0 4px 12px rgba(24,24,46,0.12), 0 0 0 1px rgba(24,24,46,0.08);
+  --velvet-shadow-lg:   0 8px 24px rgba(24,24,46,0.14), 0 0 0 1px rgba(24,24,46,0.1);
+  --velvet-shadow-xl:   0 16px 48px rgba(24,24,46,0.16), 0 0 0 1px rgba(24,24,46,0.12);
+  --velvet-shadow-2xl:  0 32px 96px rgba(24,24,46,0.18), 0 0 0 1px rgba(24,24,46,0.14);
+  --velvet-shadow-inset:     inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(24,24,46,0.05);
+  --velvet-shadow-inset-lg:  inset 0 2px 4px rgba(24,24,46,0.06), inset 0 -1px 0 rgba(24,24,46,0.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   AMBIENT LIGHT TOKENS — Atmospheric depth and warmth
+   ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ───── Radial Blooms ───── */
+  --velvet-ambient-bloom-sm:    radial-gradient(300px 200px at var(--pos), var(--velvet-accent-glow2) 0%, transparent 70%);
+  --velvet-ambient-bloom-md:    radial-gradient(500px 350px at var(--pos), var(--velvet-accent-glow2) 0%, transparent 65%);
+  --velvet-ambient-bloom-lg:    radial-gradient(800px 600px at var(--pos), var(--velvet-accent-glow2) 0%, transparent 60%);
+  --velvet-ambient-bloom-xl:    radial-gradient(1200px 800px at var(--pos), var(--velvet-accent-glow2) 0%, transparent 55%);
+
+  /* ───── Corner Blooms ───── */
+  --velvet-ambient-corner-tr: radial-gradient(ellipse at top right, var(--velvet-accent-glow2) 0%, transparent 70%);
+  --velvet-ambient-corner-tl: radial-gradient(ellipse at top left, var(--velvet-accent-glow2) 0%, transparent 70%);
+  --velvet-ambient-corner-br: radial-gradient(ellipse at bottom right, var(--velvet-accent-glow2) 0%, transparent 70%);
+  --velvet-ambient-corner-bl: radial-gradient(ellipse at bottom left, var(--velvet-accent-glow2) 0%, transparent 70%);
+
+  /* ───── Directional Washes ───── */
+  --velvet-ambient-wash-top:    linear-gradient(180deg, var(--velvet-accent-glow2) 0%, transparent 100%);
+  --velvet-ambient-wash-bottom: linear-gradient(0deg, var(--velvet-accent-glow2) 0%, transparent 100%);
+  --velvet-ambient-wash-start:  linear-gradient(90deg, var(--velvet-accent-glow2) 0%, transparent 100%);
+  --velvet-ambient-wash-end:    linear-gradient(270deg, var(--velvet-accent-glow2) 0%, transparent 100%);
+
+  /* ───── Mesh Gradients (page backgrounds) ───── */
+  --velvet-mesh-primary: radial-gradient(1200px 700px at 80% -10%, var(--velvet-accent-glow2) 0%, transparent 55%),
+                         radial-gradient(900px 600px at 0% 100%, var(--velvet-800) 0%, transparent 60%),
+                         linear-gradient(180deg, var(--velvet-bg) 0%, var(--velvet-bg-elevated) 100%);
+  --velvet-mesh-inverted: radial-gradient(1200px 700px at 20% -10%, var(--velvet-accent-glow2) 0%, transparent 55%),
+                          radial-gradient(900px 600px at 100% 100%, var(--velvet-800) 0%, transparent 60%),
+                          linear-gradient(180deg, var(--velvet-bg) 0%, var(--velvet-bg-elevated) 100%);
+  --velvet-mesh-subtle: radial-gradient(800px 500px at 50% 0%, var(--velvet-accent-glow2) 0%, transparent 60%),
+                        linear-gradient(180deg, var(--velvet-bg) 0%, var(--velvet-bg) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BLUR TOKENS — Frosted glass backdrop filters
+   ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  --velvet-blur-none:        0;
+  --velvet-blur-xs:          4px;
+  --velvet-blur-sm:          8px;
+  --velvet-blur-md:          12px;
+  --velvet-blur-lg:          16px;
+  --velvet-blur-xl:          22px;     /* Standard glass */
+  --velvet-blur-2xl:         32px;
+  --velvet-blur-3xl:         44px;     /* Heavy chrome/modal */
+  --velvet-blur-4xl:         64px;     /* Ultra-heavy overlay */
+
+  /* Saturate multipliers (applied with blur) */
+  --velvet-saturate-low:     120%;
+  --velvet-saturate-md:      160%;
+  --velvet-saturate-high:    180%;
+  --velvet-saturate-ultra:   200%;
+
+  /* Composed glass filter values */
+  --velvet-glass-filter:         blur(var(--velvet-blur-xl)) saturate(var(--velvet-saturate-md));
+  --velvet-glass-filter-heavy:   blur(var(--velvet-blur-3xl)) saturate(var(--velvet-saturate-high));
+  --velvet-glass-filter-ultra:   blur(var(--velvet-blur-4xl)) saturate(var(--velvet-saturate-ultra));
+  --velvet-glass-filter-light:   blur(var(--velvet-blur-md)) saturate(var(--velvet-saturate-low));
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BORDER TOKENS — Hairlines, emphasis, and semantic borders
+   ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ───── Widths ───── */
+  --velvet-border-width-hairline:  1px;
+  --velvet-border-width-thin:      1px;
+  --velvet-border-width-base:      1px;
+  --velvet-border-width-strong:    2px;
+  --velvet-border-width-thick:     3px;
+
+  /* ───── Colors — Default (neutral) ───── */
+  --velvet-border:           rgba(255, 255, 255, 0.08);
+  --velvet-border-hover:     rgba(255, 255, 255, 0.14);
+  --velvet-border-strong:    rgba(255, 255, 255, 0.2);
+  --velvet-border-emphasis:  rgba(255, 255, 255, 0.3);
+
+  /* ───── Colors — Accent ───── */
+  --velvet-border-accent:          var(--velvet-accent);
+  --velvet-border-accent-hover:    var(--velvet-accent-hover);
+  --velvet-border-accent-subtle:   var(--velvet-accent-glow2);
+  --velvet-border-accent-strong:   var(--velvet-accent-glow);
+
+  /* ───── Colors — Semantic ───── */
+  --velvet-border-success:       var(--velvet-success);
+  --velvet-border-success-subtle: var(--velvet-success-bg);
+  --velvet-border-warning:       var(--velvet-warning);
+  --velvet-border-warning-subtle: var(--velvet-warning-bg);
+  --velvet-border-error:         var(--velvet-error);
+  --velvet-border-error-subtle:  var(--velvet-error-bg);
+  --velvet-border-info:          var(--velvet-info);
+  --velvet-border-info-subtle:   var(--velvet-info-bg);
+  --velvet-border-neutral:       var(--velvet-neutral);
+  --velvet-border-neutral-subtle: var(--velvet-neutral-bg);
+
+  /* ───── Styles ───── */
+  --velvet-border-style-solid: solid;
+  --velvet-border-style-dashed: dashed;
+  --velvet-border-style-dotted: dotted;
+}
+
+/* ───── White theme overrides ───── */
+[data-velvet-theme='white'][data-velvet-mode='light'] {
+  --velvet-border:           rgba(24, 24, 46, 0.08);
+  --velvet-border-hover:     rgba(24, 24, 46, 0.14);
+  --velvet-border-strong:    rgba(24, 24, 46, 0.2);
+  --velvet-border-emphasis:  rgba(24, 24, 46, 0.3);
+  --velvet-border-accent-subtle: var(--velvet-accent-glow2);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   ELEVATION TOKENS — Layered Z-depth system
+   ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ───── Z-Index Scale ───── */
+  --velvet-z-base:       0;      /* Page content */
+  --velvet-z-raised:     10;     /* Cards, elevated surfaces */
+  --velvet-z-sticky:     50;     /* Sticky headers */
+  --velvet-z-dropdown:   100;    /* Dropdowns, popovers */
+  --velvet-z-drawer:     200;    /* Side drawers */
+  --velvet-z-modal:      300;    /* Modals */
+  --velvet-z-popover:    400;    /* Popovers, tooltips */
+  --velvet-z-toast:      500;    /* Toasts, notifications */
+  --velvet-z-tooltip:    600;    /* Tooltips */
+  --velvet-z-max:        9999;   /* Absolute max */
+
+  /* ───── Elevation Levels (composed: surface + shadow + border) ───── */
+  /* Level 0 — Flat, no shadow */
+  --velvet-elev-0-surface: var(--velvet-bg);
+  --velvet-elev-0-shadow: none;
+  --velvet-elev-0-border: var(--velvet-border);
+
+  /* Level 1 — Slightly raised (cards at rest) */
+  --velvet-elev-1-surface: var(--velvet-bg-card);
+  --velvet-elev-1-shadow: var(--velvet-shadow-card);
+  --velvet-elev-1-border: var(--velvet-border);
+
+  /* Level 2 — Hovered/selected cards */
+  --velvet-elev-2-surface: var(--velvet-bg-hover);
+  --velvet-elev-2-shadow: var(--velvet-shadow-card-hover);
+  --velvet-elev-2-border: var(--velvet-border-hover);
+
+  /* Level 3 — Glowing/active (accent border) */
+  --velvet-elev-3-surface: var(--velvet-bg-card);
+  --velvet-elev-3-shadow: var(--velvet-shadow-glow);
+  --velvet-elev-3-border: var(--velvet-border-accent);
+
+  /* Level 4 — Floating panels (popovers, dropdowns) */
+  --velvet-elev-4-surface: var(--velvet-surface-solid);
+  --velvet-elev-4-shadow: var(--velvet-shadow-pop);
+  --velvet-elev-4-border: var(--velvet-border-strong);
+
+  /* Level 5 — Modals (highest elevation) */
+  --velvet-elev-5-surface: var(--velvet-surface-solid);
+  --velvet-elev-5-shadow: var(--velvet-shadow-2xl), var(--velvet-shadow-inset-lg);
+  --velvet-elev-5-border: var(--velvet-border-strong);
+
+  /* Level 6 — Chrome (nav, headers) — solid, no transparency */
+  --velvet-elev-6-surface: var(--velvet-surface-solid);
+  --velvet-elev-6-shadow: var(--velvet-shadow-lg);
+  --velvet-elev-6-border: var(--velvet-border-strong);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════════
+   MOTION TOKENS — Signature easing, durations, keyframes
+   ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ───── Signature Easing ───── */
+  --velvet-ease:           cubic-bezier(0.16, 1, 0.3, 1);      /* Primary — spring-like */
+  --velvet-ease-out:       cubic-bezier(0.16, 1, 0.3, 1);      /* Same as primary */
+  --velvet-ease-in:        cubic-bezier(0.4, 0, 0.6, 1);       /* Standard in */
+  --velvet-ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);       /* Standard in-out */
+  --velvet-ease-sharp:     cubic-bezier(0.4, 0, 0.6, 1);       /* Quick, decisive */
+  --velvet-ease-gentle:    cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Gentle, calm */
+  --velvet-ease-bounce:    cubic-bezier(0.34, 1.56, 0.64, 1);   /* Playful overshoot */
+
+  /* ───── Duration Scale ───── */
+  --velvet-duration-instant:   0ms;
+  --velvet-duration-xxs:       50ms;
+  --velvet-duration-xs:        100ms;
+  --velvet-duration-sm:        150ms;
+  --velvet-duration-md:        200ms;
+  --velvet-duration-lg:        280ms;
+  --velvet-duration-xl:        350ms;
+  --velvet-duration-2xl:       450ms;
+  --velvet-duration-3xl:       600ms;
+  --velvet-duration-4xl:       800ms;
+
+  /* ───── Semantic Duration Mapping ───── */
+  --velvet-duration-hover:     var(--velvet-duration-sm);      /* 150ms — color, border, transform */
+  --velvet-duration-focus:     var(--velvet-duration-xs);      /* 100ms — focus ring */
+  --velvet-duration-press:     var(--velvet-duration-instant); /* 0ms — immediate press */
+  --velvet-duration-transition: var(--velvet-duration-lg);     /* 280ms — panel, modal, drawer */
+  --velvet-duration-page:      var(--velvet-duration-xl);      /* 350ms — page transitions */
+  --velvet-duration-theme:     var(--velvet-duration-2xl);     /* 450ms — theme switch */
+
+  /* ───── Keyframes — Entrance ───── */
+  @keyframes velvet-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes velvet-fade-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+  @keyframes velvet-scale-in {
+    from { opacity: 0; transform: scale(0.96) translateY(6px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes velvet-scale-out {
+    from { opacity: 1; transform: scale(1) translateY(0); }
+    to   { opacity: 0; transform: scale(0.96) translateY(-6px); }
+  }
+  @keyframes velvet-slide-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes velvet-slide-down {
+    from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes velvet-slide-start {
+    from { opacity: 0; transform: translateX(-20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes velvet-slide-end {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ───── Keyframes — Interaction ───── */
+  @keyframes velvet-shimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+  @keyframes velvet-pulse {
+    0%, 100% { opacity: 0.6; }
+    50%      { opacity: 1; }
+  }
+  @keyframes velvet-pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 var(--velvet-accent-glow); }
+    50%      { box-shadow: 0 0 24px 4px var(--velvet-accent-glow); }
+  }
+  @keyframes velvet-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes velvet-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-16px); }
+  }
+
+  /* ───── Animation Shorthands ───── */
+  --velvet-animate-fade-in:        velvet-fade-in var(--velvet-duration-md) var(--velvet-ease) both;
+  --velvet-animate-fade-out:       velvet-fade-out var(--velvet-duration-md) var(--velvet-ease) both;
+  --velvet-animate-scale-in:       velvet-scale-in var(--velvet-duration-lg) var(--velvet-ease) both;
+  --velvet-animate-scale-out:      velvet-scale-out var(--velvet-duration-lg) var(--velvet-ease) both;
+  --velvet-animate-slide-up:       velvet-slide-up var(--velvet-duration-xl) var(--velvet-ease) both;
+  --velvet-animate-slide-down:     velvet-slide-down var(--velvet-duration-xl) var(--velvet-ease) both;
+  --velvet-animate-slide-start:    velvet-slide-start var(--velvet-duration-lg) var(--velvet-ease) both;
+  --velvet-animate-slide-end:      velvet-slide-end var(--velvet-duration-lg) var(--velvet-ease) both;
+  --velvet-animate-shimmer:        velvet-shimmer 1.6s linear infinite;
+  --velvet-animate-pulse:          velvet-pulse 2s ease-in-out infinite;
+  --velvet-animate-pulse-glow:     velvet-pulse-glow 3s ease-in-out infinite;
+  --velvet-animate-spin:           velvet-spin 1s linear infinite;
+  --velvet-animate-float:          velvet-float 6s ease-in-out infinite;
+
+  /* ───── Reduced Motion ───── */
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --velvet-duration-instant:   0ms;
+      --velvet-duration-xxs:       1ms;
+      --velvet-duration-xs:        1ms;
+      --velvet-duration-sm:        1ms;
+      --velvet-duration-md:        1ms;
+      --velvet-duration-lg:        1ms;
+      --velvet-duration-xl:        1ms;
+      --velvet-duration-2xl:       1ms;
+      --velvet-duration-3xl:       1ms;
+      --velvet-duration-4xl:       1ms;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SEMANTIC ALIASES — For backwards compatibility & easy migration
+   ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Map to existing HealthOS token names */
+  --bg:                 var(--velvet-bg);
+  --bg-2:               var(--velvet-bg-elevated);
+  --bg-3:               var(--velvet-bg-card);
+  --surface:            var(--velvet-surface);
+  --surface-2:          var(--velvet-surface-2);
+  --surface-3:          var(--velvet-surface-3);
+  --surface-solid:      var(--velvet-surface-solid);
+  --border:             var(--velvet-border);
+  --border-strong:      var(--velvet-border-strong);
+  --text:               var(--velvet-text);
+  --text-sub:           var(--velvet-text-sub);
+  --text-muted:         var(--velvet-text-muted);
+  --accent:             var(--velvet-accent);
+  --accent-hi:          var(--velvet-accent-hover);
+  --accent-dim:         var(--velvet-accent-dim);
+  --accent-glow:        var(--velvet-accent-glow);
+  --accent-glow2:       var(--velvet-accent-glow2);
+  --success:            var(--velvet-success);
+  --warning:            var(--velvet-warning);
+  --error:              var(--velvet-error);
+  --info:               var(--velvet-info);
+  --glass-fill:         var(--velvet-glass-fill);
+  --glass-fill-hover:   var(--velvet-glass-fill-hover);
+  --glass-border:       var(--velvet-glass-border);
+  --glass-blur:         var(--velvet-blur-xl);
+  --glass-blur-heavy:   var(--velvet-blur-3xl);
+  --shadow-card:        var(--velvet-shadow-card);
+  --shadow-pop:         var(--velvet-shadow-pop);
+  --gradient:           var(--velvet-gradient-primary);
+  --gradient-soft:      var(--velvet-gradient-soft);
+  --mesh:               var(--velvet-mesh-primary);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════════
+   UTILITY CLASSES — Minimal helpers for token access in HTML
+   ═══════════════════════════════════════════════════════════════════════════════ */
+/* Use these sparingly — prefer CSS variables in component styles */
+
+.velvet-glass {
+  position: relative;
+  background: var(--velvet-glass-fill);
+  backdrop-filter: var(--velvet-glass-filter);
+  -webkit-backdrop-filter: var(--velvet-glass-filter);
+  border: 1px solid var(--velvet-glass-border);
+  border-radius: 1.75rem;
+}
+
+/* Top-edge glint — premium highlight reflection */
+.velvet-glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 8%; right: 8%;
+  height: 1px;
+  background: var(--velvet-glass-glint);
+  pointer-events: none;
+}
+
+/* Corner bloom — soft ambient light */
+.velvet-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--velvet-glass-bloom);
+  pointer-events: none;
+  opacity: 0.5;
+  border-radius: inherit;
+}
+
+.velvet-glass-heavy {
+  position: relative;
+  background: var(--velvet-glass-fill-heavy);
+  backdrop-filter: var(--velvet-glass-filter-heavy);
+  -webkit-backdrop-filter: var(--velvet-glass-filter-heavy);
+  border: 1px solid var(--velvet-glass-border);
+  border-radius: 1.75rem;
+}
+
+.velvet-glass-heavy::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 8%; right: 8%;
+  height: 1px;
+  background: var(--velvet-glass-glint);
+  pointer-events: none;
+}
+
+.velvet-card {
+  position: relative;
+  background: var(--velvet-bg-card);
+  border: 1px solid var(--velvet-border);
+  border-radius: 1.75rem;
+  box-shadow: var(--velvet-shadow-card);
+}
+
+/* Top highlight reflection — signature velvet card glint */
+.velvet-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 8%; right: 8%;
+  height: 1px;
+  background: var(--velvet-glass-glint);
+  pointer-events: none;
+}
+
+.velvet-card-hover {
+  transition: background var(--velvet-duration-hover) var(--velvet-ease),
+              border-color var(--velvet-duration-hover) var(--velvet-ease),
+              box-shadow var(--velvet-duration-hover) var(--velvet-ease),
+              transform var(--velvet-duration-hover) var(--velvet-ease);
+}
+
+.velvet-card-hover:hover {
+  background: var(--velvet-bg-hover);
+  border-color: var(--velvet-border-hover);
+  box-shadow: var(--velvet-shadow-card-hover);
+  transform: translateY(-4px);
+}
+
+.velvet-btn-primary {
+  background: var(--velvet-gradient-primary);
+  color: var(--velvet-text-inverse);
+  font-weight: 700;
+  border-radius: 1rem;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 8px 28px -8px var(--velvet-accent-glow), inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: transform var(--velvet-duration-hover) var(--velvet-ease),
+              box-shadow var(--velvet-duration-hover) var(--velvet-ease),
+              filter var(--velvet-duration-hover) var(--velvet-ease);
+}
+
+.velvet-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 44px -12px var(--velvet-accent-glow), inset 0 1px 0 rgba(255,255,255,0.3);
+  filter: saturate(1.08);
+}
+
+.velvet-btn-primary:active { transform: translateY(0) scale(0.98); }
+
+.velvet-btn-secondary {
+  background: var(--velvet-glass-fill);
+  color: var(--velvet-text);
+  font-weight: 600;
+  border-radius: 1rem;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--velvet-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: transform var(--velvet-duration-hover) var(--velvet-ease),
+              border-color var(--velvet-duration-hover) var(--velvet-ease),
+              background var(--velvet-duration-hover) var(--velvet-ease);
+}
+
+.velvet-btn-secondary:hover {
+  border-color: var(--velvet-border-hover);
+  background: var(--velvet-glass-fill-hover);
+  transform: translateY(-1px);
+}
+
+.velvet-btn-secondary:active { transform: translateY(0) scale(0.98); }
+
+.velvet-btn-ghost {
+  background: transparent;
+  color: var(--velvet-text-sub);
+  font-weight: 600;
+  border-radius: 1rem;
+  padding: 0.625rem 1rem;
+  border: 1px solid transparent;
+  transition: color var(--velvet-duration-hover) var(--velvet-ease),
+              background var(--velvet-duration-hover) var(--velvet-ease);
+}
+
+.velvet-btn-ghost:hover { background: var(--velvet-surface-2); color: var(--velvet-text); }
+
+/* Danger button — secondary shape with danger-tinted tokens (never saturated fill) */
+.velvet-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--velvet-error-bg);
+  color: var(--velvet-error);
+  font-weight: 600;
+  border-radius: 1rem;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--velvet-error-border);
+  box-shadow: inset 0 1px 0 rgba(248, 113, 113, 0.1);
+  transition: transform var(--velvet-duration-hover) var(--velvet-ease),
+              border-color var(--velvet-duration-hover) var(--velvet-ease),
+              background var(--velvet-duration-hover) var(--velvet-ease),
+              color var(--velvet-duration-hover) var(--velvet-ease);
+}
+
+.velvet-btn-danger:hover {
+  background: var(--velvet-error-bg);
+  border-color: var(--velvet-error);
+  color: var(--velvet-error);
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(248, 113, 113, 0.15), 0 8px 24px -12px var(--velvet-error-glow);
+}
+
+.velvet-btn-danger:active { transform: translateY(0) scale(0.98); }
+
+/* Card with gradient wash overlay */
+.velvet-card-gradient {
+  position: relative;
+  background: var(--velvet-bg-card);
+  backdrop-filter: var(--velvet-glass-filter-light);
+  -webkit-backdrop-filter: var(--velvet-glass-filter-light);
+  border: 1px solid var(--velvet-border);
+  border-radius: 1.75rem;
+  overflow: hidden;
+  box-shadow: var(--velvet-shadow-card);
+}
+
+.velvet-card-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--velvet-gradient-soft);
+  opacity: 0.14;
+  pointer-events: none;
+  transition: opacity 0.4s var(--velvet-ease);
+}
+
+.velvet-card-gradient::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, var(--velvet-border-strong) 50%, transparent 90%);
+  pointer-events: none;
+}
+
+.velvet-card-gradient:hover::before { opacity: 0.2; }
+
+/* Spotlight card — top-right bloom with hover lift */
+.velvet-spotlight-card {
+  position: relative;
+  background: var(--velvet-surface-solid);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--velvet-glass-border);
+  border-radius: 1.75rem;
+  overflow: hidden;
+  transition: border-color 0.3s var(--velvet-ease),
+              transform 0.3s var(--velvet-ease),
+              box-shadow 0.3s var(--velvet-ease);
+}
+
+.velvet-spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--velvet-glass-bloom);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.velvet-spotlight-card:hover {
+  border-color: var(--velvet-border-strong);
+  box-shadow: var(--velvet-shadow-glow-subtle);
+}
+
+/* Animated gradient border card */
+.velvet-gradient-border {
+  position: relative;
+  background: var(--velvet-surface-solid);
+  border-radius: 1.75rem;
+  padding: 1px;
+  overflow: hidden;
+}
+
+.velvet-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(from 0deg, var(--velvet-accent), transparent 25%, var(--velvet-accent-glow) 50%, transparent 75%, var(--velvet-accent));
+  animation: float-spin 8s linear infinite;
+  opacity: 0.5;
+}
+
+.velvet-gradient-border > * { position: relative; z-index: 1; }
+
+/* Nav item — workspace tabs / vertical nav entries */
+.velvet-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 1rem;
+  color: var(--velvet-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: var(--font-sans, 'Manrope', sans-serif);
+  transition: color var(--velvet-duration-hover) var(--velvet-ease),
+              background var(--velvet-duration-hover) var(--velvet-ease),
+              transform 0.15s var(--velvet-ease);
+  position: relative;
+  cursor: pointer;
+}
+
+.velvet-nav-item:hover {
+  color: var(--velvet-text);
+  background: var(--velvet-surface-2);
+}
+
+.velvet-nav-item.active {
+  color: var(--velvet-accent);
+  background: var(--velvet-accent-glow2);
+  box-shadow: inset 0 0 0 1px var(--velvet-border-strong);
+}
+
+.velvet-nav-item.active::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 1.5rem;
+  border-radius: 9999px;
+  background: var(--velvet-accent);
+  box-shadow: 0 0 12px var(--velvet-accent-glow);
+}
+
+/* Skeleton — shimmering placeholder matching velvet surfaces */
+.velvet-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--velvet-surface-2);
+  border-radius: 0.875rem;
+}
+
+.velvet-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--velvet-surface-3), transparent);
+  animation: shimmer-sweep 1.6s infinite;
+  transform: translateX(-100%);
+}
+
+/* Top edge highlight reflection — premium chrome material */
+.velvet-header-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--velvet-glass-glint-strong) 20%, var(--velvet-accent-glow) 50%, var(--velvet-glass-glint-strong) 80%, transparent 100%);
+  background-size: 200% 100%;
+  animation: header-shimmer 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Text gradient utility */
+.velvet-text-gradient {
+  background: var(--velvet-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Focus ring utility */
+.velvet-focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--velvet-accent-glow2), 0 0 0 1px var(--velvet-accent);
+}
+
+
+/* Badge chip — tiny counters on nav items */
+.velvet-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.375rem;
+  height: 1.375rem;
+  padding: 0 0.4rem;
+  border-radius: 9999px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+  background: var(--velvet-accent);
+  color: var(--velvet-ink-on-accent);
+  box-shadow: 0 0 0 1px var(--velvet-glass-border), 0 0 10px var(--velvet-accent-glow);
+}
+
+.velvet-badge-muted {
+  background: var(--velvet-surface-2);
+  color: var(--velvet-text-sub);
+  border: 1px solid var(--velvet-border);
+  box-shadow: none;
+}
+/* ════════════════════════════════════════════════════════════════════════════════
+   END OF VELVET DESIGN SYSTEM TOKENS
+   �������� */

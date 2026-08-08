@@ -1,13 +1,13 @@
 .root {
   @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold tracking-wide uppercase text-white cursor-pointer transition-all duration-200 border border-transparent select-none;
-  background: var(--gradient);
-  box-shadow: 0 8px 32px -12px var(--accent-glow);
+  background: var(--velvet-gradient-primary);
+  box-shadow: 0 8px 32px -12px var(--velvet-accent-glow);
 }
 
 .root:hover {
   @apply -translate-y-0.5;
   filter: brightness(1.08);
-  box-shadow: 0 16px 48px -16px var(--accent-glow);
+  box-shadow: 0 16px 48px -16px var(--velvet-accent-glow);
 }
 
 .root:active {
@@ -16,7 +16,7 @@
 
 .root:focus {
   @apply outline-none;
-  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+  box-shadow: 0 0 0 2px var(--velvet-bg), 0 0 0 4px var(--velvet-accent);
 }
 
 .root[data-active] {

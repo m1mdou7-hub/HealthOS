@@ -242,14 +242,14 @@ export default function DeveloperWorkspace() {
       
       {/* Toast notifications */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white font-sans text-xs px-4 py-3 rounded-3xl shadow-2xl flex items-center gap-2 border border-emerald-500 animate-slide-in">
+        <div className="fixed bottom-6 end-6 z-50 bg-emerald-600 text-white font-sans text-xs px-4 py-3 rounded-3xl shadow-pop flex items-center gap-2 border border-emerald-500 animate-slide-in">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{toastMsg}</span>
         </div>
       )}
 
       {/* HORIZONTAL WORKSPACE TABS */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-soft">
         <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-3xl border border-zinc-850">
           {[
             { id: 'explorer', key: 'explorer', icon: Terminal },
@@ -266,7 +266,7 @@ export default function DeveloperWorkspace() {
                 onClick={() => setTab(t.id as any)}
                 className={`px-4 py-2.5 rounded-xl text-xs font-bold font-sans transition-all flex items-center gap-2 cursor-pointer border ${
                   isSel 
-                    ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-extrabold shadow-lg shadow-emerald-500/20 scale-[1.02]' 
+                    ? 'bg-emerald-500 text-zinc-950 border-emerald-400 font-extrabold shadow-soft shadow-emerald-500/20 scale-[1.02]' 
                     : 'bg-zinc-900/40 text-zinc-300 border-zinc-850 hover:bg-zinc-900 hover:text-white hover:border-zinc-800'
                 }`}
               >
@@ -291,7 +291,7 @@ export default function DeveloperWorkspace() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-sans text-xs">
             
             {/* Explorer sandbox controls */}
-            <div className="lg:col-span-1 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-850/80 space-y-4 shadow-lg">
+            <div className="lg:col-span-1 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-850/80 space-y-4 shadow-soft">
               <span className="text-sm font-bold text-white uppercase tracking-wider block font-sans">{tDev('sandbox.builderTitle')}</span>
               
               <div className="space-y-3">
@@ -324,7 +324,7 @@ export default function DeveloperWorkspace() {
                 <button 
                   onClick={handleSendRequest}
                   disabled={isSending}
-                  className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 py-2.5 rounded-xl font-extrabold flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-md shadow-emerald-500/10"
+                  className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 py-2.5 rounded-xl font-extrabold flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-soft shadow-emerald-500/10"
                 >
                   {isSending ? (
                     <RefreshCw className="w-4 h-4 animate-spin" />
@@ -337,7 +337,7 @@ export default function DeveloperWorkspace() {
             </div>
 
             {/* Sandbox response viewport */}
-            <div className="lg:col-span-2 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-850/80 space-y-3.5 flex flex-col justify-between shadow-lg">
+            <div className="lg:col-span-2 p-5 rounded-3xl bg-zinc-900/40 border border-zinc-850/80 space-y-3.5 flex flex-col justify-between shadow-soft">
               <div className="flex justify-between items-center text-xs text-zinc-400 border-b border-zinc-800 pb-2 font-sans">
                 <span className="font-bold text-zinc-300">{tDev('sandbox.proxyLogs')}</span>
                 <div className="flex items-center gap-3">
@@ -350,12 +350,12 @@ export default function DeveloperWorkspace() {
               <div className="flex-1 bg-zinc-950 p-4 rounded-xl border border-zinc-850 overflow-x-auto min-h-[220px] relative">
                 <button 
                   onClick={() => handleCopy(JSON.stringify(apiResponse, null, 2), 'Response Body')}
-                  className="absolute right-3 top-3 p-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-zinc-400 hover:text-white transition-all cursor-pointer"
+                  className="absolute end-3 top-3 p-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-zinc-400 hover:text-white transition-all cursor-pointer"
                   title="Copy JSON Payload"
                 >
                   <Copy className="w-3.5 h-3.5" />
                 </button>
-                <pre className="text-[11px] text-blue-400 leading-normal font-mono select-text">
+                <pre className="text-xs text-blue-400 leading-normal font-mono select-text">
                   {JSON.stringify(apiResponse, null, 2)}
                 </pre>
               </div>
@@ -381,17 +381,17 @@ export default function DeveloperWorkspace() {
                     
                     <div className="flex flex-wrap gap-1">
                       {wh.events.map(ev => (
-                        <span key={ev} className="text-[9px] bg-blue-500/15 border border-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-bold font-mono">
+                        <span key={ev} className="text-2xs bg-blue-500/15 border border-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-bold font-mono">
                           {ev}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 ml-4">
+                  <div className="flex items-center gap-2 ms-4">
                     <button
                       onClick={() => handleToggleWebhook(wh.id)}
-                      className={`text-[9px] font-mono px-2 py-1 rounded border font-black transition-all cursor-pointer ${
+                      className={`text-2xs font-mono px-2 py-1 rounded border font-black transition-all cursor-pointer ${
                         wh.active 
                           ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
                           : 'bg-zinc-800 text-zinc-500 border-zinc-850'
@@ -431,7 +431,7 @@ export default function DeveloperWorkspace() {
 
                 <div className="space-y-1">
                   <label className="text-zinc-500">Event Topic Trigger</label>
-                  <div className="space-y-1.5 text-[10px] text-zinc-400">
+                  <div className="space-y-1.5 text-2xs text-zinc-400">
                     {['patient.created', 'appointment.scheduled', 'lab.completed', 'billing.unpaid', 'inventory.low'].map(ev => {
                       const has = selectedWebhookEvents.includes(ev);
                       return (
@@ -442,7 +442,7 @@ export default function DeveloperWorkspace() {
                             if (has) setSelectedWebhookEvents(selectedWebhookEvents.filter(e => e !== ev));
                             else setSelectedWebhookEvents([...selectedWebhookEvents, ev]);
                           }}
-                          className={`w-full text-left p-1.5 border rounded-lg transition-all flex items-center justify-between ${
+                          className={`w-full text-start p-1.5 border rounded-lg transition-all flex items-center justify-between ${
                             has ? 'bg-blue-950/40 text-blue-400 border-blue-800 font-bold' : 'bg-transparent border-zinc-850'
                           }`}
                         >
@@ -473,7 +473,7 @@ export default function DeveloperWorkspace() {
                 <div className="flex justify-between items-center">
                   <div>
                     <h4 className="text-xs font-bold text-white uppercase tracking-wider block">Live Authorization Secret Keys</h4>
-                    <p className="text-[10px] text-zinc-500 mt-1">Use these private keys to authorize API clients on behalf of this workspace.</p>
+                    <p className="text-2xs text-zinc-500 mt-1">Use these private keys to authorize API clients on behalf of this workspace.</p>
                   </div>
                   <button 
                     onClick={handleGenerateKey}
@@ -487,11 +487,11 @@ export default function DeveloperWorkspace() {
                   {apiKeys.map(key => (
                     <div key={key.id} className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="font-bold text-white text-[11px]">{key.name}</span>
-                        <span className="text-[9px] text-zinc-500">Generated: {key.created}</span>
+                        <span className="font-bold text-white text-xs">{key.name}</span>
+                        <span className="text-2xs text-zinc-500">Generated: {key.created}</span>
                       </div>
 
-                      <div className="p-2 bg-zinc-900 border border-zinc-800 rounded-lg flex justify-between items-center text-[10px]">
+                      <div className="p-2 bg-zinc-900 border border-zinc-800 rounded-lg flex justify-between items-center text-2xs">
                         <span className="text-zinc-400 truncate max-w-[320px] select-all font-mono">{key.token}</span>
                         <div className="flex items-center gap-1.5">
                           <button 
@@ -523,7 +523,7 @@ export default function DeveloperWorkspace() {
                   <ShieldAlert className="w-4 h-4 shrink-0" />
                   <span className="text-xs font-bold uppercase tracking-wider block">Developer Warning</span>
                 </div>
-                <p className="text-[11px] text-zinc-400 font-sans leading-relaxed">
+                <p className="text-xs text-zinc-400 font-sans leading-relaxed">
                   Never commit API keys directly to git records or expose them client-side in the browser. Always proxy REST requests through a server API route to keep keys hidden from client inspection.
                 </p>
               </div>
@@ -536,13 +536,13 @@ export default function DeveloperWorkspace() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-mono text-xs animate-fade-in">
             <div className="lg:col-span-2 p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4">
               <span className="text-xs font-bold text-white uppercase tracking-wider block">SDK Code Implementations</span>
-              <p className="text-[10px] text-zinc-500">Developer libraries wrapper methods for instant patient and laboratory integrations.</p>
+              <p className="text-2xs text-zinc-500">Developer libraries wrapper methods for instant patient and laboratory integrations.</p>
 
               <div className="space-y-4">
                 
                 {/* TypeScript copy widget */}
                 <div className="space-y-1.5">
-                  <div className="flex justify-between items-center text-[10px] text-zinc-500">
+                  <div className="flex justify-between items-center text-2xs text-zinc-500">
                     <span>Typescript (SDK Client v2.1)</span>
                     <button 
                       onClick={() => handleCopy(CODE_EXAMPLES.typescript, 'TypeScript Example')}
@@ -551,14 +551,14 @@ export default function DeveloperWorkspace() {
                       <Copy className="w-3 h-3" /> Copy Sample
                     </button>
                   </div>
-                  <pre className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl text-blue-400 text-[10px] overflow-x-auto select-text font-mono">
+                  <pre className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl text-blue-400 text-2xs overflow-x-auto select-text font-mono">
                     {CODE_EXAMPLES.typescript}
                   </pre>
                 </div>
 
                 {/* Python copy widget */}
                 <div className="space-y-1.5">
-                  <div className="flex justify-between items-center text-[10px] text-zinc-500">
+                  <div className="flex justify-between items-center text-2xs text-zinc-500">
                     <span>Python (Client Library v1.4)</span>
                     <button 
                       onClick={() => handleCopy(CODE_EXAMPLES.python, 'Python Example')}
@@ -567,7 +567,7 @@ export default function DeveloperWorkspace() {
                       <Copy className="w-3 h-3" /> Copy Sample
                     </button>
                   </div>
-                  <pre className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl text-blue-400 text-[10px] overflow-x-auto select-text font-mono">
+                  <pre className="p-3 bg-zinc-950 border border-zinc-850 rounded-xl text-blue-400 text-2xs overflow-x-auto select-text font-mono">
                     {CODE_EXAMPLES.python}
                   </pre>
                 </div>
@@ -586,8 +586,8 @@ export default function DeveloperWorkspace() {
                   ].map((sdk, i) => (
                     <div key={i} className="p-2.5 bg-zinc-950 border border-zinc-850 rounded-xl flex justify-between items-center">
                       <div>
-                        <p className="text-white font-bold text-[11px] truncate max-w-[170px]">{sdk.name}</p>
-                        <p className="text-[10px] text-zinc-500 mt-0.5">{sdk.size} • {sdk.downloads} pulls</p>
+                        <p className="text-white font-bold text-xs truncate max-w-[170px]">{sdk.name}</p>
+                        <p className="text-2xs text-zinc-500 mt-0.5">{sdk.size} • {sdk.downloads} pulls</p>
                       </div>
                       <button 
                         onClick={() => triggerToast(`Downloading ${sdk.name} to local system.`)}
@@ -609,7 +609,7 @@ export default function DeveloperWorkspace() {
       <div className="p-5 rounded-3xl bg-zinc-900/30 border border-zinc-900 space-y-4">
         <div>
           <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">REST API Network Volume & Latency Trace</h4>
-          <p className="text-[10px] text-zinc-500 font-mono">Real-time health telemetry from API gateway load balancer.</p>
+          <p className="text-2xs text-zinc-500 font-mono">Real-time health telemetry from API gateway load balancer.</p>
         </div>
 
         <div className="h-44 w-full">

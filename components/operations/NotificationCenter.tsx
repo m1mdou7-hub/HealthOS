@@ -63,16 +63,16 @@ export default function NotificationCenter({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-bold font-mono flex items-center gap-2" style={{ color: 'var(--text)' }}>
-              <Bell className="w-4 h-4" style={{ color: 'var(--accent)' }} /> Clinic Dispatch Notification Hub
+            <h3 className="text-sm font-bold font-mono flex items-center gap-2" style={{ color: 'var(--velvet-text)' }}>
+              <Bell className="w-4 h-4" style={{ color: 'var(--velvet-accent)' }} /> Clinic Dispatch Notification Hub
             </h3>
             {unreadCount > 0 && (
-              <span className="badge badge-danger font-mono font-black text-[10px] px-2 py-0.5 rounded-full animate-bounce">
+              <span className="badge badge-danger font-mono font-black text-2xs px-2 py-0.5 rounded-full animate-bounce">
                 {unreadCount} Unread
               </span>
             )}
           </div>
-          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-xs mt-1" style={{ color: 'var(--velvet-text-muted)' }}>
             Stay aligned with system updates, AI margin warnings, medical alert conditions, and prosthetic milling cycles.
           </p>
         </div>
@@ -88,8 +88,8 @@ export default function NotificationCenter({
       {/* Filter Toolbar */}
       <div className="flex flex-wrap items-center gap-3 p-3 rounded-xl card-gradient">
         <div className="flex items-center gap-1.5">
-          <Filter className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
-          <span className="text-[10px] font-mono uppercase font-bold" style={{ color: 'var(--text-muted)' }}>Filters:</span>
+          <Filter className="w-3.5 h-3.5" style={{ color: 'var(--velvet-text-muted)' }} />
+          <span className="text-2xs font-mono uppercase font-bold" style={{ color: 'var(--velvet-text-muted)' }}>Filters:</span>
         </div>
 
         {/* Category Filter */}
@@ -97,7 +97,7 @@ export default function NotificationCenter({
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="text-xs py-1 px-2.5 rounded-lg border font-mono"
-          style={{ background: 'var(--surface-2)', color: 'var(--text-sub)', borderColor: 'var(--border)' }}
+          style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-sub)', borderColor: 'var(--velvet-border)' }}
         >
           <option value="All">All Categories</option>
           <option value="Appointments">Appointments</option>
@@ -113,7 +113,7 @@ export default function NotificationCenter({
           value={selectedPriority}
           onChange={(e) => setSelectedPriority(e.target.value)}
           className="text-xs py-1 px-2.5 rounded-lg border font-mono"
-          style={{ background: 'var(--surface-2)', color: 'var(--text-sub)', borderColor: 'var(--border)' }}
+          style={{ background: 'var(--velvet-surface-2)', color: 'var(--velvet-text-sub)', borderColor: 'var(--velvet-border)' }}
         >
           <option value="All">All Priorities</option>
           <option value="High">High Urgency</option>
@@ -123,7 +123,7 @@ export default function NotificationCenter({
       </div>
 
       {/* Notification Stream */}
-      <div className="space-y-3 max-h-[450px] overflow-y-auto scrollbar-none pr-1">
+      <div className="space-y-3 max-h-[450px] overflow-y-auto scrollbar-none pe-1">
         <AnimatePresence initial={false}>
           {filteredNotifications.map((notif) => (
             <motion.div
@@ -131,28 +131,28 @@ export default function NotificationCenter({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, x: -50 }}
-              className={`p-4 rounded-xl border text-left flex items-start gap-3.5 transition-all card-hover ${
+              className={`p-4 rounded-xl border text-start flex items-start gap-3.5 transition-all card-hover ${
                 notif.unread 
                   ? 'card-gradient' 
                   : 'card-elevated'
               }`}
             >
-              <div className="p-2 rounded-lg border shrink-0" style={{ background: 'var(--surface-2)', borderColor: 'var(--border)' }}>
+              <div className="p-2 rounded-lg border shrink-0" style={{ background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)' }}>
                 {getCategoryIcon(notif.category)}
               </div>
 
               <div className="space-y-1 flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-xs" style={{ color: 'var(--text)' }}>{notif.title}</span>
-                    <span className={`text-[8px] px-1.5 py-0.5 rounded font-mono border font-bold ${getPriorityBadge(notif.priority)}`}>
+                    <span className="font-bold text-xs" style={{ color: 'var(--velvet-text)' }}>{notif.title}</span>
+                    <span className={`text-2xs px-1.5 py-0.5 rounded font-mono border font-bold ${getPriorityBadge(notif.priority)}`}>
                       {notif.priority}
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{notif.time}</span>
+                  <span className="text-2xs font-mono whitespace-nowrap" style={{ color: 'var(--velvet-text-muted)' }}>{notif.time}</span>
                 </div>
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-sub)' }}>{notif.desc}</p>
-                <div className="pt-1.5 flex items-center gap-2 text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--velvet-text-sub)' }}>{notif.desc}</p>
+                <div className="pt-1.5 flex items-center gap-2 text-2xs font-mono" style={{ color: 'var(--velvet-text-muted)' }}>
                   <span>Category: {notif.category}</span>
                 </div>
               </div>
@@ -162,7 +162,7 @@ export default function NotificationCenter({
                   <button
                     onClick={() => handleMarkRead(notif.id)}
                     className="p-1 rounded hover:opacity-80"
-                    style={{ color: 'var(--success)' }}
+                    style={{ color: 'var(--velvet-success)' }}
                     title="Mark as read"
                   >
                     <Check className="w-4 h-4" />
@@ -171,7 +171,7 @@ export default function NotificationCenter({
                 <button
                   onClick={() => handleDelete(notif.id)}
                   className="p-1 rounded hover:opacity-80"
-                  style={{ color: 'var(--text-muted)' }}
+                  style={{ color: 'var(--velvet-text-muted)' }}
                   title="Dismiss notification"
                 >
                   <X className="w-4 h-4" />
@@ -181,7 +181,7 @@ export default function NotificationCenter({
           ))}
         </AnimatePresence>
         {filteredNotifications.length === 0 && (
-          <div className="p-8 text-center text-xs italic" style={{ color: 'var(--text-muted)' }}>
+          <div className="p-8 text-center text-xs italic" style={{ color: 'var(--velvet-text-muted)' }}>
             No dispatch alerts found.
           </div>
         )}

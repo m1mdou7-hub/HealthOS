@@ -179,37 +179,37 @@ export default function LaboratoryWorkspace() {
         case 'material':
           setAiOutputLog(
             `**AI STRENGTH & ESTHETIC DIAGNOSIS**\n` +
-            `• Case Context: ${activeCase.restorationType} restoration\n` +
-            `• Recommended Material: ${
+            `â€¢ Case Context: ${activeCase.restorationType} restoration\n` +
+            `â€¢ Recommended Material: ${
               activeCase.priority === 'Urgent' ? 'Lithium Disilicate Glass Ceramic (IPS e.max CAD)' : 'High-translucency Zirconia multi-layer (Katana HTML)'
             }\n` +
-            `• Critical Force Analysis: Posterior zones require monolithic strength; anterior veneers benefit from handcrafted incisal cut-backs.`
+            `â€¢ Critical Force Analysis: Posterior zones require monolithic strength; anterior veneers benefit from handcrafted incisal cut-backs.`
           );
           break;
         case 'shade':
           setAiOutputLog(
             `**AI SHADE SELECTION TRANSITION MATRIX**\n` +
-            `• Target Shade requested: ${activeCase.shade.vitaShade}\n` +
-            `• Custom Shade Blend: ${activeCase.shade.customShade || 'Standard glaze'}\n` +
-            `• Masking ratio calculation: Prep color values suggest high translucency block. Translucent glaze layer recommended to match halo effects.`
+            `â€¢ Target Shade requested: ${activeCase.shade.vitaShade}\n` +
+            `â€¢ Custom Shade Blend: ${activeCase.shade.customShade || 'Standard glaze'}\n` +
+            `â€¢ Masking ratio calculation: Prep color values suggest high translucency block. Translucent glaze layer recommended to match halo effects.`
           );
           break;
         case 'manufacturing':
           setAiOutputLog(
             `**AI MANUFACTURING ROUTING**\n` +
-            `• Recommended Method: 5-Axis Wet Diamond Milling\n` +
-            `• Sintering parameters: Rapid short-cycle sintering program at 1450°C. Duration: 3.5 hours.\n` +
-            `• alternative Routing: Formlabs castable sacrificial resin printing for ceramic pressing.`
+            `â€¢ Recommended Method: 5-Axis Wet Diamond Milling\n` +
+            `â€¢ Sintering parameters: Rapid short-cycle sintering program at 1450آ°C. Duration: 3.5 hours.\n` +
+            `â€¢ alternative Routing: Formlabs castable sacrificial resin printing for ceramic pressing.`
           );
           break;
         case 'time':
           setAiOutputLog(
             `**AI OPTIMAL PRODUCTION TIME ESTIMATION**\n` +
-            `• CAD Design: 35 minutes\n` +
-            `• Wet milling / Carving: 18 minutes\n` +
-            `• Sintering & Crystallization: 4 hours\n` +
-            `• Hand-finishing & Glaze bake: 45 minutes\n` +
-            `• Projected Delivery Window: Ready in approximately 5.5 hours.`
+            `â€¢ CAD Design: 35 minutes\n` +
+            `â€¢ Wet milling / Carving: 18 minutes\n` +
+            `â€¢ Sintering & Crystallization: 4 hours\n` +
+            `â€¢ Hand-finishing & Glaze bake: 45 minutes\n` +
+            `â€¢ Projected Delivery Window: Ready in approximately 5.5 hours.`
           );
           break;
         case 'files':
@@ -220,16 +220,16 @@ export default function LaboratoryWorkspace() {
 
           let msg = `**AI INTEGRITY SCAN OF DIGITAL RAW FILES**\n`;
           let clean = true;
-          if (!hasPrep) { msg += `❌ ALERT: Prep arch scan mesh not found.\n`; clean = false; }
-          if (!hasAntagonist) { msg += `❌ ALERT: Antagonist scan mesh not found.\n`; clean = false; }
-          if (!hasBite) { msg += `❌ ALERT: Buccal bite alignment scan not found.\n`; clean = false; }
+          if (!hasPrep) { msg += `â‌Œ ALERT: Prep arch scan mesh not found.\n`; clean = false; }
+          if (!hasAntagonist) { msg += `â‌Œ ALERT: Antagonist scan mesh not found.\n`; clean = false; }
+          if (!hasBite) { msg += `â‌Œ ALERT: Buccal bite alignment scan not found.\n`; clean = false; }
 
           if (clean) {
-            msg += `✓ All primary STL CAD/CAM files verified (Prep jaw, antagonist, and bite).\n` +
-                   `✓ DICOM skull volume aligned with 3D dental arches.\n` +
-                   `✓ Checksums verified. MD5 matches original clinical upload. No anomalies.`;
+            msg += `âœ“ All primary STL CAD/CAM files verified (Prep jaw, antagonist, and bite).\n` +
+                   `âœ“ DICOM skull volume aligned with 3D dental arches.\n` +
+                   `âœ“ Checksums verified. MD5 matches original clinical upload. No anomalies.`;
           } else {
-            msg += `• Awaiting digital delivery from clinic before milling toolpath computation can commence.`;
+            msg += `â€¢ Awaiting digital delivery from clinic before milling toolpath computation can commence.`;
           }
           setAiOutputLog(msg);
           break;
@@ -240,7 +240,7 @@ export default function LaboratoryWorkspace() {
             `  <clinician>${activeCase.doctorName}</clinician>\n` +
             `  <material>${activeCase.restorationType}</material>\n` +
             `  <instructions>${activeCase.internalNotes}</instructions>\n` +
-            `  <cement_gap>15μm</cement_gap>\n` +
+            `  <cement_gap>15خ¼m</cement_gap>\n` +
             `  <margin_offset>0.2mm</margin_offset>\n` +
             `</exocad_workorder>`
           );
@@ -281,36 +281,36 @@ export default function LaboratoryWorkspace() {
       {/* CAD/CAM HEADER BRAND STRIP */}
       <div className="bg-zinc-900/85 border-b border-zinc-900 px-6 py-3.5 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl border" style={{ background: 'var(--accent-glow2)', borderColor: 'var(--border-strong)', color: 'var(--accent)' }}>
+          <div className="p-2 rounded-xl border" style={{ background: 'var(--velvet-accent-glow2)', borderColor: 'var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
             <Cpu className="w-5 h-5 animate-pulse" />
           </div>
-          <div className="text-left">
+          <div className="text-start">
             <div className="flex items-center gap-2">
               <h2 className="text-xs font-black uppercase tracking-wider text-gradient">HealthOS DentalLab Pro</h2>
               <span className="badge badge-success">
                 S5 ENTERPRISE WORKFLOW
               </span>
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">
-              Synchronized Dental Lab Operating System • Connected to Exocad & 3Shape Servers
+            <p className="text-2xs text-zinc-500 font-mono">
+              Synchronized Dental Lab Operating System â€¢ Connected to Exocad & 3Shape Servers
             </p>
           </div>
         </div>
 
         {/* WORK ORDER STATE BANNER */}
         <div className="hidden lg:flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 px-4 py-1.5 rounded-3xl">
-          <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Loaded Specimen:</span>
+          <span className="text-2xs font-bold text-zinc-500 uppercase tracking-widest font-mono">Loaded Specimen:</span>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-white font-mono">{activeCase.id}</span>
             <span className="text-xs text-emerald-400 font-semibold truncate max-w-[130px]">{activeCase.patientName}</span>
-            <span className="bg-zinc-900 text-zinc-500 text-[10px] px-1.5 py-0.2 border border-zinc-850 rounded font-mono font-bold">
+            <span className="bg-zinc-900 text-zinc-500 text-2xs px-1.5 py-0.2 border border-zinc-850 rounded font-mono font-bold">
               {activeCase.status}
             </span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 text-[10px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full font-mono font-bold">
+          <div className="flex items-center gap-1.5 text-2xs bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full font-mono font-bold">
             <Shield className="w-3.5 h-3.5" /> HIPAA DIGITAL TRUST
           </div>
         </div>
@@ -322,12 +322,12 @@ export default function LaboratoryWorkspace() {
         {/* RESIZABLE WORKSPACE SELECTOR MENU */}
         <div 
           style={{ width: `${sidebarWidth}px` }}
-          className="bg-zinc-900 border-r border-zinc-900 flex flex-col shrink-0 overflow-hidden select-none"
+          className="bg-zinc-900 border-e border-zinc-900 flex flex-col shrink-0 overflow-hidden select-none"
         >
           {/* HEADER SECTOR */}
-          <div className="p-4 border-b border-zinc-900 shrink-0 text-left">
+          <div className="p-4 border-b border-zinc-900 shrink-0 text-start">
             <span className="eyebrow block mb-2">CAD/CAM Sections</span>
-            <p className="text-[10px] text-zinc-400 font-mono">Select enterprise dental lab viewports:</p>
+            <p className="text-2xs text-zinc-400 font-mono">Select enterprise dental lab viewports:</p>
           </div>
 
           {/* LIST OF WORKSPACES */}
@@ -354,9 +354,9 @@ export default function LaboratoryWorkspace() {
                   key={item.id}
                   id={`tab-btn-${item.id.toLowerCase()}`}
                   onClick={() => setActiveTab(item.id as any)}
-                  className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-bold font-mono transition-all flex items-center justify-between border cursor-pointer ${
+                  className={`w-full text-start px-3 py-2.5 rounded-xl text-xs font-bold font-mono transition-all flex items-center justify-between border cursor-pointer ${
                     isActive 
-                      ? 'bg-emerald-500 text-zinc-950 border-emerald-400 shadow-md shadow-emerald-500/10' 
+                      ? 'bg-emerald-500 text-zinc-950 border-emerald-400 shadow-soft shadow-emerald-500/10' 
                       : 'bg-transparent text-zinc-400 border-transparent hover:bg-zinc-950/40 hover:text-white hover:border-zinc-800'
                   }`}
                 >
@@ -365,7 +365,7 @@ export default function LaboratoryWorkspace() {
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className={`text-[8px] font-mono font-black px-1.5 py-0.5 rounded-md border ${
+                    <span className={`text-2xs font-mono font-black px-1.5 py-0.5 rounded-md border ${
                       item.badgeColor || (isActive ? 'bg-zinc-950 text-emerald-400 border-emerald-500/30' : 'bg-zinc-950 text-zinc-500 border-zinc-850')
                     }`}>
                       {item.badge}
@@ -377,15 +377,15 @@ export default function LaboratoryWorkspace() {
           </div>
 
           {/* ACTIVE CASE FOOTER CARD */}
-          <div className="p-3 bg-zinc-950/80 border-t border-zinc-900 shrink-0 space-y-2 text-left">
+          <div className="p-3 bg-zinc-950/80 border-t border-zinc-900 shrink-0 space-y-2 text-start">
             <span className="eyebrow block">Loaded Specimen</span>
             <div className="flex items-center gap-2.5 p-2 bg-zinc-900 border border-zinc-850 rounded-xl">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-xs font-black text-emerald-400 uppercase font-mono shadow-md shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-xs font-black text-emerald-400 uppercase font-mono shadow-soft shrink-0">
                 {activeCase.patientName.split(' ').map(n=>n[0]).join('')}
               </div>
               <div className="min-w-0 flex-1">
-                <h5 className="text-[11px] font-bold text-white truncate">{activeCase.patientName}</h5>
-                <p className="text-[9px] text-zinc-500 font-mono truncate">{activeCase.restorationType}</p>
+                <h5 className="text-xs font-bold text-white truncate">{activeCase.patientName}</h5>
+                <p className="text-2xs text-zinc-500 font-mono truncate">{activeCase.restorationType}</p>
               </div>
             </div>
           </div>
@@ -428,7 +428,7 @@ export default function LaboratoryWorkspace() {
                   className="space-y-4"
                 >
                   {/* Header Controls */}
-                  <div className="flex justify-between items-center border-b border-zinc-900 pb-2 text-left">
+                  <div className="flex justify-between items-center border-b border-zinc-900 pb-2 text-start">
                     <div>
                       <span className="eyebrow block mb-1">Case Registry</span>
                       <h3 className="text-base font-black uppercase tracking-tight text-gradient">Enterprise Lab Case Registry</h3>
@@ -453,18 +453,18 @@ export default function LaboratoryWorkspace() {
                   {/* Search & Filters */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-2 shrink-0">
                     <div className="relative">
-                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                      <Search className="absolute start-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                       <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search cases by name, doctor, ID..."
-                        className="w-full pl-8 pr-3 py-1.5 bg-zinc-900 border border-zinc-800 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-650"
+                        className="w-full ps-8 pe-3 py-1.5 bg-zinc-900 border border-zinc-800 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-650"
                       />
                     </div>
 
                     <div className="flex items-center gap-2 text-xs">
-                      <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">Status:</span>
+                      <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">Status:</span>
                       <select
                         value={statusFilter}
                         onChange={(e) => setStatusFilter(e.target.value)}
@@ -481,7 +481,7 @@ export default function LaboratoryWorkspace() {
                     </div>
 
                     <div className="flex items-center gap-2 text-xs">
-                      <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold shrink-0">Priority:</span>
+                      <span className="text-2xs font-mono text-zinc-500 uppercase font-bold shrink-0">Priority:</span>
                       <select
                         value={priorityFilter}
                         onChange={(e) => setPriorityFilter(e.target.value)}
@@ -497,7 +497,7 @@ export default function LaboratoryWorkspace() {
 
                   {/* Rendering results */}
                   {viewMode === 'Grid' ? (
-                    <div id="cases-registry-grid" className="grid grid-cols-2 md:grid-cols-4 gap-4 overflow-y-auto max-h-[420px] pr-1">
+                    <div id="cases-registry-grid" className="grid grid-cols-2 md:grid-cols-4 gap-4 overflow-y-auto max-h-[420px] pe-1">
                       {filteredCases.map((c) => (
                         <div
                           key={c.id}
@@ -506,13 +506,13 @@ export default function LaboratoryWorkspace() {
                             setSelectedCaseId(c.id);
                             setActiveTab('CaseWorkspace');
                           }}
-                          className={`p-4 card-elevated card-hover flex flex-col justify-between h-[175px] cursor-pointer transition-all text-left ${
+                          className={`p-4 card-elevated card-hover flex flex-col justify-between h-[175px] cursor-pointer transition-all text-start ${
                             selectedCaseId === c.id ? 'ring-2 ring-emerald-500/20' : ''
                           }`}
-                          style={selectedCaseId === c.id ? { borderColor: 'var(--success)' } : undefined}
+                          style={selectedCaseId === c.id ? { borderColor: 'var(--velvet-success)' } : undefined}
                         >
                           <div className="flex justify-between items-start">
-                            <span className="text-[9px] font-bold font-mono bg-zinc-950 border border-zinc-800 text-emerald-400 px-1.5 py-0.5 rounded-md">
+                            <span className="text-2xs font-bold font-mono bg-zinc-950 border border-zinc-800 text-emerald-400 px-1.5 py-0.5 rounded-md">
                               {c.id}
                             </span>
                             <span className={`badge ${
@@ -526,11 +526,11 @@ export default function LaboratoryWorkspace() {
 
                           <div className="space-y-1">
                             <h4 className="text-xs font-black text-white">{c.patientName}</h4>
-                            <p className="text-[10px] text-zinc-450 font-mono truncate">{c.restorationType}</p>
-                            <p className="text-[9px] text-zinc-500 font-mono">Shade: {c.shade.vitaShade}</p>
+                            <p className="text-2xs text-zinc-450 font-mono truncate">{c.restorationType}</p>
+                            <p className="text-2xs text-zinc-500 font-mono">Shade: {c.shade.vitaShade}</p>
                           </div>
 
-                          <div className="border-t border-zinc-900/60 pt-2 flex justify-between items-center text-[10px] font-mono">
+                          <div className="border-t border-zinc-900/60 pt-2 flex justify-between items-center text-2xs font-mono">
                             <span className="text-zinc-500">Progress:</span>
                             <span className="font-bold text-emerald-400">{c.progressPercent}%</span>
                           </div>
@@ -539,9 +539,9 @@ export default function LaboratoryWorkspace() {
                     </div>
                   ) : (
                     <div id="cases-registry-list" className="overflow-x-auto rounded-xl max-h-[420px] overflow-y-auto">
-                      <table className="w-full text-left border-collapse text-xs font-mono">
+                      <table className="w-full text-start border-collapse text-xs font-mono">
                         <thead>
-                          <tr className="bg-zinc-950 text-zinc-500 text-[10px] uppercase font-bold">
+                          <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold">
                             <th className="p-3">ID</th>
                             <th className="p-3">Patient</th>
                             <th className="p-3">Doctor</th>
@@ -619,11 +619,11 @@ export default function LaboratoryWorkspace() {
                 >
                   {/* Rotating solid crown simulator (Exocad viewport) */}
                   <div className="flex-1 card-gradient p-4 flex flex-col justify-between relative overflow-hidden select-none min-h-[360px]">
-                    <div className="flex justify-between items-center text-[10px] text-zinc-500 font-mono z-10">
+                    <div className="flex justify-between items-center text-2xs text-zinc-500 font-mono z-10">
                       <span className="font-bold text-white uppercase bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
                         {activeCase.doctorName}&apos;s Case Workstation
                       </span>
-                      <span>ROT: {cadRotation}° ELEV: {cadElevation}°</span>
+                      <span>ROT: {cadRotation}آ° ELEV: {cadElevation}آ°</span>
                     </div>
 
                     {/* Viewport mesh simulator */}
@@ -643,32 +643,32 @@ export default function LaboratoryWorkspace() {
                             ? 'border-rose-500 bg-zinc-900/60'
                             : activeCadTool === 'Contacts'
                             ? 'border-yellow-500 bg-gradient-to-b from-blue-500 via-yellow-400 to-rose-500'
-                            : 'border-emerald-500/80 bg-zinc-900/80 shadow-2xl shadow-emerald-500/15'
+                            : 'border-emerald-500/80 bg-zinc-900/80 shadow-card shadow-emerald-500/15'
                         }`}>
                           <div className="text-center font-mono space-y-1">
-                            <span className="text-[10px] font-black text-white block uppercase tracking-wider">
+                            <span className="text-2xs font-black text-white block uppercase tracking-wider">
                               v3.2_Exocad
                             </span>
-                            <span className="text-[9px] text-zinc-500 block">IPS e.max CAD</span>
+                            <span className="text-2xs text-zinc-500 block">IPS e.max CAD</span>
                           </div>
 
                           {activeCadTool === 'MarginLine' && (
-                            <div className="absolute -bottom-1.5 left-2 right-2 h-1 bg-rose-500 rounded animate-pulse" />
+                            <div className="absolute -bottom-1.5 start-2 end-2 h-1 bg-rose-500 rounded animate-pulse" />
                           )}
 
                           {activeCadTool === 'Contacts' && (
                             <>
-                              <div className="absolute -left-2 top-10 w-4 h-4 bg-rose-500 rounded-full flex items-center justify-center text-[8px] font-black text-white">M</div>
-                              <div className="absolute -right-2 top-12 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center text-[8px] font-black text-white">D</div>
+                              <div className="absolute -start-2 top-10 w-4 h-4 bg-rose-500 rounded-full flex items-center justify-center text-2xs font-black text-white">M</div>
+                              <div className="absolute -end-2 top-12 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center text-2xs font-black text-white">D</div>
                             </>
                           )}
                         </div>
                       </div>
 
                       {showMinimumThicknessCheck && (
-                        <div className="absolute bottom-4 right-4 card-elevated p-3 space-y-1 font-mono text-[10px] z-10 text-left">
+                        <div className="absolute bottom-4 end-4 card-elevated p-3 space-y-1 font-mono text-2xs z-10 text-start">
                           <p className="font-bold text-zinc-400 uppercase">Caliper Telemetry:</p>
-                          <p className="text-white">Margin Width: <span className="text-emerald-400 font-bold">11.2 μm</span></p>
+                          <p className="text-white">Margin Width: <span className="text-emerald-400 font-bold">11.2 خ¼m</span></p>
                           <p className="text-white">Prep shoulder: <span className="text-emerald-400 font-bold">1.25 mm</span></p>
                           <p className="text-white">Restoration: <span className="text-emerald-400 font-bold">{measuredThickness}</span></p>
                         </div>
@@ -714,7 +714,7 @@ export default function LaboratoryWorkspace() {
                           <button
                             key={m.id}
                             onClick={() => setActiveCadTool(m.id as any)}
-                            className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold transition-all border ${
+                            className={`px-2.5 py-1 rounded text-2xs font-mono font-bold transition-all border ${
                               activeCadTool === m.id 
                                 ? 'bg-emerald-500 text-zinc-950 border-emerald-400' 
                                 : 'bg-zinc-950 border-zinc-880 text-zinc-400 hover:text-white'
@@ -728,12 +728,12 @@ export default function LaboratoryWorkspace() {
                   </div>
 
                   {/* Right side parameters */}
-                  <div className="w-full lg:w-72 card-elevated p-4 flex flex-col justify-between space-y-4 text-left">
+                  <div className="w-full lg:w-72 card-elevated p-4 flex flex-col justify-between space-y-4 text-start">
                     <div className="space-y-4">
                       <div className="border-b border-zinc-900 pb-3">
                         <span className="eyebrow block mb-1">Design values</span>
                         <h4 className="text-xs font-bold uppercase text-gradient">Exocad Rijeka Engine</h4>
-                        <p className="text-[10px] text-zinc-500 font-mono mt-0.5">Version: v3.2_final</p>
+                        <p className="text-2xs text-zinc-500 font-mono mt-0.5">Version: v3.2_final</p>
                       </div>
 
                       <div className="space-y-3 font-mono text-xs text-zinc-400">
@@ -762,7 +762,7 @@ export default function LaboratoryWorkspace() {
                       </div>
                     </div>
 
-                    <div className="p-3 card-elevated font-mono text-[9px] text-zinc-500">
+                    <div className="p-3 card-elevated font-mono text-2xs text-zinc-500">
                       <span>GPU ACCELERATION: ACTIVE</span>
                       <p className="mt-1">Direct OpenGL wrapper active on localized node.</p>
                     </div>
@@ -822,7 +822,7 @@ export default function LaboratoryWorkspace() {
               {activeTab === 'Materials' && (
                 <WorkspaceTabPanel key="tab-materials"
 
-                  className="space-y-4 text-left"
+                  className="space-y-4 text-start"
                 >
                   <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
                     <div>
@@ -845,12 +845,12 @@ export default function LaboratoryWorkspace() {
                             <span className="text-xs font-black uppercase tracking-wider font-mono">{mat.title}</span>
                             {mat.warn && <AlertTriangle className="w-3.5 h-3.5 text-rose-400 animate-pulse" />}
                           </div>
-                          <p className="text-[9px] opacity-65 font-mono mt-0.5">{mat.desc}</p>
+                          <p className="text-2xs opacity-65 font-mono mt-0.5">{mat.desc}</p>
                         </div>
 
                         <div className="space-y-0.5">
                           <span className="text-2xl font-mono font-black">{mat.count} <span className="text-xs font-normal text-zinc-500">discs</span></span>
-                          <p className="text-[8px] font-mono opacity-80">Safety Limit: {mat.limit}</p>
+                          <p className="text-2xs font-mono opacity-80">Safety Limit: {mat.limit}</p>
                         </div>
                       </div>
                     ))}
@@ -862,7 +862,7 @@ export default function LaboratoryWorkspace() {
               {activeTab === 'AiAssistant' && (
                 <WorkspaceTabPanel key="tab-aiassistant"
 
-                  className="h-full flex flex-col justify-between text-left"
+                  className="h-full flex flex-col justify-between text-start"
                 >
                   <div className="space-y-4">
                     <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -889,13 +889,13 @@ export default function LaboratoryWorkspace() {
                           key={act.id}
                           id={`ai-btn-${act.id}`}
                           onClick={() => triggerAiLabAnalysis(act.id as any)}
-                          className="p-3.5 card-elevated card-hover text-left cursor-pointer transition-all space-y-1 group"
+                          className="p-3.5 card-elevated card-hover text-start cursor-pointer transition-all space-y-1 group"
                         >
                           <div className="flex items-center gap-1.5">
                             <Zap className="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform" />
                             <span className="text-xs font-bold text-white font-mono">{act.label}</span>
                           </div>
-                          <p className="text-[10px] text-zinc-500 font-mono">{act.desc}</p>
+                          <p className="text-2xs text-zinc-500 font-mono">{act.desc}</p>
                         </button>
                       ))}
                     </div>
@@ -917,11 +917,11 @@ export default function LaboratoryWorkspace() {
                           </pre>
                         ) : (
                           <div className="flex flex-col items-center justify-center h-[140px] font-mono text-xs text-center p-6 space-y-3">
-                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)', boxShadow: '0 0 0 8px var(--accent-glow2)' }}>
+                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)', boxShadow: '0 0 0 8px var(--velvet-accent-glow2)' }}>
                               <Sparkles className="w-6 h-6" />
                             </div>
-                            <p className="font-bold" style={{ color: 'var(--text)' }}>Awaiting AI Assistant Query</p>
-                            <p className="text-[11px] max-w-sm" style={{ color: 'var(--text-muted)' }}>Select any telemetry command above to run a clinical diagnostic evaluation of active case {activeCase.id}.</p>
+                            <p className="font-bold" style={{ color: 'var(--velvet-text)' }}>Awaiting AI Assistant Query</p>
+                            <p className="text-xs max-w-sm" style={{ color: 'var(--velvet-text-muted)' }}>Select any telemetry command above to run a clinical diagnostic evaluation of active case {activeCase.id}.</p>
                           </div>
                         )}
                       </div>
@@ -946,7 +946,7 @@ export default function LaboratoryWorkspace() {
               {activeTab === 'Timeline' && (
                 <WorkspaceTabPanel key="tab-timeline"
 
-                  className="h-full flex flex-col justify-between text-left"
+                  className="h-full flex flex-col justify-between text-start"
                 >
                   <div className="space-y-4">
                     <div className="border-b border-zinc-900 pb-2">
@@ -955,7 +955,7 @@ export default function LaboratoryWorkspace() {
                       <p className="text-xs text-zinc-500 font-mono mt-1">Chronological audit logs of restorations from prescription to physical clinical delivery.</p>
                     </div>
 
-                    <div className="relative border-l-2 border-zinc-900 ml-4 pl-6 space-y-6 max-h-[420px] overflow-y-auto scrollbar-thin">
+                    <div className="relative border-s-2 border-zinc-900 ms-4 ps-6 space-y-6 max-h-[420px] overflow-y-auto scrollbar-thin">
                       {activeCase.timeline.map((item, idx) => (
                         <div key={idx} className="relative">
                           <span className={`absolute -left-[31px] top-1.5 p-1 rounded-full bg-zinc-950 border-2 ${
@@ -967,9 +967,9 @@ export default function LaboratoryWorkspace() {
                           <div className="space-y-1">
                             <div className="flex justify-between items-baseline">
                               <h4 className={`text-xs font-black ${item.completed ? 'text-white' : 'text-zinc-500'}`}>{item.stage}</h4>
-                              <span className="text-[9px] font-mono text-zinc-500 font-bold">{item.timestamp || 'Scheduled'}</span>
+                              <span className="text-2xs font-mono text-zinc-500 font-bold">{item.timestamp || 'Scheduled'}</span>
                             </div>
-                            <p className="text-[11px] text-zinc-400 font-mono leading-relaxed">
+                            <p className="text-xs text-zinc-400 font-mono leading-relaxed">
                               {item.note || 'Staged for sequential manufacturing completion.'}
                             </p>
                           </div>
@@ -984,7 +984,7 @@ export default function LaboratoryWorkspace() {
               {activeTab === 'Analytics' && (
                 <WorkspaceTabPanel key="tab-analytics"
 
-                  className="h-full flex flex-col justify-between text-left"
+                  className="h-full flex flex-col justify-between text-start"
                 >
                   <div className="space-y-4">
                     <div className="border-b border-zinc-900 pb-2 flex justify-between items-center">
@@ -1044,9 +1044,9 @@ export default function LaboratoryWorkspace() {
                     </div>
 
                     <div className="overflow-x-auto rounded-xl">
-                      <table className="w-full text-left border-collapse text-xs font-mono">
+                      <table className="w-full text-start border-collapse text-xs font-mono">
                         <thead>
-                          <tr className="bg-zinc-950 text-zinc-500 text-[9px] uppercase font-bold">
+                          <tr className="bg-zinc-950 text-zinc-500 text-2xs uppercase font-bold">
                             <th className="p-2">Ceramist / Engineer</th>
                             <th className="p-2">Cases Completed</th>
                             <th className="p-2">Avg Turnaround</th>

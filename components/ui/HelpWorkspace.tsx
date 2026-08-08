@@ -113,13 +113,13 @@ export default function HelpWorkspace() {
         </div>
 
         <div className="relative w-full md:w-96 z-10">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-500" />
+          <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-500" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search tutorials, FAQs, and guides..."
-            className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition-colors font-mono rounded-xl"
+            className="w-full ps-10 pe-4 py-2.5 bg-zinc-950 border border-zinc-800 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition-colors font-mono rounded-xl"
           />
         </div>
       </div>
@@ -178,10 +178,10 @@ export default function HelpWorkspace() {
               {filteredArticles.map(art => (
                 <div key={art.id} className="p-4 bg-zinc-950/40 border border-zinc-900 hover:border-zinc-800 rounded-3xl space-y-2 transition-all group">
                   <div className="flex justify-between items-start gap-4">
-                    <span className="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                    <span className="text-2xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
                       {art.category}
                     </span>
-                    <span className="text-[10px] text-zinc-500 font-mono">{art.duration} • {art.views} views</span>
+                    <span className="text-2xs text-zinc-500 font-mono">{art.duration} • {art.views} views</span>
                   </div>
 
                   <h4 className="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors leading-snug">
@@ -189,7 +189,7 @@ export default function HelpWorkspace() {
                   </h4>
                   <p className="text-xs text-zinc-400 leading-relaxed font-sans">{art.desc}</p>
                   
-                  <div className="flex items-center gap-1.5 text-[10px] text-zinc-500 font-mono pt-1">
+                  <div className="flex items-center gap-1.5 text-2xs text-zinc-500 font-mono pt-1">
                     <span>EHR Manual v2026.3</span>
                     <ChevronRight className="w-3 h-3" />
                   </div>
@@ -214,16 +214,16 @@ export default function HelpWorkspace() {
                       onClick={() => triggerToast(`Streaming video lecture "${vid.title}"`)}
                       className="w-10 h-10 rounded-full bg-emerald-500 text-zinc-950 flex items-center justify-center font-black cursor-pointer group-hover:scale-110 transition-transform relative z-10"
                     >
-                      <Play className="w-5 h-5 fill-current ml-0.5" />
+                      <Play className="w-5 h-5 fill-current ms-0.5" />
                     </button>
-                    <span className="absolute bottom-2 right-2 text-[9px] font-mono bg-zinc-950/80 px-1.5 py-0.5 rounded text-zinc-400">
+                    <span className="absolute bottom-2 end-2 text-2xs font-mono bg-zinc-950/80 px-1.5 py-0.5 rounded text-zinc-400">
                       {vid.duration}
                     </span>
                   </div>
 
                   <div className="space-y-1 font-mono text-xs">
-                    <h5 className="font-bold text-white text-[11px] leading-snug">{vid.title}</h5>
-                    <div className="flex justify-between text-[10px] text-zinc-500 mt-1">
+                    <h5 className="font-bold text-white text-xs leading-snug">{vid.title}</h5>
+                    <div className="flex justify-between text-2xs text-zinc-500 mt-1">
                       <span>Lecturer: {vid.author}</span>
                       <span>{vid.views}</span>
                     </div>
@@ -304,14 +304,14 @@ export default function HelpWorkspace() {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-white">{t.ticketId}</span>
-                      <span className="text-[10px] text-zinc-500">• {t.category}</span>
+                      <span className="text-2xs text-zinc-500">• {t.category}</span>
                     </div>
                     <p className="text-xs text-zinc-400 font-sans leading-relaxed">{t.title}</p>
-                    <span className="text-[10px] text-zinc-500 block">Created: {t.created}</span>
+                    <span className="text-2xs text-zinc-500 block">Created: {t.created}</span>
                   </div>
 
-                  <div className="text-right">
-                    <span className={`text-[10px] px-2.5 py-0.5 rounded font-black ${
+                  <div className="text-end">
+                    <span className={`text-2xs px-2.5 py-0.5 rounded font-black ${
                       t.status === 'Resolved' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
                     }`}>
                       {t.status}
@@ -330,7 +330,7 @@ export default function HelpWorkspace() {
           <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
             <div>
               <h3 className="text-sm font-bold text-white uppercase tracking-wider">HealthOS Platform telemetry Clusters</h3>
-              <p className="text-[10px] text-zinc-500">Live heartbeat pings from HIPAA safe-nodes.</p>
+              <p className="text-2xs text-zinc-500">Live heartbeat pings from HIPAA safe-nodes.</p>
             </div>
             <button 
               onClick={() => triggerToast('Checking cluster heartbeat endpoints...')}
@@ -345,10 +345,10 @@ export default function HelpWorkspace() {
               <div key={sys.node} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between gap-4">
                 <div className="space-y-1">
                   <h4 className="font-bold text-white text-xs">{sys.node}</h4>
-                  <p className="text-[10px] text-zinc-500">Secure AES TLS Channel • Gateway Latency: <strong className="text-zinc-300">{sys.latency}</strong></p>
+                  <p className="text-2xs text-zinc-500">Secure AES TLS Channel • Gateway Latency: <strong className="text-zinc-300">{sys.latency}</strong></p>
                 </div>
 
-                <span className="text-[10px] font-black uppercase text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                <span className="text-2xs font-black uppercase text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
                   {sys.status}
                 </span>
               </div>
@@ -371,9 +371,9 @@ export default function HelpWorkspace() {
               <div key={rel.version} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl space-y-2">
                 <div className="flex justify-between items-center">
                   <h4 className="text-xs font-black text-emerald-400">{rel.version} Update</h4>
-                  <span className="text-[10px] text-zinc-500">{rel.date}</span>
+                  <span className="text-2xs text-zinc-500">{rel.date}</span>
                 </div>
-                <h5 className="font-bold text-white text-[13px]">{rel.title}</h5>
+                <h5 className="font-bold text-white text-sm">{rel.title}</h5>
                 <p className="text-xs text-zinc-400 font-sans leading-relaxed">{rel.desc}</p>
               </div>
             ))}

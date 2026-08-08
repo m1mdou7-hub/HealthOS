@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { Send, CheckCircle2, XCircle, Info, MessageSquare, Clock } from 'lucide-react';
+import { Send, CheckCircle2, XCircle, Info } from 'lucide-react';
 import { clinicalService, PatientDocument } from '../../../utils/services/clinicalService';
 import { Patient } from '../PatientWorkspace';
+import { Card, Badge, Button, Input, Skeleton, EmptyState } from '@/components/ui/design-system';
 
 interface CommunicationPanelProps {
   supabase: SupabaseClient;
   activePatient: Patient;
   demoMode: boolean;
 }
+
+const statusBadgeTone = (status?: string) => {
+  if (status === 'Accepted') return 'success' as const;
+  if (status === 'Rejected') return 'error' as const;
+  if (status === 'Info Requested') return 'info' as const;
+  return 'default' as const;
+};
 
 export default function CommunicationPanel({ supabase, activePatient, demoMode }: CommunicationPanelProps) {
   const queryClient = useQueryClient();
@@ -62,145 +70,145 @@ export default function CommunicationPanel({ supabase, activePatient, demoMode }
   const activeReferral = referrals.find(r => r.id === selectedRefId) || referrals[0];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 text-left">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 text-start">
       {/* Left Column: Referrals Inbox List (Col span 4) */}
       <div className="md:col-span-4 space-y-4">
-        <div className="p-4 card-elevated rounded-2xl">
-          <h3 className="text-xs font-bold text-white font-mono uppercase tracking-wider mb-3">Referrals Inbox</h3>
+        <Card variant="elevated" hover={false} className="p-4 rounded-2xl">
+          <h3 className="text-xs font-bold text-[var(--velvet-text)] font-mono uppercase tracking-wider mb-3">Referrals Inbox</h3>
           {isLoading ? (
-            <div className="text-zinc-500 text-xs py-4 animate-pulse">Loading inbox...</div>
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, idx) => (
+                <Skeleton key={idx} className="h-16 rounded-xl" />
+              ))}
+            </div>
           ) : referrals.length === 0 ? (
-            <p className="text-zinc-500 text-[11px] py-4">No surgical referrals or physician letters on file.</p>
+            <EmptyState
+              icon={<Send className="w-6 h-6" />}
+              title="No referrals yet"
+              description="No surgical referrals or physician letters on file."
+            />
           ) : (
             <div className="space-y-2">
               {referrals.map((ref) => (
                 <button
                   key={ref.id}
                   onClick={() => setSelectedRefId(ref.id)}
-                  className={`w-full text-left p-3 rounded-xl border transition-all text-xs font-sans ${
+                  className={`w-full text-start p-3 rounded-xl border transition-all text-xs font-sans ${
                     (selectedRefId === ref.id || (!selectedRefId && referrals[0].id === ref.id))
-                      ? 'bg-zinc-900 border-zinc-800 text-white'
-                      : 'bg-zinc-950 border-zinc-900 text-zinc-400 hover:bg-zinc-900/50'
+                      ? 'bg-[var(--velvet-surface-2)] border-[var(--velvet-border-strong)] text-[var(--velvet-text)]'
+                      : 'bg-[var(--velvet-surface-1)] border-[var(--velvet-border)] text-[var(--velvet-text-muted)] hover:bg-[var(--velvet-surface-2)]'
                   }`}
                 >
                   <div className="flex justify-between items-center mb-1.5">
-                    <span className="text-[9px] font-mono font-semibold text-zinc-500">{ref.date}</span>
-                    <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded border uppercase ${
-                      ref.status === 'Accepted' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                      ref.status === 'Rejected' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                      ref.status === 'Info Requested' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                      'bg-zinc-900 text-zinc-400 border-zinc-800'
-                    }`}>
+                    <span className="text-2xs font-mono font-semibold text-[var(--velvet-text-muted)]">{ref.date}</span>
+                    <Badge tone={statusBadgeTone(ref.status)} className="text-2xs uppercase">
                       {ref.status || 'Pending'}
-                    </span>
+                    </Badge>
                   </div>
                   <h4 className="font-bold truncate">{ref.name}</h4>
                 </button>
               ))}
             </div>
           )}
-        </div>
+        </Card>
       </div>
 
       {/* Right Column: Workflow Controls and Status Timeline (Col span 8) */}
       <div className="md:col-span-8">
         {!activeReferral ? (
-          <div className="p-8 card-elevated rounded-3xl text-center text-xs" style={{ color: 'var(--text-muted)' }}>
+          <Card variant="elevated" hover={false} className="p-8 rounded-3xl text-center text-xs text-[var(--velvet-text-muted)]">
             Select a referral letter from the inbox to process.
-          </div>
+          </Card>
         ) : (
-          <div className="p-5 card-elevated rounded-3xl space-y-6">
+          <Card variant="elevated" hover={false} className="p-5 rounded-3xl space-y-6">
             {/* Header info */}
-            <div className="flex justify-between items-start border-b border-zinc-900/60 pb-3">
+            <div className="flex justify-between items-start border-b pb-3" style={{ borderColor: 'var(--velvet-border)' }}>
               <div>
-                <span className="text-[9px] font-mono text-zinc-500">File ID: {activeReferral.id}</span>
-                <h3 className="text-sm font-bold text-white mt-0.5">{activeReferral.name}</h3>
-                <p className="text-xs text-zinc-400 mt-1">Classification: Specialist Referral Clearance</p>
+                <span className="text-2xs font-mono text-[var(--velvet-text-muted)]">File ID: {activeReferral.id}</span>
+                <h3 className="text-sm font-bold text-[var(--velvet-text)] mt-0.5">{activeReferral.name}</h3>
+                <p className="text-xs text-[var(--velvet-text-muted)] mt-1">Classification: Specialist Referral Clearance</p>
               </div>
-              <span className={`badge ${
-                activeReferral.status === 'Accepted' ? 'badge-success' :
-                activeReferral.status === 'Rejected' ? 'badge-danger' :
-                activeReferral.status === 'Info Requested' ? 'badge-info' :
-                ''
-              }`}>
+              <Badge tone={statusBadgeTone(activeReferral.status)}>
                 {activeReferral.status || 'Pending Review'}
-              </span>
+              </Badge>
             </div>
 
             {/* Referral description mock copy */}
-            <div className="p-4 card-elevated rounded-2xl text-xs leading-relaxed font-sans" style={{ color: 'var(--text-sub)' }}>
-              <p className="font-bold text-white mb-2">CLINICAL DIRECTIVE & DIAGNOSIS OVERVIEW</p>
+            <Card variant="elevated" hover={false} className="p-4 rounded-2xl text-xs leading-relaxed font-sans text-[var(--velvet-text-sub)]">
+              <p className="font-bold text-[var(--velvet-text)] mb-2">CLINICAL DIRECTIVE & DIAGNOSIS OVERVIEW</p>
               <p>Referred for evaluation of localized bone volume deficiencies in the posterior maxilla. Recommend sinus floor elevation (osteotome prep) and bone graft augmentation before scheduling full arch zirconia bridge delivery.</p>
-              <p className="mt-2 font-mono text-[10px] text-zinc-500">Referring Physician: Specialist Diagnostics Unit | Authenticator: REFERRAL_OK_AUTH_9918</p>
-            </div>
+              <p className="mt-2 font-mono text-2xs text-[var(--velvet-text-muted)]">Referring Physician: Specialist Diagnostics Unit | Authenticator: REFERRAL_OK_AUTH_9918</p>
+            </Card>
 
             {/* Workflow Action Buttons */}
             {activeReferral.status !== 'Accepted' && activeReferral.status !== 'Rejected' && (
               <div className="space-y-3">
-                <div className="flex gap-2">
-                  <button
+                <div className="flex flex-wrap gap-2">
+                  <Button
                     onClick={() => handleUpdateReferral(activeReferral.id, 'Accepted', 'Referral review completed. Patient cleared for clinical course.')}
-                    className="btn-primary flex-1 py-2 rounded-xl text-xs"
+                    className="flex-1 py-2 rounded-xl text-xs min-w-[160px]"
                   >
                     <CheckCircle2 className="w-4 h-4" /> Accept Referral
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="danger"
                     onClick={() => handleUpdateReferral(activeReferral.id, 'Rejected', 'Referral rejected due to systemic clinical contraindications.')}
-                    className="flex-1 py-2 rounded-xl bg-red-950/20 hover:bg-red-900/10 border border-red-500/20 text-red-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                    className="flex-1 py-2 rounded-xl text-xs min-w-[160px]"
                   >
                     <XCircle className="w-4 h-4" /> Reject Referral
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="secondary"
                     onClick={() => setShowRequestBox(!showRequestBox)}
-                    className="btn-secondary px-4 py-2 rounded-xl text-xs"
+                    className="px-4 py-2 rounded-xl text-xs"
                   >
                     <Info className="w-4 h-4" /> Request Info
-                  </button>
+                  </Button>
                 </div>
 
                 {showRequestBox && (
-                  <div className="p-3 card-elevated rounded-2xl space-y-2">
-                    <label className="text-[10px] text-zinc-400 block font-bold">Specify Information Request Details</label>
+                  <Card variant="elevated" hover={false} className="p-3 rounded-2xl space-y-2">
+                    <label className="text-2xs text-[var(--velvet-text-muted)] block font-bold">Specify Information Request Details</label>
                     <div className="flex gap-2">
-                      <input
-                        type="text"
+                      <Input
                         value={infoRequestText}
                         onChange={(e) => setInfoRequestText(e.target.value)}
                         placeholder="e.g. Please send the latest panoramic radiograph..."
-                        className="flex-1 px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:border-blue-500/40 text-xs"
+                        aria-label="Information request details"
                       />
-                      <button
+                      <Button
+                        variant="secondary"
                         onClick={() => handleUpdateReferral(activeReferral.id, 'Info Requested', `Information Request dispatched: "${infoRequestText}"`)}
                         disabled={!infoRequestText.trim()}
-                        className="btn-secondary px-3 py-2 rounded-lg text-xs"
+                        className="px-3 py-2 rounded-lg text-xs shrink-0"
                       >
                         Send
-                      </button>
+                      </Button>
                     </div>
-                  </div>
+                  </Card>
                 )}
               </div>
             )}
 
             {/* Referral Status Timeline (Audit trail) */}
             <div className="space-y-3 pt-2">
-              <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider font-mono">Referral Status Timeline & Audit Log</h4>
-              <div className="space-y-3 relative pl-3.5 before:absolute before:left-1 before:top-2 before:bottom-2 before:w-0.5 before:bg-zinc-900">
+              <h4 className="text-2xs font-bold text-[var(--velvet-text-muted)] uppercase tracking-wider font-mono">Referral Status Timeline & Audit Log</h4>
+              <div className="space-y-3 relative ps-3.5 before:absolute before:start-1 before:top-2 before:bottom-2 before:w-0.5 before:bg-[var(--velvet-border-strong)]">
                 {(activeReferral.referralTimeline || [
                   { date: activeReferral.date, action: "Received", note: "Referral submitted to inbox.", actor: "Referring Physician" }
                 ]).map((item, idx) => (
                   <div key={idx} className="relative text-xs">
-                    <span className="absolute -left-[19px] top-1.5 w-2 h-2 rounded-full bg-zinc-800 border-2 border-zinc-950" />
-                    <div className="flex items-center justify-between text-[9px] font-mono text-zinc-500">
+                    <span className="absolute -left-[19px] top-1.5 w-2 h-2 rounded-full border-2" style={{ background: 'var(--velvet-surface-2)', borderColor: 'var(--velvet-border)' }} />
+                    <div className="flex items-center justify-between text-2xs font-mono text-[var(--velvet-text-muted)]">
                       <span>{item.date} • Action by {item.actor}</span>
-                      <span className="text-[8px] px-1.5 py-0.2 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-bold uppercase">{item.action}</span>
+                      <Badge tone="default" className="text-2xs uppercase">{item.action}</Badge>
                     </div>
-                    <p className="text-zinc-300 font-medium mt-1 leading-normal">{item.note}</p>
+                    <p className="text-[var(--velvet-text-sub)] font-medium mt-1 leading-normal">{item.note}</p>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
+          </Card>
         )}
       </div>
     </div>

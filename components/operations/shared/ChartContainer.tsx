@@ -24,7 +24,7 @@ export const ChartContainer = ({ children, data, title, desc, height = 256 }: Ch
     <>
       <div>
         <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono" aria-label={title}>{title}</h4>
-        <p className="text-[10px] text-zinc-500 font-mono">{desc}</p>
+        <p className="text-2xs text-zinc-500 font-mono">{desc}</p>
       </div>
       <div style={{ height }} className="w-full">
         <ResponsiveContainer width="100%" height="100%">

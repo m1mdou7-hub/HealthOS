@@ -301,7 +301,7 @@ export default function VoiceSystem({ onAlert }: VoiceSystemProps) {
           ))}
         </div>
 
-        <span className={`text-[10px] font-mono font-bold hidden sm:inline ${
+        <span className={`text-2xs font-mono font-bold hidden sm:inline ${
           mode === 'dictating'  ? 'text-rose-400' :
           mode === 'commanding' ? 'text-amber-400' :
           mode === 'speaking'   ? 'text-blue-400' :
@@ -327,13 +327,13 @@ export default function VoiceSystem({ onAlert }: VoiceSystemProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 top-12 w-80 z-[9999] bg-[#09090e] border border-rose-500/20 rounded-3xl shadow-2xl shadow-black/90 overflow-hidden"
+            className="absolute end-0 top-12 w-80 z-[9999] bg-[#09090e] border border-rose-500/20 rounded-3xl shadow-card shadow-black/90 overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-white/[0.06]">
               <div>
                 <p className="text-xs font-bold text-white">Voice System</p>
-                <p className="text-[10px] text-zinc-500 font-mono">Web Speech API · HIPAA Compliant</p>
+                <p className="text-2xs text-zinc-500 font-mono">Web Speech API · HIPAA Compliant</p>
               </div>
               <button onClick={() => setExpanded(false)} className="p-1.5 rounded-lg text-zinc-600 hover:text-zinc-400 cursor-pointer">
                 <X className="w-3.5 h-3.5" />
@@ -371,9 +371,9 @@ export default function VoiceSystem({ onAlert }: VoiceSystemProps) {
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${mode === 'dictating' ? 'bg-rose-500/30' : 'bg-white/[0.06]'}`}>
                   <Mic className={`w-4 h-4 ${mode === 'dictating' ? 'text-rose-400 animate-pulse' : 'text-zinc-400'}`} />
                 </div>
-                <div className="text-left">
+                <div className="text-start">
                   <p>{mode === 'dictating' ? '● Stop Dictation' : 'Start Voice Dictation'}</p>
-                  <p className="text-[10px] font-normal text-zinc-500 mt-0.5">Speak → Types in focused field</p>
+                  <p className="text-2xs font-normal text-zinc-500 mt-0.5">Speak → Types in focused field</p>
                 </div>
               </button>
 
@@ -389,9 +389,9 @@ export default function VoiceSystem({ onAlert }: VoiceSystemProps) {
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${mode === 'commanding' ? 'bg-amber-500/30' : 'bg-white/[0.06]'}`}>
                   <Zap className={`w-4 h-4 ${mode === 'commanding' ? 'text-amber-400 animate-pulse' : 'text-zinc-400'}`} />
                 </div>
-                <div className="text-left">
+                <div className="text-start">
                   <p>{mode === 'commanding' ? '● Stop Commands' : 'Voice Navigation'}</p>
-                  <p className="text-[10px] font-normal text-zinc-500 mt-0.5">Say "patients", "dashboard"…</p>
+                  <p className="text-2xs font-normal text-zinc-500 mt-0.5">Say "patients", "dashboard"…</p>
                 </div>
               </button>
 
@@ -407,12 +407,12 @@ export default function VoiceSystem({ onAlert }: VoiceSystemProps) {
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${ttsEnabled ? 'bg-white/[0.06]' : 'bg-white/[0.02]'}`}>
                   {ttsEnabled ? <Volume2 className="w-4 h-4 text-zinc-400" /> : <VolumeX className="w-4 h-4 text-zinc-600" />}
                 </div>
-                <div className="text-left">
+                <div className="text-start">
                   <p>Voice Alerts (TTS): <span className={ttsEnabled ? 'text-rose-400' : 'text-zinc-600'}>{ttsEnabled ? 'ON' : 'OFF'}</span></p>
-                  <p className="text-[10px] font-normal text-zinc-500 mt-0.5">Reads notifications aloud</p>
+                  <p className="text-2xs font-normal text-zinc-500 mt-0.5">Reads notifications aloud</p>
                 </div>
                 {/* Toggle pill */}
-                <div className="ml-auto">
+                <div className="ms-auto">
                   <div className={`w-9 h-5 rounded-full border flex items-center px-0.5 transition-all ${ttsEnabled ? 'bg-rose-500/30 border-rose-500/40 justify-end' : 'bg-white/[0.04] border-white/[0.08] justify-start'}`}>
                     <div className={`w-4 h-4 rounded-full shadow ${ttsEnabled ? 'bg-rose-400' : 'bg-zinc-600'}`} />
                   </div>
@@ -422,10 +422,10 @@ export default function VoiceSystem({ onAlert }: VoiceSystemProps) {
 
             {/* Command Quick Reference */}
             <div className="px-4 pb-3">
-              <p className="text-[10px] font-bold text-zinc-600 uppercase font-mono mb-2">Quick Commands</p>
+              <p className="text-2xs font-bold text-zinc-600 uppercase font-mono mb-2">Quick Commands</p>
               <div className="flex flex-wrap gap-1">
                 {['patients', 'dashboard', 'appointments', 'lab', 'billing', 'settings'].map(cmd => (
-                  <span key={cmd} className="text-[9px] font-mono px-2 py-0.5 bg-white/[0.04] border border-white/[0.06] rounded-full text-zinc-500">
+                  <span key={cmd} className="text-2xs font-mono px-2 py-0.5 bg-white/[0.04] border border-white/[0.06] rounded-full text-zinc-500">
                     "{cmd}"
                   </span>
                 ))}
@@ -435,10 +435,10 @@ export default function VoiceSystem({ onAlert }: VoiceSystemProps) {
             {/* Command History Log */}
             {commandHistory.length > 0 && (
               <div className="border-t border-white/[0.06] px-4 py-3">
-                <p className="text-[10px] font-bold text-zinc-600 uppercase font-mono mb-2">Recent Activity</p>
+                <p className="text-2xs font-bold text-zinc-600 uppercase font-mono mb-2">Recent Activity</p>
                 <div className="space-y-1 max-h-28 overflow-y-auto">
                   {commandHistory.slice(0, 6).map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 text-[10px] font-mono">
+                    <div key={i} className="flex items-center gap-2 text-2xs font-mono">
                       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${h.type === 'nav' ? 'bg-amber-400' : h.type === 'dictate' ? 'bg-rose-400' : 'bg-blue-400'}`} />
                       <span className="text-zinc-400 truncate flex-1">{h.text}</span>
                       <span className="text-zinc-700 shrink-0">{h.time}</span>

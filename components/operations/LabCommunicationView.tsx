@@ -59,13 +59,13 @@ export default function LabCommunicationView({ activeCase, onUpdateCase }: LabCo
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 text-left">
+    <div className="space-y-6 text-zinc-100 text-start">
       <div className="border-b border-zinc-900 pb-3 flex justify-between items-center">
         <div>
           <h3 className="text-base font-black text-white uppercase tracking-tight">Secure Laboratory Communication</h3>
           <p className="text-xs text-zinc-500 font-mono">Secure, HIPAA-compliant chat and prescription audit logs between clinical operatory and lab technician.</p>
         </div>
-        <div className="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-3 py-1 rounded-xl text-[10px] font-mono font-bold">
+        <div className="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-3 py-1 rounded-xl text-2xs font-mono font-bold">
           <ShieldCheck className="w-3.5 h-3.5" />
           <span>E2E ENCRYPTED</span>
         </div>
@@ -78,13 +78,13 @@ export default function LabCommunicationView({ activeCase, onUpdateCase }: LabCo
           
           {/* Header Message Filter Bar */}
           <div className="p-3 bg-zinc-900/60 border-b border-zinc-900 flex items-center justify-between">
-            <span className="text-[10px] font-mono text-zinc-400 uppercase font-bold">Message Filter:</span>
+            <span className="text-2xs font-mono text-zinc-400 uppercase font-bold">Message Filter:</span>
             <div className="flex gap-1.5">
               {['All', 'Message', 'Comment', 'Revision Request', 'Approval Request'].map(t => (
                 <button
                   key={t}
                   onClick={() => setFilterType(t)}
-                  className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold border transition-all ${
+                  className={`px-2 py-0.5 rounded text-2xs font-mono font-bold border transition-all ${
                     filterType === t 
                       ? 'bg-emerald-500 text-zinc-950 border-emerald-400' 
                       : 'bg-zinc-950 border-zinc-900 hover:border-zinc-800 text-zinc-500 hover:text-zinc-300'
@@ -108,7 +108,7 @@ export default function LabCommunicationView({ activeCase, onUpdateCase }: LabCo
                   id={`chat-msg-${msg.id}`}
                   className={`flex flex-col ${isClinician ? 'items-end' : 'items-start'} max-w-full`}
                 >
-                  <div className="flex items-baseline gap-1.5 text-[9px] font-mono text-zinc-500 font-bold mb-0.5">
+                  <div className="flex items-baseline gap-1.5 text-2xs font-mono text-zinc-500 font-bold mb-0.5">
                     <span>{msg.senderName} ({msg.sender})</span>
                     <span>•</span>
                     <span>{msg.timestamp}</span>
@@ -116,23 +116,23 @@ export default function LabCommunicationView({ activeCase, onUpdateCase }: LabCo
 
                   <div className={`p-3 rounded-2xl max-w-[85%] text-xs border ${
                     isClinician 
-                      ? 'bg-emerald-500/5 border-emerald-500/20 text-emerald-100 rounded-tr-none' 
-                      : 'bg-zinc-900/60 border-zinc-850 text-zinc-200 rounded-tl-none'
+                      ? 'bg-emerald-500/5 border-emerald-500/20 text-emerald-100 rounded-te-none' 
+                      : 'bg-zinc-900/60 border-zinc-850 text-zinc-200 rounded-ts-none'
                   }`}>
                     
                     {/* Specific card layout for Approval/Revision Requests */}
                     {msg.type === 'Approval Request' && (
                       <div className="space-y-2 border-b border-zinc-900 pb-2 mb-2">
-                        <div className="flex items-center gap-1 text-purple-400 font-bold uppercase tracking-wider text-[10px]">
+                        <div className="flex items-center gap-1 text-purple-400 font-bold uppercase tracking-wider text-2xs">
                           <CheckCircle className="w-3.5 h-3.5" />
                           <span>3D Design Approval Requested</span>
                         </div>
-                        <p className="text-[11px] text-zinc-400">
+                        <p className="text-xs text-zinc-400">
                           Please verify crown contour, contact pressure map, and subgingival margins.
                         </p>
                         <div className="flex items-center gap-2 pt-1">
                           {msg.isApproved ? (
-                            <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px] font-bold uppercase">
+                            <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded text-2xs font-bold uppercase">
                               Approved & Sent to CAM
                             </span>
                           ) : (
@@ -140,14 +140,14 @@ export default function LabCommunicationView({ activeCase, onUpdateCase }: LabCo
                               <button
                                 onClick={() => handleApproveRequest(msg.id)}
                                 id={`approve-design-btn-${msg.id}`}
-                                className="bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-[10px] font-mono px-3 py-1 rounded cursor-pointer transition-colors"
+                                className="bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-2xs font-mono px-3 py-1 rounded cursor-pointer transition-colors"
                               >
                                 APPROVE & PROCEED
                               </button>
                               <button
                                 onClick={() => alert('Simulating revision request reply draft...')}
                                 id={`reject-design-btn-${msg.id}`}
-                                className="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 font-bold text-[10px] font-mono px-3 py-1 rounded cursor-pointer transition-colors"
+                                className="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 font-bold text-2xs font-mono px-3 py-1 rounded cursor-pointer transition-colors"
                               >
                                 REQUEST REVISION
                               </button>
@@ -158,7 +158,7 @@ export default function LabCommunicationView({ activeCase, onUpdateCase }: LabCo
                     )}
 
                     {msg.type === 'Revision Request' && (
-                      <div className="flex items-start gap-1.5 text-amber-400 font-semibold mb-1.5 uppercase text-[10px]">
+                      <div className="flex items-start gap-1.5 text-amber-400 font-semibold mb-1.5 uppercase text-2xs">
                         <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
                         <span>REVISION GUIDELINE REQ</span>
                       </div>
@@ -219,16 +219,16 @@ export default function LabCommunicationView({ activeCase, onUpdateCase }: LabCo
           
           {/* Quick Files panel */}
           <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-3 text-xs">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
+            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
               Case Attachment References
             </span>
 
             <div className="space-y-2 max-h-[220px] overflow-y-auto scrollbar-thin">
               {activeCase.files.map((file) => (
-                <div key={file.id} className="p-2 bg-zinc-900/30 border border-zinc-900 rounded-xl flex justify-between items-center font-mono text-[11px]">
+                <div key={file.id} className="p-2 bg-zinc-900/30 border border-zinc-900 rounded-xl flex justify-between items-center font-mono text-xs">
                   <div className="min-w-0">
                     <p className="font-bold text-zinc-200 truncate">{file.name}</p>
-                    <p className="text-[9px] text-zinc-500">{file.size} • {file.type}</p>
+                    <p className="text-2xs text-zinc-500">{file.size} • {file.type}</p>
                   </div>
                   <button
                     onClick={() => alert(`Downloading attachment ${file.name}...`)}
@@ -251,7 +251,7 @@ export default function LabCommunicationView({ activeCase, onUpdateCase }: LabCo
             </button>
           </div>
 
-          <div className="p-4 bg-zinc-900/10 border border-zinc-900 rounded-2xl font-mono text-[10px] text-zinc-500">
+          <div className="p-4 bg-zinc-900/10 border border-zinc-900 rounded-2xl font-mono text-2xs text-zinc-500">
             <p className="font-bold block text-zinc-400 mb-1">HIPAA AUDIT STATE:</p>
             <p>All communication lines recorded under PACS secure message log policy. Verification SHA-256 enabled on all attachments.</p>
           </div>

@@ -62,7 +62,7 @@ export default function SmileDesignWorkspace({ activeCase, onUpdateCase }: Smile
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 text-left">
+    <div className="space-y-6 text-zinc-100 text-start">
       <div className="border-b border-zinc-900 pb-3 flex justify-between items-center">
         <div>
           <h3 className="text-base font-black text-white uppercase tracking-tight">Digital Smile Design (DSD) Workspace</h3>
@@ -82,13 +82,13 @@ export default function SmileDesignWorkspace({ activeCase, onUpdateCase }: Smile
         
         {/* Aesthetic Metrics Calibration (7 columns) */}
         <div className="md:col-span-7 p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-4">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
+          <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
             Geometric Analysis & Reference Lines
           </span>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
             <div className="space-y-1.5">
-              <label className="text-[10px] text-zinc-400 uppercase font-bold flex items-center gap-1">
+              <label className="text-2xs text-zinc-400 uppercase font-bold flex items-center gap-1">
                 <Ruler className="w-3 h-3 text-emerald-400" /> Interpupillary Line
               </label>
               <select
@@ -103,7 +103,7 @@ export default function SmileDesignWorkspace({ activeCase, onUpdateCase }: Smile
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] text-zinc-400 uppercase font-bold flex items-center gap-1">
+              <label className="text-2xs text-zinc-400 uppercase font-bold flex items-center gap-1">
                 <Grid className="w-3 h-3 text-emerald-400" /> Smile Line Curvature
               </label>
               <select
@@ -119,7 +119,7 @@ export default function SmileDesignWorkspace({ activeCase, onUpdateCase }: Smile
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] text-zinc-400 uppercase font-bold flex items-center gap-1">
+              <label className="text-2xs text-zinc-400 uppercase font-bold flex items-center gap-1">
                 <Ruler className="w-3 h-3 text-emerald-400" /> Dental Midline Alignment
               </label>
               <select
@@ -135,7 +135,7 @@ export default function SmileDesignWorkspace({ activeCase, onUpdateCase }: Smile
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] text-zinc-400 uppercase font-bold flex items-center gap-1">
+              <label className="text-2xs text-zinc-400 uppercase font-bold flex items-center gap-1">
                 <Grid className="w-3 h-3 text-emerald-400" /> Golden Proportion (1.618 : 1)
               </label>
               <select
@@ -151,7 +151,7 @@ export default function SmileDesignWorkspace({ activeCase, onUpdateCase }: Smile
           </div>
 
           <div className="space-y-2 border-t border-zinc-900/60 pt-4">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">
+            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">
               Virtual Wax-Up Planning Notes
             </span>
             <textarea
@@ -169,37 +169,37 @@ export default function SmileDesignWorkspace({ activeCase, onUpdateCase }: Smile
           
           {/* Reference Photos */}
           <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-3">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
+            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block border-b border-zinc-900 pb-2">
               DSD Calibration Images
             </span>
 
             <div className="grid grid-cols-2 gap-2.5">
               <div className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl text-center space-y-2">
                 <ImageIcon className="w-6 h-6 mx-auto text-emerald-400" />
-                <span className="text-[10px] font-mono text-zinc-400 block font-bold">facial_smile.jpg</span>
+                <span className="text-2xs font-mono text-zinc-400 block font-bold">facial_smile.jpg</span>
               </div>
               <div className="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl text-center space-y-2">
                 <ImageIcon className="w-6 h-6 mx-auto text-emerald-400" />
-                <span className="text-[10px] font-mono text-zinc-400 block font-bold">retracted.jpg</span>
+                <span className="text-2xs font-mono text-zinc-400 block font-bold">retracted.jpg</span>
               </div>
             </div>
           </div>
 
           {/* Trial Try-In Tracking */}
-          <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-3 font-mono text-xs text-left">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block border-b border-zinc-900 pb-2">
+          <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-3 font-mono text-xs text-start">
+            <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 block border-b border-zinc-900 pb-2">
               Clinical Trial Try-In Checkup
             </span>
 
             <div className="p-3 bg-zinc-900/30 border border-zinc-900 rounded-xl space-y-1">
-              <div className="flex justify-between text-[11px] font-bold">
+              <div className="flex justify-between text-xs font-bold">
                 <span className="text-zinc-300">Phase: 3D Printed Mock-Up</span>
                 <span className="text-emerald-400">{defaultSmile.mockUpTracking.status}</span>
               </div>
-              <p className="text-[10px] text-zinc-400 italic">
+              <p className="text-2xs text-zinc-400 italic">
                 &ldquo;{defaultSmile.mockUpTracking.feedback}&rdquo;
               </p>
-              <p className="text-[9px] text-zinc-500 font-bold mt-1">Verified on: {defaultSmile.mockUpTracking.date}</p>
+              <p className="text-2xs text-zinc-500 font-bold mt-1">Verified on: {defaultSmile.mockUpTracking.date}</p>
             </div>
           </div>
 

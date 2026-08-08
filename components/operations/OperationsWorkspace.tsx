@@ -90,27 +90,27 @@ export default function OperationsWorkspace({
   ] as const;
 
   return (
-    <div className="space-y-6 max-w-[1600px] mx-auto pb-12 animate-fade-in" style={{ color: 'var(--text)' }}>
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-12 animate-fade-in" style={{ color: 'var(--velvet-text)' }}>
       
       {/* Platform Title Banner */}
-      <div className="p-6 card-gradient flex flex-col md:flex-row md:items-center justify-between gap-6 text-left relative overflow-hidden">
+      <div className="p-6 card-gradient flex flex-col md:flex-row md:items-center justify-between gap-6 text-start relative overflow-hidden">
         <div className="relative space-y-1.5">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="badge badge-success uppercase tracking-widest animate-pulse">
               HealthOS Enterprise Node
             </span>
-            <span style={{ color: 'var(--text-muted)' }}>•</span>
-            <span className="text-xs font-mono" style={{ color: 'var(--text-sub)' }}>Clinical Operations Platform (Sprint 4 Module)</span>
+            <span style={{ color: 'var(--velvet-text-muted)' }}>â€¢</span>
+            <span className="text-xs font-mono" style={{ color: 'var(--velvet-text-sub)' }}>Clinical Operations Platform (Sprint 4 Module)</span>
           </div>
           <h2 className="section-title text-xl md:text-2xl">
             Multi-Doctor Prosthodontic Control Console
           </h2>
-          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-xs" style={{ color: 'var(--velvet-text-muted)' }}>
             Integrated live data bus bridging operatory suites, surgeon schedules, waiting lists, and active EHR session histories.
           </p>
         </div>
-        <div className="p-3 card-elevated rounded-xl text-xs font-mono flex items-center gap-2 self-start md:self-auto" style={{ color: 'var(--accent)' }}>
-          <Sparkles className="w-4 h-4 shrink-0" style={{ color: 'var(--accent)' }} />
+        <div className="p-3 card-elevated rounded-xl text-xs font-mono flex items-center gap-2 self-start md:self-auto" style={{ color: 'var(--velvet-accent)' }}>
+          <Sparkles className="w-4 h-4 shrink-0" style={{ color: 'var(--velvet-accent)' }} />
           <span>Real-time Clinical Sync Engine active</span>
         </div>
       </div>

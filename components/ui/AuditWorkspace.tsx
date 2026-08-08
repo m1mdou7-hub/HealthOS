@@ -155,7 +155,7 @@ export default function AuditWorkspace() {
 
       {/* COMPLIANCE INDEX OVERALL INDICATOR */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch font-sans">
-        <div className="md:col-span-1 p-6 rounded-3xl bg-zinc-900/50 border border-zinc-850/80 space-y-4 relative overflow-hidden flex flex-col justify-between min-h-[170px] shadow-xl backdrop-blur-xl">
+        <div className="md:col-span-1 p-6 rounded-3xl bg-zinc-900/50 border border-zinc-850/80 space-y-4 relative overflow-hidden flex flex-col justify-between min-h-[170px] shadow-card backdrop-blur-xl">
           <div className="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
           
           <div className="space-y-1 relative z-10">
@@ -173,7 +173,7 @@ export default function AuditWorkspace() {
           </p>
         </div>
 
-        <div className="md:col-span-2 p-6 rounded-3xl bg-zinc-900/40 border border-zinc-850/80 grid grid-cols-1 md:grid-cols-2 gap-4 shadow-xl">
+        <div className="md:col-span-2 p-6 rounded-3xl bg-zinc-900/40 border border-zinc-850/80 grid grid-cols-1 md:grid-cols-2 gap-4 shadow-card">
           {[
             { label: tAudit('authorizedSessions'), value: users.filter(u => u.status === 'Verified').length, icon: Users, color: 'text-blue-400', desc: tAudit('authorizedSessionsDesc') },
             { label: tAudit('encryptionClusters'), value: '4/4', icon: ShieldCheck, color: 'text-emerald-400', desc: tAudit('encryptionClustersDesc') }
@@ -195,7 +195,7 @@ export default function AuditWorkspace() {
       </div>
 
       {/* FILTER & CONTROL PANEL */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-md">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-zinc-900/40 p-3 rounded-3xl border border-zinc-850/80 shadow-soft">
         <div className="flex flex-wrap gap-2 p-1.5 bg-zinc-950/80 rounded-3xl border border-zinc-850 relative">
           {[
             { id: 'logs', key: 'logs', icon: Activity, color: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/10' },
@@ -238,7 +238,7 @@ export default function AuditWorkspace() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => handleGenerateReport('HIPAA v2026')}
-            className="px-4 py-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-zinc-200 font-sans font-bold text-xs flex items-center gap-2 rounded-xl cursor-pointer transition-all shadow-sm"
+            className="px-4 py-2 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-zinc-200 font-sans font-bold text-xs flex items-center gap-2 rounded-xl cursor-pointer transition-all shadow-soft"
           >
             <Download className="w-4 h-4 text-emerald-400" />
             <span>{tAudit('exportPdf')}</span>
@@ -257,13 +257,13 @@ export default function AuditWorkspace() {
             </span>
 
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search codes, operators..."
-                className="w-full pl-9 pr-4 py-2 bg-zinc-950 border border-zinc-850 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-emerald-500 rounded-xl"
+                className="w-full ps-9 pe-4 py-2 bg-zinc-950 border border-zinc-850 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-emerald-500 rounded-xl"
               />
             </div>
 
@@ -282,7 +282,7 @@ export default function AuditWorkspace() {
                   <button
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
-                    className={`w-full text-left p-2.5 rounded-xl border text-[11px] font-bold font-mono transition-all block ${
+                    className={`w-full text-start p-2.5 rounded-xl border text-xs font-bold font-mono transition-all block ${
                       isSelected 
                         ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' 
                         : 'bg-zinc-950/20 border-transparent text-zinc-400 hover:text-white'
@@ -301,7 +301,7 @@ export default function AuditWorkspace() {
               Encrypted Audit Stream Trail
             </span>
 
-            <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
+            <div className="space-y-2 max-h-[500px] overflow-y-auto pe-1">
               {filteredLogs.length === 0 ? (
                 <div className="py-12 text-center text-zinc-600">
                   No encrypted log blocks match the active filter criteria.
@@ -311,13 +311,13 @@ export default function AuditWorkspace() {
                   <div key={lg.id} className="p-3.5 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[10px] font-bold text-white uppercase bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800">
+                        <span className="text-2xs font-bold text-white uppercase bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800">
                           {lg.id}
                         </span>
-                        <span className="text-[9px] text-zinc-500 font-mono">{lg.module}</span>
+                        <span className="text-2xs text-zinc-500 font-mono">{lg.module}</span>
                         
                         {/* Dynamic Status Badging */}
-                        <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded font-mono ${
+                        <span className={`text-2xs font-bold px-1.5 py-0.2 rounded font-mono ${
                           lg.status === 'Success' 
                             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/10' 
                             : lg.status === 'Warn' 
@@ -329,17 +329,17 @@ export default function AuditWorkspace() {
                         </span>
                       </div>
 
-                      <p className="text-[11px] text-zinc-300 leading-relaxed font-sans">{lg.action}</p>
+                      <p className="text-xs text-zinc-300 leading-relaxed font-sans">{lg.action}</p>
                       
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] text-zinc-500">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-2xs text-zinc-500">
                         <span>Operator: <strong className="text-zinc-300 font-sans">{lg.actor}</strong></span>
-                        <span className="px-1 py-0.2 bg-zinc-900 rounded border border-zinc-850 text-zinc-400 text-[9px] font-mono">{lg.role}</span>
+                        <span className="px-1 py-0.2 bg-zinc-900 rounded border border-zinc-850 text-zinc-400 text-2xs font-mono">{lg.role}</span>
                         <span>IP Address: <strong className="text-zinc-400">{lg.ipAddress}</strong></span>
                       </div>
                     </div>
 
-                    <div className="text-right shrink-0">
-                      <span className="text-[10px] text-zinc-500 font-mono">{lg.timestamp}</span>
+                    <div className="text-end shrink-0">
+                      <span className="text-2xs text-zinc-500 font-mono">{lg.timestamp}</span>
                     </div>
                   </div>
                 ))
@@ -359,7 +359,7 @@ export default function AuditWorkspace() {
               <span className="text-xs font-bold text-white uppercase tracking-wider">HIPAA Audit Control Framework</span>
               <button 
                 onClick={() => handleGenerateReport('HIPAA Core Safeguard')}
-                className="text-[10px] font-bold text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 rounded"
+                className="text-2xs font-bold text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 rounded"
               >
                 Sign Off HIPAA Framework
               </button>
@@ -373,8 +373,8 @@ export default function AuditWorkspace() {
                   className="p-3 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between gap-4 cursor-pointer hover:border-zinc-800 transition-colors"
                 >
                   <div className="space-y-1">
-                    <span className="text-[9px] text-zinc-500 font-black uppercase block">{item.tag}</span>
-                    <h5 className="text-[11px] text-zinc-300 font-sans">{item.task}</h5>
+                    <span className="text-2xs text-zinc-500 font-black uppercase block">{item.tag}</span>
+                    <h5 className="text-xs text-zinc-300 font-sans">{item.task}</h5>
                   </div>
 
                   <span className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
@@ -393,7 +393,7 @@ export default function AuditWorkspace() {
               <span className="text-xs font-bold text-white uppercase tracking-wider">GDPR Compliance Framework</span>
               <button 
                 onClick={() => handleGenerateReport('GDPR Framework')}
-                className="text-[10px] font-bold text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 rounded"
+                className="text-2xs font-bold text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 rounded"
               >
                 Sign Off GDPR Framework
               </button>
@@ -407,8 +407,8 @@ export default function AuditWorkspace() {
                   className="p-3 bg-zinc-950 border border-zinc-850 rounded-3xl flex items-center justify-between gap-4 cursor-pointer hover:border-zinc-800 transition-colors"
                 >
                   <div className="space-y-1">
-                    <span className="text-[9px] text-zinc-500 font-black uppercase block">{item.tag}</span>
-                    <h5 className="text-[11px] text-zinc-300 font-sans">{item.task}</h5>
+                    <span className="text-2xs text-zinc-500 font-black uppercase block">{item.tag}</span>
+                    <h5 className="text-xs text-zinc-300 font-sans">{item.task}</h5>
                   </div>
 
                   <span className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
@@ -435,12 +435,12 @@ export default function AuditWorkspace() {
               <div key={u.id} className="p-4 bg-zinc-950 border border-zinc-850 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
                   <h4 className="font-bold text-white text-sm">{u.name}</h4>
-                  <p className="text-[10px] text-zinc-500">System Role: <strong className="text-zinc-300 font-sans">{u.role}</strong> • IP Limit: {u.ip}</p>
-                  <p className="text-[10px] text-zinc-500">Last Cryptographic Session: {u.lastLogin}</p>
+                  <p className="text-2xs text-zinc-500">System Role: <strong className="text-zinc-300 font-sans">{u.role}</strong> • IP Limit: {u.ip}</p>
+                  <p className="text-2xs text-zinc-500">Last Cryptographic Session: {u.lastLogin}</p>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className={`text-[10px] px-2.5 py-0.5 rounded font-black ${
+                  <span className={`text-2xs px-2.5 py-0.5 rounded font-black ${
                     u.status === 'Verified' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'
                   }`}>
                     {u.status}
@@ -448,7 +448,7 @@ export default function AuditWorkspace() {
 
                   <button 
                     onClick={() => handleToggleUserStatus(u.id)}
-                    className="px-3 py-1 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-bold rounded-xl text-[10px]"
+                    className="px-3 py-1 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-bold rounded-xl text-2xs"
                   >
                     {u.status === 'Verified' ? 'Revoke Tokens' : 'Authorize User'}
                   </button>

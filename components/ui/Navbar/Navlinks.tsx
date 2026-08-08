@@ -22,11 +22,11 @@ export default function Navlinks({ user }: NavlinksProps) {
   return (
     <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
       <div className="flex items-center flex-1">
-        <Link href="/" className="flex items-center gap-2.5 font-bold text-lg tracking-tight" style={{ color: 'var(--text)' }} aria-label="Logo">
+        <Link href="/" className="flex items-center gap-2.5 font-bold text-lg tracking-tight" style={{ color: 'var(--velvet-text)' }} aria-label="Logo">
           <Logo />
           <span className="font-display">HealthOS</span>
         </Link>
-        <nav className="ml-6 space-x-2 hidden md:block">
+        <nav className="ms-6 space-s-2 hidden md:block">
           <Link href="/" className={s.link}>
             {tNav('workspacePlatform')}
           </Link>
@@ -43,7 +43,7 @@ export default function Navlinks({ user }: NavlinksProps) {
           </form>
         ) : (
           <Link href="/signin" className="inline-flex items-center justify-center px-5 py-2 text-sm font-bold rounded-xl text-white transition-all hover:-translate-y-0.5 active:scale-95"
-            style={{ background: 'var(--gradient)', boxShadow: '0 8px 32px -12px var(--accent-glow)' }}>
+            style={{ background: 'var(--velvet-gradient-primary)', boxShadow: '0 8px 32px -12px var(--velvet-accent-glow)' }}>
             {t('signIn')}
           </Link>
         )}

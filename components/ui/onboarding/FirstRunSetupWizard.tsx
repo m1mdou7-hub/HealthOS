@@ -55,7 +55,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
   const [branchName, setBranchName] = useState('');
   const [timezone, setTimezone] = useState('riyadh');
   const [language, setLanguage] = useState('arabic');
-  const [seats, setSeats] = useState('4–12 seats');
+  const [seats, setSeats] = useState('4â€“12 seats');
   const [branches, setBranches] = useState('1 location');
   const [finished, setFinished] = useState(false);
 
@@ -126,9 +126,9 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
           {[0, 1, 2].map((s) => (
             <div key={s} className="flex items-center gap-2">
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-black transition-all border ${
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all border ${
                   s === step
-                    ? 'bg-gradient-to-tr from-rose-500 to-amber-500 text-white border-transparent shadow-lg shadow-rose-500/30 scale-110'
+                    ? 'bg-gradient-to-tr from-rose-500 to-amber-500 text-white border-transparent shadow-soft shadow-rose-500/30 scale-110'
                     : s < step
                       ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
                       : 'bg-zinc-900 text-zinc-500 border-zinc-800'
@@ -150,7 +150,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
           className="card-gradient rounded-3xl overflow-hidden relative"
         >
           {/* Ambient glow */}
-          <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-[100px] pointer-events-none" style={{ background: 'var(--accent-glow2)' }} />
+          <div className="absolute -top-24 -end-24 w-72 h-72 rounded-full blur-[100px] pointer-events-none" style={{ background: 'var(--velvet-accent-glow2)' }} />
 
           {finished ? (
             <div className="relative p-8 sm:p-12 text-center space-y-5">
@@ -172,11 +172,11 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
             </div>
           ) : (
             <div className="relative p-6 sm:p-10">
-              {/* STEP 0 — PRACTICE TYPE */}
+              {/* STEP 0 â€” PRACTICE TYPE */}
               {step === 0 && (
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                       <Sparkles className="w-6 h-6" />
                     </div>
                     <div>
@@ -200,14 +200,14 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                           key={p.id}
                           type="button"
                           onClick={() => selectPractice(p.id)}
-                          className={`text-left p-4 rounded-2xl border transition-all cursor-pointer flex flex-col gap-3 group ${
+                          className={`text-start p-4 rounded-2xl border transition-all cursor-pointer flex flex-col gap-3 group ${
                             selected
-                              ? 'border-rose-500/60 bg-rose-500/10 shadow-lg shadow-rose-500/10 scale-[1.01]'
+                              ? 'border-rose-500/60 bg-rose-500/10 shadow-soft shadow-rose-500/10 scale-[1.01]'
                               : 'border-zinc-800 bg-zinc-950/60 hover:border-zinc-700 hover:bg-zinc-900/60'
                           }`}
                         >
                           <div className="flex items-center justify-between">
-                            <div className={`w-11 h-11 rounded-2xl bg-gradient-to-tr ${meta.gradient} flex items-center justify-center text-white shadow-lg`}>
+                            <div className={`w-11 h-11 rounded-2xl bg-gradient-to-tr ${meta.gradient} flex items-center justify-center text-white shadow-soft`}>
                               <Icon className="w-5 h-5" />
                             </div>
                             {selected && (
@@ -218,13 +218,13 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                           </div>
                           <div>
                             <h4 className="text-sm font-bold text-white">{t(`practiceTypes.${p.id}`)}</h4>
-                            <p className="text-[11px] text-zinc-500 mt-1 leading-relaxed">{p.description}</p>
+                            <p className="text-xs text-zinc-500 mt-1 leading-relaxed">{p.description}</p>
                           </div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className={`text-[10px] font-mono px-2 py-0.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400`}>
+                            <span className={`text-2xs font-mono px-2 py-0.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400`}>
                               {p.seatRange}
                             </span>
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400">
+                            <span className="text-2xs font-mono px-2 py-0.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400">
                               {p.branchRange}
                             </span>
                           </div>
@@ -235,11 +235,11 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                 </div>
               )}
 
-              {/* STEP 1 — ORG DETAILS */}
+              {/* STEP 1 â€” ORG DETAILS */}
               {step === 1 && (
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                       <Building2 className="w-6 h-6" />
                     </div>
                     <div>
@@ -250,7 +250,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-bold text-zinc-300 uppercase tracking-wider">{t('orgName')}</label>
+                      <label className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('orgName')}</label>
                       <input
                         value={orgName}
                         onChange={(e) => setOrgName(e.target.value)}
@@ -259,7 +259,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-bold text-zinc-300 uppercase tracking-wider">{t('branchName')}</label>
+                      <label className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('branchName')}</label>
                       <input
                         value={branchName}
                         onChange={(e) => setBranchName(e.target.value)}
@@ -268,7 +268,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-bold text-zinc-300 uppercase tracking-wider">{t('timezone')}</label>
+                      <label className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('timezone')}</label>
                       <select
                         value={timezone}
                         onChange={(e) => setTimezone(e.target.value)}
@@ -282,7 +282,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                       </select>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-bold text-zinc-300 uppercase tracking-wider">{t('primaryLanguage')}</label>
+                      <label className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('primaryLanguage')}</label>
                       <select
                         value={language}
                         onChange={(e) => setLanguage(e.target.value)}
@@ -309,11 +309,11 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
                 </div>
               )}
 
-              {/* STEP 2 — REVIEW */}
+              {/* STEP 2 â€” REVIEW */}
               {step === 2 && practice && (
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--accent-glow2)', border: '1px solid var(--border-strong)', color: 'var(--accent)' }}>
+                    <div className="p-3 rounded-2xl shrink-0" style={{ background: 'var(--velvet-accent-glow2)', border: '1px solid var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
                       <ShieldCheck className="w-6 h-6" />
                     </div>
                     <div>
@@ -324,58 +324,58 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="p-4 card-elevated rounded-2xl space-y-2.5">
-                      <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{t('selectedPractice')}</span>
+                      <span className="text-2xs font-bold text-zinc-500 uppercase tracking-widest">{t('selectedPractice')}</span>
                       <div className="flex items-center gap-3">
                         <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${TYPE_META[practice.id].gradient} flex items-center justify-center text-white`}>
                           {(() => { const I = TYPE_META[practice.id].icon; return <I className="w-5 h-5" />; })()}
                         </div>
                         <div>
                           <h4 className="text-sm font-bold text-white">{practice.name}</h4>
-                          <p className="text-xs text-zinc-500">{practice.sizeLabel} · {practice.branchRange}</p>
+                          <p className="text-xs text-zinc-500">{practice.sizeLabel} آ· {practice.branchRange}</p>
                         </div>
                       </div>
                     </div>
 
                     <div className="p-4 card-elevated rounded-2xl space-y-2.5">
-                      <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{t('orgName')}</span>
+                      <span className="text-2xs font-bold text-zinc-500 uppercase tracking-widest">{t('orgName')}</span>
                       <h4 className="text-sm font-bold text-white truncate">{orgName.trim() || 'HealthOS Dental Group'}</h4>
-                      <p className="text-xs text-zinc-500 truncate">{branchName.trim() || 'Main Campus'} · {t(`timezones.${timezone}`)}</p>
+                      <p className="text-xs text-zinc-500 truncate">{branchName.trim() || 'Main Campus'} آ· {t(`timezones.${timezone}`)}</p>
                     </div>
                   </div>
 
                   <div>
-                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3 block">{t('whatGetsConfigured')}</span>
+                    <span className="text-2xs font-bold text-zinc-400 uppercase tracking-widest mb-3 block">{t('whatGetsConfigured')}</span>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       <div className="p-3.5 rounded-2xl border border-zinc-800 bg-zinc-950/60 space-y-2">
                         <div className="flex items-center gap-2 text-zinc-300">
                           <Building2 className="w-4 h-4 text-sky-400" />
-                          <span className="text-[11px] font-bold uppercase tracking-wider">{t('departments')}</span>
+                          <span className="text-xs font-bold uppercase tracking-wider">{t('departments')}</span>
                         </div>
                         <div className="flex flex-wrap gap-1">
                           {practice.suggestedDepartments.map((d) => (
-                            <span key={d} className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{d}</span>
+                            <span key={d} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{d}</span>
                           ))}
                         </div>
                       </div>
                       <div className="p-3.5 rounded-2xl border border-zinc-800 bg-zinc-950/60 space-y-2">
                         <div className="flex items-center gap-2 text-zinc-300">
                           <Grid className="w-4 h-4 text-purple-400" />
-                          <span className="text-[11px] font-bold uppercase tracking-wider">{t('workspaces')}</span>
+                          <span className="text-xs font-bold uppercase tracking-wider">{t('workspaces')}</span>
                         </div>
                         <div className="flex flex-wrap gap-1">
                           {practice.suggestedWorkspaces.map((w) => (
-                            <span key={w} className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{getWorkspaceById(w)?.name ?? w}</span>
+                            <span key={w} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{getWorkspaceById(w)?.name ?? w}</span>
                           ))}
                         </div>
                       </div>
                       <div className="p-3.5 rounded-2xl border border-zinc-800 bg-zinc-950/60 space-y-2">
                         <div className="flex items-center gap-2 text-zinc-300">
                           <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                          <span className="text-[11px] font-bold uppercase tracking-wider">{t('permissionTemplates')}</span>
+                          <span className="text-xs font-bold uppercase tracking-wider">{t('permissionTemplates')}</span>
                         </div>
                         <div className="flex flex-wrap gap-1">
                           {practice.defaultPermissionTemplateIds.map((id) => (
-                            <span key={id} className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{id}</span>
+                            <span key={id} className="text-2xs font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">{id}</span>
                           ))}
                         </div>
                       </div>
@@ -432,7 +432,7 @@ export default function FirstRunSetupWizard({ onComplete, onSkip }: FirstRunSetu
           )}
         </motion.div>
 
-        <p className="text-center text-[11px] text-zinc-600 mt-4 font-sans">{t('skipHint')}</p>
+        <p className="text-center text-xs text-zinc-600 mt-4 font-sans">{t('skipHint')}</p>
       </div>
     </motion.div>
   );

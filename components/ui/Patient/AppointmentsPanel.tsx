@@ -4,6 +4,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { Calendar as CalendarIcon, Clock, CheckCircle2, User, Plus, Edit, XCircle } from 'lucide-react';
 import { clinicalService, Appointment } from '../../../utils/services/clinicalService';
 import { Patient } from '../PatientWorkspace';
+import { Badge, Button, Card, EmptyState, Input, Modal, Skeleton } from '@/components/ui/design-system';
 
 interface AppointmentsPanelProps {
   supabase: SupabaseClient;
@@ -118,94 +119,109 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
   };
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6 text-start">
       {/* Header toolbar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 card-gradient rounded-3xl gap-3">
-        <div>
-          <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
-            <CalendarIcon className="w-4 h-4 text-emerald-400" /> Patient Appointment Desk
-          </h3>
-          <p className="text-[11px] text-zinc-400 mt-0.5">Reschedule visits, record intake completions, and adjust chair assignments.</p>
+      <Card variant="gradient" hover={false} className="p-4 rounded-3xl">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div>
+            <h3 className="text-sm font-bold text-[var(--velvet-text)] flex items-center gap-1.5 font-mono">
+              <CalendarIcon className="w-4 h-4 text-[var(--velvet-success)]" /> Patient Appointment Desk
+            </h3>
+            <p className="text-xs text-[var(--velvet-text-muted)] mt-0.5">Reschedule visits, record intake completions, and adjust chair assignments.</p>
+          </div>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => {
+              setBookForm({
+                procedure: 'Crown Preparation',
+                chair: 'Chair A',
+                date: new Date().toISOString().split('T')[0],
+                startTime: '09:00',
+                duration: 60,
+                category: 'Treatment'
+              });
+              setShowBookModal(true);
+            }}
+            className="self-stretch sm:self-auto justify-center"
+          >
+            <Plus className="w-3.5 h-3.5" /> Book Appointment
+          </Button>
         </div>
-        <button
-          onClick={() => {
-            setBookForm({
-              procedure: 'Crown Preparation',
-              chair: 'Chair A',
-              date: new Date().toISOString().split('T')[0],
-              startTime: '09:00',
-              duration: 60,
-              category: 'Treatment'
-            });
-            setShowBookModal(true);
-          }}
-          className="btn-primary px-3.5 py-1.5 rounded-lg text-xs self-stretch sm:self-auto justify-center"
-        >
-          <Plus className="w-3.5 h-3.5" /> Book Appointment
-        </button>
-      </div>
+      </Card>
 
       {/* Appointment list */}
       <div className="space-y-3">
         {isLoading ? (
-          <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading appointments...</div>
-        ) : appointments.length === 0 ? (
-          <div className="py-8 card-elevated rounded-3xl text-center">
-            <div className="mx-auto w-10 h-10 rounded-2xl flex items-center justify-center mb-3" style={{ background: 'var(--accent-glow2)', color: 'var(--accent)' }}>
-              <CalendarIcon className="w-5 h-5" />
-            </div>
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              No active appointments registered. Use the toolbar to schedule a visit.
-            </p>
+          <div className="space-y-3">
+            {Array.from({ length: 2 }).map((_, idx) => (
+              <Skeleton key={idx} className="h-20 rounded-2xl" />
+            ))}
           </div>
+        ) : appointments.length === 0 ? (
+          <Card variant="elevated" hover={false} className="py-8 rounded-3xl">
+            <EmptyState
+              icon={<CalendarIcon className="w-5 h-5" />}
+              title="No active appointments"
+              description="No active appointments registered. Use the toolbar to schedule a visit."
+            />
+          </Card>
         ) : (
           appointments.map((appt) => (
-            <div key={appt.id} className="p-4 card-elevated rounded-2xl flex flex-col sm:flex-row justify-between gap-4">
-              <div className="space-y-1.5 text-left">
+            <Card key={appt.id} variant="elevated" hover={false} className="p-4 rounded-2xl flex flex-col sm:flex-row justify-between gap-4">
+              <div className="space-y-1.5 text-start">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs font-mono font-bold text-zinc-500">{appt.date} • {appt.startTime} ({appt.duration} mins)</span>
-                  <span className={`badge ${
-                    appt.status === 'Confirmed' ? 'badge-success' :
-                    appt.status === 'In-Progress' ? 'badge-info' :
-                    appt.status === 'Completed' ? '' :
-                    'badge-danger'
-                  }`}>
+                  <span className="text-xs font-mono font-bold text-[var(--velvet-text-muted)]">{appt.date} â€¢ {appt.startTime} ({appt.duration} mins)</span>
+                  <Badge tone={
+                    appt.status === 'Confirmed' ? 'success' :
+                    appt.status === 'In-Progress' ? 'info' :
+                    appt.status === 'Completed' ? 'accent' :
+                    'error'
+                  }>
                     {appt.status}
-                  </span>
-                  <span className="text-[9px] font-mono text-zinc-500">{appt.chair}</span>
+                  </Badge>
+                  <span className="text-2xs font-mono text-[var(--velvet-text-muted)]">{appt.chair}</span>
                 </div>
-                <h4 className="text-sm font-bold text-white">{appt.procedure}</h4>
-                <p className="text-[11px] text-zinc-400 flex items-center gap-1"><User className="w-3.5 h-3.5 text-zinc-500" /> Assigned: {appt.doctorName}</p>
+                <h4 className="text-sm font-bold text-[var(--velvet-text)]">{appt.procedure}</h4>
+                <p className="text-xs text-[var(--velvet-text-muted)] flex items-center gap-1"><User className="w-3.5 h-3.5 text-[var(--velvet-text-muted)]" /> Assigned: {appt.doctorName}</p>
               </div>
 
               {/* Action buttons */}
               {appt.status !== 'Completed' && appt.status !== 'Cancelled' && (
                 <div className="flex flex-wrap items-center gap-1.5 self-end sm:self-center">
                   {appt.status === 'Pending' && (
-                    <button
+                    <Button
+                      variant="primary"
+                      size="sm"
                       onClick={() => handleAction(appt.id, 'Confirm')}
-                      className="btn-primary px-2.5 py-1.5 rounded-lg text-[10px]"
+                      className="text-2xs"
                     >
                       Confirm
-                    </button>
+                    </Button>
                   )}
                   {appt.status === 'Confirmed' && (
-                    <button
+                    <Button
+                      variant="secondary"
+                      size="sm"
                       onClick={() => handleAction(appt.id, 'Check In')}
-                      className="btn-secondary px-2.5 py-1.5 rounded-lg text-[10px]"
+                      className="text-2xs"
                     >
                       Check In
-                    </button>
+                    </Button>
                   )}
                   {appt.status === 'In-Progress' && (
-                    <button
+                    <Button
+                      variant="primary"
+                      size="sm"
                       onClick={() => handleAction(appt.id, 'Complete')}
-                      className="btn-primary px-2.5 py-1.5 rounded-lg text-[10px]"
+                      className="text-2xs"
                     >
                       Complete
-                    </button>
+                    </Button>
                   )}
-                  <button
+                  <Button
+                    variant="secondary"
+                    size="sm"
                     onClick={() => {
                       setReschedulingAppt(appt);
                       setRescheduleForm({
@@ -215,168 +231,160 @@ export default function AppointmentsPanel({ supabase, activePatient, demoMode }:
                         doctorName: appt.doctorName
                       });
                     }}
-                    className="btn-secondary px-2.5 py-1.5 rounded-lg text-[10px]"
+                    className="text-2xs"
                   >
                     Reschedule
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
                     onClick={() => handleAction(appt.id, 'No Show')}
-                    className="btn-secondary px-2.5 py-1.5 rounded-lg text-[10px] text-amber-400"
+                    className="text-2xs"
+                    style={{ color: 'var(--velvet-warning)' }}
                   >
                     No Show
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
                     onClick={() => handleAction(appt.id, 'Cancel')}
-                    className="btn-ghost p-1.5 rounded-lg text-red-400"
+                    className="p-1.5 rounded-lg"
                     title="Cancel Visit"
                   >
                     <XCircle className="w-3.5 h-3.5" />
-                  </button>
+                  </Button>
                 </div>
               )}
-            </div>
+            </Card>
           ))
         )}
       </div>
 
       {/* Book Appointment Modal */}
-      {showBookModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleBookAppointment} className="card-elevated p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
-            <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">Schedule Patient Intake</h3>
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <label className="text-zinc-400">Procedure Description</label>
-                <input
-                  type="text"
-                  value={bookForm.procedure}
-                  onChange={(e) => setBookForm({ ...bookForm, procedure: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                  required
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="space-y-1">
-                  <label className="text-zinc-400">Date</label>
-                  <input
-                    type="date"
-                    value={bookForm.date}
-                    onChange={(e) => setBookForm({ ...bookForm, date: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                    required
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-zinc-400">Start Time</label>
-                  <input
-                    type="text"
-                    value={bookForm.startTime}
-                    onChange={(e) => setBookForm({ ...bookForm, startTime: e.target.value })}
-                    placeholder="e.g. 09:00"
-                    className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="space-y-1">
-                  <label className="text-zinc-400">Chair Location</label>
-                  <input
-                    type="text"
-                    value={bookForm.chair}
-                    onChange={(e) => setBookForm({ ...bookForm, chair: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                    required
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-zinc-400">Duration (mins)</label>
-                  <input
-                    type="number"
-                    value={bookForm.duration}
-                    onChange={(e) => setBookForm({ ...bookForm, duration: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                    required
-                  />
-                </div>
-              </div>
+      <Modal
+        open={showBookModal}
+        onOpenChange={setShowBookModal}
+        title="Schedule Patient Intake"
+        size="sm"
+        actions={
+          <>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowBookModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="book-appt-form"
+              variant="primary"
+              size="sm"
+              disabled={createMutation.isPending}
+            >
+              Schedule
+            </Button>
+          </>
+        }
+      >
+        <form id="book-appt-form" onSubmit={handleBookAppointment} className="space-y-4 text-xs">
+          <div className="space-y-3">
+            <Input
+              label="Procedure Description"
+              value={bookForm.procedure}
+              onChange={(e) => setBookForm({ ...bookForm, procedure: e.target.value })}
+              required
+            />
+            <div className="grid grid-cols-2 gap-2">
+              <Input
+                label="Date"
+                type="date"
+                value={bookForm.date}
+                onChange={(e) => setBookForm({ ...bookForm, date: e.target.value })}
+                required
+              />
+              <Input
+                label="Start Time"
+                type="text"
+                value={bookForm.startTime}
+                onChange={(e) => setBookForm({ ...bookForm, startTime: e.target.value })}
+                placeholder="e.g. 09:00"
+                required
+              />
             </div>
-            <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
-              <button
-                type="button"
-                onClick={() => setShowBookModal(false)}
-                className="btn-ghost px-3 py-1.5 rounded-lg"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={createMutation.isPending}
-                className="btn-primary px-4 py-1.5 rounded-lg"
-              >
-                Schedule
-              </button>
+            <div className="grid grid-cols-2 gap-2">
+              <Input
+                label="Chair Location"
+                value={bookForm.chair}
+                onChange={(e) => setBookForm({ ...bookForm, chair: e.target.value })}
+                required
+              />
+              <Input
+                label="Duration (mins)"
+                type="number"
+                value={bookForm.duration}
+                onChange={(e) => setBookForm({ ...bookForm, duration: Number(e.target.value) })}
+                required
+              />
             </div>
-          </form>
-        </div>
-      )}
+          </div>
+        </form>
+      </Modal>
 
       {/* Reschedule Modal */}
-      {reschedulingAppt && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleRescheduleSubmit} className="card-elevated p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
-            <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">Reschedule Visit</h3>
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <label className="text-zinc-400">Date</label>
-                <input
-                  type="date"
-                  value={rescheduleForm.date}
-                  onChange={(e) => setRescheduleForm({ ...rescheduleForm, date: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                  required
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400">Start Time</label>
-                <input
-                  type="text"
-                  value={rescheduleForm.startTime}
-                  onChange={(e) => setRescheduleForm({ ...rescheduleForm, startTime: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                  required
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400">Chair Location</label>
-                <input
-                  type="text"
-                  value={rescheduleForm.chair}
-                  onChange={(e) => setRescheduleForm({ ...rescheduleForm, chair: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                  required
-                />
-              </div>
-            </div>
-            <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
-              <button
-                type="button"
-                onClick={() => setReschedulingAppt(null)}
-                className="btn-ghost px-3 py-1.5 rounded-lg"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={rescheduleMutation.isPending}
-                className="btn-primary px-4 py-1.5 rounded-lg"
-              >
-                Save
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+      <Modal
+        open={!!reschedulingAppt}
+        onOpenChange={(open) => { if (!open) setReschedulingAppt(null); }}
+        title="Reschedule Visit"
+        size="sm"
+        actions={
+          <>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => setReschedulingAppt(null)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="reschedule-form"
+              variant="primary"
+              size="sm"
+              disabled={rescheduleMutation.isPending}
+            >
+              Save
+            </Button>
+          </>
+        }
+      >
+        <form id="reschedule-form" onSubmit={handleRescheduleSubmit} className="space-y-4 text-xs">
+          <div className="space-y-3">
+            <Input
+              label="Date"
+              type="date"
+              value={rescheduleForm.date}
+              onChange={(e) => setRescheduleForm({ ...rescheduleForm, date: e.target.value })}
+              required
+            />
+            <Input
+              label="Start Time"
+              type="text"
+              value={rescheduleForm.startTime}
+              onChange={(e) => setRescheduleForm({ ...rescheduleForm, startTime: e.target.value })}
+              required
+            />
+            <Input
+              label="Chair Location"
+              value={rescheduleForm.chair}
+              onChange={(e) => setRescheduleForm({ ...rescheduleForm, chair: e.target.value })}
+              required
+            />
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

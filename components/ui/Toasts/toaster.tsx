@@ -1,19 +1,12 @@
 'use client';
 
-import {
-  Toast,
-  ToastClose,
-  ToastDescription,
-  ToastProvider,
-  ToastTitle,
-  ToastViewport
-} from '@/components/ui/Toasts/toast';
-import { useToast } from '@/components/ui/Toasts/use-toast';
+import { useToast, toast } from '@/components/ui/Toasts/toast';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import { ToastContainer as DesignToaster } from '@/components/ui/design-system/primitives';
 
 export function Toaster() {
-  const { toast, toasts } = useToast();
+  const { toasts, dismiss } = useToast();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -25,22 +18,12 @@ export function Toaster() {
     const error_description = searchParams.get('error_description');
     if (error || status) {
       toast({
-        title: error
-          ? error ?? 'Hmm... Something went wrong.'
-          : status ?? 'Alright!',
-        description: error ? error_description : status_description,
-        variant: error ? 'destructive' : undefined
+        title: error ? error ?? 'Hmm... Something went wrong.' : status ?? 'Alright!',
+        description: error ? (error_description ?? undefined) : (status_description ?? undefined),
+        type: error ? 'error' : 'success',
       });
-      // Clear any 'error', 'status', 'status_description', and 'error_description' search params
-      // so that the toast doesn't show up again on refresh, but leave any other search params
-      // intact.
       const newSearchParams = new URLSearchParams(searchParams.toString());
-      const paramsToRemove = [
-        'error',
-        'status',
-        'status_description',
-        'error_description'
-      ];
+      const paramsToRemove = ['error', 'status', 'status_description', 'error_description'];
       paramsToRemove.forEach((param) => newSearchParams.delete(param));
       const redirectPath = `${pathname}?${newSearchParams.toString()}`;
       router.replace(redirectPath, { scroll: false });
@@ -48,21 +31,9 @@ export function Toaster() {
   }, [searchParams, pathname, router, toast]);
 
   return (
-    <ToastProvider>
-      {toasts.map(function ({ id, title, description, ...props }) {
-        return (
-          <Toast key={id} {...props}>
-            <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
-              {description && (
-                <ToastDescription>{description}</ToastDescription>
-              )}
-            </div>
-            <ToastClose />
-          </Toast>
-        );
-      })}
-      <ToastViewport />
-    </ToastProvider>
+    <DesignToaster
+      toasts={toasts.map(t => ({ ...t, type: t.type === 'error' ? 'error' : 'success' as const }))}
+      onRemove={(index) => dismiss(toasts[index]?.id)}
+    />
   );
 }

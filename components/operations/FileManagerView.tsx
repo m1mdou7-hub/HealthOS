@@ -118,7 +118,7 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
   };
 
   return (
-    <div className="space-y-6 text-zinc-100 text-left">
+    <div className="space-y-6 text-zinc-100 text-start">
       <div className="border-b border-zinc-900 pb-3">
         <h3 className="text-base font-black text-white uppercase tracking-tight">Digital Dentistry PACS File Hub</h3>
         <p className="text-xs text-zinc-500 font-mono">Manage intraoral raw scans, CBCT segmentations, DSLR shades, and clinical CAD/CAM files.</p>
@@ -130,14 +130,14 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
         <div className="lg:col-span-5 space-y-4">
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+              <Search className="absolute start-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
               <input
                 type="text"
                 value={search}
                 id="file-manager-search"
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search scans, photos, tags..."
-                className="w-full pl-8 pr-3 py-1.5 bg-zinc-900 border border-zinc-800 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-650"
+                className="w-full ps-8 pe-3 py-1.5 bg-zinc-900 border border-zinc-800 text-xs rounded-xl outline-none focus:border-emerald-500 text-white font-mono placeholder:text-zinc-650"
               />
             </div>
             
@@ -165,7 +165,7 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
                     setIsRenaming(false);
                     setNewName(file.name);
                   }}
-                  className={`p-3 cursor-pointer transition-colors text-left flex items-center justify-between gap-2 ${
+                  className={`p-3 cursor-pointer transition-colors text-start flex items-center justify-between gap-2 ${
                     isActive ? 'bg-emerald-500/5' : 'hover:bg-zinc-900/20'
                   }`}
                 >
@@ -179,13 +179,13 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
                       <p className={`text-xs font-bold truncate ${isActive ? 'text-emerald-400' : 'text-zinc-200'}`}>
                         {file.name}
                       </p>
-                      <p className="text-[10px] text-zinc-500 font-mono">
+                      <p className="text-2xs text-zinc-500 font-mono">
                         {file.type} • {file.size} • v{file.version}
                       </p>
                     </div>
                   </div>
 
-                  <span className="text-[9px] font-mono text-zinc-600 bg-zinc-900 border border-zinc-850 px-1.5 py-0.2 rounded shrink-0">
+                  <span className="text-2xs font-mono text-zinc-600 bg-zinc-900 border border-zinc-850 px-1.5 py-0.2 rounded shrink-0">
                     {file.category}
                   </span>
                 </div>
@@ -241,7 +241,7 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
                       </button>
                     </div>
                   )}
-                  <p className="text-[10px] text-zinc-500 font-mono">
+                  <p className="text-2xs text-zinc-500 font-mono">
                     Format: {selectedFile.type} • Uploaded by {selectedFile.uploadedBy} on {selectedFile.uploadedAt}
                   </p>
                 </div>
@@ -270,12 +270,12 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
                         transform: `rotate(${previewRot}deg) scale(${previewZoom / 100})`
                       }}
                     >
-                      <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest text-center">
+                      <span className="text-2xs font-mono font-bold text-zinc-400 uppercase tracking-widest text-center">
                         {selectedFile.type} MESH
                       </span>
                     </div>
 
-                    <div className="absolute bottom-2.5 right-2.5 bg-zinc-900/90 border border-zinc-850 rounded-lg p-2 flex items-center gap-3 text-[10px] font-mono text-zinc-400">
+                    <div className="absolute bottom-2.5 end-2.5 bg-zinc-900/90 border border-zinc-850 rounded-lg p-2 flex items-center gap-3 text-2xs font-mono text-zinc-400">
                       <button 
                         onClick={() => setIsWireframe(!isWireframe)}
                         className={`px-1.5 py-0.5 rounded ${isWireframe ? 'bg-emerald-500 text-zinc-950' : 'bg-zinc-950'}`}
@@ -291,24 +291,24 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
                   <div className="relative flex items-center justify-center w-full h-full">
                     <div className="w-44 h-28 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-center relative">
                       <Eye className="w-6 h-6 text-emerald-400" />
-                      <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 text-[9px] font-mono text-zinc-500">Shade photo loaded</span>
+                      <span className="absolute bottom-1.5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 text-2xs font-mono text-zinc-500">Shade photo loaded</span>
                     </div>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center justify-center text-zinc-600 font-mono text-xs space-y-1.5">
                     <Folder className="w-8 h-8 text-zinc-700" />
                     <p className="font-bold">Clinical {selectedFile.type} Document</p>
-                    <p className="text-[10px] text-zinc-600">Double click to stream raw file</p>
+                    <p className="text-2xs text-zinc-600">Double click to stream raw file</p>
                   </div>
                 )}
               </div>
 
               {/* Tags Section */}
               <div className="space-y-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Tags</span>
+                <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Tags</span>
                 <div className="flex flex-wrap gap-1.5">
                   {selectedFile.tags.map((t, idx) => (
-                    <span key={idx} className="flex items-center gap-1 text-[10px] font-mono bg-zinc-900 border border-zinc-800 text-emerald-400 px-2 py-0.5 rounded-full">
+                    <span key={idx} className="flex items-center gap-1 text-2xs font-mono bg-zinc-900 border border-zinc-800 text-emerald-400 px-2 py-0.5 rounded-full">
                       <span>{t}</span>
                       <button onClick={() => handleRemoveTag(t)} className="text-zinc-600 hover:text-rose-400">
                         &times;
@@ -323,7 +323,7 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
                       id="new-tag-input"
                       onChange={(e) => setNewTag(e.target.value)}
                       placeholder="+ Add tag"
-                      className="bg-transparent border border-dashed border-zinc-800 hover:border-zinc-700 rounded-full text-[10px] font-mono px-2 py-0.5 text-zinc-400 focus:text-white outline-none"
+                      className="bg-transparent border border-dashed border-zinc-800 hover:border-zinc-700 rounded-full text-2xs font-mono px-2 py-0.5 text-zinc-400 focus:text-white outline-none"
                     />
                   </form>
                 </div>
@@ -331,17 +331,17 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
 
               {/* Version History */}
               <div className="space-y-2 border-t border-zinc-900/60 pt-3">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 font-mono block">Version History Audit Log</span>
+                <span className="text-2xs font-bold uppercase tracking-widest text-zinc-500 font-mono block">Version History Audit Log</span>
                 <div className="space-y-1.5">
                   {selectedFile.versionHistory.map((hist, idx) => (
-                    <div key={idx} className="p-2 bg-zinc-900/30 border border-zinc-900 rounded-lg flex items-start justify-between text-[11px] font-mono">
+                    <div key={idx} className="p-2 bg-zinc-900/30 border border-zinc-900 rounded-lg flex items-start justify-between text-xs font-mono">
                       <div>
                         <p className="text-zinc-200 font-bold">Version {hist.version}</p>
-                        <p className="text-[10px] text-zinc-400 italic">&ldquo;{hist.note}&rdquo;</p>
+                        <p className="text-2xs text-zinc-400 italic">&ldquo;{hist.note}&rdquo;</p>
                       </div>
-                      <div className="text-right">
-                        <span className="text-[9px] text-zinc-500 font-bold block">{hist.date}</span>
-                        <span className="text-[9px] text-zinc-500 block">By {hist.author}</span>
+                      <div className="text-end">
+                        <span className="text-2xs text-zinc-500 font-bold block">{hist.date}</span>
+                        <span className="text-2xs text-zinc-500 block">By {hist.author}</span>
                       </div>
                     </div>
                   ))}
@@ -353,7 +353,7 @@ export default function FileManagerView({ activeCase, onUpdateCase }: FileManage
             <div className="h-full flex flex-col items-center justify-center p-12 text-zinc-600 font-mono text-xs border border-zinc-900 rounded-2xl bg-zinc-950">
               <Folder className="w-8 h-8 text-zinc-700" />
               <p className="font-bold mt-2">No Active File Loaded</p>
-              <p className="text-[10px] text-zinc-650 mt-1">Select a scan or clinical photo from the catalog list to preview.</p>
+              <p className="text-2xs text-zinc-650 mt-1">Select a scan or clinical photo from the catalog list to preview.</p>
             </div>
           )}
         </div>
