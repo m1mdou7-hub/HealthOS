@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import Image from 'next/image';
-import { Search, Plus, Filter, ArrowUpDown, Grid, List, Mail, Phone, Calendar, Stethoscope, Scissors, Trash2, Edit3, Archive } from 'lucide-react';
+import { Plus, ArrowUpDown, Grid, List, Mail, Phone, Trash2, Edit3, Archive, Users, Search } from 'lucide-react';
 import { Patient } from '../PatientWorkspace';
+import { Card, Badge, Button, Input, Avatar, Table, EmptyState, Select } from '@/components/ui/design-system';
+import type { Column } from '@/components/ui/design-system/primitives';
 
 interface PatientListViewProps {
   patients: Patient[];
@@ -11,6 +12,14 @@ interface PatientListViewProps {
   onDeletePatient: (id: string, e: React.MouseEvent) => void;
   onArchivePatient: (id: string, e: React.MouseEvent) => void;
 }
+
+const statusFilterOptions = [
+  { value: 'All', label: 'All' },
+  { value: 'Active', label: 'Active' },
+  { value: 'New', label: 'New' },
+  { value: 'Under Treatment', label: 'Under Treatment' },
+  { value: 'Completed', label: 'Completed' }
+];
 
 export default function PatientListView({
   patients,
@@ -76,212 +85,240 @@ export default function PatientListView({
     currentPage * itemsPerPage
   );
 
+  const columns: Column<Patient>[] = [
+    {
+      key: 'id',
+      header: 'ID',
+      sticky: true,
+      render: (p) => <span className="font-mono font-bold text-[var(--velvet-text-muted)]">{p.id}</span>
+    },
+    {
+      key: 'name',
+      header: 'Name',
+      render: (p) => (
+        <button onClick={() => onSelectPatient(p.id)} className="flex items-center gap-3 font-bold text-[var(--velvet-text)]">
+          <Avatar name={p.name} src={p.photoUrl} size="sm" className="rounded-2xl" />
+          {p.name}
+        </button>
+      )
+    },
+    {
+      key: 'age',
+      header: 'Age/Gender',
+      render: (p) => <span>{p.age} Yrs / {p.gender}</span>
+    },
+    {
+      key: 'contact',
+      header: 'Contact Info',
+      render: (p) => (
+        <div className="text-start">
+          <p className="font-mono text-[var(--velvet-text-sub)]">{p.phone}</p>
+          <p className="text-2xs text-[var(--velvet-text-muted)]">{p.email}</p>
+        </div>
+      )
+    },
+    {
+      key: 'lastVisit',
+      header: 'Last Visit',
+      render: (p) => <span className="font-mono">{p.lastVisit}</span>
+    },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (p) => <Badge tone={p.status === 'Completed' ? 'success' : 'default'}>{p.status}</Badge>
+    },
+    {
+      key: 'actions',
+      header: '',
+      align: 'end',
+      render: (p) => (
+        <div className="flex justify-end gap-1.5" onClick={e => e.stopPropagation()}>
+          <Button variant="ghost" size="sm" onClick={(e) => onEditPatient(p, e as any)} className="p-1.5" aria-label={`Edit ${p.name}`}>
+            <Edit3 className="w-3.5 h-3.5" />
+          </Button>
+          <Button variant="ghost" size="sm" onClick={(e) => onArchivePatient(p.id, e as any)} className="p-1.5" aria-label={`Archive ${p.name}`}>
+            <Archive className="w-3.5 h-3.5" />
+          </Button>
+          <Button variant="ghost" size="sm" onClick={(e) => onDeletePatient(p.id, e as any)} className="p-1.5 text-[var(--velvet-error)]" aria-label={`Delete ${p.name}`}>
+            <Trash2 className="w-3.5 h-3.5" />
+          </Button>
+        </div>
+      )
+    }
+  ];
+
   return (
     <div className="space-y-6 text-start">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 card-gradient rounded-3xl">
+      <Card variant="gradient" hover={false} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 rounded-3xl">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight sm:text-2xl flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--velvet-text)] tracking-tight sm:text-2xl flex items-center gap-2">
             Patients Workspace
-            <span className="badge badge-success">
-              {patients.length} Registered
-            </span>
+            <Badge tone="success">{patients.length} Registered</Badge>
           </h2>
-          <p className="text-zinc-400 text-xs">Prosthodontics & Digital Dentistry Centralized EHR Database Node.</p>
+          <p className="text-[var(--velvet-text-muted)] text-xs">Prosthodontics & Digital Dentistry Centralized EHR Database Node.</p>
         </div>
-        <button
-          onClick={onAddPatient}
-          className="btn-primary px-4 py-2 rounded-xl text-xs self-start sm:self-auto"
-        >
+        <Button onClick={onAddPatient} size="sm" className="self-start sm:self-auto">
           <Plus className="w-4 h-4" /> Add Patient Record
-        </button>
-      </div>
+        </Button>
+      </Card>
 
       {/* Toolbar filter */}
-      <div className="flex flex-col md:flex-row justify-between items-center p-4 card-elevated rounded-3xl gap-4">
-        <div className="relative w-full max-w-sm">
-          <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-          <input
-            type="text"
+      <Card variant="elevated" hover={false} className="flex flex-col md:flex-row justify-between items-center p-4 rounded-3xl gap-4">
+        <div className="w-full max-w-sm">
+          <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search patient name, ID, or phone..."
-            className="w-full ps-9 pe-4 py-2 rounded-xl bg-zinc-950/60 border border-zinc-850 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-emerald-500/40"
+            leftIcon={<Search className="w-4 h-4" />}
+            aria-label="Search patients"
           />
         </div>
         <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-          <div className="flex items-center gap-1 p-1 rounded-xl card-elevated">
-            {['All', 'Active', 'New', 'Under Treatment', 'Completed'].map((status) => (
-              <button
-                key={status}
-                onClick={() => setStatusFilter(status as any)}
-                className={`px-3 py-1.5 rounded-lg text-2xs font-semibold transition-all ${
-                  statusFilter === status ? 'bg-[#0d0d16] text-gold-400 border border-gold-500' : 'text-zinc-400 hover:text-zinc-200'
-                }`}
-              >
-                {status}
-              </button>
-            ))}
+          <div className="w-44">
+            <Select
+              value={statusFilter}
+              onChange={(e) => { setStatusFilter(e.target.value as any); setCurrentPage(1); }}
+              options={statusFilterOptions}
+              aria-label="Filter by status"
+            />
           </div>
-          <div className="flex items-center gap-1 p-1 rounded-xl card-elevated">
-            <button
+          <div className="w-44">
+            <Select
+              value={sortField}
+              onChange={(e) => handleSort(e.target.value as any)}
+              options={[
+                { value: 'id', label: 'Sort: ID' },
+                { value: 'name', label: 'Sort: Name' },
+                { value: 'age', label: 'Sort: Age' },
+                { value: 'lastVisit', label: 'Sort: Last Visit' }
+              ]}
+              aria-label="Sort by"
+            />
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
+            className="p-1.5"
+            aria-label="Toggle sort order"
+          >
+            <ArrowUpDown className="w-4 h-4" />
+          </Button>
+          <div className="flex items-center gap-1 p-1 rounded-xl" style={{ background: 'var(--velvet-surface-2)', border: '1px solid var(--velvet-border)' }}>
+            <Button
+              variant={viewMode === 'table' ? 'secondary' : 'ghost'}
+              size="sm"
               onClick={() => setViewMode('table')}
-              className={`p-1.5 rounded-lg ${viewMode === 'table' ? 'bg-zinc-850 text-emerald-400' : 'text-zinc-500 hover:text-zinc-300'}`}
+              className="p-1.5"
+              aria-label="Table view"
             >
               <List className="w-4 h-4" />
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={viewMode === 'card' ? 'secondary' : 'ghost'}
+              size="sm"
               onClick={() => setViewMode('card')}
-              className={`p-1.5 rounded-lg ${viewMode === 'card' ? 'bg-zinc-850 text-emerald-400' : 'text-zinc-500 hover:text-zinc-300'}`}
+              className="p-1.5"
+              aria-label="Card view"
             >
               <Grid className="w-4 h-4" />
-            </button>
+            </Button>
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Grid or Table List */}
       {viewMode === 'table' ? (
-        <div className="overflow-x-auto rounded-3xl card-elevated">
-          <table className="w-full text-xs text-start text-zinc-300">
-            <thead className="bg-zinc-900/40 text-2xs font-mono uppercase tracking-wider text-zinc-500 border-b border-zinc-900">
-              <tr>
-                <th className="px-6 py-4 cursor-pointer" onClick={() => handleSort('id')}>ID <ArrowUpDown className="w-3 h-3 inline" /></th>
-                <th className="px-6 py-4 cursor-pointer" onClick={() => handleSort('name')}>Name <ArrowUpDown className="w-3 h-3 inline" /></th>
-                <th className="px-6 py-4 cursor-pointer" onClick={() => handleSort('age')}>Age/Gender <ArrowUpDown className="w-3 h-3 inline" /></th>
-                <th className="px-6 py-4">Contact Info</th>
-                <th className="px-6 py-4 cursor-pointer" onClick={() => handleSort('lastVisit')}>Last Visit <ArrowUpDown className="w-3 h-3 inline" /></th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4 text-end">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-900">
-              {paginatedPatients.map((p) => (
-                <tr
-                  key={p.id}
-                  onClick={() => onSelectPatient(p.id)}
-                  className="hover:bg-zinc-900/25 transition-colors cursor-pointer"
-                >
-                  <td className="px-6 py-4 font-mono font-bold text-zinc-500">{p.id}</td>
-                  <td className="px-6 py-4 font-bold text-white flex items-center gap-3">
-                    <Image
-                      src={p.photoUrl}
-                      alt={p.name}
-                      width={32}
-                      height={32}
-                      className="w-8 h-8 rounded-2xl object-cover"
-                      style={{ border: '1px solid var(--velvet-border-strong)' }}
-                      referrerPolicy="no-referrer"
-                    />
-                    {p.name}
-                  </td>
-                  <td className="px-6 py-4">{p.age} Yrs / {p.gender}</td>
-                  <td className="px-6 py-4">
-                    <p className="font-mono text-zinc-400">{p.phone}</p>
-                    <p className="text-2xs text-zinc-500">{p.email}</p>
-                  </td>
-                  <td className="px-6 py-4 font-mono">{p.lastVisit}</td>
-                  <td className="px-6 py-4">
-                    <span className={`badge ${
-                      p.status === 'Completed' ? 'badge-success' : ''
-                    }`}>
-                      {p.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-end flex justify-end gap-1.5" onClick={e => e.stopPropagation()}>
-                    <button
-                      onClick={(e) => onEditPatient(p, e)}
-                      className="btn-ghost p-1.5 rounded-lg"
-                    >
-                      <Edit3 className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={(e) => onArchivePatient(p.id, e)}
-                      className="btn-ghost p-1.5 rounded-lg"
-                    >
-                      <Archive className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={(e) => onDeletePatient(p.id, e)}
-                      className="btn-ghost p-1.5 rounded-lg text-red-400 hover:text-red-300"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Card variant="elevated" hover={false} className="rounded-3xl overflow-hidden">
+          <Table
+            columns={columns}
+            data={paginatedPatients}
+            keyExtractor={(p) => p.id}
+            stickyFirstColumn
+            emptyState={
+              <EmptyState
+                icon={<Users className="w-6 h-6" />}
+                title="No patients found"
+                description="Try adjusting your search query or filters."
+              />
+            }
+          />
+        </Card>
       ) : (
         /* Cards View */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {paginatedPatients.map((p) => (
-            <div
+          {paginatedPatients.length === 0 ? (
+            <div className="col-span-full">
+              <Card variant="elevated" hover={false} className="rounded-3xl">
+                <EmptyState
+                  icon={<Users className="w-6 h-6" />}
+                  title="No patients found"
+                  description="Try adjusting your search query or filters."
+                />
+              </Card>
+            </div>
+          ) : paginatedPatients.map((p) => (
+            <Card
               key={p.id}
+              variant="elevated"
+              hover
               onClick={() => onSelectPatient(p.id)}
-              className="p-5 card-elevated card-hover rounded-3xl cursor-pointer flex flex-col justify-between h-48"
+              className="p-5 rounded-3xl cursor-pointer flex flex-col justify-between h-48"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onSelectPatient(p.id); }}
             >
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
-                  <Image
-                    src={p.photoUrl}
-                    alt={p.name}
-                    width={40}
-                    height={40}
-                    className="w-10 h-10 rounded-2xl object-cover"
-                    style={{ border: '1px solid var(--velvet-border-strong)' }}
-                    referrerPolicy="no-referrer"
-                  />
+                  <Avatar name={p.name} src={p.photoUrl} size="md" className="rounded-2xl" />
                   <div>
-                    <h3 className="text-xs font-bold text-white leading-normal">{p.name}</h3>
-                    <span className="text-2xs font-mono text-zinc-500">{p.id}</span>
+                    <h3 className="text-xs font-bold text-[var(--velvet-text)] leading-normal">{p.name}</h3>
+                    <span className="text-2xs font-mono text-[var(--velvet-text-muted)]">{p.id}</span>
                   </div>
                 </div>
-                <span className={`badge ${
-                  p.status === 'Completed' ? 'badge-success' : ''
-                }`}>
-                  {p.status}
-                </span>
+                <Badge tone={p.status === 'Completed' ? 'success' : 'default'}>{p.status}</Badge>
               </div>
 
-              <div className="space-y-1.5 text-xs text-zinc-400 font-sans my-4">
-                <p className="flex items-center gap-1.5 font-mono"><Phone className="w-3 h-3 text-zinc-500" /> {p.phone}</p>
-                <p className="flex items-center gap-1.5"><Mail className="w-3 h-3 text-zinc-500 truncate" /> {p.email}</p>
+              <div className="space-y-1.5 text-xs text-[var(--velvet-text-muted)] font-sans my-4">
+                <p className="flex items-center gap-1.5 font-mono"><Phone className="w-3 h-3" /> {p.phone}</p>
+                <p className="flex items-center gap-1.5"><Mail className="w-3 h-3" /> <span className="truncate">{p.email}</span></p>
               </div>
 
-              <div className="flex items-center justify-between border-t border-zinc-900/60 pt-2 text-2xs text-zinc-500 font-mono">
+              <div className="flex items-center justify-between border-t pt-2 text-2xs text-[var(--velvet-text-muted)] font-mono" style={{ borderColor: 'var(--velvet-border)' }}>
                 <span>Last Visit: {p.lastVisit}</span>
                 <div className="flex gap-1" onClick={e => e.stopPropagation()}>
-                  <button onClick={(e) => onEditPatient(p, e)} className="text-zinc-400 hover:text-white">Edit</button>
-                  <span>â€¢</span>
-                  <button onClick={(e) => onDeletePatient(p.id, e)} className="text-red-400 hover:text-red-300">Delete</button>
+                  <Button variant="ghost" size="sm" onClick={(e) => onEditPatient(p, e as any)} className="p-1 text-[var(--velvet-text-sub)]">Edit</Button>
+                  <span>•</span>
+                  <Button variant="ghost" size="sm" onClick={(e) => onDeletePatient(p.id, e as any)} className="p-1 text-[var(--velvet-error)]">Delete</Button>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex justify-between items-center text-xs font-mono pt-4 border-t border-zinc-900 text-zinc-500">
+        <div className="flex justify-between items-center text-xs font-mono pt-4 border-t text-[var(--velvet-text-muted)]" style={{ borderColor: 'var(--velvet-border)' }}>
           <span>Page {currentPage} of {totalPages}</span>
           <div className="flex gap-2">
-            <button
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
-              className="btn-secondary px-3 py-1.5 rounded-lg text-2xs disabled:opacity-40"
             >
               Previous
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
               disabled={currentPage === totalPages}
-              className="btn-secondary px-3 py-1.5 rounded-lg text-2xs disabled:opacity-40"
             >
               Next
-            </button>
+            </Button>
           </div>
         </div>
       )}

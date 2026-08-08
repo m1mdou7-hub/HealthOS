@@ -6,10 +6,11 @@ import { useTranslations } from 'next-intl';
 import { SupabaseClient } from '@supabase/supabase-js';
 import {
   FlaskConical, Plus, Eye, Edit3, Trash2, Box,
-  Calendar, CheckCircle2, Clock, AlertCircle, ChevronRight, Layers
+  CheckCircle2, Clock, AlertCircle, ChevronRight, Layers
 } from 'lucide-react';
 import { PatientCase, PatientDocument } from '../../../utils/services/clinicalService';
 import { Patient } from '../PatientWorkspace';
+import { Card, Button, Badge, Progress, EmptyState } from '@/components/ui/design-system';
 
 interface LaboratoryPanelProps {
   supabase: SupabaseClient;
@@ -71,28 +72,24 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
   };
 
   return (
-    <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/30 space-y-5 hover:border-zinc-800 transition-all group">
+    <Card variant="elevated" className="p-5 rounded-3xl space-y-5 group">
       {/* Top bar */}
       <div className="flex flex-wrap justify-between items-start gap-3">
         <div className="flex-1 min-w-[200px]">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-2xs font-mono text-zinc-500 uppercase">{c.id} · {c.createdDate}</span>
-            <span className={`px-2 py-0.5 rounded text-2xs uppercase font-mono font-bold border ${
-              c.priority === 'Urgent'
-                ? 'bg-red-500/10 text-red-400 border-red-500/20'
-                : 'bg-zinc-900 text-zinc-400 border-zinc-800'
-            }`}>
+            <span className="text-2xs font-mono text-[var(--velvet-text-muted)] uppercase">{c.id} · {c.createdDate}</span>
+            <Badge tone={c.priority === 'Urgent' ? 'error' : 'neutral'} className="text-2xs uppercase font-mono font-bold">
               {t('lab_priority')}: {c.priority}
-            </span>
-            <span className="text-2xs font-mono text-zinc-500">{t('lab_clinician')}: {c.clinician}</span>
+            </Badge>
+            <span className="text-2xs font-mono text-[var(--velvet-text-muted)]">{t('lab_clinician')}: {c.clinician}</span>
           </div>
-          <h3 className="text-sm font-bold text-white">{c.name}</h3>
+          <h3 className="text-sm font-bold text-[var(--velvet-text)]">{c.name}</h3>
         </div>
 
         {/* Countdown badge */}
         <div className="flex items-center gap-3 shrink-0">
           {countdown && (
-            <div className={`text-end ${countdown.overdue ? 'text-red-400' : 'text-emerald-400'}`}>
+            <div className={`text-end ${countdown.overdue ? 'text-[var(--velvet-error)]' : 'text-[var(--velvet-success)]'}`}>
               <span className="text-2xs font-mono uppercase block">
                 {countdown.overdue ? t('lab_overdue') : t('lab_countdown')}
               </span>
@@ -102,19 +99,19 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
             </div>
           )}
           <div className="flex gap-1.5 self-center">
-            <button onClick={onEdit} className="p-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors">
+            <Button variant="ghost" size="sm" onClick={onEdit} className="p-1.5 text-[var(--velvet-text-muted)] hover:text-[var(--velvet-text)]" aria-label={`Edit ${c.name}`}>
               <Edit3 className="w-3.5 h-3.5" />
-            </button>
-            <button onClick={onDelete} className="p-1.5 rounded bg-zinc-900 hover:bg-red-900/30 text-zinc-400 hover:text-red-400 border border-zinc-800 transition-colors">
+            </Button>
+            <Button variant="ghost" size="sm" onClick={onDelete} className="p-1.5 text-[var(--velvet-text-muted)] hover:text-[var(--velvet-error)] hover:bg-[var(--velvet-error-bg)]" aria-label={`Delete ${c.name}`}>
               <Trash2 className="w-3.5 h-3.5" />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
 
       {/* Stage Kanban Pipeline tracker */}
       <div className="space-y-2">
-        <span className="text-2xs font-mono text-zinc-500 uppercase tracking-widest font-bold block">{t('lab_stages_track')}</span>
+        <span className="text-2xs font-mono text-[var(--velvet-text-muted)] uppercase tracking-widest font-bold block">{t('lab_stages_track')}</span>
         <div className="flex items-center gap-0">
           {STAGES.map((stage, idx) => {
             const isCompleted = idx < stageIndex;
@@ -123,22 +120,22 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
               <React.Fragment key={stage}>
                 <div className={`flex flex-col items-center gap-1 px-2 py-1.5 rounded-lg transition-all ${
                   isActive
-                    ? 'bg-emerald-500/10 border border-emerald-500/30'
+                    ? 'bg-[var(--velvet-success-bg)] border border-[var(--velvet-success-border)]'
                     : isCompleted
                     ? 'opacity-60'
                     : 'opacity-25'
                 }`}>
                   <div className={`w-2 h-2 rounded-full border ${
-                    isActive ? 'bg-emerald-400 border-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)]' :
-                    isCompleted ? 'bg-zinc-400 border-zinc-400' :
-                    'bg-zinc-800 border-zinc-700'
+                    isActive ? 'bg-[var(--velvet-success)] border-[var(--velvet-success)]' :
+                    isCompleted ? 'bg-[var(--velvet-text-muted)] border-[var(--velvet-text-muted)]' :
+                    'bg-[var(--velvet-surface-3)] border-[var(--velvet-border-strong)]'
                   }`} />
                   <span className={`text-2xs font-mono font-bold whitespace-nowrap ${
-                    isActive ? 'text-emerald-400' : isCompleted ? 'text-zinc-400' : 'text-zinc-600'
+                    isActive ? 'text-[var(--velvet-success)]' : isCompleted ? 'text-[var(--velvet-text-muted)]' : 'text-[var(--velvet-text-faint)]'
                   }`}>{stageKey[stage]}</span>
                 </div>
                 {idx < STAGES.length - 1 && (
-                  <ChevronRight className={`w-3 h-3 shrink-0 ${idx < stageIndex ? 'text-zinc-600' : 'text-zinc-800'}`} />
+                  <ChevronRight className={`w-3 h-3 shrink-0 ${idx < stageIndex ? 'text-[var(--velvet-text-faint)]' : 'text-[var(--velvet-border-strong)]'}`} />
                 )}
               </React.Fragment>
             );
@@ -148,23 +145,16 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
 
       {/* Progress bar */}
       <div className="space-y-1.5">
-        <div className="flex justify-between text-2xs font-mono text-zinc-500">
+        <div className="flex justify-between text-2xs font-mono text-[var(--velvet-text-muted)]">
           <span>{t('lab_progress')}</span>
-          <span className={progress === 100 ? 'text-emerald-400 font-bold' : ''}>{progress}%</span>
+          <span className={progress === 100 ? 'text-[var(--velvet-success)] font-bold' : ''}>{progress}%</span>
         </div>
-        <div className="w-full bg-zinc-900 h-1.5 rounded-full overflow-hidden border border-zinc-950/50">
-          <div
-            className={`h-full rounded-full transition-all duration-700 ${
-              progress === 100 ? 'bg-emerald-400' : 'bg-gradient-to-r from-emerald-600 to-emerald-400'
-            }`}
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+        <Progress value={progress} size="sm" tone={progress === 100 ? 'success' : 'default'} />
       </div>
 
       {/* Shade Picker */}
-      <div className="space-y-2 pt-1 border-t border-zinc-900/60">
-        <span className="text-2xs font-mono text-zinc-500 uppercase tracking-widest font-bold block">{t('lab_shade_picker')}</span>
+      <div className="space-y-2 pt-1 border-t" style={{ borderColor: 'var(--velvet-border)' }}>
+        <span className="text-2xs font-mono text-[var(--velvet-text-muted)] uppercase tracking-widest font-bold block">{t('lab_shade_picker')}</span>
         <div className="flex gap-1.5 flex-wrap">
           {SHADE_PALETTE.map((shade) => (
             <button
@@ -173,32 +163,32 @@ function CaseCard({ c, t, onEdit, onDelete }: { c: PatientCase; t: any; onEdit: 
               onClick={() => setSelectedShade(shade.code)}
               className={`group/shade relative w-7 h-7 rounded-full border-2 transition-all ${
                 selectedShade === shade.code
-                  ? 'border-emerald-400 scale-110 shadow-[0_0_8px_rgba(52,211,153,0.4)]'
-                  : 'border-zinc-800 hover:border-zinc-600 hover:scale-105'
+                  ? 'border-[var(--velvet-success)] scale-110 shadow-[0_0_8px_var(--velvet-success-glow)]'
+                  : 'border-[var(--velvet-border)] hover:border-[var(--velvet-border-strong)] hover:scale-105'
               }`}
               style={{ backgroundColor: shade.hex }}
             >
               {selectedShade === shade.code && (
-                <span className="absolute -bottom-5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 text-2xs font-mono text-emerald-400 whitespace-nowrap font-bold">
+                <span className="absolute -bottom-5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 text-2xs font-mono text-[var(--velvet-success)] whitespace-nowrap font-bold">
                   {shade.code}
                 </span>
               )}
             </button>
           ))}
         </div>
-        <div className="mt-1 text-2xs font-mono text-zinc-400">
-          {t('lab_shade')}: <span className="text-white font-bold">{SHADE_PALETTE.find(s => s.code === selectedShade)?.label}</span>
+        <div className="mt-1 text-2xs font-mono text-[var(--velvet-text-muted)]">
+          {t('lab_shade')}: <span className="text-[var(--velvet-text)] font-bold">{SHADE_PALETTE.find(s => s.code === selectedShade)?.label}</span>
         </div>
       </div>
 
       {/* Notes */}
       {c.notes && (
-        <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-900/60 text-xs text-zinc-400 leading-normal">
-          <span className="font-bold text-zinc-300 block mb-1">{t('lab_instructions')}:</span>
+        <div className="p-3 bg-[var(--velvet-surface-2)] rounded-xl border text-xs text-[var(--velvet-text-muted)] leading-normal" style={{ borderColor: 'var(--velvet-border)' }}>
+          <span className="font-bold text-[var(--velvet-text-sub)] block mb-1">{t('lab_instructions')}:</span>
           {c.notes}
         </div>
       )}
-    </div>
+    </Card>
   );
 }
 
@@ -232,35 +222,32 @@ export default function LaboratoryPanel({
   return (
     <div className="space-y-6 text-start">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
+      <Card variant="elevated" hover={false} className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 rounded-3xl gap-3">
         <div>
-          <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
-            <FlaskConical className="w-4 h-4 text-emerald-400" /> {t('lab_title')}
+          <h3 className="text-sm font-bold text-[var(--velvet-text)] flex items-center gap-1.5 font-mono">
+            <FlaskConical className="w-4 h-4 text-[var(--velvet-success)]" /> {t('lab_title')}
           </h3>
-          <p className="text-xs text-zinc-400 mt-0.5">{t('lab_desc')}</p>
+          <p className="text-xs text-[var(--velvet-text-muted)] mt-0.5">{t('lab_desc')}</p>
         </div>
-        <button
-          onClick={onAddCase}
-          className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold flex items-center gap-1 self-stretch sm:self-auto justify-center transition-colors"
-        >
+        <Button size="sm" onClick={onAddCase} className="self-stretch sm:self-auto justify-center">
           <Plus className="w-3.5 h-3.5" /> {t('btn_file_case')}
-        </button>
-      </div>
+        </Button>
+      </Card>
 
       {/* Mini stats strip */}
       {totalCases > 0 && (
         <div className="grid grid-cols-4 gap-2">
           {[
-            { label: 'Total Cases', value: totalCases, color: 'text-white', icon: <Layers className="w-4 h-4 text-zinc-500" /> },
-            { label: 'Delivered', value: deliveredCount, color: 'text-emerald-400', icon: <CheckCircle2 className="w-4 h-4 text-emerald-500" /> },
-            { label: 'Urgent', value: urgentCount, color: 'text-red-400', icon: <AlertCircle className="w-4 h-4 text-red-500" /> },
-            { label: 'Overdue', value: overdueCount, color: 'text-orange-400', icon: <Clock className="w-4 h-4 text-orange-500" /> },
+            { label: 'Total Cases', value: totalCases, color: 'text-[var(--velvet-text)]', icon: <Layers className="w-4 h-4 text-[var(--velvet-text-muted)]" /> },
+            { label: 'Delivered', value: deliveredCount, color: 'text-[var(--velvet-success)]', icon: <CheckCircle2 className="w-4 h-4 text-[var(--velvet-success)]" /> },
+            { label: 'Urgent', value: urgentCount, color: 'text-[var(--velvet-error)]', icon: <AlertCircle className="w-4 h-4 text-[var(--velvet-error)]" /> },
+            { label: 'Overdue', value: overdueCount, color: 'text-[var(--velvet-warning)]', icon: <Clock className="w-4 h-4 text-[var(--velvet-warning)]" /> },
           ].map((stat) => (
-            <div key={stat.label} className="bg-zinc-950/40 border border-zinc-900 rounded-xl p-3 flex flex-col items-center gap-1 text-center">
+            <Card key={stat.label} variant="elevated" hover={false} className="p-3 flex flex-col items-center gap-1 text-center">
               {stat.icon}
               <span className={`text-xl font-black font-mono ${stat.color}`}>{stat.value}</span>
-              <span className="text-2xs text-zinc-500 font-mono uppercase tracking-wide">{stat.label}</span>
-            </div>
+              <span className="text-2xs text-[var(--velvet-text-muted)] font-mono uppercase tracking-wide">{stat.label}</span>
+            </Card>
           ))}
         </div>
       )}
@@ -268,10 +255,10 @@ export default function LaboratoryPanel({
       {/* Cases */}
       <div className="space-y-4">
         {cases.length === 0 ? (
-          <div className="text-zinc-500 text-xs text-center py-10 border border-zinc-900 rounded-3xl bg-zinc-950/20 flex flex-col items-center gap-2">
-            <FlaskConical className="w-8 h-8 text-zinc-800" />
-            {t('lab_no_cases')}
-          </div>
+          <EmptyState
+            icon={<FlaskConical className="w-8 h-8" />}
+            title={t('lab_no_cases')}
+          />
         ) : (
           cases.map((c) => (
             <CaseCard
@@ -286,34 +273,35 @@ export default function LaboratoryPanel({
       </div>
 
       {/* 3D STL files */}
-      <div className="p-5 rounded-3xl border border-zinc-900 bg-zinc-950/20 space-y-4">
-        <h4 className="text-xs font-bold text-white font-mono uppercase tracking-wider flex items-center gap-1.5">
-          <Box className="w-4 h-4 text-emerald-400" /> {t('lab_stl_title')}
+      <Card variant="elevated" hover={false} className="p-5 rounded-3xl space-y-4">
+        <h4 className="text-xs font-bold text-[var(--velvet-text)] font-mono uppercase tracking-wider flex items-center gap-1.5">
+          <Box className="w-4 h-4 text-[var(--velvet-success)]" /> {t('lab_stl_title')}
         </h4>
         {stlFiles.length === 0 ? (
-          <p className="text-zinc-500 text-xs py-2">{t('lab_stl_empty')}</p>
+          <p className="text-[var(--velvet-text-muted)] text-xs py-2">{t('lab_stl_empty')}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {stlFiles.map((stl: PatientDocument) => (
-              <div key={stl.id} className="p-3.5 rounded-xl border border-zinc-900 bg-zinc-950/60 flex items-center justify-between hover:border-zinc-800 transition-colors">
+              <Card key={stl.id} variant="elevated" hover className="p-3.5 rounded-xl flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Box className="w-4 h-4 text-emerald-400" />
+                  <Box className="w-4 h-4 text-[var(--velvet-success)]" />
                   <div>
-                    <h5 className="text-xs font-bold text-zinc-200 truncate max-w-[180px]">{stl.name}</h5>
-                    <span className="text-2xs font-mono text-zinc-500">{stl.date}</span>
+                    <h5 className="text-xs font-bold text-[var(--velvet-text-sub)] truncate max-w-[180px]">{stl.name}</h5>
+                    <span className="text-2xs font-mono text-[var(--velvet-text-muted)]">{stl.date}</span>
                   </div>
                 </div>
-                <button
+                <Button
+                  variant="secondary"
+                  size="sm"
                   onClick={() => alert(`Launching CAD/CAM exocad interactive viewport for design file: ${stl.name}`)}
-                  className="px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-2xs text-zinc-300 rounded flex items-center gap-1 font-mono uppercase transition-colors"
                 >
                   <Eye className="w-3.5 h-3.5" /> View
-                </button>
-              </div>
+                </Button>
+              </Card>
             ))}
           </div>
         )}
-      </div>
+      </Card>
     </div>
   );
 }

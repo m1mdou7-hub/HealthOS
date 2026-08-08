@@ -1,15 +1,31 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { HardDrive, Plus, Eye, Download, Trash2, Edit3, Filter, FileText } from 'lucide-react';
+import { HardDrive, Plus, Eye, Trash2, Edit3, FileText } from 'lucide-react';
 import { clinicalService, PatientDocument } from '../../../utils/services/clinicalService';
 import { Patient } from '../PatientWorkspace';
+import { Button, Card, Badge, Input, Select, Modal, Skeleton, EmptyState } from '@/components/ui/design-system';
 
 interface DocumentsPanelProps {
   supabase: SupabaseClient;
   activePatient: Patient;
   demoMode: boolean;
 }
+
+const DOC_TYPE_OPTIONS = [
+  { value: 'Consent Form', label: 'Consent Form' },
+  { value: 'Lab Prescription', label: 'Lab Prescription' },
+  { value: 'Referral Letter', label: 'Referral Letter' },
+  { value: 'Medical Report', label: 'Medical Report' },
+  { value: 'STL File', label: '3D STL Scan File' },
+  { value: 'Clinical Photo', label: 'Clinical Intraoral Photo' },
+];
+
+const docStatusTone = (status?: string) => {
+  if (status === 'Accepted') return 'success' as const;
+  if (status === 'Rejected') return 'error' as const;
+  return 'default' as const;
+};
 
 export default function DocumentsPanel({ supabase, activePatient, demoMode }: DocumentsPanelProps) {
   const queryClient = useQueryClient();
@@ -88,36 +104,39 @@ export default function DocumentsPanel({ supabase, activePatient, demoMode }: Do
   return (
     <div className="space-y-6 text-start">
       {/* Header and actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/10 p-4 rounded-3xl border border-zinc-900 gap-3">
-        <div>
-          <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
-            <HardDrive className="w-4 h-4 text-emerald-400" /> Patient Document Center
-          </h3>
-          <p className="text-xs text-zinc-400 mt-0.5">Manage informed consents, STL files, referrals, and clinical photo archives.</p>
+      <Card variant="elevated" hover={false} className="p-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div>
+            <h3 className="text-sm font-bold text-[var(--velvet-text)] flex items-center gap-1.5 font-mono">
+              <HardDrive className="w-4 h-4 text-[var(--velvet-success)]" /> Patient Document Center
+            </h3>
+            <p className="text-xs text-[var(--velvet-text-muted)] mt-0.5">Manage informed consents, STL files, referrals, and clinical photo archives.</p>
+          </div>
+          <Button
+            size="sm"
+            onClick={() => {
+              setUploadForm({ name: '', type: 'Consent Form', url: '#' });
+              setShowUploadModal(true);
+            }}
+            className="self-stretch sm:self-auto"
+          >
+            <Plus className="w-3.5 h-3.5" /> Upload File
+          </Button>
         </div>
-        <button
-          onClick={() => {
-            setUploadForm({ name: '', type: 'Consent Form', url: '#' });
-            setShowUploadModal(true);
-          }}
-          className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold flex items-center gap-1 self-stretch sm:self-auto justify-center"
-        >
-          <Plus className="w-3.5 h-3.5" /> Upload File
-        </button>
-      </div>
+      </Card>
 
       {/* Filter and Content */}
       <div className="space-y-4">
         {/* Category selector */}
-        <div className="flex flex-wrap gap-1 bg-zinc-950/50 p-1 rounded-xl border border-zinc-900">
+        <div className="flex flex-wrap gap-1 bg-[var(--velvet-surface-1)] p-1 rounded-xl border border-[var(--velvet-border)]">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedFilter(cat)}
               className={`px-3 py-1.5 rounded-lg text-2xs font-semibold transition-all flex items-center gap-1.5 ${
                 selectedFilter === cat
-                  ? "bg-zinc-800 text-white border border-zinc-700 shadow"
-                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-transparent"
+                  ? "bg-[var(--velvet-surface-2)] text-[var(--velvet-text)] border border-[var(--velvet-border-strong)] shadow-[var(--velvet-shadow-pop)]"
+                  : "text-[var(--velvet-text-muted)] hover:text-[var(--velvet-text)] hover:bg-[var(--velvet-surface-2)] border border-transparent"
               }`}
             >
               {cat}s
@@ -127,158 +146,140 @@ export default function DocumentsPanel({ supabase, activePatient, demoMode }: Do
 
         {/* List of files */}
         {isLoading ? (
-          <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading documents...</div>
-        ) : filteredDocs.length === 0 ? (
-          <div className="text-zinc-500 text-xs text-center py-8 border border-zinc-900 rounded-3xl bg-zinc-950/20">
-            No files found under this category.
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <Skeleton key={idx} variant="card" />
+            ))}
           </div>
+        ) : filteredDocs.length === 0 ? (
+          <Card variant="elevated" hover={false} className="rounded-3xl">
+            <EmptyState
+              icon={<FileText className="w-6 h-6" />}
+              title="No files found under this category."
+            />
+          </Card>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredDocs.map((doc) => (
-              <div key={doc.id} className="p-4 rounded-xl border border-zinc-900 bg-zinc-950/40 hover:bg-zinc-900/20 hover:border-zinc-800 transition-all flex flex-col justify-between h-36">
+              <Card key={doc.id} className="p-4 rounded-xl flex flex-col justify-between h-36">
                 <div>
                   <div className="flex justify-between items-start">
-                    <span className="text-2xs font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 uppercase font-semibold">
+                    <Badge tone="neutral" className="text-2xs font-mono uppercase font-semibold px-2 py-0.5 rounded">
                       {doc.type}
-                    </span>
-                    <span className="text-2xs font-mono text-zinc-500">{doc.date}</span>
+                    </Badge>
+                    <span className="text-2xs font-mono text-[var(--velvet-text-muted)]">{doc.date}</span>
                   </div>
-                  <h4 className="text-xs font-bold text-white mt-2.5 break-all line-clamp-2">{doc.name}</h4>
+                  <h4 className="text-xs font-bold text-[var(--velvet-text)] mt-2.5 break-all line-clamp-2">{doc.name}</h4>
                 </div>
 
-                <div className="flex items-center justify-between border-t border-zinc-900/60 pt-2 mt-4 text-xs font-mono">
+                <div className="flex items-center justify-between border-t pt-2 mt-4 text-xs font-mono" style={{ borderColor: 'var(--velvet-border)' }}>
                   {doc.status ? (
-                    <span className={`text-2xs px-1.5 py-0.5 rounded border uppercase ${
-                      doc.status === 'Accepted' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                      doc.status === 'Rejected' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                      'bg-zinc-900 text-zinc-400 border-zinc-800'
-                    }`}>
+                    <Badge tone={docStatusTone(doc.status)} className="text-2xs uppercase px-1.5 py-0.5 rounded">
                       {doc.status}
-                    </span>
+                    </Badge>
                   ) : (
-                    <span className="text-zinc-500">System Filed</span>
+                    <span className="text-[var(--velvet-text-muted)]">System Filed</span>
                   )}
                   <div className="flex items-center gap-1.5">
-                    <button
-                      onClick={() => alert(`Opening preview window for ${doc.name}...`)}
-                      className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800"
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="p-1.5 rounded-lg"
                       title="Preview Document"
+                      onClick={() => alert(`Opening preview window for ${doc.name}...`)}
                     >
                       <Eye className="w-3.5 h-3.5" />
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="p-1.5 rounded-lg"
+                      title="Rename Document"
                       onClick={() => {
                         setEditingDoc(doc);
                         setRenameForm({ name: doc.name });
                         setShowRenameModal(true);
                       }}
-                      className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800"
-                      title="Rename Document"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(doc.id)}
-                      className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-red-400 hover:text-red-300 border border-zinc-800"
+                    </Button>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      className="p-1.5 rounded-lg"
                       title="Archive Document"
+                      onClick={() => handleDelete(doc.id)}
                     >
                       <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                    </Button>
                   </div>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         )}
       </div>
 
       {/* Upload Document Modal */}
-      {showUploadModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleUpload} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
-            <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">Register Patient Document</h3>
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <label className="text-zinc-400 font-semibold">Document Name</label>
-                <input
-                  type="text"
-                  value={uploadForm.name}
-                  onChange={(e) => setUploadForm({ ...uploadForm, name: e.target.value })}
-                  placeholder="e.g. Patient Sign Consent form"
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                  required
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400 font-semibold">Classification Type</label>
-                <select
-                  value={uploadForm.type}
-                  onChange={(e) => setUploadForm({ ...uploadForm, type: e.target.value as any })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                >
-                  <option value="Consent Form">Consent Form</option>
-                  <option value="Lab Prescription">Lab Prescription</option>
-                  <option value="Referral Letter">Referral Letter</option>
-                  <option value="Medical Report">Medical Report</option>
-                  <option value="STL File">3D STL Scan File</option>
-                  <option value="Clinical Photo">Clinical Intraoral Photo</option>
-                </select>
-              </div>
-            </div>
-            <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
-              <button
-                type="button"
-                onClick={() => setShowUploadModal(false)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 text-zinc-400"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={saveDocsMutation.isPending}
-                className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold"
-              >
-                Upload File
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+      <Modal
+        open={showUploadModal}
+        onOpenChange={setShowUploadModal}
+        title="Register Patient Document"
+        size="sm"
+      >
+        <form onSubmit={handleUpload} className="space-y-4 text-xs">
+          <div className="space-y-3">
+            <Input
+              label="Document Name"
+              type="text"
+              value={uploadForm.name}
+              onChange={(e) => setUploadForm({ ...uploadForm, name: e.target.value })}
+              placeholder="e.g. Patient Sign Consent form"
+              required
+            />
+            <Select
+              label="Classification Type"
+              options={DOC_TYPE_OPTIONS}
+              value={uploadForm.type}
+              onChange={(e) => setUploadForm({ ...uploadForm, type: e.target.value as any })}
+            />
+          </div>
+          <div className="flex justify-end gap-2 border-t pt-3" style={{ borderColor: 'var(--velvet-border)' }}>
+            <Button variant="secondary" type="button" onClick={() => setShowUploadModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" loading={saveDocsMutation.isPending}>
+              Upload File
+            </Button>
+          </div>
+        </form>
+      </Modal>
 
       {/* Rename Document Modal */}
-      {showRenameModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleRename} className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
-            <h3 className="text-sm font-bold text-white border-b border-zinc-900 pb-2">Rename File Record</h3>
-            <div className="space-y-1">
-              <label className="text-zinc-400">File Name</label>
-              <input
-                type="text"
-                value={renameForm.name}
-                onChange={(e) => setRenameForm({ name: e.target.value })}
-                className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                required
-              />
-            </div>
-            <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
-              <button
-                type="button"
-                onClick={() => setShowRenameModal(false)}
-                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 text-zinc-400"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={saveDocsMutation.isPending}
-                className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold"
-              >
-                Rename
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+      <Modal
+        open={showRenameModal}
+        onOpenChange={setShowRenameModal}
+        title="Rename File Record"
+        size="sm"
+      >
+        <form onSubmit={handleRename} className="space-y-4 text-xs">
+          <Input
+            label="File Name"
+            type="text"
+            value={renameForm.name}
+            onChange={(e) => setRenameForm({ name: e.target.value })}
+            required
+          />
+          <div className="flex justify-end gap-2 border-t pt-3" style={{ borderColor: 'var(--velvet-border)' }}>
+            <Button variant="secondary" type="button" onClick={() => setShowRenameModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" loading={saveDocsMutation.isPending}>
+              Rename
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { DollarSign, Plus, CheckCircle2, ShieldAlert, Clock, ArrowUpDown, FileText, Printer, ShieldCheck, Calculator, QrCode, X, Building2, User, Calendar } from 'lucide-react';
+import { DollarSign, Plus, Printer, ShieldCheck, Calculator, QrCode, Building2 } from 'lucide-react';
+import { Button, Card, Badge, Input, Textarea, Select, Modal } from '@/components/ui/design-system';
 import { clinicalService, BillingInvoice, BillingPayment, InsuranceClaim } from '../../../utils/services/clinicalService';
 import { Patient } from '../PatientWorkspace';
 
@@ -180,40 +181,43 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
     <div className="space-y-6 text-start">
       {/* Overview stats cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 card-elevated rounded-2xl">
-          <span className="text-2xs text-zinc-500 font-mono uppercase block">{t('total_fees_invoiced')}</span>
-          <span className="text-base font-bold text-white font-mono block mt-1">${totalInvoiced.toLocaleString()}</span>
-        </div>
-        <div className="p-4 card-elevated rounded-2xl">
-          <span className="text-2xs text-zinc-500 font-mono uppercase block">{t('amount_paid_settled')}</span>
-          <span className="text-base font-bold text-emerald-400 font-mono block mt-1">${totalPaid.toLocaleString()}</span>
-        </div>
-        <div className="p-4 rounded-xl border border-white/5 bg-[#0d0d16]/40 shadow-gold-glow card-luxury relative">
-          <span className="text-2xs text-zinc-500 font-mono uppercase block">{t('outstanding')}</span>
-          <span className={`text-base font-bold font-mono block mt-1 ${outstandingBalance > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
+        <Card variant="elevated" hover={false} className="p-4 rounded-2xl">
+          <span className="text-2xs text-[var(--velvet-text-muted)] font-mono uppercase block">{t('total_fees_invoiced')}</span>
+          <span className="text-base font-bold text-[var(--velvet-text)] font-mono block mt-1">${totalInvoiced.toLocaleString()}</span>
+        </Card>
+        <Card variant="elevated" hover={false} className="p-4 rounded-2xl">
+          <span className="text-2xs text-[var(--velvet-text-muted)] font-mono uppercase block">{t('amount_paid_settled')}</span>
+          <span className="text-base font-bold text-[var(--velvet-success)] font-mono block mt-1">${totalPaid.toLocaleString()}</span>
+        </Card>
+        <Card variant="gradient" hover={false} className="p-4 rounded-xl relative shadow-[var(--velvet-shadow-pop)]">
+          <span className="text-2xs text-[var(--velvet-text-muted)] font-mono uppercase block">{t('outstanding')}</span>
+          <span className={`text-base font-bold font-mono block mt-1 ${outstandingBalance > 0 ? 'text-[var(--velvet-warning)]' : 'text-[var(--velvet-success)]'}`}>
             ${outstandingBalance.toLocaleString()}
           </span>
-        </div>
+        </Card>
       </div>
 
       {/* Toolbar actions */}
-      <div className="flex flex-wrap justify-between items-center p-4 card-elevated rounded-3xl gap-3">
+      <Card variant="elevated" hover={false} className="flex flex-wrap justify-between items-center p-4 rounded-3xl gap-3">
         <div>
-          <h3 className="text-sm font-bold text-white flex items-center gap-1.5 font-mono">
-            <DollarSign className="w-4 h-4 text-gold-400" /> {t('patient_ledger_title')}
+          <h3 className="text-sm font-bold text-[var(--velvet-text)] flex items-center gap-1.5 font-mono">
+            <DollarSign className="w-4 h-4 text-[var(--velvet-accent)]" /> {t('patient_ledger_title')}
           </h3>
-          <p className="text-xs text-zinc-400 mt-0.5">{t('patient_ledger_desc')}</p>
+          <p className="text-xs text-[var(--velvet-text-muted)] mt-0.5">{t('patient_ledger_desc')}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {outstandingBalance > 0 && (
-            <button
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={() => setShowInstallmentModal(true)}
-              className="btn-secondary px-3 py-1.5 rounded-lg text-xs"
             >
               <Calculator className="w-3.5 h-3.5" /> {t('btn_installment_plan')}
-            </button>
+            </Button>
           )}
-          <button
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={() => {
               if (invoices.length > 0) {
                 setClaimForm({
@@ -228,11 +232,12 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                 alert("Please create an invoice first.");
               }
             }}
-            className="btn-secondary px-3 py-1.5 rounded-lg text-xs"
           >
             <ShieldCheck className="w-3.5 h-3.5" /> {t('btn_submit_claim')}
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => {
               setInvoiceForm({
                 invoiceNumber: `INV-2026-${activePatient.id.split('-')[1] || '0'}-${Math.floor(100 + Math.random() * 900)}`,
@@ -245,11 +250,12 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               });
               setShowInvoiceModal(true);
             }}
-            className="btn-ghost px-3 py-1.5 rounded-lg text-xs"
           >
             <Plus className="w-3.5 h-3.5" /> {t('btn_create_invoice')}
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
             onClick={() => {
               if (invoices.length > 0) {
                 setPaymentForm({
@@ -263,26 +269,25 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
                 alert("Please create an invoice before recording a payment.");
               }
             }}
-            className="btn-primary px-3.5 py-1.5 rounded-lg text-xs"
           >
             {t('btn_record_payment')}
-          </button>
+          </Button>
         </div>
-      </div>
+      </Card>
 
       {/* Ledger list */}
       <div className="space-y-4">
         {isLoadingInvoices || isLoadingPayments ? (
-          <div className="text-zinc-500 text-xs text-center py-6 animate-pulse">Loading financial records...</div>
+          <div className="text-[var(--velvet-text-muted)] text-xs text-center py-6 animate-pulse">Loading financial records...</div>
         ) : invoices.length === 0 ? (
-          <div className="py-8 card-elevated rounded-3xl text-center">
+          <Card variant="elevated" hover={false} className="py-8 rounded-3xl text-center">
             <div className="mx-auto w-10 h-10 rounded-2xl flex items-center justify-center mb-3" style={{ background: 'var(--velvet-accent-glow2)', color: 'var(--velvet-accent)' }}>
               <DollarSign className="w-5 h-5" />
             </div>
             <p className="text-xs" style={{ color: 'var(--velvet-text-muted)' }}>
               {t('no_invoices_logged')}
             </p>
-          </div>
+          </Card>
         ) : (
           <div className="space-y-4">
             {invoices.map((inv) => {
@@ -292,61 +297,59 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
               const remaining = Math.max(0, copayTotal - (inv.amountPaid || 0));
 
               return (
-                <div key={inv.id} className="p-5 card-elevated rounded-3xl space-y-4">
-                  <div className="flex flex-wrap justify-between items-start gap-2 border-b border-zinc-900/60 pb-3">
+                <Card key={inv.id} variant="elevated" hover={false} className="p-5 rounded-3xl space-y-4">
+                  <div className="flex flex-wrap justify-between items-start gap-2 border-b pb-3" style={{ borderColor: 'var(--velvet-border)' }}>
                     <div className="text-start">
-                      <span className="text-2xs font-mono text-zinc-500">{inv.invoiceNumber}</span>
-                      <h4 className="text-xs font-bold text-white mt-0.5">{inv.clinicName} â€¢ Due {inv.dueDate}</h4>
+                      <span className="text-2xs font-mono text-[var(--velvet-text-muted)]">{inv.invoiceNumber}</span>
+                      <h4 className="text-xs font-bold text-[var(--velvet-text)] mt-0.5">{inv.clinicName} â€¢ Due {inv.dueDate}</h4>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => {
                           setSelectedInvoiceForPrint(inv);
                           setShowPrintModal(true);
                         }}
-                        className="btn-ghost px-2.5 py-1 rounded-lg text-2xs"
+                        className="px-2.5 py-1 rounded-lg text-2xs"
                       >
-                        <Printer className="w-3 h-3 text-emerald-400" /> {t('btn_print_invoice')}
-                      </button>
-                      <span className={`badge ${
-                        inv.paymentStatus === 'Paid' ? 'badge-success' :
-                        inv.paymentStatus === 'Partially Paid' ? 'badge-warning' :
-                        ''
-                      }`}>
+                        <Printer className="w-3 h-3 text-[var(--velvet-success)]" /> {t('btn_print_invoice')}
+                      </Button>
+                      <Badge tone={inv.paymentStatus === 'Paid' ? 'success' : inv.paymentStatus === 'Partially Paid' ? 'warning' : 'default'}>
                         {inv.paymentStatus}
-                      </span>
+                      </Badge>
                     </div>
                   </div>
 
                   {/* Procedures Table */}
                   <div className="space-y-1.5 text-xs font-mono">
-                    <div className="grid grid-cols-12 text-2xs text-zinc-500 font-bold uppercase border-b border-zinc-900/40 pb-1">
+                    <div className="grid grid-cols-12 text-2xs text-[var(--velvet-text-muted)] font-bold uppercase border-b pb-1" style={{ borderColor: 'var(--velvet-border)' }}>
                       <span className="col-span-6">{t('th_item_desc')}</span>
                       <span className="col-span-2 text-end">{t('th_fee')}</span>
                       <span className="col-span-2 text-end">{t('th_ins_co')}</span>
                       <span className="col-span-2 text-end">{t('th_copay')}</span>
                     </div>
                     {(inv.treatmentItems || []).map((item, idx) => (
-                      <div key={idx} className="grid grid-cols-12 text-zinc-300 py-0.5 border-b border-zinc-900/20">
-                        <span className="col-span-6 font-sans text-xs text-white truncate">{item.name}</span>
+                      <div key={idx} className="grid grid-cols-12 text-[var(--velvet-text-sub)] py-0.5 border-b" style={{ borderColor: 'var(--velvet-border)' }}>
+                        <span className="col-span-6 font-sans text-xs text-[var(--velvet-text)] truncate">{item.name}</span>
                         <span className="col-span-2 text-end">${item.fee.toLocaleString()}</span>
-                        <span className="col-span-2 text-end text-purple-400">${item.insurance.toLocaleString()}</span>
-                        <span className="col-span-2 text-end text-amber-400">${item.copay.toLocaleString()}</span>
+                        <span className="col-span-2 text-end text-[var(--velvet-accent)]">${item.insurance.toLocaleString()}</span>
+                        <span className="col-span-2 text-end text-[var(--velvet-warning)]">${item.copay.toLocaleString()}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Footer calculations */}
-                  <div className="flex flex-wrap justify-between items-center text-xs font-mono pt-2 border-t border-zinc-900/60 bg-zinc-950/10 p-2 rounded-lg">
+                  <div className="flex flex-wrap justify-between items-center text-xs font-mono pt-2 border-t p-2 rounded-lg" style={{ borderColor: 'var(--velvet-border)', background: 'var(--velvet-surface-1)' }}>
                     <div className="flex gap-4">
-                      <span>{t('th_insurer')}: <strong className="text-zinc-300">{inv.insuranceProvider} ({inv.insuranceClaimStatus})</strong></span>
-                      <span>{t('th_paid')}: <strong className="text-emerald-400">${inv.amountPaid.toLocaleString()}</strong></span>
+                      <span>{t('th_insurer')}: <strong className="text-[var(--velvet-text-sub)]">{inv.insuranceProvider} ({inv.insuranceClaimStatus})</strong></span>
+                      <span>{t('th_paid')}: <strong className="text-[var(--velvet-success)]">${inv.amountPaid.toLocaleString()}</strong></span>
                     </div>
-                    <span className={`font-bold ${remaining > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
+                    <span className={`font-bold ${remaining > 0 ? 'text-[var(--velvet-warning)]' : 'text-[var(--velvet-success)]'}`}>
                       {t('th_remaining_share')}: ${remaining.toLocaleString()}
                     </span>
                   </div>
-                </div>
+                </Card>
               );
             })}
           </div>
@@ -354,325 +357,272 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
       </div>
 
       {/* Invoices Create Modal */}
-      {showInvoiceModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleCreateInvoice} className="card-elevated p-6 rounded-3xl w-full max-w-lg space-y-4 text-xs">
-            <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">{t('modal_create_invoice')}</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <label className="text-zinc-400">Invoice Number</label>
-                <input
-                  type="text"
-                  value={invoiceForm.invoiceNumber}
-                  onChange={(e) => setInvoiceForm({ ...invoiceForm, invoiceNumber: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400">Due Date</label>
-                <input
-                  type="date"
-                  value={invoiceForm.dueDate}
-                  onChange={(e) => setInvoiceForm({ ...invoiceForm, dueDate: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400">Insurer Provider</label>
-                <input
-                  type="text"
-                  value={invoiceForm.insuranceProvider}
-                  onChange={(e) => setInvoiceForm({ ...invoiceForm, insuranceProvider: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400">Insurer Share (%)</label>
-                <input
-                  type="number"
-                  value={invoiceForm.insuranceCoveragePercent}
-                  onChange={(e) => setInvoiceForm({ ...invoiceForm, insuranceCoveragePercent: Number(e.target.value) })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none font-mono"
-                />
-              </div>
-              <div className="sm:col-span-2 space-y-1">
-                <label className="text-zinc-400">Items (Format: Name | Fee | Insurer Share | Copay)</label>
-                <textarea
-                  value={invoiceForm.itemsText}
-                  onChange={(e) => setInvoiceForm({ ...invoiceForm, itemsText: e.target.value })}
-                  rows={3}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                />
-              </div>
-            </div>
-            <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
-              <button
-                type="button"
-                onClick={() => setShowInvoiceModal(false)}
-                className="btn-ghost px-3 py-1.5 rounded-lg text-xs"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={createInvoiceMutation.isPending}
-                className="btn-primary px-4 py-1.5 rounded-lg text-xs"
-              >
-                Publish Invoice
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+      <Modal
+        open={showInvoiceModal}
+        onOpenChange={setShowInvoiceModal}
+        title={t('modal_create_invoice')}
+        size="lg"
+        actions={
+          <>
+            <Button variant="ghost" type="button" onClick={() => setShowInvoiceModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" form="billing-invoice-form" loading={createInvoiceMutation.isPending}>
+              Publish Invoice
+            </Button>
+          </>
+        }
+      >
+        <form id="billing-invoice-form" onSubmit={handleCreateInvoice} className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-start">
+          <Input
+            label="Invoice Number"
+            type="text"
+            value={invoiceForm.invoiceNumber}
+            onChange={(e) => setInvoiceForm({ ...invoiceForm, invoiceNumber: e.target.value })}
+            className="font-mono"
+          />
+          <Input
+            label="Due Date"
+            type="date"
+            value={invoiceForm.dueDate}
+            onChange={(e) => setInvoiceForm({ ...invoiceForm, dueDate: e.target.value })}
+            className="font-mono"
+          />
+          <Input
+            label="Insurer Provider"
+            type="text"
+            value={invoiceForm.insuranceProvider}
+            onChange={(e) => setInvoiceForm({ ...invoiceForm, insuranceProvider: e.target.value })}
+          />
+          <Input
+            label="Insurer Share (%)"
+            type="number"
+            value={invoiceForm.insuranceCoveragePercent}
+            onChange={(e) => setInvoiceForm({ ...invoiceForm, insuranceCoveragePercent: Number(e.target.value) })}
+            className="font-mono"
+          />
+          <Textarea
+            label="Items (Format: Name | Fee | Insurer Share | Copay)"
+            value={invoiceForm.itemsText}
+            onChange={(e) => setInvoiceForm({ ...invoiceForm, itemsText: e.target.value })}
+            rows={3}
+            className="sm:col-span-2 font-mono"
+          />
+        </form>
+      </Modal>
 
       {/* Payment Record Modal */}
-      {showPaymentModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleRecordPayment} className="card-elevated p-6 rounded-3xl w-full max-w-sm space-y-4 text-xs">
-            <h3 className="text-sm font-bold section-title border-b border-zinc-900 pb-2">{t('modal_record_payment')}</h3>
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <label className="text-zinc-400">Target Invoice</label>
-                <select
-                  value={paymentForm.invoiceId}
-                  onChange={(e) => setPaymentForm({ ...paymentForm, invoiceId: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                >
-                  {invoices.map(inv => (
-                    <option key={inv.id} value={inv.id}>{inv.invoiceNumber} - Due: {inv.dueDate}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400">Payment Amount ($)</label>
-                <input
-                  type="number"
-                  value={paymentForm.amount}
-                  onChange={(e) => setPaymentForm({ ...paymentForm, amount: Number(e.target.value) })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400">Method</label>
-                <select
-                  value={paymentForm.paymentMethod}
-                  onChange={(e) => setPaymentForm({ ...paymentForm, paymentMethod: e.target.value as any })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                >
-                  <option value="Credit Card">Credit Card</option>
-                  <option value="Cash">Cash</option>
-                  <option value="Insurance Claim">Insurance Claim</option>
-                  <option value="Bank Transfer">Bank Transfer</option>
-                </select>
-              </div>
-            </div>
-            <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
-              <button
-                type="button"
-                onClick={() => setShowPaymentModal(false)}
-                className="btn-ghost px-3 py-1.5 rounded-lg text-xs"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={recordPaymentMutation.isPending}
-                className="btn-primary px-4 py-1.5 rounded-lg text-xs"
-              >
-                Record Payment
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+      <Modal
+        open={showPaymentModal}
+        onOpenChange={setShowPaymentModal}
+        title={t('modal_record_payment')}
+        size="sm"
+        actions={
+          <>
+            <Button variant="ghost" type="button" onClick={() => setShowPaymentModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" form="billing-payment-form" loading={recordPaymentMutation.isPending}>
+              Record Payment
+            </Button>
+          </>
+        }
+      >
+        <form id="billing-payment-form" onSubmit={handleRecordPayment} className="space-y-4 text-start">
+          <Select
+            label="Target Invoice"
+            value={paymentForm.invoiceId}
+            onChange={(e) => setPaymentForm({ ...paymentForm, invoiceId: e.target.value })}
+            options={invoices.map(inv => ({ value: inv.id, label: `${inv.invoiceNumber} - Due: ${inv.dueDate}` }))}
+          />
+          <Input
+            label="Payment Amount ($)"
+            type="number"
+            value={paymentForm.amount}
+            onChange={(e) => setPaymentForm({ ...paymentForm, amount: Number(e.target.value) })}
+            className="font-mono"
+          />
+          <Select
+            label="Method"
+            value={paymentForm.paymentMethod}
+            onChange={(e) => setPaymentForm({ ...paymentForm, paymentMethod: e.target.value as any })}
+            options={[
+              { value: 'Credit Card', label: 'Credit Card' },
+              { value: 'Cash', label: 'Cash' },
+              { value: 'Insurance Claim', label: 'Insurance Claim' },
+              { value: 'Bank Transfer', label: 'Bank Transfer' }
+            ]}
+          />
+        </form>
+      </Modal>
 
       {/* e-Claim Submission Modal */}
-      {showClaimModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleClaimSubmit} className="card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-xs">
-            <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
-              <h3 className="text-sm font-bold section-title flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-blue-400" /> {t('btn_submit_claim')}
-              </h3>
-              <button type="button" onClick={() => setShowClaimModal(false)} className="text-zinc-500 hover:text-white">
-                <X className="w-4 h-4" />
-              </button>
+      <Modal
+        open={showClaimModal}
+        onOpenChange={setShowClaimModal}
+        title={t('btn_submit_claim')}
+        size="md"
+        actions={
+          <>
+            <Button variant="ghost" type="button" onClick={() => setShowClaimModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" form="billing-claim-form" loading={submitClaimMutation.isPending}>
+              <ShieldCheck className="w-3.5 h-3.5" /> Submit Claim
+            </Button>
+          </>
+        }
+      >
+        <form id="billing-claim-form" onSubmit={handleClaimSubmit} className="space-y-4 text-start">
+          <Select
+            label="Target Invoice"
+            value={claimForm.invoiceId}
+            onChange={(e) => setClaimForm({ ...claimForm, invoiceId: e.target.value })}
+            options={invoices.map(inv => ({ value: inv.id, label: `${inv.invoiceNumber} - ${inv.insuranceProvider}` }))}
+          />
+          <div className="space-y-1.5">
+            <span className="block font-semibold text-sm" style={{ color: 'var(--velvet-text)' }}>{t('claim_provider_policy')}</span>
+            <div className="grid grid-cols-2 gap-3">
+              <Input
+                type="text"
+                value={claimForm.provider}
+                onChange={(e) => setClaimForm({ ...claimForm, provider: e.target.value })}
+                placeholder="Insurer Name"
+              />
+              <Input
+                type="text"
+                value={claimForm.policyNumber}
+                onChange={(e) => setClaimForm({ ...claimForm, policyNumber: e.target.value })}
+                placeholder="Policy Number"
+                className="font-mono"
+              />
             </div>
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <label className="text-zinc-400">Target Invoice</label>
-                <select
-                  value={claimForm.invoiceId}
-                  onChange={(e) => setClaimForm({ ...claimForm, invoiceId: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                >
-                  {invoices.map(inv => (
-                    <option key={inv.id} value={inv.id}>{inv.invoiceNumber} - {inv.insuranceProvider}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400">{t('claim_provider_policy')}</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <input
-                    type="text"
-                    value={claimForm.provider}
-                    onChange={(e) => setClaimForm({ ...claimForm, provider: e.target.value })}
-                    className="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none"
-                    placeholder="Insurer Name"
-                  />
-                  <input
-                    type="text"
-                    value={claimForm.policyNumber}
-                    onChange={(e) => setClaimForm({ ...claimForm, policyNumber: e.target.value })}
-                    className="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                    placeholder="Policy Number"
-                  />
-                </div>
-              </div>
-              <div className="space-y-1">
-                <label className="text-zinc-400">Amount Claimed ($)</label>
-                <input
-                  type="number"
-                  value={claimForm.amountClaimed}
-                  onChange={(e) => setClaimForm({ ...claimForm, amountClaimed: Number(e.target.value) })}
-                  className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-mono focus:outline-none"
-                />
-              </div>
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold">{t('claim_status_preauth')}</span>
-                  <span className="px-2 py-0.5 rounded bg-blue-500/20 font-bold text-2xs font-mono text-blue-300 uppercase">Pre-Authorized (Approved)</span>
-                </div>
-                <p className="text-2xs text-blue-300/80">Electronic CDT procedure code clearance automatically verified via HealthOS Portal EDI Gateway.</p>
-              </div>
+          </div>
+          <Input
+            label="Amount Claimed ($)"
+            type="number"
+            value={claimForm.amountClaimed}
+            onChange={(e) => setClaimForm({ ...claimForm, amountClaimed: Number(e.target.value) })}
+            className="font-mono"
+          />
+          <div className="p-3 rounded-xl border text-xs space-y-1" style={{ background: 'var(--velvet-info-bg)', borderColor: 'var(--velvet-info-border)', color: 'var(--velvet-info)' }}>
+            <div className="flex items-center justify-between">
+              <span className="font-semibold">{t('claim_status_preauth')}</span>
+              <Badge tone="info" className="text-2xs font-mono uppercase px-2 py-0.5">Pre-Authorized (Approved)</Badge>
             </div>
-            <div className="flex justify-end gap-2 border-t border-zinc-900 pt-3">
-              <button
-                type="button"
-                onClick={() => setShowClaimModal(false)}
-                className="btn-ghost px-3 py-1.5 rounded-lg text-xs"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={submitClaimMutation.isPending}
-                className="btn-primary px-4 py-1.5 rounded-lg text-xs flex items-center gap-1"
-              >
-                <ShieldCheck className="w-3.5 h-3.5" /> Submit Claim
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+            <p className="text-2xs" style={{ color: 'var(--velvet-info)', opacity: 0.8 }}>Electronic CDT procedure code clearance automatically verified via HealthOS Portal EDI Gateway.</p>
+          </div>
+        </form>
+      </Modal>
 
       {/* Installment Plan Calculator Modal */}
-      {showInstallmentModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="card-elevated p-6 rounded-3xl w-full max-w-md space-y-4 text-xs">
-            <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
-              <h3 className="text-sm font-bold section-title flex items-center gap-1.5">
-                <Calculator className="w-4 h-4 text-purple-400" /> {t('installment_calc_title')}
-              </h3>
-              <button type="button" onClick={() => setShowInstallmentModal(false)} className="text-zinc-500 hover:text-white">
-                <X className="w-4 h-4" />
-              </button>
+      <Modal
+        open={showInstallmentModal}
+        onOpenChange={setShowInstallmentModal}
+        title={t('installment_calc_title')}
+        size="md"
+        actions={
+          <Button variant="primary" type="button" onClick={() => setShowInstallmentModal(false)}>
+            Close Calculator
+          </Button>
+        }
+      >
+        <div className="space-y-4">
+          <div className="p-3 rounded-xl border flex justify-between items-center" style={{ background: 'var(--velvet-accent-glow2)', borderColor: 'var(--velvet-border-strong)', color: 'var(--velvet-accent)' }}>
+            <div>
+              <span className="text-2xs uppercase font-mono block">{t('outstanding')}</span>
+              <span className="text-lg font-bold font-mono text-[var(--velvet-text)]">${outstandingBalance.toLocaleString()}</span>
             </div>
-            <div className="space-y-4">
-              <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 flex justify-between items-center">
-                <div>
-                  <span className="text-2xs uppercase font-mono text-purple-400 block">{t('outstanding')}</span>
-                  <span className="text-lg font-bold font-mono text-white">${outstandingBalance.toLocaleString()}</span>
-                </div>
-                <div className="text-end">
-                  <span className="text-2xs uppercase font-mono text-purple-400 block">{t('installment_calc_monthly_val')}</span>
-                  <span className="text-lg font-bold font-mono text-purple-300">
-                    ${(outstandingBalance / installmentMonths).toFixed(2)}/mo
-                  </span>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-zinc-400">{t('installment_calc_months')}</label>
-                <div className="grid grid-cols-4 gap-2">
-                  {[3, 6, 9, 12].map(m => (
-                    <button
-                      key={m}
-                      type="button"
-                      onClick={() => setInstallmentMonths(m)}
-                      className={`py-2 rounded-xl text-xs font-mono font-bold border transition-all ${
-                        installmentMonths === m
-                          ? 'btn-primary'
-                          : 'btn-secondary'
-                      }`}
-                    >
-                      {m} Months
-                    </button>
-                  ))}
-                </div>
-              </div>
+            <div className="text-end">
+              <span className="text-2xs uppercase font-mono block">{t('installment_calc_monthly_val')}</span>
+              <span className="text-lg font-bold font-mono">
+                ${(outstandingBalance / installmentMonths).toFixed(2)}/mo
+              </span>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <span className="block font-semibold text-sm" style={{ color: 'var(--velvet-text)' }}>{t('installment_calc_months')}</span>
+            <div className="grid grid-cols-4 gap-2">
+              {[3, 6, 9, 12].map(m => (
+                <Button
+                  key={m}
+                  type="button"
+                  variant={installmentMonths === m ? 'primary' : 'secondary'}
+                  size="sm"
+                  onClick={() => setInstallmentMonths(m)}
+                  className="w-full font-mono font-bold"
+                >
+                  {m} Months
+                </Button>
+              ))}
+            </div>
+          </div>
 
-              {/* Installments Schedule Breakdown */}
-              <div className="space-y-1.5 border-t border-zinc-900 pt-3">
-                <span className="text-2xs font-mono text-zinc-500 uppercase font-bold block">Payment Schedule Breakdown</span>
-                <div className="space-y-1 max-h-36 overflow-y-auto pe-1">
-                  {Array.from({ length: installmentMonths }).map((_, idx) => {
-                    const due = new Date(Date.now() + (idx + 1) * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-                    const amount = (outstandingBalance / installmentMonths).toFixed(2);
-                    return (
-                      <div key={idx} className="flex justify-between items-center p-2 rounded-lg bg-zinc-900/60 border border-zinc-900 text-xs font-mono">
-                        <span className="text-zinc-400">Installment #{idx + 1} â€¢ Due {due}</span>
-                        <span className="text-white font-bold">${amount}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-end border-t border-zinc-900 pt-3">
-              <button
-                type="button"
-                onClick={() => setShowInstallmentModal(false)}
-                className="btn-primary px-4 py-1.5 rounded-lg text-xs"
-              >
-                Close Calculator
-              </button>
+          {/* Installments Schedule Breakdown */}
+          <div className="space-y-1.5 border-t pt-3" style={{ borderColor: 'var(--velvet-border)' }}>
+            <span className="text-2xs font-mono text-[var(--velvet-text-muted)] uppercase font-bold block">Payment Schedule Breakdown</span>
+            <div className="space-y-1 max-h-36 overflow-y-auto pe-1">
+              {Array.from({ length: installmentMonths }).map((_, idx) => {
+                const due = new Date(Date.now() + (idx + 1) * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                const amount = (outstandingBalance / installmentMonths).toFixed(2);
+                return (
+                  <div key={idx} className="flex justify-between items-center p-2 rounded-lg border text-xs font-mono" style={{ background: 'var(--velvet-surface-1)', borderColor: 'var(--velvet-border)' }}>
+                    <span className="text-[var(--velvet-text-muted)]">Installment #{idx + 1} â€¢ Due {due}</span>
+                    <span className="text-[var(--velvet-text)] font-bold">${amount}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
-      )}
+      </Modal>
 
       {/* Printable Invoice / Official Receipt Modal */}
-      {showPrintModal && selectedInvoiceForPrint && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white text-zinc-950 p-8 rounded-3xl w-full max-w-2xl space-y-6 shadow-card relative">
-            <div className="flex justify-between items-start border-b border-zinc-200 pb-4">
+      <Modal
+        open={showPrintModal && !!selectedInvoiceForPrint}
+        onOpenChange={(open) => { if (!open) setShowPrintModal(false); }}
+        title={selectedInvoiceForPrint ? selectedInvoiceForPrint.clinicName : t('btn_print_invoice')}
+        size="lg"
+        actions={
+          <>
+            <Button variant="ghost" type="button" onClick={() => setShowPrintModal(false)} className="print:hidden">
+              Close Preview
+            </Button>
+            <Button variant="primary" type="button" onClick={() => window.print()} className="print:hidden">
+              <Printer className="w-4 h-4" /> Print Receipt PDF
+            </Button>
+          </>
+        }
+      >
+        {selectedInvoiceForPrint && (
+          <div className="space-y-6">
+            <div className="flex justify-between items-start border-b pb-4" style={{ borderColor: 'var(--velvet-border)' }}>
               <div>
                 <div className="flex items-center gap-2">
-                  <Building2 className="w-6 h-6 text-emerald-600" />
-                  <h2 className="text-lg font-bold text-zinc-900">{selectedInvoiceForPrint.clinicName}</h2>
+                  <Building2 className="w-6 h-6 text-[var(--velvet-success)]" />
+                  <h2 className="text-lg font-bold text-[var(--velvet-text)]">{selectedInvoiceForPrint.clinicName}</h2>
                 </div>
-                <p className="text-xs text-zinc-500 mt-1">HealthOS Official Dental & Medical Center â€¢ Tax ID: 300921893</p>
+                <p className="text-xs text-[var(--velvet-text-muted)] mt-1">HealthOS Official Dental & Medical Center â€¢ Tax ID: 300921893</p>
               </div>
               <div className="text-end">
-                <span className="px-3 py-1 bg-emerald-100 text-emerald-800 font-mono text-xs font-bold rounded-full">
+                <Badge tone="success" className="font-mono text-xs font-bold">
                   OFFICIAL RECEIPT
-                </span>
-                <span className="block text-xs font-mono text-zinc-500 mt-1">{selectedInvoiceForPrint.invoiceNumber}</span>
+                </Badge>
+                <span className="block text-xs font-mono text-[var(--velvet-text-muted)] mt-1">{selectedInvoiceForPrint.invoiceNumber}</span>
               </div>
             </div>
 
             {/* Meta information */}
-            <div className="grid grid-cols-2 gap-4 text-xs border-b border-zinc-200 pb-4">
+            <div className="grid grid-cols-2 gap-4 text-xs border-b pb-4" style={{ borderColor: 'var(--velvet-border)' }}>
               <div>
-                <span className="text-zinc-400 uppercase text-2xs font-bold block">Patient Details</span>
-                <span className="font-bold text-zinc-900 block text-sm">{activePatient.name}</span>
-                <span className="text-zinc-600 block">ID: {activePatient.id} â€¢ Tel: {activePatient.phone || '+966 50 123 4567'}</span>
+                <span className="text-[var(--velvet-text-muted)] uppercase text-2xs font-bold block">Patient Details</span>
+                <span className="font-bold text-[var(--velvet-text)] block text-sm">{activePatient.name}</span>
+                <span className="text-[var(--velvet-text-muted)] block">ID: {activePatient.id} â€¢ Tel: {activePatient.phone || '+966 50 123 4567'}</span>
               </div>
               <div className="text-end">
-                <span className="text-zinc-400 uppercase text-2xs font-bold block">Attending Clinician & Date</span>
-                <span className="font-bold text-zinc-900 block text-sm">{activePatient.primaryDoctor || 'Dr. Ahmed'}</span>
-                <span className="text-zinc-600 block">Issue Date: {selectedInvoiceForPrint.issueDate}</span>
+                <span className="text-[var(--velvet-text-muted)] uppercase text-2xs font-bold block">Attending Clinician & Date</span>
+                <span className="font-bold text-[var(--velvet-text)] block text-sm">{activePatient.primaryDoctor || 'Dr. Ahmed'}</span>
+                <span className="text-[var(--velvet-text-muted)] block">Issue Date: {selectedInvoiceForPrint.issueDate}</span>
               </div>
             </div>
 
@@ -680,20 +630,20 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
             <div className="space-y-2">
               <table className="w-full text-start text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-zinc-300 text-zinc-500 text-2xs uppercase font-bold">
+                  <tr className="border-b text-[var(--velvet-text-muted)] text-2xs uppercase font-bold" style={{ borderColor: 'var(--velvet-border)' }}>
                     <th className="py-2">Procedure Description</th>
                     <th className="py-2 text-end">Fee</th>
                     <th className="py-2 text-end">Insurer Share</th>
                     <th className="py-2 text-end">Patient Co-Pay</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-200 font-mono">
+                <tbody className="divide-y divide-inherit font-mono" style={{ borderColor: 'var(--velvet-border)' }}>
                   {(selectedInvoiceForPrint.treatmentItems || []).map((item, i) => (
                     <tr key={i}>
-                      <td className="py-2 font-sans text-zinc-900 font-medium">{item.name}</td>
-                      <td className="py-2 text-end text-zinc-700">${item.fee.toLocaleString()}</td>
-                      <td className="py-2 text-end text-purple-600">${item.insurance.toLocaleString()}</td>
-                      <td className="py-2 text-end font-bold text-zinc-900">${item.copay.toLocaleString()}</td>
+                      <td className="py-2 font-sans text-[var(--velvet-text)] font-medium">{item.name}</td>
+                      <td className="py-2 text-end text-[var(--velvet-text-muted)]">${item.fee.toLocaleString()}</td>
+                      <td className="py-2 text-end text-[var(--velvet-accent)]">${item.insurance.toLocaleString()}</td>
+                      <td className="py-2 text-end font-bold text-[var(--velvet-text)]">${item.copay.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -701,46 +651,28 @@ export default function BillingOverview({ supabase, activePatient, demoMode }: B
             </div>
 
             {/* Total calculation & QR Code */}
-            <div className="flex justify-between items-center border-t border-zinc-300 pt-4">
-              <div className="flex items-center gap-3 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
-                <QrCode className="w-10 h-10 text-zinc-800" />
-                <div className="text-2xs text-zinc-600">
-                  <span className="font-bold text-zinc-900 block">{t('official_receipt_qr')}</span>
+            <div className="flex justify-between items-center border-t pt-4" style={{ borderColor: 'var(--velvet-border-strong)' }}>
+              <div className="flex items-center gap-3 p-3 rounded-xl border" style={{ background: 'var(--velvet-surface-1)', borderColor: 'var(--velvet-border)' }}>
+                <QrCode className="w-10 h-10 text-[var(--velvet-text-sub)]" />
+                <div className="text-2xs text-[var(--velvet-text-muted)]">
+                  <span className="font-bold text-[var(--velvet-text)] block">{t('official_receipt_qr')}</span>
                   <span>Scan to verify authenticity & ZATCA e-invoicing compliance</span>
                 </div>
               </div>
               <div className="text-end space-y-1 font-mono text-xs">
-                <div className="flex justify-between gap-6 text-zinc-600">
+                <div className="flex justify-between gap-6 text-[var(--velvet-text-muted)]">
                   <span>Total Invoiced:</span>
                   <span>${(selectedInvoiceForPrint.treatmentItems || []).reduce((s, i) => s + i.fee, 0).toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between gap-6 text-emerald-600 font-bold">
+                <div className="flex justify-between gap-6 text-[var(--velvet-success)] font-bold">
                   <span>Amount Paid:</span>
                   <span>${selectedInvoiceForPrint.amountPaid.toLocaleString()}</span>
                 </div>
               </div>
             </div>
-
-            {/* Print & Close buttons */}
-            <div className="flex justify-end gap-2 border-t border-zinc-200 pt-4 print:hidden">
-              <button
-                type="button"
-                onClick={() => setShowPrintModal(false)}
-                className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-semibold"
-              >
-                Close Preview
-              </button>
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-soft shadow-emerald-600/20"
-              >
-                <Printer className="w-4 h-4" /> Print Receipt PDF
-              </button>
-            </div>
           </div>
-        </div>
-      )}
+        )}
+      </Modal>
     </div>
   );
 }

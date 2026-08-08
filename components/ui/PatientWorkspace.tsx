@@ -6,7 +6,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { createClient } from '@/utils/supabase/client';
-import { Grid, Heart, Clipboard, Calendar as CalendarIcon, Layers, FlaskConical, DollarSign, HardDrive, Send, Activity, Sparkles, Plus, Edit3 } from 'lucide-react';
+import { Grid, Heart, Clipboard, Calendar as CalendarIcon, Layers, FlaskConical, DollarSign, HardDrive, Send, Activity, Sparkles } from 'lucide-react';
+import { Card, Tabs, TabPanel, Button } from '@/components/ui/design-system';
+import type { TabItem } from '@/components/ui/design-system/primitives';
 
 // Types & Services
 import { clinicalService, PatientCase, Appointment } from '@/utils/services/clinicalService';
@@ -272,18 +274,18 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
     else if (actionType === 'prescription') setWorkspaceTab('documents');
   };
 
-  const menuTabs = [
-    { id: 'overview', label: t('tab_overview'), icon: Grid },
-    { id: 'timeline', label: t('tab_timeline'), icon: Activity },
-    { id: 'clinical', label: t('tab_clinical'), icon: Heart },
-    { id: 'treatment', label: t('tab_treatment'), icon: Clipboard },
-    { id: 'appointments', label: t('tab_appointments'), icon: CalendarIcon },
-    { id: 'radiology', label: t('tab_radiology'), icon: Layers },
-    { id: 'laboratory', label: t('tab_laboratory'), icon: FlaskConical },
-    { id: 'billing', label: t('tab_billing'), icon: DollarSign },
-    { id: 'documents', label: t('tab_documents'), icon: HardDrive },
-    { id: 'communication', label: t('tab_communication'), icon: Send },
-    { id: 'analytics', label: t('tab_analytics'), icon: Activity }
+  const menuTabs: TabItem[] = [
+    { id: 'overview', label: t('tab_overview'), icon: <Grid className="w-4 h-4" /> },
+    { id: 'timeline', label: t('tab_timeline'), icon: <Activity className="w-4 h-4" /> },
+    { id: 'clinical', label: t('tab_clinical'), icon: <Heart className="w-4 h-4" /> },
+    { id: 'treatment', label: t('tab_treatment'), icon: <Clipboard className="w-4 h-4" /> },
+    { id: 'appointments', label: t('tab_appointments'), icon: <CalendarIcon className="w-4 h-4" /> },
+    { id: 'radiology', label: t('tab_radiology'), icon: <Layers className="w-4 h-4" /> },
+    { id: 'laboratory', label: t('tab_laboratory'), icon: <FlaskConical className="w-4 h-4" /> },
+    { id: 'billing', label: t('tab_billing'), icon: <DollarSign className="w-4 h-4" /> },
+    { id: 'documents', label: t('tab_documents'), icon: <HardDrive className="w-4 h-4" /> },
+    { id: 'communication', label: t('tab_communication'), icon: <Send className="w-4 h-4" /> },
+    { id: 'analytics', label: t('tab_analytics'), icon: <Activity className="w-4 h-4" /> }
   ];
 
   return (
@@ -328,123 +330,121 @@ function WorkspaceOrchestrator({ demoMode, initialRows }: PatientWorkspaceProps)
             />
 
             {/* Horizontal Tabs Menu */}
-            <div className="overflow-x-auto pb-1 flex scrollbar-none gap-1 p-2 rounded-2xl text-xs card-elevated">
-              {menuTabs.map((tab) => {
-                const Icon = tab.icon;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setWorkspaceTab(tab.id)}
-                    className={`px-3.5 py-2.5 rounded-lg font-semibold shrink-0 transition-all flex items-center gap-1.5 border-b-2 border-transparent ${
-                      workspaceTab === tab.id
-                        ? 'bg-[#0d0d16] text-gold-400 border-b-2 border-gold-500'
-                        : 'text-zinc-400 hover:text-zinc-200'
-                    }`}
-                  >
-                    <Icon className="w-3.5 h-3.5" />
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </div>
+            <Card variant="elevated" hover={false} className="p-2">
+              <Tabs tabs={menuTabs} activeTab={workspaceTab} onChange={setWorkspaceTab} />
+            </Card>
 
             {/* Content Switcher */}
             <div className="min-h-[400px]">
-              {workspaceTab === 'overview' && (
-                <div className="space-y-6">
-                  <ClinicalDashboard
-                    activePatient={activePatient}
-                    appointments={appointments}
-                    treatmentPlans={plans}
-                    outstandingBalance={outstandingBalance}
-                    labOrdersCount={activePatient.cases?.length || 0}
-                    radiologyReportsCount={gallery.filter((g: any) => g.category === 'CBCT').length}
-                    clinicalNotesCount={notesList.length}
-                    alertsCount={activePatient.medicalAlerts?.filter(a => a !== 'None').length || 0}
-                    onNavigateTab={setWorkspaceTab}
-                  />
-                  <div className="p-6 card-gradient rounded-3xl text-start space-y-2">
-                    <h3 className="eyebrow">{t('demographics')}</h3>
-                    <p className="text-xs" style={{ color: 'var(--velvet-text-muted)' }}>{t('chiefComplaint')}: <strong style={{ color: 'var(--velvet-text)' }}>{activePatient.summary}</strong></p>
-                    <p className="text-xs" style={{ color: 'var(--velvet-text-muted)' }}>{t('primaryInsurer')}: <strong style={{ color: 'var(--velvet-text)' }}>{activePatient.allergyStatus}</strong></p>
-                  </div>
-                </div>
-              )}
-              {workspaceTab === 'timeline' && (
-                <PatientTimeline
-                  activePatient={activePatient}
-                  appointments={appointments}
-                  treatmentPlans={plans}
-                  clinicalNotesList={notesList}
-                  imagingGallery={gallery}
-                  patientDocuments={docs}
-                  invoices={invoices}
-                  payments={payments}
-                  onActionExecute={handleCaseAction}
-                />
-              )}
-              {workspaceTab === 'clinical' && (
-                <div className="space-y-6">
-                  <ToothSelector
-                    activeTooth={activeTooth}
-                    setActiveTooth={setActiveTooth}
-                    teethStatuses={teethStatuses}
-                    setTeethStatuses={setTeethStatuses}
-                  />
-                  <SoapNoteEditor
-                    supabase={supabase as any}
-                    activePatient={activePatient}
-                    demoMode={!!demoMode}
-                    activeTooth={activeTooth}
-                    activeToothStatus={activeTooth ? teethStatuses[activeTooth] : null}
-                  />
-                </div>
-              )}
-              {workspaceTab === 'treatment' && (
-                <TreatmentPlansPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />
-              )}
-              {workspaceTab === 'appointments' && (
-                <AppointmentsPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />
-              )}
-              {workspaceTab === 'radiology' && (
-                <RadiologyPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />
-              )}
-              {workspaceTab === 'laboratory' && (
-                <LaboratoryPanel
-                  supabase={supabase as any}
-                  activePatient={activePatient}
-                  demoMode={!!demoMode}
-                  cases={activePatient.cases || []}
-                  onAddCase={() => setIsCaseModalOpen(true)}
-                  onEditCase={(item) => {
-                    setEditingCase(item);
-                    setCaseForm(item as any);
-                    setIsCaseModalOpen(true);
-                  }}
-                  onDeleteCase={(id) => alert(`Laboratory case ${id} removed.`)}
-                />
-              )}
-              {workspaceTab === 'billing' && (
-                <BillingOverview supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />
-              )}
-              {workspaceTab === 'documents' && (
-                <DocumentsPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />
-              )}
-              {workspaceTab === 'communication' && (
-                <CommunicationPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />
-              )}
-              {workspaceTab === 'analytics' && (
-                <AnalyticsPanel activePatient={activePatient} />
-              )}
+              <TabPanel activeTab={workspaceTab} tabs={menuTabs}>
+                {(tabId) => {
+                  if (tabId === 'overview') {
+                    return (
+                      <div className="space-y-6">
+                        <ClinicalDashboard
+                          activePatient={activePatient}
+                          appointments={appointments}
+                          treatmentPlans={plans}
+                          outstandingBalance={outstandingBalance}
+                          labOrdersCount={activePatient.cases?.length || 0}
+                          radiologyReportsCount={gallery.filter((g: any) => g.category === 'CBCT').length}
+                          clinicalNotesCount={notesList.length}
+                          alertsCount={activePatient.medicalAlerts?.filter(a => a !== 'None').length || 0}
+                          onNavigateTab={setWorkspaceTab}
+                        />
+                        <Card variant="gradient" hover={false} className="p-6 rounded-3xl text-start space-y-2">
+                          <h3 className="eyebrow">{t('demographics')}</h3>
+                          <p className="text-xs text-[var(--velvet-text-muted)]">{t('chiefComplaint')}: <strong className="text-[var(--velvet-text)]">{activePatient.summary}</strong></p>
+                          <p className="text-xs text-[var(--velvet-text-muted)]">{t('primaryInsurer')}: <strong className="text-[var(--velvet-text)]">{activePatient.allergyStatus}</strong></p>
+                        </Card>
+                      </div>
+                    );
+                  }
+                  if (tabId === 'timeline') {
+                    return (
+                      <PatientTimeline
+                        activePatient={activePatient}
+                        appointments={appointments}
+                        treatmentPlans={plans}
+                        clinicalNotesList={notesList}
+                        imagingGallery={gallery}
+                        patientDocuments={docs}
+                        invoices={invoices}
+                        payments={payments}
+                        onActionExecute={handleCaseAction}
+                      />
+                    );
+                  }
+                  if (tabId === 'clinical') {
+                    return (
+                      <div className="space-y-6">
+                        <ToothSelector
+                          activeTooth={activeTooth}
+                          setActiveTooth={setActiveTooth}
+                          teethStatuses={teethStatuses}
+                          setTeethStatuses={setTeethStatuses}
+                        />
+                        <SoapNoteEditor
+                          supabase={supabase as any}
+                          activePatient={activePatient}
+                          demoMode={!!demoMode}
+                          activeTooth={activeTooth}
+                          activeToothStatus={activeTooth ? teethStatuses[activeTooth] : null}
+                        />
+                      </div>
+                    );
+                  }
+                  if (tabId === 'treatment') {
+                    return <TreatmentPlansPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />;
+                  }
+                  if (tabId === 'appointments') {
+                    return <AppointmentsPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />;
+                  }
+                  if (tabId === 'radiology') {
+                    return <RadiologyPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />;
+                  }
+                  if (tabId === 'laboratory') {
+                    return (
+                      <LaboratoryPanel
+                        supabase={supabase as any}
+                        activePatient={activePatient}
+                        demoMode={!!demoMode}
+                        cases={activePatient.cases || []}
+                        onAddCase={() => setIsCaseModalOpen(true)}
+                        onEditCase={(item) => {
+                          setEditingCase(item);
+                          setCaseForm(item as any);
+                          setIsCaseModalOpen(true);
+                        }}
+                        onDeleteCase={(id) => alert(`Laboratory case ${id} removed.`)}
+                      />
+                    );
+                  }
+                  if (tabId === 'billing') {
+                    return <BillingOverview supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />;
+                  }
+                  if (tabId === 'documents') {
+                    return <DocumentsPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />;
+                  }
+                  if (tabId === 'communication') {
+                    return <CommunicationPanel supabase={supabase as any} activePatient={activePatient} demoMode={!!demoMode} />;
+                  }
+                  if (tabId === 'analytics') {
+                    return <AnalyticsPanel activePatient={activePatient} />;
+                  }
+                  return null;
+                }}
+              </TabPanel>
             </div>
 
             {/* Right Collapsible AI Sidebar */}
-            <button
+            <Button
               onClick={() => setIsCopilotSidebarOpen(!isCopilotSidebarOpen)}
-              className="fixed bottom-6 end-20 z-45 magic-shimmer-btn rounded-full px-4 py-2.5 text-xs font-bold flex items-center gap-1.5 shadow-card active:scale-95"
+              size="sm"
+              className="fixed bottom-6 end-20 z-50 rounded-full shadow-[var(--velvet-shadow-pop)] active:scale-95"
             >
               <Sparkles className="w-4 h-4" /> AI Diagnostics
-            </button>
+            </Button>
 
             <ClinicalPanel
               isOpen={isCopilotSidebarOpen}
